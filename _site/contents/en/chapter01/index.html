@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      Introduction to Deep Learning &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item active" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <h1>01. Introduction to Deep Learning</h1>
+
+
+
+
+
+
+
+
+<!-- Get first post and show it -->
+
+<h1 id="introduction-to-deep-learning">Introduction to Deep Learning</h1>
+
+<h2 id="1-concept-overview">1. Concept Overview</h2>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/AI-ML-DL.svg/800px-AI-ML-DL.svg.png" alt="Deep Learning Hierarchy" />
+<em>Hình ảnh: Mối quan hệ giữa AI, Machine Learning và Deep Learning. Nguồn: Wikimedia Commons</em></p>
+
+<p>Deep Learning represents one of the most transformative technological advances of the 21st century. At its core, <strong>deep learning</strong> is a subset of machine learning that uses artificial neural networks with multiple layers—hence “deep”—to automatically learn hierarchical representations of data. What makes deep learning revolutionary is not just that it works, but how fundamentally it changes our approach to building intelligent systems.</p>
+
+<p>To truly understand deep learning’s significance, we must appreciate what preceded it. Traditional machine learning required human experts to manually engineer features—the relevant patterns or characteristics that algorithms would use to make decisions. For image recognition, this meant designing edge detectors, texture analyzers, and shape descriptors by hand. For speech recognition, it meant crafting phoneme representations and acoustic models based on linguistic theory. This feature engineering was both an art and a science, requiring deep domain expertise and often years of iterative refinement.</p>
+
+<p>Deep learning eliminates this bottleneck through <strong>representation learning</strong>—the ability to automatically discover the representations needed for detection or classification directly from raw data. A deep neural network learns features at multiple levels of abstraction: in computer vision, the first layer might learn to detect edges, the second layer combines edges into simple shapes, the third layer assembles shapes into object parts, and deeper layers recognize complete objects. Critically, the network discovers these hierarchical features on its own, without human guidance beyond providing the training data and the learning objective.</p>
+
+<p>This automatic feature learning has profound implications. It means deep learning can tackle problems where we don’t know how to manually engineer good features. It means the same basic architecture—with appropriate modifications—can excel at diverse tasks: recognizing faces, translating languages, generating images, playing games, or folding proteins. It means that as we collect more data and apply more computation, performance continues to improve, rather than plateauing as it often does with carefully hand-tuned classical systems.</p>
+
+<h3 id="key-characteristics-of-deep-learning">Key Characteristics of Deep Learning</h3>
+
+<p><strong>1. Hierarchical Feature Learning</strong>: Deep networks learn features at multiple levels of abstraction. Low-level layers capture simple patterns (edges, colors, basic phonemes), while higher layers combine these into complex concepts (objects, faces, semantic meanings). This hierarchy mirrors how we believe biological vision and cognition work—building understanding layer by layer from simple to complex.</p>
+
+<p><strong>2. End-to-End Learning</strong>: Rather than building modular pipelines where each component is optimized separately, deep learning enables end-to-end optimization where the entire system learns jointly. For machine translation, instead of separate modules for parsing, alignment, and generation, a single neural network learns to map source language to target language directly, with all components optimized together toward the final translation quality.</p>
+
+<p><strong>3. Scalability with Data and Computation</strong>: Traditional machine learning often exhibits diminishing returns—adding more data beyond a certain point provides little benefit. Deep learning’s performance continues to improve with more data and more computation, a scaling property that has driven the revolution in large language models and computer vision systems. This scalability is both a strength (enabling superhuman performance on many tasks) and a challenge (requiring massive datasets and computational resources).</p>
+
+<p><strong>4. Distributed Representations</strong>: Deep networks learn to represent concepts as patterns of activation across many neurons, rather than having dedicated neurons for each concept. This enables generalization: knowledge about “dogs” can inform understanding of “wolves” because they share many representational features. It also provides robustness: if some neurons fail or are dropped out during training, the distributed representation still functions.</p>
+
+<h3 id="why-deep-learning-matters">Why Deep Learning Matters</h3>
+
+<p>The impact of deep learning extends far beyond academic curiosity. It has fundamentally changed multiple industries and aspects of daily life:</p>
+
+<ul>
+  <li>
+    <p><strong>Computer Vision</strong>: From barely functional digit recognition in the 1990s to systems that surpass human performance on many visual tasks, recognize thousands of object categories, generate photorealistic images, and enable autonomous vehicles.</p>
+  </li>
+  <li>
+    <p><strong>Natural Language Processing</strong>: From rigid rule-based systems to neural language models that can write essays, answer questions, translate between languages with near-human quality, and engage in coherent dialogue.</p>
+  </li>
+  <li>
+    <p><strong>Healthcare</strong>: From slow, error-prone manual diagnosis to AI systems that detect diseases from medical images with expert-level accuracy, predict patient outcomes, accelerate drug discovery, and personalize treatment plans.</p>
+  </li>
+  <li>
+    <p><strong>Scientific Discovery</strong>: From traditional hypothesis-driven research to AI systems that discover novel materials, predict protein structures (AlphaFold solving a 50-year grand challenge), generate hypotheses from literature, and design experiments.</p>
+  </li>
+</ul>
+
+<p>Perhaps most importantly, deep learning has democratized AI. Open-source frameworks like PyTorch and TensorFlow, pre-trained models available freely, and educational resources have made powerful AI accessible to anyone with a laptop and curiosity. This democratization accelerates innovation as millions of researchers and developers worldwide contribute to advancing the field.</p>
+
+<h2 id="2-mathematical-foundation">2. Mathematical Foundation</h2>
+
+<p>At its mathematical core, deep learning is about <strong>function approximation</strong>. Given training data \(\{(\mathbf{x}_1, y_1), (\mathbf{x}_2, y_2), \ldots, (\mathbf{x}_n, y_n)\}\) where \(\mathbf{x}_i\) are inputs (images, text, sensor readings) and \(y_i\) are desired outputs (labels, translations, actions), we want to find a function \(f_\theta\) parameterized by \(\theta\) that accurately maps inputs to outputs.</p>
+
+<h3 id="the-universal-approximation-theorem">The Universal Approximation Theorem</h3>
+
+<p>A fundamental theoretical result states that a neural network with even a single hidden layer containing sufficiently many neurons can approximate any continuous function to arbitrary accuracy. Mathematically, for any continuous function \(g: \mathbb{R}^n \to \mathbb{R}^m\) and any \(\epsilon &gt; 0\), there exists a neural network \(f_\theta\) such that:</p>
+
+\[\|f_\theta(\mathbf{x}) - g(\mathbf{x})\| &lt; \epsilon \quad \text{for all } \mathbf{x}\]
+
+<p>This is remarkable: neural networks are <strong>universal function approximators</strong>. However, this theorem has important caveats. It guarantees existence but not learnability—finding the parameters \(\theta\) through gradient descent is not guaranteed. It requires potentially exponentially many neurons in the hidden layer, which is impractical. And it applies to shallow networks, but doesn’t explain why deep networks work better in practice.</p>
+
+<h3 id="why-depth-matters">Why Depth Matters</h3>
+
+<p>While shallow networks are theoretically sufficient, <strong>deep networks</strong> are exponentially more efficient for many real-world functions. Consider representing a function with \(k\) levels of composition: \(f = f_k \circ f_{k-1} \circ \cdots \circ f_1\). A shallow network might need exponentially many neurons to represent this, while a deep network with \(k\) layers can represent it naturally with polynomial complexity.</p>
+
+<p>The mathematical intuition is that many functions in nature exhibit compositional structure. To recognize a face, we first detect edges, then combine edges into facial features (eyes, nose, mouth), then combine features into a face representation. This hierarchical composition is naturally expressed as successive transformations through layers:</p>
+
+<p>\(\mathbf{h}^{(1)} = \sigma(\mathbf{W}^{(1)}\mathbf{x} + \mathbf{b}^{(1)})\)
+\(\mathbf{h}^{(2)} = \sigma(\mathbf{W}^{(2)}\mathbf{h}^{(1)} + \mathbf{b}^{(2)})\)
+\(\vdots\)
+\(\mathbf{y} = \mathbf{W}^{(L)}\mathbf{h}^{(L-1)} + \mathbf{b}^{(L)}\)</p>
+
+<p>where \(\sigma\) is a nonlinear activation function (ReLU, sigmoid, tanh), \(\mathbf{W}^{(l)}\) are weight matrices, and \(\mathbf{b}^{(l)}\) are bias vectors at layer \(l\).</p>
+
+<h3 id="the-learning-objective">The Learning Objective</h3>
+
+<p>Training a neural network means finding parameters \(\theta = \{\mathbf{W}^{(1)}, \mathbf{b}^{(1)}, \ldots, \mathbf{W}^{(L)}, \mathbf{b}^{(L)}\}\) that minimize a loss function \(\mathcal{L}(\theta)\) measuring prediction error:</p>
+
+\[\theta^* = \arg\min_\theta \frac{1}{n}\sum_{i=1}^n \mathcal{L}(f_\theta(\mathbf{x}_i), y_i)\]
+
+<p>For classification, we typically use cross-entropy loss:
+\(\mathcal{L}(\hat{\mathbf{y}}, \mathbf{y}) = -\sum_j y_j \log \hat{y}_j\)</p>
+
+<p>For regression, mean squared error:
+\(\mathcal{L}(\hat{y}, y) = \frac{1}{2}(y - \hat{y})^2\)</p>
+
+<p>We optimize this via <strong>gradient descent</strong>: iteratively updating parameters in the direction that decreases loss:</p>
+
+\[\theta \leftarrow \theta - \eta \nabla_\theta \mathcal{L}(\theta)\]
+
+<p>where \(\eta\) is the learning rate. Computing gradients efficiently through backpropagation—applying the chain rule layer by layer—is what makes training deep networks practical.</p>
+
+<h3 id="why-it-works-the-bias-variance-tradeoff">Why It Works: The Bias-Variance Tradeoff</h3>
+
+<p>Deep learning’s success can be understood through the classical bias-variance tradeoff. High bias (underfitting) means the model can’t capture the data’s complexity. High variance (overfitting) means the model fits noise rather than true patterns. Deep networks have enormous capacity (low bias) but are surprisingly resistant to overfitting when properly regularized, achieving low variance despite having millions of parameters—often more parameters than training examples!</p>
+
+<p>This seems to violate classical statistical learning theory, which suggests models should be simpler than the data. Recent theoretical work on “double descent” and “implicit regularization” shows that overparameterized networks trained with gradient descent implicitly prefer simpler functions, providing a form of automatic regularization that classical theory didn’t account for.</p>
+
+<h2 id="3-example--intuition">3. Example / Intuition</h2>
+
+<p>To develop intuition for how deep learning works, let’s walk through a concrete example: teaching a network to recognize handwritten digits.</p>
+
+<h3 id="the-problem-mnist-digit-recognition">The Problem: MNIST Digit Recognition</h3>
+
+<p>Imagine you have 28×28 pixel grayscale images of handwritten digits (0-9), and you want a system that can correctly identify which digit is in each image. Each image is just a 784-dimensional vector (28×28 = 784 pixels, each with intensity 0-255).</p>
+
+<p><strong>Traditional Approach</strong>: You might manually design features:</p>
+<ul>
+  <li>Count loops (0, 6, 8, 9 have loops; 1, 7 don’t)</li>
+  <li>Detect vertical/horizontal strokes</li>
+  <li>Measure height-to-width ratios</li>
+  <li>Identify endpoints and intersections</li>
+</ul>
+
+<p>This requires deep expertise and doesn’t generalize well (what about cursive? different fonts?).</p>
+
+<p><strong>Deep Learning Approach</strong>: Feed the 784 pixel values directly into a neural network:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Input (784 pixels) → Hidden Layer 1 (128 neurons) → Hidden Layer 2 (64 neurons) → Output (10 classes)
+</code></pre></div></div>
+
+<p>The network automatically learns:</p>
+<ul>
+  <li><strong>Layer 1</strong> discovers edge detectors—neurons that activate for vertical lines, horizontal lines, curves at different positions</li>
+  <li><strong>Layer 2</strong> combines edges into stroke patterns—long vertical strokes (for 1, 7), circular shapes (for 0, 6, 8, 9), specific curve combinations</li>
+  <li><strong>Output layer</strong> combines these patterns to recognize complete digits</li>
+</ul>
+
+<h3 id="how-learning-happens-an-intuitive-example">How Learning Happens: An Intuitive Example</h3>
+
+<p>Initially, weights are random. When shown a “3”:</p>
+<ol>
+  <li><strong>Forward pass</strong>: Network makes a random prediction, say 70% confident it’s a “7”</li>
+  <li><strong>Compute error</strong>: True label is “3”, prediction was “7”—big error!</li>
+  <li><strong>Backward pass (backpropagation)</strong>:
+    <ul>
+      <li>Output layer: “I should have activated neuron 3 more and neuron 7 less”</li>
+      <li>Hidden layers: “Which of my activations contributed to the wrong prediction? Adjust weights to fix this”</li>
+    </ul>
+  </li>
+  <li><strong>Update weights</strong>: Slightly modify all weights to reduce this particular error</li>
+  <li><strong>Repeat</strong>: After seeing thousands of “3”s with various handwriting styles, the network learns the essential features of “3”-ness</li>
+</ol>
+
+<p>The magic is that this simple process—forward pass, compute error, backpropagate, update—when repeated millions of times, discovers the hierarchical features needed for recognition.</p>
+
+<h3 id="why-hierarchical-learning-matters">Why Hierarchical Learning Matters</h3>
+
+<p>Consider recognizing a face:</p>
+<ul>
+  <li><strong>Low-level features</strong> (Layer 1): Edge detectors at various orientations, color blobs</li>
+  <li><strong>Mid-level features</strong> (Layer 2-3): Combine edges into simple shapes—curves, corners, textures</li>
+  <li><strong>High-level features</strong> (Layer 4-5): Combine shapes into facial features—eyes (pair of dark circles with highlights), nose (triangular region with shadows), mouth (horizontal dark region, possibly with teeth)</li>
+  <li><strong>Complete concept</strong> (Output): Combine facial features into specific face identities</li>
+</ul>
+
+<p>Each layer learns increasingly abstract representations, naturally capturing the compositional nature of visual recognition. The network discovers that eyes, noses, and mouths are reusable components that appear in all faces, just as strokes and curves are reusable components in all digits.</p>
+
+<p>This hierarchical, distributed representation also explains deep learning’s sample efficiency. Once the network learns “edge detector” and “circle detector” neurons from seeing digits, these same neurons help recognize letters, faces, and objects—transfer learning happens naturally through shared low-level features.</p>
+
+<h2 id="4-code-snippet">4. Code Snippet</h2>
+
+<p>Let’s implement a simple deep learning example to make concepts concrete. We’ll build a neural network to classify MNIST digits using PyTorch.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="n">torch.optim</span> <span class="k">as</span> <span class="n">optim</span>
+<span class="kn">from</span> <span class="n">torchvision</span> <span class="kn">import</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">transforms</span>
+<span class="kn">from</span> <span class="n">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+
+<span class="c1"># Define a simple deep neural network
+</span><span class="k">class</span> <span class="nc">SimpleDeepNet</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    A 3-layer neural network for MNIST digit classification.
+    
+    Architecture:
+    - Input: 784 dimensions (28x28 flattened image)
+    - Hidden Layer 1: 128 neurons with ReLU activation
+    - Hidden Layer 2: 64 neurons with ReLU activation  
+    - Output Layer: 10 neurons (one per digit class)
+    </span><span class="sh">"""</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">(</span><span class="n">SimpleDeepNet</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>  <span class="c1"># First hidden layer
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>    <span class="c1"># Second hidden layer
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">fc3</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>     <span class="c1"># Output layer
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">relu</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">()</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="c1"># Flatten the 28x28 images to 784-dimensional vectors
+</span>        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">784</span><span class="p">)</span>
+        
+        <span class="c1"># Layer 1: Learn low-level features
+</span>        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="nf">fc1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        
+        <span class="c1"># Layer 2: Learn mid-level feature combinations
+</span>        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="nf">fc2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        
+        <span class="c1"># Output layer: Classify into 10 digit classes
+</span>        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">fc3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+<span class="c1"># Load MNIST dataset
+</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="p">.</span><span class="nc">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="p">.</span><span class="nc">ToTensor</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="p">.</span><span class="nc">Normalize</span><span class="p">((</span><span class="mf">0.1307</span><span class="p">,),</span> <span class="p">(</span><span class="mf">0.3081</span><span class="p">,))</span>  <span class="c1"># Normalize with MNIST mean/std
+</span><span class="p">])</span>
+
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="nc">MNIST</span><span class="p">(</span><span class="sh">'</span><span class="s">./data</span><span class="sh">'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+<span class="n">test_dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="nc">MNIST</span><span class="p">(</span><span class="sh">'</span><span class="s">./data</span><span class="sh">'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+
+<span class="n">train_loader</span> <span class="o">=</span> <span class="nc">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">test_loader</span> <span class="o">=</span> <span class="nc">DataLoader</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="c1"># Initialize model, loss function, and optimizer
+</span><span class="n">model</span> <span class="o">=</span> <span class="nc">SimpleDeepNet</span><span class="p">()</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">CrossEntropyLoss</span><span class="p">()</span>  <span class="c1"># Combines softmax + negative log likelihood
+</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+
+<span class="c1"># Training loop
+</span><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>  <span class="c1"># Set model to training mode
+</span>    <span class="n">total_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">for</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">train_loader</span><span class="p">):</span>
+        <span class="c1"># Forward pass: compute predictions
+</span>        <span class="n">output</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        
+        <span class="c1"># Backward pass: compute gradients
+</span>        <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>  <span class="c1"># Clear previous gradients
+</span>        <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>        <span class="c1"># Backpropagation
+</span>        
+        <span class="c1"># Update weights
+</span>        <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+        
+        <span class="c1"># Track accuracy
+</span>        <span class="n">pred</span> <span class="o">=</span> <span class="n">output</span><span class="p">.</span><span class="nf">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="n">pred</span><span class="p">.</span><span class="nf">eq</span><span class="p">(</span><span class="n">target</span><span class="p">).</span><span class="nf">sum</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span>
+        <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="n">batch_idx</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s">, Batch </span><span class="si">{</span><span class="n">batch_idx</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span><span class="si">}</span><span class="s">, </span><span class="sh">'</span>
+                  <span class="sa">f</span><span class="sh">'</span><span class="s">Loss: </span><span class="si">{</span><span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+    
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="mf">100.</span> <span class="o">*</span> <span class="n">correct</span> <span class="o">/</span> <span class="nf">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">)</span>
+    <span class="n">avg_loss</span> <span class="o">=</span> <span class="n">total_loss</span> <span class="o">/</span> <span class="nf">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s"> Training: Avg Loss=</span><span class="si">{</span><span class="n">avg_loss</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, Accuracy=</span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">%</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># Evaluation loop
+</span><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">,</span> <span class="n">criterion</span><span class="p">):</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>  <span class="c1"># Set model to evaluation mode
+</span>    <span class="n">test_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>  <span class="c1"># Disable gradient computation for efficiency
+</span>        <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">test_loss</span> <span class="o">+=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">).</span><span class="nf">item</span><span class="p">()</span>
+            <span class="n">pred</span> <span class="o">=</span> <span class="n">output</span><span class="p">.</span><span class="nf">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">correct</span> <span class="o">+=</span> <span class="n">pred</span><span class="p">.</span><span class="nf">eq</span><span class="p">(</span><span class="n">target</span><span class="p">).</span><span class="nf">sum</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span>
+    
+    <span class="n">test_loss</span> <span class="o">/=</span> <span class="nf">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">)</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="mf">100.</span> <span class="o">*</span> <span class="n">correct</span> <span class="o">/</span> <span class="nf">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Test: Avg Loss=</span><span class="si">{</span><span class="n">test_loss</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, Accuracy=</span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">%</span><span class="se">\n</span><span class="sh">'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">accuracy</span>
+
+<span class="c1"># Train for multiple epochs
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Starting training...</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>  <span class="c1"># Train for 5 epochs
+</span>    <span class="nf">train</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
+    <span class="n">test_accuracy</span> <span class="o">=</span> <span class="nf">test</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">,</span> <span class="n">criterion</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Final test accuracy: </span><span class="si">{</span><span class="n">test_accuracy</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">%</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training complete! The network learned to recognize digits through:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">1. Forward propagation (making predictions)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">2. Loss computation (measuring errors)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">3. Backpropagation (computing gradients)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">4. Weight updates (learning from mistakes)</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="understanding-the-code">Understanding the Code</h3>
+
+<p>This simple example demonstrates core deep learning principles:</p>
+
+<p><strong>1. Architecture Design</strong>: Three layers transform 784-dimensional input to 10-dimensional output through learned representations.</p>
+
+<p><strong>2. Automatic Feature Learning</strong>: We never told the network what features to look for—it discovers useful representations automatically.</p>
+
+<p><strong>3. The Training Loop</strong>: The standard pattern of forward pass → compute loss → backpropagate → update weights that underlies all deep learning.</p>
+
+<p><strong>4. Nonlinearity is Crucial</strong>: ReLU activation functions between layers enable learning complex, nonlinear functions. Without them, multiple layers would collapse to a single linear transformation.</p>
+
+<p><strong>5. Scalability</strong>: This same code structure, with appropriate modifications, works for much larger datasets and more complex tasks—computer vision, natural language processing, etc.</p>
+
+<p>After just 5 epochs (5 passes through 60,000 training images), this simple network typically achieves ~97% accuracy—demonstrating deep learning’s power to learn from data.</p>
+
+<h2 id="5-related-concepts">5. Related Concepts</h2>
+
+<p>Understanding deep learning requires seeing how it connects to broader machine learning and AI concepts:</p>
+
+<h3 id="supervised-vs-unsupervised-vs-reinforcement-learning">Supervised vs Unsupervised vs Reinforcement Learning</h3>
+
+<p><strong>Supervised Learning</strong> (what we’ve primarily discussed) learns from labeled examples: input-output pairs like (image, label) or (sentence, translation). The network learns to map inputs to correct outputs.</p>
+
+<p><strong>Unsupervised Learning</strong> discovers structure in data without labels. Autoencoders learn compressed representations. Clustering groups similar examples. Generative models learn data distributions to create new samples. These techniques are crucial when labels are expensive or unavailable.</p>
+
+<p><strong>Reinforcement Learning</strong> learns from interaction: an agent takes actions in an environment, receives rewards, and learns policies to maximize cumulative reward. This enables learning behaviors (game playing, robotics) where we can’t provide explicit correct actions for every situation, only feedback on outcomes.</p>
+
+<p>Deep learning has transformed all three paradigms, but the principles differ significantly. This course focuses primarily on supervised learning initially, with later chapters covering unsupervised and reinforcement learning.</p>
+
+<h3 id="classical-machine-learning-vs-deep-learning">Classical Machine Learning vs Deep Learning</h3>
+
+<p>Traditional machine learning (SVMs, decision trees, logistic regression) typically requires:</p>
+<ul>
+  <li>Hand-engineered features</li>
+  <li>Explicit model assumptions (linearity, independence)</li>
+  <li>Works well with moderate data (hundreds to thousands of examples)</li>
+  <li>More interpretable (feature importance, decision boundaries)</li>
+</ul>
+
+<p>Deep learning:</p>
+<ul>
+  <li>Learns features automatically end-to-end</li>
+  <li>Fewer assumptions about data structure</li>
+  <li>Requires large datasets (thousands to millions of examples)</li>
+  <li>Less interpretable but more powerful for complex patterns</li>
+</ul>
+
+<p>Neither approach is universally superior—classical ML can be better for small datasets, tabular data, or when interpretability is critical. Deep learning excels with large datasets, high-dimensional inputs (images, text), and complex patterns.</p>
+
+<h3 id="transfer-learning-and-pre-training">Transfer Learning and Pre-training</h3>
+
+<p>One of deep learning’s most powerful techniques is <strong>transfer learning</strong>: training a network on one task (e.g., ImageNet classification) then adapting it to related tasks (medical image analysis, wildlife detection). The network’s learned representations—edge detectors, texture patterns, shape recognizers—transfer across domains.</p>
+
+<p><strong>Pre-training</strong> on large general datasets, then <strong>fine-tuning</strong> on specific tasks, has become standard practice. GPT, BERT, and other large language models are pre-trained on massive text corpora, then specialized for particular applications through fine-tuning with much less task-specific data. This dramatically reduces data requirements for new tasks.</p>
+
+<h3 id="the-role-of-architecture-vs-data-vs-compute">The Role of Architecture vs Data vs Compute</h3>
+
+<p>Deep learning’s success derives from three factors working together:</p>
+
+<p><strong>Architecture innovations</strong> (CNNs, Transformers, ResNets) enable learning certain patterns efficiently. The right architecture provides appropriate inductive biases for the problem structure.</p>
+
+<p><strong>Data scale</strong> provides the raw material for learning. More diverse, high-quality data enables networks to learn more robust, generalizable representations.</p>
+
+<p><strong>Computational scale</strong> makes training large networks on large datasets practical. GPUs parallelize the matrix operations neural networks depend on, reducing training time from months to hours.</p>
+
+<p>Modern deep learning progress comes from advances in all three: better architectures (Transformers), larger datasets (web-scale text and images), and more compute (GPU clusters, TPUs). No single factor alone explains the field’s success.</p>
+
+<h2 id="6-fundamental-papers">6. Fundamental Papers</h2>
+
+<p>Understanding deep learning’s historical development through key papers provides context for current practice and future directions.</p>
+
+<p><strong><a href="https://link.springer.com/article/10.1007/BF02478259">“A Logical Calculus of Ideas Immanent in Nervous Activity” (1943)</a></strong><br />
+<em>Authors</em>: Warren McCulloch and Walter Pitts<br />
+This foundational paper introduced the mathematical model of artificial neurons, showing that networks of simple threshold units could compute any logical function. While vastly simplified compared to biological neurons, this work established the theoretical basis for neural computation and inspired subsequent research in both neuroscience and artificial intelligence.</p>
+
+<p><strong><a href="https://www.nature.com/articles/323533a0">“Learning representations by back-propagating errors” (1986)</a></strong><br />
+<em>Authors</em>: David Rumelhart, Geoffrey Hinton, Ronald Williams<br />
+Backpropagation wasn’t invented here (it was discovered independently multiple times), but this paper brought it to widespread attention and demonstrated its power for training multi-layer networks. By showing how to efficiently compute gradients through composition of functions via the chain rule, backpropagation made deep learning practical. This paper ended the first AI winter by proving that neural networks could learn complex functions.</p>
+
+<p><strong><a href="http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf">“Gradient-Based Learning Applied to Document Recognition” (1998)</a></strong><br />
+<em>Authors</em>: Yann LeCun, Léon Bottou, Yoshua Bengio, Patrick Haffner<br />
+LeNet-5, introduced in this paper, demonstrated that convolutional neural networks could achieve excellent performance on real-world tasks (check reading, digit recognition). More importantly, it established design principles—local connectivity, weight sharing, pooling—that remain central to modern computer vision. This paper showed that deep learning could move from toy problems to practical applications.</p>
+
+<p><strong><a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks">“ImageNet Classification with Deep Convolutional Neural Networks” (2012)</a></strong><br />
+<em>Authors</em>: Alex Krizhevsky, Ilya Sutskever, Geoffrey Hinton<br />
+AlexNet’s crushing victory in the 2012 ImageNet competition (15.3% error vs 26.2% for second place) sparked the modern deep learning revolution. By combining deeper architectures, ReLU activations, dropout regularization, and GPU training, it demonstrated that neural networks could scale to large, complex datasets. This success convinced the broader computer vision community to adopt deep learning.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1706.03762">“Attention Is All You Need” (2017)</a></strong><br />
+<em>Authors</em>: Ashish Vaswani et al. (Google)<br />
+The Transformer architecture introduced here has become the foundation of modern NLP and increasingly other domains. By replacing recurrence with attention mechanisms, Transformers enable full parallelization during training and better capture long-range dependencies. This paper’s influence extends far beyond its original machine translation application—BERT, GPT, and most recent large language models build on this architecture.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1512.03385">“Deep Residual Learning for Image Recognition” (2016)</a></strong><br />
+<em>Authors</em>: Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun<br />
+ResNet introduced skip connections that enabled training networks hundreds of layers deep by providing direct gradient pathways. Beyond winning ImageNet 2015, this work fundamentally changed how we think about deep architectures—depth is crucial, but networks need architectural innovations (skip connections, careful normalization) to train effectively. ResNet’s principles appear in most modern deep architectures.</p>
+
+<h2 id="applications-of-deep-learning">Applications of Deep Learning</h2>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Deep_Learning_Applications.png/800px-Deep_Learning_Applications.png" alt="Deep Learning Applications" />
+<em>Hình ảnh: Các ứng dụng của Deep Learning trong nhiều lĩnh vực. Nguồn: Wikimedia Commons</em></p>
+
+<h3 id="computer-vision">Computer Vision</h3>
+<ul>
+  <li>Image classification</li>
+  <li>Object detection</li>
+  <li>Semantic segmentation</li>
+  <li>Face recognition</li>
+  <li>Image generation</li>
+</ul>
+
+<h3 id="natural-language-processing">Natural Language Processing</h3>
+<ul>
+  <li>Machine translation</li>
+  <li>Sentiment analysis</li>
+  <li>Question answering</li>
+  <li>Text generation (GPT models)</li>
+  <li>Language understanding (BERT)</li>
+</ul>
+
+<h3 id="speech-and-audio">Speech and Audio</h3>
+<ul>
+  <li>Speech recognition</li>
+  <li>Text-to-speech synthesis</li>
+  <li>Music generation</li>
+  <li>Voice cloning</li>
+</ul>
+
+<h3 id="reinforcement-learning">Reinforcement Learning</h3>
+<ul>
+  <li>Game playing (Chess, Go, Atari)</li>
+  <li>Robotics control</li>
+  <li>Autonomous driving</li>
+  <li>Resource optimization</li>
+</ul>
+
+<h3 id="healthcare">Healthcare</h3>
+<ul>
+  <li>Disease diagnosis from images</li>
+  <li>Drug discovery</li>
+  <li>Protein folding (AlphaFold)</li>
+  <li>Personalized medicine</li>
+</ul>
+
+<h3 id="other-domains">Other Domains</h3>
+<ul>
+  <li>Financial prediction</li>
+  <li>Recommendation systems</li>
+  <li>Climate modeling</li>
+  <li>Scientific discovery</li>
+</ul>
+
+<h2 id="challenges-and-limitations">Challenges and Limitations</h2>
+
+<h3 id="current-challenges">Current Challenges</h3>
+
+<ol>
+  <li><strong>Data Requirements</strong>: Need large labeled datasets</li>
+  <li><strong>Computational Cost</strong>: Training large models is expensive</li>
+  <li><strong>Interpretability</strong>: “Black box” nature</li>
+  <li><strong>Generalization</strong>: Overfitting, domain shift</li>
+  <li><strong>Robustness</strong>: Adversarial examples</li>
+  <li><strong>Ethics</strong>: Bias, fairness, privacy concerns</li>
+</ol>
+
+<h3 id="active-research-areas">Active Research Areas</h3>
+
+<ul>
+  <li><strong>Efficient Deep Learning</strong>: Model compression, quantization</li>
+  <li><strong>Few-Shot Learning</strong>: Learning from limited data</li>
+  <li><strong>Transfer Learning</strong>: Leveraging pre-trained models</li>
+  <li><strong>Explainable AI</strong>: Understanding model decisions</li>
+  <li><strong>Continual Learning</strong>: Learning without forgetting</li>
+  <li><strong>Multimodal Learning</strong>: Combining vision, language, etc.</li>
+</ul>
+
+<h2 id="what-youll-learn-in-this-course">What You’ll Learn in This Course</h2>
+
+<h3 id="part-i-foundations-chapters-00-03">Part I: Foundations (Chapters 00-03)</h3>
+<ul>
+  <li>Mathematical prerequisites</li>
+  <li>Neural network basics</li>
+  <li>Training techniques (backpropagation, optimization)</li>
+</ul>
+
+<h3 id="part-ii-core-architectures-chapters-04-08">Part II: Core Architectures (Chapters 04-08)</h3>
+<ul>
+  <li>CNNs for computer vision</li>
+  <li>RNNs for sequences</li>
+  <li>Attention and Transformers</li>
+</ul>
+
+<h3 id="part-iii-advanced-topics-chapters-09-16">Part III: Advanced Topics (Chapters 09-16)</h3>
+<ul>
+  <li>Regularization and optimization</li>
+  <li>Generative models (VAE, GANs)</li>
+  <li>Transfer and self-supervised learning</li>
+</ul>
+
+<h3 id="part-iv-applications-chapters-17-25">Part IV: Applications (Chapters 17-25)</h3>
+<ul>
+  <li>Computer vision applications</li>
+  <li>Natural language processing</li>
+  <li>Reinforcement learning</li>
+  <li>Specialized topics (GNNs, efficiency, interpretability)</li>
+</ul>
+
+<h2 id="prerequisites-for-this-course">Prerequisites for This Course</h2>
+
+<h3 id="required">Required</h3>
+<ul>
+  <li><strong>Programming</strong>: Python basics</li>
+  <li><strong>Mathematics</strong>:
+    <ul>
+      <li>Linear algebra (vectors, matrices)</li>
+      <li>Calculus (derivatives, chain rule)</li>
+      <li>Probability (distributions, expectation)</li>
+    </ul>
+  </li>
+  <li><strong>Machine Learning</strong>: Basic understanding helpful</li>
+</ul>
+
+<h3 id="recommended">Recommended</h3>
+<ul>
+  <li>Experience with NumPy, basic ML algorithms</li>
+  <li>Familiarity with Python ML libraries</li>
+  <li>Understanding of optimization concepts</li>
+</ul>
+
+<h2 id="how-to-succeed-in-deep-learning">How to Succeed in Deep Learning</h2>
+
+<h3 id="practical-tips">Practical Tips</h3>
+
+<ol>
+  <li><strong>Implement from Scratch</strong>: Understand fundamentals</li>
+  <li><strong>Work with Frameworks</strong>: Master PyTorch or TensorFlow</li>
+  <li><strong>Read Papers</strong>: Stay current with research</li>
+  <li><strong>Do Projects</strong>: Apply knowledge to real problems</li>
+  <li><strong>Join Community</strong>: Participate in discussions, competitions</li>
+  <li><strong>Iterate and Experiment</strong>: Learning by doing</li>
+</ol>
+
+<h3 id="resources-beyond-this-course">Resources Beyond This Course</h3>
+
+<ul>
+  <li><strong>Papers</strong>: ArXiv.org, Papers with Code</li>
+  <li><strong>Courses</strong>: Fast.ai, Stanford CS231n/CS224n</li>
+  <li><strong>Books</strong>: Deep Learning (Goodfellow), Dive into Deep Learning</li>
+  <li><strong>Competitions</strong>: Kaggle, AIcrowd</li>
+  <li><strong>Communities</strong>: Reddit r/MachineLearning, Discord servers</li>
+</ul>
+
+<h2 id="the-deep-learning-mindset">The Deep Learning Mindset</h2>
+
+<h3 id="key-principles">Key Principles</h3>
+
+<ol>
+  <li><strong>Start Simple</strong>: Begin with basic models, add complexity</li>
+  <li><strong>Visualize</strong>: Plot loss curves, attention maps, features</li>
+  <li><strong>Debug Systematically</strong>: Check data, architecture, training</li>
+  <li><strong>Use Baselines</strong>: Compare against simple models</li>
+  <li><strong>Monitor Metrics</strong>: Track training and validation performance</li>
+  <li><strong>Be Patient</strong>: Training takes time and iteration</li>
+</ol>
+
+<h3 id="common-pitfalls-to-avoid">Common Pitfalls to Avoid</h3>
+
+<ul>
+  <li>Insufficient data preprocessing</li>
+  <li>Poor initialization</li>
+  <li>Wrong learning rate</li>
+  <li>Ignoring validation set</li>
+  <li>Overfitting to training data</li>
+  <li>Not using proper evaluation metrics</li>
+</ul>
+
+<h2 id="the-road-ahead">The Road Ahead</h2>
+
+<p>Deep learning is a rapidly evolving field. This course provides:</p>
+<ul>
+  <li><strong>Solid foundations</strong> in neural networks</li>
+  <li><strong>Practical skills</strong> for implementing models</li>
+  <li><strong>Understanding</strong> of modern architectures</li>
+  <li><strong>Preparation</strong> for advanced research and applications</li>
+</ul>
+
+<p>By the end of this course, you’ll be equipped to:</p>
+<ul>
+  <li>Build and train neural networks from scratch</li>
+  <li>Apply deep learning to real-world problems</li>
+  <li>Read and implement research papers</li>
+  <li>Contribute to the field’s advancement</li>
+</ul>
+
+<p>Let’s begin this exciting journey into deep learning! 🚀</p>
+
+<h2 id="summary">Summary</h2>
+
+<ul>
+  <li><strong>Deep Learning</strong>: Neural networks with multiple layers for hierarchical learning</li>
+  <li><strong>Revolution</strong>: Transformed AI with breakthrough applications</li>
+  <li><strong>Core Idea</strong>: Automatic feature learning from raw data</li>
+  <li><strong>Key Architectures</strong>: MLPs, CNNs, RNNs, Transformers</li>
+  <li><strong>Applications</strong>: Vision, NLP, speech, games, healthcare, and more</li>
+  <li><strong>Course Goal</strong>: Master theory and practice of deep learning</li>
+</ul>
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<p>This introductory lesson establishes the foundational understanding needed for the deep learning journey ahead:</p>
+
+<p><strong>1. Core Concept</strong>: Deep learning uses multi-layer neural networks to automatically learn hierarchical representations from data, eliminating the need for manual feature engineering.</p>
+
+<p><strong>2. Mathematical Foundation</strong>: Neural networks are universal function approximators that learn through gradient descent and backpropagation, with depth providing exponential efficiency for compositional functions.</p>
+
+<p><strong>3. Practical Power</strong>: From MNIST digit recognition achieving 97%+ accuracy in minutes to modern systems surpassing human performance on complex tasks, deep learning has transformed AI from research curiosity to practical tool.</p>
+
+<p><strong>4. Historical Context</strong>: The field evolved through AI winters and revivals, with key innovations (backpropagation, CNNs, Transformers) building on each other to create today’s powerful systems.</p>
+
+<p><strong>5. Broader Connections</strong>: Deep learning connects to classical ML, transfer learning, and the interplay of architecture, data, and compute that drives modern progress.</p>
+
+<p><strong>6. Foundational Papers</strong>: Understanding the historical development through seminal papers (McCulloch-Pitts neurons, backpropagation, LeNet, AlexNet, Transformers, ResNet) provides context for current practice.</p>
+
+<h2 id="whats-next">What’s Next?</h2>
+
+<p>In the next chapter, we’ll dive into <strong>Neural Networks Fundamentals</strong> and understand how artificial neurons work together to learn from data. You’ll learn:</p>
+
+<ul>
+  <li>The mathematical model of artificial neurons (perceptrons)</li>
+  <li>How neurons combine into networks through layers</li>
+  <li>Activation functions and their role in enabling nonlinear learning</li>
+  <li>Forward propagation: how networks make predictions</li>
+  <li>The architecture choices that define different network types</li>
+</ul>
+
+<p>Armed with the conceptual understanding from this introduction and the detailed mechanics from the next chapter, you’ll be ready to understand training algorithms, implement your own networks, and appreciate the sophisticated architectures that power modern AI systems.</p>
+
+<p><strong>Remember</strong>: Deep learning is fundamentally about letting data reveal its own structure rather than imposing our assumptions. This paradigm shift—from hand-crafted features to learned representations—is what makes deep learning both powerful and philosophically different from traditional approaches. As you progress through this course, you’ll see this principle manifest in countless ways across different domains and architectures.</p>
+
+
+<!-- Remove first element from post_list which is already shown above. -->
+  
+
+<!-- List up the posts in the chapter -->
+<ul style="list-style: none;">
+
+  
+  
+  
+  
+    <li style="text-align:left; vertical-align: middle; margin-left: -2em; margin-top: 5px;" >
+      <a href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/01_01_Why_Deep_Learning/">01-01 Why Deep Learning?</a>
+      
+        
+          <span class="lesson-badge required">Required</span>
+        
+      
+    </li>
+  
+  
+
+</ul>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

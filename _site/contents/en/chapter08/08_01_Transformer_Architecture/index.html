@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      08-01 The Transformer Architecture &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    08-01 The Transformer Architecture
+    
+      
+        <span class="lesson-badge required large">Required</span>
+      
+    
+  </h1>
+  <h1 id="the-transformer-revolutionizing-sequence-processing">The Transformer: Revolutionizing Sequence Processing</h1>
+
+<p><img src="https://machinelearningmastery.com/wp-content/uploads/2021/08/attention_research_1.png" alt="Transformer Architecture" />
+<em>Hình ảnh: Kiến trúc Transformer từ paper “Attention Is All You Need”. Nguồn: Google Research</em></p>
+
+<h2 id="1-concept-overview">1. Concept Overview</h2>
+
+<p>The Transformer represents one of the most significant architectural innovations in the history of deep learning. When Vaswani and colleagues at Google introduced it in their 2017 paper “Attention Is All You Need,” they made a bold claim that seemed almost heretical: recurrent layers, which had been the foundation of sequence modeling for decades, were unnecessary. Instead, they proposed an architecture built entirely on attention mechanisms, enabling parallel processing of sequences and fundamentally changing how we approach natural language processing, and increasingly, many other domains.</p>
+
+<p>To understand why the Transformer was revolutionary, we must first appreciate the limitations it overcame. Recurrent Neural Networks, including their sophisticated variants LSTMs and GRUs, process sequences one element at a time, maintaining a hidden state that theoretically encodes all previous context. This sequential processing is inherently slow—we cannot process timestep \(t\) until we’ve processed timestep \(t-1\), preventing parallelization across the sequence length. Moreover, information from early in the sequence must pass through many recurrent steps to influence predictions about later elements, and with each step, gradients can vanish or the information can degrade. While LSTMs mitigated this through gating mechanisms, they didn’t eliminate the fundamental sequential bottleneck.</p>
+
+<p>The Transformer’s key insight is that we can replace sequential processing with attention mechanisms that directly compute relationships between all positions in a sequence simultaneously. Instead of information flowing through hidden states across time, every position can directly attend to every other position in a single operation. This enables full parallelization across sequence length—we can process all positions simultaneously using matrix operations that GPUs excel at. The model can learn arbitrary dependencies without the constraint that information must flow sequentially through hidden states.</p>
+
+<p>Beyond computational efficiency, the Transformer’s attention mechanisms provide something qualitatively different from RNNs: explicit, interpretable relationships between sequence elements. When translating “The animal didn’t cross the street because it was too tired,” the model can directly compute that “it” strongly attends to “animal” (not “street”), making the representation more interpretable and debuggable. These attention weights, which we can visualize, show what the model is “focusing on,” providing insight impossible with RNN hidden states.</p>
+
+<p>The impact of Transformers extends far beyond their original application to machine translation. They’ve become the foundation of modern NLP through models like BERT (which uses Transformer encoders for understanding) and GPT (which uses Transformer decoders for generation). The architecture has proven remarkably versatile, succeeding not just in NLP but in computer vision (Vision Transformers), speech processing, protein folding (AlphaFold), and even multimodal tasks combining vision and language (CLIP, GPT-4). This versatility suggests the Transformer captures something fundamental about how to process structured data, not just sequences.</p>
+
+<p>Understanding Transformers deeply requires grasping several interconnected ideas: how self-attention computes relationships between all positions, why we need multiple attention heads, how positional encodings inject sequence order into an otherwise position-agnostic model, and how the encoder-decoder architecture enables sequence-to-sequence tasks. Each component serves a specific purpose, and their combination creates an architecture that’s both powerful and elegant.</p>
+
+<h2 id="2-mathematical-foundation">2. Mathematical Foundation</h2>
+
+<p>The mathematical elegance of the Transformer lies in how it decomposes sequence processing into simple, parallelizable operations. Let’s build up the mathematics systematically, starting with the core attention mechanism and then showing how complete Transformer layers are constructed.</p>
+
+<h3 id="self-attention-the-core-mechanism">Self-Attention: The Core Mechanism</h3>
+
+<p>Given an input sequence \(\mathbf{X} = [\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_n]\) where each \(\mathbf{x}_i \in \mathbb{R}^{d_{model}}\), self-attention computes a new representation where each position incorporates information from all other positions. The mechanism uses three learned projections of the input:</p>
+
+<p>\(\mathbf{Q} = \mathbf{X}\mathbf{W}^Q \in \mathbb{R}^{n \times d_k}\) (Queries: “what am I looking for?”)</p>
+
+<p>\(\mathbf{K} = \mathbf{X}\mathbf{W}^K \in \mathbb{R}^{n \times d_k}\) (Keys: “what do I offer?”)</p>
+
+<p>\(\mathbf{V} = \mathbf{X}\mathbf{W}^V \in \mathbb{R}^{n \times d_v}\) (Values: “what is my actual content?”)</p>
+
+<p>The intuition behind this query-key-value paradigm comes from information retrieval. When searching a database, you have a query (what you’re looking for), items have keys (metadata describing them), and when you find matches, you retrieve values (the actual content). Self-attention works similarly: each position’s query determines what to look for, is compared against all positions’ keys to find relevant matches, and then retrieves a weighted combination of their values.</p>
+
+<p>The attention computation itself is remarkably simple:</p>
+
+\[\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\right) \mathbf{V}\]
+
+<p>Let’s parse this step by step. The matrix product \(\mathbf{Q}\mathbf{K}^T\) produces an \(n \times n\) matrix of attention scores, where entry \((i,j)\) is the dot product between query \(i\) and key \(j\), measuring their similarity. High dot product means the query and key align well—this position should attend strongly to that position.</p>
+
+<p>The scaling by \(\sqrt{d_k}\) prevents the dot products from growing too large as dimensionality increases. Without this scaling, when \(d_k\) is large, dot products can become very large in magnitude, pushing the softmax into regions where gradients vanish (the softmax saturates). The specific choice of \(\sqrt{d_k}\) comes from assuming query and key components are independent random variables with variance 1—then the dot product has variance \(d_k\), so dividing by \(\sqrt{d_k}\) normalizes back to unit variance. This scaling is crucial for stable training.</p>
+
+<p>The softmax operation converts these scores into a probability distribution over positions for each query position. For position \(i\), the softmax over scores determines how much to attend to each other position, with weights summing to 1. This normalization is essential—it creates a weighted average rather than a weighted sum, making the output scale independent of sequence length.</p>
+
+<p>Finally, multiplying by \(\mathbf{V}\) computes the weighted average of values. Each output position is a weighted combination of all input values, where weights are determined by query-key similarities. This is where information actually flows between positions—the attention weights determine which positions’ information contributes to each output.</p>
+
+<h3 id="multi-head-attention-multiple-perspectives">Multi-Head Attention: Multiple Perspectives</h3>
+
+<p>A single attention mechanism can learn one type of relationship, but language (and many other domains) involves multiple types of relationships simultaneously. Multi-head attention addresses this by running multiple attention operations in parallel, each with different learned projection matrices:</p>
+
+\[\text{MultiHead}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h) \mathbf{W}^O\]
+
+<p>where each head is:</p>
+
+\[\text{head}_i = \text{Attention}(\mathbf{Q}\mathbf{W}_i^Q, \mathbf{K}\mathbf{W}_i^K, \mathbf{V}\mathbf{W}_i^V)\]
+
+<p>The typical configuration uses \(h=8\) heads with \(d_k = d_v = d_{model}/h = 64\) when \(d_{model}=512\). This design choice means the total computational cost of multi-head attention equals that of single-head attention with full dimensionality, but we get the representational advantage of multiple attention patterns.</p>
+
+<p>Different heads learn to capture different types of relationships. In machine translation, one head might focus on syntactic dependencies (subject-verb agreement), another on semantic relationships (coreference resolution), and another on positional biases (nearby words often relate). The model learns these specializations automatically through training—we don’t specify what each head should do, we merely provide the capacity for specialization.</p>
+
+<p>The final linear projection \(\mathbf{W}^O\) integrates information from all heads. This projection is crucial—without it, we’d just have \(h\) independent attention mechanisms. The projection allows heads to collaborate, combining their different perspectives into a unified representation.</p>
+
+<h3 id="positional-encoding-injecting-sequence-order">Positional Encoding: Injecting Sequence Order</h3>
+
+<p>A fundamental property of attention is that it’s permutation-invariant: if we shuffle the input sequence, the attention outputs (before considering position) shuffle identically. This is because attention only looks at content similarity (dot products), not position. For language, where word order crucially affects meaning (“dog bites man” vs “man bites dog”), this is a problem.</p>
+
+<p>The solution is to add positional information to the input embeddings. The original Transformer uses sinusoidal positional encodings:</p>
+
+\[PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{2i/d_{model}}}\right)\]
+
+\[PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{2i/d_{model}}}\right)\]
+
+<p>where \(pos\) is the position index and \(i\) is the dimension index. This might seem arbitrary, but it has elegant properties. Different dimensions use different frequencies, from wavelengths of \(2\pi\) to \(10000 \cdot 2\pi\). This creates a unique “fingerprint” for each position. Moreover, the encoding is deterministic and works for sequences longer than those seen during training (unlike learned positional embeddings which have a maximum length).</p>
+
+<p>The trigonometric functions also enable the model to learn relative positions. For any fixed offset \(k\), \(PE_{pos+k}\) can be expressed as a linear function of \(PE_{pos}\). This means the model can learn to attend based on relative distances (“attend to the word 3 positions before”) rather than just absolute positions, making it more flexible.</p>
+
+<h3 id="the-complete-transformer-layer">The Complete Transformer Layer</h3>
+
+<p>A Transformer encoder layer combines self-attention with a position-wise feed-forward network, both wrapped in residual connections and layer normalization:</p>
+
+\[\mathbf{X}' = \text{LayerNorm}(\mathbf{X} + \text{MultiHeadAttention}(\mathbf{X}, \mathbf{X}, \mathbf{X}))\]
+
+\[\mathbf{X}'' = \text{LayerNorm}(\mathbf{X}' + \text{FFN}(\mathbf{X}'))\]
+
+<p>The FFN is applied identically to each position:</p>
+
+\[\text{FFN}(x) = \max(0, x\mathbf{W}_1 + \mathbf{b}_1)\mathbf{W}_2 + \mathbf{b}_2\]
+
+<p>Typically \(\mathbf{W}_1 \in \mathbb{R}^{d_{model} \times d_{ff}}\) with \(d_{ff} = 4 \times d_{model} = 2048\) (for \(d_{model}=512\)). This expansion and contraction pattern allows the network to compute complex functions of the attention output.</p>
+
+<p>The residual connections (adding input to output) and layer normalization are critical for training deep Transformers. Residual connections provide gradient highways—gradients can flow directly through the addition operation without passing through attention or FFN, mitigating vanishing gradients. Layer normalization stabilizes training by normalizing activations to have zero mean and unit variance within each sample, making the network less sensitive to parameter scale.</p>
+
+<p>The decoder architecture adds an additional cross-attention layer that attends to the encoder’s output:</p>
+
+\[\mathbf{X}' = \text{LayerNorm}(\mathbf{X} + \text{MaskedSelfAttention}(\mathbf{X}, \mathbf{X}, \mathbf{X}))\]
+
+\[\mathbf{X}'' = \text{LayerNorm}(\mathbf{X}' + \text{CrossAttention}(\mathbf{X}', \text{EncoderOut}, \text{EncoderOut}))\]
+
+\[\mathbf{X}''' = \text{LayerNorm}(\mathbf{X}'' + \text{FFN}(\mathbf{X}''))\]
+
+<p>The masked self-attention uses a causal mask preventing positions from attending to future positions, crucial for autoregressive generation where we generate one token at a time.</p>
+
+<h2 id="3-example--intuition">3. Example / Intuition</h2>
+
+<p>To build intuition for how Transformers process sequences, let’s trace through a concrete example of translating “I love deep learning” to French “J’aime l’apprentissage profond.”</p>
+
+<p>First, consider what happens in the encoder. The input sentence becomes a sequence of embeddings, one per word (or subword token). Let’s focus on how the word “learning” in position 4 builds its representation through self-attention.</p>
+
+<p>The query for “learning” asks: “What context is relevant for understanding me?” Its query vector gets compared (via dot products) against the key vectors of all positions:</p>
+
+<ul>
+  <li>“learning” ↔ “I”: Low similarity (grammatical subject, semantically distant)</li>
+  <li>“learning” ↔ “love”: Medium similarity (verb governing the noun phrase)</li>
+  <li>“learning” ↔ “deep”: High similarity (adjective modifying this noun)</li>
+  <li>“learning” ↔ “learning”: High similarity (self-attention)</li>
+</ul>
+
+<p>After softmax normalization, suppose we get attention weights [0.05, 0.15, 0.35, 0.45]. The output representation for “learning” is:</p>
+
+\[\text{output}_{\text{learning}} = 0.05 \cdot \mathbf{v}_{\text{I}} + 0.15 \cdot \mathbf{v}_{\text{love}} + 0.35 \cdot \mathbf{v}_{\text{deep}} + 0.45 \cdot \mathbf{v}_{\text{learning}}\]
+
+<p>This output incorporates information from “deep” (the modifying adjective) and from the word itself, with smaller contributions from other positions. The representation has been contextualized—it now encodes not just “learning” in isolation but “deep learning” as a compound concept.</p>
+
+<p>Crucially, all four word positions compute their attention weights and outputs simultaneously in matrix form. This parallelization is what makes Transformers fast to train compared to RNNs, which would need four sequential steps.</p>
+
+<p>Now consider the decoder when generating “profond” (deep) in the French translation. The decoder performs masked self-attention over the French tokens generated so far: “J’” (I), “aime” (love), “l’apprentissage” (learning). It cannot attend to “profond” itself because that would be “cheating”—looking at the answer we’re trying to predict. The causal mask enforces this.</p>
+
+<p>Then comes cross-attention, where the decoder attends to the encoder’s representation of the English sentence. The query for the position being generated asks: “What part of the source sentence should I focus on to generate the next French word?” The key-value pairs come from the encoder’s final representations:</p>
+
+<ul>
+  <li>Query from “generate next word after ‘l’apprentissage’”</li>
+  <li>Keys from [“I”, “love”, “deep”, “learning”]</li>
+  <li>High attention to “deep” (the English word we’re translating)</li>
+</ul>
+
+<p>The cross-attention mechanism has learned to align French positions with corresponding English positions, implementing a soft, learned alignment that’s more flexible than hard alignment rules.</p>
+
+<p>With multiple heads, different heads can attend to different aspects. Head 1 might focus on the direct translation source (“deep” → “profond”), Head 2 on syntactic context (adjective following noun in French), Head 3 on longer-range dependencies. The model learns these specializations through backpropagation, discovering that different types of attention are useful for translation.</p>
+
+<p>The position-wise feed-forward network after attention serves a different role. While attention computes relationships between positions, FFN processes each position’s representation independently, transforming it through nonlinear functions. This non-linearity is essential—attention is essentially a weighted average (a linear operation), so without FFN, stacking attention layers wouldn’t increase representational power. The FFN allows each position to compute complex functions of its attended representation.</p>
+
+<p>Think of the encoder-decoder flow like this: The encoder builds increasingly sophisticated representations of the input through stacked layers of self-attention. Each layer refines the representation by letting positions communicate, building up from surface features (word identity) to deep semantic understanding (meaning in context). The decoder then uses this rich representation to generate the output autoregressively, using masked self-attention to maintain coherence in what it’s generated so far and cross-attention to align with the source.</p>
+
+<h2 id="4-code-snippet">4. Code Snippet</h2>
+
+<p>Let’s implement a Transformer from scratch to understand every component deeply:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="n">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">import</span> <span class="n">math</span>
+
+<span class="k">class</span> <span class="nc">ScaledDotProductAttention</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Core attention mechanism: attention = softmax(QK^T / √d_k) V
+    
+    The scaling by √d_k is not optional—it</span><span class="sh">'</span><span class="s">s critical for training stability.
+    Without it, dot products grow with dimensionality, pushing softmax into
+    saturation regions where gradients vanish. This small detail was crucial
+    to making Transformers work.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temperature</span>  <span class="c1"># √d_k for scaling
+</span>    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        q: queries (batch, n_heads, seq_len_q, d_k)
+        k: keys (batch, n_heads, seq_len_k, d_k)
+        v: values (batch, n_heads, seq_len_v, d_v)
+        mask: optional mask (batch, 1, seq_len_q, seq_len_k)
+        
+        The 4D tensors accommodate batching (dimension 0), multiple heads
+        (dimension 1), and sequence processing (dimensions 2-3).
+        </span><span class="sh">"""</span>
+        <span class="c1"># Compute attention scores: how much should each query attend to each key?
+</span>        <span class="c1"># Shape: (batch, n_heads, seq_len_q, seq_len_k)
+</span>        <span class="n">attn_scores</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">matmul</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">.</span><span class="nf">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">temperature</span>
+        
+        <span class="c1"># Apply mask if provided (for padding or causal masking)
+</span>        <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c1"># Set masked positions to -inf so softmax gives them weight 0
+</span>            <span class="c1"># Why -inf? Because e^(-inf) = 0, so softmax probability becomes 0
+</span>            <span class="n">attn_scores</span> <span class="o">=</span> <span class="n">attn_scores</span><span class="p">.</span><span class="nf">masked_fill</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="nf">float</span><span class="p">(</span><span class="sh">'</span><span class="s">-inf</span><span class="sh">'</span><span class="p">))</span>
+        
+        <span class="c1"># Normalize scores to probabilities using softmax
+</span>        <span class="c1"># Each query position gets a probability distribution over key positions
+</span>        <span class="n">attn_weights</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">softmax</span><span class="p">(</span><span class="n">attn_scores</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># Weighted sum of values according to attention weights
+</span>        <span class="c1"># This is where information actually flows between positions
+</span>        <span class="n">output</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">matmul</span><span class="p">(</span><span class="n">attn_weights</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">attn_weights</span>
+
+<span class="k">class</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Multi-head attention: parallel attention with different learned projections.
+    
+    Why multiple heads? Different heads can learn different types of relationships.
+    One head might learn syntactic dependencies, another semantic similarities,
+    another positional patterns. The model discovers these specializations
+    through training.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">n_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="k">assert</span> <span class="n">d_model</span> <span class="o">%</span> <span class="n">n_heads</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="sh">"</span><span class="s">d_model must be divisible by n_heads</span><span class="sh">"</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">d_model</span> <span class="o">=</span> <span class="n">d_model</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">n_heads</span> <span class="o">=</span> <span class="n">n_heads</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">d_k</span> <span class="o">=</span> <span class="n">d_model</span> <span class="o">//</span> <span class="n">n_heads</span>  <span class="c1"># Dimension per head
+</span>        
+        <span class="c1"># Linear projections for Q, K, V (all heads combined in one matrix)
+</span>        <span class="c1"># Why combined? More efficient GPU computation than separate projections
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">W_q</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">W_k</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">W_v</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        
+        <span class="c1"># Output projection to combine heads
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">W_o</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        
+        <span class="c1"># Attention mechanism with scaling
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">attention</span> <span class="o">=</span> <span class="nc">ScaledDotProductAttention</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="n">math</span><span class="p">.</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">d_k</span><span class="p">))</span>
+        
+        <span class="c1"># Dropout for regularization
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        q, k, v: (batch, seq_len, d_model)
+        
+        The same input X is typically used for q, k, v in self-attention,
+        but they can differ for cross-attention (decoder attending to encoder).
+        </span><span class="sh">"""</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        
+        <span class="c1"># Linear projections for all heads at once
+</span>        <span class="c1"># Shape: (batch, seq_len, d_model)
+</span>        <span class="n">q</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nc">W_q</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nc">W_k</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nc">W_v</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        
+        <span class="c1"># Split into multiple heads
+</span>        <span class="c1"># Reshape (batch, seq_len, d_model) to (batch, seq_len, n_heads, d_k)
+</span>        <span class="c1"># Then transpose to (batch, n_heads, seq_len, d_k) for head-wise processing
+</span>        <span class="n">q</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">n_heads</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">d_k</span><span class="p">).</span><span class="nf">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">n_heads</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">d_k</span><span class="p">).</span><span class="nf">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">n_heads</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">d_k</span><span class="p">).</span><span class="nf">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        
+        <span class="c1"># Apply attention for all heads in parallel
+</span>        <span class="c1"># Each head operates independently on its d_k dimensions
+</span>        <span class="n">attn_output</span><span class="p">,</span> <span class="n">attn_weights</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">attention</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+        
+        <span class="c1"># Concatenate heads back together
+</span>        <span class="c1"># (batch, n_heads, seq_len, d_k) → (batch, seq_len, n_heads, d_k) 
+</span>        <span class="c1"># → (batch, seq_len, d_model)
+</span>        <span class="n">attn_output</span> <span class="o">=</span> <span class="n">attn_output</span><span class="p">.</span><span class="nf">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">contiguous</span><span class="p">().</span><span class="nf">view</span><span class="p">(</span>
+            <span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">d_model</span><span class="p">)</span>
+        
+        <span class="c1"># Final linear projection integrates information from all heads
+</span>        <span class="n">output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nc">W_o</span><span class="p">(</span><span class="n">attn_output</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">dropout</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">attn_weights</span>
+
+<span class="k">class</span> <span class="nc">PositionwiseFeedForward</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Two-layer fully connected network applied to each position independently.
+    
+    Why position-wise? After attention computes interactions between positions,
+    each position needs to process its aggregated information. The FFN provides
+    this capacity for complex, nonlinear transformations.
+    
+    Why two layers? Single linear layer would be too limiting. Two layers with
+    nonlinearity between them (forming a MLP) can approximate any function.
+    The expansion (d_model → d_ff) and contraction (d_ff → d_model) pattern
+    is similar to an autoencoder, creating a bottleneck that forces efficient
+    representation.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">d_ff</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="c1"># Expansion layer
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">w_1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_ff</span><span class="p">)</span>
+        <span class="c1"># Contraction layer
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">w_2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_ff</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        x: (batch, seq_len, d_model)
+        
+        Each position (each row in seq_len dimension) passes through
+        the same two-layer network independently. This is equivalent to
+        applying a 1D convolution with kernel size 1.
+        </span><span class="sh">"""</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">w_2</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="nf">dropout</span><span class="p">(</span><span class="n">F</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="nf">w_1</span><span class="p">(</span><span class="n">x</span><span class="p">))))</span>
+
+<span class="k">class</span> <span class="nc">TransformerEncoderLayer</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Complete Transformer encoder layer: self-attention + FFN + residuals + norms.
+    
+    The architecture follows a specific pattern that has been carefully designed:
+    1. Multi-head self-attention for position interactions
+    2. Residual connection + layer norm for stable training
+    3. Position-wise FFN for nonlinear transformation
+    4. Another residual connection + layer norm
+    
+    This pattern repeats for all encoder layers, building increasingly
+    sophisticated representations through depth.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">n_heads</span><span class="p">,</span> <span class="n">d_ff</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">self_attn</span> <span class="o">=</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">n_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">ffn</span> <span class="o">=</span> <span class="nc">PositionwiseFeedForward</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_ff</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
+        
+        <span class="c1"># Layer normalization (normalizes across features for each sample/position)
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">norm1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">LayerNorm</span><span class="p">(</span><span class="n">d_model</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">norm2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">LayerNorm</span><span class="p">(</span><span class="n">d_model</span><span class="p">)</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">dropout1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">dropout2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        x: (batch, seq_len, d_model)
+        mask: optional attention mask
+        
+        The forward pass implements the add &amp; norm pattern:
+        x = norm(x + sublayer(x))
+        
+        Why this order? Normalizing after adding (post-norm) was the original
+        design. Modern variants use pre-norm (norm before sublayer) which can
+        be more stable for very deep networks.
+        </span><span class="sh">"""</span>
+        <span class="c1"># Self-attention block
+</span>        <span class="n">attn_output</span><span class="p">,</span> <span class="n">attn_weights</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">self_attn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">norm1</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="nf">dropout1</span><span class="p">(</span><span class="n">attn_output</span><span class="p">))</span>
+        
+        <span class="c1"># Feed-forward block  
+</span>        <span class="n">ffn_output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">ffn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">norm2</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="nf">dropout2</span><span class="p">(</span><span class="n">ffn_output</span><span class="p">))</span>
+        
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">attn_weights</span>
+
+<span class="k">def</span> <span class="nf">create_positional_encoding</span><span class="p">(</span><span class="n">max_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Sinusoidal positional encoding as proposed in original paper.
+    
+    We create a matrix of shape (max_len, d_model) where row i contains
+    the positional encoding for position i. Even dimensions use sine,
+    odd dimensions use cosine, with frequencies decreasing as dimension increases.
+    
+    Why this specific pattern? It creates unique encodings for each position,
+    allows the model to learn relative positions (PE(pos+k) is linear in PE(pos)),
+    and generalizes to unseen sequence lengths.
+    </span><span class="sh">"""</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="n">max_len</span><span class="p">).</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (max_len, 1)
+</span>    
+    <span class="c1"># Compute frequencies for each dimension
+</span>    <span class="c1"># div_term = 1 / (10000^(2i/d_model)) for i in [0, d_model/2)
+</span>    <span class="n">div_term</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> 
+                        <span class="o">-</span><span class="p">(</span><span class="n">math</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="mf">10000.0</span><span class="p">)</span> <span class="o">/</span> <span class="n">d_model</span><span class="p">))</span>
+    
+    <span class="n">pe</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">zeros</span><span class="p">(</span><span class="n">max_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+    <span class="n">pe</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">sin</span><span class="p">(</span><span class="n">position</span> <span class="o">*</span> <span class="n">div_term</span><span class="p">)</span>  <span class="c1"># Even dimensions
+</span>    <span class="n">pe</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cos</span><span class="p">(</span><span class="n">position</span> <span class="o">*</span> <span class="n">div_term</span><span class="p">)</span>  <span class="c1"># Odd dimensions
+</span>    
+    <span class="k">return</span> <span class="n">pe</span>
+
+<span class="k">class</span> <span class="nc">TransformerEncoder</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Stack of N encoder layers that progressively refine representations.
+    
+    Each layer allows positions to communicate through attention, building
+    up from surface-level features to deep semantic understanding. The stack
+    of 6 layers in the original paper was empirically determined—deeper can
+    be better with enough data, but training becomes harder.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">d_model</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">n_heads</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">n_layers</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+                 <span class="n">d_ff</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">d_model</span> <span class="o">=</span> <span class="n">d_model</span>
+        
+        <span class="c1"># Token embeddings: convert token IDs to dense vectors
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        
+        <span class="c1"># Positional encoding (fixed, not learned in original Transformer)
+</span>        <span class="n">self</span><span class="p">.</span><span class="nf">register_buffer</span><span class="p">(</span><span class="sh">'</span><span class="s">pos_encoding</span><span class="sh">'</span><span class="p">,</span> 
+                           <span class="nf">create_positional_encoding</span><span class="p">(</span><span class="n">max_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">))</span>
+        
+        <span class="c1"># Stack of encoder layers
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">layers</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">ModuleList</span><span class="p">([</span>
+            <span class="nc">TransformerEncoderLayer</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">n_heads</span><span class="p">,</span> <span class="n">d_ff</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n_layers</span><span class="p">)</span>
+        <span class="p">])</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>
+        
+        <span class="c1"># Initialize embeddings (important for training stability)
+</span>        <span class="n">nn</span><span class="p">.</span><span class="n">init</span><span class="p">.</span><span class="nf">normal_</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">embedding</span><span class="p">.</span><span class="n">weight</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">d_model</span><span class="o">**-</span><span class="mf">0.5</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">src_mask</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        src: source token IDs (batch, seq_len)
+        src_mask: optional mask for padding tokens
+        
+        Returns encoded representations after passing through all layers.
+        </span><span class="sh">"""</span>
+        <span class="n">seq_len</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># Embed tokens and scale (important: multiply by √d_model)
+</span>        <span class="c1"># Why scale? To balance with positional encoding which has values ~1
+</span>        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">embedding</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="p">.</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">d_model</span><span class="p">)</span>
+        
+        <span class="c1"># Add positional encoding
+</span>        <span class="c1"># Broadcasting: (batch, seq_len, d_model) + (seq_len, d_model)
+</span>        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">pos_encoding</span><span class="p">[:</span><span class="n">seq_len</span><span class="p">,</span> <span class="p">:].</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        
+        <span class="c1"># Pass through encoder layers sequentially
+</span>        <span class="c1"># Each layer refines the representation
+</span>        <span class="n">attn_weights_all</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">layers</span><span class="p">:</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">attn_weights</span> <span class="o">=</span> <span class="nf">layer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">src_mask</span><span class="p">)</span>
+            <span class="n">attn_weights_all</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">attn_weights</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">attn_weights_all</span>
+
+<span class="c1"># Demonstration: Create and test encoder
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Transformer Encoder Example</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="n">vocab_size</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">seq_len</span> <span class="o">=</span> <span class="mi">15</span>
+
+<span class="n">encoder</span> <span class="o">=</span> <span class="nc">TransformerEncoder</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">d_model</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">n_heads</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">n_layers</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="c1"># Random input tokens
+</span><span class="n">src</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">))</span>
+
+<span class="c1"># Forward pass
+</span><span class="n">encoded</span><span class="p">,</span> <span class="n">attn_weights</span> <span class="o">=</span> <span class="nf">encoder</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Input shape: </span><span class="si">{</span><span class="n">src</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (2, 15)
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Output shape: </span><span class="si">{</span><span class="n">encoded</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (2, 15, 512)
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Number of attention weight matrices: </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">attn_weights</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># 6 layers
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Each attention weight shape: </span><span class="si">{</span><span class="n">attn_weights</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (2, 8, 15, 15)
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Total parameters: </span><span class="si">{</span><span class="nf">sum</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">encoder</span><span class="p">.</span><span class="nf">parameters</span><span class="p">())</span><span class="si">:</span><span class="p">,</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Visualize attention for first head of first layer
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Attention Pattern (Layer 0, Head 0)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Take first sample, first head, first layer
+</span><span class="n">attn_map</span> <span class="o">=</span> <span class="n">attn_weights</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">].</span><span class="nf">detach</span><span class="p">().</span><span class="nf">numpy</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Attention weights (each row shows what that position attends to):</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">attn_map</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Note: Each row sums to 1.0 (probability distribution over positions)</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now let’s implement a complete training loop showing how Transformers learn:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SimpleTransformerLM</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Simple Transformer language model for demonstration.
+    
+    This implements a decoder-only architecture (like GPT) that predicts
+    the next token given previous tokens. It</span><span class="sh">'</span><span class="s">s simpler than full encoder-decoder
+    but demonstrates all key concepts.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">d_model</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">n_heads</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">n_layers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                 <span class="n">d_ff</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">d_model</span> <span class="o">=</span> <span class="n">d_model</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="nf">register_buffer</span><span class="p">(</span><span class="sh">'</span><span class="s">pos_encoding</span><span class="sh">'</span><span class="p">,</span>
+                           <span class="nf">create_positional_encoding</span><span class="p">(</span><span class="n">max_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">))</span>
+        
+        <span class="c1"># Decoder layers (with causal masking in attention)
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">layers</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">ModuleList</span><span class="p">([</span>
+            <span class="nc">TransformerEncoderLayer</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">n_heads</span><span class="p">,</span> <span class="n">d_ff</span><span class="p">,</span> <span class="n">dropout</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n_layers</span><span class="p">)</span>
+        <span class="p">])</span>
+        
+        <span class="c1"># Output projection to vocabulary
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">output_proj</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">)</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">create_causal_mask</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Create mask preventing attention to future positions.
+        
+        For autoregressive generation, position i should only attend to
+        positions 0...i, not i+1...n. This mask enforces causality.
+        
+        Returns upper triangular matrix of False (mask out future)
+        </span><span class="sh">"""</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">tril</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">ones</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">)).</span><span class="nf">bool</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">mask</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">x: (batch, seq_len) of token IDs</span><span class="sh">"""</span>
+        <span class="n">seq_len</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># Embedding + positional encoding
+</span>        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">embedding</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="p">.</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">d_model</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">pos_encoding</span><span class="p">[:</span><span class="n">seq_len</span><span class="p">,</span> <span class="p">:].</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        
+        <span class="c1"># Create causal mask
+</span>        <span class="n">causal_mask</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">create_causal_mask</span><span class="p">(</span><span class="n">seq_len</span><span class="p">).</span><span class="nf">to</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">device</span><span class="p">)</span>
+        
+        <span class="c1"># Process through layers
+</span>        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">layers</span><span class="p">:</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="nf">layer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">causal_mask</span><span class="p">.</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        
+        <span class="c1"># Project to vocabulary
+</span>        <span class="n">logits</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">output_proj</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">logits</span>
+
+<span class="c1"># Training example on toy data
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training Transformer Language Model</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Create simple sequence prediction task
+# Task: predict next number in sequence [1,2,3,4,5,...]
+</span><span class="n">vocab_size_small</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">model_lm</span> <span class="o">=</span> <span class="nc">SimpleTransformerLM</span><span class="p">(</span><span class="n">vocab_size_small</span><span class="p">,</span> <span class="n">d_model</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> 
+                               <span class="n">n_heads</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">n_layers</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">model_lm</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">CrossEntropyLoss</span><span class="p">()</span>
+
+<span class="c1"># Generate training data: sequences like [1,2,3,4] → predict [2,3,4,5]
+</span><span class="k">def</span> <span class="nf">generate_sequence_data</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">Generate simple sequential patterns for language model training</span><span class="sh">"""</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">vocab_size</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">))</span>
+    <span class="c1"># Target is input shifted by 1
+</span>    <span class="n">targets</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">([</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span> 
+                        <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">))],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">targets</span>
+
+<span class="c1"># Train for a few iterations
+</span><span class="n">model_lm</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="c1"># Generate batch
+</span>    <span class="n">src</span><span class="p">,</span> <span class="n">tgt</span> <span class="o">=</span> <span class="nf">generate_sequence_data</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">seq_len</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> 
+                                     <span class="n">vocab_size</span><span class="o">=</span><span class="n">vocab_size_small</span><span class="p">)</span>
+    
+    <span class="c1"># Forward pass
+</span>    <span class="n">logits</span> <span class="o">=</span> <span class="nf">model_lm</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>  <span class="c1"># (batch, seq_len, vocab_size)
+</span>    
+    <span class="c1"># Compute loss (flatten for cross-entropy)
+</span>    <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">logits</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vocab_size_small</span><span class="p">),</span> <span class="n">tgt</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    
+    <span class="c1"># Backward and optimize
+</span>    <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+    <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>  <span class="c1"># Backprop through Transformer!
+</span>    <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="mi">20</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">:</span><span class="mi">3</span><span class="n">d</span><span class="si">}</span><span class="s">: Loss = </span><span class="si">{</span><span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Transformer successfully trained to predict sequences!</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">The model learned to use attention to predict based on context.</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="5-related-concepts">5. Related Concepts</h2>
+
+<p>The Transformer’s relationship to recurrent neural networks is both a contrast and a continuation. RNNs process sequences through time, maintaining a hidden state that theoretically summarizes all previous information. This recurrence enables temporal dependencies but creates several problems: sequential processing (can’t parallelize), vanishing gradients over long sequences, and fixed-size bottleneck (hidden state must compress everything). Transformers solve all three: attention allows full parallelization, gradients flow directly between any positions (no vanishing), and there’s no bottleneck—all positions remain active. However, this comes at a cost: \(O(n^2)\) complexity in sequence length for attention, compared to \(O(n)\) for RNNs. For very long sequences (thousands of tokens), this quadratic cost becomes prohibitive, motivating research into efficient attention variants.</p>
+
+<p>The connection between Transformers and convolutional networks is subtler but illuminating. Both process structured data (sequences for Transformers, images for CNNs) using specialized operations. Convolution uses local receptive fields and parameter sharing for translation invariance. Attention uses global receptive fields (every position attends to every other) and position-specific parameters. You can view self-attention as a learned, data-dependent, global convolution where the kernel (attention weights) changes based on input content rather than being fixed. This flexibility allows Transformers to capture long-range dependencies that would require many convolutional layers, but at higher computational cost.</p>
+
+<p>The encoder-decoder architecture of the original Transformer connects to earlier sequence-to-sequence models. The encoder-decoder paradigm—separately encode the source into a representation, then decode into the target—predates Transformers, appearing in RNN seq2seq models. The Transformer’s innovation was implementing this paradigm using only attention. The encoder builds a source representation through stacked self-attention, and the decoder uses this via cross-attention while maintaining causality through masked self-attention. This decomposition is powerful because encoder and decoder can have different depths and properties optimized for their specific roles.</p>
+
+<p>Positional encodings connect to a fundamental tension in Transformers: they’re designed to be permutation-invariant (for parallelization) but must process ordered sequences (where order matters). The positional encoding solution adds position information to content embeddings, allowing the model to distinguish positions. Learned positional embeddings (used in BERT and GPT) are an alternative that’s simpler but can’t extrapolate to longer sequences than seen in training. Recent research explores relative positional encodings (T5, Transformer-XL) that encode relative rather than absolute positions, potentially providing better inductive bias for certain tasks. Understanding these variants helps appreciate the tradeoffs in representing position.</p>
+
+<p>The Transformer’s influence on architecture search and neural network design more broadly cannot be overstated. The architecture’s success despite breaking with the conventional wisdom (that recurrence was necessary for sequences) encouraged researchers to question other assumptions. This led to Vision Transformers (questioning whether convolution was necessary for images), protein structure prediction with Transformers (AlphaFold), and countless other applications. The Transformer demonstrates that strong inductive biases (like convolution’s locality or recurrence’s temporal processing) can sometimes be replaced with more flexible learned mechanisms given sufficient data and computation.</p>
+
+<h2 id="6-fundamental-papers">6. Fundamental Papers</h2>
+
+<p><strong><a href="https://arxiv.org/abs/1706.03762">“Attention Is All You Need” (2017)</a></strong><br />
+<em>Authors</em>: Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, Illia Polosukhin (Google Brain/Research)<br />
+This is THE foundational paper that introduced the Transformer architecture and revolutionized deep learning. The authors demonstrated that multi-head self-attention alone, without any recurrence or convolution, could achieve state-of-the-art results on machine translation while being significantly more parallelizable. The paper is remarkably clear and comprehensive, describing every component of the architecture, the training details, and extensive experiments. The title itself—”Attention Is All You Need”—was provocative, suggesting that the attention mechanism introduced in earlier seq2seq papers was sufficient on its own. History proved this claim correct and then some: Transformers became the foundation not just of NLP but of modern AI broadly. The paper’s impact is measured not just in citations (tens of thousands) but in how thoroughly it changed the field—within five years, Transformers had largely replaced RNNs for sequence modeling.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1810.04805">“BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding” (2018)</a></strong><br />
+<em>Authors</em>: Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova (Google AI Language)<br />
+BERT took the Transformer encoder and introduced a new pre-training paradigm that revolutionized NLP. Instead of training on next-token prediction (like language models), BERT uses masked language modeling: randomly mask some tokens and predict them from bidirectional context. This forces the model to develop deep understanding of language since it must use both left and right context. BERT demonstrated that pre-training Transformers on massive unlabeled data, then fine-tuning on specific tasks, could achieve state-of-the-art results across a wide range of NLP tasks with minimal task-specific architecture changes. The paper established the pre-train-then-fine-tune paradigm now dominant in NLP and increasingly other domains. BERT’s success spawned numerous variants (RoBERTa, ALBERT, ELECTRA) and demonstrated the power of transfer learning with Transformers.</p>
+
+<p><strong><a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">“Language Models are Unsupervised Multitask Learners” (2019)</a></strong><br />
+<em>Authors</em>: Alec Radford, Jeffrey Wu, Rewon Child, David Luan, Dario Amodei, Ilya Sutskever (OpenAI)<br />
+The GPT-2 paper showed that large Transformer language models could perform multiple tasks zero-shot without any fine-tuning—simply by framing tasks as language modeling problems. The model demonstrated reading comprehension, translation, summarization, and question-answering capabilities without being explicitly trained for these tasks. This “prompting” paradigm, where we guide the model through natural language instructions rather than fine-tuning, would become even more important with GPT-3 and ChatGPT. The paper also demonstrated scaling laws: larger Transformers with more data generally perform better, with no clear ceiling yet observed. This observation drove the race toward ever-larger language models that continues today. GPT-2’s release was controversial (initially withheld due to concerns about misuse), raising important questions about AI safety and responsible research that remain relevant.</p>
+
+<p><strong><a href="https://arxiv.org/abs/2010.11929">“An Image is Worth 16×16 Words: Transformers for Image Recognition at Scale” (2021)</a></strong><br />
+<em>Authors</em>: Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, et al. (Google Research, Brain Team)<br />
+Vision Transformer (ViT) demonstrated that Transformers could match or exceed CNNs on image classification, challenging the dominance of convolutional architectures in computer vision. The key insight was treating images as sequences of patches: split an image into 16×16 patches, linearly embed each patch, add positional encodings, and process with a standard Transformer encoder. Remarkably, this approach with minimal vision-specific inductive bias (no convolution, no pooling) achieved excellent results when pretrained on sufficient data. ViT showed that Transformers are not just for NLP but represent a more general architecture for processing structured data. The paper sparked rapid adoption of Transformers in vision, with variants like Swin Transformer and DeiT addressing ViT’s data hungriness and computational cost.</p>
+
+<p><strong><a href="https://arxiv.org/abs/2207.09238">“Formal Algorithms for Transformers” (2022)</a></strong><br />
+<em>Authors</em>: Mary Phuong, Marcus Hutter (DeepMind)<br />
+This relatively recent paper provides a comprehensive mathematical formalization of Transformer architectures and their variants. While not introducing new models, it serves as the definitive technical reference, precisely defining all operations, analyzing computational complexity, and cataloging the many Transformer variants (encoder-only, decoder-only, encoder-decoder, sparse attention, etc.). The paper is invaluable for researchers implementing custom Transformers or analyzing their properties rigorously. It clarifies subtle details often glossed over in tutorials and papers (like exactly how masks work, how to handle variable-length sequences, and the precise order of operations). For anyone seeking to truly understand Transformers at a formal level or implement them correctly from scratch, this paper is essential reading.</p>
+
+<h2 id="common-pitfalls-and-tricks">Common Pitfalls and Tricks</h2>
+
+<p>One of the most common mistakes when implementing Transformers is forgetting to add positional encodings or adding them incorrectly. Without positional information, the attention mechanism is permutation-invariant—shuffling the input tokens produces identically shuffled outputs. For language, where “dog bites man” and “man bites dog” have opposite meanings, this is catastrophic. The positional encoding must be added to the embeddings after embedding lookup but before the first encoder layer. A subtle error is adding positional encodings at every layer rather than just initially—the original Transformer adds them only once, letting subsequent layers maintain or modify positional information through attention.</p>
+
+<p>Incorrect masking is another insidious bug. In decoder self-attention, the causal mask must prevent position \(i\) from attending to positions \(&gt; i\). This requires setting attention scores to \(-\infty\) (not 0!) before softmax for masked positions. Setting masked scores to 0 before softmax means they still receive positive probability after softmax (since \(e^0 = 1\)), allowing information leakage from future tokens. The \(-\infty\) ensures \(e^{-\infty} = 0\), giving zero probability. Additionally, for padded sequences, we must mask attention to padding tokens in both encoder and decoder to prevent the model from attending to meaningless padding.</p>
+
+<p>Forgetting to scale attention scores by \(\sqrt{d_k}\) is surprisingly common and can severely impact training. As dimensionality increases, unscaled dot products grow in magnitude (assuming normalized inputs with unit variance, the variance of the dot product grows linearly with dimension). Large dot products push softmax into saturation—most probability mass goes to a single position, and gradients become very small. The model fails to learn distributed attention patterns and may not train at all for large \(d_k\). The \(\sqrt{d_k}\) scaling keeps dot products at reasonable magnitude regardless of dimension.</p>
+
+<p>The learning rate schedule used in the original Transformer paper—warmup followed by decay—is actually quite important for stable training, not just a minor detail. The schedule increases learning rate linearly for the first warmup_steps (typically 4000), then decays proportional to the inverse square root of step number. Why warmup? At initialization, parameters are random and gradients can be noisy. A high learning rate causes wild updates that can push the model into bad regions. Warmup allows the model to “settle in” with small, careful steps before accelerating. After warmup, the decay helps convergence by taking smaller steps as we approach a minimum. This schedule is now standard for training large Transformers.</p>
+
+<p>A powerful technique for Transformers is using mixed precision training (FP16 instead of FP32). Transformers have many matrix multiplications, which GPUs can perform much faster in FP16. However, naive FP16 training causes numerical issues (small gradients underflow to zero). The solution is mixed precision: compute in FP16 but maintain FP32 master copy of weights and use loss scaling to prevent gradient underflow. This can speed training by 2-3× and reduce memory usage, allowing larger batch sizes or models.</p>
+
+<p>For inference efficiency, key-value caching is essential in autoregressive generation (generating one token at a time). When generating token \(t\), we’ve already computed keys and values for tokens \(1...t-1\). Rather than recomputing them (which requires processing the entire sequence again), cache them and only compute the new token’s keys/values. This transforms generation from \(O(n^2)\) complexity to \(O(n)\), making generation of long sequences practical.</p>
+
+<p>Finally, understanding that Transformer complexity is \(O(n^2 d)\) where \(n\) is sequence length motivates much recent research. For very long sequences (documents with thousands of tokens), the quadratic complexity becomes prohibitive. Various approaches address this: Sparse Transformers use local + strided attention patterns reducing to \(O(n \sqrt{n})\), Linformer uses low-rank approximations achieving \(O(n)\), and Reformer uses locality-sensitive hashing for efficient attention. Understanding why vanilla Transformers are expensive helps appreciate these innovations and choose appropriate variants for different sequence length regimes.</p>
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<p>The Transformer architecture revolutionized sequence processing by replacing recurrence with self-attention, enabling parallel training and better long-range dependencies. The core scaled dot-product attention computes relationships between all positions through query-key similarities, weighted value averaging. Multi-head attention allows learning multiple relationship types simultaneously. Positional encodings inject sequence order into the otherwise position-agnostic attention mechanism. The encoder-decoder architecture with masked self-attention and cross-attention enables sequence-to-sequence tasks like translation. Residual connections and layer normalization enable training deep Transformers (6+ layers). The architecture’s success extends far beyond NLP to vision, speech, and multimodal domains, establishing Transformers as perhaps the most important neural architecture of the modern era. Understanding Transformers deeply—their mathematical foundations, implementation details, and design rationale—is essential for anyone working in contemporary AI, as they underlie BERT, GPT, ChatGPT, and countless other systems transforming how we interact with technology.</p>
+
+<p>The Transformer’s elegance lies not in complex components but in how simple pieces—attention, residuals, normalization—combine into an architecture that’s simultaneously powerful, efficient, and versatile. This is the hallmark of great design in any field.</p>
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter08/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter08/08_00_Introduction/">
+              08 The Transformer Architecture
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+    
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

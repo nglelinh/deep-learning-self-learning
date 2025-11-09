@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      00-04-01 Basic Probability Theory &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/00_04_01_Basic_Probability_Theory/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    00-04-01 Basic Probability Theory
+    
+  </h1>
+  <h2 id="basic-probability-theory">Basic Probability Theory</h2>
+
+<p>Probability theory provides the mathematical framework for reasoning about uncertainty, which is fundamental to many deep-learning problems in machine learning and data science.</p>
+
+<h3 id="1-sample-space-and-events">1. Sample Space and Events</h3>
+
+<p><strong>Sample Space (Ω)</strong>: The set of all possible outcomes of an experiment.</p>
+
+<p><strong>Event (A)</strong>: A subset of the sample space representing a collection of outcomes.</p>
+
+<p><strong>Examples:</strong></p>
+<ul>
+  <li>Coin flip: Ω = {H, T}</li>
+  <li>Die roll: Ω = {1, 2, 3, 4, 5, 6}</li>
+  <li>Continuous: Ω = [0, 1] for uniform random variable</li>
+</ul>
+
+<div id="sample-space-demo" style="border: 2px solid #ddd; padding: 20px; margin: 20px 0; border-radius: 10px; background-color: #f9f9f9;">
+    <h4 style="text-align: center; color: #333;">Interactive Sample Space Visualization</h4>
+    
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;">
+        <div style="flex: 1; min-width: 400px;">
+            <canvas id="sampleSpaceCanvas" width="400" height="300" style="border: 1px solid #ccc; background: white;"></canvas>
+            <p style="font-size: 12px; color: #666; margin-top: 5px;">
+                <strong>Visualization:</strong> Click to generate random samples. Different colors represent different events.
+            </p>
+        </div>
+        
+        <div style="flex: 1; min-width: 250px;">
+            <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <h5 style="margin-top: 0; color: #444;">Experiment Type</h5>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 10px;">
+                        <input type="radio" name="experiment" value="coin" checked="" /> Coin Flip
+                    </label>
+                    <label style="display: block; margin-bottom: 10px;">
+                        <input type="radio" name="experiment" value="dice" /> Dice Roll
+                    </label>
+                    <label style="display: block; margin-bottom: 10px;">
+                        <input type="radio" name="experiment" value="uniform" /> Uniform [0,1]
+                    </label>
+                </div>
+                
+                <button id="generate-sample" style="width: 100%; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 10px;">Generate Sample</button>
+                <button id="clear-samples" style="width: 100%; padding: 8px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px;">Clear</button>
+                
+                <div id="sample-stats" style="font-family: monospace; font-size: 12px; line-height: 1.4; background: #f8f9fa; padding: 10px; border-radius: 4px;">
+                    <div><strong>Statistics:</strong></div>
+                    <div>Total samples: <span id="total-samples">0</span></div>
+                    <div>Event A: <span id="event-a-count">0</span></div>
+                    <div>Event B: <span id="event-b-count">0</span></div>
+                    <div>P(A) ≈ <span id="prob-a">0.000</span></div>
+                    <div>P(B) ≈ <span id="prob-b">0.000</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 id="2-probability-axioms-kolmogorov-axioms">2. Probability Axioms (Kolmogorov Axioms)</h3>
+
+<p>For any probability measure P, the following axioms must hold:</p>
+
+<h4 id="axiom-1-non-negativity">Axiom 1: Non-negativity</h4>
+<p>\(P(A) \geq 0 \text{ for all events } A\)</p>
+
+<h4 id="axiom-2-normalization">Axiom 2: Normalization</h4>
+<p>\(P(\Omega) = 1\)</p>
+
+<h4 id="axiom-3-countable-additivity">Axiom 3: Countable Additivity</h4>
+<p>For mutually exclusive events \(A_1, A_2, \ldots\):
+\(P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i)\)</p>
+
+<h3 id="3-basic-properties-and-rules">3. Basic Properties and Rules</h3>
+
+<h4 id="complement-rule">Complement Rule</h4>
+<p>\(P(A^c) = 1 - P(A)\)</p>
+
+<h4 id="addition-rule">Addition Rule</h4>
+<p>For any two events A and B:
+\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</p>
+
+<h4 id="multiplication-rule">Multiplication Rule</h4>
+<p>\(P(A \cap B) = P(A|B) \cdot P(B) = P(B|A) \cdot P(A)\)</p>
+
+<h3 id="4-conditional-probability">4. Conditional Probability</h3>
+
+<p>The probability of event A given that event B has occurred:</p>
+
+\[P(A|B) = \frac{P(A \cap B)}{P(B)}, \quad P(B) &gt; 0\]
+
+<p><strong>Interpretation</strong>: Conditional probability updates our belief about A when we have information about B.</p>
+
+<div id="conditional-prob-demo" style="border: 2px solid #ddd; padding: 20px; margin: 20px 0; border-radius: 10px; background-color: #f9f9f9;">
+    <h4 style="text-align: center; color: #333;">Conditional Probability Visualization</h4>
+    
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;">
+        <div style="flex: 1; min-width: 400px;">
+            <canvas id="conditionalCanvas" width="400" height="300" style="border: 1px solid #ccc; background: white;"></canvas>
+            <p style="font-size: 12px; color: #666; margin-top: 5px;">
+                <strong>Venn Diagram:</strong> Blue circle is event A, red circle is event B. Purple intersection shows A ∩ B.
+            </p>
+        </div>
+        
+        <div style="flex: 1; min-width: 250px;">
+            <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <h5 style="margin-top: 0; color: #444;">Adjust Probabilities</h5>
+                
+                <div style="margin-bottom: 15px;">
+                    <label for="prob-a-slider" style="display: block; margin-bottom: 5px; font-weight: bold;">P(A): <span id="prob-a-value">0.4</span></label>
+                    <input type="range" id="prob-a-slider" min="0.1" max="0.9" step="0.05" value="0.4" style="width: 100%;" />
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label for="prob-b-slider" style="display: block; margin-bottom: 5px; font-weight: bold;">P(B): <span id="prob-b-value">0.5</span></label>
+                    <input type="range" id="prob-b-slider" min="0.1" max="0.9" step="0.05" value="0.5" style="width: 100%;" />
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label for="overlap-slider" style="display: block; margin-bottom: 5px; font-weight: bold;">Overlap: <span id="overlap-value">0.2</span></label>
+                    <input type="range" id="overlap-slider" min="0" max="0.4" step="0.05" value="0.2" style="width: 100%;" />
+                </div>
+                
+                <div id="conditional-results" style="font-family: monospace; font-size: 12px; line-height: 1.4; background: #f8f9fa; padding: 10px; border-radius: 4px;">
+                    <div><strong>Probabilities:</strong></div>
+                    <div>P(A) = <span id="display-prob-a">0.400</span></div>
+                    <div>P(B) = <span id="display-prob-b">0.500</span></div>
+                    <div>P(A ∩ B) = <span id="display-prob-ab">0.200</span></div>
+                    <div>P(A ∪ B) = <span id="display-prob-union">0.700</span></div>
+                    <div><strong>Conditional:</strong></div>
+                    <div>P(A|B) = <span id="display-prob-a-given-b">0.400</span></div>
+                    <div>P(B|A) = <span id="display-prob-b-given-a">0.500</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 id="5-independence">5. Independence</h3>
+
+<p>Two events A and B are <strong>independent</strong> if:
+\(P(A \cap B) = P(A) \cdot P(B)\)</p>
+
+<p>Equivalently:
+\(P(A|B) = P(A) \quad \text{and} \quad P(B|A) = P(B)\)</p>
+
+<p><strong>Interpretation</strong>: Knowledge about one event doesn’t change the probability of the other.</p>
+
+<h3 id="6-random-variables">6. Random Variables</h3>
+
+<p>A <strong>random variable</strong> X is a function that assigns a real number to each outcome in the sample space:
+\(X: \Omega \rightarrow \mathbb{R}\)</p>
+
+<h4 id="types-of-random-variables">Types of Random Variables:</h4>
+
+<p><strong>Discrete</strong>: Takes countable values (e.g., number of heads in coin flips)</p>
+<ul>
+  <li>Probability Mass Function (PMF): \(P(X = x)\)</li>
+</ul>
+
+<p><strong>Continuous</strong>: Takes uncountable values (e.g., height, weight)</p>
+<ul>
+  <li>Probability Density Function (PDF): \(f_X(x)\)</li>
+  <li>
+\[P(a \leq X \leq b) = \int_a^b f_X(x) dx\]
+  </li>
+</ul>
+
+<h3 id="7-connection-to-deep-learning">7. Connection to Deep Learning</h3>
+
+<p>Probability theory connects to deep-learning in several ways:</p>
+
+<h4 id="maximum-likelihood-estimation">Maximum Likelihood Estimation</h4>
+<p>Find parameters θ that maximize the likelihood:
+\(\hat{\theta} = \arg\max_\theta P(\text{data}|\theta)\)</p>
+
+<h4 id="expected-value-deep-learning">Expected Value Deep Learning</h4>
+<p>Minimize expected loss:
+\(\min_\theta \mathbb{E}[L(Y, f(X; \theta))]\)</p>
+
+<h4 id="bayesian-deep-learning">Bayesian Deep Learning</h4>
+<p>Use probability distributions to model uncertainty in objective functions and guide search for optimal solutions.</p>
+
+<div id="deep-learning-connection" style="border: 2px solid #ddd; padding: 20px; margin: 20px 0; border-radius: 10px; background-color: #f0f8ff;">
+    <h4 style="text-align: center; color: #333;">Probability in Deep Learning Example</h4>
+    
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;">
+        <div style="flex: 1; min-width: 400px;">
+            <canvas id="deep-learningCanvas" width="400" height="300" style="border: 1px solid #ccc; background: white;"></canvas>
+            <p style="font-size: 12px; color: #666; margin-top: 5px;">
+                <strong>MLE Example:</strong> Finding the parameter μ that maximizes likelihood of observed data from Normal(μ, 1).
+            </p>
+        </div>
+        
+        <div style="flex: 1; min-width: 250px;">
+            <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <h5 style="margin-top: 0; color: #444;">MLE Demo</h5>
+                
+                <div style="margin-bottom: 15px;">
+                    <label for="true-mu-slider" style="display: block; margin-bottom: 5px; font-weight: bold;">True μ: <span id="true-mu-value">2.0</span></label>
+                    <input type="range" id="true-mu-slider" min="-2" max="4" step="0.1" value="2.0" style="width: 100%;" />
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label for="sample-size-slider" style="display: block; margin-bottom: 5px; font-weight: bold;">Sample Size: <span id="sample-size-value">20</span></label>
+                    <input type="range" id="sample-size-slider" min="5" max="100" step="5" value="20" style="width: 100%;" />
+                </div>
+                
+                <button id="generate-mle-data" style="width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px;">Generate Data &amp; Find MLE</button>
+                
+                <div id="mle-results" style="font-family: monospace; font-size: 12px; line-height: 1.4; background: #f8f9fa; padding: 10px; border-radius: 4px;">
+                    <div><strong>Results:</strong></div>
+                    <div>True μ: <span id="display-true-mu">2.000</span></div>
+                    <div>Sample mean: <span id="sample-mean">--</span></div>
+                    <div>MLE estimate: <span id="mle-estimate">--</span></div>
+                    <div>Error: <span id="mle-error">--</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 id="key-takeaways">Key Takeaways</h3>
+
+<ol>
+  <li><strong>Foundation</strong>: Probability axioms provide the mathematical foundation for reasoning about uncertainty</li>
+  <li><strong>Conditional Probability</strong>: Essential for updating beliefs with new information</li>
+  <li><strong>Independence</strong>: Simplifies calculations and modeling assumptions</li>
+  <li><strong>Random Variables</strong>: Bridge between abstract probability and concrete applications</li>
+  <li><strong>Deep Learning Connection</strong>: Many deep-learning problems arise from probabilistic modeling</li>
+</ol>
+
+<p>Understanding these basics prepares you for more advanced topics like Bayesian inference, maximum likelihood estimation, and stochastic deep-learning that are central to modern machine learning and data science.</p>
+
+<script>
+// Sample Space Visualization
+class SampleSpaceDemo {
+    constructor() {
+        this.canvas = document.getElementById('sampleSpaceCanvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.width = this.canvas.width;
+        this.height = this.canvas.height;
+        
+        this.samples = [];
+        this.experimentType = 'coin';
+        
+        this.setupControls();
+        this.draw();
+    }
+    
+    setupControls() {
+        const radios = document.querySelectorAll('input[name="experiment"]');
+        const generateBtn = document.getElementById('generate-sample');
+        const clearBtn = document.getElementById('clear-samples');
+        
+        radios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                this.experimentType = e.target.value;
+                this.samples = [];
+                this.updateStats();
+                this.draw();
+            });
+        });
+        
+        generateBtn.addEventListener('click', () => this.generateSample());
+        clearBtn.addEventListener('click', () => {
+            this.samples = [];
+            this.updateStats();
+            this.draw();
+        });
+        
+        this.canvas.addEventListener('click', () => this.generateSample());
+    }
+    
+    generateSample() {
+        let sample;
+        
+        switch(this.experimentType) {
+            case 'coin':
+                sample = {
+                    value: Math.random() < 0.5 ? 'H' : 'T',
+                    x: Math.random() * (this.width - 40) + 20,
+                    y: Math.random() * (this.height - 40) + 20,
+                    eventA: Math.random() < 0.5, // Event A: Heads
+                    eventB: Math.random() < 0.3  // Event B: Lucky flip
+                };
+                break;
+            case 'dice':
+                const diceValue = Math.floor(Math.random() * 6) + 1;
+                sample = {
+                    value: diceValue,
+                    x: Math.random() * (this.width - 40) + 20,
+                    y: Math.random() * (this.height - 40) + 20,
+                    eventA: diceValue >= 4, // Event A: 4, 5, or 6
+                    eventB: diceValue % 2 === 0 // Event B: Even
+                };
+                break;
+            case 'uniform':
+                const uniformValue = Math.random();
+                sample = {
+                    value: uniformValue.toFixed(3),
+                    x: uniformValue * (this.width - 40) + 20,
+                    y: Math.random() * (this.height - 40) + 20,
+                    eventA: uniformValue > 0.5, // Event A: > 0.5
+                    eventB: uniformValue < 0.7  // Event B: < 0.7
+                };
+                break;
+        }
+        
+        this.samples.push(sample);
+        this.updateStats();
+        this.draw();
+    }
+    
+    updateStats() {
+        const total = this.samples.length;
+        const eventACount = this.samples.filter(s => s.eventA).length;
+        const eventBCount = this.samples.filter(s => s.eventB).length;
+        
+        document.getElementById('total-samples').textContent = total;
+        document.getElementById('event-a-count').textContent = eventACount;
+        document.getElementById('event-b-count').textContent = eventBCount;
+        document.getElementById('prob-a').textContent = total > 0 ? (eventACount / total).toFixed(3) : '0.000';
+        document.getElementById('prob-b').textContent = total > 0 ? (eventBCount / total).toFixed(3) : '0.000';
+    }
+    
+    draw() {
+        this.ctx.clearRect(0, 0, this.width, this.height);
+        
+        // Draw background
+        this.ctx.fillStyle = '#f8f9fa';
+        this.ctx.fillRect(0, 0, this.width, this.height);
+        
+        // Draw samples
+        this.samples.forEach(sample => {
+            // Determine color based on events
+            let color = '#666';
+            if (sample.eventA && sample.eventB) color = '#9c27b0'; // Both events
+            else if (sample.eventA) color = '#2196f3'; // Event A only
+            else if (sample.eventB) color = '#f44336'; // Event B only
+            
+            this.ctx.fillStyle = color;
+            this.ctx.beginPath();
+            this.ctx.arc(sample.x, sample.y, 5, 0, 2 * Math.PI);
+            this.ctx.fill();
+            
+            // Draw value
+            this.ctx.fillStyle = '#000';
+            this.ctx.font = '10px Arial';
+            this.ctx.textAlign = 'center';
+            this.ctx.fillText(sample.value, sample.x, sample.y - 8);
+        });
+        
+        // Draw legend
+        this.ctx.fillStyle = '#000';
+        this.ctx.font = '12px Arial';
+        this.ctx.textAlign = 'left';
+        this.ctx.fillText('Legend:', 10, 20);
+        
+        this.ctx.fillStyle = '#2196f3';
+        this.ctx.beginPath();
+        this.ctx.arc(20, 35, 4, 0, 2 * Math.PI);
+        this.ctx.fill();
+        this.ctx.fillStyle = '#000';
+        this.ctx.fillText('Event A only', 30, 38);
+        
+        this.ctx.fillStyle = '#f44336';
+        this.ctx.beginPath();
+        this.ctx.arc(20, 50, 4, 0, 2 * Math.PI);
+        this.ctx.fill();
+        this.ctx.fillStyle = '#000';
+        this.ctx.fillText('Event B only', 30, 53);
+        
+        this.ctx.fillStyle = '#9c27b0';
+        this.ctx.beginPath();
+        this.ctx.arc(20, 65, 4, 0, 2 * Math.PI);
+        this.ctx.fill();
+        this.ctx.fillStyle = '#000';
+        this.ctx.fillText('Both A and B', 30, 68);
+    }
+}
+
+// Conditional Probability Visualization
+class ConditionalProbDemo {
+    constructor() {
+        this.canvas = document.getElementById('conditionalCanvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.width = this.canvas.width;
+        this.height = this.canvas.height;
+        
+        this.probA = 0.4;
+        this.probB = 0.5;
+        this.overlap = 0.2;
+        
+        this.setupControls();
+        this.draw();
+    }
+    
+    setupControls() {
+        const probASlider = document.getElementById('prob-a-slider');
+        const probBSlider = document.getElementById('prob-b-slider');
+        const overlapSlider = document.getElementById('overlap-slider');
+        
+        probASlider.addEventListener('input', (e) => {
+            this.probA = parseFloat(e.target.value);
+            document.getElementById('prob-a-value').textContent = this.probA.toFixed(1);
+            this.updateCalculations();
+            this.draw();
+        });
+        
+        probBSlider.addEventListener('input', (e) => {
+            this.probB = parseFloat(e.target.value);
+            document.getElementById('prob-b-value').textContent = this.probB.toFixed(1);
+            this.updateCalculations();
+            this.draw();
+        });
+        
+        overlapSlider.addEventListener('input', (e) => {
+            this.overlap = parseFloat(e.target.value);
+            document.getElementById('overlap-value').textContent = this.overlap.toFixed(1);
+            // Ensure overlap doesn't exceed min(probA, probB)
+            const maxOverlap = Math.min(this.probA, this.probB);
+            if (this.overlap > maxOverlap) {
+                this.overlap = maxOverlap;
+                overlapSlider.value = this.overlap;
+                document.getElementById('overlap-value').textContent = this.overlap.toFixed(1);
+            }
+            this.updateCalculations();
+            this.draw();
+        });
+        
+        this.updateCalculations();
+    }
+    
+    updateCalculations() {
+        const probUnion = this.probA + this.probB - this.overlap;
+        const probAGivenB = this.probB > 0 ? this.overlap / this.probB : 0;
+        const probBGivenA = this.probA > 0 ? this.overlap / this.probA : 0;
+        
+        document.getElementById('display-prob-a').textContent = this.probA.toFixed(3);
+        document.getElementById('display-prob-b').textContent = this.probB.toFixed(3);
+        document.getElementById('display-prob-ab').textContent = this.overlap.toFixed(3);
+        document.getElementById('display-prob-union').textContent = probUnion.toFixed(3);
+        document.getElementById('display-prob-a-given-b').textContent = probAGivenB.toFixed(3);
+        document.getElementById('display-prob-b-given-a').textContent = probBGivenA.toFixed(3);
+    }
+    
+    draw() {
+        this.ctx.clearRect(0, 0, this.width, this.height);
+        
+        // Draw universe rectangle
+        this.ctx.strokeStyle = '#000';
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeRect(50, 50, 300, 200);
+        this.ctx.fillStyle = '#000';
+        this.ctx.font = '14px Arial';
+        this.ctx.fillText('Ω (Sample Space)', 55, 45);
+        
+        // Calculate circle parameters
+        const centerAX = 150;
+        const centerAY = 150;
+        const centerBX = 250;
+        const centerBY = 150;
+        
+        // Calculate radii based on probabilities (area proportional to probability)
+        const radiusA = Math.sqrt(this.probA * 10000 / Math.PI);
+        const radiusB = Math.sqrt(this.probB * 10000 / Math.PI);
+        
+        // Draw circle A
+        this.ctx.globalAlpha = 0.3;
+        this.ctx.fillStyle = '#2196f3';
+        this.ctx.beginPath();
+        this.ctx.arc(centerAX, centerAY, radiusA, 0, 2 * Math.PI);
+        this.ctx.fill();
+        
+        // Draw circle B
+        this.ctx.fillStyle = '#f44336';
+        this.ctx.beginPath();
+        this.ctx.arc(centerBX, centerBY, radiusB, 0, 2 * Math.PI);
+        this.ctx.fill();
+        
+        // Draw intersection (approximate)
+        if (this.overlap > 0) {
+            this.ctx.fillStyle = '#9c27b0';
+            const overlapRadius = Math.sqrt(this.overlap * 5000 / Math.PI);
+            this.ctx.beginPath();
+            this.ctx.arc((centerAX + centerBX) / 2, (centerAY + centerBY) / 2, overlapRadius, 0, 2 * Math.PI);
+            this.ctx.fill();
+        }
+        
+        this.ctx.globalAlpha = 1.0;
+        
+        // Draw circle outlines
+        this.ctx.strokeStyle = '#2196f3';
+        this.ctx.lineWidth = 2;
+        this.ctx.beginPath();
+        this.ctx.arc(centerAX, centerAY, radiusA, 0, 2 * Math.PI);
+        this.ctx.stroke();
+        
+        this.ctx.strokeStyle = '#f44336';
+        this.ctx.beginPath();
+        this.ctx.arc(centerBX, centerBY, radiusB, 0, 2 * Math.PI);
+        this.ctx.stroke();
+        
+        // Labels
+        this.ctx.fillStyle = '#000';
+        this.ctx.font = '16px Arial';
+        this.ctx.fillText('A', centerAX - 40, centerAY);
+        this.ctx.fillText('B', centerBX + 30, centerBY);
+        
+        if (this.overlap > 0) {
+            this.ctx.fillText('A∩B', (centerAX + centerBX) / 2 - 15, (centerAY + centerBY) / 2 + 5);
+        }
+    }
+}
+
+// MLE Deep Learning Demo
+class MLEDemo {
+    constructor() {
+        this.canvas = document.getElementById('deep-learningCanvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.width = this.canvas.width;
+        this.height = this.canvas.height;
+        
+        this.trueMu = 2.0;
+        this.sampleSize = 20;
+        this.data = [];
+        
+        this.setupControls();
+        this.draw();
+    }
+    
+    setupControls() {
+        const trueMuSlider = document.getElementById('true-mu-slider');
+        const sampleSizeSlider = document.getElementById('sample-size-slider');
+        const generateBtn = document.getElementById('generate-mle-data');
+        
+        trueMuSlider.addEventListener('input', (e) => {
+            this.trueMu = parseFloat(e.target.value);
+            document.getElementById('true-mu-value').textContent = this.trueMu.toFixed(1);
+            document.getElementById('display-true-mu').textContent = this.trueMu.toFixed(3);
+        });
+        
+        sampleSizeSlider.addEventListener('input', (e) => {
+            this.sampleSize = parseInt(e.target.value);
+            document.getElementById('sample-size-value').textContent = this.sampleSize;
+        });
+        
+        generateBtn.addEventListener('click', () => this.generateDataAndFindMLE());
+    }
+    
+    generateDataAndFindMLE() {
+        // Generate data from Normal(trueMu, 1)
+        this.data = [];
+        for (let i = 0; i < this.sampleSize; i++) {
+            // Box-Muller transform for normal distribution
+            const u1 = Math.random();
+            const u2 = Math.random();
+            const z = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+            this.data.push(this.trueMu + z); // Normal(trueMu, 1)
+        }
+        
+        // Calculate MLE (sample mean for normal distribution)
+        const sampleMean = this.data.reduce((sum, x) => sum + x, 0) / this.data.length;
+        const error = Math.abs(sampleMean - this.trueMu);
+        
+        // Update display
+        document.getElementById('sample-mean').textContent = sampleMean.toFixed(3);
+        document.getElementById('mle-estimate').textContent = sampleMean.toFixed(3);
+        document.getElementById('mle-error').textContent = error.toFixed(3);
+        
+        this.draw();
+    }
+    
+    draw() {
+        this.ctx.clearRect(0, 0, this.width, this.height);
+        
+        if (this.data.length === 0) {
+            this.ctx.fillStyle = '#666';
+            this.ctx.font = '16px Arial';
+            this.ctx.textAlign = 'center';
+            this.ctx.fillText('Click "Generate Data & Find MLE" to start', this.width / 2, this.height / 2);
+            return;
+        }
+        
+        // Draw axes
+        this.ctx.strokeStyle = '#ddd';
+        this.ctx.lineWidth = 1;
+        const marginX = 50;
+        const marginY = 50;
+        const plotWidth = this.width - 2 * marginX;
+        const plotHeight = this.height - 2 * marginY;
+        
+        // X-axis
+        this.ctx.beginPath();
+        this.ctx.moveTo(marginX, this.height - marginY);
+        this.ctx.lineTo(this.width - marginX, this.height - marginY);
+        this.ctx.stroke();
+        
+        // Y-axis
+        this.ctx.beginPath();
+        this.ctx.moveTo(marginX, marginY);
+        this.ctx.lineTo(marginX, this.height - marginY);
+        this.ctx.stroke();
+        
+        // Find data range
+        const minX = Math.min(...this.data) - 1;
+        const maxX = Math.max(...this.data) + 1;
+        
+        // Draw likelihood function
+        this.ctx.strokeStyle = '#2196f3';
+        this.ctx.lineWidth = 2;
+        this.ctx.beginPath();
+        
+        for (let i = 0; i <= 100; i++) {
+            const mu = minX + (maxX - minX) * i / 100;
+            let logLikelihood = 0;
+            
+            // Calculate log-likelihood
+            for (const x of this.data) {
+                logLikelihood -= 0.5 * Math.log(2 * Math.PI);
+                logLikelihood -= 0.5 * (x - mu) * (x - mu);
+            }
+            
+            const x = marginX + (mu - minX) / (maxX - minX) * plotWidth;
+            const y = this.height - marginY - (logLikelihood - (-this.data.length * 2)) / (this.data.length) * plotHeight * 0.8;
+            
+            if (i === 0) {
+                this.ctx.moveTo(x, y);
+            } else {
+                this.ctx.lineTo(x, y);
+            }
+        }
+        this.ctx.stroke();
+        
+        // Mark MLE
+        const sampleMean = this.data.reduce((sum, x) => sum + x, 0) / this.data.length;
+        const mleX = marginX + (sampleMean - minX) / (maxX - minX) * plotWidth;
+        
+        this.ctx.strokeStyle = '#f44336';
+        this.ctx.lineWidth = 2;
+        this.ctx.beginPath();
+        this.ctx.moveTo(mleX, marginY);
+        this.ctx.lineTo(mleX, this.height - marginY);
+        this.ctx.stroke();
+        
+        // Mark true value
+        const trueX = marginX + (this.trueMu - minX) / (maxX - minX) * plotWidth;
+        this.ctx.strokeStyle = '#4caf50';
+        this.ctx.lineWidth = 2;
+        this.ctx.setLineDash([5, 5]);
+        this.ctx.beginPath();
+        this.ctx.moveTo(trueX, marginY);
+        this.ctx.lineTo(trueX, this.height - marginY);
+        this.ctx.stroke();
+        this.ctx.setLineDash([]);
+        
+        // Draw data points
+        this.ctx.fillStyle = '#666';
+        for (const x of this.data) {
+            const pointX = marginX + (x - minX) / (maxX - minX) * plotWidth;
+            this.ctx.beginPath();
+            this.ctx.arc(pointX, this.height - marginY + 10, 2, 0, 2 * Math.PI);
+            this.ctx.fill();
+        }
+        
+        // Labels
+        this.ctx.fillStyle = '#000';
+        this.ctx.font = '12px Arial';
+        this.ctx.textAlign = 'center';
+        this.ctx.fillText('μ', this.width / 2, this.height - 10);
+        
+        this.ctx.save();
+        this.ctx.translate(15, this.height / 2);
+        this.ctx.rotate(-Math.PI / 2);
+        this.ctx.fillText('Log-Likelihood', 0, 0);
+        this.ctx.restore();
+        
+        // Legend
+        this.ctx.textAlign = 'left';
+        this.ctx.fillText('— Likelihood', 10, 20);
+        this.ctx.fillStyle = '#f44336';
+        this.ctx.fillText('— MLE', 10, 35);
+        this.ctx.fillStyle = '#4caf50';
+        this.ctx.fillText('--- True μ', 10, 50);
+    }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    new SampleSpaceDemo();
+    new ConditionalProbDemo();
+    new MLEDemo();
+});
+</script>
+
+<style>
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 5px;
+    background: #ddd;
+    outline: none;
+    border-radius: 5px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: #007bff;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: #007bff;
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+}
+
+canvas {
+    border-radius: 5px;
+}
+
+.demo-container {
+    margin: 20px 0;
+}
+</style>
+
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter00/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter00/00_04_Probability_and_Statistics/">
+              00-04 Probability and Statistics
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter00/00_03_02_Topology_in_Real_Analysis/">
+              00-03-02 Topology in Real Analysis
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li>
+        <h2>Next Post</h2>
+        <h3>
+          <a href="/deep-learning-self-learning/contents/en/chapter00/00_04_02_Common_Probability_Distributions/">
+            00-04-02 Common Probability Distributions
+          </a>
+        </h3>
+      </li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

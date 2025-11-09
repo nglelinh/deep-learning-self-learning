@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      15-01 Transfer Learning Fundamentals &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    15-01 Transfer Learning Fundamentals
+    
+      
+        <span class="lesson-badge required large">Required</span>
+      
+    
+  </h1>
+  <h1 id="transfer-learning-leveraging-pre-trained-knowledge">Transfer Learning: Leveraging Pre-trained Knowledge</h1>
+
+<h2 id="1-concept-overview">1. Concept Overview</h2>
+
+<p>Transfer learning represents one of the most practically important paradigms in modern deep learning, enabling us to build highly effective models with limited task-specific data by leveraging knowledge learned from related tasks. The core principle is deceptively simple: instead of training a neural network from scratch with randomly initialized weights, we start with weights pre-trained on a large dataset for a related task, then adapt these weights to our specific problem. This approach has democratized deep learning, making it accessible to practitioners who lack the massive datasets and computational resources required to train large models from scratch. A medical imaging application might leverage a network pre-trained on ImageNet. A sentiment analysis model might start from BERT pre-trained on web text. A speech recognition system might fine-tune Wav2Vec learned on unlabeled audio.</p>
+
+<p>Understanding why transfer learning works requires appreciating what neural networks learn during training. The layers of a deep network progressively build hierarchical representations. Early layers learn general, low-level features—edges, textures, simple shapes for images; basic phonemes for audio; common word patterns for text. These features are remarkably consistent across tasks and datasets. A network trained to classify cars versus trucks learns edge detectors nearly identical to a network classifying dogs versus cats, because edges are fundamental to visual understanding regardless of the specific objects. Middle layers learn mid-level features—object parts, texture combinations, shape compositions—that are somewhat task-specific but still broadly useful. Only the deepest layers learn highly task-specific features—”this particular combination indicates a golden retriever” for dog breed classification.</p>
+
+<p>This feature reuse across tasks is what makes transfer learning possible. The early and middle layers, having learned general features on a large source dataset, provide a strong starting point for a target task. Even if the target task differs (classifying medical images instead of natural images), the fundamental visual features—edges, textures, shapes—remain relevant. We don’t need millions of medical images to learn these basics; we can transfer them from ImageNet and focus our limited medical data on learning the task-specific features in deeper layers. This is analogous to how humans learn: having learned basic visual concepts from everyday experience, we can quickly learn to identify rare diseases from a few examples, transferring our general visual understanding rather than learning vision from scratch.</p>
+
+<p>The practical impact cannot be overstated. Before transfer learning became standard practice, training good image classifiers required hundreds of thousands of labeled images. With transfer learning from ImageNet pre-trained models, competitive results are possible with thousands or even hundreds of images. In natural language processing, the impact was even more dramatic. Pre-trained language models like BERT, trained on billions of words of text, can be fine-tuned for specific tasks (sentiment analysis, named entity recognition, question answering) with datasets of just thousands of labeled examples, achieving performance that would require millions of labels if training from scratch. This has enabled applications of deep learning in domains where large labeled datasets don’t exist: medical diagnosis with limited patient data, rare language processing, specialized technical document understanding.</p>
+
+<p>Yet transfer learning is not magic, and understanding when it works versus when it fails is crucial for practitioners. Transfer learning assumes the source and target tasks share relevant structure—edges learned from ImageNet help with medical images because both involve natural images with edges, textures, and shapes. But ImageNet features might not transfer well to radar images (different data modality), satellite images (different scale and perspective), or abstract art (different statistical properties). The more similar the source and target distributions, the more effectively features transfer. This principle guides choice of pre-trained models: for medical imaging, networks pre-trained on chest X-rays transfer better than ImageNet, though ImageNet remains surprisingly effective due to the generality of low and mid-level visual features.</p>
+
+<h2 id="2-mathematical-foundation">2. Mathematical Foundation</h2>
+
+<p>The mathematical framework for transfer learning connects to domain adaptation, multi-task learning, and meta-learning. Let’s formalize what we’re doing when we transfer knowledge and understand the theoretical foundations that explain why it works.</p>
+
+<p>Suppose we have a source domain with distribution \(p_S(\mathbf{x}, y)\) and abundant labeled data \(\mathcal{D}_S = \{(\mathbf{x}_i^S, y_i^S)\}_{i=1}^{N_S}\), and a target domain with distribution \(p_T(\mathbf{x}, y)\) and limited labeled data \(\mathcal{D}_T = \{(\mathbf{x}_j^T, y_j^T)\}_{j=1}^{N_T}\) where \(N_T \ll N_S\). We want to learn a predictor \(f_\theta(\mathbf{x})\) that performs well on the target domain.</p>
+
+<p>In standard supervised learning, we would minimize empirical risk on target data:</p>
+
+\[\theta^* = \arg\min_\theta \frac{1}{N_T}\sum_{j=1}^{N_T} \mathcal{L}(f_\theta(\mathbf{x}_j^T), y_j^T)\]
+
+<p>But with small \(N_T\), this leads to severe overfitting—the model memorizes training examples without learning generalizable patterns.</p>
+
+<p>Transfer learning instead performs two-stage optimization:</p>
+
+<p><strong>Stage 1 (Pre-training)</strong>: Train on source domain
+\(\theta_S^* = \arg\min_\theta \frac{1}{N_S}\sum_{i=1}^{N_S} \mathcal{L}(f_\theta(\mathbf{x}_i^S), y_i^S)\)</p>
+
+<p><strong>Stage 2 (Fine-tuning)</strong>: Initialize with \(\theta_S^*\), then train on target domain
+\(\theta_T^* = \arg\min_\theta \frac{1}{N_T}\sum_{j=1}^{N_T} \mathcal{L}(f_\theta(\mathbf{x}_j^T), y_j^T), \quad \text{starting from } \theta_0 = \theta_S^*\)</p>
+
+<p>The initialization \(\theta_0 = \theta_S^*\) is crucial—it provides a starting point already close to a good solution for the target task (assuming domains are related), allowing fine-tuning to converge quickly with limited data.</p>
+
+<p>We can decompose the model as \(f_\theta = h_{\theta_h} \circ g_{\theta_g}\) where \(g_{\theta_g}\) is the feature extractor (early/middle layers) and \(h_{\theta_h}\) is the task-specific head (final layers). Transfer learning strategies differ in what they transfer and what they adapt:</p>
+
+<p><strong>Feature extraction</strong>: Freeze \(\theta_g = \theta_g^S\) (use pre-trained features), only train \(\theta_h\) on target data
+\(\theta_h^* = \arg\min_{\theta_h} \frac{1}{N_T}\sum_{j=1}^{N_T} \mathcal{L}(h_{\theta_h}(g_{\theta_g^S}(\mathbf{x}_j^T)), y_j^T)\)</p>
+
+<p><strong>Fine-tuning all layers</strong>: Initialize both \(\theta_g\) and \(\theta_h\) from source, train both on target
+\((\theta_g^*, \theta_h^*) = \arg\min_{\theta_g, \theta_h} \frac{1}{N_T}\sum_{j=1}^{N_T} \mathcal{L}(h_{\theta_h}(g_{\theta_g}(\mathbf{x}_j^T)), y_j^T)\)
+starting from \((\theta_g^S, \theta_h^{\text{random}})\)</p>
+
+<p><strong>Layer-wise differential learning rates</strong>: Use different learning rates for different layers
+\(\theta_g \leftarrow \theta_g - \eta_g \nabla_{\theta_g} \mathcal{L}, \quad \theta_h \leftarrow \theta_h - \eta_h \nabla_{\theta_h} \mathcal{L}\)
+typically with \(\eta_g &lt; \eta_h\) (smaller learning rate for pre-trained layers, larger for new head)</p>
+
+<p>The choice depends on dataset size and similarity. With very small target data (hundreds of examples) and similar domains, feature extraction often works best—frozen pre-trained features provide robust representations, and we only need to learn the task-specific mapping. With moderate data (thousands) and moderate similarity, fine-tuning with small learning rates adapts features slightly while avoiding catastrophic forgetting. With large data (tens of thousands+), full fine-tuning or even training from scratch might be preferable.</p>
+
+<h3 id="domain-adaptation-theory">Domain Adaptation Theory</h3>
+
+<p>The theoretical analysis of when transfer works invokes domain adaptation theory. Define the hypothesis space \(\mathcal{H}\) (all functions representable by our architecture). The error on target domain for hypothesis \(h \in \mathcal{H}\) can be bounded:</p>
+
+\[\epsilon_T(h) \leq \epsilon_S(h) + \frac{1}{2}d_{\mathcal{H}}(D_S, D_T) + \lambda\]
+
+<p>where:</p>
+<ul>
+  <li>\(\epsilon_S(h)\): error on source domain (can be minimized with abundant source data)</li>
+  <li>\(d_{\mathcal{H}}(D_S, D_T)\): distance between source and target distributions (measures domain shift)</li>
+  <li>\(\lambda\): error of ideal joint hypothesis (minimum possible error on both domains)</li>
+</ul>
+
+<p>This bound reveals what’s needed for successful transfer: (1) low source error (good pre-training), (2) small domain distance (similar source and target), (3) small \(\lambda\) (shared optimal hypothesis exists). When domains are very different, \(d_{\mathcal{H}}\) is large, and the bound becomes loose—no guarantee transfer helps. This formalizes the intuition that transfer works when domains share structure.</p>
+
+<h2 id="3-example--intuition">3. Example / Intuition</h2>
+
+<p>Consider a concrete scenario: building a bird species classifier with only 500 labeled images across 20 species (25 images per species). Training a ResNet-50 (25 million parameters) from scratch on this data would catastrophically overfit—we have far more parameters than training examples.</p>
+
+<p>The transfer learning approach starts with ResNet-50 pre-trained on ImageNet (1.2 million images, 1000 classes). This network has already learned:</p>
+<ul>
+  <li><strong>Layer 1</strong>: Edge detectors (horizontal, vertical, diagonal, curved)</li>
+  <li><strong>Layer 2</strong>: Texture patterns (feathers, beaks, backgrounds)</li>
+  <li><strong>Layer 3</strong>: Object parts (wings, heads, feet)</li>
+  <li><strong>Layer 4</strong>: Object compositions (whole birds, though specific to ImageNet bird species)</li>
+</ul>
+
+<p>For our bird classification task, we:</p>
+
+<p><strong>Option 1: Feature Extraction</strong></p>
+<ul>
+  <li>Remove final classification layer (1000 classes)</li>
+  <li>Freeze all conv layers (keep pre-trained features)</li>
+  <li>Add new classification head (20 bird species)</li>
+  <li>Train only this new head on our 500 images</li>
+</ul>
+
+<p>This works because the frozen layers provide rich 2048-dimensional feature vectors for each image, capturing edges, textures, and bird-like parts. We only need to learn which combinations of these features correspond to which of our 20 species—a much simpler problem requiring far less data.</p>
+
+<p><strong>Option 2: Fine-Tuning</strong></p>
+<ul>
+  <li>Start with pre-trained weights everywhere</li>
+  <li>Replace final layer with 20-class head (random initialization)</li>
+  <li>Train entire network with small learning rate (0.0001 vs typical 0.1)</li>
+</ul>
+
+<p>The small learning rate is crucial. Pre-trained features are already good; we want to adapt them slightly, not destroy them. Early layers might barely change (edges are universal). Middle layers adapt more (bird-specific textures). Deep layers change most (our specific species features).</p>
+
+<p><strong>Concrete numerical example</strong>: Suppose a pre-trained conv filter in layer 3 has weights detecting “curved structures” (useful for any object with curves). For bird species, we might want to detect “feather curves” specifically. Fine-tuning adjusts this filter’s weights slightly:</p>
+
+<p>Original weight: \(w_{\text{pre}} = 0.523\)<br />
+Gradient on bird data: \(\nabla w = 0.015\) (indicates small adjustment needed)<br />
+Updated weight: \(w_{\text{fine}} = 0.523 - 0.0001 \times 0.015 = 0.5229985\)</p>
+
+<p>The tiny change (0.0001 learning rate) adapts the feature slightly without destroying the useful structure learned from ImageNet. Across thousands of weights, these small adaptations accumulate to specialize the network for birds while preserving general visual understanding.</p>
+
+<p>Results: With feature extraction, we might achieve 85% accuracy on bird classification. With fine-tuning, 92% accuracy. Training from scratch with our 500 images: perhaps 60% accuracy (severe overfitting). The transfer learning advantage is dramatic and practical.</p>
+
+<h2 id="4-code-snippet">4. Code Snippet</h2>
+
+<p>Complete transfer learning implementation:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="n">torch.optim</span> <span class="k">as</span> <span class="n">optim</span>
+<span class="kn">from</span> <span class="n">torchvision</span> <span class="kn">import</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="n">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">random_split</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Transfer Learning: Fine-tuning Pre-trained ResNet for Custom Dataset</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Load pre-trained ResNet18 (smaller than ResNet50 for demonstration)
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">1. Loading Pre-trained Model</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># weights='IMAGENET1K_V1' loads ImageNet pre-trained weights
+</span><span class="n">model_pretrained</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="nf">resnet18</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="sh">'</span><span class="s">IMAGENET1K_V1</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Loaded ResNet18 pre-trained on ImageNet</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Original output layer: </span><span class="si">{</span><span class="n">model_pretrained</span><span class="p">.</span><span class="n">fc</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  (1000 classes for ImageNet)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Examine what pre-trained model has learned
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Pre-trained features:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Layer 1 filters: </span><span class="si">{</span><span class="n">model_pretrained</span><span class="p">.</span><span class="n">conv1</span><span class="p">.</span><span class="n">weight</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (64, 3, 7, 7)
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  These are edge/texture detectors learned from ImageNet</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 2. Adapt for new task
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">2. Adapting for Custom Task (10 Classes)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Replace final fully-connected layer for our task
+# Everything else keeps pre-trained weights
+</span><span class="n">num_classes</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># Our custom task has 10 classes
+</span><span class="n">num_features</span> <span class="o">=</span> <span class="n">model_pretrained</span><span class="p">.</span><span class="n">fc</span><span class="p">.</span><span class="n">in_features</span>  <span class="c1"># Get input size of fc layer
+</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Original FC input features: </span><span class="si">{</span><span class="n">num_features</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Replacing final layer for </span><span class="si">{</span><span class="n">num_classes</span><span class="si">}</span><span class="s"> classes...</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="n">model_pretrained</span><span class="p">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">num_features</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">New model output layer: </span><span class="si">{</span><span class="n">model_pretrained</span><span class="p">.</span><span class="n">fc</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  (10 classes for our custom task)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Create dummy dataset (in practice, use your real data)
+# We'll simulate with CIFAR-10 as our "custom" task
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">3. Preparing Custom Dataset</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+
+<span class="n">transform_train</span> <span class="o">=</span> <span class="n">transforms</span><span class="p">.</span><span class="nc">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="p">.</span><span class="nc">Resize</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span>  <span class="c1"># ResNet expects 224×224 (CIFAR is 32×32)
+</span>    <span class="n">transforms</span><span class="p">.</span><span class="nc">ToTensor</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="p">.</span><span class="nc">Normalize</span><span class="p">([</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span>  <span class="c1"># ImageNet stats
+</span><span class="p">])</span>
+
+<span class="c1"># Simulate limited data scenario: use only 1000 training images
+</span><span class="n">full_dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="nc">CIFAR10</span><span class="p">(</span><span class="sh">'</span><span class="s">./data</span><span class="sh">'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform_train</span><span class="p">)</span>
+
+<span class="c1"># Take subset to simulate limited data
+</span><span class="n">limited_size</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">remaining</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">full_dataset</span><span class="p">)</span> <span class="o">-</span> <span class="n">limited_size</span>
+<span class="n">train_dataset</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="nf">random_split</span><span class="p">(</span><span class="n">full_dataset</span><span class="p">,</span> <span class="p">[</span><span class="n">limited_size</span><span class="p">,</span> <span class="n">remaining</span><span class="p">])</span>
+
+<span class="n">train_loader</span> <span class="o">=</span> <span class="nc">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">test_dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="nc">CIFAR10</span><span class="p">(</span><span class="sh">'</span><span class="s">./data</span><span class="sh">'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform_train</span><span class="p">)</span>
+<span class="n">test_loader</span> <span class="o">=</span> <span class="nc">DataLoader</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Training with only </span><span class="si">{</span><span class="n">limited_size</span><span class="si">}</span><span class="s"> images (simulating limited data)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Test set: </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">)</span><span class="si">}</span><span class="s"> images</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 3. Training Strategy: Feature Extraction vs Fine-Tuning
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">4. Strategy A: Feature Extraction (Freeze Pre-trained Layers)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Create copy of model for feature extraction
+</span><span class="n">model_features</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="nf">resnet18</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="sh">'</span><span class="s">IMAGENET1K_V1</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">model_features</span><span class="p">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">num_features</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+
+<span class="c1"># Freeze all layers except final FC
+</span><span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model_features</span><span class="p">.</span><span class="nf">parameters</span><span class="p">():</span>
+    <span class="n">param</span><span class="p">.</span><span class="n">requires_grad</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="c1"># Unfreeze final layer
+</span><span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model_features</span><span class="p">.</span><span class="n">fc</span><span class="p">.</span><span class="nf">parameters</span><span class="p">():</span>
+    <span class="n">param</span><span class="p">.</span><span class="n">requires_grad</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="n">trainable_params_fe</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model_features</span><span class="p">.</span><span class="nf">parameters</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="p">.</span><span class="n">requires_grad</span><span class="p">)</span>
+<span class="n">total_params</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model_features</span><span class="p">.</span><span class="nf">parameters</span><span class="p">())</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Total parameters: </span><span class="si">{</span><span class="n">total_params</span><span class="si">:</span><span class="p">,</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Trainable parameters: </span><span class="si">{</span><span class="n">trainable_params_fe</span><span class="si">:</span><span class="p">,</span><span class="si">}</span><span class="s"> (</span><span class="si">{</span><span class="n">trainable_params_fe</span><span class="o">/</span><span class="n">total_params</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">%)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Only training the final classification layer!</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Optimizer for feature extraction (only fc layer parameters)
+</span><span class="n">optimizer_fe</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">model_features</span><span class="p">.</span><span class="n">fc</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">CrossEntropyLoss</span><span class="p">()</span>
+
+<span class="c1"># Train
+</span><span class="n">model_features</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Training feature extraction model (5 epochs)...</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">running_loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+        <span class="n">optimizer_fe</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        
+        <span class="c1"># Forward (conv layers frozen, only fc trains)
+</span>        <span class="n">outputs</span> <span class="o">=</span> <span class="nf">model_features</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+        
+        <span class="c1"># Backward
+</span>        <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        <span class="n">optimizer_fe</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+        
+        <span class="n">running_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">predicted</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">.</span><span class="nf">max</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="n">predicted</span><span class="p">.</span><span class="nf">eq</span><span class="p">(</span><span class="n">labels</span><span class="p">).</span><span class="nf">sum</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">labels</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="n">train_acc</span> <span class="o">=</span> <span class="mf">100.</span> <span class="o">*</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">total</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">: Loss = </span><span class="si">{</span><span class="n">running_loss</span><span class="o">/</span><span class="nf">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="sh">"</span>
+          <span class="sa">f</span><span class="sh">"</span><span class="s">Train Acc = </span><span class="si">{</span><span class="n">train_acc</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">%</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Evaluate
+</span><span class="n">model_features</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+<span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="nf">model_features</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">predicted</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">.</span><span class="nf">max</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="n">predicted</span><span class="p">.</span><span class="nf">eq</span><span class="p">(</span><span class="n">labels</span><span class="p">).</span><span class="nf">sum</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">labels</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">test_acc_fe</span> <span class="o">=</span> <span class="mf">100.</span> <span class="o">*</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">total</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Feature Extraction Test Accuracy: </span><span class="si">{</span><span class="n">test_acc_fe</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">%</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 4. Strategy B: Fine-Tuning
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">5. Strategy B: Fine-Tuning (Update All Layers)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+
+<span class="n">model_finetune</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="nf">resnet18</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="sh">'</span><span class="s">IMAGENET1K_V1</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">model_finetune</span><span class="p">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">num_features</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+
+<span class="c1"># All parameters trainable
+</span><span class="n">trainable_params_ft</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model_finetune</span><span class="p">.</span><span class="nf">parameters</span><span class="p">())</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Trainable parameters: </span><span class="si">{</span><span class="n">trainable_params_ft</span><span class="si">:</span><span class="p">,</span><span class="si">}</span><span class="s"> (100%)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Use differential learning rates
+# Lower LR for pre-trained layers, higher for new layer
+</span><span class="n">optimizer_ft</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">([</span>
+    <span class="p">{</span><span class="sh">'</span><span class="s">params</span><span class="sh">'</span><span class="p">:</span> <span class="n">model_finetune</span><span class="p">.</span><span class="n">layer1</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="sh">'</span><span class="s">lr</span><span class="sh">'</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">},</span>
+    <span class="p">{</span><span class="sh">'</span><span class="s">params</span><span class="sh">'</span><span class="p">:</span> <span class="n">model_finetune</span><span class="p">.</span><span class="n">layer2</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="sh">'</span><span class="s">lr</span><span class="sh">'</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">},</span>
+    <span class="p">{</span><span class="sh">'</span><span class="s">params</span><span class="sh">'</span><span class="p">:</span> <span class="n">model_finetune</span><span class="p">.</span><span class="n">layer3</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="sh">'</span><span class="s">lr</span><span class="sh">'</span><span class="p">:</span> <span class="mf">0.0002</span><span class="p">},</span>
+    <span class="p">{</span><span class="sh">'</span><span class="s">params</span><span class="sh">'</span><span class="p">:</span> <span class="n">model_finetune</span><span class="p">.</span><span class="n">layer4</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="sh">'</span><span class="s">lr</span><span class="sh">'</span><span class="p">:</span> <span class="mf">0.0005</span><span class="p">},</span>
+    <span class="p">{</span><span class="sh">'</span><span class="s">params</span><span class="sh">'</span><span class="p">:</span> <span class="n">model_finetune</span><span class="p">.</span><span class="n">fc</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="sh">'</span><span class="s">lr</span><span class="sh">'</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">}</span>  <span class="c1"># Highest for new layer
+</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">)</span>  <span class="c1"># Default for any params not specified
+</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Using layer-wise differential learning rates:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  Early layers: 0.0001 (barely change)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  Middle layers: 0.0002</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  Deep layers: 0.0005</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  New FC layer: 0.001 (change most)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Train
+</span><span class="n">model_finetune</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Training fine-tuning model (5 epochs)...</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">running_loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+        <span class="n">optimizer_ft</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        
+        <span class="n">outputs</span> <span class="o">=</span> <span class="nf">model_finetune</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+        
+        <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        <span class="n">optimizer_ft</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+        
+        <span class="n">running_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">predicted</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">.</span><span class="nf">max</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="n">predicted</span><span class="p">.</span><span class="nf">eq</span><span class="p">(</span><span class="n">labels</span><span class="p">).</span><span class="nf">sum</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">labels</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="n">train_acc</span> <span class="o">=</span> <span class="mf">100.</span> <span class="o">*</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">total</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">: Loss = </span><span class="si">{</span><span class="n">running_loss</span><span class="o">/</span><span class="nf">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="sh">"</span>
+          <span class="sa">f</span><span class="sh">"</span><span class="s">Train Acc = </span><span class="si">{</span><span class="n">train_acc</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">%</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Evaluate
+</span><span class="n">model_finetune</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+<span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="nf">model_finetune</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">predicted</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">.</span><span class="nf">max</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="n">predicted</span><span class="p">.</span><span class="nf">eq</span><span class="p">(</span><span class="n">labels</span><span class="p">).</span><span class="nf">sum</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">labels</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">test_acc_ft</span> <span class="o">=</span> <span class="mf">100.</span> <span class="o">*</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">total</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Fine-Tuning Test Accuracy: </span><span class="si">{</span><span class="n">test_acc_ft</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">%</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Compare results
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Transfer Learning Results Comparison</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Feature Extraction: </span><span class="si">{</span><span class="n">test_acc_fe</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">% test accuracy</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Fine-Tuning:        </span><span class="si">{</span><span class="n">test_acc_ft</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">% test accuracy</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Both dramatically outperform training from scratch (~60% on 1000 images)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Transfer learning enabled competitive performance with limited data!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Demonstrate feature visualization:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Analyzing Transferred Features</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Extract features for analysis
+</span><span class="k">def</span> <span class="nf">extract_features</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="n">layer_name</span><span class="o">=</span><span class="sh">'</span><span class="s">layer4</span><span class="sh">'</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Extract features from a specific layer.
+    
+    This shows what representations the model uses for classification.
+    Pre-trained features should be meaningful even for custom task.
+    </span><span class="sh">"""</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+    <span class="n">features_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">labels_list</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># Register hook to capture layer outputs
+</span>    <span class="n">features_hook</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span> <span class="nf">hook_fn</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
+        <span class="n">features_hook</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">output</span><span class="p">.</span><span class="nf">detach</span><span class="p">())</span>
+    
+    <span class="c1"># Get the layer
+</span>    <span class="n">layer</span> <span class="o">=</span> <span class="nf">dict</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">named_modules</span><span class="p">())[</span><span class="n">layer_name</span><span class="p">]</span>
+    <span class="n">handle</span> <span class="o">=</span> <span class="n">layer</span><span class="p">.</span><span class="nf">register_forward_hook</span><span class="p">(</span><span class="n">hook_fn</span><span class="p">)</span>
+    
+    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+            <span class="n">features_list</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">features_hook</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">labels_list</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+            <span class="n">features_hook</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+    
+    <span class="n">handle</span><span class="p">.</span><span class="nf">remove</span><span class="p">()</span>
+    
+    <span class="c1"># Concatenate all batches
+</span>    <span class="n">features</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">(</span><span class="n">features_list</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">(</span><span class="n">labels_list</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span>
+
+<span class="c1"># Extract layer4 features (last conv layer before FC)
+</span><span class="n">features_train</span><span class="p">,</span> <span class="n">labels_train</span> <span class="o">=</span> <span class="nf">extract_features</span><span class="p">(</span>
+    <span class="n">model_finetune</span><span class="p">,</span> 
+    <span class="nc">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">),</span> 
+    <span class="sh">'</span><span class="s">layer4</span><span class="sh">'</span>
+<span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Extracted features from layer4 (last conv layer)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Feature shape: </span><span class="si">{</span><span class="n">features_train</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (1000, 512, 7, 7)
+</span>
+<span class="c1"># Global average pool to get 512-dim vectors
+</span><span class="n">features_pooled</span> <span class="o">=</span> <span class="n">features_train</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>  <span class="c1"># (1000, 512)
+</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">After global average pooling: </span><span class="si">{</span><span class="n">features_pooled</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">These 512-dimensional features encode:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - Low-level: edges, textures (from ImageNet)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - Mid-level: object parts, shapes (from ImageNet)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - High-level: bird-specific patterns (adapted during fine-tuning)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">The pre-trained features provide strong starting point!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="5-related-concepts">5. Related Concepts</h2>
+
+<p>Transfer learning connects to multi-task learning, where we train a single model on multiple related tasks simultaneously rather than sequentially. Multi-task learning uses shared representations (early/middle layers) while maintaining task-specific heads (final layers), similar to transfer learning’s architecture but with joint training. The shared representation learns features useful across tasks, providing implicit regularization (a feature must help multiple tasks to be retained) that often improves generalization compared to single-task training. Understanding this connection helps appreciate that transfer learning and multi-task learning address similar problems—leveraging shared structure across related tasks—through different training procedures.</p>
+
+<p>The relationship to meta-learning (learning to learn) is more subtle but important. Meta-learning aims to learn an initialization or learning algorithm that enables fast adaptation to new tasks with minimal data. Model-Agnostic Meta-Learning (MAML), for instance, learns an initialization that’s a few gradient steps away from good performance on any task from a distribution. Transfer learning can be viewed as a simple form of meta-learning where the “meta-training” is pre-training on the source task and “adaptation” is fine-tuning on the target. More sophisticated meta-learning approaches extend this idea to learn better adaptations or to handle more diverse task distributions.</p>
+
+<p>Transfer learning’s success in NLP through pre-trained language models exemplifies domain-specific evolution of the paradigm. Word2Vec and GloVe provided pre-trained word embeddings, transferring lexical knowledge. ELMo provided pre-trained contextual representations. BERT revolutionized the field by pre-training entire Transformer models on massive text corpora through masked language modeling, then fine-tuning for specific tasks. GPT took this further with models so large that fine-tuning isn’t always necessary—few-shot learning through prompting can adapt the model without any parameter updates. This progression from transferring embeddings to transferring complete models to avoiding fine-tuning entirely shows how transfer learning evolved as models scaled.</p>
+
+<p>The connection to curriculum learning provides another perspective. Transfer learning can be viewed as a two-stage curriculum: first learn general features (easier task with abundant data), then learn task-specific features (harder task with limited data). This staged approach mirrors how humans learn—general education before specialization—and often works better than jumping directly to the hardest problem. Understanding this connection suggests we might use multi-stage transfer: pre-train on general data (ImageNet), intermediate training on domain-specific data (medical images broadly), then fine-tune on specific task (lung cancer detection). Such staged transfer has proven effective in specialized domains.</p>
+
+<p>Finally, transfer learning connects to the broader question of sample efficiency in machine learning. Deep learning’s data hunger—requiring millions of examples—limits applications where data is expensive (medical imaging, rare events) or impossible to collect at scale (private data, unique scenarios). Transfer learning dramatically improves sample efficiency by amortizing the cost of learning general features across many downstream tasks. Understanding transfer learning’s sample efficiency provides insights into what makes learning difficult (learning general features requires lots of data) versus easier (learning task-specific mappings given good features needs less data), informing when to expect transfer to help most dramatically.</p>
+
+<h2 id="6-fundamental-papers">6. Fundamental Papers</h2>
+
+<p><strong><a href="https://arxiv.org/abs/1411.1792">“How transferable are features in deep neural networks?” (2014)</a></strong><br />
+<em>Authors</em>: Jason Yosinski, Jeff Clune, Yoshua Bengio, Hector Lipson<br />
+This paper systematically investigated transferability of neural network features across tasks, providing empirical evidence and theoretical understanding of when transfer works. The authors trained networks on ImageNet variants, freezing different numbers of layers when transferring to new tasks, measuring performance degradation versus full fine-tuning. Key findings: early layers learn general features that transfer almost universally; middle layers are more task-specific but still broadly useful; final layers are highly task-specific and benefit most from adaptation. The paper also showed that co-adapted features (features that work well together) can be disrupted by freezing some while training others, suggesting fine-tuning all layers often works better than freezing many. This work established the empirical foundations for transfer learning best practices and demonstrated that feature transferability isn’t universal but depends on layer depth and task similarity.</p>
+
+<p><strong><a href="https://www.cv-foundation.org/openaccess/content_cvpr_2014/papers/Oquab_Learning_and_Transferring_2014_CVPR_paper.pdf">“Learning and Transferring Mid-Level Image Representations using Convolutional Neural Networks” (2014)</a></strong><br />
+<em>Authors</em>: Maxime Oquab, Leon Bottou, Ivan Laptev, Josef Sivic<br />
+This paper demonstrated that CNN features pre-trained on ImageNet transfer effectively to diverse visual recognition tasks including object detection, scene classification, and fine-grained recognition. The authors showed that simply using pre-trained conv layers as feature extractors and training a classifier on these features achieved strong performance across tasks, outperforming hand-engineered features. The work established transfer learning as practical standard practice in computer vision, showing the features learned on one large dataset (ImageNet) generalize to many other vision tasks. The paper’s experimental methodology—systematic evaluation across multiple tasks with controlled comparisons—set standards for demonstrating transfer effectiveness and influenced the widespread adoption of pre-trained models in computer vision.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1810.04805">“BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding” (2018)</a></strong><br />
+<em>Authors</em>: Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova<br />
+While primarily introducing BERT, this paper revolutionized transfer learning in NLP by showing that pre-training Transformers on massive text through masked language modeling, then fine-tuning on specific tasks, achieved state-of-the-art results across eleven diverse NLP tasks including question answering, natural language inference, and named entity recognition. BERT demonstrated the power of transfer learning at scale: a single pre-trained model could be adapted to vastly different tasks with minimal architectural changes (just adding simple task-specific heads). The pre-train-then-fine-tune paradigm became dominant in NLP, showing that transfer learning isn’t vision-specific but a general principle applicable across modalities. The paper’s impact extended beyond BERT itself to establishing large-scale unsupervised pre-training as a standard first step in NLP model development.</p>
+
+<p><strong><a href="https://ieeexplore.ieee.org/document/5288526">“A Survey on Transfer Learning” (2010)</a></strong><br />
+<em>Authors</em>: Sinno Jialin Pan, Qiang Yang<br />
+This comprehensive survey paper organized and taxonomized transfer learning approaches across machine learning, not just deep learning. Pan and Yang defined: inductive transfer (labeled target data), transductive transfer (no labeled target data), and unsupervised transfer. They analyzed when transfer works (source and target share marginal or conditional distributions) versus fails (large domain shift), providing theoretical frameworks for understanding transferability. While pre-dating the deep learning era’s dramatic transfer learning successes, the theoretical foundations remain relevant: understanding transfer as leveraging shared structure between source and target, analyzing domain shift quantitatively, and recognizing that negative transfer (where using source data hurts target performance) can occur when domains are too dissimilar. The survey connects deep transfer learning to broader machine learning traditions, providing theoretical context for why and when transfer is effective.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1811.08883">“Rethinking ImageNet Pre-training” (2019)</a></strong><br />
+<em>Authors</em>: Kaiming He, Ross Girshick, Piotr Dollár<br />
+This paper challenged the conventional wisdom that ImageNet pre-training is always beneficial, showing that for tasks with sufficient data (tens of thousands of images), training from scratch can match or exceed fine-tuning pre-trained models, given enough training time. The key insight was that pre-training’s advantage is primarily in faster convergence and better performance with limited data, not in reaching fundamentally better solutions. With abundant task-specific data and proper regularization, random initialization can work well, though requiring much longer training. The paper refined understanding of when transfer helps most: in low-data regimes (hundreds to thousands of examples), pre-training provides massive advantages; in high-data regimes (hundreds of thousands+), advantages diminish. This nuanced view helps practitioners make informed decisions about whether to use pre-trained models or train from scratch based on data availability and computational budget.</p>
+
+<h2 id="common-pitfalls-and-tricks">Common Pitfalls and Tricks</h2>
+
+<p>The most common mistake is using pre-trained models without matching preprocessing to the pre-training protocol. If a model was pre-trained on ImageNet with specific normalization (mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225] for RGB channels), fine-tuning or feature extraction must use identical normalization. Mismatched preprocessing causes the model to receive inputs from a different distribution than it was trained on, degrading performance dramatically. Always check the pre-training protocol (input size, normalization statistics, preprocessing steps) and replicate it exactly for transfer.</p>
+
+<p>Using too high a learning rate when fine-tuning destroys pre-trained features before they can adapt to the new task. The pre-trained weights represent useful features; large updates can push them far from this useful region into random territory. A good rule: use 10-100× smaller learning rate for fine-tuning than for training from scratch. If normal training uses lr=0.1, fine-tuning should use lr=0.001-0.01. Even better: use differential learning rates with earlier layers getting smaller rates (they’re more general, should change less) and later layers getting larger rates (more task-specific, should adapt more).</p>
+
+<p>Forgetting to set the model to eval mode when extracting features is a subtle bug that causes inconsistent results. If the model contains batch normalization or dropout layers and remains in train mode during feature extraction, these layers behave differently on different calls (batch norm uses batch statistics, dropout drops random units), causing the same input to produce different features. Always call <code class="language-plaintext highlighter-rouge">model.eval()</code> and use <code class="language-plaintext highlighter-rouge">torch.no_grad()</code> when extracting features or making predictions.</p>
+
+<p>When fine-tuning NLP models like BERT, a common issue is catastrophic forgetting on short sequences. BERT was pre-trained on sequences of 512 tokens. Fine-tuning on a task with short sequences (tweets, SMS messages of 20-50 tokens) can degrade the model’s ability to handle long sequences. If you need to preserve this capability, include long-sequence examples during fine-tuning or use a mixture of source and target data (partial fine-tuning).</p>
+
+<p>A powerful trick for better transfer is using cyclical learning rates during fine-tuning. Start with a low learning rate, gradually increase to a moderate peak, then decrease again. This allows gentle adaptation initially (not destroying pre-trained features), more aggressive updates at the peak (finding task-specific features), and refinement finally (fine-tuning the adapted features). Combined with gradual unfreezing (start by training only the head, then unfreeze top layers, then middle layers), this provides smooth adaptation from pre-trained to task-specific features.</p>
+
+<p>For tasks very different from the pre-training domain, partial fine-tuning often works better than full fine-tuning. Freeze early layers (most general, least likely to need adaptation), fine-tune middle and late layers. This preserves universal low-level features while adapting task-specific higher-level features. The choice of where to freeze involves experimentation but follows the principle: freeze what transfers well, adapt what needs task-specific learning.</p>
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<p>Transfer learning leverages pre-trained models to achieve strong performance on target tasks with limited data by transferring learned features from related source tasks with abundant data. The hierarchical nature of deep network features—general low-level features in early layers, task-specific high-level features in late layers—enables selective transfer where we keep useful general features and adapt task-specific components. Feature extraction freezes pre-trained weights and trains only a new task-specific head, working well with very limited data (hundreds of examples) and minimal computational cost. Fine-tuning adapts all or most layers with small learning rates, typically achieving better performance with moderate data (thousands of examples) by specializing pre-trained features to the target domain. Layer-wise differential learning rates control adaptation, with early layers changing minimally (preserving general features) and late layers changing more (learning task-specific features), preventing catastrophic forgetting while enabling effective specialization. Transfer learning’s effectiveness depends on source-target similarity—more similar domains enable better transfer—and the quality of pre-training—better source task performance generally improves transfer. Modern practice in computer vision starts with ImageNet pre-training, in NLP with BERT/GPT pre-training, and in speech with Wav2Vec pre-training, making transfer learning a standard first step rather than advanced technique. Understanding transfer learning deeply means recognizing it as amortizing the cost of learning general representations across many tasks, democratizing deep learning by making high performance achievable without massive task-specific datasets, and embodying the principle that good representations learned on one task often help on related tasks—a form of knowledge reuse fundamental to efficient learning.</p>
+
+<p>Transfer learning exemplifies how deep learning matured from requiring massive datasets for every task to enabling strong performance with limited task-specific data through strategic reuse of learned knowledge.</p>
+
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter15/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter15/15_00_Introduction/">
+              15 Transfer Learning
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+    
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

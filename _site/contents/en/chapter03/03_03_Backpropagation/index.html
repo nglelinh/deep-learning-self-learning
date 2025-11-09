@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      03-03 Backpropagation Algorithm &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    03-03 Backpropagation Algorithm
+    
+      
+        <span class="lesson-badge required large">Required</span>
+      
+    
+  </h1>
+  <h1 id="backpropagation-the-engine-of-deep-learning">Backpropagation: The Engine of Deep Learning</h1>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Backpropagation_example.svg/600px-Backpropagation_example.svg.png" alt="Backpropagation Visualization" />
+<em>Hình ảnh: Minh họa quá trình Backpropagation trong mạng neural. Nguồn: Wikimedia Commons</em></p>
+
+<h2 id="1-concept-overview">1. Concept Overview</h2>
+
+<p>Backpropagation is the algorithmic heart of deep learning, the mechanism that makes training neural networks practical. Without it, deep learning as we know it would not exist. The algorithm solves a deceptively simple problem: given a neural network with potentially millions of parameters and a measure of how wrong its predictions are, how should we adjust each parameter to improve performance? The naive approach—computing the gradient of each parameter independently through finite differences—would require millions of forward passes per training example, making training prohibitively expensive. Backpropagation computes all these gradients simultaneously in roughly the same time as a single forward pass, a computational efficiency gain of millions.</p>
+
+<p>The fundamental insight of backpropagation is that gradients can be computed efficiently by reusing calculations. When we compute how the loss changes with respect to a parameter deep in the network, we’re applying the chain rule from calculus, but we’re doing so cleverly. Rather than recomputing the entire chain for each parameter, we compute intermediate derivatives once and reuse them. This dynamic programming approach transforms an exponential-time problem into a linear-time one, making training practical.</p>
+
+<p>What makes backpropagation particularly elegant is its local nature. Each layer needs only to know how to compute its own local gradients—how its outputs change with respect to its inputs and parameters. It receives gradients from the layer above and passes gradients to the layer below. This modularity means we can mix different layer types (convolutional, recurrent, attention, etc.) in the same network, and as long as each can compute its local gradients, backpropagation works seamlessly. This is why modern deep learning frameworks can support such diverse architectures—the backpropagation algorithm naturally handles any differentiable computational graph.</p>
+
+<p>Understanding backpropagation deeply means understanding not just the mechanics of computing gradients but why the algorithm is structured the way it is, what assumptions it makes, and where it can fail. The algorithm assumes our network consists of differentiable operations—this is why activation functions must be smooth. It assumes we can store intermediate computations from the forward pass—this is why memory limits constrain the batch sizes we can use. It propagates errors backward proportional to the weights—this is why extremely large or small weights cause gradient explosions or vanishing. These aren’t just implementation details; they’re fundamental properties that shape how we design and train networks.</p>
+
+<p>The historical importance of backpropagation cannot be overstated. While gradient descent had been known since the 19th century and the chain rule is elementary calculus, recognizing how to apply these efficiently to multi-layer networks was the breakthrough that revived neural network research in the 1980s after the first AI winter. The algorithm was actually discovered multiple times independently by different researchers (Werbos in 1974, Rumelhart/Hinton/Williams in 1986, and others), but it was the 1986 Nature paper that brought it to widespread attention and demonstrated its power on problems like speech recognition and image classification. This marks one of those rare moments in science where a computational technique—not new data or more powerful hardware—fundamentally expanded what was possible.</p>
+
+<h2 id="2-mathematical-foundation">2. Mathematical Foundation</h2>
+
+<p>To truly understand backpropagation, we must first be precise about what we’re computing and why. Our goal is to minimize a loss function \(\mathcal{L}(\mathbf{y}, \hat{\mathbf{y}})\) that measures the discrepancy between our network’s predictions \(\hat{\mathbf{y}}\) and the true labels \(\mathbf{y}\). The network is a composition of functions, one per layer, and each layer has parameters (weights and biases) that we can adjust. Gradient descent tells us that to minimize the loss, we should adjust each parameter \(\theta\) in the direction opposite to the gradient:</p>
+
+\[\theta \leftarrow \theta - \eta \frac{\partial \mathcal{L}}{\partial \theta}\]
+
+<p>The challenge is computing \(\frac{\partial \mathcal{L}}{\partial \theta}\) efficiently for every parameter in the network. Let’s build up the mathematics carefully, starting with a simple two-layer network and then generalizing.</p>
+
+<p>Consider a network with input \(\mathbf{x}\), one hidden layer with activation \(\mathbf{h}\), and output \(\hat{\mathbf{y}}\). The forward pass computes:</p>
+
+<p>\(\mathbf{z}^{[1]} = \mathbf{W}^{[1]} \mathbf{x} + \mathbf{b}^{[1]}\)
+\(\mathbf{h} = \mathbf{a}^{[1]} = g^{[1]}(\mathbf{z}^{[1]})\)
+\(\mathbf{z}^{[2]} = \mathbf{W}^{[2]} \mathbf{h} + \mathbf{b}^{[2]}\)
+\(\hat{\mathbf{y}} = \mathbf{a}^{[2]} = g^{[2]}(\mathbf{z}^{[2]})\)
+\(\mathcal{L} = \mathcal{L}(\mathbf{y}, \hat{\mathbf{y}})\)</p>
+
+<p>where \(g^{[l]}\) denotes the activation function for layer \(l\). To find \(\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[1]}}\), we apply the chain rule:</p>
+
+\[\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[1]}} = \frac{\partial \mathcal{L}}{\partial \hat{\mathbf{y}}} \frac{\partial \hat{\mathbf{y}}}{\partial \mathbf{z}^{[2]}} \frac{\partial \mathbf{z}^{[2]}}{\partial \mathbf{h}} \frac{\partial \mathbf{h}}{\partial \mathbf{z}^{[1]}} \frac{\partial \mathbf{z}^{[1]}}{\partial \mathbf{W}^{[1]}}\]
+
+<p>Computing this directly involves multiplying many Jacobian matrices, which seems expensive. The key insight of backpropagation is to compute these products right-to-left, reusing intermediate results.</p>
+
+<p>Define the error term for each layer as:</p>
+
+\[\boldsymbol{\delta}^{[l]} = \frac{\partial \mathcal{L}}{\partial \mathbf{z}^{[l]}}\]
+
+<p>This quantity represents the sensitivity of the loss to changes in the pre-activation of layer \(l\). For the output layer with binary cross-entropy loss and sigmoid activation, something remarkable happens:</p>
+
+\[\boldsymbol{\delta}^{[L]} = \frac{\partial \mathcal{L}}{\partial \mathbf{z}^{[L]}} = \frac{\partial \mathcal{L}}{\partial \mathbf{a}^{[L]}} \frac{\partial \mathbf{a}^{[L]}}{\partial \mathbf{z}^{[L]}}\]
+
+<p>The loss derivative is \(\frac{\partial \mathcal{L}}{\partial \mathbf{a}^{[L]}} = -\frac{\mathbf{y}}{\mathbf{a}^{[L]}} + \frac{1-\mathbf{y}}{1-\mathbf{a}^{[L]}}\), and the sigmoid derivative is \(\frac{\partial \mathbf{a}^{[L]}}{\partial \mathbf{z}^{[L]}} = \mathbf{a}^{[L]}(1-\mathbf{a}^{[L]})\). When you multiply these together and simplify, almost all terms cancel, leaving simply:</p>
+
+\[\boldsymbol{\delta}^{[L]} = \mathbf{a}^{[L]} - \mathbf{y}\]
+
+<p>This beautiful simplification—that the output error is just the difference between prediction and truth—occurs for several common loss/activation combinations (MSE with linear, cross-entropy with sigmoid, cross-entropy with softmax). It’s not a coincidence but a deliberate design: these combinations were chosen precisely because they yield simple gradients.</p>
+
+<p>For hidden layers, we propagate the error backward:</p>
+
+\[\boldsymbol{\delta}^{[l]} = (\mathbf{W}^{[l+1]})^T \boldsymbol{\delta}^{[l+1]} \odot g'^{[l]}(\mathbf{z}^{[l]})\]
+
+<p>Let’s parse this equation carefully because it encodes the core of backpropagation. The term \((\mathbf{W}^{[l+1]})^T \boldsymbol{\delta}^{[l+1]}\) propagates the error from layer \(l+1\) back to layer \(l\), weighted by the connection strengths (the transpose of the weight matrix). If a particular hidden neuron has strong connections to neurons with large errors in the next layer, it receives a large error signal. The Hadamard product \(\odot g'^{[l]}(\mathbf{z}^{[l]})\) then scales this by the local gradient of the activation function. This scaling is crucial: if the activation function is saturated (gradient near zero), the error signal is suppressed, which is exactly what causes the vanishing gradient problem in deep networks with sigmoid/tanh activations.</p>
+
+<p>Once we have the error terms \(\boldsymbol{\delta}^{[l]}\), computing parameter gradients becomes straightforward:</p>
+
+\[\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[l]}} = \boldsymbol{\delta}^{[l]} (\mathbf{a}^{[l-1]})^T\]
+
+\[\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[l]}} = \boldsymbol{\delta}^{[l]}\]
+
+<p>The weight gradient is an outer product of the error signal with the layer’s input, which has an elegant interpretation: we adjust connection strength proportionally to both the error at the output and the activation at the input. Strong input with large error means this connection should change substantially. The bias gradient is simply the error signal itself, since the bias always has an “input” of 1.</p>
+
+<p>The computational complexity analysis reveals backpropagation’s efficiency. A forward pass through a network with \(L\) layers, \(n\) neurons per layer, and batch size \(m\) requires \(O(L \cdot n^2 \cdot m)\) operations (dominated by matrix multiplications). Amazingly, backpropagation requires exactly the same complexity—we compute all gradients for all parameters in the same time as one forward pass. Compare this to naive gradient computation via finite differences, which would require \(O(P)\) forward passes where \(P\) is the number of parameters, potentially millions. This efficiency difference—linear versus quadratic in the number of parameters—is what makes deep learning tractable.</p>
+
+<h2 id="3-example--intuition">3. Example / Intuition</h2>
+
+<p>Let’s work through a complete example with actual numbers to demystify backpropagation. Consider the simplest interesting case: a two-layer network for binary classification. We have two inputs, two hidden neurons with ReLU activation, and one output with sigmoid activation.</p>
+
+<p><strong>Network architecture</strong>:
+\(\mathbf{x} \in \mathbb{R}^2 \xrightarrow{\mathbf{W}^{[1]}, \mathbf{b}^{[1]}} \mathbf{z}^{[1]} \in \mathbb{R}^2 \xrightarrow{\text{ReLU}} \mathbf{a}^{[1]} \in \mathbb{R}^2 \xrightarrow{\mathbf{W}^{[2]}, \mathbf{b}^{[2]}} z^{[2]} \in \mathbb{R} \xrightarrow{\text{Sigmoid}} \hat{y} \in (0,1)\)</p>
+
+<p><strong>Parameters</strong> (initialized):
+\(\mathbf{W}^{[1]} = \begin{bmatrix} 0.5 &amp; -0.3 \\ 0.2 &amp; 0.8 \end{bmatrix}, \quad \mathbf{b}^{[1]} = \begin{bmatrix} 0.1 \\ -0.2 \end{bmatrix}\)</p>
+
+\[\mathbf{W}^{[2]} = \begin{bmatrix} 1.0 &amp; -0.5 \end{bmatrix}, \quad b^{[2]} = 0.5\]
+
+<p><strong>Input and label</strong>: \(\mathbf{x} = \begin{bmatrix} 1.0 \\ 2.0 \end{bmatrix}\), \(y = 1\) (true class is positive)</p>
+
+<p>Now let’s trace through forward and backward passes step by step, understanding what each computation means.</p>
+
+<p><strong>Forward Pass</strong>:</p>
+
+\[\mathbf{z}^{[1]} = \begin{bmatrix} 0.5 &amp; -0.3 \\ 0.2 &amp; 0.8 \end{bmatrix} \begin{bmatrix} 1.0 \\ 2.0 \end{bmatrix} + \begin{bmatrix} 0.1 \\ -0.2 \end{bmatrix} = \begin{bmatrix} 0.5 - 0.6 + 0.1 \\ 0.2 + 1.6 - 0.2 \end{bmatrix} = \begin{bmatrix} 0.0 \\ 1.6 \end{bmatrix}\]
+
+<p>The first hidden neuron receives \(z^{[1]}_1 = 0\), exactly at the ReLU threshold. The second receives \(z^{[1]}_2 = 1.6\), a strong positive signal. Applying ReLU:</p>
+
+\[\mathbf{a}^{[1]} = \max(0, \mathbf{z}^{[1]}) = \begin{bmatrix} 0.0 \\ 1.6 \end{bmatrix}\]
+
+<p>The first neuron outputs zero (it’s on the boundary), while the second is active. This creates a sparse representation—only one of two neurons is contributing. Now these activations feed into the output layer:</p>
+
+\[z^{[2]} = \begin{bmatrix} 1.0 &amp; -0.5 \end{bmatrix} \begin{bmatrix} 0.0 \\ 1.6 \end{bmatrix} + 0.5 = 0 - 0.8 + 0.5 = -0.3\]
+
+<p>The output layer receives a slightly negative input, suggesting the network currently leans toward predicting class 0. Applying sigmoid:</p>
+
+\[\hat{y} = \sigma(-0.3) = \frac{1}{1 + e^{0.3}} \approx 0.426\]
+
+<p>Our network predicts 42.6% probability of class 1, but the true label is 1 (100% probability). The loss, using binary cross-entropy, is:</p>
+
+\[\mathcal{L} = -[1 \cdot \log(0.426) + 0 \cdot \log(1-0.426)] = -\log(0.426) \approx 0.853\]
+
+<p>This loss quantifies our mistake. Now backpropagation will tell us how to adjust each weight to reduce this loss.</p>
+
+<p><strong>Backward Pass</strong>:</p>
+
+<p>Starting from the output, the error is:</p>
+
+\[\delta^{[2]} = \hat{y} - y = 0.426 - 1 = -0.574\]
+
+<p>This negative error means our output is too low—we need to increase it. The gradient with respect to the output layer weights is:</p>
+
+\[\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[2]}} = \delta^{[2]} (\mathbf{a}^{[1]})^T = -0.574 \times \begin{bmatrix} 0.0 &amp; 1.6 \end{bmatrix} = \begin{bmatrix} 0 &amp; -0.918 \end{bmatrix}\]
+
+<p>The gradient is zero for the connection from the first hidden neuron (which was inactive) and -0.918 for the second. This tells us to increase \(W^{[2]}_2\) (currently -0.5) to make the output larger. This makes perfect sense: the second hidden neuron was active and could have contributed more to the output, so we strengthen that connection.</p>
+
+<p>Now we propagate error to the hidden layer:</p>
+
+\[\boldsymbol{\delta}^{[1]} = (\mathbf{W}^{[2]})^T \delta^{[2]} \odot \text{ReLU}'(\mathbf{z}^{[1]})\]
+
+<p>Let’s compute each part. The weights-transposed-times-error gives:</p>
+
+\[(\mathbf{W}^{[2]})^T \delta^{[2]} = \begin{bmatrix} 1.0 \\ -0.5 \end{bmatrix} \times (-0.574) = \begin{bmatrix} -0.574 \\ 0.287 \end{bmatrix}\]
+
+<p>The ReLU derivative is 1 where the input was positive, 0 where it was negative:</p>
+
+\[\text{ReLU}'(\mathbf{z}^{[1]}) = \text{ReLU}'\begin{pmatrix} \begin{bmatrix} 0.0 \\ 1.6 \end{bmatrix} \end{pmatrix} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}\]
+
+<p>Note that the first hidden neuron, which was exactly at the threshold (\(z=0\)), has zero gradient. This is the dying ReLU problem in action—neurons at or below zero don’t propagate gradients. The element-wise product gives:</p>
+
+\[\boldsymbol{\delta}^{[1]} = \begin{bmatrix} -0.574 \\ 0.287 \end{bmatrix} \odot \begin{bmatrix} 0 \\ 1 \end{bmatrix} = \begin{bmatrix} 0 \\ 0.287 \end{bmatrix}\]
+
+<p>Finally, the input layer weight gradients:</p>
+
+\[\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[1]}} = \boldsymbol{\delta}^{[1]} \mathbf{x}^T = \begin{bmatrix} 0 \\ 0.287 \end{bmatrix} \begin{bmatrix} 1.0 &amp; 2.0 \end{bmatrix} = \begin{bmatrix} 0 &amp; 0 \\ 0.287 &amp; 0.574 \end{bmatrix}\]
+
+<p>Only the second hidden neuron’s weights receive gradients. The gradient suggests increasing both weights to make this neuron activate more strongly for similar inputs, which would ultimately increase the network’s output toward the target of 1.</p>
+
+<p>This step-by-step walkthrough reveals the logic of backpropagation. Errors flow backward through the network, attenuated by the local derivatives. Active neurons with strong connections to high-error outputs receive large gradients and update substantially. Inactive neurons or those with weak connections receive small gradients and update little or not at all. This automatic assignment of credit and blame is what enables networks to learn complex functions—each parameter adjusts proportionally to its contribution to the error.</p>
+
+<h2 id="4-code-snippet">4. Code Snippet</h2>
+
+<p>Let’s implement backpropagation from scratch to understand every detail, then show how PyTorch automates this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Sigmoid activation: maps real numbers to (0, 1)
+    
+    Why sigmoid? It</span><span class="sh">'</span><span class="s">s smooth (differentiable everywhere), bounded (outputs
+    don</span><span class="sh">'</span><span class="s">t explode), and has probabilistic interpretation. The derivative
+    has a beautiful form: σ</span><span class="sh">'</span><span class="s">(z) = σ(z)(1 - σ(z)), which we can compute
+    from the activation itself without storing z.
+    </span><span class="sh">"""</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="p">.</span><span class="nf">clip</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="o">-</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">)))</span>  <span class="c1"># Clip for numerical stability
+</span>
+<span class="k">def</span> <span class="nf">sigmoid_derivative</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">Derivative in terms of activation (not z!)</span><span class="sh">"""</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">relu</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    ReLU: max(0, z) - outputs input if positive, zero otherwise
+    
+    Why ReLU? It</span><span class="sh">'</span><span class="s">s computationally trivial (just thresholding), doesn</span><span class="sh">'</span><span class="s">t
+    saturate for positive inputs (gradient is 1, not approaching 0),
+    and induces sparse representations. These properties make it vastly
+    superior for deep networks compared to sigmoid/tanh.
+    </span><span class="sh">"""</span>
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">relu_derivative</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Derivative is 1 where z &gt; 0, zero elsewhere
+    
+    Note: at z=0, derivative is undefined. In practice, we define it as 0
+    or sometimes 0.5, but this rarely matters since exact equality is rare.
+    </span><span class="sh">"""</span>
+    <span class="nf">return </span><span class="p">(</span><span class="n">z</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">).</span><span class="nf">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">NeuralNetworkBackprop</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">
+    Implementing backpropagation manually to understand every step.
+    
+    This implementation prioritizes clarity over efficiency. Each operation
+    is explicit, gradients are computed manually, and we store everything
+    needed for understanding. A production implementation would vectorize
+    more aggressively and use automatic differentiation.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">layer_sizes</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        layer_sizes: list like [2, 4, 3, 1] for 2 inputs, hidden layers of 4 and 3, 1 output
+        
+        We initialize weights using He initialization for hidden layers (assuming ReLU)
+        and small random values for output layer. This initialization scheme ensures
+        activations maintain reasonable scale through forward pass and gradients
+        maintain reasonable scale through backward pass.
+        </span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">layer_sizes</span> <span class="o">=</span> <span class="n">layer_sizes</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">L</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># Number of weight layers
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">n_in</span><span class="p">,</span> <span class="n">n_out</span> <span class="o">=</span> <span class="n">layer_sizes</span><span class="p">[</span><span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">layer_sizes</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+            
+            <span class="k">if</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">self</span><span class="p">.</span><span class="n">L</span><span class="p">:</span>
+                <span class="c1"># He initialization for ReLU layers: variance = 2/n_in
+</span>                <span class="c1"># Why? ReLU zeros half the neurons, so we need √2 instead of √1
+</span>                <span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">W</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">n_out</span><span class="p">,</span> <span class="n">n_in</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">sqrt</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">/</span> <span class="n">n_in</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Output layer: smaller weights for numerical stability
+</span>                <span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">W</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">n_out</span><span class="p">,</span> <span class="n">n_in</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.01</span>
+            
+            <span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">b</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">((</span><span class="n">n_out</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Initialized network with architecture: </span><span class="si">{</span><span class="n">layer_sizes</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Total parameters: </span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="nf">count_parameters</span><span class="p">()</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">count_parameters</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Count total trainable parameters</span><span class="sh">"""</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">W</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">].</span><span class="n">size</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">b</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">].</span><span class="n">size</span>
+        <span class="k">return</span> <span class="n">total</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Forward propagation with detailed caching for backward pass.
+        
+        We must store Z (pre-activations) and A (activations) for each layer
+        because backpropagation needs them. This is a memory vs computation tradeoff:
+        we could recompute forward pass during backward pass, but storing is faster.
+        </span><span class="sh">"""</span>
+        <span class="n">cache</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">A0</span><span class="sh">'</span><span class="p">:</span> <span class="n">X</span><span class="p">}</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">X</span>
+        
+        <span class="c1"># Hidden layers with ReLU
+</span>        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">L</span><span class="p">):</span>
+            <span class="n">Z</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">W</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">@</span> <span class="n">A</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">b</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="nf">relu</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+            <span class="n">cache</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">Z</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">Z</span>
+            <span class="n">cache</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">A</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span>
+        
+        <span class="c1"># Output layer with sigmoid
+</span>        <span class="n">Z</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">W</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">L</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">@</span> <span class="n">A</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">b</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">L</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+        <span class="n">cache</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">Z</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">L</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">Z</span>
+        <span class="n">cache</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">A</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">L</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span>
+        
+        <span class="k">return</span> <span class="n">A</span><span class="p">,</span> <span class="n">cache</span>
+    
+    <span class="k">def</span> <span class="nf">compute_loss</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">AL</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Binary cross-entropy loss with numerical stability tricks.
+        
+        The loss -[y log(ŷ) + (1-y) log(1-ŷ)] has a problem: if ŷ is exactly
+        0 or 1, we compute log(0) = -∞. We clip predictions to [ε, 1-ε] to prevent this.
+        </span><span class="sh">"""</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">Y</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1e-8</span>
+        <span class="n">AL_clipped</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">clip</span><span class="p">(</span><span class="n">AL</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">epsilon</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">Y</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="n">AL_clipped</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Y</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">AL_clipped</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">loss</span>
+    
+    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">AL</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">cache</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Backpropagation: compute all parameter gradients efficiently.
+        
+        The algorithm processes layers in reverse order, maintaining error terms
+        and using cached forward pass values. Each layer</span><span class="sh">'</span><span class="s">s gradient depends on
+        gradients from layers above it, creating the backward flow of information
+        that gives the algorithm its name.
+        </span><span class="sh">"""</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">Y</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">grads</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="c1"># Output layer error (for BCE + sigmoid this is remarkably simple!)
+</span>        <span class="n">dAL</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">Y</span> <span class="o">/</span> <span class="p">(</span><span class="n">AL</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Y</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">AL</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">))</span>  <span class="c1"># Derivative of loss
+</span>        <span class="n">dZL</span> <span class="o">=</span> <span class="n">dAL</span> <span class="o">*</span> <span class="nf">sigmoid_derivative</span><span class="p">(</span><span class="n">AL</span><span class="p">)</span>  <span class="c1"># But actually, dZL = AL - Y works directly
+</span>        
+        <span class="c1"># Simplification for BCE + Sigmoid (should use this in practice)
+</span>        <span class="n">dZL</span> <span class="o">=</span> <span class="n">AL</span> <span class="o">-</span> <span class="n">Y</span>
+        
+        <span class="c1"># Output layer gradients
+</span>        <span class="n">grads</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">dW</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">L</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">dZL</span> <span class="o">@</span> <span class="n">cache</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">A</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="sh">'</span><span class="p">].</span><span class="n">T</span>
+        <span class="n">grads</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">db</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">L</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">dZL</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="c1"># Initialize dA for propagation
+</span>        <span class="n">dA</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">W</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">L</span><span class="si">}</span><span class="sh">'</span><span class="p">].</span><span class="n">T</span> <span class="o">@</span> <span class="n">dZL</span>
+        
+        <span class="c1"># Hidden layers (backward through layers L-1 down to 1)
+</span>        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nf">reversed</span><span class="p">(</span><span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">L</span><span class="p">)):</span>
+            <span class="c1"># Current layer's error
+</span>            <span class="n">dZ</span> <span class="o">=</span> <span class="n">dA</span> <span class="o">*</span> <span class="nf">relu_derivative</span><span class="p">(</span><span class="n">cache</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">Z</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">])</span>
+            
+            <span class="c1"># Gradients for this layer
+</span>            <span class="n">grads</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">dW</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">dZ</span> <span class="o">@</span> <span class="n">cache</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">A</span><span class="si">{</span><span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="sh">'</span><span class="p">].</span><span class="n">T</span>
+            <span class="n">grads</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">db</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">dZ</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            
+            <span class="c1"># Propagate error to previous layer (if not input layer)
+</span>            <span class="k">if</span> <span class="n">l</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">dA</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">W</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">].</span><span class="n">T</span> <span class="o">@</span> <span class="n">dZ</span>
+        
+        <span class="k">return</span> <span class="n">grads</span>
+    
+    <span class="k">def</span> <span class="nf">update_parameters</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">grads</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Gradient descent update: θ ← θ - η ∇θ L
+        
+        We move parameters in the direction that decreases loss. The learning
+        rate η controls step size—too large causes overshooting and instability,
+        too small causes slow convergence.
+        </span><span class="sh">"""</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">L</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">W</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">-=</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">dW</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">b</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">-=</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">db</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span>
+    
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">print_every</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Complete training loop: forward → loss → backward → update
+        
+        This is the standard training loop for neural networks. Each iteration
+        processes the entire dataset (batch gradient descent). In practice, we</span><span class="sh">'</span><span class="s">d
+        use mini-batches for efficiency.
+        </span><span class="sh">"""</span>
+        <span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">):</span>
+            <span class="c1"># Forward propagation
+</span>            <span class="n">AL</span><span class="p">,</span> <span class="n">cache</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">forward</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+            
+            <span class="c1"># Compute loss
+</span>            <span class="n">loss</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">compute_loss</span><span class="p">(</span><span class="n">AL</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+            <span class="n">losses</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+            
+            <span class="c1"># Backward propagation
+</span>            <span class="n">grads</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">backward</span><span class="p">(</span><span class="n">AL</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">cache</span><span class="p">)</span>
+            
+            <span class="c1"># Update parameters
+</span>            <span class="n">self</span><span class="p">.</span><span class="nf">update_parameters</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">)</span>
+            
+            <span class="c1"># Print progress
+</span>            <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">print_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">accuracy</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">((</span><span class="n">AL</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">).</span><span class="nf">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">==</span> <span class="n">Y</span><span class="p">)</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Iteration </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="mi">4</span><span class="n">d</span><span class="si">}</span><span class="s">: Loss = </span><span class="si">{</span><span class="n">loss</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, Accuracy = </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="o">%</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">losses</span>
+
+<span class="c1"># Demonstrate on XOR problem
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training Neural Network on XOR using Manual Backpropagation</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># XOR dataset
+</span><span class="n">X_xor</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>  <span class="c1"># Shape: (2, 4)
+</span><span class="n">Y_xor</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>  <span class="c1"># Shape: (1, 4)
+</span>
+<span class="c1"># Create and train network
+</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>  <span class="c1"># For reproducibility
+</span><span class="n">network</span> <span class="o">=</span> <span class="nc">NeuralNetworkBackprop</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># 2→4→4→1 architecture
+</span><span class="n">losses</span> <span class="o">=</span> <span class="n">network</span><span class="p">.</span><span class="nf">train</span><span class="p">(</span><span class="n">X_xor</span><span class="p">,</span> <span class="n">Y_xor</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">print_every</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+
+<span class="c1"># Test final performance
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Final Results</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="n">AL_final</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">network</span><span class="p">.</span><span class="nf">forward</span><span class="p">(</span><span class="n">X_xor</span><span class="p">)</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="p">(</span><span class="n">AL_final</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">).</span><span class="nf">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Input: </span><span class="si">{</span><span class="n">X_xor</span><span class="p">[</span><span class="si">:</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s">, True: </span><span class="si">{</span><span class="nf">int</span><span class="p">(</span><span class="n">Y_xor</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span><span class="si">}</span><span class="s">, </span><span class="sh">"</span> <span class="o">+</span>
+          <span class="sa">f</span><span class="sh">"</span><span class="s">Predicted: </span><span class="si">{</span><span class="nf">int</span><span class="p">(</span><span class="n">predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span><span class="si">}</span><span class="s">, Probability: </span><span class="si">{</span><span class="n">AL_final</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Final accuracy: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">predictions</span> <span class="o">==</span> <span class="n">Y_xor</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">0</span><span class="o">%</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Success! Backpropagation enabled the network to learn XOR.</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now let’s see how PyTorch automates all of this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="n">torch.optim</span> <span class="k">as</span> <span class="n">optim</span>
+
+<span class="k">class</span> <span class="nc">SimpleNetPyTorch</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Same network using PyTorch</span><span class="sh">'</span><span class="s">s automatic differentiation.
+    
+    Notice how we don</span><span class="sh">'</span><span class="s">t implement backward() - PyTorch computes all gradients
+    automatically by building a computational graph during forward pass and
+    applying backpropagation when we call loss.backward().
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">(</span><span class="n">SimpleNetPyTorch</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">fc3</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="nf">fc1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="nf">fc2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">sigmoid</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="nf">fc3</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+<span class="c1"># Training with PyTorch
+</span><span class="n">model</span> <span class="o">=</span> <span class="nc">SimpleNetPyTorch</span><span class="p">()</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">BCELoss</span><span class="p">()</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">SGD</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Convert to PyTorch tensors
+</span><span class="n">X_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">(</span><span class="n">X_xor</span><span class="p">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># (4, 2)
+</span><span class="n">Y_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">(</span><span class="n">Y_xor</span><span class="p">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># (4, 1)
+</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training with PyTorch Automatic Differentiation</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">2000</span><span class="p">):</span>
+    <span class="c1"># Forward pass
+</span>    <span class="n">predictions</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">X_torch</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">Y_torch</span><span class="p">)</span>
+    
+    <span class="c1"># Backward pass - PyTorch does backpropagation automatically!
+</span>    <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>  <span class="c1"># Clear old gradients
+</span>    <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>        <span class="c1"># Compute gradients via automatic differentiation
+</span>    <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>       <span class="c1"># Update weights
+</span>    
+    <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="mi">500</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+            <span class="n">acc</span> <span class="o">=</span> <span class="p">((</span><span class="n">predictions</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">).</span><span class="nf">float</span><span class="p">()</span> <span class="o">==</span> <span class="n">Y_torch</span><span class="p">).</span><span class="nf">float</span><span class="p">().</span><span class="nf">mean</span><span class="p">()</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">:</span><span class="mi">4</span><span class="n">d</span><span class="si">}</span><span class="s">: Loss = </span><span class="si">{</span><span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, Accuracy = </span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="o">%</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># Final test
+</span><span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="n">final_preds</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">X_torch</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">PyTorch Final Results</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Input: </span><span class="si">{</span><span class="n">X_torch</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">numpy</span><span class="p">()</span><span class="si">}</span><span class="s">, Predicted: </span><span class="si">{</span><span class="n">final_preds</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The comparison reveals the power of modern frameworks. Our manual implementation took ~100 lines to implement backpropagation for a simple network. PyTorch handles arbitrary architectures automatically. However, understanding the manual implementation is invaluable. When debugging why a network isn’t training, when implementing custom layers, or when reading research papers that discuss gradient flow, the deep understanding from manual implementation is essential.</p>
+
+<h2 id="5-related-concepts">5. Related Concepts</h2>
+
+<p>Backpropagation doesn’t exist in isolation—it’s intimately connected to numerous other concepts in deep learning and machine learning more broadly. Understanding these connections transforms backpropagation from a mere algorithm into a window into the fundamental principles of learning systems.</p>
+
+<p>The most direct connection is to gradient descent and its variants. Backpropagation solves the problem of computing gradients, but it’s gradient descent that uses these gradients to update parameters. The choice of optimization algorithm—vanilla gradient descent, SGD with momentum, Adam, etc.—determines how we use backpropagation’s gradients. Understanding this separation helps clarify responsibilities: backpropagation tells us which direction decreases loss, while the optimizer decides how far to move in that direction and potentially accumulates information across iterations.</p>
+
+<p>Automatic differentiation, the technology underlying PyTorch and TensorFlow, is backpropagation’s computational cousin. While backpropagation is typically described as an algorithm for neural networks, automatic differentiation is a more general technique for computing derivatives of arbitrary programs. Modern frameworks build a computational graph during the forward pass, where nodes represent operations (matrix multiply, add, ReLU, etc.) and edges represent data flow. Backpropagation is then simply reverse-mode automatic differentiation on this graph. Understanding this connection explains why frameworks can handle arbitrary architectures—as long as each operation is differentiable, backpropagation works automatically.</p>
+
+<p>The vanishing and exploding gradient problems are direct consequences of how backpropagation propagates errors through layers. Each layer’s error is the previous layer’s error multiplied by weights and activation derivatives. If these multipliers are consistently less than 1 (as with saturated sigmoid/tanh activations), errors shrink exponentially with depth—this is vanishing gradients. If multipliers are greater than 1, errors explode. This understanding motivated numerous innovations: ReLU activations keep gradients at 1 for positive inputs, batch normalization keeps activations in reasonable ranges, residual connections provide gradient highways bypassing many layers, and careful initialization ensures neither vanishing nor explosion at the start of training.</p>
+
+<p>Computational graphs and backpropagation connect to a beautiful area of computer science: automatic differentiation and the calculus of variations. Every differentiable program can be seen as defining a function from inputs to outputs, and automatic differentiation provides the gradient of this function. This generality means backpropagation isn’t limited to feedforward networks—it works for recurrent networks (backpropagation through time), for networks with complex control flow, even for networks where the architecture itself depends on the data (dynamic networks). The principle is always the same: build the computational graph, compute forward pass, compute backward pass using the chain rule.</p>
+
+<p>Finally, backpropagation connects to the broader question of credit assignment in learning systems. When a network makes a mistake, which parameters were responsible? Backpropagation provides one answer: assign credit proportional to gradients. But this isn’t the only possible answer. Reinforcement learning uses different credit assignment mechanisms for sequential decision problems. Attention mechanisms provide another form of credit assignment for sequence-to-sequence tasks. Understanding backpropagation as one solution to credit assignment helps us appreciate both its power and its limitations, and motivates alternative approaches when backpropagation’s assumptions don’t hold.</p>
+
+<h2 id="6-fundamental-papers">6. Fundamental Papers</h2>
+
+<p><strong><a href="https://www.nature.com/articles/323533a0">“Learning representations by back-propagating errors” (1986)</a></strong><br />
+<em>Authors</em>: David E. Rumelhart, Geoffrey E. Hinton, Ronald J. Williams<br />
+This seminal Nature paper made backpropagation widely known and demonstrated its power on practical problems including speech recognition and image classification. The paper elegantly presented the algorithm, proved its correctness via the chain rule, and showed that multi-layer networks trained with backpropagation could solve problems impossible for single-layer perceptrons. The authors demonstrated learning internal representations—hidden layers discovering useful features automatically—which was revelatory at the time. This paper effectively launched the connectionist revolution and remains one of the most cited papers in all of machine learning. Reading it today, one is struck by how clearly the authors understood both the algorithm’s power and its challenges, including what we now call vanishing gradients.</p>
+
+<p><strong><a href="http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf">“Efficient BackProp” (1998)</a></strong><br />
+<em>Authors</em>: Yann LeCun, Léon Bottou, Genevieve B. Orr, Klaus-Robert Müller<br />
+This technical report, though less famous than the original backpropagation paper, is arguably more important for practitioners. LeCun and colleagues systematically analyzed what makes backpropagation work well in practice, covering initialization (why random weights should have carefully chosen variance), normalization (why standardizing inputs helps), learning rate selection, and activation function choices. The paper provides the practical wisdom accumulated from years of making backpropagation work on real problems. Many “tricks” taught in modern deep learning courses—like He initialization and input normalization—have their roots in insights from this paper. It’s essential reading for anyone who wants to train networks effectively rather than just mechanically applying backpropagation.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1211.5063">“On the difficulty of training Recurrent Neural Networks” (2013)</a></strong><br />
+<em>Authors</em>: Razvan Pascanu, Tomas Mikolov, Yoshua Bengio<br />
+This paper rigorously analyzed why backpropagation fails in recurrent neural networks—specifically, why gradients vanish or explode when propagating back through time. The authors showed that when unrolling an RNN through many time steps, gradients must pass through repeated matrix multiplications, and if the largest eigenvalue of the recurrent weight matrix is less than 1, gradients vanish exponentially; if greater than 1, they explode. The paper proposed gradient clipping to handle explosions (still standard practice today) and analyzed how LSTM’s gating mechanisms mitigate vanishing gradients. This work deepened our understanding of backpropagation’s limitations and motivated architectural innovations like LSTMs and GRUs that make recurrent backpropagation more stable.</p>
+
+<p><strong><a href="https://openreview.net/forum?id=BJJsrmfCZ">“Automatic differentiation in PyTorch” (2017)</a></strong><br />
+<em>Authors</em>: Adam Paszke, Sam Gross, Soumith Chintala, et al.<br />
+This paper described PyTorch’s autograd system, which automates backpropagation using dynamic computational graphs. Unlike earlier frameworks that required defining the network structure statically, PyTorch builds the graph during forward execution, allowing for dynamic architectures (where the computation depends on the data). The paper explained how PyTorch computes gradients using reverse-mode automatic differentiation—which is backpropagation generalized to arbitrary code, not just neural networks. This flexibility made PyTorch popular in research where experimenting with novel architectures is common. Understanding how frameworks automate backpropagation helps users debug gradient issues and implement custom operations correctly.</p>
+
+<p><strong><a href="http://www.deeplearningbook.org/contents/mlp.html">“Deep Learning” - Chapter 6 (2016)</a></strong><br />
+<em>Authors</em>: Ian Goodfellow, Yoshua Bengio, Aaron Courville<br />
+While not a research paper, this textbook chapter provides the most comprehensive and rigorous treatment of backpropagation available. It covers the algorithm from first principles, discusses computational graphs in detail, analyzes complexity, and addresses practical considerations like numerical stability and memory management. The chapter bridges theory and practice, explaining not just what backpropagation computes but why it computes it that way, how to implement it efficiently, and when it might fail. For anyone seeking a complete mathematical understanding of backpropagation, this chapter is the definitive resource. It’s also freely available online, making it accessible to all learners.</p>
+
+<h2 id="common-pitfalls-and-tricks">Common Pitfalls and Tricks</h2>
+
+<p>Perhaps the most insidious pitfall in backpropagation is failing to cache forward pass values. During the forward pass, we must store both pre-activations \(\mathbf{z}^{[l]}\) and activations \(\mathbf{a}^{[l]}\) for every layer because the backward pass needs them. Forgetting to cache these values or overwriting them before the backward pass completes means you’ll have to recompute the forward pass, doubling computation time, or worse, using incorrect values and getting wrong gradients. This is why modern frameworks automatically handle caching—the computational graph remembers all intermediate values. When implementing backpropagation manually, explicitly maintain a cache dictionary is good practice.</p>
+
+<p>Dimension mismatches between gradients and parameters are another common error that can be subtle to debug. The gradient \(\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[l]}}\) must have exactly the same shape as \(\mathbf{W}^{[l]}\)—if \(\mathbf{W}^{[l]}\) is \(n_{out} \times n_{in}\), so must be its gradient. When computing \(\boldsymbol{\delta}^{[l]} (\mathbf{a}^{[l-1]})^T\), getting the order of multiplication wrong or forgetting the transpose can produce a matrix of the wrong shape that Python might broadcast incorrectly, leading to subtle bugs. Always assert that gradient shapes match parameter shapes after computing them.</p>
+
+<p>Numerical instability in gradient computation can cause training to fail in ways that aren’t immediately obvious. When computing sigmoid derivatives \(\sigma'(z) = \sigma(z)(1-\sigma(z))\), if \(z\) is very large, \(\sigma(z) \approx 1\) and the derivative becomes \(1 \times (1-1) = 0\) numerically, even though mathematically it should be a small positive number. This causes gradients to vanish not due to network depth but due to floating-point precision. Clipping intermediate values to reasonable ranges and using numerically stable implementations (like log-sum-exp trick for softmax) prevents these issues.</p>
+
+<p>A powerful debugging technique is gradient checking through numerical approximation. For any parameter \(\theta\), we can approximate its gradient using finite differences:</p>
+
+\[\frac{\partial \mathcal{L}}{\partial \theta} \approx \frac{\mathcal{L}(\theta + \epsilon) - \mathcal{L}(\theta - \epsilon)}{2\epsilon}\]
+
+<p>with \(\epsilon \approx 10^{-7}\). Comparing this numerical gradient to the backpropagation gradient reveals implementation errors. The relative difference should be less than \(10^{-7}\) for correct implementations. However, gradient checking is slow (requires multiple forward passes) so use it only for debugging, never during actual training.</p>
+
+<p>Gradient clipping deserves special mention as an essential trick when training recurrent networks or any deep architecture prone to gradient explosion. We monitor the global gradient norm \(\|\nabla_\theta \mathcal{L}\|_2 = \sqrt{\sum_{\theta} (\frac{\partial \mathcal{L}}{\partial \theta})^2}\) and if it exceeds a threshold (typically 5 or 10), we scale all gradients by \(\frac{\text{threshold}}{\|\nabla_\theta \mathcal{L}\|_2}\). This preserves gradient directions while preventing the explosive updates that would destabilize training. It’s a simple trick that makes training many architectures possible.</p>
+
+<p>Finally, understanding that backpropagation is just an efficient implementation of the chain rule means you can derive gradients for custom layers yourself. When implementing a novel operation, derive its local gradient (how outputs change with respect to inputs), and backpropagation automatically incorporates it into the full network gradient. This understanding is empowering—you’re not limited to predefined layers but can create whatever computations your problem requires, as long as you can differentiate them.</p>
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<p>Backpropagation is fundamentally an efficient application of the calculus chain rule to compute gradients in neural networks. Its efficiency—computing all gradients in time proportional to one forward pass—makes training deep networks tractable. The algorithm processes layers in reverse order, propagating errors backward and using cached forward pass values to compute parameter gradients. The beautiful simplicity of \(\boldsymbol{\delta}^{[L]} = \mathbf{a}^{[L]} - \mathbf{y}\) for output layers with appropriate loss/activation pairs is not coincidence but careful design. Modern frameworks automate backpropagation through automatic differentiation, building computational graphs and applying reverse-mode differentiation. Understanding backpropagation deeply means understanding not just the mechanics but the why—why we cache values, why gradients vanish or explode, why certain design choices simplify gradients—and this understanding is essential for debugging training failures, designing novel architectures, and truly mastering deep learning rather than merely applying it.</p>
+
+<p>The journey from manually implementing backpropagation to using it seamlessly through PyTorch mirrors the journey from understanding to application, and both are necessary for expertise.</p>
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter03/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+    
+      
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter03/03_02_Gradient_Descent/">
+              03-02 Gradient Descent
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+      
+    
+    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li>
+        <h2>Next Post</h2>
+        <h3>
+          <a href="/deep-learning-self-learning/contents/en/chapter03/03_04_Training_Techniques/">
+            03-04 Practical Training Techniques
+          </a>
+        </h3>
+      </li>
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

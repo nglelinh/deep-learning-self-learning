@@ -1,0 +1,79 @@
+---
+layout: default
+---
+
+<div class="post">
+  <h1 class="post-title">
+    {{ page.title }}
+    {% if page.lesson_type %}
+      {% if page.lesson_type == 'required' %}
+        <span class="lesson-badge required large">{% t required %}</span>
+      {% elsif page.lesson_type == 'optional' %}
+        <span class="lesson-badge optional large">{% t optional %}</span>
+      {% endif %}
+    {% endif %}
+  </h1>
+  {{ content }}
+</div>
+
+<!-- Back to Chapter Home Link -->
+{% if page.chapter %}
+  {% assign chapter_path = page.lang | default: site.default_lang | append: "/chapter" | append: page.chapter | append: "/" %}
+  {% assign chapter_url = "/contents/" | append: chapter_path %}
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="{{ site.baseurl }}{{ chapter_url }}" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← {% if page.lang == 'vi' %}Quay lại đầu chương{% else %}Back to Chapter Home{% endif %}
+    </a>
+  </div>
+{% endif %}
+
+{% assign full_name = page.chapter | prepend: "chapter" %}
+{% assign all_posts = site.categories[full_name] | sort_natural: "order" %}
+{% assign current_lang = page.lang | default: site.default_lang %}
+{% assign post_list = all_posts | where: "lang", current_lang %}
+
+{% assign post_order = page.order%}
+
+{% assign post_before = page.order | minus: 1 %}
+{% assign post_after = page.order | plus: 1 %}
+
+{% if post_list.size >= 2 %}
+<div class="related">
+  <ul class="related-posts">
+    {% for post in post_list%}
+      {% if post.order == post_before %}
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="{{ site.baseurl }}{{ post.url }}">
+              {{ post.title }}
+            </a>
+          </h3>
+        </li>
+      {% endif %}
+    {% endfor %}
+    {% for post in post_list%}
+    {% if post.order == post_after %}
+      <li>
+        <h2>Next Post</h2>
+        <h3>
+          <a href="{{ site.baseurl }}{{ post.url }}">
+            {{ post.title }}
+          </a>
+        </h3>
+      </li>
+    {% endif %}
+  {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>

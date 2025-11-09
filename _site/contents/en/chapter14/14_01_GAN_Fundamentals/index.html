@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      14-01 Generative Adversarial Networks &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    14-01 Generative Adversarial Networks
+    
+      
+        <span class="lesson-badge required large">Required</span>
+      
+    
+  </h1>
+  <h1 id="generative-adversarial-networks-learning-through-competition">Generative Adversarial Networks: Learning Through Competition</h1>
+
+<p><img src="https://developers.google.com/static/machine-learning/gan/images/gan_diagram.svg" alt="GAN Architecture" />
+<em>Hình ảnh: Kiến trúc GAN với Generator và Discriminator. Nguồn: Google Developers</em></p>
+
+<h2 id="1-concept-overview">1. Concept Overview</h2>
+
+<p>Generative Adversarial Networks represent one of the most creative and impactful ideas in recent machine learning history. Introduced by Ian Goodfellow and colleagues in 2014, GANs approach generative modeling through an entirely novel paradigm: training two neural networks in competition with each other. A generator network learns to create fake data that looks real, while a discriminator network learns to distinguish real data from the generator’s fakes. As these networks improve through their adversarial game, the generator becomes increasingly skilled at creating realistic outputs, eventually producing samples indistinguishable from real data.</p>
+
+<p>The elegance and power of this idea is best appreciated by understanding what preceded it. Traditional generative models like Gaussian Mixture Models or Hidden Markov Models required explicit probabilistic formulations and often made restrictive assumptions about data distribution. Variational autoencoders used neural networks but required explicit density models and variational inference. GANs sidestep these complexities entirely. We never explicitly model the probability density \(p(x)\). Instead, we implicitly learn to sample from it through the generator network. This implicit density modeling enables generating high-dimensional, complex data (like realistic images) that would be intractable to model explicitly.</p>
+
+<p>The adversarial training framework is inspired by game theory, specifically zero-sum games where one player’s gain is another’s loss. The generator tries to fool the discriminator, while the discriminator tries not to be fooled. This creates a natural curriculum: as the discriminator improves at detecting fakes, it provides increasingly challenging training signal to the generator, pushing it to create better fakes. Conversely, as the generator improves, the discriminator must become more discerning. At equilibrium—when the discriminator cannot distinguish real from fake better than random guessing—the generator has learned to perfectly model the data distribution.</p>
+
+<p>Understanding GANs deeply requires grappling with several conceptual challenges. Training two networks simultaneously in opposition is fundamentally different from standard supervised learning where we optimize a single network. The loss for one network depends on the other network’s parameters, creating a moving target that can lead to instability. Mode collapse—where the generator learns to produce only a few types of outputs rather than capturing the full data diversity—is a persistent challenge. Measuring GAN performance is non-trivial since we can’t simply evaluate likelihood (we don’t have an explicit density model). These challenges make GANs notoriously difficult to train, requiring careful architecture design, loss function choices, and training tricks accumulated through years of research.</p>
+
+<p>Yet the results speak for themselves. GANs can generate photorealistic faces that don’t exist, transform horses into zebras, create art in specific styles, upscale low-resolution images, and countless other applications. The quality of GAN-generated images often exceeds VAEs and other generative approaches. This practical success, despite training difficulties, has made GANs one of the most active research areas in deep learning, with hundreds of variants proposed to stabilize training, improve quality, or enable new applications. Understanding the original GAN framework provides foundation for appreciating this vast landscape of extensions and applications.</p>
+
+<h2 id="2-mathematical-foundation">2. Mathematical Foundation</h2>
+
+<p>The mathematical framework of GANs is based on a minimax game between generator and discriminator. Let’s build this up carefully, understanding each component’s role and how they interact.</p>
+
+<p>The generator \(G\) is a neural network that maps random noise \(\mathbf{z}\) sampled from a simple distribution (typically \(\mathbf{z} \sim \mathcal{N}(0, I)\)) to fake data:</p>
+
+\[\mathbf{x}_{\text{fake}} = G(\mathbf{z}; \theta_G)\]
+
+<p>where \(\theta_G\) represents generator parameters. The noise vector \(\mathbf{z}\) serves as the source of variation—different noise vectors should produce different fake samples, and the generator learns to map the noise distribution to the data distribution.</p>
+
+<p>The discriminator \(D\) is a neural network that takes an input \(\mathbf{x}\) (either real data or generator output) and outputs a probability that it’s real:</p>
+
+\[D(\mathbf{x}; \theta_D) \in [0, 1]\]
+
+<p>where \(\theta_D\) represents discriminator parameters. Typically \(D\) ends with a sigmoid activation: \(D(\mathbf{x}) = \sigma(f_{\theta_D}(\mathbf{x}))\) where \(f\) is the discriminator’s feature extractor (convolutional layers, etc.).</p>
+
+<p>The training objective is formulated as a minimax game:</p>
+
+\[\min_G \max_D V(D, G) = \mathbb{E}_{\mathbf{x} \sim p_{\text{data}}}[\log D(\mathbf{x})] + \mathbb{E}_{\mathbf{z} \sim p_z}[\log(1 - D(G(\mathbf{z})))]\]
+
+<p>Let’s parse this carefully. The discriminator wants to maximize \(V\):</p>
+<ul>
+  <li>\(\mathbb{E}_{\mathbf{x} \sim p_{\text{data}}}[\log D(\mathbf{x})]\): Assign high probability to real data (\(D(\mathbf{x}) \to 1\), so \(\log D(\mathbf{x}) \to 0\))</li>
+  <li>\(\mathbb{E}_{\mathbf{z} \sim p_z}[\log(1 - D(G(\mathbf{z})))]\): Assign low probability to fakes (\(D(G(\mathbf{z})) \to 0\), so \(\log(1-D(G(\mathbf{z}))) \to 0\))</li>
+</ul>
+
+<p>The generator wants to minimize \(V\), specifically minimize \(\mathbb{E}_{\mathbf{z}}[\log(1 - D(G(\mathbf{z})))]\), making the discriminator assign high probability to its fakes.</p>
+
+<p>However, in practice, minimizing \(\log(1-D(G(\mathbf{z})))\) causes problems early in training when the generator is poor and \(D(G(\mathbf{z})) \approx 0\). The gradient of \(\log(1-D(G(\mathbf{z})))\) with respect to generator parameters is very small when \(D(G(\mathbf{z}))\) is small, providing weak learning signal exactly when the generator needs to improve most. The solution is a non-saturating variant: instead of minimizing \(\log(1-D(G(\mathbf{z})))\), maximize \(\log D(G(\mathbf{z}))\). These aren’t equivalent—the second provides much stronger gradients when \(D(G(\mathbf{z}))\) is small.</p>
+
+<p>The training alternates between discriminator and generator updates:</p>
+
+<p><strong>Discriminator update</strong> (maximize \(V\) with respect to \(\theta_D\)):</p>
+
+\[\theta_D \leftarrow \theta_D + \eta_D \nabla_{\theta_D} \left[\frac{1}{m}\sum_{i=1}^m \log D(\mathbf{x}^{(i)}) + \log(1-D(G(\mathbf{z}^{(i)})))\right]\]
+
+<p><strong>Generator update</strong> (minimize \(V\) with respect to \(\theta_G\), using non-saturating objective):</p>
+
+\[\theta_G \leftarrow \theta_G - \eta_G \nabla_{\theta_G} \left[\frac{1}{m}\sum_{i=1}^m \log D(G(\mathbf{z}^{(i)}))\right]\]
+
+<p>The gradients for the generator pass through the discriminator: \(\nabla_{\theta_G} D(G(\mathbf{z}))\) requires backpropagating through both \(G\) and \(D\). This coupling means generator training depends critically on discriminator providing meaningful gradients—if the discriminator is too perfect (always correctly identifying fakes), gradients vanish; if too poor (can’t distinguish real from fake), gradients are misleading.</p>
+
+<p>This delicate balance motivates various training strategies. We might train the discriminator \(k\) times per generator update (typically \(k=1\) or \(5\)), ensuring it stays ahead of the generator. We might add instance noise to discriminator inputs early in training, making its task harder and preventing it from becoming too strong too quickly. We might use different learning rates for generator and discriminator (often \(\eta_G &lt; \eta_D\)) to control their relative improvement rates.</p>
+
+<p>At the theoretical equilibrium where \(p_G = p_{\text{data}}\) (generator distribution equals data distribution), the optimal discriminator is \(D^*(\mathbf{x}) = \frac{p_{\text{data}}(\mathbf{x})}{p_{\text{data}}(\mathbf{x}) + p_G(\mathbf{x})} = 0.5\) everywhere—it cannot distinguish real from fake. At this point, both loss terms equal \(\log(0.5)\), and neither network can improve by changing. This equilibrium corresponds to the generator perfectly modeling the data distribution.</p>
+
+<p>However, reaching this equilibrium in practice is challenging. The training dynamics can cycle, oscillate, or diverge. Mode collapse occurs when the generator discovers it can fool the discriminator by generating only a subset of the data distribution (modes)—if producing only digit “1” fools the discriminator, why bother learning to generate other digits? Various regularization techniques (minibatch discrimination, unrolled optimization, spectral normalization) address these instabilities, showing that successful GAN training requires understanding the adversarial dynamics deeply, not just implementing the basic algorithm.</p>
+
+<h2 id="3-example--intuition">3. Example / Intuition</h2>
+
+<p>To build intuition for the adversarial training process, imagine a scenario with counterfeit money (generator) and bank inspector (discriminator). Initially, the counterfeiter produces poor fakes—perhaps using a home printer that makes obviously fake bills. The inspector easily identifies these as fake (discriminator outputs near 0 for generator samples). This clear signal tells the counterfeiter what’s wrong—the texture is wrong, colors are off, security features are missing.</p>
+
+<p>The counterfeiter improves, using better equipment and studying real bills more carefully. Now fakes are harder to detect—maybe they pass casual inspection but fail under UV light. The inspector learns to check UV features (discriminator learns more sophisticated detection). This pushes the counterfeiter to replicate UV features too.</p>
+
+<p>This arms race continues. Each improvement by one side forces the other to improve. Eventually, the counterfeiter creates bills so convincing that even expert inspection cannot reliably distinguish them from real bills—the equilibrium where \(D(\mathbf{x}) = 0.5\). At this point, the counterfeiter has learned to generate perfect currency.</p>
+
+<p>The GAN training dynamic follows this pattern. Let’s trace through early training on generating MNIST digits:</p>
+
+<p><strong>Iteration 1-10</strong> (Generator is terrible):</p>
+<ul>
+  <li>Generator produces noise that vaguely resembles digit shapes</li>
+  <li>Discriminator easily detects fakes (outputs near 0)</li>
+  <li>Strong gradients tell generator: “make sharper edges,” “center the digit,” “use correct aspect ratio”</li>
+</ul>
+
+<p><strong>Iteration 100-500</strong> (Generator is improving):</p>
+<ul>
+  <li>Generator produces digit-like shapes, but wrong proportions or artifacts</li>
+  <li>Discriminator learns subtle features distinguishing real from fake</li>
+  <li>Maybe real 3s have specific curve ratios that fakes miss</li>
+  <li>Generator learns to match these statistics</li>
+</ul>
+
+<p><strong>Iteration 1000+</strong> (Approaching equilibrium):</p>
+<ul>
+  <li>Generator produces convincing digits</li>
+  <li>Discriminator performance approaches 50% accuracy</li>
+  <li>Each generated sample looks like it could be from MNIST</li>
+  <li>Latent space has structure: different \(\mathbf{z}\) produces different digits</li>
+</ul>
+
+<p>A concrete example with numbers: suppose at some training iteration, we generate a fake digit and the discriminator outputs \(D(G(\mathbf{z})) = 0.3\). The discriminator is somewhat confident this is fake (30% probability of real). The generator’s loss is \(-\log(0.3) = 1.20\). Gradients indicate how to change generator parameters to increase \(D(G(\mathbf{z}))\) toward 1. The generator learns to adjust its outputs to fool this particular discriminator configuration.</p>
+
+<p>Meanwhile, the discriminator sees both this fake (which it correctly identified with 70% confidence) and real digits (which it should assign high probability). Suppose on a real digit, it outputs \(D(\mathbf{x}_{\text{real}}) = 0.95\)—correctly identifying real data with 95% confidence. Its loss combines both: \(-\log(0.95) - \log(1-0.3) = 0.05 + 0.36 = 0.41\). Gradients tell it how to better separate real from fake distributions.</p>
+
+<p>The adversarial dynamic is that the generator’s improvement makes the discriminator’s task harder (fakes become more convincing), while the discriminator’s improvement makes the generator’s task harder (must create more realistic fakes to fool a better detector). This mutual improvement drives both toward high capability.</p>
+
+<p>Mode collapse manifests distinctly. Suppose the generator discovers that producing “1”s consistently fools the discriminator (maybe because “1” is simple and the discriminator hasn’t learned to detect fake “1”s yet). The generator might converge to producing only “1”s or a few “1”-like outputs, ignoring the rest of the digit manifold. The discriminator eventually learns to detect these specific fake “1”s, but by then the generator might have mode-collapsed to a different digit. The training never achieves the equilibrium where all modes are covered. Various techniques address this: minibatch discrimination lets the discriminator detect lack of diversity, unrolled optimization allows the generator to anticipate discriminator’s response, and architectural choices can encourage diversity.</p>
+
+<h2 id="4-code-snippet">4. Code Snippet</h2>
+
+<p>Let’s implement a complete GAN from scratch to understand the training dynamics:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="n">torch.optim</span> <span class="k">as</span> <span class="n">optim</span>
+<span class="kn">from</span> <span class="n">torchvision</span> <span class="kn">import</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">transforms</span>
+<span class="kn">from</span> <span class="n">torchvision.utils</span> <span class="kn">import</span> <span class="n">make_grid</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="k">class</span> <span class="nc">Generator</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Generator: maps random noise to fake data.
+    
+    Architecture follows common pattern for image generation:
+    - Start with low spatial resolution but many channels
+    - Progressively upsample spatially while reducing channels
+    - Final layer outputs image with correct dimensions
+    
+    For MNIST: noise (100) → (256×7×7) → (128×14×14) → (1×28×28)
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">latent_dim</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">(</span><span class="n">Generator</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">latent_dim</span> <span class="o">=</span> <span class="n">latent_dim</span>
+        
+        <span class="c1"># Project and reshape noise
+</span>        <span class="c1"># Linear layer: 100 → 256*7*7, then reshape to (256, 7, 7)
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">latent_dim</span><span class="p">,</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span><span class="p">)</span>
+        
+        <span class="c1"># Upsample through transposed convolutions
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">deconv</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="c1"># 256×7×7 → 128×14×14
+</span>            <span class="n">nn</span><span class="p">.</span><span class="nc">ConvTranspose2d</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">BatchNorm2d</span><span class="p">(</span><span class="mi">128</span><span class="p">),</span>  <span class="c1"># Stabilizes training
+</span>            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            
+            <span class="c1"># 128×14×14 → 1×28×28
+</span>            <span class="n">nn</span><span class="p">.</span><span class="nc">ConvTranspose2d</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Tanh</span><span class="p">()</span>  <span class="c1"># Output in [-1, 1] (we'll normalize real data to match)
+</span>        <span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        z: (batch, latent_dim) random noise
+        Returns: (batch, 1, 28, 28) generated images
+        
+        The forward pass transforms unstructured noise into structured
+        images through learned transformations. Early in training, outputs
+        are noise. As training progresses, digit-like structures emerge.
+        </span><span class="sh">"""</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">fc</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>  <span class="c1"># Reshape to feature maps
+</span>        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">deconv</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+<span class="k">class</span> <span class="nc">Discriminator</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Discriminator: distinguishes real from fake.
+    
+    Architecture mirrors generator in reverse:
+    - Input: (1×28×28) image
+    - Conv layers progressively downsample while increasing channels
+    - Final: scalar output (probability image is real)
+    
+    Uses LeakyReLU instead of ReLU to prevent dying units, and no pooling
+    (stride for downsampling instead) following DCGAN best practices.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">(</span><span class="n">Discriminator</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">conv</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="c1"># 1×28×28 → 64×14×14
+</span>            <span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>  <span class="c1"># Negative slope 0.2
+</span>            
+            <span class="c1"># 64×14×14 → 128×7×7
+</span>            <span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">BatchNorm2d</span><span class="p">(</span><span class="mi">128</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+            
+            <span class="c1"># Flatten: 128×7×7 → 6272
+</span>            <span class="n">nn</span><span class="p">.</span><span class="nc">Flatten</span><span class="p">(),</span>
+            
+            <span class="c1"># Final classification
+</span>            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">128</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Sigmoid</span><span class="p">()</span>  <span class="c1"># Probability of being real
+</span>        <span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        x: (batch, 1, 28, 28) images
+        Returns: (batch, 1) probabilities of being real
+        
+        The discriminator learns hierarchical features for detection:
+        - Early layers: edges, textures (distinguish fake textures from real)
+        - Middle layers: shapes, patterns (detect anatomically incorrect digits)  
+        - Late layers: holistic features (identify subtle statistical differences)
+        </span><span class="sh">"""</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">conv</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Training GAN
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training Generative Adversarial Network on MNIST</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Hyperparameters
+</span><span class="n">latent_dim</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.0002</span>
+<span class="n">beta1</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># Adam beta1 (lower than default 0.9 for GAN stability)
+</span>
+<span class="c1"># Data loading (normalize to [-1, 1] to match generator's tanh output)
+</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="p">.</span><span class="nc">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="p">.</span><span class="nc">ToTensor</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="p">.</span><span class="nc">Normalize</span><span class="p">([</span><span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">])</span>  <span class="c1"># Normalize to [-1, 1]
+</span><span class="p">])</span>
+
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="nc">MNIST</span><span class="p">(</span><span class="sh">'</span><span class="s">./data</span><span class="sh">'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="nc">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> 
+                                          <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Initialize networks
+</span><span class="n">generator</span> <span class="o">=</span> <span class="nc">Generator</span><span class="p">(</span><span class="n">latent_dim</span><span class="o">=</span><span class="n">latent_dim</span><span class="p">)</span>
+<span class="n">discriminator</span> <span class="o">=</span> <span class="nc">Discriminator</span><span class="p">()</span>
+
+<span class="c1"># Optimizers (both use Adam with β1=0.5 for stability)
+</span><span class="n">optimizer_G</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">generator</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="n">beta1</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">))</span>
+<span class="n">optimizer_D</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">discriminator</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="n">beta1</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">))</span>
+
+<span class="c1"># Loss function (binary cross-entropy)
+</span><span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">BCELoss</span><span class="p">()</span>
+
+<span class="c1"># Labels for real and fake (used in loss computation)
+</span><span class="n">real_label</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">fake_label</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Generator parameters: </span><span class="si">{</span><span class="nf">sum</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">generator</span><span class="p">.</span><span class="nf">parameters</span><span class="p">())</span><span class="si">:</span><span class="p">,</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Discriminator parameters: </span><span class="si">{</span><span class="nf">sum</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">discriminator</span><span class="p">.</span><span class="nf">parameters</span><span class="p">())</span><span class="si">:</span><span class="p">,</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Training for </span><span class="si">{</span><span class="n">num_epochs</span><span class="si">}</span><span class="s"> epochs...</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">This demonstrates the adversarial training dynamics:</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Training loop
+</span><span class="n">G_losses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">D_losses</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">real_images</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">train_loader</span><span class="p">):</span>
+        <span class="n">batch_size_actual</span> <span class="o">=</span> <span class="n">real_images</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        
+        <span class="c1"># ==================== Train Discriminator ====================
+</span>        <span class="c1"># Discriminator wants to maximize: log D(x) + log(1 - D(G(z)))
+</span>        <span class="c1"># Equivalently, minimize: -log D(x) - log(1 - D(G(z)))
+</span>        
+        <span class="n">discriminator</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        
+        <span class="c1"># Train on real data: maximize log D(x)
+</span>        <span class="c1"># Loss: -log D(x) (negated because we minimize)
+</span>        <span class="n">labels_real</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">full</span><span class="p">((</span><span class="n">batch_size_actual</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">real_label</span><span class="p">)</span>
+        <span class="n">output_real</span> <span class="o">=</span> <span class="nf">discriminator</span><span class="p">(</span><span class="n">real_images</span><span class="p">)</span>
+        <span class="n">loss_D_real</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">output_real</span><span class="p">,</span> <span class="n">labels_real</span><span class="p">)</span>
+        
+        <span class="c1"># Train on fake data: maximize log(1 - D(G(z)))
+</span>        <span class="c1"># Loss: -log(1 - D(G(z)))
+</span>        <span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">batch_size_actual</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">)</span>
+        <span class="n">fake_images</span> <span class="o">=</span> <span class="nf">generator</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        <span class="n">labels_fake</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">full</span><span class="p">((</span><span class="n">batch_size_actual</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">fake_label</span><span class="p">)</span>
+        <span class="n">output_fake</span> <span class="o">=</span> <span class="nf">discriminator</span><span class="p">(</span><span class="n">fake_images</span><span class="p">.</span><span class="nf">detach</span><span class="p">())</span>  <span class="c1"># Detach! Don't backprop through G
+</span>        <span class="n">loss_D_fake</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">output_fake</span><span class="p">,</span> <span class="n">labels_fake</span><span class="p">)</span>
+        
+        <span class="c1"># Total discriminator loss
+</span>        <span class="n">loss_D</span> <span class="o">=</span> <span class="n">loss_D_real</span> <span class="o">+</span> <span class="n">loss_D_fake</span>
+        <span class="n">loss_D</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        <span class="n">optimizer_D</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+        
+        <span class="c1"># ==================== Train Generator ====================
+</span>        <span class="c1"># Generator wants to minimize: -log D(G(z))
+</span>        <span class="c1"># Equivalently, maximize: log D(G(z)) (non-saturating objective)
+</span>        
+        <span class="n">generator</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        
+        <span class="c1"># Generate fakes again (no detach this time - we need gradients through G!)
+</span>        <span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">batch_size_actual</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">)</span>
+        <span class="n">fake_images</span> <span class="o">=</span> <span class="nf">generator</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        <span class="n">output_fake_for_G</span> <span class="o">=</span> <span class="nf">discriminator</span><span class="p">(</span><span class="n">fake_images</span><span class="p">)</span>
+        
+        <span class="c1"># Generator tries to make discriminator output 1 (real) for its fakes
+</span>        <span class="n">labels_real_for_G</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">full</span><span class="p">((</span><span class="n">batch_size_actual</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">real_label</span><span class="p">)</span>
+        <span class="n">loss_G</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">output_fake_for_G</span><span class="p">,</span> <span class="n">labels_real_for_G</span><span class="p">)</span>
+        
+        <span class="n">loss_G</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        <span class="n">optimizer_G</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+        
+        <span class="c1"># Track losses
+</span>        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Once per epoch
+</span>            <span class="n">G_losses</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">loss_G</span><span class="p">.</span><span class="nf">item</span><span class="p">())</span>
+            <span class="n">D_losses</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">loss_D</span><span class="p">.</span><span class="nf">item</span><span class="p">())</span>
+    
+    <span class="c1"># Print progress
+</span>    <span class="nf">if </span><span class="p">(</span><span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Epoch [</span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="mi">2</span><span class="n">d</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="n">num_epochs</span><span class="si">}</span><span class="s">]  </span><span class="sh">"</span>
+              <span class="sa">f</span><span class="sh">"</span><span class="s">D_loss: </span><span class="si">{</span><span class="n">loss_D</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">  </span><span class="sh">"</span>
+              <span class="sa">f</span><span class="sh">"</span><span class="s">G_loss: </span><span class="si">{</span><span class="n">loss_G</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">  </span><span class="sh">"</span>
+              <span class="sa">f</span><span class="sh">"</span><span class="s">D(x): </span><span class="si">{</span><span class="n">output_real</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">  </span><span class="sh">"</span>
+              <span class="sa">f</span><span class="sh">"</span><span class="s">D(G(z)): </span><span class="si">{</span><span class="n">output_fake</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training Complete! Analyzing Results</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Generate samples
+</span><span class="n">generator</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="c1"># Generate 64 samples
+</span>    <span class="n">z_sample</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">)</span>
+    <span class="n">fake_samples</span> <span class="o">=</span> <span class="nf">generator</span><span class="p">(</span><span class="n">z_sample</span><span class="p">)</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Generated </span><span class="si">{</span><span class="n">fake_samples</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s"> fake MNIST digits</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Sample shape: </span><span class="si">{</span><span class="n">fake_samples</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (64, 1, 28, 28)
+</span>    
+    <span class="c1"># Check discriminator's opinion on generated samples
+</span>    <span class="n">disc_scores</span> <span class="o">=</span> <span class="nf">discriminator</span><span class="p">(</span><span class="n">fake_samples</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Discriminator scores for generated samples:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Mean: </span><span class="si">{</span><span class="n">disc_scores</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s"> (ideally ~0.5)</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Std:  </span><span class="si">{</span><span class="n">disc_scores</span><span class="p">.</span><span class="nf">std</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># If mean is near 0.5, generator is successfully fooling discriminator
+</span>    <span class="k">if</span> <span class="n">disc_scores</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.4</span> <span class="ow">and</span> <span class="n">disc_scores</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.6</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  ✓ Generator successfully fools discriminator!</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">disc_scores</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.3</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  ✗ Discriminator still easily detects fakes</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  ~ Generator is somewhat convincing</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Demonstrate latent space interpolation
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Latent Space Interpolation in GAN</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="c1"># Two random latent codes
+</span>    <span class="n">z1</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">)</span>
+    <span class="n">z2</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">)</span>
+    
+    <span class="c1"># Interpolate
+</span>    <span class="n">n_steps</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Generating </span><span class="si">{</span><span class="n">n_steps</span><span class="si">}</span><span class="s"> images by interpolating latent codes:</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">)):</span>
+        <span class="n">z_interp</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">z1</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">z2</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="nf">generator</span><span class="p">(</span><span class="n">z_interp</span><span class="p">)</span>
+        
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Step </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s"> (t=</span><span class="si">{</span><span class="n">t</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">): Generated image shape </span><span class="si">{</span><span class="n">img</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Interpolation should show smooth morphing between different digits.</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Quality of interpolation indicates latent space structure.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">GAN Training Insights</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Key observations from training:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">1. Adversarial dynamics create natural curriculum</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">2. Balance between D and G is crucial (neither should dominate)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">3. Loss values don</span><span class="sh">'</span><span class="s">t directly indicate quality (check samples!)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">4. Mode collapse is a constant danger (monitor diversity)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">5. Generated samples can be realistic despite imperfect equilibrium</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="5-related-concepts">5. Related Concepts</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td>The relationship between GANs and variational autoencoders illuminates different approaches to generative modeling. VAEs explicitly model the data distribution through a latent variable model $$p(\mathbf{x}) = \int p(\mathbf{x}</td>
+      <td>\mathbf{z})p(\mathbf{z})d\mathbf{z}$$, training through maximizing a variational lower bound on likelihood. This probabilistic framework provides theoretical guarantees and enables principled Bayesian inference but requires choosing parametric forms for distributions and often produces blurrier samples due to the reconstruction loss. GANs implicitly model distributions through the generator’s learned mapping from noise to data, using adversarial training instead of likelihood. This enables generating sharper, more realistic samples (because the discriminator can learn perceptual similarity rather than pixel-wise reconstruction) but lacks VAE’s theoretical guarantees and density estimation capability. Understanding both approaches reveals different tradeoffs: VAEs for theoretical understanding and density modeling, GANs for sample quality and flexibility.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>GANs connect to game theory through the minimax formulation. The generator and discriminator play a two-player zero-sum game where one’s gain (discriminator correctly identifying fakes) is the other’s loss (generator’s fakes being detected). Nash equilibrium—where neither player can improve by unilaterally changing strategy—corresponds to the generator matching the data distribution. However, reaching Nash equilibrium in practice is challenging because we’re using gradient-based optimization, which makes local moves, in a non-convex game where equilibria might not exist or be unstable. This connection to game theory helps understand why GAN training can be unstable (many games have no pure strategy Nash equilibrium or have multiple equilibria) and motivates algorithms from game theory like unrolled optimization.</p>
+
+<p>The relationship to adversarial examples and robustness provides an interesting perspective. In adversarial examples research, we perturb inputs slightly to fool classifiers. In GANs, we’re doing something similar but more ambitious: creating completely synthetic inputs that fool the discriminator. The discriminator trying to resist fooling is analogous to adversarial training for robust classifiers. This connection suggests techniques from adversarial robustness (like certified defenses) might apply to stabilizing GAN training, and conversely, that GAN discriminators might provide insights into what makes classifiers vulnerable to adversarial examples. The mathematical connection is deep: both involve optimizing over input space to maximize or minimize classifier outputs.</p>
+
+<p>GANs’ impact on semi-supervised learning demonstrates how generative models can improve discriminative tasks. By adding an auxiliary task to the discriminator—not just real/fake but also classifying real images into categories—we can leverage unlabeled data (used for adversarial training) to improve classification on limited labeled data. The discriminator learns representations through both tasks, with the generative task providing regularization and additional training signal. This semi-supervised GAN framework has been successful in low-data regimes, showing how generative and discriminative learning can be mutually beneficial.</p>
+
+<p>Finally, GANs connect to the broader theme of learning without direct supervision on the target task. We never show the generator example outputs—it learns purely from discriminator feedback. This is analogous to reinforcement learning where agents learn from reward signals rather than supervised examples. Indeed, GANs can be viewed as applying policy gradient methods (from RL) to generative modeling, with the discriminator providing rewards (high scores for good fakes) that guide generator improvement. This connection has led to hybrid approaches combining GAN training with reinforcement learning principles for improved stability and performance.</p>
+
+<h2 id="6-fundamental-papers">6. Fundamental Papers</h2>
+
+<p><strong><a href="https://arxiv.org/abs/1406.2661">“Generative Adversarial Networks” (2014)</a></strong><br />
+<em>Authors</em>: Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, Yoshua Bengio<br />
+This foundational paper introduced the GAN framework and remains one of the most influential papers in modern machine learning. Goodfellow conceived the basic idea—training generator and discriminator adversarially—reportedly in a single evening, though the paper’s development involved significant theoretical and empirical work. The paper formalized GANs as a minimax game, proved that at equilibrium the generator learns the data distribution, and demonstrated results on several datasets. What made GANs revolutionary was not just the results but the paradigm shift: generative modeling through competition rather than likelihood maximization or reconstruction. The paper acknowledged training challenges (instability, mode collapse) while showing the approach’s potential. Reading it today, one appreciates both the clarity of the core idea and the prescience about challenges that would occupy researchers for years. GANs demonstrated that sometimes the best way to solve a problem isn’t to attack it directly (modeling density explicitly) but indirectly (learning to generate through adversarial feedback).</p>
+
+<p><strong><a href="https://arxiv.org/abs/1511.06434">“Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks” (2016)</a></strong><br />
+<em>Authors</em>: Alec Radford, Luke Metz, Soumith Chintala<br />
+The DCGAN paper made GANs practical by identifying architectural guidelines that stabilize training and improve sample quality. The authors systematically explored design choices—convolutional vs fully connected layers, batch normalization placement, activation functions—finding combinations that consistently worked. Their guidelines: use strided convolutions instead of pooling, use batch norm in both networks (except generator output and discriminator input), use ReLU in generator except output (tanh), use LeakyReLU in discriminator. These weren’t theoretically motivated but empirically discovered through extensive experimentation, demonstrating that practical progress sometimes comes from systematic engineering rather than mathematical insight. DCGAN showed that GANs could generate high-quality images (64×64 faces) and that the learned latent space had meaningful structure—arithmetic in latent space (vector for “smiling woman” minus “neutral woman” plus “neutral man”) produced “smiling man.” This demonstrated GANs learn disentangled representations encoding semantic attributes, making them useful beyond generation for representation learning.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1606.03498">“Improved Techniques for Training GANs” (2016)</a></strong><br />
+<em>Authors</em>: Tim Salimans, Ian Goodfellow, Wojciech Zaremba, Vicki Cheung, Alec Radford, Xi Chen<br />
+This paper addressed GAN training instabilities through several techniques: feature matching (train generator to match statistics of discriminator’s intermediate features rather than fool final output), minibatch discrimination (let discriminator compare examples within a batch to detect lack of diversity), historical averaging (penalize parameters for deviating from historical averages), one-sided label smoothing (use 0.9 instead of 1.0 for real labels to prevent discriminator overconfidence), and virtual batch normalization (normalize using statistics from a reference batch to reduce batch-to-batch variance). Each technique addresses a specific failure mode: feature matching reduces instability, minibatch discrimination combats mode collapse, label smoothing prevents discriminator saturation. The paper also introduced the Inception Score for quantifying sample quality, providing an automated metric (though imperfect) for evaluating GANs. This work established that successful GAN training requires multiple complementary tricks rather than just the basic algorithm, providing a toolkit that has become standard practice.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1710.10196">“Progressive Growing of GANs for Improved Quality, Stability, and Variation” (2018)</a></strong><br />
+<em>Authors</em>: Tero Karras, Timo Aila, Samuli Laine, Jaakko Lehtinen (NVIDIA)<br />
+This paper introduced progressive training: start with low-resolution images (4×4) and progressively add layers to generator and discriminator, increasing resolution (8×8, 16×16, …, up to 1024×1024). This approach stabilizes training (easier to learn low-resolution distributions first) and enables generating very high-resolution images that were previously impossible. The paper also introduced improved evaluation metrics and training techniques. The generated faces at 1024×1024 resolution were shockingly realistic, demonstrating GANs’ capability for high-fidelity generation. Progressive growing has influenced subsequent work (StyleGAN builds on it) and demonstrated that training curriculum—gradually increasing task difficulty—applies not just to data (easy examples first) but to architecture (simple generation first, complex later). The work showed that GAN training instability can be partially addressed through careful training procedures, not just architecture or loss modifications.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1812.04948">“A Style-Based Generator Architecture for Generative Adversarial Networks” (2019)</a></strong><br />
+<em>Authors</em>: Tero Karras, Samuli Laine, Timo Aila (NVIDIA)<br />
+StyleGAN redesigned the generator architecture to enable fine-grained control over generated images. Instead of feeding latent code directly into the generator, StyleGAN maps it through a mapping network to an intermediate latent space \(\mathcal{W}\), then uses this to control style at different resolution levels through adaptive instance normalization. This enables incredible control: changing coarse styles (pose, face shape) independently of fine styles (hair texture, skin pores). The paper demonstrated unprecedented image quality and introduced tools for analyzing and improving GANs (like perceptual path length metric). StyleGAN generated faces indistinguishable from real photographs, achieving a milestone in generative modeling. The architecture’s success showed that generator design matters enormously—not all ways of mapping noise to images are equally good. The disentanglement properties (ability to control attributes independently) made StyleGAN useful for semantic editing and style transfer, expanding GANs from pure generation to controllable synthesis.</p>
+
+<h2 id="common-pitfalls-and-tricks">Common Pitfalls and Tricks</h2>
+
+<p>Mode collapse is perhaps the most frustrating failure mode in GAN training. The generator discovers it can fool the discriminator by producing only a few types of outputs rather than the full data diversity. For MNIST, this might mean generating only 1s and 7s, ignoring other digits. For faces, generating only certain poses or expressions. Detection requires checking sample diversity, not just quality—generate many samples and verify they span the data distribution. Solutions include minibatch discrimination (let discriminator see multiple samples and detect homogeneity), unrolled optimization (let generator anticipate discriminator’s response), or using different loss functions like Wasserstein GAN that are less prone to mode collapse. Understanding that mode collapse stems from the generator finding local optima in the adversarial game helps recognize when it’s occurring and motivates these solutions.</p>
+
+<p>Discriminator overpowering the generator early in training is common and destructive. If the discriminator becomes too good too quickly, it assigns probability near 0 to all generator outputs, providing vanishing gradients to the generator which can’t learn. This happens when the discriminator is too large relative to the generator, learning rate is too high for discriminator, or real/fake distributions are easily separable initially (generator starts terrible). Solutions: train discriminator less frequently (every \(k\) generator updates), use lower learning rate for discriminator, add noise to discriminator inputs (blurring the real/fake distinction), or use one-sided label smoothing (real labels = 0.9 instead of 1.0, reducing discriminator overconfidence). Monitoring \(D(\mathbf{x}_{\text{real}})\) and \(D(G(\mathbf{z}))\) helps: if real is always near 1 and fake always near 0, discriminator is too strong.</p>
+
+<p>Using batch normalization in the discriminator can cause problems when batch sizes are small because batch statistics become unreliable. With batch size 1, batch norm fails entirely. Solutions include using larger batch sizes (at least 32-64), using layer normalization or instance normalization instead of batch norm, or using virtual batch normalization (normalize using statistics from a fixed reference batch). Understanding that discriminator’s normalization affects what features it learns helps debug training issues related to batch size.</p>
+
+<p>Evaluating GAN quality is challenging because we can’t compute likelihood. Inception Score measures both quality (samples should be confidently classified) and diversity (should cover all classes) using a pre-trained classifier, but has limitations (doesn’t detect memorization, biased toward ImageNet classes). Fréchet Inception Distance (FID) compares statistics of real and generated samples in feature space, providing a better metric but still imperfect. For practical work, visual inspection remains important—generate many samples and manually check quality and diversity. Quantitative metrics complement but don’t replace human evaluation.</p>
+
+<p>A powerful technique for stable training is spectral normalization, which constrains discriminator’s Lipschitz constant by normalizing weight matrices by their spectral norm (largest singular value). This prevents the discriminator from having arbitrarily large gradients, stabilizing training dynamics. The technique adds minimal computational cost (computing spectral norm via power iteration) while dramatically improving stability. Modern GANs often use spectral normalization in the discriminator as standard practice, showing how theoretical understanding of training dynamics (Lipschitz constraint improves stability) translates to practical techniques.</p>
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<p>Generative Adversarial Networks learn to generate realistic data by training two networks adversarially: a generator creating fake samples from random noise and a discriminator distinguishing real from fake. The adversarial objective is formulated as a minimax game where the generator minimizes what the discriminator maximizes, creating competitive dynamics that drive both networks toward higher capability. At equilibrium, the generator’s distribution matches the data distribution and the discriminator cannot distinguish real from fake better than random guessing, though reaching this equilibrium in practice is challenging. Training alternates between discriminator updates (using real data and generator’s fakes) and generator updates (trying to fool the discriminator), requiring careful balancing to prevent either network from dominating. Mode collapse—the generator producing limited diversity—remains a persistent challenge addressed through architectural choices, modified objectives, and training techniques. GANs excel at generating high-quality, realistic samples (often superior to VAEs) and learning latent spaces with semantic structure enabling interpolation and manipulation. The implicit density modeling approach enables generating complex high-dimensional data without explicit probabilistic formulations, though at the cost of training instability and difficulty in evaluation. Understanding GANs deeply means appreciating both their creative power in generating realistic data and the delicate training dynamics that make them challenging but rewarding to work with in practice.</p>
+
+<p>The GAN framework demonstrates that competition can be a powerful learning signal, a principle that has influenced deep learning far beyond generative modeling.</p>
+
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter14/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter14/14_00_Introduction/">
+              14 Generative Adversarial Networks (GANs)
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+    
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

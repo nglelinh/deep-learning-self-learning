@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      11-01 Generative Models - Core Concepts &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    11-01 Generative Models - Core Concepts
+    
+      
+        <span class="lesson-badge required large">Required</span>
+      
+    
+  </h1>
+  <h1 id="generative-models-learning-to-create">Generative Models: Learning to Create</h1>
+
+<h2 id="1-concept-overview">1. Concept Overview</h2>
+
+<p>Generative models represent a fundamental shift in how we think about machine learning. While discriminative models learn to map inputs to outputs—classifying images into categories, translating sentences between languages, or predicting stock prices from historical data—generative models learn to understand and reproduce the underlying structure of data itself. They ask a more ambitious question: given examples of some data distribution, can we learn to generate new, realistic samples from that distribution? This capability opens remarkable possibilities: creating photorealistic images of people who don’t exist, composing music in the style of Bach, designing molecules with desired properties, or augmenting limited datasets with synthetic examples.</p>
+
+<p>Understanding why generative modeling matters requires appreciating what’s fundamentally different about generation versus discrimination. A discriminative classifier for dog breeds learns features sufficient to distinguish breeds—the shape of ears, coat patterns, size. It doesn’t need to understand how these features combine to form a coherent dog, or what makes a dog anatomically plausible versus impossible. A generative model must learn deeper structure: how pixels organize into textures, how textures form objects, how objects compose into scenes, and crucially, what combinations are realistic versus unrealistic. This deeper understanding means generative models often learn richer representations than discriminative models, making them valuable even when generation itself isn’t the end goal.</p>
+
+<p>The mathematical framework for generative models is rooted in probability theory and statistical modeling. We assume data \(\mathbf{x}\) comes from some unknown distribution \(p_{\text{data}}(\mathbf{x})\). Our goal is to learn a model distribution \(p_{\text{model}}(\mathbf{x}; \theta)\) parameterized by \(\theta\) (neural network weights) that approximates \(p_{\text{data}}\). If we succeed, sampling from \(p_{\text{model}}\) should produce data indistinguishable from samples from \(p_{\text{data}}\). This probabilistic framing connects generative models to maximum likelihood estimation, variational inference, and other foundational concepts in statistics, while the use of neural networks for the model provides unprecedented flexibility in the functional forms we can represent.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Different generative modeling approaches make different tradeoffs between sample quality, training stability, theoretical guarantees, and computational requirements. Autoregressive models like PixelCNN explicitly model $$p(\mathbf{x}) = \prod_i p(x_i</td>
+      <td>x_{&lt;i})\(, decomposing generation into sequential conditional distributions. They provide exact likelihoods and stable training but generate slowly (one pixel at a time). Variational autoencoders introduce latent variables\)\mathbf{z}\(and model\)p(\mathbf{x}) = \int p(\mathbf{x}</td>
+      <td>\mathbf{z})p(\mathbf{z})d\mathbf{z}\(, optimizing a tractable lower bound on likelihood. They enable fast sampling and provide a principled probabilistic framework but often generate somewhat blurry samples. Generative adversarial networks sidestep explicit density modeling entirely, using adversarial training to learn a generator that implicitly samples from\)p_{\text{data}}$$. They often produce the sharpest, most realistic samples but suffer from training instability and mode collapse.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The practical applications of generative models extend far beyond novelty. In computer vision, they enable data augmentation (generating additional training examples), super-resolution (upscaling low-resolution images), inpainting (filling missing regions), and style transfer (applying artistic styles to photographs). In natural language processing, they power text generation, machine translation through generative seq2seq models, and data augmentation for low-resource languages. In drug discovery, they generate molecular structures with desired properties. In creative applications, they assist artists and designers. In anomaly detection, they identify outliers by measuring how well they fit the learned distribution. Understanding generative models opens this vast application space while providing insights into data structure that benefit even purely discriminative tasks.</p>
+
+<p>Yet generative modeling is fundamentally harder than discriminative learning in several ways. The space of possible outputs is exponentially larger than the space of labels (\(2^{784}\) possible MNIST images vs 10 labels). The learned distribution must capture complex dependencies between output dimensions (pixels aren’t independent—nearby pixels are correlated, object parts must be anatomically coherent). Evaluation is challenging—we can’t simply compute accuracy as we can for classification. And generation requires understanding not just what separates classes but what makes examples realistic, a higher bar of understanding. These challenges make generative modeling an active research area where major innovations continue to emerge regularly.</p>
+
+<h2 id="2-mathematical-foundation">2. Mathematical Foundation</h2>
+
+<p>The mathematical foundation of generative models rests on probability theory, likelihood estimation, and information theory. Let’s build these concepts systematically to understand what we’re optimizing when training generative models and why different approaches lead to different algorithms.</p>
+
+<h3 id="probability-density-and-the-data-distribution">Probability Density and the Data Distribution</h3>
+
+<p>We assume our training data \(\{\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(m)}\}\) consists of independent samples from some unknown distribution \(p_{\text{data}}(\mathbf{x})\). For images, \(\mathbf{x}\) might be \(28 \times 28 = 784\) dimensional (MNIST) or \(224 \times 224 \times 3 = 150,528\) dimensional (ImageNet). The distribution \(p_{\text{data}}\) assigns probability density to each possible \(\mathbf{x}\), with high density for realistic images (actual digits, photographs of objects) and low or zero density for unrealistic ones (random noise, anatomically impossible scenes).</p>
+
+<p>Our goal is to learn a parametric model \(p_{\text{model}}(\mathbf{x}; \theta)\) that approximates \(p_{\text{data}}\). The parameters \(\theta\) (neural network weights) should be set such that the model assigns high probability to training examples and, by generalization, to held-out examples from the same distribution. The standard approach is maximum likelihood estimation:</p>
+
+\[\theta^* = \arg\max_\theta \prod_{i=1}^{m} p_{\text{model}}(\mathbf{x}^{(i)}; \theta)\]
+
+<p>Taking logarithms (for numerical stability and mathematical convenience):</p>
+
+\[\theta^* = \arg\max_\theta \sum_{i=1}^{m} \log p_{\text{model}}(\mathbf{x}^{(i)}; \theta) = \arg\max_\theta \frac{1}{m}\sum_{i=1}^{m} \log p_{\text{model}}(\mathbf{x}^{(i)}; \theta)\]
+
+<p>The average log-likelihood \(\frac{1}{m}\sum_{i=1}^{m} \log p_{\text{model}}(\mathbf{x}^{(i)}; \theta)\) approximates the expected log-likelihood under the data distribution:</p>
+
+\[\mathbb{E}_{\mathbf{x} \sim p_{\text{data}}}[\log p_{\text{model}}(\mathbf{x}; \theta)]\]
+
+<p>Maximizing this expectation is equivalent to minimizing the Kullback-Leibler divergence between data and model distributions:</p>
+
+\[KL(p_{\text{data}} \| p_{\text{model}}) = \mathbb{E}_{\mathbf{x} \sim p_{\text{data}}}[\log p_{\text{data}}(\mathbf{x}) - \log p_{\text{model}}(\mathbf{x}; \theta)]\]
+
+<p>Since \(p_{\text{data}}\) is fixed, minimizing KL divergence is equivalent to maximizing expected log-likelihood. This connects maximum likelihood to information theory and provides a principled measure of how well our model approximates the true distribution.</p>
+
+<h3 id="explicit-vs-implicit-density-models">Explicit vs Implicit Density Models</h3>
+
+<p>The challenge in generative modeling is that for high-dimensional data, explicitly defining \(p_{\text{model}}(\mathbf{x}; \theta)\) that’s both flexible (can approximate complex distributions) and tractable (we can actually compute it and optimize it) is difficult.</p>
+
+<p><strong>Explicit density models</strong> directly parameterize \(p_{\text{model}}(\mathbf{x}; \theta)\):</p>
+
+<p><em>Autoregressive models</em> use the chain rule to factorize density:</p>
+
+\[p(\mathbf{x}) = p(x_1) p(x_2|x_1) p(x_3|x_1, x_2) \cdots p(x_d|x_1, \ldots, x_{d-1}) = \prod_{i=1}^{d} p(x_i|\mathbf{x}_{&lt;i})\]
+
+<table>
+  <tbody>
+    <tr>
+      <td>Each conditional $$p(x_i</td>
+      <td>\mathbf{x}_{&lt;i})\(is modeled with a neural network. This is exact—we can compute\)p(\mathbf{x})\(for any\)\mathbf{x}$$—but generation is slow (must generate dimensions sequentially) and the conditional independence assumptions might be restrictive.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Flow-based models</em> use invertible transformations \(\mathbf{x} = f(\mathbf{z})\) where \(\mathbf{z} \sim p_{\mathbf{z}}\) is simple (Gaussian). The change of variables formula gives:</p>
+
+\[p_{\mathbf{x}}(\mathbf{x}) = p_{\mathbf{z}}(f^{-1}(\mathbf{x})) \left|\det \frac{\partial f^{-1}}{\partial \mathbf{x}}\right|\]
+
+<p>This is exact and allows both density evaluation and fast sampling, but requires carefully designed architectures to ensure invertibility and tractable Jacobian determinants.</p>
+
+<p><strong>Implicit density models</strong> define a stochastic procedure for sampling without explicitly specifying \(p_{\text{model}}(\mathbf{x})\):</p>
+
+<p><em>GANs</em> learn a generator \(G: \mathcal{Z} \to \mathcal{X}\) such that if \(\mathbf{z} \sim p_{\mathbf{z}}\) then \(G(\mathbf{z})\) has distribution approximating \(p_{\text{data}}\). We never compute \(p_{\text{model}}\) but can sample efficiently. Training uses adversarial objective instead of likelihood.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><em>VAEs</em> partially explicit: they model $$p(\mathbf{x}</td>
+      <td>\mathbf{z})\(explicitly but marginalize over latent\)\mathbf{z}$$ using variational approximation. They maximize a lower bound on log-likelihood (ELBO) instead of likelihood itself.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The choice between explicit and implicit, between different model families, depends on priorities: do we need exact likelihood (for anomaly detection, compression)? Do we need fast sampling (for real-time generation)? Do we prioritize sample quality over training stability? Understanding these tradeoffs guides model selection for specific applications.</p>
+
+<h3 id="latent-variable-models">Latent Variable Models</h3>
+
+<p>Many generative models introduce latent variables \(\mathbf{z}\) representing hidden factors of variation. The generative process becomes:</p>
+
+<ol>
+  <li>Sample latent code: \(\mathbf{z} \sim p(\mathbf{z})\) (typically \(\mathcal{N}(0, I)\))</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>Generate data: $$\mathbf{x} \sim p(\mathbf{x}</td>
+          <td>\mathbf{z}; \theta)$$</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ol>
+
+<p>The marginal distribution is:</p>
+
+\[p(\mathbf{x}; \theta) = \int p(\mathbf{x}|\mathbf{z}; \theta) p(\mathbf{z}) d\mathbf{z}\]
+
+<p>This framework is powerful because latent variables can represent interpretable factors (for faces: pose, lighting, expression, identity) and low-dimensional latent spaces can capture high-dimensional data manifolds. The challenge is that computing the integral for exact likelihood requires integrating over all possible latent codes, which is intractable for continuous \(\mathbf{z}\). Different generative models address this differently:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>VAEs use variational inference, introducing an encoder $$q(\mathbf{z}</td>
+      <td>\mathbf{x}; \phi)\(that approximates the posterior\)p(\mathbf{z}</td>
+      <td>\mathbf{x})$$ and optimizing the Evidence Lower BOund (ELBO):</td>
+    </tr>
+  </tbody>
+</table>
+
+\[\log p(\mathbf{x}; \theta) \geq \mathbb{E}_{\mathbf{z} \sim q(\mathbf{z}|\mathbf{x}; \phi)}[\log p(\mathbf{x}|\mathbf{z}; \theta)] - KL(q(\mathbf{z}|\mathbf{x}; \phi) \| p(\mathbf{z}))\]
+
+<p>This lower bound is tractable—we can estimate it via sampling and optimize it via backpropagation through the reparameterization trick.</p>
+
+<p>GANs bypass the likelihood computation entirely, directly training the generator \(G(\mathbf{z}; \theta)\) to produce samples indistinguishable from data through adversarial training. We never compute \(p(\mathbf{x})\) but implicitly learn to sample from it.</p>
+
+<h3 id="evaluation-metrics">Evaluation Metrics</h3>
+
+<p>Evaluating generative models is challenging because we care about distribution matching, not just performance on specific examples. Several metrics have been proposed:</p>
+
+<p><strong>Log-likelihood</strong> (when computable): Measures how well the model assigns probability to test data. Higher is better. However, high likelihood doesn’t guarantee good samples (a model memorizing training data has perfect likelihood on training set).</p>
+
+<p><strong>Inception Score</strong> (IS): Generates samples, classifies them with Inception network, computes:</p>
+
+\[IS = \exp(\mathbb{E}_{\mathbf{x} \sim p_G}[KL(p(y|\mathbf{x}) \| p(y))])\]
+
+<p>Measures both quality (samples should be confidently classified) and diversity (should cover all classes). Higher is better, but IS has issues (biased toward ImageNet classes, doesn’t detect memorization).</p>
+
+<p><strong>Fréchet Inception Distance</strong> (FID): Compares statistics of real and generated samples in Inception feature space, treating them as Gaussians and computing:</p>
+
+\[FID = \|\mu_r - \mu_g\|^2 + \text{Tr}(\Sigma_r + \Sigma_g - 2(\Sigma_r \Sigma_g)^{1/2})\]
+
+<p>Lower FID indicates closer distributions. More reliable than IS but still imperfect (assumes Gaussian features).</p>
+
+<p>Understanding these metrics’ limitations is as important as using them. They correlate with perceptual quality but aren’t perfect. Visual inspection remains crucial. For specific applications, domain-specific metrics (face identity preservation for face generation, molecular validity for drug design) often matter more than generic metrics.</p>
+
+<h2 id="3-example--intuition">3. Example / Intuition</h2>
+
+<p>To build intuition for generative models, let’s think about learning to generate handwritten digits. Imagine you’ve never seen the digit “3” but have seen thousands of other digits. Could you invent a plausible “3”? Probably not—you lack understanding of what makes a valid digit, what “3” specifically looks like, how strokes connect.</p>
+
+<p>Now suppose you see thousands of examples of each digit including “3”. You could learn: “3” has two rounded parts, typically connected, orientation upright, strokes smooth. With this understanding, you could generate novel “3”s—not copies of training examples but new variations following the learned pattern. This is what generative models do, but discovered automatically from data rather than described verbally.</p>
+
+<p>Consider the different approaches to this task:</p>
+
+<p><strong>Autoregressive approach</strong>: Generate the digit pixel by pixel, left-to-right, top-to-bottom. At each position, predict the pixel value conditioned on all previous pixels. This ensures each pixel is consistent with preceding ones (if the top already looks like “3”, continue that pattern). The sequential generation provides strong guidance but is slow—784 sequential decisions for MNIST.</p>
+
+<p><strong>VAE approach</strong>: Learn a latent space where different regions correspond to different digits and variations. To generate a “3”, sample a latent code from the “3 region” (learned during training) and decode it through the decoder network. The latent space provides efficient generation (sample once, decode once) and enables interpolation (smoothly morph between digits). However, the reconstruction-based training might produce blurry samples because pixel-wise MSE doesn’t capture perceptual quality well.</p>
+
+<p><strong>GAN approach</strong>: Train a generator to fool a discriminator that’s trying to detect fakes. The generator learns whatever mapping from noise to images makes the discriminator unable to detect fakes. This adversarial training doesn’t require explicit pixel-wise reconstruction, allowing the generator to prioritize perceptual realism over exact pixel matching. The result is often sharper, more realistic samples, though training can be unstable and mode collapse might occur (generator only learns to create certain types of “3”s).</p>
+
+<p>Let’s trace through a concrete example with a simple toy dataset: 2D points forming two clusters (representing two modes of a distribution). The true distribution \(p_{\text{data}}\) is a mixture of two Gaussians:</p>
+
+\[p_{\text{data}}(\mathbf{x}) = 0.5 \mathcal{N}(\mathbf{x}; [2, 2], I) + 0.5 \mathcal{N}(\mathbf{x}; [-2, -2], I)\]
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>Autoregressive model</strong>: Models $$p(x_2</td>
+      <td>x_1)p(x_1)\(. For the first mode centered at [2, 2], it learns\)p(x_1) \approx \mathcal{N}(2, 1)\(and\)p(x_2</td>
+      <td>x_1) \approx \mathcal{N}(2, 1)\((roughly independent since we're using Gaussians, but could learn correlations). Generation: sample\)x_1 \sim p(x_1)\(, then\)x_2 \sim p(x_2</td>
+      <td>x_1)$$.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>VAE</strong>: Introduces latent \(z \in \mathbb{R}\). Learns that \(z &lt; 0\) maps to mode at [-2, -2] and \(z &gt; 0\) maps to mode at [2, 2]. To generate, sample \(z \sim \mathcal{N}(0, 1)\), decode to \(\mathbf{x}\). The latent space smoothly varies from one mode to another.</p>
+
+<p><strong>GAN</strong>: Generator learns to map 1D noise \(z\) to 2D points such that the discriminator (which sees both real samples from the two Gaussians and generated samples) cannot distinguish real from fake. The generator might learn a nonlinear function that maps \(z \in [-3, 0]\) to the first mode and \(z \in [0, 3]\) to the second mode.</p>
+
+<p>Each approach successfully generates from both modes if trained properly, but they differ in how they represent the distribution, training stability, and generation procedure. Understanding these differences through simple examples builds intuition for their behavior on complex data like images.</p>
+
+<h2 id="4-code-snippet">4. Code Snippet</h2>
+
+<p>Let’s implement different generative modeling approaches on a toy dataset to understand their mechanics:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="n">torch.optim</span> <span class="k">as</span> <span class="n">optim</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="c1"># Generate toy data: mixture of 8 Gaussians in a circle
+</span><span class="k">def</span> <span class="nf">generate_mixture_data</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10000</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Generate 2D data from mixture of 8 Gaussians arranged in a circle.
+    
+    This toy dataset lets us visualize learned distributions and compare
+    different generative modeling approaches. Each Gaussian represents a
+    </span><span class="sh">"</span><span class="s">mode</span><span class="sh">"</span><span class="s"> - generative models should learn to generate from all modes.
+    </span><span class="sh">"""</span>
+    <span class="n">n_modes</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="mf">2.0</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="mf">0.02</span>
+    
+    <span class="c1"># Angles for modes evenly spaced around circle
+</span>    <span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">n_modes</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    
+    <span class="c1"># Centers of Gaussians
+</span>    <span class="n">centers</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">cos</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nf">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">thetas</span><span class="p">])</span>
+    
+    <span class="c1"># Sample from mixture
+</span>    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n_samples</span><span class="p">):</span>
+        <span class="c1"># Choose mode uniformly
+</span>        <span class="n">mode_idx</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="n">n_modes</span><span class="p">)</span>
+        <span class="c1"># Sample from chosen Gaussian
+</span>        <span class="n">sample</span> <span class="o">=</span> <span class="n">centers</span><span class="p">[</span><span class="n">mode_idx</span><span class="p">]</span> <span class="o">+</span> <span class="n">std</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">centers</span>
+
+<span class="c1"># Generate training data
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Generative Models on Toy 2D Dataset</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="n">data_train</span><span class="p">,</span> <span class="n">true_centers</span> <span class="o">=</span> <span class="nf">generate_mixture_data</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">data_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nc">FloatTensor</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Generated </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span><span class="si">}</span><span class="s"> samples from 8 Gaussian modes</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Data shape: </span><span class="si">{</span><span class="n">data_train</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (10000, 2)
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Mode centers:</span><span class="se">\n</span><span class="si">{</span><span class="n">true_centers</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 1. Simple Autoregressive Model
+</span><span class="k">class</span> <span class="nc">AutoregressiveModel</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Simple 2D autoregressive model: p(x) = p(x2|x1) * p(x1)
+    
+    Models p(x1) as mixture of logistics, p(x2|x1) as conditional mixture.
+    Demonstrates explicit density modeling - we can compute p(x) exactly.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="c1"># p(x1): mixture of logistics
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">x1_logits</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">n_components</span><span class="p">))</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">x1_means</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">n_components</span><span class="p">))</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">x1_scales</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">ones</span><span class="p">(</span><span class="n">n_components</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">)</span>
+        
+        <span class="c1"># p(x2|x1): neural network outputting mixture parameters
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">x2_net</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">n_components</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># logits, means, scales for mixture
+</span>        <span class="p">)</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_components</span>
+    
+    <span class="k">def</span> <span class="nf">log_prob</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Compute log p(x) = log p(x1) + log p(x2|x1)
+        
+        This is what makes it an explicit density model - we can evaluate
+        probability of any point, enabling maximum likelihood training.
+        </span><span class="sh">"""</span>
+        <span class="n">x1</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">x2</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+        
+        <span class="c1"># log p(x1): log mixture of logistics
+</span>        <span class="n">logits_1</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">x1_logits</span><span class="p">.</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># (1, n_components)
+</span>        <span class="n">means_1</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">x1_means</span><span class="p">.</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">scales_1</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">abs</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">x1_scales</span><span class="p">).</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.01</span>
+        
+        <span class="c1"># Logistic log-prob for each component
+</span>        <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">means_1</span><span class="p">)</span> <span class="o">/</span> <span class="n">scales_1</span>
+        <span class="n">log_probs_1</span> <span class="o">=</span> <span class="o">-</span><span class="n">z</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">functional</span><span class="p">.</span><span class="nf">softplus</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">)</span> <span class="o">-</span> <span class="n">torch</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="n">scales_1</span><span class="p">)</span>
+        
+        <span class="c1"># Mixture log-prob using log-sum-exp
+</span>        <span class="n">log_p_x1</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">logsumexp</span><span class="p">(</span><span class="n">logits_1</span> <span class="o">+</span> <span class="n">log_probs_1</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> \
+                   <span class="n">torch</span><span class="p">.</span><span class="nf">logsumexp</span><span class="p">(</span><span class="n">logits_1</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># log p(x2|x1): conditional mixture
+</span>        <span class="n">params_2</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">x2_net</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+        <span class="n">params_2</span> <span class="o">=</span> <span class="n">params_2</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">n_components</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        
+        <span class="n">logits_2</span> <span class="o">=</span> <span class="n">params_2</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">means_2</span> <span class="o">=</span> <span class="n">params_2</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">scales_2</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">abs</span><span class="p">(</span><span class="n">params_2</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="mf">0.01</span>
+        
+        <span class="n">z_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">means_2</span><span class="p">)</span> <span class="o">/</span> <span class="n">scales_2</span>
+        <span class="n">log_probs_2</span> <span class="o">=</span> <span class="o">-</span><span class="n">z_2</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">functional</span><span class="p">.</span><span class="nf">softplus</span><span class="p">(</span><span class="o">-</span><span class="n">z_2</span><span class="p">)</span> <span class="o">-</span> <span class="n">torch</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="n">scales_2</span><span class="p">)</span>
+        
+        <span class="n">log_p_x2_given_x1</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">logsumexp</span><span class="p">(</span><span class="n">logits_2</span> <span class="o">+</span> <span class="n">log_probs_2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> \
+                            <span class="n">torch</span><span class="p">.</span><span class="nf">logsumexp</span><span class="p">(</span><span class="n">logits_2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># Total log-prob
+</span>        <span class="k">return</span> <span class="n">log_p_x1</span> <span class="o">+</span> <span class="n">log_p_x2_given_x1</span>
+    
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Generate samples: first sample x1, then x2|x1
+        
+        Demonstrates sequential generation - characteristic of autoregressive.
+        Exact sampling from learned distribution.
+        </span><span class="sh">"""</span>
+        <span class="c1"># Sample x1
+</span>        <span class="n">probs_1</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">softmax</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">x1_logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">components</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">multinomial</span><span class="p">(</span><span class="n">probs_1</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="n">means</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">x1_means</span><span class="p">[</span><span class="n">components</span><span class="p">]</span>
+        <span class="n">scales</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">abs</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">x1_scales</span><span class="p">[</span><span class="n">components</span><span class="p">])</span>
+        
+        <span class="c1"># Logistic samples (approximately using Gaussian)
+</span>        <span class="n">x1</span> <span class="o">=</span> <span class="n">means</span> <span class="o">+</span> <span class="n">scales</span> <span class="o">*</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span>
+        
+        <span class="c1"># Sample x2|x1
+</span>        <span class="n">params_2</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">x2_net</span><span class="p">(</span><span class="n">x1</span><span class="p">.</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">params_2</span> <span class="o">=</span> <span class="n">params_2</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">n_components</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        
+        <span class="c1"># Sample component for each x1
+</span>        <span class="n">logits_2</span> <span class="o">=</span> <span class="n">params_2</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">probs_2</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">softmax</span><span class="p">(</span><span class="n">logits_2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">components_2</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">multinomial</span><span class="p">(</span><span class="n">probs_2</span><span class="p">,</span> <span class="mi">1</span><span class="p">).</span><span class="nf">squeeze</span><span class="p">()</span>
+        
+        <span class="c1"># Get parameters for chosen components
+</span>        <span class="n">means_2</span> <span class="o">=</span> <span class="n">params_2</span><span class="p">[</span><span class="nf">range</span><span class="p">(</span><span class="n">n_samples</span><span class="p">),</span> <span class="n">components_2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">scales_2</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">abs</span><span class="p">(</span><span class="n">params_2</span><span class="p">[</span><span class="nf">range</span><span class="p">(</span><span class="n">n_samples</span><span class="p">),</span> <span class="n">components_2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+        
+        <span class="n">x2</span> <span class="o">=</span> <span class="n">means_2</span> <span class="o">+</span> <span class="n">scales_2</span> <span class="o">*</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">torch</span><span class="p">.</span><span class="nf">stack</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Train autoregressive model
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">1. Training Autoregressive Model (Explicit Density)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+
+<span class="n">ar_model</span> <span class="o">=</span> <span class="nc">AutoregressiveModel</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ar_optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">ar_model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+
+<span class="n">ar_model</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">200</span><span class="p">):</span>
+    <span class="c1"># Shuffle data
+</span>    <span class="n">indices</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randperm</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">data_tensor</span><span class="p">))</span>
+    
+    <span class="c1"># Mini-batch training
+</span>    <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span>
+    <span class="n">epoch_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">data_tensor</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">):</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="n">data_tensor</span><span class="p">[</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">batch_size</span><span class="p">]]</span>
+        
+        <span class="c1"># Compute negative log-likelihood
+</span>        <span class="n">log_probs</span> <span class="o">=</span> <span class="n">ar_model</span><span class="p">.</span><span class="nf">log_prob</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">log_probs</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span>  <span class="c1"># Negative log-likelihood
+</span>        
+        <span class="n">ar_optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        <span class="n">ar_optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+        
+        <span class="n">epoch_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="mi">50</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">:</span><span class="mi">3</span><span class="n">d</span><span class="si">}</span><span class="s">: NLL = </span><span class="si">{</span><span class="n">epoch_loss</span><span class="o">/</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">data_tensor</span><span class="p">)</span><span class="o">/</span><span class="n">batch_size</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Generate samples
+</span><span class="n">ar_model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="n">samples_ar</span> <span class="o">=</span> <span class="n">ar_model</span><span class="p">.</span><span class="nf">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Generated </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">samples_ar</span><span class="p">)</span><span class="si">}</span><span class="s"> samples</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Sample mean: </span><span class="si">{</span><span class="n">samples_ar</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">).</span><span class="nf">numpy</span><span class="p">()</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Data mean:   </span><span class="si">{</span><span class="n">data_tensor</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">).</span><span class="nf">numpy</span><span class="p">()</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 2. Simple GAN for comparison
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">2. Training GAN (Implicit Density)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ToyGenerator</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">Simple generator for 2D data</span><span class="sh">"""</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">latent_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">latent_dim</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># Output 2D points
+</span>        <span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">net</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ToyDiscriminator</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">Simple discriminator for 2D data</span><span class="sh">"""</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Sigmoid</span><span class="p">()</span>
+        <span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">gen</span> <span class="o">=</span> <span class="nc">ToyGenerator</span><span class="p">(</span><span class="n">latent_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">disc</span> <span class="o">=</span> <span class="nc">ToyDiscriminator</span><span class="p">()</span>
+
+<span class="n">gen_optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">gen</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.0002</span><span class="p">,</span> <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">))</span>
+<span class="n">disc_optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">disc</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.0002</span><span class="p">,</span> <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">))</span>
+
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">BCELoss</span><span class="p">()</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training GAN on mixture of Gaussians...</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="c1"># Train discriminator
+</span>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># k discriminator steps per generator step
+</span>        <span class="n">disc</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        
+        <span class="c1"># Real data
+</span>        <span class="n">batch_real</span> <span class="o">=</span> <span class="n">data_tensor</span><span class="p">[</span><span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">data_tensor</span><span class="p">),</span> <span class="p">(</span><span class="mi">128</span><span class="p">,))]</span>
+        <span class="n">labels_real</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">ones</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">output_real</span> <span class="o">=</span> <span class="nf">disc</span><span class="p">(</span><span class="n">batch_real</span><span class="p">)</span>
+        <span class="n">loss_d_real</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">output_real</span><span class="p">,</span> <span class="n">labels_real</span><span class="p">)</span>
+        
+        <span class="c1"># Fake data
+</span>        <span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">fake</span> <span class="o">=</span> <span class="nf">gen</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        <span class="n">labels_fake</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">zeros</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">output_fake</span> <span class="o">=</span> <span class="nf">disc</span><span class="p">(</span><span class="n">fake</span><span class="p">.</span><span class="nf">detach</span><span class="p">())</span>
+        <span class="n">loss_d_fake</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">output_fake</span><span class="p">,</span> <span class="n">labels_fake</span><span class="p">)</span>
+        
+        <span class="n">loss_d</span> <span class="o">=</span> <span class="n">loss_d_real</span> <span class="o">+</span> <span class="n">loss_d_fake</span>
+        <span class="n">loss_d</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        <span class="n">disc_optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+    
+    <span class="c1"># Train generator
+</span>    <span class="n">gen</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">fake</span> <span class="o">=</span> <span class="nf">gen</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="nf">disc</span><span class="p">(</span><span class="n">fake</span><span class="p">)</span>
+    <span class="n">labels_real_for_g</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">ones</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">loss_g</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">labels_real_for_g</span><span class="p">)</span>
+    
+    <span class="n">loss_g</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+    <span class="n">gen_optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="mi">200</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">:</span><span class="mi">4</span><span class="n">d</span><span class="si">}</span><span class="s">: D_loss = </span><span class="si">{</span><span class="n">loss_d</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="sh">"</span>
+              <span class="sa">f</span><span class="sh">"</span><span class="s">G_loss = </span><span class="si">{</span><span class="n">loss_g</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="sh">"</span>
+              <span class="sa">f</span><span class="sh">"</span><span class="s">D(real) = </span><span class="si">{</span><span class="n">output_real</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="sh">"</span>
+              <span class="sa">f</span><span class="sh">"</span><span class="s">D(fake) = </span><span class="si">{</span><span class="n">output_fake</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Generate samples
+</span><span class="n">gen</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="n">z_sample</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">samples_gan</span> <span class="o">=</span> <span class="nf">gen</span><span class="p">(</span><span class="n">z_sample</span><span class="p">)</span>
+    
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">GAN generated </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">samples_gan</span><span class="p">)</span><span class="si">}</span><span class="s"> samples</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Checking mode coverage (samples should cluster around 8 centers)...</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Check if GAN covers all modes (mode collapse detection)
+# For each true center, count nearby generated samples
+</span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">center</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">true_centers</span><span class="p">):</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">norm</span><span class="p">(</span><span class="n">samples_gan</span> <span class="o">-</span> <span class="n">torch</span><span class="p">.</span><span class="nc">FloatTensor</span><span class="p">(</span><span class="n">center</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">nearby</span> <span class="o">=</span> <span class="p">(</span><span class="n">distances</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">).</span><span class="nf">sum</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Mode </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s"> (center </span><span class="si">{</span><span class="n">center</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s">): </span><span class="si">{</span><span class="n">nearby</span><span class="si">}</span><span class="s"> nearby samples</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="nf">all</span><span class="p">((</span><span class="n">torch</span><span class="p">.</span><span class="nf">norm</span><span class="p">(</span><span class="n">samples_gan</span> <span class="o">-</span> <span class="n">torch</span><span class="p">.</span><span class="nc">FloatTensor</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">).</span><span class="nf">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">50</span> 
+       <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">true_centers</span><span class="p">):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">✓ GAN covers all modes successfully!</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">✗ Mode collapse detected - some modes have few/no samples</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Generative Modeling Comparison</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Autoregressive Model:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  + Exact likelihood computable</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  + Stable training</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - Sequential generation (slow)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - Strong ordering assumptions</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">GAN:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  + Fast parallel generation</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  + Often high sample quality</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - No explicit likelihood</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - Training can be unstable</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - Mode collapse risk</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">VAE (next chapter):</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  + Explicit latent space</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  + Stable training</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  + Fast generation</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - Samples sometimes blurry</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Demonstrate likelihood-based evaluation:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Evaluating Generative Model Quality</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># For autoregressive model, we can compute exact likelihood
+</span><span class="n">ar_model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="c1"># Test set (held-out data from same distribution)
+</span>    <span class="n">data_test</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="nf">generate_mixture_data</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">data_test_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nc">FloatTensor</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+    
+    <span class="c1"># Compute log-likelihood on test set
+</span>    <span class="n">test_log_probs</span> <span class="o">=</span> <span class="n">ar_model</span><span class="p">.</span><span class="nf">log_prob</span><span class="p">(</span><span class="n">data_test_tensor</span><span class="p">)</span>
+    <span class="n">avg_test_ll</span> <span class="o">=</span> <span class="n">test_log_probs</span><span class="p">.</span><span class="nf">mean</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Autoregressive Model Test Log-Likelihood: </span><span class="si">{</span><span class="n">avg_test_ll</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Higher is better - model assigns high probability to test data</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># Generate and evaluate (samples should have similar likelihood to real data)
+</span>    <span class="n">samples_ar_eval</span> <span class="o">=</span> <span class="n">ar_model</span><span class="p">.</span><span class="nf">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">samples_log_probs</span> <span class="o">=</span> <span class="n">ar_model</span><span class="p">.</span><span class="nf">log_prob</span><span class="p">(</span><span class="n">samples_ar_eval</span><span class="p">)</span>
+    <span class="n">avg_sample_ll</span> <span class="o">=</span> <span class="n">samples_log_probs</span><span class="p">.</span><span class="nf">mean</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Generated Samples Log-Likelihood: </span><span class="si">{</span><span class="n">avg_sample_ll</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Should be similar to test LL if model is good</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="n">diff</span> <span class="o">=</span> <span class="nf">abs</span><span class="p">(</span><span class="n">avg_test_ll</span> <span class="o">-</span> <span class="n">avg_sample_ll</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">diff</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">✓ Small difference (</span><span class="si">{</span><span class="n">diff</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">) indicates good model!</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">✗ Large difference (</span><span class="si">{</span><span class="n">diff</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">) indicates issues</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># For GAN, we can't compute likelihood, so we use proxy metrics
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">GAN Evaluation (without explicit likelihood):</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - Visual inspection (do samples look realistic?)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - Mode coverage (do samples span all modes?)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - Diversity (are samples varied or repetitive?)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - Discriminator score (should be ~0.5 for good generator)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="n">disc_scores_real</span> <span class="o">=</span> <span class="nf">disc</span><span class="p">(</span><span class="n">data_test_tensor</span><span class="p">)</span>
+    <span class="n">disc_scores_fake</span> <span class="o">=</span> <span class="nf">disc</span><span class="p">(</span><span class="n">samples_gan</span><span class="p">)</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Discriminator scores:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Real data: </span><span class="si">{</span><span class="n">disc_scores_real</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s"> (should be ~1.0 if D is good)</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Generated: </span><span class="si">{</span><span class="n">disc_scores_fake</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s"> (should be ~0.5 at equilibrium)</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">disc_scores_fake</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.4</span> <span class="ow">and</span> <span class="n">disc_scores_fake</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.6</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">✓ Generator successfully fools discriminator!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="5-related-concepts">5. Related Concepts</h2>
+
+<p>Generative models connect to density estimation, a classical problem in statistics where we try to estimate probability density functions from samples. Traditional methods like kernel density estimation or parametric fitting (Gaussian mixture models) work well in low dimensions but scale poorly to high dimensions due to the curse of dimensionality. Neural network-based generative models overcome this by learning hierarchical features that capture data structure rather than explicitly representing density in raw input space. A deep generative model effectively performs density estimation in a learned feature space where data structure is simpler, then maps back to input space. This perspective helps appreciate why deep generative models succeed where classical methods fail.</p>
+
+<p>The relationship to unsupervised and self-supervised learning is profound. Generative models learn representations without labels, discovering structure purely from data patterns. The features learned during generative modeling often transfer well to downstream supervised tasks—autoencoders provide good initializations, GAN discriminators learn useful features, VAE encoders create meaningful latent spaces. This connects to the broader theme that large-scale unsupervised pre-training (like BERT or GPT language modeling, which are generative tasks) followed by supervised fine-tuning often outperforms purely supervised learning, especially in limited-data regimes. Understanding generative models provides insight into why unsupervised learning works and what representations emerge from generative objectives.</p>
+
+<p>Generative models connect to data augmentation through their ability to generate synthetic training examples. For imbalanced datasets (many examples of common classes, few of rare classes), generative models can synthesize additional minority class examples. For expensive-to-label data (medical images requiring expert annotation), generated examples can augment limited labeled sets. However, care is required: if the generative model hasn’t learned the true distribution accurately, synthetic examples might introduce bias. Best practice is to validate that generated examples aid rather than hurt downstream task performance.</p>
+
+<p>The evolution of evaluation metrics for generative models reflects ongoing challenges in measuring quality and diversity. Early GANs used human evaluation (time-consuming, not reproducible) or binary classifier tests (can a classifier distinguish real from fake?). Inception Score and FID provided automated metrics but have known biases and failure modes. Recent work explores learned perceptual metrics (measuring distance in learned feature spaces), precision-recall tradeoffs (quantifying quality vs diversity separately), and likelihood-based methods (for models that provide likelihoods). Understanding that no single metric is perfect guides practitioners to use multiple complementary evaluations rather than optimizing for any single metric.</p>
+
+<p>Finally, generative models connect to the fundamental question of what neural networks learn. By training networks to generate complex data like images or text, we’re essentially asking: what patterns, structures, and regularities exist in this data, and can networks discover them automatically? The fact that neural networks can learn to generate photorealistic faces, coherent paragraphs, or valid molecular structures demonstrates they’re capturing deep statistical regularities, not just memorizing. This learning of latent structure has implications beyond generation—it suggests neural networks are discovering representations that reflect genuine structure in the world, not just fitting training data.</p>
+
+<h2 id="6-fundamental-papers">6. Fundamental Papers</h2>
+
+<p><strong><a href="http://yann.lecun.com/exdb/publis/pdf/lecun-06.pdf">“A tutorial on Energy-Based Learning” (2006)</a></strong><br />
+<em>Author</em>: Yann LeCun<br />
+While not specifically about modern generative models, this tutorial established the energy-based framework that underlies much generative modeling. LeCun showed how many learning problems can be formulated as learning energy functions that assign low energy to correct/realistic outputs and high energy to incorrect/unrealistic ones. Generative models fit this framework: they learn energy landscapes where data has low energy. The tutorial covered Boltzmann machines, contrastive divergence, and other techniques that influenced later work on deep generative models. Understanding energy-based models provides theoretical foundation for why certain training procedures (like contrastive divergence or score matching) work and connects generative modeling to statistical physics and probabilistic inference. While modern generative models often use different training procedures (backpropagation with reparameterization for VAEs, adversarial training for GANs), the energy-based perspective remains valuable for understanding what these models are fundamentally doing.</p>
+
+<p><strong><a href="http://proceedings.mlr.press/v15/larochelle11a.html">“NADE: The Neural Autoregressive Distribution Estimator” (2011)</a></strong><br />
+<em>Authors</em>: Hugo Larochelle, Iain Murray<br />
+This paper introduced NADE, an efficient autoregressive model that tractably computes \(p(\mathbf{x}) = \prod_i p(x_i|\mathbf{x}_{&lt;i})\) using neural networks for the conditionals. The key innovation was weight sharing: rather than training separate networks for each conditional, NADE uses a single neural network with shared parameters, making it efficient and preventing overfitting. The paper demonstrated that autoregressive models could compete with more complex approaches like restricted Boltzmann machines while providing exact likelihood computation and stable training. NADE influenced subsequent autoregressive models like PixelRNN/PixelCNN (for images) and WaveNet (for audio), establishing autoregressive modeling as a viable approach for complex, high-dimensional data. The work showed that explicit density modeling—directly parameterizing \(p(\mathbf{x})\)—was practical for deep learning, not just classical statistics.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1312.6114">“Auto-Encoding Variational Bayes” (2014)</a></strong><br />
+<em>Authors</em>: Diederik P. Kingma, Max Welling<br />
+This foundational paper introduced Variational Autoencoders, combining variational inference with neural networks to create a scalable framework for generative modeling with latent variables. The key contribution was the reparameterization trick: instead of sampling \(\mathbf{z} \sim q(\mathbf{z}|\mathbf{x})\) (which isn’t differentiable with respect to \(q\)’s parameters), rewrite sampling as \(\mathbf{z} = \mu + \sigma \odot \boldsymbol{\epsilon}\) where \(\boldsymbol{\epsilon} \sim \mathcal{N}(0, I)\). This deterministic function of parameters (\(\mu, \sigma\)) and external randomness (\(\boldsymbol{\epsilon}\)) enables backpropagation through sampling, making variational inference trainable via gradient descent. The paper showed VAEs could learn meaningful latent representations and generate novel samples while providing a principled probabilistic framework (unlike GANs which were concurrent but more heuristic initially). VAEs influenced countless subsequent works and established that latent variable models could scale to complex data through careful algorithm design. The ELBO objective and reparameterization trick have become fundamental tools in probabilistic deep learning.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1406.2661">“Generative Adversarial Networks” (2014)</a></strong><br />
+<em>Authors</em>: Ian Goodfellow et al.<br />
+The GAN paper revolutionized generative modeling by introducing adversarial training as an alternative to maximum likelihood. By framing generation as a game between generator and discriminator, GANs enabled learning implicit density models that generate high-quality samples without requiring explicit density computation or intractable integrals. The paper’s theoretical analysis—showing that at Nash equilibrium, the generator recovers the data distribution—provided foundation while empirical results demonstrated practical viability. GANs spawned enormous subsequent research addressing training stability, mode collapse, and architecture design, becoming one of the most influential ideas in modern machine learning. The adversarial framework has been applied beyond generation to domain adaptation, robust training, and semi-supervised learning, demonstrating how a novel training paradigm can impact the field broadly.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1912.02762">“Normalizing Flows for Probabilistic Modeling and Inference” (2019)</a></strong><br />
+<em>Authors</em>: George Papamakarios, Eric Nalisnick, Danilo Jimenez Rezende, Shakir Mohamed, Balaji Lakshminarayanan<br />
+This comprehensive review unified normalizing flows—generative models based on invertible transformations—explaining their theoretical foundations and practical implementations. Flows learn bijective mappings \(\mathbf{x} = f(\mathbf{z})\) where \(\mathbf{z}\) has simple density (Gaussian) and \(f\) is invertible with tractable Jacobian determinant. This enables exact likelihood computation (unlike GANs) and fast sampling (unlike autoregressive models). The paper covered the landscape of flow architectures (coupling flows, autoregressive flows, continuous flows), their theoretical properties, and applications. Flows are less commonly used than VAEs or GANs for image generation but excel in tasks requiring exact density (anomaly detection, compression) or specific structure (molecular generation where validity constraints matter). Understanding flows completes the generative modeling picture, showing the tradeoff space between likelihood tractability, sampling efficiency, and architectural flexibility.</p>
+
+<h2 id="common-pitfalls-and-tricks">Common Pitfalls and Tricks</h2>
+
+<p>The most fundamental mistake in generative modeling is evaluating models solely on training set likelihood or reconstruction quality. A model that memorizes training examples achieves perfect training likelihood but generates no novel examples—it fails as a generative model despite optimizing the objective perfectly. Symptoms include generated samples being near-identical to training examples and poor test set likelihood. Detection requires checking nearest neighbors in training set for each generated sample (if always very close, likely memorization) and evaluating on held-out data. Prevention includes proper regularization (weight decay, dropout), using validation set for model selection, and architectures that encourage generalization (bottlenecks in autoencoders, discriminator in GANs forcing novelty).</p>
+
+<p>Choosing inappropriate reconstruction losses causes perceptual mismatches between what the model optimizes and what humans care about. Pixel-wise MSE treats all pixels equally, but human vision is non-uniform—we’re more sensitive to structure and edges than to smooth regions. An MSE-optimal reconstruction might be blurry (averaging out details) while looking poor perceptually. Conversely, a reconstruction with slightly shifted edges (high MSE) might look perceptually similar. Solutions include perceptual losses (measuring distance in feature space of a pre-trained network like VGG), adversarial losses (using a discriminator to judge realism), or structured losses (measuring gradient similarity, not just pixel similarity). Understanding that loss functions embody assumptions about what’s important guides appropriate choices for specific applications.</p>
+
+<p>For latent variable models, choosing latent dimensionality involves subtle tradeoffs. Too small (2-3 dimensions) enables visualization but may not capture data complexity, causing poor reconstructions. Too large (approaching input dimension) enables perfect reconstruction but may not learn meaningful structure—the model might use each latent dimension for one input dimension, learning identity mapping. The right size depends on data complexity and desired compression. A useful heuristic: start with 10-20× compression, adjust based on reconstruction quality and downstream task performance. For MNIST (784 dimensions), try 32-64 latent dimensions. For ImageNet (224×224×3), try 512-2048.</p>
+
+<p>When generating samples, the sampling temperature often significantly affects quality-diversity tradeoffs. For autoregressive models or VAEs where we sample from learned distributions, we can scale logits by temperature before softmax:</p>
+
+\[p(x_i | \mathbf{x}_{&lt;i}) = \text{softmax}(\mathbf{z}_i / T)\]
+
+<p>Low temperature (\(T &lt; 1\)) makes the distribution sharper—more confident, less diverse. High temperature (\(T &gt; 1\)) makes it more uniform—more diverse but potentially less realistic. Temperature provides a post-training knob for trading off quality and diversity without retraining. Understanding this tradeoff helps generate samples appropriate for different applications.</p>
+
+<p>A powerful technique for improving sample quality is rejection sampling: generate multiple samples, score them with a discriminator or classifier, keep only high-scoring ones. This filters generated samples for quality at the cost of efficiency (must generate more samples than needed). For applications where quality matters more than generation speed (creating artwork, designing molecules), rejection sampling provides an easy win. Understanding that we can post-process generated samples—not just use whatever the model produces—expands the toolkit for practical applications.</p>
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<p>Generative models learn to understand and reproduce data distributions, enabling creation of novel, realistic samples from learned patterns. The three main paradigms—autoregressive models providing explicit sequential density factorization, variational autoencoders using latent variables with variational inference, and generative adversarial networks training through adversarial competition—make different tradeoffs between likelihood tractability, sampling efficiency, training stability, and sample quality. Maximum likelihood provides a principled training objective connecting to information theory through KL divergence, though it requires tractable density evaluation or lower bounds. Latent variable models introduce compressed representations capturing factors of variation, enabling fast sampling and interpretable manipulation, though requiring careful inference procedures. Evaluation of generative models is challenging, requiring multiple metrics (likelihood when available, Inception Score, FID, human evaluation) and domain-specific validation rather than single numbers. Applications span data augmentation, super-resolution, style transfer, drug discovery, and creative tools, with choice of approach depending on whether we need likelihood estimation, controlled generation, sample quality, or training stability. Understanding generative modeling deeply means appreciating both the statistical foundations (probability theory, density estimation, variational inference) and the deep learning implementations (neural architectures, training algorithms, practical tricks) that make learning complex distributions tractable.</p>
+
+<p>Generative models demonstrate that neural networks can discover and internalize the statistical structure underlying complex data, learning representations that enable not just recognition but creation—a capability that edges closer to what we might consider genuine understanding.</p>
+
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter11/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter11/11_00_Introduction/">
+              11 Generative Models Introduction
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+    
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

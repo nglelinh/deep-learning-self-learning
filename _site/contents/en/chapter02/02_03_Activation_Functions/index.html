@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      02-03 Activation Functions in Detail &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    02-03 Activation Functions in Detail
+    
+      
+        <span class="lesson-badge required large">Required</span>
+      
+    
+  </h1>
+  <p>This lesson provides an in-depth exploration of activation functions, their properties, and how to choose the right one for your neural network.</p>
+
+<hr />
+
+<h2 id="why-activation-functions-matter">Why Activation Functions Matter</h2>
+
+<p><strong>Without activation functions</strong>, neural networks would be limited to learning only linear transformations. No matter how many layers you stack, a composition of linear functions is still linear:</p>
+
+\[f(g(h(\mathbf{x}))) = \mathbf{A}_1(\mathbf{A}_2(\mathbf{A}_3 \mathbf{x})) = (\mathbf{A}_1 \mathbf{A}_2 \mathbf{A}_3)\mathbf{x} = \mathbf{A}\mathbf{x}\]
+
+<p><strong>Activation functions introduce nonlinearity</strong>, enabling networks to learn complex patterns and approximate arbitrary functions.</p>
+
+<h2 id="desirable-properties-of-activation-functions">Desirable Properties of Activation Functions</h2>
+
+<p>An ideal activation function should have:</p>
+
+<ol>
+  <li><strong>Nonlinearity</strong>: Enable learning of complex patterns</li>
+  <li><strong>Differentiability</strong>: Enable gradient-based deep-learning</li>
+  <li><strong>Monotonicity</strong>: Preserve ordering (helpful for deep-learning)</li>
+  <li><strong>Computational efficiency</strong>: Fast to compute forward and backward</li>
+  <li><strong>Bounded or unbounded appropriately</strong>: Depending on the task</li>
+  <li><strong>Zero-centered</strong>: Help with gradient flow (for hidden layers)</li>
+  <li><strong>Avoid saturation</strong>: Prevent vanishing gradients</li>
+</ol>
+
+<p>No single activation function satisfies all properties perfectly, so the choice depends on the specific use case.</p>
+
+<h2 id="common-activation-functions">Common Activation Functions</h2>
+
+<h3 id="1-sigmoid-logistic-function">1. Sigmoid (Logistic Function)</h3>
+
+\[\sigma(z) = \frac{1}{1 + e^{-z}}\]
+
+<p><strong>Derivative:</strong></p>
+
+\[\sigma'(z) = \sigma(z)(1 - \sigma(z))\]
+
+<p><strong>Properties:</strong></p>
+<ul>
+  <li>Range: \((0, 1)\)</li>
+  <li>Smooth, differentiable everywhere</li>
+  <li>Monotonically increasing</li>
+  <li>Saturates at both ends</li>
+</ul>
+
+<p><strong>Advantages:</strong></p>
+<ul>
+  <li>Clear probabilistic interpretation</li>
+  <li>Smooth gradient</li>
+  <li>Historically popular</li>
+</ul>
+
+<p><strong>Disadvantages:</strong></p>
+<ul>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><strong>Vanishing gradient problem</strong>: Gradients near 0 for $$</td>
+          <td>z</td>
+          <td>&gt; 4$$</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li><strong>Not zero-centered</strong>: Outputs always positive</li>
+  <li><strong>Computationally expensive</strong>: Requires exponential calculation</li>
+</ul>
+
+<p><strong>Use cases:</strong></p>
+<ul>
+  <li>Output layer for binary classification</li>
+  <li>Gate activations in LSTMs</li>
+  <li>Generally avoided in hidden layers of deep networks</li>
+</ul>
+
+<h3 id="2-hyperbolic-tangent-tanh">2. Hyperbolic Tangent (tanh)</h3>
+
+\[\tanh(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}} = \frac{e^{2z} - 1}{e^{2z} + 1} = 2\sigma(2z) - 1\]
+
+<p><strong>Derivative:</strong></p>
+
+\[\tanh'(z) = 1 - \tanh^2(z)\]
+
+<p><strong>Properties:</strong></p>
+<ul>
+  <li>Range: \((-1, 1)\)</li>
+  <li>Zero-centered (improvement over sigmoid)</li>
+  <li>Saturates at both ends</li>
+</ul>
+
+<p><strong>Advantages:</strong></p>
+<ul>
+  <li>Zero-centered (better gradient flow)</li>
+  <li>Stronger gradients than sigmoid (derivative range: \((0, 1]\))</li>
+</ul>
+
+<p><strong>Disadvantages:</strong></p>
+<ul>
+  <li>Still suffers from vanishing gradients</li>
+  <li>Computationally expensive</li>
+</ul>
+
+<p><strong>Use cases:</strong></p>
+<ul>
+  <li>Hidden layers (better than sigmoid but worse than ReLU)</li>
+  <li>RNN/LSTM cells</li>
+  <li>When zero-centered outputs are beneficial</li>
+</ul>
+
+<h3 id="3-rectified-linear-unit-relu">3. Rectified Linear Unit (ReLU)</h3>
+
+\[\text{ReLU}(z) = \max(0, z) = \begin{cases} z &amp; \text{if } z &gt; 0 \\ 0 &amp; \text{if } z \leq 0 \end{cases}\]
+
+<p><strong>Derivative:</strong></p>
+
+\[\text{ReLU}'(z) = \begin{cases} 1 &amp; \text{if } z &gt; 0 \\ 0 &amp; \text{if } z \leq 0 \\ \text{undefined} &amp; \text{if } z = 0 \end{cases}\]
+
+<p>(In practice, we define \(\text{ReLU}'(0) = 0\) or \(0.5\))</p>
+
+<p><strong>Properties:</strong></p>
+<ul>
+  <li>Range: \([0, \infty)\)</li>
+  <li>Not saturating for positive values</li>
+  <li>Sparse activation (many neurons output 0)</li>
+</ul>
+
+<p><strong>Advantages:</strong></p>
+<ul>
+  <li><strong>Computational efficiency</strong>: Just thresholding at zero</li>
+  <li><strong>Alleviates vanishing gradient</strong>: Gradient is 1 for positive inputs</li>
+  <li><strong>Sparse representations</strong>: Natural sparsity</li>
+  <li><strong>Empirically successful</strong>: Works very well in practice</li>
+</ul>
+
+<p><strong>Disadvantages:</strong></p>
+<ul>
+  <li><strong>Not zero-centered</strong>: All outputs are non-negative</li>
+  <li><strong>Dying ReLU problem</strong>: Neurons can become inactive forever
+    <ul>
+      <li>If \(z &lt; 0\) always, gradient is always 0, no learning occurs</li>
+      <li>Can happen with high learning rates or poor initialization</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Use cases:</strong></p>
+<ul>
+  <li><strong>Default choice</strong> for hidden layers in deep networks</li>
+  <li>CNNs, ResNets, most modern architectures</li>
+</ul>
+
+<h3 id="4-leaky-relu">4. Leaky ReLU</h3>
+
+\[\text{LeakyReLU}(z) = \begin{cases} z &amp; \text{if } z &gt; 0 \\ \alpha z &amp; \text{if } z \leq 0 \end{cases}\]
+
+<p>where \(\alpha\) is a small constant (typically 0.01)</p>
+
+<p><strong>Derivative:</strong></p>
+
+\[\text{LeakyReLU}'(z) = \begin{cases} 1 &amp; \text{if } z &gt; 0 \\ \alpha &amp; \text{if } z \leq 0 \end{cases}\]
+
+<p><strong>Advantages:</strong></p>
+<ul>
+  <li><strong>Prevents dying ReLU</strong>: Small gradient even for negative inputs</li>
+  <li>Computationally efficient</li>
+  <li>All benefits of ReLU</li>
+</ul>
+
+<p><strong>Disadvantages:</strong></p>
+<ul>
+  <li>Introduces hyperparameter \(\alpha\)</li>
+  <li>Not always better than ReLU in practice</li>
+</ul>
+
+<p><strong>Variants:</strong></p>
+<ul>
+  <li><strong>Parametric ReLU (PReLU)</strong>: \(\alpha\) is learned during training</li>
+  <li><strong>Randomized Leaky ReLU (RReLU)</strong>: \(\alpha\) is randomly sampled during training</li>
+</ul>
+
+<h3 id="5-exponential-linear-unit-elu">5. Exponential Linear Unit (ELU)</h3>
+
+\[\text{ELU}(z) = \begin{cases} z &amp; \text{if } z &gt; 0 \\ \alpha(e^z - 1) &amp; \text{if } z \leq 0 \end{cases}\]
+
+<p>where \(\alpha &gt; 0\) (typically \(\alpha = 1\))</p>
+
+<p><strong>Derivative:</strong></p>
+
+\[\text{ELU}'(z) = \begin{cases} 1 &amp; \text{if } z &gt; 0 \\ \alpha e^z = \text{ELU}(z) + \alpha &amp; \text{if } z \leq 0 \end{cases}\]
+
+<p><strong>Properties:</strong></p>
+<ul>
+  <li>Smooth everywhere</li>
+  <li>Negative values push mean activation closer to zero</li>
+</ul>
+
+<p><strong>Advantages:</strong></p>
+<ul>
+  <li><strong>Closer to zero-centered</strong>: Negative outputs possible</li>
+  <li><strong>No dying ReLU problem</strong>: Gradients exist for all inputs</li>
+  <li><strong>Smooth</strong>: Better deep-learning landscape</li>
+  <li>Often leads to faster learning and better performance</li>
+</ul>
+
+<p><strong>Disadvantages:</strong></p>
+<ul>
+  <li>Computationally more expensive (exponential)</li>
+  <li>Introduces hyperparameter \(\alpha\)</li>
+</ul>
+
+<p><strong>Use cases:</strong></p>
+<ul>
+  <li>Alternative to ReLU when extra computation is acceptable</li>
+  <li>Tasks where zero-centered activations help</li>
+</ul>
+
+<h3 id="6-scaled-exponential-linear-unit-selu">6. Scaled Exponential Linear Unit (SELU)</h3>
+
+\[\text{SELU}(z) = \lambda \begin{cases} z &amp; \text{if } z &gt; 0 \\ \alpha(e^z - 1) &amp; \text{if } z \leq 0 \end{cases}\]
+
+<p>where \(\lambda \approx 1.0507\) and \(\alpha \approx 1.6733\)</p>
+
+<p><strong>Properties:</strong></p>
+<ul>
+  <li><strong>Self-normalizing</strong>: Under certain conditions, activations automatically converge to zero mean and unit variance</li>
+  <li>Requires specific initialization (LeCun normal)</li>
+  <li>Requires specific architecture (fully connected layers)</li>
+</ul>
+
+<p><strong>Advantages:</strong></p>
+<ul>
+  <li>Can enable very deep networks without batch normalization</li>
+  <li>Theoretical guarantees about convergence</li>
+</ul>
+
+<p><strong>Disadvantages:</strong></p>
+<ul>
+  <li>Strict requirements on network architecture</li>
+  <li>Not widely adopted</li>
+  <li>Doesn’t work well with dropout or convolutional layers</li>
+</ul>
+
+<h3 id="7-swish-silu---sigmoid-linear-unit">7. Swish (SiLU - Sigmoid Linear Unit)</h3>
+
+\[\text{Swish}(z) = z \cdot \sigma(z) = \frac{z}{1 + e^{-z}}\]
+
+<p><strong>Properties:</strong></p>
+<ul>
+  <li>Smooth, non-monotonic</li>
+  <li>Unbounded above, bounded below</li>
+  <li>Self-gated (input modulated by sigmoid of itself)</li>
+</ul>
+
+<p><strong>Advantages:</strong></p>
+<ul>
+  <li><strong>Better performance</strong>: Empirically shown to outperform ReLU in some tasks</li>
+  <li>Smooth gradients</li>
+  <li>Non-monotonicity can be beneficial</li>
+</ul>
+
+<p><strong>Disadvantages:</strong></p>
+<ul>
+  <li>Computationally more expensive than ReLU</li>
+  <li>Requires careful tuning</li>
+</ul>
+
+<p><strong>Use cases:</strong></p>
+<ul>
+  <li>Modern architectures (EfficientNet uses Swish)</li>
+  <li>When computational cost is not critical</li>
+</ul>
+
+<h3 id="8-gelu-gaussian-error-linear-unit">8. GELU (Gaussian Error Linear Unit)</h3>
+
+\[\text{GELU}(z) = z \cdot \Phi(z)\]
+
+<p>where \(\Phi(z)\) is the cumulative distribution function of the standard normal distribution.</p>
+
+<p><strong>Approximation:</strong></p>
+
+\[\text{GELU}(z) \approx 0.5z\left(1 + \tanh\left(\sqrt{\frac{2}{\pi}}(z + 0.044715z^3)\right)\right)\]
+
+<p><strong>Properties:</strong></p>
+<ul>
+  <li>Smooth, non-monotonic</li>
+  <li>Stochastic regularizer interpretation</li>
+</ul>
+
+<p><strong>Advantages:</strong></p>
+<ul>
+  <li><strong>State-of-the-art performance</strong>: Used in BERT, GPT models</li>
+  <li>Smooth everywhere</li>
+  <li>Captures aspects of dropout and zoneout</li>
+</ul>
+
+<p><strong>Disadvantages:</strong></p>
+<ul>
+  <li>Computationally expensive</li>
+  <li>Harder to interpret</li>
+</ul>
+
+<p><strong>Use cases:</strong></p>
+<ul>
+  <li><strong>Transformer models</strong>: BERT, GPT-2, GPT-3</li>
+  <li>NLP tasks</li>
+  <li>Modern large-scale models</li>
+</ul>
+
+<h3 id="9-softmax-output-layer">9. Softmax (Output Layer)</h3>
+
+\[\text{softmax}(\mathbf{z})_i = \frac{e^{z_i}}{\sum_{j=1}^K e^{z_j}}\]
+
+<p><strong>Properties:</strong></p>
+<ul>
+  <li>Converts logits to probability distribution</li>
+  <li>Output range: \((0, 1)\) with \(\sum_i p_i = 1\)</li>
+</ul>
+
+<p><strong>Derivative (for class \(i\) with respect to \(z_j\)):</strong></p>
+
+\[\frac{\partial \text{softmax}(\mathbf{z})_i}{\partial z_j} = \begin{cases} \text{softmax}(\mathbf{z})_i(1 - \text{softmax}(\mathbf{z})_i) &amp; \text{if } i = j \\ -\text{softmax}(\mathbf{z})_i \cdot \text{softmax}(\mathbf{z})_j &amp; \text{if } i \neq j \end{cases}\]
+
+<p><strong>Use cases:</strong></p>
+<ul>
+  <li><strong>Multi-class classification</strong> output layer</li>
+  <li>Attention mechanisms</li>
+  <li>Any scenario requiring probability distribution over classes</li>
+</ul>
+
+<h3 id="10-softplus">10. Softplus</h3>
+
+\[\text{softplus}(z) = \ln(1 + e^z)\]
+
+<p><strong>Properties:</strong></p>
+<ul>
+  <li>Smooth approximation of ReLU</li>
+  <li>Always positive</li>
+  <li>Asymptotically approaches ReLU for large \(z\)</li>
+</ul>
+
+<p><strong>Derivative:</strong></p>
+
+\[\text{softplus}'(z) = \frac{e^z}{1 + e^z} = \sigma(z)\]
+
+<p><strong>Use cases:</strong></p>
+<ul>
+  <li>Occasionally used in hidden layers</li>
+  <li>Generative models (ensuring positive outputs)</li>
+</ul>
+
+<h2 id="comparison-summary">Comparison Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Activation</th>
+      <th>Range</th>
+      <th>Zero-Centered</th>
+      <th>Vanishing Gradient</th>
+      <th>Dying Units</th>
+      <th>Computational Cost</th>
+      <th>Common Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sigmoid</td>
+      <td>(0,1)</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>High</td>
+      <td>Output (binary)</td>
+    </tr>
+    <tr>
+      <td>tanh</td>
+      <td>(-1,1)</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>High</td>
+      <td>Hidden (old), RNN</td>
+    </tr>
+    <tr>
+      <td>ReLU</td>
+      <td>[0,∞)</td>
+      <td>No</td>
+      <td>No (for z&gt;0)</td>
+      <td>Yes</td>
+      <td><strong>Low</strong></td>
+      <td><strong>Hidden (default)</strong></td>
+    </tr>
+    <tr>
+      <td>Leaky ReLU</td>
+      <td>(-∞,∞)</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td><strong>Low</strong></td>
+      <td>Hidden</td>
+    </tr>
+    <tr>
+      <td>ELU</td>
+      <td>(-α,∞)</td>
+      <td>~Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Medium</td>
+      <td>Hidden</td>
+    </tr>
+    <tr>
+      <td>SELU</td>
+      <td>(-λα,∞)</td>
+      <td>Yes (self-norm)</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Medium</td>
+      <td>Hidden (specific)</td>
+    </tr>
+    <tr>
+      <td>Swish</td>
+      <td>(-∞,∞)</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Medium</td>
+      <td>Hidden (modern)</td>
+    </tr>
+    <tr>
+      <td>GELU</td>
+      <td>(-∞,∞)</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>High</td>
+      <td><strong>Transformers</strong></td>
+    </tr>
+    <tr>
+      <td>Softmax</td>
+      <td>(0,1)</td>
+      <td>N/A</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>High</td>
+      <td><strong>Output (multi-class)</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="choosing-the-right-activation-function">Choosing the Right Activation Function</h2>
+
+<h3 id="for-hidden-layers">For Hidden Layers</h3>
+
+<p><strong>Default recommendation: ReLU</strong></p>
+<ul>
+  <li>Start with ReLU for most applications</li>
+  <li>Computationally efficient</li>
+  <li>Works well in practice</li>
+</ul>
+
+<p><strong>If dying ReLU is a problem:</strong></p>
+<ul>
+  <li>Try Leaky ReLU or ELU</li>
+  <li>Check learning rate and initialization</li>
+</ul>
+
+<p><strong>For modern/large-scale models:</strong></p>
+<ul>
+  <li>GELU for transformers and NLP</li>
+  <li>Swish for image models when performance is critical</li>
+</ul>
+
+<p><strong>For very deep networks:</strong></p>
+<ul>
+  <li>Consider ELU or SELU</li>
+  <li>May need normalization techniques (covered later)</li>
+</ul>
+
+<h3 id="for-output-layers">For Output Layers</h3>
+
+<p><strong>Binary classification:</strong></p>
+<ul>
+  <li><strong>Sigmoid</strong>: Outputs probability for positive class</li>
+</ul>
+
+<p><strong>Multi-class classification:</strong></p>
+<ul>
+  <li><strong>Softmax</strong>: Outputs probability distribution over classes</li>
+</ul>
+
+<p><strong>Regression:</strong></p>
+<ul>
+  <li><strong>Linear (identity)</strong>: For unbounded outputs</li>
+  <li><strong>ReLU</strong>: For non-negative outputs (e.g., prices, counts)</li>
+  <li><strong>Sigmoid/tanh</strong>: For bounded outputs</li>
+</ul>
+
+<p><strong>Multi-label classification:</strong></p>
+<ul>
+  <li><strong>Sigmoid</strong>: Independent probability for each label</li>
+</ul>
+
+<h2 id="practical-implementation">Practical Implementation</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="k">class</span> <span class="nc">Activations</span><span class="p">:</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">sigmoid_derivative</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">Activations</span><span class="p">.</span><span class="nf">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">s</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">s</span><span class="p">)</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">tanh</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">tanh</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">tanh_derivative</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="nf">tanh</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">relu</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">relu_derivative</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+        <span class="nf">return </span><span class="p">(</span><span class="n">z</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">).</span><span class="nf">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">leaky_relu</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="n">z</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">leaky_relu_derivative</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="n">z</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">elu</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="n">z</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">elu_derivative</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="n">z</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Activations</span><span class="p">.</span><span class="nf">elu</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">+</span> <span class="n">alpha</span><span class="p">)</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">softmax</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+        <span class="c1"># Numerical stability: subtract max
+</span>        <span class="n">exp_z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="nf">max</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">exp_z</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">exp_z</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">swish</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">z</span> <span class="o">*</span> <span class="n">Activations</span><span class="p">.</span><span class="nf">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">gelu</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+        <span class="c1"># Approximation
+</span>        <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="nf">tanh</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">+</span> <span class="mf">0.044715</span> <span class="o">*</span> <span class="n">z</span><span class="o">**</span><span class="mi">3</span><span class="p">)))</span>
+
+<span class="c1"># Example usage
+</span><span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">ReLU:</span><span class="sh">"</span><span class="p">,</span> <span class="n">Activations</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Leaky ReLU:</span><span class="sh">"</span><span class="p">,</span> <span class="n">Activations</span><span class="p">.</span><span class="nf">leaky_relu</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Sigmoid:</span><span class="sh">"</span><span class="p">,</span> <span class="n">Activations</span><span class="p">.</span><span class="nf">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Tanh:</span><span class="sh">"</span><span class="p">,</span> <span class="n">Activations</span><span class="p">.</span><span class="nf">tanh</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="the-vanishing-gradient-problem">The Vanishing Gradient Problem</h2>
+
+<h3 id="why-it-matters">Why It Matters</h3>
+
+<p>During backpropagation, gradients are multiplied through layers:</p>
+
+\[\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[1]}} = \frac{\partial \mathcal{L}}{\partial \mathbf{a}^{[L]}} \cdot \frac{\partial \mathbf{a}^{[L]}}{\partial \mathbf{z}^{[L]}} \cdot \ldots \cdot \frac{\partial \mathbf{z}^{[2]}}{\partial \mathbf{a}^{[1]}} \cdot \frac{\partial \mathbf{a}^{[1]}}{\partial \mathbf{z}^{[1]}} \cdot \frac{\partial \mathbf{z}^{[1]}}{\partial \mathbf{W}^{[1]}}\]
+
+<h3 id="problem-with-sigmoidtanh">Problem with Sigmoid/Tanh</h3>
+
+<ul>
+  <li>Maximum derivative: \(\sigma'(z) = 0.25\) (sigmoid), \(\tanh'(z) = 1\) (tanh at \(z=0\))</li>
+  <li>Typical derivative: Much smaller (\(&lt; 0.25\) for sigmoid)</li>
+  <li>After many layers: \(0.25^{10} \approx 9.5 \times 10^{-7}\) (extremely small!)</li>
+</ul>
+
+<p><strong>Result</strong>: Gradients vanish, early layers learn very slowly or not at all.</p>
+
+<h3 id="relu-to-the-rescue">ReLU to the Rescue</h3>
+
+<ul>
+  <li>Derivative is 1 for positive inputs (no vanishing)</li>
+  <li>Gradient flows unchanged through active ReLU units</li>
+  <li>Enables training of much deeper networks</li>
+</ul>
+
+<h3 id="the-dying-relu-problem">The Dying ReLU Problem</h3>
+
+<ul>
+  <li>If \(z &lt; 0\) always, gradient is 0, no learning</li>
+  <li>Can happen with:
+    <ul>
+      <li>Poor initialization</li>
+      <li>High learning rates</li>
+      <li>Unlucky updates</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Solutions:</strong></p>
+<ul>
+  <li>Use Leaky ReLU, ELU, or other variants</li>
+  <li>Proper initialization (He initialization for ReLU)</li>
+  <li>Reasonable learning rates</li>
+  <li>Batch normalization (covered later)</li>
+</ul>
+
+<h2 id="summary">Summary</h2>
+
+<ul>
+  <li><strong>Activation functions</strong> introduce nonlinearity, enabling networks to learn complex patterns</li>
+  <li><strong>ReLU</strong> is the default choice for hidden layers in modern deep learning</li>
+  <li><strong>Sigmoid</strong> is used for binary classification outputs</li>
+  <li><strong>Softmax</strong> is used for multi-class classification outputs</li>
+  <li><strong>Advanced activations</strong> (ELU, Swish, GELU) can provide performance improvements</li>
+  <li><strong>Vanishing gradients</strong> are a major issue with sigmoid/tanh in deep networks</li>
+  <li><strong>ReLU</strong> alleviates vanishing gradients but introduces the dying ReLU problem</li>
+  <li>Choice of activation function significantly impacts training and performance</li>
+</ul>
+
+<p>In the next lesson, we’ll explore forward propagation in detail with concrete examples.</p>
+
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter02/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+    
+      
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter02/02_02_Neural_Network_Architecture/">
+              02-02 Neural Network Architecture
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+      
+    
+    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li>
+        <h2>Next Post</h2>
+        <h3>
+          <a href="/deep-learning-self-learning/contents/en/chapter02/02_04_Forward_Propagation/">
+            02-04 Forward Propagation
+          </a>
+        </h3>
+      </li>
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

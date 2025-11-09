@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      21-01 Deep Reinforcement Learning &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    21-01 Deep Reinforcement Learning
+    
+      
+        <span class="lesson-badge required large">Required</span>
+      
+    
+  </h1>
+  <h1 id="deep-reinforcement-learning-neural-networks-meet-sequential-decision-making">Deep Reinforcement Learning: Neural Networks Meet Sequential Decision Making</h1>
+
+<h2 id="1-concept-overview">1. Concept Overview</h2>
+
+<p>Deep Reinforcement Learning combines the representation learning power of deep neural networks with the sequential decision-making framework of reinforcement learning, enabling agents to learn complex behaviors directly from high-dimensional sensory inputs like images or raw sensor data. While classical RL required hand-crafted feature representations and could only handle low-dimensional state spaces, deep RL learns both the representation and the policy end-to-end, scaling to problems previously intractable: playing video games from pixels, controlling robots from camera inputs, mastering chess and Go at superhuman levels, and learning complex manipulation skills through trial and error.</p>
+
+<p>The key insight making deep RL work is using neural networks as function approximators for value functions or policies. Instead of maintaining explicit tables \(Q(s,a)\) for every state-action pair (impossible for high-dimensional states like 84×84×4 Atari frames with \(256^{84 \times 84 \times 4} \approx 10^{67000}\) possible states), we approximate \(Q(s,a) \approx Q(s,a;\theta)\) with a neural network parameterized by \(\theta\). The network learns to generalize across similar states—having learned to recognize enemies in one game location, it applies this knowledge to other locations—enabling learning from feasible amounts of experience rather than requiring exhaustive exploration.</p>
+
+<p>However, combining deep learning with RL introduces unique challenges absent in either field individually. RL generates its own training data through interaction, creating correlations between sequential samples that violate the i.i.d. assumption underlying standard neural network training. The target values in Q-learning are non-stationary—they depend on the current Q-network which is constantly updating, creating a moving target that can cause instability. The exploration-exploitation tradeoff becomes more critical when actions affect what data the agent sees, potentially causing the agent to get stuck in sub-optimal behaviors that prevent discovering better alternatives.</p>
+
+<p>Deep Q-Networks (DQN), introduced by DeepMind in 2013, solved these challenges through two key innovations: experience replay and target networks. Experience replay stores past experiences in a buffer and samples uniformly for training, breaking temporal correlations and allowing reuse of rare experiences. Target networks provide stable targets by updating slowly, preventing the oscillations that occur when chasing a constantly moving target. These techniques, combined with careful architecture design and training procedures, enabled learning to play Atari games directly from pixels at human or superhuman levels—a watershed moment demonstrating deep learning could tackle sequential decision-making at scale.</p>
+
+<p>The success of deep RL extends far beyond games. AlphaGo combined deep neural networks with Monte Carlo tree search to defeat world champions at Go, a game previously thought to require decades more progress. Robotic systems learn manipulation skills through deep RL, discovering strategies humans never explicitly programmed. Language models are fine-tuned through reinforcement learning from human feedback (RLHF), aligning them with human preferences for helpfulness and safety. Autonomous vehicles learn driving policies through simulation and real-world interaction. Understanding deep RL opens this vast application space while providing insights into how systems can learn complex behaviors through interaction rather than passive observation.</p>
+
+<h2 id="2-mathematical-foundation">2. Mathematical Foundation</h2>
+
+<p>Deep Q-Networks extend Q-learning to continuous state spaces through neural function approximation. The Q-function is approximated as \(Q(s,a;\theta)\) where \(\theta\) are neural network parameters. Given transition \((s_t, a_t, r_t, s_{t+1})\), standard Q-learning updates:</p>
+
+\[Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha[r_t + \gamma \max_{a'} Q(s_{t+1}, a') - Q(s_t, a_t)]\]
+
+<p>With neural networks, this becomes a gradient descent update minimizing squared TD error:</p>
+
+\[\mathcal{L}(\theta) = \mathbb{E}_{(s,a,r,s') \sim \mathcal{D}}\left[\left(r + \gamma \max_{a'} Q(s', a'; \theta^-) - Q(s,a;\theta)\right)^2\right]\]
+
+<p>where \(\mathcal{D}\) is experience replay buffer and \(\theta^-\) are target network parameters (updated periodically from \(\theta\)).</p>
+
+<p>The gradient with respect to \(\theta\) is:</p>
+
+\[\nabla_\theta \mathcal{L}(\theta) = \mathbb{E}\left[\left(r + \gamma \max_{a'} Q(s', a'; \theta^-) - Q(s,a;\theta)\right) \nabla_\theta Q(s,a;\theta)\right]\]
+
+<p>Notice the target \(r + \gamma \max_{a'} Q(s', a'; \theta^-)\) is treated as constant (no gradient through \(\theta^-\)), preventing unstable feedback loops that would occur if targets depended on parameters being optimized.</p>
+
+<h3 id="experience-replay">Experience Replay</h3>
+
+<p>The replay buffer \(\mathcal{D}\) stores recent transitions: \(\mathcal{D} = \{(s_i, a_i, r_i, s_i')\}_{i=1}^N\) with capacity \(N\) (typically 100K-1M). Each training iteration:</p>
+<ol>
+  <li>Agent takes action, observes transition, adds to \(\mathcal{D}\)</li>
+  <li>Sample mini-batch uniformly from \(\mathcal{D}\)</li>
+  <li>Compute loss and gradient on mini-batch</li>
+  <li>Update \(\theta\) via gradient descent</li>
+</ol>
+
+<p>Uniform sampling breaks temporal correlations (adjacent experiences are correlated, but random samples from buffer aren’t), stabilizing training. Reusing experiences improves sample efficiency—each experience can be used in multiple updates rather than once.</p>
+
+<h3 id="target-network">Target Network</h3>
+
+<p>Maintain two networks: online network \(Q(s,a;\theta)\) updated every step, and target network \(Q(s,a;\theta^-)\) updated periodically (every \(C\) steps):</p>
+
+\[\theta^- \leftarrow \theta \quad \text{every } C \text{ steps}\]
+
+<p>This provides stable targets for \(C\) steps, preventing the moving target problem where both the prediction and target change simultaneously, causing oscillations. Typical \(C = 10,000\) steps.</p>
+
+<h3 id="policy-gradient-methods">Policy Gradient Methods</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td>An alternative to value-based RL directly parameterizes the policy $$\pi(a</td>
+      <td>s;\theta)$$. The objective is expected return:</td>
+    </tr>
+  </tbody>
+</table>
+
+\[J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}\left[\sum_{t=0}^T \gamma^t r_t\right]\]
+
+<p>The policy gradient theorem gives:</p>
+
+\[\nabla_\theta J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}\left[\sum_{t=0}^T \nabla_\theta \log \pi_\theta(a_t|s_t) \cdot G_t\right]\]
+
+<p>where \(G_t = \sum_{k=t}^T \gamma^{k-t} r_k\) is return from time \(t\). This remarkable result says we can estimate the gradient by sampling trajectories, computing returns, and weighting log-probabilities of actions by returns. High-return actions get positive weight (increase probability), low-return actions get negative weight (decrease probability).</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Actor-Critic methods combine value and policy learning. The actor (policy $$\pi(a</td>
+      <td>s;\theta)\() selects actions, the critic (value function\)V(s;\phi)$$) evaluates them. The actor updates using policy gradient with advantage:</td>
+    </tr>
+  </tbody>
+</table>
+
+\[\nabla_\theta J(\theta) \propto \nabla_\theta \log \pi_\theta(a_t|s_t) \cdot A(s_t, a_t)\]
+
+<p>where \(A(s_t, a_t) = Q(s_t, a_t) - V(s_t)\) is advantage (how much better than average this action is). The critic updates to better estimate values, providing better advantage estimates for the actor.</p>
+
+<h2 id="3-example--intuition">3. Example / Intuition</h2>
+
+<p>Imagine teaching an agent to play Pong from pixel inputs. The state is an 84×84 grayscale image showing paddles and ball. Actions are {up, down, stay}. The agent must learn to move the paddle to hit the ball—a simple task for humans but challenging for RL.</p>
+
+<p>Initially, the agent takes random actions. Occasionally it hits the ball by chance, receiving +1 reward. The DQN updates Q-values for states/actions leading to this reward. For the state “ball approaching my paddle from upper-left,” action “move up” gets higher Q-value. Through thousands of games, patterns emerge:</p>
+
+<ul>
+  <li>Ball high, paddle low → move up has high Q-value</li>
+  <li>Ball low, paddle high → move down has high Q-value</li>
+  <li>Ball middle, paddle middle → stay has high Q-value</li>
+</ul>
+
+<p>The neural network learns these patterns not through explicit rules but by associating visual patterns (ball position relative to paddle) with action values. Crucially, it learns the dynamics: where the ball will be, not just where it is now, enabling anticipatory control.</p>
+
+<p>The experience replay buffer contains diverse situations: paddle at top with ball approaching, paddle at bottom with ball far away, etc. Uniformly sampling this buffer prevents the network from forgetting how to handle situations it hasn’t seen recently—a problem called catastrophic forgetting that would occur if training only on the current game state.</p>
+
+<h2 id="4-code-snippet">4. Code Snippet</h2>
+
+<p>Complete DQN implementation:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="n">torch.optim</span> <span class="k">as</span> <span class="n">optim</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+<span class="kn">import</span> <span class="n">random</span>
+
+<span class="k">class</span> <span class="nc">DQN</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Deep Q-Network for Atari-style games.
+    
+    Architecture: Conv layers extract features from frames,
+    fully connected layers output Q-values for each action.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">(</span><span class="n">DQN</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="c1"># Input: (batch, 4, 84, 84) - 4 stacked frames
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">conv</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">()</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># Calculate conv output size
+</span>        <span class="n">conv_output_size</span> <span class="o">=</span> <span class="mi">64</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span>
+        
+        <span class="c1"># Fully connected layers
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">conv_output_size</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">)</span>  <span class="c1"># Q-value per action
+</span>        <span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">x: (batch, 4, 84, 84) stacked frames</span><span class="sh">"""</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">conv</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">fc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ReplayBuffer</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">Experience replay buffer</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="mi">100000</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="nb">buffer</span> <span class="o">=</span> <span class="nf">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="n">capacity</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">done</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="nb">buffer</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">done</span><span class="p">))</span>
+    
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="nf">sample</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="nb">buffer</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
+        <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">done</span> <span class="o">=</span> <span class="nf">zip</span><span class="p">(</span><span class="o">*</span><span class="n">batch</span><span class="p">)</span>
+        <span class="nf">return </span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">state</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">action</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">reward</span><span class="p">),</span>
+                <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">next_state</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">done</span><span class="p">))</span>
+    
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nf">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="nb">buffer</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">DQNAgent</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">Complete DQN agent with experience replay and target network</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">state_shape</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">num_actions</span> <span class="o">=</span> <span class="n">num_actions</span>
+        
+        <span class="c1"># Online and target networks
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">policy_net</span> <span class="o">=</span> <span class="nc">DQN</span><span class="p">(</span><span class="n">state_shape</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">target_net</span> <span class="o">=</span> <span class="nc">DQN</span><span class="p">(</span><span class="n">state_shape</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">target_net</span><span class="p">.</span><span class="nf">load_state_dict</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">policy_net</span><span class="p">.</span><span class="nf">state_dict</span><span class="p">())</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">policy_net</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.00025</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">memory</span> <span class="o">=</span> <span class="nc">ReplayBuffer</span><span class="p">(</span><span class="n">capacity</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.99</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">epsilon_min</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">epsilon_decay</span> <span class="o">=</span> <span class="mf">0.995</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">target_update_freq</span> <span class="o">=</span> <span class="mi">1000</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">steps</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">def</span> <span class="nf">select_action</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">ε-greedy action selection</span><span class="sh">"""</span>
+        <span class="k">if</span> <span class="n">random</span><span class="p">.</span><span class="nf">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">self</span><span class="p">.</span><span class="n">epsilon</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">random</span><span class="p">.</span><span class="nf">randrange</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">num_actions</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+                <span class="n">state_t</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nc">FloatTensor</span><span class="p">(</span><span class="n">state</span><span class="p">).</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">q_values</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">policy_net</span><span class="p">(</span><span class="n">state_t</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">q_values</span><span class="p">.</span><span class="nf">argmax</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">train_step</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Single training step on mini-batch from replay buffer</span><span class="sh">"""</span>
+        <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">memory</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">self</span><span class="p">.</span><span class="n">batch_size</span><span class="p">:</span>
+            <span class="k">return</span>
+        
+        <span class="c1"># Sample mini-batch
+</span>        <span class="n">states</span><span class="p">,</span> <span class="n">actions</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">next_states</span><span class="p">,</span> <span class="n">dones</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">memory</span><span class="p">.</span><span class="nf">sample</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">batch_size</span><span class="p">)</span>
+        
+        <span class="c1"># Convert to tensors
+</span>        <span class="n">states</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nc">FloatTensor</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
+        <span class="n">actions</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nc">LongTensor</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
+        <span class="n">rewards</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nc">FloatTensor</span><span class="p">(</span><span class="n">rewards</span><span class="p">)</span>
+        <span class="n">next_states</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nc">FloatTensor</span><span class="p">(</span><span class="n">next_states</span><span class="p">)</span>
+        <span class="n">dones</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nc">FloatTensor</span><span class="p">(</span><span class="n">dones</span><span class="p">)</span>
+        
+        <span class="c1"># Compute current Q-values
+</span>        <span class="n">current_q</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">policy_net</span><span class="p">(</span><span class="n">states</span><span class="p">).</span><span class="nf">gather</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">actions</span><span class="p">.</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)).</span><span class="nf">squeeze</span><span class="p">()</span>
+        
+        <span class="c1"># Compute target Q-values using target network
+</span>        <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+            <span class="n">next_q</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">target_net</span><span class="p">(</span><span class="n">next_states</span><span class="p">).</span><span class="nf">max</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">target_q</span> <span class="o">=</span> <span class="n">rewards</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">dones</span><span class="p">)</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">next_q</span>
+        
+        <span class="c1"># Compute loss
+</span>        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">mse_loss</span><span class="p">(</span><span class="n">current_q</span><span class="p">,</span> <span class="n">target_q</span><span class="p">)</span>
+        
+        <span class="c1"># Optimize
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        <span class="c1"># Gradient clipping for stability
+</span>        <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="nf">clip_grad_norm_</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">policy_net</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+        
+        <span class="c1"># Update target network periodically
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">steps</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">steps</span> <span class="o">%</span> <span class="n">self</span><span class="p">.</span><span class="n">target_update_freq</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">target_net</span><span class="p">.</span><span class="nf">load_state_dict</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">policy_net</span><span class="p">.</span><span class="nf">state_dict</span><span class="p">())</span>
+        
+        <span class="c1"># Decay epsilon
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">epsilon_min</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">epsilon</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">epsilon_decay</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Deep Q-Network (DQN) Agent</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Demonstrate DQN components
+</span><span class="n">state_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">84</span><span class="p">)</span>  <span class="c1"># 4 stacked frames
+</span><span class="n">num_actions</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="nc">DQNAgent</span><span class="p">(</span><span class="n">state_shape</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">DQN Components:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Policy network: </span><span class="si">{</span><span class="nf">sum</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">agent</span><span class="p">.</span><span class="n">policy_net</span><span class="p">.</span><span class="nf">parameters</span><span class="p">())</span><span class="si">:</span><span class="p">,</span><span class="si">}</span><span class="s"> params</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Target network: Same architecture, updated every </span><span class="si">{</span><span class="n">agent</span><span class="p">.</span><span class="n">target_update_freq</span><span class="si">}</span><span class="s"> steps</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Replay buffer: Capacity </span><span class="si">{</span><span class="n">agent</span><span class="p">.</span><span class="n">memory</span><span class="p">.</span><span class="nb">buffer</span><span class="p">.</span><span class="n">maxlen</span><span class="si">:</span><span class="p">,</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Batch size: </span><span class="si">{</span><span class="n">agent</span><span class="p">.</span><span class="n">batch_size</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Discount γ: </span><span class="si">{</span><span class="n">agent</span><span class="p">.</span><span class="n">gamma</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Initial ε: </span><span class="si">{</span><span class="n">agent</span><span class="p">.</span><span class="n">epsilon</span><span class="si">}</span><span class="s"> (decays to </span><span class="si">{</span><span class="n">agent</span><span class="p">.</span><span class="n">epsilon_min</span><span class="si">}</span><span class="s">)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Simulate training loop structure
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">DQN Training Loop:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  1. Select action using ε-greedy</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  2. Execute in environment, observe reward and next state</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  3. Store transition in replay buffer</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  4. Sample mini-batch from buffer</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  5. Compute Q-learning loss with target network</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  6. Update policy network via gradient descent</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  7. Periodically copy policy → target network</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">This combination of techniques enables stable deep RL training!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="5-related-concepts">5. Related Concepts</h2>
+
+<p>Deep RL connects to supervised learning through imitation learning. Instead of learning from rewards, agents can learn from expert demonstrations—supervised learning on (state, action) pairs. This often provides better initialization than random policies, with subsequent RL fine-tuning adapting to the specific environment.</p>
+
+<p>The relationship to evolutionary strategies shows alternative optimization approaches. Instead of gradient-based policy improvement, evolve population of policies through selection and mutation. Deep neuroevolution has achieved competitive results, particularly for tasks where gradients are unreliable.</p>
+
+<h2 id="6-fundamental-papers">6. Fundamental Papers</h2>
+
+<p><strong><a href="https://arxiv.org/abs/1312.5602">“Playing Atari with Deep Reinforcement Learning” (2013)</a></strong><br />
+<em>Authors</em>: Volodymyr Mnih et al. (DeepMind)<br />
+DQN paper showed deep networks could learn control policies from pixels, combining Q-learning with deep CNN function approximation, experience replay, and target networks. Achieved human-level performance on multiple Atari games, launching deep RL revolution.</p>
+
+<p><strong><a href="https://www.nature.com/articles/nature14236">“Human-level control through deep reinforcement learning” (2015)</a></strong><br />
+<em>Authors</em>: Volodymyr Mnih et al. (DeepMind)<br />
+Nature publication demonstrating DQN achieving human-level performance across 49 Atari games with single architecture and hyperparameters. Established deep RL as viable approach for complex control from high-dimensional inputs.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1602.01783">“Asynchronous Methods for Deep Reinforcement Learning” (2016)</a></strong><br />
+<em>Authors</em>: Volodymyr Mnih et al.<br />
+A3C parallelized RL across multiple agents, removing need for experience replay through asynchronous updates. Achieved better performance with less training time, establishing actor-critic methods as alternative to value-based approaches.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1707.06347">“Proximal Policy Optimization Algorithms” (2017)</a></strong><br />
+<em>Authors</em>: John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, Oleg Klimov<br />
+PPO simplified policy gradient methods while maintaining performance through clipped surrogate objective preventing excessively large policy updates. Became de facto standard for policy gradient RL due to simplicity and robustness.</p>
+
+<p><strong><a href="https://www.nature.com/articles/nature24270">“Mastering the game of Go without human knowledge” (2017)</a></strong><br />
+<em>Authors</em>: David Silver et al. (DeepMind)<br />
+AlphaGo Zero achieved superhuman Go performance through pure self-play without human data, using deep RL with MCTS. Demonstrated RL’s potential for discovering novel strategies surpassing human knowledge.</p>
+
+<h2 id="common-pitfalls-and-tricks">Common Pitfalls and Tricks</h2>
+
+<p>Reward shaping can help or hurt. Providing intermediate rewards for subgoals speeds learning but might create unintended behaviors (agent learns to maximize shaped rewards instead of true objective). Use carefully and validate final behavior on true rewards.</p>
+
+<p>Hyperparameter sensitivity in deep RL exceeds supervised learning. Learning rate, replay buffer size, update frequency, exploration schedule—all significantly affect performance. Extensive tuning often necessary. Start with published hyperparameters for similar tasks.</p>
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<p>Deep reinforcement learning combines neural networks with RL, using networks as function approximators for value functions or policies, enabling learning from high-dimensional inputs like images. DQN uses experience replay to break temporal correlations and target networks for stable Q-learning targets, achieving human-level Atari game performance. Policy gradient methods directly optimize policy networks through REINFORCE or actor-critic approaches, often more stable than value methods for continuous actions. Deep RL has achieved remarkable successes including mastering Go, robotic control, and game playing, while remaining challenging due to sample inefficiency, hyperparameter sensitivity, and training instability. Understanding deep RL requires appreciating both RL foundations (MDPs, value functions, exploration) and deep learning techniques (CNNs for vision, gradient descent, architecture design), combining both fields’ insights to create agents that learn complex behaviors through interaction.</p>
+
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter21/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter21/21_00_Introduction/">
+              21 Deep Reinforcement Learning
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+    
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

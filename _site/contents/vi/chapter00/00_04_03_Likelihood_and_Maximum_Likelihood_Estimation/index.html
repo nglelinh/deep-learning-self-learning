@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      00-04-03 Likelihood và Ước Lượng Hợp Lý Tối Đa (MLE) &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep Learning trong Khoa học Dữ liệu</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Trang chủ</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/">
+              00. Các Khái Niệm Toán Học Cơ Bản
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Trang chủ">Deep Learning trong Khoa học Dữ liệu</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/en/chapter00/" class="language-switch" title="Chuyển sang tiếng Anh">Chuyển sang tiếng Anh</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    00-04-03 Likelihood và Ước Lượng Hợp Lý Tối Đa (MLE)
+    
+      
+        <span class="lesson-badge required large">Bắt buộc</span>
+      
+    
+  </h1>
+  <h2 id="likelihood-và-ước-lượng-hợp-lý-tối-đa">Likelihood và Ước Lượng Hợp Lý Tối Đa</h2>
+
+<p>Trong xác suất thống kê, <strong>likelihood</strong> (tạm dịch: khả năng xảy ra hoặc độ hợp lý) là một khái niệm quan trọng, biểu thị xác suất quan sát được dữ liệu cụ thể khi giả định một mô hình hoặc một tập hợp các tham số nhất định là đúng. Tuy nhiên, likelihood không phải là xác suất thông thường mà là một hàm đo lường mức độ phù hợp của mô hình với dữ liệu.</p>
+
+<h3 id="định-nghĩa-likelihood">Định Nghĩa Likelihood</h3>
+
+<p>Likelihood của một tham số \(\theta\) (hoặc một mô hình) được định nghĩa là xác suất của dữ liệu quan sát được, giả sử tham số \(\theta\) là đúng. Nó thường được ký hiệu là \(L(\theta \mid x)\), trong đó \(x\) là dữ liệu quan sát được.</p>
+
+<p><strong>Công thức:</strong>
+\(L(\theta \mid x) = P(x \mid \theta)\)</p>
+
+<p>Ở đây, \(P(x \mid \theta)\) là xác suất xảy ra dữ liệu \(x\) khi tham số \(\theta\) được cho trước.</p>
+
+<h3 id="điểm-khác-biệt-với-xác-suất">Điểm Khác Biệt với Xác Suất</h3>
+
+<ul>
+  <li><strong>Xác suất</strong> mô tả khả năng xảy ra của một sự kiện trong tương lai, với các tham số đã biết.</li>
+  <li><strong>Likelihood</strong> ngược lại, đo lường mức độ phù hợp của các tham số khác nhau đối với dữ liệu đã quan sát.</li>
+</ul>
+
+<div style="background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 20px 0;">
+<strong>⚠️ Lưu ý quan trọng:</strong> Likelihood không phải là xác suất của tham số θ, vì nó không được chuẩn hóa như một phân phối xác suất (tổng tích phân của likelihood không nhất thiết bằng 1).
+</div>
+
+<h3 id="ví-dụ-minh-họa-tung-đồng-xu">Ví Dụ Minh Họa: Tung Đồng Xu</h3>
+
+<p>Giả sử bạn tung một đồng xu và quan sát được kết quả là 3 lần “mặt sấp” (S) và 2 lần “mặt ngửa” (N) trong 5 lần tung. Bạn muốn biết xác suất tung được mặt sấp là \(p\).</p>
+
+<p>Likelihood của \(p\) là xác suất quan sát được dữ liệu (3 sấp, 2 ngửa) khi \(p\) được cho trước:</p>
+
+\[L(p \mid \text{dữ liệu}) = P(\text{3 sấp, 2 ngửa} \mid p) = \binom{5}{3} p^3 (1-p)^2\]
+
+<p>Trong đó:</p>
+<ul>
+  <li>\(\binom{5}{3}\) là hệ số nhị thức</li>
+  <li>\(p^3\) là xác suất cho 3 lần sấp</li>
+  <li>\((1-p)^2\) là xác suất cho 2 lần ngửa</li>
+</ul>
+
+<p><strong>Thử nghiệm với các giá trị khác nhau:</strong></p>
+
+<p>Với \(p = 0.6\):
+\(L(0.6 \mid \text{dữ liệu}) = \binom{5}{3} (0.6)^3 (0.4)^2 = 10 \times 0.216 \times 0.16 \approx 0.3456\)</p>
+
+<p>Với \(p = 0.5\):
+\(L(0.5 \mid \text{dữ liệu}) = \binom{5}{3} (0.5)^3 (0.5)^2 = 10 \times 0.125 \times 0.25 \approx 0.3125\)</p>
+
+<p>Likelihood cao hơn với \(p = 0.6\) cho thấy giá trị này phù hợp hơn với dữ liệu quan sát được so với \(p = 0.5\).</p>
+
+<h3 id="ví-dụ-tương-tác-tung-đồng-xu">Ví Dụ Tương Tác: Tung Đồng Xu</h3>
+
+<div id="coin-flip-example" style="border: 1px solid #ddd; padding: 20px; margin: 20px 0; border-radius: 8px;">
+    <h4>Thí Nghiệm Tung Đồng Xu</h4>
+    
+    <div style="margin: 15px 0;">
+        <label for="p-slider">Xác suất mặt sấp (p): <span id="p-value">0.5</span></label><br />
+        <input type="range" id="p-slider" min="0.01" max="0.99" step="0.01" value="0.5" style="width: 300px;" />
+    </div>
+    
+    <div style="margin: 15px 0;">
+        <label for="heads-input">Số lần sấp: </label>
+        <input type="number" id="heads-input" value="3" min="0" max="20" style="width: 60px;" />
+        
+        <label for="tails-input" style="margin-left: 20px;">Số lần ngửa: </label>
+        <input type="number" id="tails-input" value="2" min="0" max="20" style="width: 60px;" />
+    </div>
+    
+    <div style="margin: 15px 0;">
+        <canvas id="likelihood-plot" width="600" height="300" style="border: 1px solid #ccc;"></canvas>
+    </div>
+    
+    <div id="likelihood-result" style="background: #f8f9fa; padding: 10px; border-radius: 4px; margin: 10px 0;">
+        <strong>Likelihood hiện tại:</strong> <span id="current-likelihood">0.3125</span><br />
+        <strong>Log-likelihood:</strong> <span id="current-log-likelihood">-1.16</span>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const pSlider = document.getElementById('p-slider');
+    const pValue = document.getElementById('p-value');
+    const headsInput = document.getElementById('heads-input');
+    const tailsInput = document.getElementById('tails-input');
+    const canvas = document.getElementById('likelihood-plot');
+    const ctx = canvas.getContext('2d');
+    const likelihoodResult = document.getElementById('current-likelihood');
+    const logLikelihoodResult = document.getElementById('current-log-likelihood');
+    
+    function binomialCoeff(n, k) {
+        if (k > n) return 0;
+        if (k === 0 || k === n) return 1;
+        
+        let result = 1;
+        for (let i = 0; i < k; i++) {
+            result = result * (n - i) / (i + 1);
+        }
+        return result;
+    }
+    
+    function likelihood(p, heads, tails) {
+        const n = heads + tails;
+        const coeff = binomialCoeff(n, heads);
+        return coeff * Math.pow(p, heads) * Math.pow(1 - p, tails);
+    }
+    
+    function logLikelihood(p, heads, tails) {
+        const n = heads + tails;
+        const logCoeff = Math.log(binomialCoeff(n, heads));
+        return logCoeff + heads * Math.log(p) + tails * Math.log(1 - p);
+    }
+    
+    function plotLikelihood() {
+        const heads = parseInt(headsInput.value);
+        const tails = parseInt(tailsInput.value);
+        const currentP = parseFloat(pSlider.value);
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Vẽ trục
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(50, 250);
+        ctx.lineTo(550, 250);
+        ctx.moveTo(50, 250);
+        ctx.lineTo(50, 50);
+        ctx.stroke();
+        
+        // Nhãn trục
+        ctx.fillStyle = '#333';
+        ctx.font = '12px Arial';
+        ctx.fillText('p (xác suất mặt sấp)', 250, 280);
+        ctx.save();
+        ctx.translate(20, 150);
+        ctx.rotate(-Math.PI/2);
+        ctx.fillText('Likelihood', 0, 0);
+        ctx.restore();
+        
+        // Vẽ đường likelihood
+        ctx.strokeStyle = '#2196F3';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        
+        let maxLikelihood = 0;
+        const points = [];
+        
+        for (let i = 0; i <= 500; i++) {
+            const p = 0.01 + (i / 500) * 0.98;
+            const l = likelihood(p, heads, tails);
+            points.push({p: p, l: l});
+            maxLikelihood = Math.max(maxLikelihood, l);
+        }
+        
+        for (let i = 0; i < points.length; i++) {
+            const x = 50 + (points[i].p - 0.01) / 0.98 * 500;
+            const y = 250 - (points[i].l / maxLikelihood) * 200;
+            
+            if (i === 0) {
+                ctx.moveTo(x, y);
+            } else {
+                ctx.lineTo(x, y);
+            }
+        }
+        ctx.stroke();
+        
+        // Vẽ điểm hiện tại
+        const currentLikelihood = likelihood(currentP, heads, tails);
+        const currentX = 50 + (currentP - 0.01) / 0.98 * 500;
+        const currentY = 250 - (currentLikelihood / maxLikelihood) * 200;
+        
+        ctx.fillStyle = '#f44336';
+        ctx.beginPath();
+        ctx.arc(currentX, currentY, 5, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        // Cập nhật kết quả
+        likelihoodResult.textContent = currentLikelihood.toFixed(6);
+        logLikelihoodResult.textContent = logLikelihood(currentP, heads, tails).toFixed(4);
+        
+        // Vẽ các tick marks
+        ctx.fillStyle = '#666';
+        ctx.font = '10px Arial';
+        for (let i = 0; i <= 10; i++) {
+            const p = i / 10;
+            const x = 50 + (p - 0.01) / 0.98 * 500;
+            ctx.fillText(p.toFixed(1), x - 10, 265);
+        }
+    }
+    
+    function updateDisplay() {
+        pValue.textContent = pSlider.value;
+        plotLikelihood();
+    }
+    
+    pSlider.addEventListener('input', updateDisplay);
+    headsInput.addEventListener('input', plotLikelihood);
+    tailsInput.addEventListener('input', plotLikelihood);
+    
+    // Khởi tạo
+    updateDisplay();
+});
+</script>
+
+<h3 id="maximum-likelihood-estimation-mle">Maximum Likelihood Estimation (MLE)</h3>
+
+<p><strong>Ước lượng hợp lý tối đa</strong> là phương pháp tìm giá trị của tham số \(\theta\) sao cho hàm likelihood \(L(\theta \mid x)\) đạt giá trị lớn nhất.</p>
+
+<p><strong>Công thức MLE:</strong>
+\(\hat{\theta}_{MLE} = \arg\max_{\theta} L(\theta \mid x)\)</p>
+
+<p>Thường thì việc tối đa hóa log-likelihood dễ dàng hơn:
+\(\hat{\theta}_{MLE} = \arg\max_{\theta} \log L(\theta \mid x)\)</p>
+
+<h3 id="ví-dụ-mle-phân-phối-chuẩn">Ví Dụ MLE: Phân Phối Chuẩn</h3>
+
+<p>Giả sử chúng ta có \(n\) quan sát độc lập \(x_1, x_2, \ldots, x_n\) từ phân phối chuẩn \(N(\mu, \sigma^2)\).</p>
+
+<p><strong>Hàm likelihood:</strong>
+\(L(\mu, \sigma^2 \mid x_1, \ldots, x_n) = \prod_{i=1}^{n} \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x_i - \mu)^2}{2\sigma^2}\right)\)</p>
+
+<p><strong>Log-likelihood:</strong>
+\(\ell(\mu, \sigma^2) = -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log(\sigma^2) - \frac{1}{2\sigma^2}\sum_{i=1}^{n}(x_i - \mu)^2\)</p>
+
+<p><strong>Ước lượng MLE:</strong></p>
+
+<p>Để tìm \(\hat{\mu}\), lấy đạo hàm theo \(\mu\) và đặt bằng 0:
+\(\frac{\partial \ell}{\partial \mu} = \frac{1}{\sigma^2}\sum_{i=1}^{n}(x_i - \mu) = 0\)</p>
+
+<p>Giải được: \(\hat{\mu}_{MLE} = \frac{1}{n}\sum_{i=1}^{n} x_i = \bar{x}\)</p>
+
+<p>Tương tự cho \(\sigma^2\):
+\(\hat{\sigma^2}_{MLE} = \frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^2\)</p>
+
+<h3 id="ví-dụ-tương-tác-mle-cho-phân-phối-chuẩn">Ví Dụ Tương Tác: MLE cho Phân Phối Chuẩn</h3>
+
+<div id="normal-mle-example" style="border: 1px solid #ddd; padding: 20px; margin: 20px 0; border-radius: 8px;">
+    <h4>MLE cho Phân Phối Chuẩn</h4>
+    
+    <div style="margin: 15px 0;">
+        <button id="generate-data" style="background: #4CAF50; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">Tạo Dữ Liệu Mới</button>
+        <span style="margin-left: 20px;">Số mẫu: </span>
+        <input type="number" id="sample-size" value="50" min="10" max="200" style="width: 60px;" />
+    </div>
+    
+    <div style="margin: 15px 0;">
+        <label for="mu-guess">Ước lượng μ: <span id="mu-guess-value">0</span></label><br />
+        <input type="range" id="mu-guess" min="-3" max="3" step="0.1" value="0" style="width: 300px;" />
+    </div>
+    
+    <div style="margin: 15px 0;">
+        <label for="sigma-guess">Ước lượng σ: <span id="sigma-guess-value">1</span></label><br />
+        <input type="range" id="sigma-guess" min="0.1" max="3" step="0.1" value="1" style="width: 300px;" />
+    </div>
+    
+    <div style="margin: 15px 0;">
+        <canvas id="normal-plot" width="600" height="300" style="border: 1px solid #ccc;"></canvas>
+    </div>
+    
+    <div id="mle-results" style="background: #f8f9fa; padding: 10px; border-radius: 4px; margin: 10px 0;">
+        <div><strong>Dữ liệu thực:</strong> μ = <span id="true-mu">1.0</span>, σ = <span id="true-sigma">1.5</span></div>
+        <div><strong>MLE ước lượng:</strong> μ̂ = <span id="mle-mu">0.95</span>, σ̂ = <span id="mle-sigma">1.48</span></div>
+        <div><strong>Ước lượng hiện tại:</strong> μ = <span id="current-mu">0</span>, σ = <span id="current-sigma">1</span></div>
+        <div><strong>Log-likelihood hiện tại:</strong> <span id="current-ll">-75.2</span></div>
+        <div><strong>Log-likelihood tối đa:</strong> <span id="max-ll">-72.1</span></div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const generateBtn = document.getElementById('generate-data');
+    const sampleSizeInput = document.getElementById('sample-size');
+    const muGuess = document.getElementById('mu-guess');
+    const sigmaGuess = document.getElementById('sigma-guess');
+    const muGuessValue = document.getElementById('mu-guess-value');
+    const sigmaGuessValue = document.getElementById('sigma-guess-value');
+    const canvas = document.getElementById('normal-plot');
+    const ctx = canvas.getContext('2d');
+    
+    let data = [];
+    let trueMu = 1.0;
+    let trueSigma = 1.5;
+    
+    function normalRandom(mu, sigma) {
+        let u = 0, v = 0;
+        while(u === 0) u = Math.random();
+        while(v === 0) v = Math.random();
+        return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v) * sigma + mu;
+    }
+    
+    function generateData() {
+        const n = parseInt(sampleSizeInput.value);
+        trueMu = (Math.random() - 0.5) * 4; // -2 to 2
+        trueSigma = 0.5 + Math.random() * 2; // 0.5 to 2.5
+        
+        data = [];
+        for (let i = 0; i < n; i++) {
+            data.push(normalRandom(trueMu, trueSigma));
+        }
+        
+        // Tính MLE
+        const mleMu = data.reduce((sum, x) => sum + x, 0) / data.length;
+        const mleSigma = Math.sqrt(data.reduce((sum, x) => sum + (x - mleMu) ** 2, 0) / data.length);
+        
+        document.getElementById('true-mu').textContent = trueMu.toFixed(2);
+        document.getElementById('true-sigma').textContent = trueSigma.toFixed(2);
+        document.getElementById('mle-mu').textContent = mleMu.toFixed(2);
+        document.getElementById('mle-sigma').textContent = mleSigma.toFixed(2);
+        
+        plotData();
+    }
+    
+    function logLikelihood(mu, sigma, data) {
+        const n = data.length;
+        const sumSquares = data.reduce((sum, x) => sum + (x - mu) ** 2, 0);
+        return -n/2 * Math.log(2 * Math.PI) - n * Math.log(sigma) - sumSquares / (2 * sigma ** 2);
+    }
+    
+    function normalPDF(x, mu, sigma) {
+        return (1 / (sigma * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * ((x - mu) / sigma) ** 2);
+    }
+    
+    function plotData() {
+        if (data.length === 0) return;
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        const currentMu = parseFloat(muGuess.value);
+        const currentSigma = parseFloat(sigmaGuess.value);
+        
+        // Tìm phạm vi dữ liệu
+        const minX = Math.min(...data) - 1;
+        const maxX = Math.max(...data) + 1;
+        const range = maxX - minX;
+        
+        // Vẽ histogram
+        const bins = 20;
+        const binWidth = range / bins;
+        const binCounts = new Array(bins).fill(0);
+        
+        data.forEach(x => {
+            const binIndex = Math.floor((x - minX) / binWidth);
+            if (binIndex >= 0 && binIndex < bins) {
+                binCounts[binIndex]++;
+            }
+        });
+        
+        const maxCount = Math.max(...binCounts);
+        
+        ctx.fillStyle = 'rgba(33, 150, 243, 0.3)';
+        for (let i = 0; i < bins; i++) {
+            const x = 50 + (i * binWidth / range) * 500;
+            const height = (binCounts[i] / maxCount) * 200;
+            const width = (binWidth / range) * 500;
+            ctx.fillRect(x, 250 - height, width, height);
+        }
+        
+        // Vẽ đường phân phối thực
+        ctx.strokeStyle = '#4CAF50';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (let i = 0; i <= 500; i++) {
+            const x = minX + (i / 500) * range;
+            const y = normalPDF(x, trueMu, trueSigma);
+            const plotX = 50 + (i / 500) * 500;
+            const plotY = 250 - (y / (1 / (trueSigma * Math.sqrt(2 * Math.PI)))) * 200;
+            
+            if (i === 0) ctx.moveTo(plotX, plotY);
+            else ctx.lineTo(plotX, plotY);
+        }
+        ctx.stroke();
+        
+        // Vẽ đường ước lượng hiện tại
+        ctx.strokeStyle = '#f44336';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        for (let i = 0; i <= 500; i++) {
+            const x = minX + (i / 500) * range;
+            const y = normalPDF(x, currentMu, currentSigma);
+            const plotX = 50 + (i / 500) * 500;
+            const plotY = 250 - (y / (1 / (currentSigma * Math.sqrt(2 * Math.PI)))) * 200;
+            
+            if (i === 0) ctx.moveTo(plotX, plotY);
+            else ctx.lineTo(plotX, plotY);
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+        
+        // Vẽ trục
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(50, 250);
+        ctx.lineTo(550, 250);
+        ctx.stroke();
+        
+        // Cập nhật kết quả
+        const currentLL = logLikelihood(currentMu, currentSigma, data);
+        const mleMu = data.reduce((sum, x) => sum + x, 0) / data.length;
+        const mleSigma = Math.sqrt(data.reduce((sum, x) => sum + (x - mleMu) ** 2, 0) / data.length);
+        const maxLL = logLikelihood(mleMu, mleSigma, data);
+        
+        document.getElementById('current-mu').textContent = currentMu.toFixed(2);
+        document.getElementById('current-sigma').textContent = currentSigma.toFixed(2);
+        document.getElementById('current-ll').textContent = currentLL.toFixed(2);
+        document.getElementById('max-ll').textContent = maxLL.toFixed(2);
+        
+        // Thêm chú thích
+        ctx.fillStyle = '#4CAF50';
+        ctx.fillRect(450, 60, 15, 3);
+        ctx.fillStyle = '#333';
+        ctx.font = '12px Arial';
+        ctx.fillText('Phân phối thực', 470, 65);
+        
+        ctx.strokeStyle = '#f44336';
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.moveTo(450, 80);
+        ctx.lineTo(465, 80);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillText('Ước lượng hiện tại', 470, 85);
+    }
+    
+    function updateDisplay() {
+        muGuessValue.textContent = muGuess.value;
+        sigmaGuessValue.textContent = sigmaGuess.value;
+        plotData();
+    }
+    
+    generateBtn.addEventListener('click', generateData);
+    muGuess.addEventListener('input', updateDisplay);
+    sigmaGuess.addEventListener('input', updateDisplay);
+    sampleSizeInput.addEventListener('change', generateData);
+    
+    // Khởi tạo
+    generateData();
+});
+</script>
+
+<h3 id="tính-chất-của-mle">Tính Chất của MLE</h3>
+
+<ol>
+  <li>
+    <p><strong>Tính Nhất Quán (Consistency)</strong>: Khi kích thước mẫu tăng, ước lượng MLE hội tụ về giá trị thực của tham số.</p>
+  </li>
+  <li>
+    <p><strong>Tính Tiệm Cận Chuẩn (Asymptotic Normality)</strong>: Với mẫu lớn, phân phối của ước lượng MLE xấp xỉ phân phối chuẩn.</p>
+  </li>
+  <li>
+    <p><strong>Tính Hiệu Quả Tiệm Cận (Asymptotic Efficiency)</strong>: MLE đạt được cận Cramér-Rao, nghĩa là có phương sai nhỏ nhất trong các ước lượng không thiên lệch.</p>
+  </li>
+  <li>
+    <p><strong>Bất Biến (Invariance)</strong>: Nếu \(\hat{\theta}\) là MLE của \(\theta\), thì \(g(\hat{\theta})\) là MLE của \(g(\theta)\) với \(g\) là hàm khả nghịch.</p>
+  </li>
+</ol>
+
+<h3 id="ứng-dụng-của-mle">Ứng Dụng của MLE</h3>
+
+<h4 id="1-ước-lượng-tham-số">1. Ước Lượng Tham Số</h4>
+
+<p>MLE được sử dụng rộng rãi để ước lượng tham số trong các mô hình thống kê:</p>
+<ul>
+  <li>Phân phối chuẩn: ước lượng trung bình và phương sai</li>
+  <li>Phân phối Poisson: ước lượng tham số λ</li>
+  <li>Hồi quy tuyến tính: ước lượng hệ số hồi quy</li>
+</ul>
+
+<h4 id="2-so-sánh-mô-hình">2. So Sánh Mô Hình</h4>
+
+<p>Likelihood được dùng để so sánh các mô hình thống kê khác nhau:</p>
+<ul>
+  <li><strong>Likelihood Ratio Test</strong>: So sánh hai mô hình lồng nhau</li>
+  <li><strong>AIC/BIC</strong>: Tiêu chí lựa chọn mô hình dựa trên likelihood</li>
+</ul>
+
+<h4 id="3-thống-kê-bayes">3. Thống Kê Bayes</h4>
+
+<p>Trong thống kê Bayes, likelihood kết hợp với phân phối tiên nghiệm (prior) để tính phân phối hậu nghiệm (posterior):</p>
+
+\[P(\theta \mid x) \propto L(\theta \mid x) \cdot P(\theta)\]
+
+<h3 id="kết-nối-với-tối-ưu-hóa">Kết Nối với Tối Ưu Hóa</h3>
+
+<p>MLE tạo ra một bài toán tối ưu hóa:</p>
+
+\[\max_{\theta} L(\theta \mid x) \quad \text{hoặc} \quad \max_{\theta} \log L(\theta \mid x)\]
+
+<p>Điều này thường dẫn đến:</p>
+<ul>
+  <li><strong>Tối ưu hóa không ràng buộc</strong>: Khi không có ràng buộc trên tham số</li>
+  <li><strong>Tối ưu hóa có ràng buộc</strong>: Khi tham số phải thỏa mãn điều kiện nhất định</li>
+  <li><strong>Bài toán lồi</strong>: Nhiều hàm log-likelihood là lồi, đảm bảo nghiệm tối ưu toàn cục</li>
+</ul>
+
+<div style="background: #e8f4fd; padding: 15px; border-left: 4px solid #2196F3; margin: 20px 0;">
+<strong>💡 Kết Nối với Tối Ưu Hóa Lồi:</strong> Nhiều bài toán MLE dẫn đến tối ưu hóa lồi, đặc biệt trong họ phân phối mũ. Điều này đảm bảo rằng nghiệm tìm được là tối ưu toàn cục và các thuật toán tối ưu hóa sẽ hội tụ đến nghiệm đúng.
+</div>
+
+<h3 id="ví-dụ-thực-tế-hồi-quy-logistic">Ví Dụ Thực Tế: Hồi Quy Logistic</h3>
+
+<p>Trong hồi quy logistic, chúng ta mô hình hóa xác suất của biến nhị phân:</p>
+
+\[P(y = 1 \mid x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x)}}\]
+
+<p><strong>Log-likelihood:</strong>
+\(\ell(\beta_0, \beta_1) = \sum_{i=1}^{n} \left[ y_i \log(p_i) + (1-y_i) \log(1-p_i) \right]\)</p>
+
+<p>Đây là một bài toán tối ưu hóa lồi, có thể giải bằng gradient descent hoặc Newton’s method.</p>
+
+<h3 id="tóm-tắt">Tóm Tắt</h3>
+
+<ul>
+  <li><strong>Likelihood</strong> đo lường mức độ phù hợp của tham số với dữ liệu quan sát</li>
+  <li><strong>MLE</strong> tìm tham số tối đa hóa likelihood</li>
+  <li>MLE có nhiều tính chất thống kê tốt: nhất quán, hiệu quả, tiệm cận chuẩn</li>
+  <li>MLE tạo ra các bài toán tối ưu hóa, nhiều trong số đó là lồi</li>
+  <li>Ứng dụng rộng rãi trong thống kê, học máy và khoa học dữ liệu</li>
+</ul>
+
+<div style="background: #d4edda; padding: 15px; border-left: 4px solid #28a745; margin: 20px 0;">
+<strong>🎯 Điểm Quan Trọng:</strong> MLE là cầu nối quan trọng giữa thống kê và tối ưu hóa. Hiểu rõ MLE giúp bạn nắm vững cách các mô hình thống kê được ước lượng thông qua các phương pháp tối ưu hóa, đặc biệt là tối ưu hóa lồi.
+</div>
+
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/vi/chapter00/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Quay lại đầu chương
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/vi/chapter00/00_05_Quiz_Basic_Concepts/">
+              00-05 Bài tập trắc nghiệm - Khái niệm cơ bản
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/vi/chapter00/00_04_02_Common_Probability_Distributions/">
+              00-04-02 Các Phân Phối Xác Suất Thông Dụng
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

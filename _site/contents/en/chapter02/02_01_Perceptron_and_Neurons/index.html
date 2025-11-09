@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      02-01 The Perceptron and Artificial Neurons &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    02-01 The Perceptron and Artificial Neurons
+    
+      
+        <span class="lesson-badge required large">Required</span>
+      
+    
+  </h1>
+  <h1 id="the-perceptron-and-artificial-neurons">The Perceptron and Artificial Neurons</h1>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Perceptron_moj.png/400px-Perceptron_moj.png" alt="Perceptron Diagram" />
+<em>Hình ảnh: Sơ đồ cấu trúc của một Perceptron. Nguồn: Wikimedia Commons</em></p>
+
+<h2 id="1-concept-overview">1. Concept Overview</h2>
+
+<p>The journey into deep learning begins with understanding its most fundamental building block: the artificial neuron. While modern deep learning has evolved far beyond the simple perceptron introduced by Frank Rosenblatt in 1958, comprehending this historical starting point is essential for grasping why contemporary neural networks are designed the way they are. The perceptron represents humanity’s first attempt to create a machine that could learn from examples, mimicking in an extremely simplified way how biological neurons process information.</p>
+
+<p>The perceptron is, at its core, a binary classifier. It takes multiple numerical inputs, combines them using learned weights, and produces a single binary output indicating which of two classes the input belongs to. What makes this seemingly simple mechanism profound is that it can learn these weights automatically from examples, adjusting them iteratively until it correctly classifies the training data. This learning capability, primitive as it may seem compared to modern standards, was revolutionary in its time and laid the conceptual groundwork for all subsequent developments in neural networks.</p>
+
+<p>Understanding the perceptron is crucial because it introduces several concepts that persist throughout deep learning. The notion of weighted inputs captures the idea that different features contribute differently to a decision. The bias term allows the decision boundary to shift away from the origin. The learning rule demonstrates how we can adjust parameters based on errors. Perhaps most importantly, the perceptron’s fundamental limitation—its inability to solve non-linearly separable problems like XOR—directly motivates the need for multiple layers and the deep architectures that define modern deep learning.</p>
+
+<p>The transition from the perceptron to modern artificial neurons involves replacing the harsh step function with smooth, differentiable activation functions. This seemingly small change has profound implications. Smooth activation functions enable gradient-based learning through backpropagation, allowing us to train networks with many layers. They introduce the nonlinearity necessary for neural networks to approximate complex functions. The choice of activation function affects everything from training speed to the network’s ability to represent certain types of patterns, making this one of the most important architectural decisions in deep learning.</p>
+
+<h2 id="2-mathematical-foundation">2. Mathematical Foundation</h2>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Blausen_0657_MultipolarNeuron.png/500px-Blausen_0657_MultipolarNeuron.png" alt="Biological vs Artificial Neuron" />
+<em>Hình ảnh: Neuron sinh học (trái) đã truyền cảm hứng cho neuron nhân tạo. Nguồn: Wikimedia Commons</em></p>
+
+<p>The perceptron performs a remarkably simple computation, yet understanding its mathematical formulation reveals deep insights about linear classifiers and decision boundaries. Given an input vector \(\mathbf{x} = (x_1, x_2, \ldots, x_n)\) where each \(x_i\) represents a feature, and a corresponding weight vector \(\mathbf{w} = (w_1, w_2, \ldots, w_n)\), the perceptron first computes a weighted sum:</p>
+
+\[z = \sum_{i=1}^{n} w_i x_i + b = \mathbf{w}^T \mathbf{x} + b\]
+
+<p>This quantity \(z\), often called the pre-activation or logit, represents a linear combination of the inputs. Each weight \(w_i\) determines how strongly the corresponding input \(x_i\) influences the final decision. The bias term \(b\) provides a threshold that allows the decision boundary to be positioned optimally in the input space, independent of whether all inputs are zero.</p>
+
+<p>The perceptron then applies the Heaviside step function to this linear combination to produce a binary output:</p>
+
+\[y = H(z) = \begin{cases} 
+1 &amp; \text{if } z \geq 0 \\
+0 &amp; \text{if } z &lt; 0
+\end{cases}\]
+
+<p>This step function creates a sharp decision boundary. Everything on one side gets classified as positive (1), everything on the other side as negative (0). The geometric interpretation of this is elegant: the weights define a hyperplane in the input space according to the equation \(\mathbf{w}^T \mathbf{x} + b = 0\). Points are classified based on which side of this hyperplane they fall on.</p>
+
+<p>The weight vector \(\mathbf{w}\) is perpendicular (orthogonal) to the decision hyperplane. This is a fundamental geometric fact: if two points \(\mathbf{x}_1\) and \(\mathbf{x}_2\) lie on the hyperplane, then \(\mathbf{w}^T(\mathbf{x}_1 - \mathbf{x}_2) = 0\), meaning \(\mathbf{w}\) is orthogonal to any vector in the hyperplane. The magnitude of \(\mathbf{w}\) determines how quickly the activation \(z\) changes as we move perpendicular to the hyperplane, while the bias \(b\) controls the hyperplane’s distance from the origin along the direction of \(\mathbf{w}\).</p>
+
+<p>The perceptron learning algorithm provides a simple yet elegant way to find appropriate weights when the data is linearly separable. Starting from initial weights (often zeros or small random values), the algorithm processes each training example \((\mathbf{x}_i, y_i)\). When it makes a correct prediction, it does nothing. When it misclassifies, it adjusts the weights according to:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $$\mathbf{w} \leftarrow \mathbf{w} + \eta (y_i - \hat{y}_i) \mathbf{x}_i$$
+ $$b \leftarrow b + \eta (y_i - \hat{y}_i)$$
+</code></pre></div></div>
+
+<p>Here \(\eta\) is the learning rate controlling step size, and \((y_i - \hat{y}_i)\) is the error. If the true label is 1 but we predicted 0, the error is +1, and we move the weights in the direction of \(\mathbf{x}_i\), making this input more likely to be classified as 1 in the future. If we predicted 1 but the truth is 0, we move away from \(\mathbf{x}_i\). This geometric intuition—moving the decision boundary toward correctly classified points and away from incorrectly classified ones—underlies much of machine learning.</p>
+
+<p>The Perceptron Convergence Theorem guarantees that if the training data is linearly separable, this algorithm will find a separating hyperplane in a finite number of steps. However, this theorem also reveals the perceptron’s fundamental limitation: it cannot solve problems where the classes are not linearly separable. The classic example is the XOR problem, where the positive and negative classes are interleaved in such a way that no single straight line (or hyperplane in higher dimensions) can separate them. This limitation sparked the first “AI winter” in the 1970s when it became clear that single-layer perceptrons could not solve many practical problems.</p>
+
+<p>Modern artificial neurons address these limitations while preserving the core insight of weighted summation. Instead of the step function, we apply a smooth activation function \(\sigma\):</p>
+
+\[a = \sigma\left(\sum_{i=1}^{n} w_i x_i + b\right) = \sigma(\mathbf{w}^T \mathbf{x} + b)\]
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Gjl-t%28x%29.svg/500px-Gjl-t%28x%29.svg.png" alt="Activation Functions" />
+<em>Hình ảnh: Các hàm kích hoạt phổ biến (Sigmoid, Tanh, ReLU). Nguồn: Wikimedia Commons</em></p>
+
+<p>The choice of \(\sigma\) dramatically affects the neuron’s behavior. The sigmoid function \(\sigma(z) = \frac{1}{1+e^{-z}}\) smoothly transitions between 0 and 1, providing a probabilistic interpretation and crucially, being differentiable everywhere. The hyperbolic tangent \(\tanh(z)\) ranges from -1 to 1 and is zero-centered, which often improves gradient flow. The Rectified Linear Unit (ReLU), defined as \(\max(0, z)\), has become dominant in modern deep learning because it’s computationally efficient, doesn’t saturate for positive inputs (avoiding vanishing gradients), and introduces useful sparsity where negative-activated neurons output exactly zero.</p>
+
+<h2 id="3-example--intuition">3. Example / Intuition</h2>
+
+<p>To truly understand how a perceptron works, let’s walk through a concrete example that reveals both its power and limitations. Consider the simple logical AND function, which outputs 1 only when both inputs are 1. While this seems trivial, it was groundbreaking that a machine could learn this relationship from examples alone.</p>
+
+<p>Suppose we want a perceptron to learn AND using these examples: (0,0)→0, (0,1)→0, (1,0)→0, (1,1)→1. Let’s initialize with \(w_1 = 0, w_2 = 0, b = 0\) and use learning rate \(\eta = 1\). For the first example (0,0) with label 0, our prediction is \(H(0 \cdot 0 + 0 \cdot 0 + 0) = H(0) = 1\), which is wrong! The error is \(0 - 1 = -1\), so we update: \(w_1 \leftarrow 0 + 1 \cdot (-1) \cdot 0 = 0\), \(w_2 \leftarrow 0\), \(b \leftarrow 0 + 1 \cdot (-1) = -1\). Now we have a bias of -1, which provides a threshold.</p>
+
+<p>Continuing this process through the training examples, the perceptron eventually converges to weights like \(w_1 = 1, w_2 = 1, b = -1.5\). Let’s verify this works: For input (1,1), we get \(z = 1 \cdot 1 + 1 \cdot 1 - 1.5 = 0.5\), so \(H(0.5) = 1\) ✓. For (1,0), we get \(z = 1 \cdot 1 + 1 \cdot 0 - 1.5 = -0.5\), so \(H(-0.5) = 0\) ✓. The perceptron has learned to require both inputs to exceed the threshold of 1.5 combined.</p>
+
+<p>Now consider why the XOR problem is impossible for a single perceptron. XOR outputs 1 when inputs differ: (0,0)→0, (0,1)→1, (1,0)→1, (1,1)→0. If you plot these points in 2D space, you’ll see that the positive examples (0,1) and (1,0) are diagonally opposite, with negative examples (0,0) and (1,1) at the other diagonal. No single straight line can separate these classes—you would need a nonlinear boundary, like a curve or multiple line segments. This geometric impossibility reveals a fundamental computational limitation: single-layer linear models cannot capture certain logical relationships.</p>
+
+<p>This limitation drove the development of multi-layer networks. If we stack two perceptrons feeding into a third, we can solve XOR. The first layer can learn to detect \(x_1\) OR \(x_2\), and \(x_1\) AND \(x_2\), and the second layer can learn “OR but not AND,” which is exactly XOR. This demonstrates a crucial principle: depth (multiple layers) enables learning increasingly complex decision boundaries. Each additional layer can combine features from previous layers in new ways, exponentially expanding the space of representable functions.</p>
+
+<p>The biological inspiration, while imperfect, provides useful intuition. Real neurons in the brain receive signals through dendrites, integrate these signals in the cell body (soma), and fire an action potential down the axon if the integrated signal exceeds a threshold. The synapse strengths correspond to our weights—stronger synapses contribute more to whether the neuron fires. However, we must be careful not to take this analogy too far. Biological neurons are vastly more complex than artificial ones, with intricate biochemistry, complex dendritic computations, and temporal dynamics that our simple weighted-sum model doesn’t capture. Artificial neurons are engineering tools inspired by biology, not accurate models of brain function.</p>
+
+<h2 id="4-code-snippet">4. Code Snippet</h2>
+
+<p>Let’s implement both a classical perceptron and a modern neuron to understand their similarities and differences. We’ll start with a clean NumPy implementation that makes the learning process transparent:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="k">class</span> <span class="nc">Perceptron</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">Classical Perceptron with step function activation</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">n_features</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Initialize perceptron with random small weights.
+        
+        Why small random weights? We need to break symmetry - if all weights
+        start equal, all neurons learn the same features. Small values ensure
+        we start in a region where gradients (for smooth activations) are meaningful.
+        </span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">learning_rate</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">n_iterations</span> <span class="o">=</span> <span class="n">n_iterations</span>
+        <span class="c1"># Start with zeros for classical perceptron (simple and works for linearly separable data)
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">(</span><span class="n">n_features</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">bias</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">errors_</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Track errors per epoch for diagnostics
+</span>    
+    <span class="k">def</span> <span class="nf">activation</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Heaviside step function: outputs 1 if z &gt;= 0, else 0
+        
+        This creates a sharp decision boundary. Everything above the threshold
+        gets classified as 1, everything below as 0. This all-or-nothing nature
+        is both the perceptron</span><span class="sh">'</span><span class="s">s strength (clear decisions) and weakness 
+        (not differentiable, can</span><span class="sh">'</span><span class="s">t use gradient descent).
+        </span><span class="sh">"""</span>
+        <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="n">z</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Make predictions for input X.
+        
+        The computation X @ weights is a batch matrix-vector product.
+        For each example (row of X), we compute the dot product with weights,
+        add bias, and apply activation. This vectorized approach is orders of
+        magnitude faster than looping through examples.
+        </span><span class="sh">"""</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">weights</span><span class="p">)</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">bias</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">activation</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Train perceptron using the perceptron learning rule.
+        
+        Why does this work? The perceptron learning rule has a beautiful
+        geometric interpretation: when we misclassify a point, we adjust
+        the decision boundary to move toward that point (if it should be
+        positive) or away from it (if it should be negative). For linearly
+        separable data, this process is guaranteed to converge.
+        </span><span class="sh">"""</span>
+        <span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">n_iterations</span><span class="p">):</span>
+            <span class="n">errors</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x_i</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+                <span class="c1"># Compute prediction
+</span>                <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">dot</span><span class="p">(</span><span class="n">x_i</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">weights</span><span class="p">)</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">bias</span>
+                <span class="n">y_pred</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">activation</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+                
+                <span class="c1"># Update only if prediction is wrong
+</span>                <span class="n">error</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_pred</span>
+                <span class="k">if</span> <span class="n">error</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="c1"># The update rule: w ← w + η(y - ŷ)x
+</span>                    <span class="c1"># When y=1, ŷ=0: error=+1, move toward x (increase dot product)
+</span>                    <span class="c1"># When y=0, ŷ=1: error=-1, move away from x (decrease dot product)
+</span>                    <span class="n">self</span><span class="p">.</span><span class="n">weights</span> <span class="o">+=</span> <span class="n">self</span><span class="p">.</span><span class="n">lr</span> <span class="o">*</span> <span class="n">error</span> <span class="o">*</span> <span class="n">x_i</span>
+                    <span class="n">self</span><span class="p">.</span><span class="n">bias</span> <span class="o">+=</span> <span class="n">self</span><span class="p">.</span><span class="n">lr</span> <span class="o">*</span> <span class="n">error</span>
+                    <span class="n">errors</span> <span class="o">+=</span> <span class="nf">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            
+            <span class="n">self</span><span class="p">.</span><span class="n">errors_</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+            
+            <span class="c1"># Early stopping if converged
+</span>            <span class="k">if</span> <span class="n">errors</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Converged at iteration </span><span class="si">{</span><span class="n">iteration</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+                <span class="k">break</span>
+        
+        <span class="k">return</span> <span class="n">self</span>
+
+<span class="c1"># Demonstrate learning the AND function
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training Perceptron on AND gate</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="n">X_and</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">y_and</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="n">perceptron</span> <span class="o">=</span> <span class="nc">Perceptron</span><span class="p">(</span><span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">perceptron</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_and</span><span class="p">,</span> <span class="n">y_and</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Learned weights: </span><span class="si">{</span><span class="n">perceptron</span><span class="p">.</span><span class="n">weights</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Learned bias: </span><span class="si">{</span><span class="n">perceptron</span><span class="p">.</span><span class="n">bias</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Predictions: </span><span class="si">{</span><span class="n">perceptron</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_and</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">True labels:  </span><span class="si">{</span><span class="n">y_and</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Decision boundary equation: </span><span class="si">{</span><span class="n">perceptron</span><span class="p">.</span><span class="n">weights</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">*x1 + </span><span class="si">{</span><span class="n">perceptron</span><span class="p">.</span><span class="n">weights</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">*x2 + </span><span class="si">{</span><span class="n">perceptron</span><span class="p">.</span><span class="n">bias</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> = 0</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Demonstrate XOR impossibility
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Attempting to learn XOR (will fail!)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="n">X_xor</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">y_xor</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="n">perceptron_xor</span> <span class="o">=</span> <span class="nc">Perceptron</span><span class="p">(</span><span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">perceptron_xor</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_xor</span><span class="p">,</span> <span class="n">y_xor</span><span class="p">)</span>
+
+<span class="n">predictions_xor</span> <span class="o">=</span> <span class="n">perceptron_xor</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_xor</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Predictions: </span><span class="si">{</span><span class="n">predictions_xor</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">True labels:  </span><span class="si">{</span><span class="n">y_xor</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Errors remaining: </span><span class="si">{</span><span class="n">perceptron_xor</span><span class="p">.</span><span class="n">errors_</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Note: Perceptron cannot solve XOR because it</span><span class="sh">'</span><span class="s">s not linearly separable!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now let’s implement a modern neuron with smooth activation functions that enable gradient-based learning:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="n">torch.optim</span> <span class="k">as</span> <span class="n">optim</span>
+
+<span class="k">class</span> <span class="nc">ModernNeuron</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Modern artificial neuron with smooth activation function.
+    
+    The key difference from the perceptron is the activation function.
+    Instead of a step function that</span><span class="sh">'</span><span class="s">s either 0 or 1, we use smooth functions
+    that can output any value in a range and, crucially, are differentiable.
+    This differentiability is what enables backpropagation and gradient descent.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_size</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">(</span><span class="n">ModernNeuron</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="c1"># Linear layer: y = Wx + b
+</span>        <span class="c1"># PyTorch initializes weights using Kaiming uniform by default,
+</span>        <span class="c1"># which is designed for ReLU activations
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">linear</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># Choose activation function
+</span>        <span class="c1"># Each has different properties and use cases
+</span>        <span class="k">if</span> <span class="n">activation</span> <span class="o">==</span> <span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">:</span>
+            <span class="c1"># ReLU: max(0, z) - most common, prevents vanishing gradients
+</span>            <span class="n">self</span><span class="p">.</span><span class="n">activation</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">activation</span> <span class="o">==</span> <span class="sh">'</span><span class="s">sigmoid</span><span class="sh">'</span><span class="p">:</span>
+            <span class="c1"># Sigmoid: 1/(1+e^(-z)) - outputs [0,1], good for probabilities
+</span>            <span class="n">self</span><span class="p">.</span><span class="n">activation</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sigmoid</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">activation</span> <span class="o">==</span> <span class="sh">'</span><span class="s">tanh</span><span class="sh">'</span><span class="p">:</span>
+            <span class="c1"># Tanh: (e^z - e^(-z))/(e^z + e^(-z)) - outputs [-1,1], zero-centered
+</span>            <span class="n">self</span><span class="p">.</span><span class="n">activation</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Tanh</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Linear: f(z) = z - for regression
+</span>            <span class="n">self</span><span class="p">.</span><span class="n">activation</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Identity</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Forward pass through the neuron.
+        
+        The computation is the same as perceptron (weighted sum + bias)
+        but we apply a smooth activation function. This smoothness is critical:
+        it means small changes in weights cause small changes in output,
+        enabling gradient descent to work effectively.
+        </span><span class="sh">"""</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">linear</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># Linear combination: z = w^T x + b
+</span>        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">activation</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>  <span class="c1"># Apply nonlinear activation
+</span>
+<span class="c1"># Demonstrate that modern neurons can learn XOR with multiple layers
+</span><span class="k">class</span> <span class="nc">TwoLayerNetwork</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Two-layer network that CAN solve XOR.
+    
+    This demonstrates why depth matters: the first layer creates a new
+    representation space where XOR becomes linearly separable, and the
+    second layer can then separate it with a linear boundary.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">(</span><span class="n">TwoLayerNetwork</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">hidden</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="c1"># First layer creates nonlinear features
+</span>        <span class="n">h</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="nf">hidden</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="c1"># Second layer combines these features
+</span>        <span class="k">return</span> <span class="n">torch</span><span class="p">.</span><span class="nf">sigmoid</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="nf">output</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
+
+<span class="c1"># Train on XOR
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training 2-Layer Network on XOR</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="n">X_xor_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">([[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]])</span>
+<span class="n">y_xor_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">([[</span><span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.</span><span class="p">]])</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="nc">TwoLayerNetwork</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">BCELoss</span><span class="p">()</span>  <span class="c1"># Binary Cross-Entropy
+</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+
+<span class="c1"># Training loop
+</span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">5000</span><span class="p">):</span>
+    <span class="c1"># Forward pass
+</span>    <span class="n">predictions</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">X_xor_torch</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">y_xor_torch</span><span class="p">)</span>
+    
+    <span class="c1"># Backward pass
+</span>    <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+    <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">:</span><span class="mi">4</span><span class="n">d</span><span class="si">}</span><span class="s">, Loss: </span><span class="si">{</span><span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># Test the learned model
+</span><span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="n">final_predictions</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">X_xor_torch</span><span class="p">)</span>
+    <span class="n">binary_predictions</span> <span class="o">=</span> <span class="p">(</span><span class="n">final_predictions</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">).</span><span class="nf">float</span><span class="p">()</span>
+    
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Final Predictions (probabilities):</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">pred</span><span class="p">,</span> <span class="n">true</span><span class="p">)</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="nf">zip</span><span class="p">(</span><span class="n">X_xor_torch</span><span class="p">,</span> <span class="n">final_predictions</span><span class="p">,</span> <span class="n">y_xor_torch</span><span class="p">)):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Input </span><span class="si">{</span><span class="n">inp</span><span class="p">.</span><span class="nf">numpy</span><span class="p">()</span><span class="si">}</span><span class="s"> → Pred: </span><span class="si">{</span><span class="n">pred</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, True: </span><span class="si">{</span><span class="nf">int</span><span class="p">(</span><span class="n">true</span><span class="p">.</span><span class="nf">item</span><span class="p">())</span><span class="si">}</span><span class="s">, </span><span class="sh">"</span> <span class="o">+</span>
+          <span class="sa">f</span><span class="sh">"</span><span class="s">Classified as: </span><span class="si">{</span><span class="nf">int</span><span class="p">(</span><span class="n">binary_predictions</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">item</span><span class="p">())</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Success! The network learned XOR, something a single perceptron cannot do.</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">This demonstrates why depth (multiple layers) is fundamental to neural networks.</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Let’s also understand how different activation functions shape neuron behavior by examining their effects on the same input:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Compare activation functions
+</span><span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">relu_out</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="n">sigmoid_out</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="n">tanh_out</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">tanh</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Activation Function Characteristics</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">For z = -2.0:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  ReLU:    </span><span class="si">{</span><span class="n">torch</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">)).</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">  (zero for negative)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Sigmoid: </span><span class="si">{</span><span class="n">torch</span><span class="p">.</span><span class="nf">sigmoid</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">)).</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">  (near 0, but not exactly)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Tanh:    </span><span class="si">{</span><span class="n">torch</span><span class="p">.</span><span class="nf">tanh</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">)).</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">  (negative output)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">For z = 2.0:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  ReLU:    </span><span class="si">{</span><span class="n">torch</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)).</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">  (linear for positive)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Sigmoid: </span><span class="si">{</span><span class="n">torch</span><span class="p">.</span><span class="nf">sigmoid</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)).</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">  (approaching 1)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Tanh:    </span><span class="si">{</span><span class="n">torch</span><span class="p">.</span><span class="nf">tanh</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)).</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">  (approaching 1)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Key observations:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - ReLU: Outputs exactly zero for negative inputs, creates sparsity</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - Sigmoid: Always positive, good for probabilities but can saturate</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - Tanh: Zero-centered (outputs can be negative), better gradient flow than sigmoid</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The reason ReLU has become dominant deserves deeper explanation. When using sigmoid or tanh, the gradient becomes very small when the input is large in magnitude (positive or negative). This “saturation” means that during backpropagation, gradients diminish as they propagate backward through layers, making it difficult to train deep networks. ReLU doesn’t saturate for positive inputs—its gradient is exactly 1—allowing gradients to flow unchanged through many layers. This property enabled the training of much deeper networks and was crucial to the deep learning revolution of the 2010s.</p>
+
+<p>However, ReLU introduces its own challenge: the “dying ReLU” problem. If a neuron’s input is always negative during training, its output is always zero, and its gradient is also always zero, meaning it never updates and effectively dies. This can happen with poor initialization or excessively high learning rates. Variants like Leaky ReLU (\(\max(\alpha z, z)\) with \(\alpha \approx 0.01\)) address this by allowing small negative values, ensuring gradients never completely vanish.</p>
+
+<h2 id="5-related-concepts">5. Related Concepts</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Understanding the perceptron and artificial neurons properly requires seeing how they connect to the broader landscape of machine learning and deep learning. The perceptron is essentially a simplified form of logistic regression when we replace the step function with a sigmoid activation. In logistic regression, we model the probability of class membership as $$P(y=1</td>
+      <td>\mathbf{x}) = \sigma(\mathbf{w}^T \mathbf{x} + b)$$, which is exactly a perceptron with sigmoid activation. The connection runs deeper: logistic regression is typically trained using maximum likelihood estimation, which, for the binary case, leads to minimizing binary cross-entropy loss. This same loss function is used to train the output layer of neural networks for binary classification.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The relationship to Support Vector Machines (SVMs) is also illuminating. Like the perceptron, SVMs find a separating hyperplane for linearly separable data. However, SVMs optimize for the maximum margin hyperplane—the one that’s as far as possible from the nearest data points of both classes. This margin maximization provides better generalization guarantees. The perceptron, in contrast, is satisfied with any separating hyperplane and doesn’t optimize for margin. Despite this theoretical advantage of SVMs, deep neural networks built from perceptron-like units have proven more practical for complex, high-dimensional problems because they can learn nonlinear features through multiple layers.</p>
+
+<p>The evolution from perceptron to Multi-Layer Perceptron (MLP) represents one of the most important developments in machine learning. An MLP is simply multiple layers of neurons, where each layer’s outputs become the next layer’s inputs. This stacking enables the network to learn hierarchical representations. The first layer might learn to detect simple patterns (edges in images, or common word combinations in text). The second layer combines these simple patterns into mid-level features (shapes formed by edges, or phrase meanings). Deeper layers build even higher-level concepts. This hierarchical learning is arguably the most powerful aspect of deep neural networks and is only possible because we moved beyond single-layer perceptrons.</p>
+
+<p>The connection to biological neural networks, while limited, provides useful intuition about why distributed representations work. In the brain, memories and concepts aren’t stored in single neurons but in patterns of activity across many neurons. Similarly, in artificial neural networks, representations are distributed across multiple neurons. This distribution provides robustness—if a few neurons fail or are dropped (as in dropout), the network can still function. It also enables the network to represent exponentially many concepts with linearly many neurons, a property called representational efficiency that partially explains deep learning’s success.</p>
+
+<p>Finally, understanding why we need smooth activation functions connects to the broader topic of optimization. Gradient descent, the primary algorithm for training neural networks, requires gradients. The step function’s gradient is zero almost everywhere (and undefined at the threshold), making gradient-based optimization impossible. Smooth activation functions like sigmoid, tanh, and especially ReLU provide meaningful gradients that guide the learning process. The choice of activation function affects not just whether we can compute gradients but also their magnitudes, which determines how quickly different layers learn—a consideration that becomes critical in deep networks where gradients must propagate through many layers.</p>
+
+<h2 id="6-fundamental-papers">6. Fundamental Papers</h2>
+
+<p><strong><a href="https://psycnet.apa.org/record/1959-09865-001">“The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain” (1958)</a></strong><br />
+<em>Author</em>: Frank Rosenblatt<br />
+This foundational paper introduced the perceptron and demonstrated that a simple artificial neuron could learn from examples. Rosenblatt showed both the theoretical convergence properties and practical implementations, building physical machines that could perform pattern recognition. The perceptron’s success sparked immense optimism about artificial intelligence, though this was later tempered by the discovery of its limitations. The paper is historically significant not just for the algorithm but for establishing the paradigm of learning from data that underlies all of modern machine learning.</p>
+
+<p><strong><a href="https://mitpress.mit.edu/books/perceptrons">“Perceptrons: An Introduction to Computational Geometry” (1969)</a></strong><br />
+<em>Authors</em>: Marvin Minsky and Seymour Papert<br />
+While not available on arXiv, this influential book rigorously analyzed the perceptron’s limitations, proving that single-layer perceptrons cannot solve problems like XOR. The analysis was so thorough and the conclusions so discouraging that it contributed to the first AI winter, with research funding for neural networks drying up for over a decade. Ironically, Minsky and Papert noted that multi-layer networks could overcome these limitations, but the lack of a training algorithm (backpropagation hadn’t been rediscovered) meant this observation didn’t prevent the field’s decline. The book remains important for understanding both the mathematical foundations of linear classifiers and the historical development of neural networks.</p>
+
+<p><strong><a href="https://www.nature.com/articles/323533a0">“Learning representations by back-propagating errors” (1986)</a></strong><br />
+<em>Authors</em>: David E. Rumelhart, Geoffrey E. Hinton, Ronald J. Williams<br />
+This paper revitalized neural network research by showing how to train multi-layer networks of perceptron-like units using backpropagation. The key insight was that by computing gradients layer by layer using the chain rule, we could assign credit (or blame) for errors to all weights in the network, not just the output layer. This enabled training networks deep enough to solve XOR and many other problems that single perceptrons couldn’t handle. The paper marked the beginning of connectionism’s resurgence and laid the groundwork for modern deep learning.</p>
+
+<p><strong><a href="http://proceedings.mlr.press/v15/glorot11a.html">“Deep Sparse Rectifier Neural Networks” (2011)</a></strong><br />
+<em>Authors</em>: Xavier Glorot, Antoine Bordes, Yoshua Bengio<br />
+This paper introduced the Rectified Linear Unit (ReLU) as a superior activation function for deep networks and empirically demonstrated its advantages over sigmoid and tanh. The authors showed that ReLU enables training deeper networks by avoiding the vanishing gradient problem that plagued earlier activation functions. ReLU neurons are also computationally efficient (just a max operation) and induce sparse representations (many neurons output exactly zero), which can be both computationally beneficial and interpretable. The adoption of ReLU was a critical factor in the deep learning revolution, enabling the training of networks with dozens or even hundreds of layers.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1502.01852">“Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification” (2015)</a></strong><br />
+<em>Authors</em>: Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun<br />
+This paper introduced both PReLU (Parametric ReLU, where the slope for negative inputs is learned) and He initialization, a weight initialization scheme specifically designed for ReLU networks. The paper demonstrated that with proper initialization, extremely deep networks (22 layers at the time, which seemed very deep) could not only train successfully but surpass human performance on ImageNet classification. The He initialization scheme, which uses variance \(\sqrt{2/n_{in}}\) instead of \(\sqrt{1/n_{in}}\) (Xavier), accounts for the fact that ReLU zeros out half the neurons on average, maintaining appropriate activation and gradient magnitudes through deep networks.</p>
+
+<h2 id="common-pitfalls-and-tricks">Common Pitfalls and Tricks</h2>
+
+<p>One of the most common mistakes when implementing neurons is initializing all weights to the same value, particularly zero. This might seem sensible—start from a “neutral” position and let the data guide learning—but it has a devastating consequence called the symmetry problem. If all neurons in a layer start with identical weights, they receive identical gradients during backpropagation and thus make identical updates. They remain identical throughout training, learning exactly the same features. A layer of 100 neurons with identical weights is no more powerful than a single neuron. Random initialization breaks this symmetry, ensuring each neuron follows a different learning trajectory and learns to detect different patterns.</p>
+
+<p>The scale of initialization also matters profoundly, though the reasons are subtle. If weights are too large, activations can saturate (for sigmoid/tanh) or explode (growing exponentially through layers), while gradients can also explode, causing training instability. If weights are too small, activations shrink toward zero through layers, and gradients vanish, making learning impossibly slow, especially in deep networks. The solution is to scale initial weights based on layer dimensions. Xavier initialization (\(\mathcal{N}(0, 1/n_{in})\)) works well for sigmoid and tanh, maintaining variance of activations across layers. He initialization (\(\mathcal{N}(0, 2/n_{in})\)) is specifically designed for ReLU, accounting for its property of zeroing negative inputs.</p>
+
+<p>The dying ReLU problem deserves special attention because it’s a common failure mode in practice. When a ReLU neuron’s input becomes negative during training and remains negative, the neuron outputs zero and has zero gradient, so it never updates. This can happen due to unlucky initialization, too-high learning rates causing large weight updates that push neurons into the negative region, or systematic biases in the data. Once a neuron dies, it’s permanently dead for that training run. To diagnose this, monitor what fraction of neurons are always outputting zero. If more than 20-30% are dead, you likely have a problem. Solutions include using Leaky ReLU (which has small gradient even for negative inputs), reducing learning rate, improving initialization, or using batch normalization (which we’ll cover later) to keep activations in reasonable ranges.</p>
+
+<p>A powerful technique that’s often overlooked is using small positive biases for ReLU neurons. While weights should be random, initializing biases to small positive values like 0.01 ensures that most neurons are initially active (outputting positive values) rather than starting in the zero region. This gives them a chance to learn before potentially dying. This is a simple trick that can noticeably improve training in very deep networks.</p>
+
+<p>Understanding the geometric interpretation of weights helps debug and interpret models. The weight vector defines a direction in input space that the neuron is “looking” along. Its magnitude determines sensitivity—larger weights mean the neuron responds more strongly to changes in that direction. In image processing, you can literally visualize what a neuron has learned by finding the input pattern that maximally activates it, often revealing that low-level neurons learn to detect oriented edges, while deeper neurons learn to detect increasingly complex patterns like textures, object parts, or eventually complete objects.</p>
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<p>The perceptron, despite its simplicity, introduces fundamental concepts that persist throughout deep learning: the idea that we can learn from examples by adjusting weights based on errors, that weighted combinations of inputs can perform computation, and that linear models have inherent limitations necessitating nonlinearity and depth. Modern neurons extend the perceptron by using smooth, differentiable activation functions, enabling gradient-based learning through arbitrarily deep networks. The choice of activation function profoundly affects training dynamics, with ReLU emerging as the dominant choice for hidden layers due to its computational efficiency and resistance to vanishing gradients. Proper initialization breaks symmetry while maintaining appropriate activation and gradient scales, with He initialization being standard for ReLU networks. Understanding these foundational concepts deeply—not just what the formulas are but why they work and when they fail—is essential for anyone seeking to master deep learning rather than merely apply it superficially.</p>
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter02/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter02/02_00_Introduction/">
+              02 Introduction to Neural Networks
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  
+    
+  
+    
+      <li>
+        <h2>Next Post</h2>
+        <h3>
+          <a href="/deep-learning-self-learning/contents/en/chapter02/02_02_Neural_Network_Architecture/">
+            02-02 Neural Network Architecture
+          </a>
+        </h3>
+      </li>
+    
+  
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

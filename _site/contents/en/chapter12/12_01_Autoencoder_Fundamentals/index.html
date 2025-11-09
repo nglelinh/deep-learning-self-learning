@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      12-01 Autoencoder Fundamentals &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    12-01 Autoencoder Fundamentals
+    
+      
+        <span class="lesson-badge required large">Required</span>
+      
+    
+  </h1>
+  <h1 id="autoencoders-learning-efficient-representations">Autoencoders: Learning Efficient Representations</h1>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Autoencoder_structure.png/600px-Autoencoder_structure.png" alt="Autoencoder Architecture" />
+<em>Hình ảnh: Kiến trúc Autoencoder với encoder và decoder. Nguồn: Wikimedia Commons</em></p>
+
+<h2 id="1-concept-overview">1. Concept Overview</h2>
+
+<p>Autoencoders represent a fundamentally different paradigm in neural network training compared to the supervised learning we’ve studied so far. Instead of learning to map inputs to labeled outputs, autoencoders learn to reconstruct their inputs through an information bottleneck. This seemingly circular task—predicting the input from itself—becomes meaningful when we constrain the network to pass information through a lower-dimensional hidden layer called the latent space or code. By forcing the network to compress and then decompress the input, we compel it to learn efficient representations that capture the essential structure of the data while discarding noise and irrelevant details.</p>
+
+<p>The power of autoencoders lies not in the reconstruction itself but in what they learn during the process. The encoder learns to extract the most important features from high-dimensional data and compress them into a compact representation. The decoder learns to generate realistic data from these compressed representations. The latent space that emerges has remarkable properties: nearby points in latent space often correspond to semantically similar inputs, and we can interpolate smoothly between points to generate novel, realistic examples. These properties make autoencoders valuable for dimensionality reduction, denoising, anomaly detection, feature learning for downstream tasks, and as building blocks for more sophisticated generative models.</p>
+
+<p>Understanding autoencoders requires appreciating the interplay between capacity and constraint. If the latent dimension equals or exceeds the input dimension, the network can simply learn the identity function, copying inputs through unchanged—useless for learning meaningful structure. The bottleneck—making the latent dimension smaller than the input—forces the network to make choices about what to preserve. With a 784-dimensional input image compressed to 32 latent dimensions, the network cannot possibly encode every pixel independently. It must discover higher-level features like edges, shapes, and textures that compactly represent the image’s essential content. This compression isn’t arbitrary but learned from data, adapting to the specific structure present in the training distribution.</p>
+
+<p>The historical significance of autoencoders extends beyond their practical applications. They were among the first successful unsupervised learning methods in deep learning, demonstrating that neural networks could learn meaningful representations without labeled data. This influenced the development of pre-training strategies that enabled training deeper networks in the pre-ReLU era. Modern self-supervised learning and contrastive methods can be seen as descendants of autoencoder ideas—learning representations by predicting or reconstructing parts of the input from other parts. The autoencoder framework also introduced the encoder-decoder architecture pattern that has proven enormously influential, appearing in sequence-to-sequence models, variational autoencoders, and generative adversarial networks.</p>
+
+<p>Yet autoencoders have important limitations that motivate more sophisticated generative models. Standard autoencoders learn to compress and reconstruct training data but don’t necessarily learn a good generative model—the latent space might have “holes” where no training examples map, making random sampling produce unrealistic outputs. They don’t explicitly model the data distribution, limiting their theoretical guarantees. And the reconstruction loss, while intuitive, might not capture perceptual similarity (two images can be pixel-wise different yet perceptually similar, or pixel-wise similar yet perceptually different). These limitations led to variational autoencoders (which model distributions explicitly), generative adversarial networks (which use adversarial training instead of reconstruction loss), and perceptual losses (which measure similarity in feature space rather than pixel space). Understanding vanilla autoencoders provides the foundation for appreciating these more advanced techniques.</p>
+
+<h2 id="2-mathematical-foundation">2. Mathematical Foundation</h2>
+
+<p>The mathematical framework of autoencoders is elegantly simple yet rich in implications. An autoencoder consists of two neural networks composed sequentially: an encoder \(f_\phi\) parameterized by \(\phi\) and a decoder \(g_\theta\) parameterized by \(\theta\). Given input \(\mathbf{x} \in \mathbb{R}^{d}\), the encoder produces a latent representation:</p>
+
+\[\mathbf{z} = f_\phi(\mathbf{x}) \in \mathbb{R}^{k}\]
+
+<p>where \(k &lt; d\) enforces the bottleneck (though we’ll discuss cases where this isn’t strictly required). The decoder reconstructs from the latent representation:</p>
+
+\[\hat{\mathbf{x}} = g_\theta(\mathbf{z}) = g_\theta(f_\phi(\mathbf{x})) \in \mathbb{R}^{d}\]
+
+<p>The training objective minimizes reconstruction error:</p>
+
+\[\mathcal{L}(\mathbf{x}, \hat{\mathbf{x}}) = \|\mathbf{x} - \hat{\mathbf{x}}\|^2\]
+
+<p>for continuous data (mean squared error), or:</p>
+
+\[\mathcal{L}(\mathbf{x}, \hat{\mathbf{x}}) = -\sum_{i=1}^{d} [x_i \log(\hat{x}_i) + (1-x_i)\log(1-\hat{x}_i)]\]
+
+<p>for binary data (binary cross-entropy, treating each dimension as independent Bernoulli).</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>The choice of loss function embodies assumptions about the data and noise model. MSE assumes Gaussian noise: we’re modeling $$p(\mathbf{x}</td>
+      <td>\mathbf{z}) = \mathcal{N}(\mathbf{x}; g_\theta(\mathbf{z}), \sigma^2 I)\(, and minimizing MSE is equivalent to maximum likelihood under this assumption. Binary cross-entropy assumes Bernoulli noise: each pixel is independently binary with probability\)\hat{x}_i$$. For images with continuous values in [0,1], this is actually modeling each pixel as a probability, which seems odd but works reasonably in practice. More sophisticated approaches use perceptual losses based on feature distances in pre-trained networks, better capturing perceptual similarity.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The bottleneck dimension \(k\) is the key hyperparameter controlling the compression-fidelity tradeoff. Very small \(k\) (like 2-3 dimensions) creates extreme compression, forcing the network to capture only the most essential variations in data. This is useful for visualization (we can plot the 2D latent space) but may lose important details. Moderate \(k\) (32-128 dimensions for image datasets) balances compression and reconstruction quality. Large \(k\) (approaching input dimension) reduces compression pressure but might not learn interesting structure.</p>
+
+<p>Interestingly, even with \(k \geq d\) (no dimensional bottleneck), we can force meaningful learning through other constraints. Sparse autoencoders add a sparsity penalty to the latent activations:</p>
+
+\[\mathcal{L}_{\text{sparse}} = \|\mathbf{x} - \hat{\mathbf{x}}\|^2 + \lambda \sum_{j=1}^{k} KL(\rho \| \hat{\rho}_j)\]
+
+<p>where \(\rho\) is a target sparsity level (e.g., 0.05) and \(\hat{\rho}_j\) is the average activation of latent unit \(j\) over the training set. The KL divergence penalty encourages most latent units to be inactive (near zero) most of the time, forcing different units to specialize in different patterns. This creates a sparse, distributed representation even without dimensional bottleneck.</p>
+
+<p>Denoising autoencoders corrupt the input \(\mathbf{x}\) with noise to create \(\tilde{\mathbf{x}}\) but train to reconstruct the original:</p>
+
+\[\mathcal{L} = \|\mathbf{x} - g_\theta(f_\phi(\tilde{\mathbf{x}}))\|^2\]
+
+<p>The corruption process might add Gaussian noise, mask random pixels, or add salt-and-pepper noise. This forces the encoder to learn robust features invariant to the noise type, and the decoder to learn to “fill in” corrupted regions based on uncorrupted context. Denoising autoencoders often learn better features than vanilla autoencoders because the denoising task requires understanding data structure, not just memorizing training examples.</p>
+
+<p>The latent space geometry deserves careful analysis. In a well-trained autoencoder on image data, nearby points in latent space typically correspond to perceptually similar images. We can interpolate linearly between two latent codes \(\mathbf{z}_1\) and \(\mathbf{z}_2\):</p>
+
+\[\mathbf{z}_t = (1-t)\mathbf{z}_1 + t\mathbf{z}_2, \quad t \in [0,1]\]
+
+<p>and decode \(g_\theta(\mathbf{z}_t)\) to generate intermediate images. For well-behaved autoencoders, this produces smooth transitions (morphing one face into another, for example). However, standard autoencoders don’t guarantee good interpolation—there might be “holes” in latent space where no training examples map, and interpolating through these holes produces unrealistic reconstructions. Variational autoencoders address this by explicitly regularizing the latent space to be continuous and well-behaved.</p>
+
+<h2 id="3-example--intuition">3. Example / Intuition</h2>
+
+<p>To build concrete intuition for how autoencoders learn representations, let’s trace through training on MNIST digits. Suppose we compress 28×28=784 pixel images to 32-dimensional latent codes.</p>
+
+<p>Initially, with random weights, the encoder produces meaningless latent codes and the decoder generates random noise as reconstruction. The reconstruction error is enormous—we’re trying to match 784 pixel values but getting essentially random outputs. Gradients via backpropagation indicate how to adjust encoder and decoder weights to reduce this error.</p>
+
+<p>As training progresses, the encoder learns to extract increasingly meaningful features. Early on, it might learn that certain pixels tend to be dark (in the background) versus light (in digit strokes), encoding this as latent dimensions representing average brightness in different regions. This primitive encoding already allows better reconstruction than random noise—the decoder learns to generate images with appropriate overall brightness patterns.</p>
+
+<p>With more training, the encoder discovers edge patterns. Certain latent dimensions become active when the digit has vertical strokes (1, 4, 7), others for curves (0, 6, 8, 9), others for horizontal segments (2, 3, 5, 7). The decoder learns to reconstruct digit-like images from these edge indicators. Reconstructions now capture the general shape of digits, though details might be blurry.</p>
+
+<p>Eventually, the 32 latent dimensions self-organize into a meaningful representation space. Dimensions might encode: digit identity (roughly which digit), stroke thickness, slant, size, position in image. This learned representation emerges purely from the reconstruction objective—we never told the network what features to learn, only to compress and reconstruct accurately.</p>
+
+<p>Consider what happens when we encode several “3”s from the training set. Their latent codes cluster together in the 32D latent space because they share structure (similar edges, curves, topology). Different “3”s (thick, thin, slanted) map to slightly different but nearby latent points. Meanwhile, “8”s cluster in a different region of latent space—they share the topological structure (two loops) that “3”s lack. The latent space has self-organized to reflect digit categories and variations within categories, all without any labels.</p>
+
+<p>Now for the interpolation test. Encode a “3” to get \(\mathbf{z}_3\) and encode an “8” to get \(\mathbf{z}_8\). Decode intermediate points:</p>
+
+<p>\(\mathbf{z}_{0.0} = \mathbf{z}_3 \to\) decodes to “3”<br />
+\(\mathbf{z}_{0.25} = 0.75\mathbf{z}_3 + 0.25\mathbf{z}_8 \to\) decodes to “3 with hint of 8”<br />
+\(\mathbf{z}_{0.5} = 0.5\mathbf{z}_3 + 0.5\mathbf{z}_8 \to\) decodes to ambiguous digit<br />
+\(\mathbf{z}_{0.75} = 0.25\mathbf{z}_3 + 0.75\mathbf{z}_8 \to\) decodes to “8 with hint of 3”<br />
+\(\mathbf{z}_{1.0} = \mathbf{z}_8 \to\) decodes to “8”</p>
+
+<p>If interpolation is smooth, we see gradual morphing. If there are discontinuities, we might get unrealistic outputs at intermediate points. This interpolation quality is a diagnostic for whether the latent space is well-structured.</p>
+
+<p>Denoising autoencoders add an interesting twist. Suppose we corrupt a “7” by randomly zeroing 20% of pixels. The corrupted image is ambiguous—it could be a damaged “7” or possibly a “1”. The denoising autoencoder must use context (uncorrupted pixels) to infer the most likely original digit. This requires understanding digit structure, not just memorizing pixel patterns. The encoder learns to extract robust features despite corruption, and the decoder learns to generate complete digits from partial evidence. The learned representations are often more useful for downstream tasks than those from vanilla autoencoders because they’re forced to capture semantic structure rather than low-level pixel statistics.</p>
+
+<h2 id="4-code-snippet">4. Code Snippet</h2>
+
+<p>Let’s implement autoencoders from scratch with complete training pipeline:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="n">torch.optim</span> <span class="k">as</span> <span class="n">optim</span>
+<span class="kn">import</span> <span class="n">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">from</span> <span class="n">torchvision</span> <span class="kn">import</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">transforms</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="k">class</span> <span class="nc">Autoencoder</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Standard autoencoder with fully connected layers.
+    
+    Architecture: Input → Encoder → Latent (bottleneck) → Decoder → Reconstruction
+    
+    The bottleneck forces compression - input dimensions &gt; latent dimensions.
+    The network must learn efficient encoding of data structure.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="mi">784</span><span class="p">,</span> <span class="n">latent_dim</span><span class="o">=</span><span class="mi">32</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        input_dim: flattened input size (28*28=784 for MNIST)
+        latent_dim: bottleneck dimension (compression factor = input_dim/latent_dim)
+        
+        We</span><span class="sh">'</span><span class="s">ll use symmetric encoder-decoder architecture with progressively
+        decreasing then increasing dimensions: 784 → 256 → 128 → 32 → 128 → 256 → 784
+        </span><span class="sh">"""</span>
+        <span class="nf">super</span><span class="p">(</span><span class="n">Autoencoder</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="c1"># Encoder: progressively compress
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">)</span>  <span class="c1"># No activation - let latent be unbounded
+</span>        <span class="p">)</span>
+        
+        <span class="c1"># Decoder: progressively decompress
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">decoder</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">latent_dim</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Sigmoid</span><span class="p">()</span>  <span class="c1"># Sigmoid for pixel values in [0,1]
+</span>        <span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Map input to latent representation</span><span class="sh">"""</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">encoder</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Reconstruct from latent code</span><span class="sh">"""</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">decoder</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Full autoencoder: encode then decode</span><span class="sh">"""</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">reconstruction</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">reconstruction</span><span class="p">,</span> <span class="n">z</span>
+
+<span class="k">class</span> <span class="nc">DenoisingAutoencoder</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Denoising autoencoder: trained to reconstruct clean data from corrupted input.
+    
+    The corruption process forces learning robust features that capture
+    data structure rather than memorizing training examples. Results in
+    better features for downstream tasks.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="mi">784</span><span class="p">,</span> <span class="n">latent_dim</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">noise_factor</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">(</span><span class="n">DenoisingAutoencoder</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">noise_factor</span> <span class="o">=</span> <span class="n">noise_factor</span>
+        
+        <span class="c1"># Same architecture as vanilla autoencoder
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>  <span class="c1"># Additional regularization
+</span>            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">)</span>
+        <span class="p">)</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">decoder</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">latent_dim</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Sigmoid</span><span class="p">()</span>
+        <span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">add_noise</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">noise_factor</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Corrupt input with noise.
+        
+        For MNIST, we</span><span class="sh">'</span><span class="s">ll use Gaussian noise and clip to [0,1].
+        Other corruption types: masking (zero out pixels),
+        salt-and-pepper, or adversarial perturbations.
+        </span><span class="sh">"""</span>
+        <span class="k">if</span> <span class="n">noise_factor</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">noise_factor</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">noise_factor</span>
+        
+        <span class="n">noisy</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">noise_factor</span> <span class="o">*</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="p">.</span><span class="nf">clamp</span><span class="p">(</span><span class="n">noisy</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Training: corrupt input, encode corrupted, decode to clean.
+        
+        Key difference from vanilla: we add noise to input before encoding
+        but compute loss against original clean input. This trains the
+        network to denoise.
+        </span><span class="sh">"""</span>
+        <span class="c1"># Corrupt input
+</span>        <span class="n">x_noisy</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">add_noise</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        
+        <span class="c1"># Encode corrupted input
+</span>        <span class="n">z</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">encoder</span><span class="p">(</span><span class="n">x_noisy</span><span class="p">)</span>
+        
+        <span class="c1"># Decode (should reconstruct clean input, not noisy input!)
+</span>        <span class="n">reconstruction</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">decoder</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">reconstruction</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x_noisy</span>
+
+<span class="c1"># Load MNIST for demonstration
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training Autoencoders on MNIST</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Data loading
+</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="p">.</span><span class="nc">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="p">.</span><span class="nc">ToTensor</span><span class="p">(),</span>
+<span class="p">])</span>
+
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="nc">MNIST</span><span class="p">(</span><span class="sh">'</span><span class="s">./data</span><span class="sh">'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="nc">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">test_dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="nc">MNIST</span><span class="p">(</span><span class="sh">'</span><span class="s">./data</span><span class="sh">'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="nc">DataLoader</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="c1"># Train vanilla autoencoder
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">1. Training Vanilla Autoencoder (latent_dim=32)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+
+<span class="n">model_ae</span> <span class="o">=</span> <span class="nc">Autoencoder</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">784</span><span class="p">,</span> <span class="n">latent_dim</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">optimizer_ae</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">model_ae</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">MSELoss</span><span class="p">()</span>
+
+<span class="n">model_ae</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">train_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">train_loader</span><span class="p">):</span>
+        <span class="c1"># Flatten images: (batch, 1, 28, 28) → (batch, 784)
+</span>        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># Forward pass
+</span>        <span class="n">reconstruction</span><span class="p">,</span> <span class="n">latent</span> <span class="o">=</span> <span class="nf">model_ae</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">reconstruction</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        
+        <span class="c1"># Backward pass
+</span>        <span class="n">optimizer_ae</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        <span class="n">optimizer_ae</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+        
+        <span class="n">train_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
+    
+    <span class="n">avg_loss</span> <span class="o">=</span> <span class="n">train_loss</span> <span class="o">/</span> <span class="nf">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="mi">2</span><span class="n">d</span><span class="si">}</span><span class="s">: Loss = </span><span class="si">{</span><span class="n">avg_loss</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">2. Training Denoising Autoencoder (latent_dim=32, noise=0.3)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+
+<span class="n">model_dae</span> <span class="o">=</span> <span class="nc">DenoisingAutoencoder</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">784</span><span class="p">,</span> <span class="n">latent_dim</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">noise_factor</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">optimizer_dae</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">model_dae</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+
+<span class="n">model_dae</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">train_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">train_loader</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># Forward pass (adds noise internally)
+</span>        <span class="n">reconstruction</span><span class="p">,</span> <span class="n">latent</span><span class="p">,</span> <span class="n">noisy</span> <span class="o">=</span> <span class="nf">model_dae</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        
+        <span class="c1"># Loss: reconstruct CLEAN data from NOISY input
+</span>        <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">reconstruction</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        
+        <span class="n">optimizer_dae</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        <span class="n">optimizer_dae</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+        
+        <span class="n">train_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
+    
+    <span class="n">avg_loss</span> <span class="o">=</span> <span class="n">train_loss</span> <span class="o">/</span> <span class="nf">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="mi">2</span><span class="n">d</span><span class="si">}</span><span class="s">: Loss = </span><span class="si">{</span><span class="n">avg_loss</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Test and visualize
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Testing Reconstructions</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="n">model_ae</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+<span class="n">model_dae</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="c1"># Get test batch
+</span>    <span class="n">test_data</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="nf">next</span><span class="p">(</span><span class="nf">iter</span><span class="p">(</span><span class="n">test_loader</span><span class="p">))</span>
+    <span class="n">test_data_flat</span> <span class="o">=</span> <span class="n">test_data</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">test_data</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1"># Vanilla autoencoder
+</span>    <span class="n">recon_ae</span><span class="p">,</span> <span class="n">latent_ae</span> <span class="o">=</span> <span class="nf">model_ae</span><span class="p">(</span><span class="n">test_data_flat</span><span class="p">)</span>
+    
+    <span class="c1"># Denoising autoencoder (add noise for testing too)
+</span>    <span class="n">test_noisy</span> <span class="o">=</span> <span class="n">model_dae</span><span class="p">.</span><span class="nf">add_noise</span><span class="p">(</span><span class="n">test_data_flat</span><span class="p">)</span>
+    <span class="n">recon_dae</span><span class="p">,</span> <span class="n">latent_dae</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">model_dae</span><span class="p">.</span><span class="nf">forward</span><span class="p">(</span><span class="n">test_data_flat</span><span class="p">)</span>
+    
+    <span class="c1"># Compute reconstruction errors
+</span>    <span class="n">mse_ae</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">mse_loss</span><span class="p">(</span><span class="n">recon_ae</span><span class="p">,</span> <span class="n">test_data_flat</span><span class="p">).</span><span class="nf">item</span><span class="p">()</span>
+    <span class="n">mse_dae</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">mse_loss</span><span class="p">(</span><span class="n">recon_dae</span><span class="p">,</span> <span class="n">test_data_flat</span><span class="p">).</span><span class="nf">item</span><span class="p">()</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Vanilla AE reconstruction MSE: </span><span class="si">{</span><span class="n">mse_ae</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Denoising AE reconstruction MSE: </span><span class="si">{</span><span class="n">mse_dae</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># Visualize some reconstructions
+</span>    <span class="n">n_display</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Displaying first </span><span class="si">{</span><span class="n">n_display</span><span class="si">}</span><span class="s"> test images with reconstructions...</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># Reshape for visualization
+</span>    <span class="n">originals</span> <span class="o">=</span> <span class="n">test_data</span><span class="p">[:</span><span class="n">n_display</span><span class="p">].</span><span class="nf">cpu</span><span class="p">().</span><span class="nf">numpy</span><span class="p">()</span>
+    <span class="n">recon_ae_imgs</span> <span class="o">=</span> <span class="n">recon_ae</span><span class="p">[:</span><span class="n">n_display</span><span class="p">].</span><span class="nf">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">).</span><span class="nf">cpu</span><span class="p">().</span><span class="nf">numpy</span><span class="p">()</span>
+    <span class="n">recon_dae_imgs</span> <span class="o">=</span> <span class="n">recon_dae</span><span class="p">[:</span><span class="n">n_display</span><span class="p">].</span><span class="nf">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">).</span><span class="nf">cpu</span><span class="p">().</span><span class="nf">numpy</span><span class="p">()</span>
+    
+    <span class="c1"># Print shapes (would display in actual notebook)
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Original shape: </span><span class="si">{</span><span class="n">originals</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Reconstructions shape: </span><span class="si">{</span><span class="n">recon_ae_imgs</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Demonstrate latent space interpolation
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Latent Space Interpolation</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="c1"># Take two different digits
+</span>    <span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span>  <span class="c1"># Interpolate between first and sixth test image
+</span>    
+    <span class="n">img1</span> <span class="o">=</span> <span class="n">test_data</span><span class="p">[</span><span class="n">idx1</span><span class="p">:</span><span class="n">idx1</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="nf">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">img2</span> <span class="o">=</span> <span class="n">test_data</span><span class="p">[</span><span class="n">idx2</span><span class="p">:</span><span class="n">idx2</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="nf">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1"># Encode both
+</span>    <span class="n">z1</span> <span class="o">=</span> <span class="n">model_ae</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">img1</span><span class="p">)</span>
+    <span class="n">z2</span> <span class="o">=</span> <span class="n">model_ae</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">img2</span><span class="p">)</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Interpolating between two test images:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Image 1 latent code mean: </span><span class="si">{</span><span class="n">z1</span><span class="p">.</span><span class="nf">mean</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">, std: </span><span class="si">{</span><span class="n">z1</span><span class="p">.</span><span class="nf">std</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Image 2 latent code mean: </span><span class="si">{</span><span class="n">z2</span><span class="p">.</span><span class="nf">mean</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">, std: </span><span class="si">{</span><span class="n">z2</span><span class="p">.</span><span class="nf">std</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># Interpolate in latent space
+</span>    <span class="n">n_steps</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Generating </span><span class="si">{</span><span class="n">n_steps</span><span class="si">}</span><span class="s"> intermediate images by interpolation:</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">)):</span>
+        <span class="n">z_interp</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">z1</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">z2</span>
+        <span class="n">img_interp</span> <span class="o">=</span> <span class="n">model_ae</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">z_interp</span><span class="p">)</span>
+        
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Step </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s"> (t=</span><span class="si">{</span><span class="n">t</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">): Decoded image shape </span><span class="si">{</span><span class="n">img_interp</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">In a visual display, you</span><span class="sh">'</span><span class="s">d see smooth morphing from digit to digit.</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">This demonstrates the latent space has learned meaningful structure!</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Demonstrate dimensionality reduction visualization (2D latent space)
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training 2D Autoencoder for Visualization</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">TinyAutoencoder</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">Autoencoder with 2D latent space for visualization</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># 2D latent for plotting!
+</span>        <span class="p">)</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">decoder</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">784</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Sigmoid</span><span class="p">()</span>
+        <span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">encoder</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">decoder</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">z</span>
+
+<span class="n">model_2d</span> <span class="o">=</span> <span class="nc">TinyAutoencoder</span><span class="p">()</span>
+<span class="n">optimizer_2d</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">model_2d</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training 2D autoencoder (extreme compression: 784 → 2)...</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">model_2d</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="n">recon</span><span class="p">,</span> <span class="n">latent</span> <span class="o">=</span> <span class="nf">model_2d</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">mse_loss</span><span class="p">(</span><span class="n">recon</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        
+        <span class="n">optimizer_2d</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        <span class="n">optimizer_2d</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+
+<span class="c1"># Visualize latent space
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Encoding test set into 2D latent space...</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">model_2d</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+
+<span class="n">latent_codes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">labels_all</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="nf">model_2d</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">latent_codes</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">z</span><span class="p">.</span><span class="nf">cpu</span><span class="p">().</span><span class="nf">numpy</span><span class="p">())</span>
+        <span class="n">labels_all</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">labels</span><span class="p">.</span><span class="nf">cpu</span><span class="p">().</span><span class="nf">numpy</span><span class="p">())</span>
+
+<span class="n">latent_codes</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">concatenate</span><span class="p">(</span><span class="n">latent_codes</span><span class="p">)</span>
+<span class="n">labels_all</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">concatenate</span><span class="p">(</span><span class="n">labels_all</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Latent space coordinates shape: </span><span class="si">{</span><span class="n">latent_codes</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (10000, 2)
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">In a scatter plot, different digits would cluster in 2D space.</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">This demonstrates autoencoders learn meaningful representations!</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Digit 0s in one region, 1s in another, etc.</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Implement convolutional autoencoder for images:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ConvAutoencoder</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Convolutional autoencoder for images.
+    
+    Uses conv layers in encoder (spatial downsampling through striding)
+    and transposed convolutions in decoder (upsampling).
+    Much more parameter-efficient than fully connected for images.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">latent_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="c1"># Encoder: downsample with conv layers
+</span>        <span class="c1"># 28×28×1 → 14×14×32 → 7×7×64 → flatten → latent_dim
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>  <span class="c1"># 28→14
+</span>            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>  <span class="c1"># 14→7
+</span>            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Flatten</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">)</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># Decoder: upsample with transposed conv
+</span>        <span class="c1"># latent_dim → 7×7×64 → 14×14×32 → 28×28×1
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">decoder_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">latent_dim</span><span class="p">,</span> <span class="mi">64</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">decoder_conv</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ConvTranspose2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">output_padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>  <span class="c1"># 7→14
+</span>            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ConvTranspose2d</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">output_padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>  <span class="c1"># 14→28
+</span>            <span class="n">nn</span><span class="p">.</span><span class="nc">Sigmoid</span><span class="p">()</span>
+        <span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">encoder</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">decoder_linear</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>  <span class="c1"># Reshape to feature maps
+</span>        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">decoder_conv</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">z</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Convolutional Autoencoder for Images</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="n">conv_ae</span> <span class="o">=</span> <span class="nc">ConvAutoencoder</span><span class="p">(</span><span class="n">latent_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+<span class="n">total_params</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">conv_ae</span><span class="p">.</span><span class="nf">parameters</span><span class="p">())</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Total parameters: </span><span class="si">{</span><span class="n">total_params</span><span class="si">:</span><span class="p">,</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Quick training
+</span><span class="n">optimizer_conv</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">conv_ae</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training convolutional autoencoder...</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">conv_ae</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+        <span class="c1"># Keep 2D structure for conv layers
+</span>        <span class="n">recon</span><span class="p">,</span> <span class="n">latent</span> <span class="o">=</span> <span class="nf">conv_ae</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">mse_loss</span><span class="p">(</span><span class="n">recon</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        
+        <span class="n">optimizer_conv</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        <span class="n">optimizer_conv</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Convolutional autoencoder trained!</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Benefits: Fewer parameters, better image reconstructions</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">The conv structure provides inductive bias for spatial data</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="5-related-concepts">5. Related Concepts</h2>
+
+<p>Autoencoders connect deeply to principal component analysis (PCA), a classical dimensionality reduction technique. A linear autoencoder with MSE loss learns to project data onto the subspace spanned by the top \(k\) principal components—exactly what PCA does. This equivalence reveals that autoencoders generalize PCA by allowing nonlinear encoder and decoder functions. Where PCA finds the best linear \(k\)-dimensional subspace, autoencoders find the best nonlinear \(k\)-dimensional manifold. For data with nonlinear structure (like images where meaningful variations are rotations, scalings, deformations—all nonlinear), autoencoders can capture structure that PCA misses. Understanding this connection helps appreciate autoencoders as nonlinear dimension reduction and motivates their use when linear methods fail.</p>
+
+<p>The relationship to representation learning and transfer learning is profound. Autoencoders trained on large unlabeled datasets learn general features that often transfer well to supervised tasks. In the pre-ImageNet era, greedy layer-wise pre-training using stacked autoencoders was crucial for training deep networks. Each layer was trained as an autoencoder on features from the previous layer, progressively learning hierarchical representations. While ReLU, batch normalization, and better initialization have made this pre-training less necessary for supervised learning, the core idea—that unsupervised learning on plentiful unlabeled data can provide useful initializations for supervised tasks with limited labels—remains important and has evolved into modern self-supervised learning approaches.</p>
+
+<p>Autoencoders connect to information theory through the information bottleneck principle. The latent representation \(\mathbf{z}\) should capture information about \(\mathbf{x}\) relevant for reconstruction while discarding irrelevant details. Information theory quantifies this through mutual information: maximize \(I(\mathbf{x}; \mathbf{z})\) (information about input preserved in latent) while minimizing \(I(\mathbf{z}; \text{noise})\) or constraining \(I(\mathbf{z})\) (complexity of latent representation). Variational autoencoders make this connection explicit by introducing a KL divergence term that regularizes the latent distribution. Understanding autoencoders through information theory provides principled ways to think about what makes a good representation.</p>
+
+<p>The evolution from autoencoders to variational autoencoders (VAEs) and generative adversarial networks (GANs) shows how addressing limitations drives innovation. Standard autoencoders learn to reconstruct but don’t explicitly model the data distribution, limiting their generative ability. VAEs add a probabilistic framework, treating the encoder as computing a distribution over latent codes and adding a regularization term that shapes this distribution to be well-behaved (typically standard Gaussian). This enables principled sampling and interpolation. GANs take a completely different approach, using adversarial training instead of reconstruction, often generating sharper, more realistic samples. Each approach has strengths: autoencoders are simple and stable to train, VAEs provide principled probabilistic framework, GANs generate highest quality samples. Understanding autoencoders provides the foundation for appreciating these more sophisticated generative models.</p>
+
+<h2 id="6-fundamental-papers">6. Fundamental Papers</h2>
+
+<p><strong><a href="https://www.science.org/doi/10.1126/science.1127647">“Reducing the Dimensionality of Data with Neural Networks” (2006)</a></strong><br />
+<em>Authors</em>: Geoffrey E. Hinton, Ruslan Salakhutdinov<br />
+This seminal Science paper demonstrated that deep autoencoders could learn much better dimensionality reduction than PCA or shallow autoencoders. Hinton and Salakhutdinov introduced greedy layer-wise pre-training: train each layer as an autoencoder (actually a restricted Boltzmann machine in their case) on features from the previous layer, stacking them to build deep representations. This pre-training followed by fine-tuning enabled training networks much deeper than was previously possible (this was before ReLU and modern initialization techniques). The paper showed impressive results on visualizing high-dimensional data and compressing images, demonstrating that deep learning could learn hierarchical representations through unsupervised learning. This work was influential in the deep learning renaissance of the late 2000s, showing that depth mattered and that unsupervised pre-training could unlock it. While modern supervised learning doesn’t require autoencoder pre-training (thanks to ReLU, batch norm, and better initialization), the insights about hierarchical representation learning and unsupervised feature extraction remain important.</p>
+
+<p><strong><a href="https://www.cs.toronto.edu/~larocheh/publications/icml-2008-denoising-autoencoders.pdf">“Extracting and Composing Robust Features with Denoising Autoencoders” (2008)</a></strong><br />
+<em>Authors</em>: Pascal Vincent, Hugo Larochelle, Yoshua Bengio, Pierre-Antoine Manzagol<br />
+This paper introduced denoising autoencoders and provided theoretical justification for why they learn better representations than vanilla autoencoders. The key insight is that by corrupting inputs and training to reconstruct the clean originals, we force the network to learn the data manifold’s structure rather than merely memorizing examples. The corruption acts as regularization, preventing the network from learning the identity function even with large latent dimensions. The paper showed both theoretically and empirically that denoising autoencoders learn representations robust to input corruption, making features more useful for downstream tasks like classification. The denoising framework has influenced many subsequent methods—masked language modeling in BERT can be viewed as denoising, and many self-supervised approaches corrupt inputs and train networks to predict or reconstruct the original. This paper established corruption-and-reconstruction as a powerful unsupervised learning paradigm.</p>
+
+<p><strong><a href="http://www.iro.umontreal.ca/~lisa/pointeurs/ICML2011_explicit_invariance.pdf">“Contractive Auto-Encoders: Explicit Invariance During Feature Extraction” (2011)</a></strong><br />
+<em>Authors</em>: Salah Rifai, Pascal Vincent, Xavier Muller, Xavier Glorot, Yoshua Bengio<br />
+This paper proposed contractive autoencoders, which add a penalty on the Frobenius norm of the encoder’s Jacobian. The objective becomes:</p>
+
+\[\mathcal{L} = \|\mathbf{x} - \hat{\mathbf{x}}\|^2 + \lambda \|J_f(\mathbf{x})\|_F^2\]
+
+<p>where \(J_f(\mathbf{x}) = \frac{\partial f(\mathbf{x})}{\partial \mathbf{x}}\) is the encoder’s Jacobian. This penalty encourages the encoder to be insensitive to small variations in input—the latent representation should change slowly as we perturb the input slightly. The intuition is that meaningful features should be robust to small input changes (like slight translations or noise). The paper showed that contractive autoencoders learn representations with better invariance properties than vanilla or denoising autoencoders, though at computational cost of computing and regularizing the Jacobian. The work deepened theoretical understanding of what makes good representations and provided tools for encouraging specific desirable properties (invariance, sparsity, etc.) through regularization.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1312.6114">“Auto-Encoding Variational Bayes” (2014)</a></strong><br />
+<em>Authors</em>: Diederik P. Kingma, Max Welling<br />
+While introducing VAEs (covered in next chapter), this paper fundamentally changed how we think about autoencoders by providing a probabilistic framework. The authors showed that autoencoders can be viewed as learning to maximize a lower bound on the data likelihood, connecting them to principled probabilistic modeling. The variational framework addresses standard autoencoders’ limitation: the latent space might have holes where no training examples map, making sampling unreliable. VAEs regularize the latent space to follow a known distribution (typically standard Gaussian), ensuring we can sample anywhere and decode to realistic outputs. The paper’s reparameterization trick—sampling through a differentiable operation—enabled training via backpropagation. VAEs became enormously influential, spawning numerous variants and applications in generative modeling, semi-supervised learning, and representation learning. Understanding vanilla autoencoders is prerequisite to appreciating VAEs’ probabilistic sophistication and the additional guarantees it provides.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1511.05644">“Adversarial Autoencoders” (2016)</a></strong><br />
+<em>Authors</em>: Alireza Makhzani, Jonathon Shlens, Navdeep Jaitly, Ian Goodfellow, Brendan Frey<br />
+This paper combined autoencoders with adversarial training, using a discriminator to enforce that the latent code distribution matches a prior (like standard Gaussian) rather than using a KL divergence penalty (as VAEs do). The adversarial training makes the latent space match the prior more closely than VAE’s KL penalty while maintaining autoencoder’s reconstruction objective. The paper demonstrated that this hybrid approach can generate high-quality samples while being more flexible than VAEs in choice of latent prior (not limited to factorized Gaussians). Adversarial autoencoders showed how ideas from different frameworks (autoencoders, VAEs, GANs) could be combined, leading to models with complementary strengths. The work exemplifies the productive cross-pollination of ideas in deep learning—techniques developed for one purpose (adversarial training for GANs) proving useful when combined with other frameworks (autoencoders).</p>
+
+<h2 id="common-pitfalls-and-tricks">Common Pitfalls and Tricks</h2>
+
+<p>The most common failure mode in autoencoders is using too large a latent dimension, undermining the compression objective. With latent dimension approaching input dimension, the network can learn to pass information through nearly unchanged, discovering no meaningful structure. The symptom is perfect reconstructions but useless latent codes—they’re overcomplete and redundant. The solution is to aggressively reduce latent dimension or add other constraints (sparsity, denoising, contractive penalty). A useful heuristic: start with latent dimension 10-20× smaller than input dimension, then experiment. For MNIST (784 dimensions), try 32-64 latent dimensions. For higher-resolution images, the compression factor can be larger.</p>
+
+<p>Forgetting to normalize inputs causes training instability and poor reconstructions. If pixel values span [0, 255], reconstruction errors are hundreds of times larger than for normalized [0,1] values, leading to huge gradients and exploding losses. Always normalize inputs to [0,1] (dividing by 255) or standardize to mean 0, std 1. Match the decoder’s output activation to the normalization scheme: sigmoid for [0,1], tanh for [-1,1], linear for standardized. This ensures the decoder can actually produce values in the correct range.</p>
+
+<p>Using MSE loss for images seems intuitive but has a subtle issue: MSE weights all pixels equally, but human perception doesn’t work this way. A single misaligned pixel can cause large MSE even if the reconstruction looks perfect to humans. Conversely, blurry reconstructions (averaging pixels) can have low MSE while looking poor perceptually. For applications where perceptual quality matters, consider perceptual losses—measure distance in feature space of a pre-trained network like VGG rather than pixel space. Features from deep layers capture high-level structure (shapes, objects) that correlate better with human perception than pixel-wise distances.</p>
+
+<p>A powerful trick for better latent spaces is adding explicit regularization beyond just dimensionality reduction. Sparse autoencoders add L1 penalty on latent activations, encouraging most dimensions to be zero most of the time. This forces specialization—each latent dimension captures a specific aspect of variation. Variational autoencoders add KL divergence to a prior, ensuring smooth, continuous latent space. Contractive autoencoders penalize the encoder Jacobian, encouraging invariance to input perturbations. Understanding these regularization options allows tailoring autoencoders to specific desiderata—sparsity for interpretability, smoothness for interpolation, robustness for downstream tasks.</p>
+
+<p>When using autoencoders for pre-training (less common now but still useful in low-data regimes), a key decision is whether to fine-tune the encoder, decoder, or both. For classification, typically freeze the decoder (we only need encoder features) and add a classification head on the latent representation, fine-tuning only this head and optionally the encoder. For generation tasks, we might freeze the encoder (if we have good latent codes) and fine-tune only the decoder. For domain adaptation, fine-tuning both often works best. The choice depends on whether encoder features, decoder generation, or both need task-specific adaptation.</p>
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<p>Autoencoders learn efficient data representations by training to reconstruct inputs through a lower-dimensional bottleneck, forcing compression of high-dimensional data into compact latent codes that capture essential structure. The encoder maps inputs to latent representations while the decoder reconstructs inputs from latent codes, with both trained jointly using reconstruction loss (MSE for continuous data, cross-entropy for binary). The bottleneck dimension controls the compression-fidelity tradeoff, with smaller latent dimensions forcing more aggressive compression and potentially more meaningful feature learning. Denoising autoencoders corrupt inputs before encoding but train to reconstruct clean originals, learning robust features that capture data structure rather than memorizing examples. The latent space in well-trained autoencoders has semantic structure, with nearby points corresponding to similar inputs and smooth interpolation enabling morphing between examples. Autoencoders serve multiple purposes: dimensionality reduction for visualization or downstream tasks, feature learning for transfer learning, denoising to remove corruption, and as foundations for more sophisticated generative models. Understanding autoencoders provides essential background for variational autoencoders and other generative approaches while demonstrating core principles of unsupervised representation learning that pervade modern self-supervised methods.</p>
+
+<p>The autoencoder framework exemplifies a recurring theme in machine learning: learning through reconstruction, where we force models to discover structure by requiring them to recreate data through constraints or transformations that make trivial solutions impossible.</p>
+
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter12/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter12/12_00_Introduction/">
+              12 Autoencoders
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+    
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

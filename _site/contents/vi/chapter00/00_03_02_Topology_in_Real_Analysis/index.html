@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      00-03-02 Tôpô trong Giải tích thực &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep Learning trong Khoa học Dữ liệu</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Trang chủ</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/">
+              00. Các Khái Niệm Toán Học Cơ Bản
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Trang chủ">Deep Learning trong Khoa học Dữ liệu</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/en/chapter00/00_03_02_Topology_in_Real_Analysis/" class="language-switch" title="Chuyển sang tiếng Anh">Chuyển sang tiếng Anh</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    00-03-02 Tôpô trong Giải tích thực
+    
+      
+        <span class="lesson-badge required large">Bắt buộc</span>
+      
+    
+  </h1>
+  <p>Bài học này bao gồm các khái niệm tôpô cần thiết từ giải tích thực, rất quan trọng để hiểu cấu trúc của các vùng khả thi, tính liên tục và sự tồn tại của nghiệm tối ưu trong các bài toán tối ưu hóa.</p>
+
+<hr />
+
+<h2 id="giới-thiệu-về-tôpô">Giới thiệu về Tôpô</h2>
+
+<p>Tôpô nghiên cứu các tính chất của không gian được bảo toàn dưới các biến dạng liên tục. Trong tối ưu hóa, các khái niệm tôpô giúp chúng ta hiểu cấu trúc của các vùng khả thi và hành vi của các hàm số, đặc biệt liên quan đến sự tồn tại và đặc trưng của nghiệm tối ưu.</p>
+
+<h3 id="không-gian-metric-và-khoảng-cách">Không gian metric và Khoảng cách</h3>
+
+<p>Trước khi thảo luận về tôpô, chúng ta cần khái niệm khoảng cách. Trong \(\mathbb{R}^n\), <strong>khoảng cách Euclid</strong> chuẩn giữa các điểm \(\mathbf{x}\) và \(\mathbf{y}\) là:</p>
+
+\[d(\mathbf{x}, \mathbf{y}) = \|\mathbf{x} - \mathbf{y}\|_2 = \sqrt{\sum_{i=1}^n (x_i - y_i)^2}\]
+
+<h3 id="hình-cầu-mở-và-lân-cận">Hình cầu mở và Lân cận</h3>
+
+<p>Một <strong>hình cầu mở</strong> có tâm tại \(\mathbf{x}_0\) với bán kính \(\epsilon &gt; 0\) là:</p>
+
+\[B(\mathbf{x}_0, \epsilon) = \{\mathbf{y} \in \mathbb{R}^n : d(\mathbf{x}_0, \mathbf{y}) &lt; \epsilon\}\]
+
+<p>This represents all points within distance \(\epsilon\) from \(\mathbf{x}_0\).</p>
+
+<p><strong>Examples:</strong></p>
+<ul>
+  <li>In \(\mathbb{R}\): \(B(0, 1) = (-1, 1)\) (open interval)</li>
+  <li>In \(\mathbb{R}^2\): \(B(\mathbf{0}, 1) = \{(x, y) : x^2 + y^2 &lt; 1\}\) (open unit disk)</li>
+</ul>
+
+<hr />
+
+<h2 id="open-sets">Open Sets</h2>
+
+<p>An <strong>open set</strong> is characterized by the property that it <strong>contains none of its boundary points</strong>.</p>
+
+<h3 id="formal-definition">Formal Definition</h3>
+
+<p>A set \(S\) in \(\mathbb{R}^n\) is <strong>open</strong> if for every point \(\mathbf{x} \in S\), there exists a positive real number \(\epsilon &gt; 0\) such that the open ball \(B(\mathbf{x}, \epsilon)\) is entirely contained within \(S\):</p>
+
+\[\forall \mathbf{x} \in S, \exists \epsilon &gt; 0 : B(\mathbf{x}, \epsilon) \subseteq S\]
+
+<h3 id="intuitive-understanding">Intuitive Understanding</h3>
+
+<p>An open set has the property that if you’re inside it, you can move a small distance in any direction and still remain inside the set. There’s always some “wiggle room” around every point.</p>
+
+<h3 id="examples-of-open-sets">Examples of Open Sets</h3>
+
+<p><strong>In \(\mathbb{R}\):</strong></p>
+<ul>
+  <li>
+\[(0, 1) = \{x : 0 &lt; x &lt; 1\}\]
+  </li>
+  <li>
+\[(-\infty, 5) = \{x : x &lt; 5\}\]
+  </li>
+  <li>\(\mathbb{R}\) itself</li>
+</ul>
+
+<p><strong>In \(\mathbb{R}^2\):</strong></p>
+<ul>
+  <li>\(\{(x, y) : x^2 + y^2 &lt; 1\}\) (open unit disk)</li>
+  <li>\(\{(x, y) : x &gt; 0, y &gt; 0\}\) (first quadrant, excluding axes)</li>
+  <li>\(\mathbb{R}^2\) itself</li>
+</ul>
+
+<p><strong>In \(\mathbb{R}^n\):</strong></p>
+<ul>
+  <li>Any open ball \(B(\mathbf{x}_0, r)\)</li>
+  <li>\(\mathbb{R}^n\) itself</li>
+  <li>\(\emptyset\) (empty set - vacuously open)</li>
+</ul>
+
+<h3 id="properties-of-open-sets">Properties of Open Sets</h3>
+
+<ol>
+  <li>The union of any collection of open sets is open</li>
+  <li>The intersection of finitely many open sets is open</li>
+  <li>\(\mathbb{R}^n\) and \(\emptyset\) are both open</li>
+</ol>
+
+<hr />
+
+<h2 id="closed-sets">Closed Sets</h2>
+
+<p>A <strong>closed set</strong> is defined as a set that contains all of its boundary points. Equivalently, a set \(S\) is closed if its complement \(\mathbb{R}^n \setminus S\) is an <strong>open set</strong>.</p>
+
+<h3 id="formal-definition-1">Formal Definition</h3>
+
+<p>A set \(S\) is <strong>closed</strong> if it contains all its limit points. That is, if a sequence of points \((x_n)\) from \(S\) converges to a point \(\mathbf{x}\), then \(\mathbf{x}\) must also be in \(S\):</p>
+
+\[\text{If } \mathbf{x}_n \in S \text{ for all } n \text{ and } \lim_{n \to \infty} \mathbf{x}_n = \mathbf{x}, \text{ then } \mathbf{x} \in S\]
+
+<h3 id="examples-of-closed-sets">Examples of Closed Sets</h3>
+
+<p><strong>In \(\mathbb{R}\):</strong></p>
+<ul>
+  <li>
+\[[0, 1] = \{x : 0 \leq x \leq 1\}\]
+  </li>
+  <li>
+\[[a, \infty) = \{x : x \geq a\}\]
+  </li>
+  <li>\(\{0\}\) (single point)</li>
+  <li>\(\mathbb{Z}\) (integers)</li>
+</ul>
+
+<p><strong>In \(\mathbb{R}^2\):</strong></p>
+<ul>
+  <li>\(\{(x, y) : x^2 + y^2 \leq 1\}\) (closed unit disk)</li>
+  <li>\(\{(x, y) : x \geq 0, y \geq 0\}\) (first quadrant, including axes)</li>
+  <li>\(\{(0, 0)\}\) (single point)</li>
+</ul>
+
+<p><strong>In \(\mathbb{R}^n\):</strong></p>
+<ul>
+  <li>Any closed ball \(\overline{B}(\mathbf{x}_0, r) = \{\mathbf{x} : d(\mathbf{x}, \mathbf{x}_0) \leq r\}\)</li>
+  <li>\(\mathbb{R}^n\) itself</li>
+  <li>\(\emptyset\) (empty set)</li>
+  <li>Any finite set</li>
+</ul>
+
+<h3 id="properties-of-closed-sets">Properties of Closed Sets</h3>
+
+<ol>
+  <li>The intersection of any collection of closed sets is closed</li>
+  <li>The union of finitely many closed sets is closed</li>
+  <li>\(\mathbb{R}^n\) and \(\emptyset\) are both closed</li>
+</ol>
+
+<h3 id="important-note">Important Note</h3>
+
+<p>Sets can be:</p>
+<ul>
+  <li><strong>Open but not closed:</strong> \((0, 1)\)</li>
+  <li><strong>Closed but not open:</strong> \([0, 1]\)</li>
+  <li><strong>Both open and closed:</strong> \(\mathbb{R}^n\), \(\emptyset\)</li>
+  <li><strong>Neither open nor closed:</strong> \([0, 1)\), \((0, 1]\)</li>
+</ul>
+
+<hr />
+
+<h2 id="boundary-interior-and-closure">Boundary, Interior, and Closure</h2>
+
+<h3 id="boundary">Boundary</h3>
+
+<p>The <strong>boundary</strong> of a set \(S\), denoted \(\partial S\), consists of points that are “on the edge” of the set. A point \(\mathbf{x}\) is a <strong>boundary point</strong> of \(S\) if every open ball centered at \(\mathbf{x}\) intersects both \(S\) and its complement \(S^c\):</p>
+
+\[\partial S = \{\mathbf{x} : \forall \epsilon &gt; 0, B(\mathbf{x}, \epsilon) \cap S \neq \emptyset \text{ and } B(\mathbf{x}, \epsilon) \cap S^c \neq \emptyset\}\]
+
+<h3 id="interior">Interior</h3>
+
+<p>The <strong>interior</strong> of a set \(S\), denoted \(S^\circ\) or \(\text{int}(S)\), includes all points strictly “inside” the set, excluding the boundary:</p>
+
+\[S^\circ = \{\mathbf{x} \in S : \exists \epsilon &gt; 0, B(\mathbf{x}, \epsilon) \subseteq S\}\]
+
+<h3 id="closure">Closure</h3>
+
+<p>The <strong>closure</strong> of a set \(S\), denoted \(\overline{S}\) or \(\text{cl}(S)\), is the smallest closed set containing \(S\):</p>
+
+\[\overline{S} = S \cup \partial S\]
+
+<h3 id="example-analysis">Example Analysis</h3>
+
+<p>For the interval \(S = [0, 1)\) in \(\mathbb{R}\):</p>
+<ul>
+  <li><strong>Interior:</strong> \(S^\circ = (0, 1)\)</li>
+  <li><strong>Boundary:</strong> \(\partial S = \{0, 1\}\)</li>
+  <li><strong>Closure:</strong> \(\overline{S} = [0, 1]\)</li>
+</ul>
+
+<p>For the open disk \(S = \{(x, y) : x^2 + y^2 &lt; 1\}\) in \(\mathbb{R}^2\):</p>
+<ul>
+  <li><strong>Interior:</strong> \(S^\circ = S\) (the set is already open)</li>
+  <li><strong>Boundary:</strong> \(\partial S = \{(x, y) : x^2 + y^2 = 1\}\) (unit circle)</li>
+  <li><strong>Closure:</strong> \(\overline{S} = \{(x, y) : x^2 + y^2 \leq 1\}\) (closed unit disk)</li>
+</ul>
+
+<hr />
+
+<h2 id="compact-sets">Compact Sets</h2>
+
+<p>A <strong>compact set</strong> is one of the most important concepts in deep-learning theory.</p>
+
+<h3 id="definition-in-euclidean-spaces">Definition in Euclidean Spaces</h3>
+
+<p><strong>Heine-Borel Theorem:</strong> In Euclidean spaces (\(\mathbb{R}^n\)), a set is compact if and only if it is both <strong>closed and bounded</strong>.</p>
+
+<ul>
+  <li><strong>Bounded:</strong> A set \(S\) is bounded if it can be contained within some sufficiently large open ball: \(\exists M &gt; 0, \mathbf{x}_0\) such that \(S \subseteq B(\mathbf{x}_0, M)\)</li>
+  <li><strong>Closed:</strong> As defined above</li>
+</ul>
+
+<h3 id="examples-of-compact-sets">Examples of Compact Sets</h3>
+
+<p><strong>In \(\mathbb{R}\):</strong></p>
+<ul>
+  <li>\([a, b]\) (any closed, bounded interval)</li>
+  <li>\(\{0\}\) (single point)</li>
+  <li>Any finite set</li>
+</ul>
+
+<p><strong>In \(\mathbb{R}^2\):</strong></p>
+<ul>
+  <li>\(\{(x, y) : x^2 + y^2 \leq 1\}\) (closed unit disk)</li>
+  <li>\([0, 1] \times [0, 1]\) (unit square)</li>
+  <li>Any finite set of points</li>
+</ul>
+
+<p><strong>In \(\mathbb{R}^n\):</strong></p>
+<ul>
+  <li>Any closed ball \(\overline{B}(\mathbf{x}_0, r)\)</li>
+  <li>Any closed, bounded rectangle \([a_1, b_1] \times [a_2, b_2] \times \cdots \times [a_n, b_n]\)</li>
+</ul>
+
+<h3 id="non-compact-sets">Non-Compact Sets</h3>
+
+<ul>
+  <li>\((0, 1)\) (bounded but not closed)</li>
+  <li>\([0, \infty)\) (closed but not bounded)</li>
+  <li>\(\mathbb{R}^n\) (not bounded)</li>
+  <li>\(\{1, 1/2, 1/3, 1/4, \ldots\}\) (bounded but not closed, since 0 is a limit point not in the set)</li>
+</ul>
+
+<hr />
+
+<h2 id="continuity-of-functions">Continuity of Functions</h2>
+
+<h3 id="point-wise-continuity">Point-wise Continuity</h3>
+
+<p>A function \(f: A \to \mathbb{R}\) is <strong>continuous at a point</strong> \(\mathbf{c} \in A\) if for every \(\varepsilon &gt; 0\), there exists \(\delta &gt; 0\) such that for all \(\mathbf{x} \in A\):</p>
+
+\[\|\mathbf{x} - \mathbf{c}\| &lt; \delta \implies |f(\mathbf{x}) - f(\mathbf{c})| &lt; \varepsilon\]
+
+<p><strong>Intuitive meaning:</strong> Small changes in input lead to small changes in output.</p>
+
+<h3 id="global-continuity">Global Continuity</h3>
+
+<p>\(f\) is <strong>continuous on \(A\)</strong> if it’s continuous at every point in \(A\).</p>
+
+<h3 id="sequential-characterization">Sequential Characterization</h3>
+
+<p>\(f\) is continuous at \(\mathbf{c}\) if and only if for every sequence \((\mathbf{x}_n)\) in \(A\) converging to \(\mathbf{c}\):</p>
+
+\[\lim_{n \to \infty} f(\mathbf{x}_n) = f(\mathbf{c})\]
+
+<hr />
+
+<h2 id="important-theorems-for-deep-learning">Important Theorems for Deep Learning</h2>
+
+<h3 id="extreme-value-theorem">Extreme Value Theorem</h3>
+
+<p><strong>If \(f\) is continuous on a compact set \(K\), then \(f\) attains its maximum and minimum on \(K\).</strong></p>
+
+<p>This is fundamental for deep-learning: it guarantees that continuous objective functions have optimal solutions on compact feasible regions.</p>
+
+<p><strong>Proof idea:</strong> Compactness ensures that the supremum and infimum of \(f\) on \(K\) are actually achieved at points in \(K\).</p>
+
+<h3 id="intermediate-value-theorem">Intermediate Value Theorem</h3>
+
+<p><strong>If \(f\) is continuous on \([a, b]\) and \(y\) is between \(f(a)\) and \(f(b)\), then there exists \(c \in [a, b]\) such that \(f(c) = y\).</strong></p>
+
+<p>This helps establish the existence of solutions to equations \(f(x) = 0\).</p>
+
+<h3 id="bolzano-weierstrass-theorem">Bolzano-Weierstrass Theorem</h3>
+
+<p><strong>Every bounded sequence in \(\mathbb{R}^n\) has a convergent subsequence.</strong></p>
+
+<p>This is crucial for proving convergence of deep-learning algorithms.</p>
+
+<h3 id="weierstrass-approximation-theorem">Weierstrass Approximation Theorem</h3>
+
+<p><strong>Every continuous function on a closed interval can be uniformly approximated by polynomials.</strong></p>
+
+<p>This justifies using polynomial approximations in deep-learning algorithms.</p>
+
+<hr />
+
+<h2 id="applications-in-deep-learning">Applications in Deep Learning</h2>
+
+<h3 id="1-existence-of-solutions">1. Existence of Solutions</h3>
+
+<p><strong>Compact feasible sets guarantee optimal solutions exist:</strong></p>
+<ul>
+  <li>If the feasible region \(S\) is compact and the objective function \(f\) is continuous, then the deep-learning problem \(\min_{\mathbf{x} \in S} f(\mathbf{x})\) has a solution.</li>
+</ul>
+
+<h3 id="2-constraint-qualification">2. Constraint Qualification</h3>
+
+<p>Understanding topological properties of constraint sets:</p>
+<ul>
+  <li><strong>Regular points:</strong> Points where constraint gradients are linearly independent</li>
+  <li><strong>Interior point methods:</strong> Require the feasible region to have non-empty interior</li>
+</ul>
+
+<h3 id="3-convergence-analysis">3. Convergence Analysis</h3>
+
+<p>Analyzing whether deep-learning algorithms converge:</p>
+<ul>
+  <li><strong>Closed sets:</strong> Ensure limit points of convergent sequences remain feasible</li>
+  <li><strong>Compactness:</strong> Guarantees convergent subsequences exist</li>
+</ul>
+
+<h3 id="4-local-vs-global-optima">4. Local vs Global Optima</h3>
+
+<p>Using neighborhoods to define optimality:</p>
+<ul>
+  <li><strong>Local minimum:</strong> \(f(\mathbf{x}^*) \leq f(\mathbf{x})\) for all \(\mathbf{x}\) in some neighborhood of \(\mathbf{x}^*\)</li>
+  <li><strong>Global minimum:</strong> \(f(\mathbf{x}^*) \leq f(\mathbf{x})\) for all \(\mathbf{x}\) in the feasible region</li>
+</ul>
+
+<h3 id="5-feasible-region-analysis">5. Feasible Region Analysis</h3>
+
+<p>Determining properties of constraint sets:</p>
+<ul>
+  <li><strong>Linear constraints:</strong> Define closed sets (half-spaces)</li>
+  <li><strong>Nonlinear constraints:</strong> May create sets that are neither open nor closed</li>
+  <li><strong>Compact feasible regions:</strong> Guarantee existence of optimal solutions</li>
+</ul>
+
+<h3 id="example-portfolio-deep-learning">Example: Portfolio Deep Learning</h3>
+
+<p>Consider minimizing portfolio risk subject to constraints:</p>
+
+\[\begin{align}
+\min_{\mathbf{w}} \quad &amp; \mathbf{w}^T \mathbf{\Sigma} \mathbf{w} \\
+\text{s.t.} \quad &amp; \mathbf{1}^T \mathbf{w} = 1 \\
+&amp; \mathbf{w} \geq \mathbf{0}
+\end{align}\]
+
+<p>The feasible region \(S = \{\mathbf{w} : \mathbf{1}^T \mathbf{w} = 1, \mathbf{w} \geq \mathbf{0}\}\) is:</p>
+<ul>
+  <li><strong>Closed:</strong> It’s the intersection of closed sets</li>
+  <li><strong>Bounded:</strong> The constraint \(\mathbf{1}^T \mathbf{w} = 1\) with \(\mathbf{w} \geq \mathbf{0}\) bounds the feasible region</li>
+  <li><strong>Compact:</strong> Being closed and bounded in \(\mathbb{R}^n\)</li>
+</ul>
+
+<p>Since the objective function \(\mathbf{w}^T \mathbf{\Sigma} \mathbf{w}\) is continuous and \(S\) is compact, the Extreme Value Theorem guarantees that an optimal portfolio exists.</p>
+
+<p>Understanding topology and real analysis provides the rigorous foundation needed to prove that deep-learning problems have solutions and that algorithms will find them. These concepts are essential for both theoretical analysis and practical algorithm design.</p>
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/vi/chapter00/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Quay lại đầu chương
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+    
+      
+    
+      
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/vi/chapter00/00_03_01_Set_Theory_Fundamentals/">
+              00-03-01 Cơ sở Lý thuyết tập hợp
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li>
+        <h2>Next Post</h2>
+        <h3>
+          <a href="/deep-learning-self-learning/contents/vi/chapter00/00_04_01_Basic_Probability_Theory/">
+            00-04-01 Lý Thuyết Xác Suất Cơ Bản
+          </a>
+        </h3>
+      </li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

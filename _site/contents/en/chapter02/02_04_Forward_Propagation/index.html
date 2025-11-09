@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      02-04 Forward Propagation &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    02-04 Forward Propagation
+    
+      
+        <span class="lesson-badge required large">Required</span>
+      
+    
+  </h1>
+  <p>This lesson provides a comprehensive understanding of forward propagation, the process by which neural networks make predictions.</p>
+
+<hr />
+
+<h2 id="what-is-forward-propagation">What is Forward Propagation?</h2>
+
+<p><strong>Forward propagation</strong> is the process of computing the output of a neural network given an input. Data “flows forward” through the network from the input layer to the output layer, passing through all hidden layers in sequence.</p>
+
+<p>This is the <strong>inference</strong> or <strong>prediction</strong> phase of a neural network.</p>
+
+<h2 id="the-forward-pass-step-by-step">The Forward Pass: Step by Step</h2>
+
+<p>Consider a simple 3-layer network:</p>
+<ul>
+  <li><strong>Input layer</strong>: \(n^{[0]} = 3\) features</li>
+  <li><strong>Hidden layer 1</strong>: \(n^{[1]} = 4\) neurons with ReLU</li>
+  <li><strong>Hidden layer 2</strong>: \(n^{[2]} = 4\) neurons with ReLU</li>
+  <li><strong>Output layer</strong>: \(n^{[3]} = 1\) neuron with sigmoid (binary classification)</li>
+</ul>
+
+<h3 id="layer-0-input">Layer 0: Input</h3>
+
+\[\mathbf{a}^{[0]} = \mathbf{x} = \begin{bmatrix} x_1 \\ x_2 \\ x_3 \end{bmatrix}\]
+
+<h3 id="layer-1-first-hidden-layer">Layer 1: First Hidden Layer</h3>
+
+<p><strong>Linear transformation:</strong></p>
+
+\[\mathbf{z}^{[1]} = \mathbf{W}^{[1]} \mathbf{a}^{[0]} + \mathbf{b}^{[1]}\]
+
+<p>Where:</p>
+<ul>
+  <li>\(\mathbf{W}^{[1]} \in \mathbb{R}^{4 \times 3}\) (4 neurons, 3 inputs each)</li>
+  <li>\(\mathbf{b}^{[1]} \in \mathbb{R}^{4}\) (4 biases)</li>
+  <li>\(\mathbf{z}^{[1]} \in \mathbb{R}^{4}\) (pre-activation values)</li>
+</ul>
+
+<p><strong>Activation:</strong></p>
+
+\[\mathbf{a}^{[1]} = \text{ReLU}(\mathbf{z}^{[1]}) = \max(0, \mathbf{z}^{[1]})\]
+
+<p>\(\mathbf{a}^{[1]} \in \mathbb{R}^{4}\) (activations/outputs of layer 1)</p>
+
+<h3 id="layer-2-second-hidden-layer">Layer 2: Second Hidden Layer</h3>
+
+<p><strong>Linear transformation:</strong></p>
+
+\[\mathbf{z}^{[2]} = \mathbf{W}^{[2]} \mathbf{a}^{[1]} + \mathbf{b}^{[2]}\]
+
+<p>Where:</p>
+<ul>
+  <li>
+\[\mathbf{W}^{[2]} \in \mathbb{R}^{4 \times 4}\]
+  </li>
+  <li>
+\[\mathbf{b}^{[2]} \in \mathbb{R}^{4}\]
+  </li>
+</ul>
+
+<p><strong>Activation:</strong></p>
+
+\[\mathbf{a}^{[2]} = \text{ReLU}(\mathbf{z}^{[2]})\]
+
+<h3 id="layer-3-output-layer">Layer 3: Output Layer</h3>
+
+<p><strong>Linear transformation:</strong></p>
+
+\[\mathbf{z}^{[3]} = \mathbf{W}^{[3]} \mathbf{a}^{[2]} + \mathbf{b}^{[3]}\]
+
+<p>Where:</p>
+<ul>
+  <li>
+\[\mathbf{W}^{[3]} \in \mathbb{R}^{1 \times 4}\]
+  </li>
+  <li>
+\[\mathbf{b}^{[3]} \in \mathbb{R}^{1}\]
+  </li>
+</ul>
+
+<p><strong>Activation (output):</strong></p>
+
+\[\hat{y} = \mathbf{a}^{[3]} = \sigma(\mathbf{z}^{[3]}) = \frac{1}{1 + e^{-\mathbf{z}^{[3]}}}\]
+
+<p>This gives us the predicted probability of the positive class.</p>
+
+<h2 id="vectorized-forward-propagation">Vectorized Forward Propagation</h2>
+
+<p>For computational efficiency, we process <strong>multiple examples simultaneously</strong> using <strong>vectorization</strong>.</p>
+
+<h3 id="batch-processing">Batch Processing</h3>
+
+<p>Instead of processing one example at a time, we organize \(m\) examples into a matrix:</p>
+
+\[\mathbf{X} = \begin{bmatrix} | &amp; | &amp; &amp; | \\ \mathbf{x}^{(1)} &amp; \mathbf{x}^{(2)} &amp; \cdots &amp; \mathbf{x}^{(m)} \\ | &amp; | &amp; &amp; | \end{bmatrix} \in \mathbb{R}^{n^{[0]} \times m}\]
+
+<p>Each column is one training example.</p>
+
+<h3 id="vectorized-computation">Vectorized Computation</h3>
+
+<p>For layer \(l\):</p>
+
+\[\mathbf{Z}^{[l]} = \mathbf{W}^{[l]} \mathbf{A}^{[l-1]} + \mathbf{b}^{[l]}\]
+
+\[\mathbf{A}^{[l]} = g^{[l]}(\mathbf{Z}^{[l]})\]
+
+<p>Where:</p>
+<ul>
+  <li>\(\mathbf{A}^{[l]} \in \mathbb{R}^{n^{[l]} \times m}\) (each column is activations for one example)</li>
+  <li>
+\[\mathbf{Z}^{[l]} \in \mathbb{R}^{n^{[l]} \times m}\]
+  </li>
+  <li>
+\[\mathbf{W}^{[l]} \in \mathbb{R}^{n^{[l]} \times n^{[l-1]}}\]
+  </li>
+  <li>\(\mathbf{b}^{[l]} \in \mathbb{R}^{n^{[l]} \times 1}\) (broadcasted across all \(m\) examples)</li>
+</ul>
+
+<h3 id="broadcasting">Broadcasting</h3>
+
+<p>Python/NumPy automatically broadcasts \(\mathbf{b}^{[l]}\) across all examples:</p>
+
+\[\mathbf{b}^{[l]} \in \mathbb{R}^{n^{[l]} \times 1} \rightarrow \mathbb{R}^{n^{[l]} \times m}\]
+
+<p>Each column of the result gets the same bias vector added.</p>
+
+<h2 id="concrete-example-with-numbers">Concrete Example with Numbers</h2>
+
+<p>Let’s work through a small example with actual numbers.</p>
+
+<h3 id="network-setup">Network Setup</h3>
+
+<ul>
+  <li>Input: 2 features (\(n^{[0]} = 2\))</li>
+  <li>Hidden layer: 3 neurons with ReLU (\(n^{[1]} = 3\))</li>
+  <li>Output: 1 neuron with sigmoid (\(n^{[2]} = 1\))</li>
+  <li>Batch size: 2 examples (\(m = 2\))</li>
+</ul>
+
+<h3 id="parameters">Parameters</h3>
+
+\[\mathbf{W}^{[1]} = \begin{bmatrix} 0.5 &amp; -0.3 \\ 0.2 &amp; 0.8 \\ -0.4 &amp; 0.6 \end{bmatrix}, \quad \mathbf{b}^{[1]} = \begin{bmatrix} 0.1 \\ -0.2 \\ 0.3 \end{bmatrix}\]
+
+\[\mathbf{W}^{[2]} = \begin{bmatrix} 1.0 &amp; -0.5 &amp; 0.7 \end{bmatrix}, \quad \mathbf{b}^{[2]} = \begin{bmatrix} 0.5 \end{bmatrix}\]
+
+<h3 id="input-data">Input Data</h3>
+
+\[\mathbf{X} = \mathbf{A}^{[0]} = \begin{bmatrix} 1.0 &amp; 0.5 \\ 2.0 &amp; 1.5 \end{bmatrix}\]
+
+<p>Example 1: \(\mathbf{x}^{(1)} = \begin{bmatrix} 1.0 \\ 2.0 \end{bmatrix}\), Example 2: \(\mathbf{x}^{(2)} = \begin{bmatrix} 0.5 \\ 1.5 \end{bmatrix}\)</p>
+
+<h3 id="forward-pass-layer-1">Forward Pass: Layer 1</h3>
+
+<p><strong>Compute \(\mathbf{Z}^{[1]}\):</strong></p>
+
+\[\mathbf{Z}^{[1]} = \mathbf{W}^{[1]} \mathbf{A}^{[0]} + \mathbf{b}^{[1]}\]
+
+\[= \begin{bmatrix} 0.5 &amp; -0.3 \\ 0.2 &amp; 0.8 \\ -0.4 &amp; 0.6 \end{bmatrix} \begin{bmatrix} 1.0 &amp; 0.5 \\ 2.0 &amp; 1.5 \end{bmatrix} + \begin{bmatrix} 0.1 \\ -0.2 \\ 0.3 \end{bmatrix}\]
+
+<p><strong>Matrix multiplication:</strong></p>
+
+<p>First column: \(\begin{bmatrix} 0.5(1.0) + (-0.3)(2.0) \\ 0.2(1.0) + 0.8(2.0) \\ -0.4(1.0) + 0.6(2.0) \end{bmatrix} = \begin{bmatrix} -0.1 \\ 1.8 \\ 0.8 \end{bmatrix}\)</p>
+
+<p>Second column: \(\begin{bmatrix} 0.5(0.5) + (-0.3)(1.5) \\ 0.2(0.5) + 0.8(1.5) \\ -0.4(0.5) + 0.6(1.5) \end{bmatrix} = \begin{bmatrix} -0.2 \\ 1.3 \\ 0.7 \end{bmatrix}\)</p>
+
+<p>After adding bias:</p>
+
+\[\mathbf{Z}^{[1]} = \begin{bmatrix} -0.1+0.1 &amp; -0.2+0.1 \\ 1.8-0.2 &amp; 1.3-0.2 \\ 0.8+0.3 &amp; 0.7+0.3 \end{bmatrix} = \begin{bmatrix} 0.0 &amp; -0.1 \\ 1.6 &amp; 1.1 \\ 1.1 &amp; 1.0 \end{bmatrix}\]
+
+<p><strong>Apply ReLU activation:</strong></p>
+
+\[\mathbf{A}^{[1]} = \text{ReLU}(\mathbf{Z}^{[1]}) = \begin{bmatrix} 0.0 &amp; 0.0 \\ 1.6 &amp; 1.1 \\ 1.1 &amp; 1.0 \end{bmatrix}\]
+
+<h3 id="forward-pass-layer-2-output">Forward Pass: Layer 2 (Output)</h3>
+
+<p><strong>Compute \(\mathbf{Z}^{[2]}\):</strong></p>
+
+\[\mathbf{Z}^{[2]} = \mathbf{W}^{[2]} \mathbf{A}^{[1]} + \mathbf{b}^{[2]}\]
+
+\[= \begin{bmatrix} 1.0 &amp; -0.5 &amp; 0.7 \end{bmatrix} \begin{bmatrix} 0.0 &amp; 0.0 \\ 1.6 &amp; 1.1 \\ 1.1 &amp; 1.0 \end{bmatrix} + \begin{bmatrix} 0.5 \end{bmatrix}\]
+
+\[= \begin{bmatrix} 1.0(0.0) + (-0.5)(1.6) + 0.7(1.1) + 0.5 &amp; 1.0(0.0) + (-0.5)(1.1) + 0.7(1.0) + 0.5 \end{bmatrix}\]
+
+\[= \begin{bmatrix} 0.47 &amp; 0.65 \end{bmatrix}\]
+
+<p><strong>Apply sigmoid activation:</strong></p>
+
+\[\mathbf{A}^{[2]} = \sigma(\mathbf{Z}^{[2]}) = \begin{bmatrix} \frac{1}{1+e^{-0.47}} &amp; \frac{1}{1+e^{-0.65}} \end{bmatrix} \approx \begin{bmatrix} 0.615 &amp; 0.657 \end{bmatrix}\]
+
+<h3 id="final-predictions">Final Predictions</h3>
+
+<ul>
+  <li>Example 1: \(\hat{y}^{(1)} = 0.615\) (61.5% probability of positive class)</li>
+  <li>Example 2: \(\hat{y}^{(2)} = 0.657\) (65.7% probability of positive class)</li>
+</ul>
+
+<h2 id="implementation-in-python">Implementation in Python</h2>
+
+<h3 id="basic-implementation">Basic Implementation</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">relu</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">forward_propagation</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Arguments:
+    X -- input data of shape (n_x, m)
+    parameters -- python dictionary containing W1, b1, W2, b2, W3, b3, ...
+    
+    Returns:
+    AL -- last post-activation value (predictions)
+    caches -- list of caches containing (A_prev, W, b, Z) for each layer
+    </span><span class="sh">"""</span>
+    <span class="n">caches</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">X</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># number of layers
+</span>    
+    <span class="c1"># Forward through hidden layers (ReLU activation)
+</span>    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
+        <span class="n">A_prev</span> <span class="o">=</span> <span class="n">A</span>
+        <span class="n">W</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">W</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">b</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span>
+        
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">dot</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">A_prev</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="nf">relu</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+        
+        <span class="n">cache</span> <span class="o">=</span> <span class="p">(</span><span class="n">A_prev</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
+        <span class="n">caches</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span>
+    
+    <span class="c1"># Output layer (sigmoid activation)
+</span>    <span class="n">A_prev</span> <span class="o">=</span> <span class="n">A</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">W</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">b</span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span>
+    
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">dot</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">A_prev</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="n">AL</span> <span class="o">=</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+    
+    <span class="n">cache</span> <span class="o">=</span> <span class="p">(</span><span class="n">A_prev</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
+    <span class="n">caches</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">AL</span><span class="p">,</span> <span class="n">caches</span>
+
+<span class="c1"># Example usage
+</span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]])</span>
+
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sh">'</span><span class="s">W1</span><span class="sh">'</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span>
+                    <span class="p">[</span><span class="o">-</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">]]),</span>
+    <span class="sh">'</span><span class="s">b1</span><span class="sh">'</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.3</span><span class="p">]]),</span>
+    <span class="sh">'</span><span class="s">W2</span><span class="sh">'</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">]]),</span>
+    <span class="sh">'</span><span class="s">b2</span><span class="sh">'</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="mf">0.5</span><span class="p">]])</span>
+<span class="p">}</span>
+
+<span class="n">predictions</span><span class="p">,</span> <span class="n">caches</span> <span class="o">=</span> <span class="nf">forward_propagation</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Predictions:</span><span class="sh">"</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+<span class="c1"># Output: Predictions: [[0.615 0.657]]
+</span></code></pre></div></div>
+
+<h3 id="object-oriented-implementation">Object-Oriented Implementation</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">NeuralNetwork</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">layer_dims</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Arguments:
+        layer_dims -- list containing dimensions of each layer
+                     Example: [2, 3, 1] means 2 inputs, 3 hidden, 1 output
+        </span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">initialize_parameters</span><span class="p">(</span><span class="n">layer_dims</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">L</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">layer_dims</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    
+    <span class="k">def</span> <span class="nf">initialize_parameters</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">layer_dims</span><span class="p">):</span>
+        <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">layer_dims</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">W</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">layer_dims</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">layer_dims</span><span class="p">[</span><span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="mf">0.01</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">b</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">((</span><span class="n">layer_dims</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
+        
+        <span class="k">return</span> <span class="n">parameters</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Forward propagation</span><span class="sh">"""</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="n">caches</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="c1"># Hidden layers with ReLU
+</span>        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">L</span><span class="p">):</span>
+            <span class="n">A_prev</span> <span class="o">=</span> <span class="n">A</span>
+            <span class="n">W</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">W</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">b</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span>
+            
+            <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">dot</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">A_prev</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>  <span class="c1"># ReLU
+</span>            
+            <span class="n">caches</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">A_prev</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">A</span><span class="p">))</span>
+        
+        <span class="c1"># Output layer with sigmoid
+</span>        <span class="n">A_prev</span> <span class="o">=</span> <span class="n">A</span>
+        <span class="n">W</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">W</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">L</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="sh">'</span><span class="s">b</span><span class="si">{</span><span class="n">self</span><span class="p">.</span><span class="n">L</span><span class="si">}</span><span class="sh">'</span><span class="p">]</span>
+        
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">dot</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">A_prev</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="o">-</span><span class="n">Z</span><span class="p">))</span>  <span class="c1"># Sigmoid
+</span>        
+        <span class="n">caches</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">A_prev</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">A</span><span class="p">))</span>
+        
+        <span class="k">return</span> <span class="n">A</span><span class="p">,</span> <span class="n">caches</span>
+    
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Make predictions (0 or 1)</span><span class="sh">"""</span>
+        <span class="n">A</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">forward</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="nf">return </span><span class="p">(</span><span class="n">A</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">).</span><span class="nf">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># Usage
+</span><span class="n">nn</span> <span class="o">=</span> <span class="nc">NeuralNetwork</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]])</span>
+<span class="n">predictions</span><span class="p">,</span> <span class="n">caches</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nf">forward</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Predictions:</span><span class="sh">"</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="common-issues-and-debugging">Common Issues and Debugging</h2>
+
+<h3 id="1-dimension-mismatch">1. Dimension Mismatch</h3>
+
+<p><strong>Problem</strong>: Matrix multiplication fails due to incompatible dimensions.</p>
+
+<p><strong>Solution</strong>:</p>
+<ul>
+  <li>Check that \(\mathbf{W}^{[l]}\) has shape \((n^{[l]}, n^{[l-1]})\)</li>
+  <li>Check that \(\mathbf{A}^{[l-1]}\) has shape \((n^{[l-1]}, m)\)</li>
+  <li>Use print statements or debugger to verify shapes</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Layer </span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s">:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  W shape: </span><span class="si">{</span><span class="n">W</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  A_prev shape: </span><span class="si">{</span><span class="n">A_prev</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  b shape: </span><span class="si">{</span><span class="n">b</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Z shape: </span><span class="si">{</span><span class="n">Z</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="2-numerical-instability">2. Numerical Instability</h3>
+
+<p><strong>Problem</strong>: Overflow or underflow in exponentials (especially sigmoid/softmax).</p>
+
+<p><strong>Solution</strong>: Use numerical stability tricks:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Unstable
+</span><span class="k">def</span> <span class="nf">sigmoid_unstable</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
+
+<span class="c1"># Stable version
+</span><span class="k">def</span> <span class="nf">sigmoid_stable</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="n">z</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> 
+                    <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">)),</span>
+                    <span class="n">np</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="n">z</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<h3 id="3-incorrect-broadcasting">3. Incorrect Broadcasting</h3>
+
+<p><strong>Problem</strong>: Bias not broadcast correctly.</p>
+
+<p><strong>Solution</strong>: Ensure bias has shape \((n^{[l]}, 1)\) not \((n^{[l]},)\)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Correct
+</span><span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">((</span><span class="n">n_l</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># Shape (n_l, 1)
+</span>
+<span class="c1"># Incorrect (may cause issues)
+</span><span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">(</span><span class="n">n_l</span><span class="p">)</span>  <span class="c1"># Shape (n_l,)
+</span></code></pre></div></div>
+
+<h2 id="forward-propagation-complexity">Forward Propagation Complexity</h2>
+
+<h3 id="time-complexity">Time Complexity</h3>
+
+<p>For a network with \(L\) layers and \(n\) neurons per layer:</p>
+
+\[O(L \cdot n^2 \cdot m)\]
+
+<p>where \(m\) is the batch size.</p>
+
+<p><strong>Breakdown:</strong></p>
+<ul>
+  <li>Each layer: \(O(n^2 \cdot m)\) for matrix multiplication \(\mathbf{W}^{[l]} \mathbf{A}^{[l-1]}\)</li>
+  <li>\(L\) layers total</li>
+</ul>
+
+<h3 id="space-complexity">Space Complexity</h3>
+
+\[O(L \cdot n \cdot m)\]
+
+<p>Need to store activations for each layer (needed for backpropagation).</p>
+
+<h2 id="summary">Summary</h2>
+
+<ul>
+  <li><strong>Forward propagation</strong> computes predictions by passing inputs through the network</li>
+  <li>Each layer performs: <strong>linear transformation</strong> → <strong>activation function</strong></li>
+  <li><strong>Vectorization</strong> allows efficient batch processing of multiple examples</li>
+  <li>The process is: \(\mathbf{Z}^{[l]} = \mathbf{W}^{[l]} \mathbf{A}^{[l-1]} + \mathbf{b}^{[l]}, \quad \mathbf{A}^{[l]} = g^{[l]}(\mathbf{Z}^{[l]})\)</li>
+  <li><strong>Caching</strong> intermediate values is essential for efficient backpropagation</li>
+  <li>Proper handling of <strong>dimensions</strong> and <strong>numerical stability</strong> is crucial</li>
+  <li>Forward propagation is <strong>computationally efficient</strong> (\(O(L \cdot n^2 \cdot m)\))</li>
+</ul>
+
+<p>Now that we understand how networks make predictions, we need to learn how to train them. In the next chapter, we’ll cover <strong>backpropagation</strong> and <strong>gradient descent</strong>, the algorithms that enable neural networks to learn from data.</p>
+
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter02/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+    
+      
+    
+      
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter02/02_03_Activation_Functions/">
+              02-03 Activation Functions in Detail
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

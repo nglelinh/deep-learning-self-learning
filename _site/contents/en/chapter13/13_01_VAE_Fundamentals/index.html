@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      13-01 Variational Autoencoders &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    13-01 Variational Autoencoders
+    
+      
+        <span class="lesson-badge required large">Required</span>
+      
+    
+  </h1>
+  <h1 id="variational-autoencoders-probabilistic-generative-models">Variational Autoencoders: Probabilistic Generative Models</h1>
+
+<p><img src="https://lilianweng.github.io/posts/2018-08-12-vae/vae-gaussian.png" alt="VAE Architecture" />
+<em>Hình ảnh: Kiến trúc VAE với phân phối xác suất. Nguồn: Lilian Weng’s Blog</em></p>
+
+<h2 id="1-concept-overview">1. Concept Overview</h2>
+
+<p>Variational Autoencoders represent a beautiful marriage of variational inference from statistics and neural networks from deep learning, creating a principled probabilistic framework for generative modeling. While standard autoencoders learn deterministic encodings and decodings optimized for reconstruction, VAEs learn probability distributions over latent codes and data, enabling them to generate novel samples by sampling from the learned latent distribution. This probabilistic perspective addresses a fundamental limitation of vanilla autoencoders: their latent spaces can have “holes” where no training examples map, making random sampling produce unrealistic outputs. VAEs regularize the latent space to be continuous and complete, ensuring we can sample from any region and decode to realistic data.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>The key insight that makes VAEs work is the Evidence Lower BOund (ELBO), a tractable objective that lower-bounds the intractable log-likelihood we actually want to maximize. Computing \(\log p(\mathbf{x})\) for a latent variable model requires integrating over all possible latent codes \(\mathbf{z}\), which is generally impossible for continuous latent spaces with neural network decoders. VAEs sidestep this by introducing a recognition network (encoder) that approximates the true posterior $$p(\mathbf{z}</td>
+      <td>\mathbf{x})$$, then optimizing a lower bound that’s tractable. The tightness of this bound depends on how well the encoder approximates the true posterior—better approximation means tighter bound and better model.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Understanding VAEs requires appreciating several sophisticated ideas working together. The reparameterization trick enables backpropagation through stochastic sampling operations, turning an optimization problem that seems to require reinforcement learning into one solvable with standard gradient descent. The KL divergence between the approximate posterior and the prior acts as a regularizer, preventing the latent space from fragmenting into disconnected regions and encouraging smoothness that enables interpolation. The encoder and decoder are trained jointly, creating an architecture where the encoder learns to infer meaningful latent representations while the decoder learns to generate realistic data from these representations.</p>
+
+<p>The beauty of the VAE framework is its generality. The same basic structure—encoder, latent distribution, decoder, ELBO objective—works for images, text, audio, and other data types, with appropriate choices of encoder/decoder architectures and output distributions. The latent space learned by VAEs has remarkable properties: it’s continuous (nearby latent codes decode to similar outputs), complete (every region contains valid codes), and often interpretable (different latent dimensions capture different factors of variation like pose, color, or shape). These properties make VAEs valuable not just for generation but for representation learning, interpolation, and manipulation of semantic attributes.</p>
+
+<p>Yet VAEs have characteristic limitations that motivate ongoing research. Samples are often somewhat blurry compared to GANs, a consequence of the reconstruction-based objective and Gaussian assumptions commonly used for the decoder. The prior distribution (typically standard Gaussian) might not match the true aggregate posterior, creating a gap between what the encoder produces and what we sample from during generation. The encoder-decoder architecture creates a potential bottleneck if the latent dimension is too small. Understanding these limitations alongside VAE strengths enables using them appropriately: when you need a principled probabilistic model with tractable training, smooth latent space for interpolation, or explicit density estimation, VAEs excel. When sample quality is paramount and training instability is acceptable, GANs might be preferable.</p>
+
+<h2 id="2-mathematical-foundation">2. Mathematical Foundation</h2>
+
+<p>The mathematical framework of VAEs is rooted in variational inference, a powerful technique from Bayesian statistics for approximating intractable posterior distributions. Let’s build up the mathematics carefully, understanding why each component is necessary and how they combine to create a trainable generative model.</p>
+
+<p>We assume data \(\mathbf{x}\) is generated from latent variables \(\mathbf{z}\) through a probabilistic process:</p>
+
+<p>\(\mathbf{z} \sim p(\mathbf{z})\) (prior distribution, chosen to be simple)</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>$$\mathbf{x} \sim p_\theta(\mathbf{x}</td>
+      <td>\mathbf{z})\((likelihood, parameterized by neural network\)\theta$$)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The marginal likelihood of data is:</p>
+
+\[p_\theta(\mathbf{x}) = \int p_\theta(\mathbf{x}|\mathbf{z}) p(\mathbf{z}) d\mathbf{z}\]
+
+<table>
+  <tbody>
+    <tr>
+      <td>This integral is intractable for continuous \(\mathbf{z}\) with complex $$p_\theta(\mathbf{x}</td>
+      <td>\mathbf{z})$$ (neural network decoder). Direct maximum likelihood optimization is impossible because we cannot evaluate the objective we want to maximize.</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Variational inference addresses this by introducing an approximate posterior $$q_\phi(\mathbf{z}</td>
+      <td>\mathbf{x})\((the encoder, parameterized by\)\phi$$) and deriving a lower bound on log-likelihood. Starting from the log-likelihood and introducing the encoder:</td>
+    </tr>
+  </tbody>
+</table>
+
+\[\log p_\theta(\mathbf{x}) = \log \int p_\theta(\mathbf{x}|\mathbf{z}) p(\mathbf{z}) d\mathbf{z}\]
+
+<table>
+  <tbody>
+    <tr>
+      <td>Multiply inside the integral by $$\frac{q_\phi(\mathbf{z}</td>
+      <td>\mathbf{x})}{q_\phi(\mathbf{z}</td>
+      <td>\mathbf{x})} = 1$$:</td>
+    </tr>
+  </tbody>
+</table>
+
+\[= \log \int q_\phi(\mathbf{z}|\mathbf{x}) \frac{p_\theta(\mathbf{x}|\mathbf{z}) p(\mathbf{z})}{q_\phi(\mathbf{z}|\mathbf{x})} d\mathbf{z}\]
+
+\[= \log \mathbb{E}_{\mathbf{z} \sim q_\phi(\mathbf{z}|\mathbf{x})}\left[\frac{p_\theta(\mathbf{x}|\mathbf{z}) p(\mathbf{z})}{q_\phi(\mathbf{z}|\mathbf{x})}\right]\]
+
+<p>By Jensen’s inequality (log is concave):</p>
+
+\[\geq \mathbb{E}_{\mathbf{z} \sim q_\phi(\mathbf{z}|\mathbf{x})}\left[\log \frac{p_\theta(\mathbf{x}|\mathbf{z}) p(\mathbf{z})}{q_\phi(\mathbf{z}|\mathbf{x})}\right]\]
+
+<p>Rearranging terms:</p>
+
+\[= \mathbb{E}_{\mathbf{z} \sim q_\phi(\mathbf{z}|\mathbf{x})}[\log p_\theta(\mathbf{x}|\mathbf{z})] - \mathbb{E}_{\mathbf{z} \sim q_\phi(\mathbf{z}|\mathbf{x})}\left[\log \frac{q_\phi(\mathbf{z}|\mathbf{x})}{p(\mathbf{z})}\right]\]
+
+\[= \mathbb{E}_{\mathbf{z} \sim q_\phi(\mathbf{z}|\mathbf{x})}[\log p_\theta(\mathbf{x}|\mathbf{z})] - KL(q_\phi(\mathbf{z}|\mathbf{x}) \| p(\mathbf{z}))\]
+
+<p>This is the Evidence Lower BOund (ELBO). The first term is reconstruction: how well can we reconstruct \(\mathbf{x}\) from latent codes sampled from the encoder. The second term is a KL divergence between the approximate posterior and the prior, acting as regularization.</p>
+
+<p>The ELBO provides a tractable training objective. Unlike \(\log p_\theta(\mathbf{x})\) which requires intractable integration, we can estimate the ELBO through sampling:</p>
+
+\[\mathcal{L}(\theta, \phi; \mathbf{x}) \approx \frac{1}{L}\sum_{l=1}^L \log p_\theta(\mathbf{x}|\mathbf{z}^{(l)}) - KL(q_\phi(\mathbf{z}|\mathbf{x}) \| p(\mathbf{z}))\]
+
+<table>
+  <tbody>
+    <tr>
+      <td>where $$\mathbf{z}^{(l)} \sim q_\phi(\mathbf{z}</td>
+      <td>\mathbf{x})\(. Often\)L=1$$ suffices (single sample per datapoint).</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="the-reparameterization-trick">The Reparameterization Trick</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td>The remaining challenge is computing gradients with respect to \(\phi\) when the objective involves sampling $$\mathbf{z} \sim q_\phi(\mathbf{z}</td>
+      <td>\mathbf{x})$$. Naively, sampling is a non-differentiable operation—we cannot backpropagate through randomness. The reparameterization trick solves this elegantly.</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>For Gaussian approximate posterior $$q_\phi(\mathbf{z}</td>
+      <td>\mathbf{x}) = \mathcal{N}(\boldsymbol{\mu}<em>\phi(\mathbf{x}), \boldsymbol{\sigma}^2</em>\phi(\mathbf{x}))$$, instead of sampling directly, we:</td>
+    </tr>
+  </tbody>
+</table>
+
+<ol>
+  <li>Sample \(\boldsymbol{\epsilon} \sim \mathcal{N}(0, I)\) (fixed distribution, no parameters)</li>
+  <li>Compute \(\mathbf{z} = \boldsymbol{\mu}_\phi(\mathbf{x}) + \boldsymbol{\sigma}_\phi(\mathbf{x}) \odot \boldsymbol{\epsilon}\)</li>
+</ol>
+
+<table>
+  <tbody>
+    <tr>
+      <td>This is equivalent to sampling from $$q_\phi(\mathbf{z}</td>
+      <td>\mathbf{x})\(but expressed as a deterministic function of\)\phi\(and external randomness\)\boldsymbol{\epsilon}\(. Gradients with respect to\)\phi\(flow through\)\boldsymbol{\mu}<em>\phi\(and\)\boldsymbol{\sigma}</em>\phi$$, enabling backpropagation.</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>For the common case where both $$q_\phi(\mathbf{z}</td>
+      <td>\mathbf{x})\(and\)p(\mathbf{z})$$ are Gaussian, the KL divergence has a closed form:</td>
+    </tr>
+  </tbody>
+</table>
+
+\[KL(q_\phi(\mathbf{z}|\mathbf{x}) \| p(\mathbf{z})) = KL(\mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\sigma}^2) \| \mathcal{N}(0, I))\]
+
+\[= \frac{1}{2}\sum_{j=1}^{J} \left(\mu_j^2 + \sigma_j^2 - \log \sigma_j^2 - 1\right)\]
+
+<p>where \(J\) is latent dimension. This allows exact computation without sampling, making training more stable.</p>
+
+<p>The complete VAE loss for a single datapoint becomes:</p>
+
+\[\mathcal{L}_{\text{VAE}}(\theta, \phi; \mathbf{x}) = \mathbb{E}_{\boldsymbol{\epsilon} \sim \mathcal{N}(0,I)}[\log p_\theta(\mathbf{x}|\boldsymbol{\mu}_\phi(\mathbf{x}) + \boldsymbol{\sigma}_\phi(\mathbf{x}) \odot \boldsymbol{\epsilon})] - \frac{1}{2}\sum_{j=1}^{J} (\mu_j^2 + \sigma_j^2 - \log \sigma_j^2 - 1)\]
+
+<p>Maximizing this (or equivalently minimizing the negative) trains the VAE. The reconstruction term encourages accurate reconstruction while the KL term regularizes the latent space.</p>
+
+<h3 id="decoder-output-distribution">Decoder Output Distribution</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td>The choice of $$p_\theta(\mathbf{x}</td>
+      <td>\mathbf{z})$$ affects what reconstruction loss we use. For continuous data like images:</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>Gaussian likelihood</strong>: $$p_\theta(\mathbf{x}</td>
+      <td>\mathbf{z}) = \mathcal{N}(\mathbf{x}; \boldsymbol{\mu}_\theta(\mathbf{z}), \sigma^2 I)$$</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>The negative log-likelihood is proportional to MSE: $$-\log p_\theta(\mathbf{x}</td>
+      <td>\mathbf{z}) \propto |\mathbf{x} - \boldsymbol{\mu}_\theta(\mathbf{z})|^2$$</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Bernoulli likelihood</strong> (for binary images): Each pixel independent Bernoulli with probability \(\hat{x}_i\) from decoder.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>The negative log-likelihood is binary cross-entropy: $$-\log p_\theta(\mathbf{x}</td>
+      <td>\mathbf{z}) = -\sum_i [x_i \log \hat{x}_i + (1-x_i)\log(1-\hat{x}_i)]$$</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The decoder network outputs the parameters of these distributions (means for Gaussian, probabilities for Bernoulli), and we sample from them during generation but use the mean/mode during reconstruction for training.</p>
+
+<h2 id="3-example--intuition">3. Example / Intuition</h2>
+
+<p>To understand how VAEs work in practice, let’s trace through generating a new handwritten digit. Suppose we’ve trained a VAE on MNIST with 20-dimensional latent space.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>During training, the VAE saw thousands of “3”s. For each “3” image \(\mathbf{x}\), the encoder computed a Gaussian distribution in latent space: $$q_\phi(\mathbf{z}</td>
+      <td>\mathbf{x}) = \mathcal{N}(\boldsymbol{\mu}<em>\phi(\mathbf{x}), \boldsymbol{\sigma}^2</em>\phi(\mathbf{x}))\(. The KL penalty in the loss encouraged these distributions to be close to\)\mathcal{N}(0, I)$$, preventing them from spreading arbitrarily far or collapsing to point masses. The result: all “3”s map to overlapping Gaussian distributions in a region of latent space. Different “3”s (thick, thin, slanted) map to slightly different means, but all are close to each other and to the origin.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Similarly, “8”s map to a different but also origin-centered region, “1”s to another, and so on. The latent space self-organizes: different digits occupy different regions, but all regions are near the origin (due to KL penalty), and transitions between regions are smooth (no holes).</p>
+
+<p>Now for generation. We sample \(\mathbf{z} \sim \mathcal{N}(0, I)\)—just random numbers from a standard Gaussian. Suppose we get \(\mathbf{z} = [0.5, -0.3, 0.1, \ldots]\) (20 numbers). By chance, this \(\mathbf{z}\) falls in the “3” region of latent space. We decode: \(\hat{\mathbf{x}} = \text{decoder}_\theta(\mathbf{z})\). The decoder, having seen many “3”s during training whose latent codes were near this \(\mathbf{z}\), has learned to map this region to “3”-like images. The output is a novel “3”—not a copy of any training example but a new instance following the learned pattern.</p>
+
+<p>The probabilistic nature provides interesting capabilities. If we sample \(\mathbf{z}\) from exactly \(\mathcal{N}(0, I)\), we get a diverse mix of all digits. If we want only “3”s, we can sample from the region where “3”s tend to map—but we don’t know this region exactly without examining the encoder on “3” training examples. This is a limitation: VAEs don’t provide explicit control over what class to generate unless we condition on class labels or discover class regions post-hoc.</p>
+
+<p>Interpolation between images works beautifully. Encode two images to get \(\boldsymbol{\mu}_1\) and \(\boldsymbol{\mu}_2\) (using encoder’s means, ignoring variances for determinism). Linearly interpolate:</p>
+
+\[\mathbf{z}_t = (1-t)\boldsymbol{\mu}_1 + t\boldsymbol{\mu}_2, \quad t \in [0,1]\]
+
+<p>Decode each \(\mathbf{z}_t\) to get interpolated images. Because the VAE regularized the latent space to be smooth (through KL penalty), this interpolation produces coherent images throughout—smoothly morphing from one digit to another. This is unlike vanilla autoencoders where interpolation might produce unrealistic images in unexplored latent regions.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>The KL divergence penalty’s role deserves deep understanding. It serves three purposes: (1) regularization preventing overfitting to training examples, (2) ensuring the latent space is continuous and complete for sampling, (3) encouraging disentanglement where different latent dimensions capture independent factors of variation. The KL term $$KL(q_\phi(\mathbf{z}</td>
+      <td>\mathbf{x}) | p(\mathbf{z}))$$ can be decomposed:</td>
+    </tr>
+  </tbody>
+</table>
+
+\[KL(q_\phi(\mathbf{z}|\mathbf{x}) \| p(\mathbf{z})) = -H(q_\phi(\mathbf{z}|\mathbf{x})) + H(p(\mathbf{z}), q_\phi(\mathbf{z}|\mathbf{x}))\]
+
+<p>The first term encourages high entropy in \(q_\phi\) (uncertainty), preventing the encoder from collapsing to deterministic encodings (which would make sampling impossible). The second term encourages closeness to the prior \(p(\mathbf{z})\), ensuring the latent space structure matches what we’ll sample from during generation.</p>
+
+<h2 id="4-code-snippet">4. Code Snippet</h2>
+
+<p>Let’s implement a complete VAE with all mathematical components explicit:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="n">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">import</span> <span class="n">torch.optim</span> <span class="k">as</span> <span class="n">optim</span>
+<span class="kn">from</span> <span class="n">torchvision</span> <span class="kn">import</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">transforms</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="k">class</span> <span class="nc">VAE</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Variational Autoencoder for MNIST.
+    
+    Architecture:
+    - Encoder: maps images to latent distribution parameters (μ, σ)
+    - Sampler: reparameterization trick for backpropagation through sampling
+    - Decoder: maps latent codes to reconstructed images
+    
+    Loss: ELBO = reconstruction + KL divergence
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="mi">784</span><span class="p">,</span> <span class="n">latent_dim</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">(</span><span class="n">VAE</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">latent_dim</span> <span class="o">=</span> <span class="n">latent_dim</span>
+        
+        <span class="c1"># Encoder: outputs parameters of Gaussian distribution
+</span>        <span class="c1"># We output both μ and log(σ²) rather than σ for numerical stability
+</span>        <span class="c1"># (σ must be positive, easier to ensure with exp(log σ²))
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">()</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># Separate layers for mean and log-variance
+</span>        <span class="c1"># This allows encoder to learn both independently
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">fc_mu</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">fc_logvar</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">)</span>
+        
+        <span class="c1"># Decoder: maps latent code to reconstruction
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">decoder</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">latent_dim</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Sigmoid</span><span class="p">()</span>  <span class="c1"># Output in [0,1] for pixel values
+</span>        <span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Encode input to latent distribution parameters.
+        
+        Returns:
+            mu: mean of q(z|x)
+            logvar: log variance of q(z|x)
+        
+        We return log variance instead of variance/std for numerical stability.
+        Variance must be positive, so we can ensure this by exponentiating logvar.
+        This is more stable than directly predicting σ and squaring it.
+        </span><span class="sh">"""</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">encoder</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">mu</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">fc_mu</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+        <span class="n">logvar</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">fc_logvar</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mu</span><span class="p">,</span> <span class="n">logvar</span>
+    
+    <span class="k">def</span> <span class="nf">reparameterize</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">logvar</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Reparameterization trick: z = μ + σ⊙ε where ε ~ N(0,I)
+        
+        This is THE key innovation making VAEs trainable with backprop.
+        Instead of sampling z ~ N(μ,σ²) (not differentiable w.r.t. μ,σ),
+        we express z as a deterministic function of μ,σ and external randomness ε.
+        
+        Gradients can flow through μ and σ to encoder parameters, enabling
+        end-to-end training via standard backpropagation.
+        </span><span class="sh">"""</span>
+        <span class="c1"># Compute standard deviation from log variance
+</span>        <span class="c1"># std = exp(log(σ²) / 2) = exp(logvar / 2)
+</span>        <span class="n">std</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">logvar</span><span class="p">)</span>
+        
+        <span class="c1"># Sample epsilon from standard normal
+</span>        <span class="c1"># During training: random. During generation: can use specific ε
+</span>        <span class="n">eps</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn_like</span><span class="p">(</span><span class="n">std</span><span class="p">)</span>
+        
+        <span class="c1"># Reparameterized sample: z = μ + σ * ε
+</span>        <span class="n">z</span> <span class="o">=</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">std</span> <span class="o">*</span> <span class="n">eps</span>
+        
+        <span class="k">return</span> <span class="n">z</span>
+    
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Map latent code to reconstruction</span><span class="sh">"""</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">decoder</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Full VAE forward pass.
+        
+        Returns:
+            recon: reconstructed input
+            mu: latent mean (for KL computation)
+            logvar: latent log-variance (for KL computation)
+        
+        We return mu and logvar separately because we need them to compute
+        the KL divergence in the loss function.
+        </span><span class="sh">"""</span>
+        <span class="n">mu</span><span class="p">,</span> <span class="n">logvar</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">reparameterize</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">logvar</span><span class="p">)</span>
+        <span class="n">recon</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">recon</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">logvar</span>
+    
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Generate new samples by sampling from prior and decoding.
+        
+        This is how we use the trained VAE for generation:
+        1. Sample z ~ N(0, I) (the prior)
+        2. Decode to get x
+        
+        Because we regularized q(z|x) to be close to N(0,I) during training,
+        samples from N(0,I) should decode to realistic outputs.
+        </span><span class="sh">"""</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">latent_dim</span><span class="p">)</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">samples</span>
+
+<span class="k">def</span> <span class="nf">vae_loss</span><span class="p">(</span><span class="n">recon_x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">logvar</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    VAE loss: negative ELBO = reconstruction loss + KL divergence
+    
+    Args:
+        recon_x: reconstructed input
+        x: original input
+        mu: latent mean from encoder
+        logvar: latent log-variance from encoder
+        beta: weight for KL term (β-VAE uses β≠1 for disentanglement)
+    
+    The loss has two terms:
+    1. Reconstruction: how well we reconstruct input
+    2. KL: how much encoder distribution differs from prior
+    
+    We want to minimize both: good reconstruction AND latent distribution
+    close to prior.
+    </span><span class="sh">"""</span>
+    <span class="c1"># Reconstruction loss (binary cross-entropy for images in [0,1])
+</span>    <span class="c1"># Treating each pixel as independent Bernoulli
+</span>    <span class="n">BCE</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">binary_cross_entropy</span><span class="p">(</span><span class="n">recon_x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">reduction</span><span class="o">=</span><span class="sh">'</span><span class="s">sum</span><span class="sh">'</span><span class="p">)</span>
+    
+    <span class="c1"># KL divergence KL(N(μ,σ²) \| N(0,I))
+</span>    <span class="c1"># Has closed form: 0.5 * Σ(μ² + σ² - log(σ²) - 1)
+</span>    <span class="c1"># We have logvar = log(σ²), so σ² = exp(logvar)
+</span>    <span class="n">KLD</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">torch</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">logvar</span> <span class="o">-</span> <span class="n">mu</span><span class="p">.</span><span class="nf">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">logvar</span><span class="p">.</span><span class="nf">exp</span><span class="p">())</span>
+    
+    <span class="c1"># Total loss (negative ELBO)
+</span>    <span class="c1"># Minimizing this is equivalent to maximizing ELBO
+</span>    <span class="k">return</span> <span class="n">BCE</span> <span class="o">+</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">KLD</span><span class="p">,</span> <span class="n">BCE</span><span class="p">,</span> <span class="n">KLD</span>
+
+<span class="c1"># Training VAE
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training Variational Autoencoder on MNIST</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Load data
+</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="p">.</span><span class="nc">ToTensor</span><span class="p">()</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="nc">MNIST</span><span class="p">(</span><span class="sh">'</span><span class="s">./data</span><span class="sh">'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="nc">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">test_dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="nc">MNIST</span><span class="p">(</span><span class="sh">'</span><span class="s">./data</span><span class="sh">'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="nc">DataLoader</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="c1"># Create VAE
+</span><span class="n">vae</span> <span class="o">=</span> <span class="nc">VAE</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">784</span><span class="p">,</span> <span class="n">latent_dim</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">vae</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">VAE Architecture:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Input dimension: 784 (28×28)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Latent dimension: 20 (compression factor: 39×)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Total parameters: </span><span class="si">{</span><span class="nf">sum</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">vae</span><span class="p">.</span><span class="nf">parameters</span><span class="p">())</span><span class="si">:</span><span class="p">,</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Training loop
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Training VAE...</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">vae</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">train_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">train_bce</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">train_kld</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">for</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">train_loader</span><span class="p">):</span>
+        <span class="c1"># Flatten images
+</span>        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">784</span><span class="p">)</span>
+        
+        <span class="c1"># Forward pass
+</span>        <span class="n">recon</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">logvar</span> <span class="o">=</span> <span class="nf">vae</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        
+        <span class="c1"># Compute loss
+</span>        <span class="n">loss</span><span class="p">,</span> <span class="n">bce</span><span class="p">,</span> <span class="n">kld</span> <span class="o">=</span> <span class="nf">vae_loss</span><span class="p">(</span><span class="n">recon</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">logvar</span><span class="p">)</span>
+        
+        <span class="c1"># Backward pass
+</span>        <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+        
+        <span class="n">train_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
+        <span class="n">train_bce</span> <span class="o">+=</span> <span class="n">bce</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
+        <span class="n">train_kld</span> <span class="o">+=</span> <span class="n">kld</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
+    
+    <span class="c1"># Average over batches
+</span>    <span class="n">n_batches</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span>
+    <span class="n">avg_loss</span> <span class="o">=</span> <span class="n">train_loss</span> <span class="o">/</span> <span class="n">n_batches</span> <span class="o">/</span> <span class="mi">128</span>  <span class="c1"># Per sample
+</span>    <span class="n">avg_bce</span> <span class="o">=</span> <span class="n">train_bce</span> <span class="o">/</span> <span class="n">n_batches</span> <span class="o">/</span> <span class="mi">128</span>
+    <span class="n">avg_kld</span> <span class="o">=</span> <span class="n">train_kld</span> <span class="o">/</span> <span class="n">n_batches</span> <span class="o">/</span> <span class="mi">128</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="mi">2</span><span class="n">d</span><span class="si">}</span><span class="s">: Loss = </span><span class="si">{</span><span class="n">avg_loss</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s"> </span><span class="sh">"</span>
+          <span class="sa">f</span><span class="sh">"</span><span class="s">(Recon = </span><span class="si">{</span><span class="n">avg_bce</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, KL = </span><span class="si">{</span><span class="n">avg_kld</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">VAE Training Complete - Analyzing Results</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Test reconstruction
+</span><span class="n">vae</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="n">test_data</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="nf">next</span><span class="p">(</span><span class="nf">iter</span><span class="p">(</span><span class="n">test_loader</span><span class="p">))</span>
+    <span class="n">test_data_flat</span> <span class="o">=</span> <span class="n">test_data</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">784</span><span class="p">)</span>
+    
+    <span class="c1"># Encode (using mean, ignoring variance for determinism)
+</span>    <span class="n">mu</span><span class="p">,</span> <span class="n">logvar</span> <span class="o">=</span> <span class="n">vae</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">test_data_flat</span><span class="p">)</span>
+    
+    <span class="c1"># Reconstruct
+</span>    <span class="n">recon</span> <span class="o">=</span> <span class="n">vae</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span>
+    
+    <span class="c1"># Measure reconstruction error
+</span>    <span class="n">recon_error</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">mse_loss</span><span class="p">(</span><span class="n">recon</span><span class="p">,</span> <span class="n">test_data_flat</span><span class="p">).</span><span class="nf">item</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Test reconstruction MSE: </span><span class="si">{</span><span class="n">recon_error</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># Analyze latent space statistics
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Latent space statistics (should be ~N(0,1) due to KL penalty):</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Mean: </span><span class="si">{</span><span class="n">mu</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="si">:</span><span class="mi">5</span><span class="p">].</span><span class="nf">numpy</span><span class="p">().</span><span class="nf">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s"> (first 5 dims)</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Std:  </span><span class="si">{</span><span class="n">torch</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">logvar</span><span class="p">).</span><span class="nf">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="si">:</span><span class="mi">5</span><span class="p">].</span><span class="nf">numpy</span><span class="p">().</span><span class="nf">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Overall mean magnitude: </span><span class="si">{</span><span class="n">mu</span><span class="p">.</span><span class="nf">abs</span><span class="p">().</span><span class="nf">mean</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Overall std: </span><span class="si">{</span><span class="n">torch</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">logvar</span><span class="p">).</span><span class="nf">mean</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Generate new samples
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Generating New Samples from VAE</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="c1"># Sample from prior N(0,I)
+</span>    <span class="n">num_samples</span> <span class="o">=</span> <span class="mi">64</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">vae</span><span class="p">.</span><span class="nf">sample</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Generated </span><span class="si">{</span><span class="n">num_samples</span><span class="si">}</span><span class="s"> samples by sampling z ~ N(0,I)</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Sample shape: </span><span class="si">{</span><span class="n">samples</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (64, 784)
+</span>    
+    <span class="c1"># Check sample statistics
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Generated sample mean: </span><span class="si">{</span><span class="n">samples</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s"> (should be ~0.5)</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Generated sample std: </span><span class="si">{</span><span class="n">samples</span><span class="p">.</span><span class="nf">std</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># Reshape for visualization
+</span>    <span class="n">samples_img</span> <span class="o">=</span> <span class="n">samples</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Reshaped for visualization: </span><span class="si">{</span><span class="n">samples_img</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Demonstrate interpolation
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Latent Space Interpolation</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="c1"># Take two test images
+</span>    <span class="n">img1</span> <span class="o">=</span> <span class="n">test_data_flat</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">img2</span> <span class="o">=</span> <span class="n">test_data_flat</span><span class="p">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="c1"># Encode to latent means
+</span>    <span class="n">mu1</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">vae</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">img1</span><span class="p">)</span>
+    <span class="n">mu2</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">vae</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">img2</span><span class="p">)</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Interpolating between two images in latent space:</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># Interpolate
+</span>    <span class="n">n_steps</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">)):</span>
+        <span class="n">z_interp</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">mu1</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">mu2</span>
+        <span class="n">img_interp</span> <span class="o">=</span> <span class="n">vae</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">z_interp</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Print every other step
+</span>            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  t=</span><span class="si">{</span><span class="n">t</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">: Generated interpolation image </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="n">n_steps</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Interpolation should be smooth due to latent space regularization!</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">This is a key advantage of VAE over vanilla autoencoders.</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Demonstrate β-VAE (varying KL weight)
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">β-VAE: Controlling Disentanglement</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">By varying β (weight on KL term), we control tradeoffs:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  β &lt; 1: Prioritize reconstruction (sharper but less disentangled)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  β = 1: Standard VAE (balanced)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  β &gt; 1: Prioritize latent regularity (more disentangled, blurrier)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">β-VAE with β=4-10 often learns more interpretable latent dimensions</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">where each dimension captures one semantic factor (size, rotation, etc.)</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="5-related-concepts">5. Related Concepts</h2>
+
+<p>The relationship between VAEs and standard autoencoders illuminates what the probabilistic framework adds. Both use encoder-decoder architectures and reconstruction losses, but VAEs add: (1) probabilistic encodings (distributions rather than points), (2) the KL divergence regularization term, (3) the ability to sample for generation. These differences stem from VAEs being principled probabilistic models optimizing a lower bound on likelihood, while autoencoders are simply dimensionality reduction with a bottleneck. The probabilistic perspective provides theoretical guarantees: VAEs are approximately maximizing data likelihood, ensuring generated samples should be realistic if training succeeds. Autoencoders have no such guarantee—they minimize reconstruction error, which doesn’t directly translate to generating good samples.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>VAEs connect deeply to variational inference, a general technique in Bayesian statistics for approximating intractable posterior distributions. The idea is always the same: we have a model \(p(\mathbf{x}, \mathbf{z})\) but cannot compute $$p(\mathbf{z}</td>
+      <td>\mathbf{x})\(exactly, so we approximate it with a simpler distribution\)q(\mathbf{z}</td>
+      <td>\mathbf{x})\(from a tractable family (here, factorized Gaussians). We optimize the approximation by maximizing the ELBO, which lower-bounds the quantity we actually care about (log-likelihood). VAEs made variational inference scalable to high-dimensional problems through: (1) using neural networks for\)q\(and\)p$$, providing enormous flexibility, (2) the reparameterization trick enabling gradient-based optimization, (3) stochastic optimization allowing mini-batch training. Understanding VAEs through the variational inference lens connects them to a rich statistical tradition and motivates extensions like importance-weighted VAEs or hierarchical VAEs.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The connection to information theory provides another perspective. The ELBO can be written:</p>
+
+\[\text{ELBO} = \mathbb{E}_{q_\phi(\mathbf{z}|\mathbf{x})}[\log p_\theta(\mathbf{x}|\mathbf{z})] - KL(q_\phi(\mathbf{z}|\mathbf{x}) \| p(\mathbf{z}))\]
+
+\[= -H_{q_\phi}(p_\theta(\mathbf{x}|\mathbf{z})) - KL(q_\phi(\mathbf{z}|\mathbf{x}) \| p(\mathbf{z}))\]
+
+<p>The first term is negative conditional entropy—favoring decoders that confidently reconstruct given latent codes (low uncertainty). The KL term measures information cost of using \(q_\phi\) instead of the prior \(p\). This information-theoretic view suggests VAEs trade off between reconstruction fidelity and compression (low information latent codes), a perspective formalized in the β-VAE framework where we explicitly control this tradeoff with \(\beta\).</p>
+
+<p>VAEs relate to normalizing flows through their treatment of latent variables. Both use latent variables \(\mathbf{z}\) and learn mappings to data \(\mathbf{x}\). However, flows use invertible, deterministic mappings with tractable Jacobians, enabling exact likelihood. VAEs use flexible neural networks for encoder/decoder but approximate the likelihood through ELBO. Flows provide exact inference but require constrained architectures. VAEs allow flexible architectures but provide approximate inference. This tradeoff shapes their respective application domains: flows for exact density modeling, VAEs for flexible generation with stable training.</p>
+
+<p>Finally, VAEs connect to representation learning and disentanglement. A disentangled representation has individual latent dimensions corresponding to independent factors of variation (for faces: one dimension for pose, another for lighting, another for identity). VAEs’ factorized Gaussian posterior encourages independence between latent dimensions, and β-VAEs with \(\beta &gt; 1\) further encourage disentanglement by more strongly penalizing KL divergence. Learning disentangled representations is valuable beyond generation: downstream tasks benefit from interpretable, factorized features where we can manipulate specific attributes independently. Understanding how VAE training encourages disentanglement connects to broader questions about what constitutes good representations and how to discover them through unsupervised learning.</p>
+
+<h2 id="6-fundamental-papers">6. Fundamental Papers</h2>
+
+<p><strong><a href="https://arxiv.org/abs/1312.6114">“Auto-Encoding Variational Bayes” (2014)</a></strong><br />
+<em>Authors</em>: Diederik P. Kingma, Max Welling<br />
+This foundational paper introduced VAEs and made variational inference practical for deep learning through the reparameterization trick. Kingma and Welling showed that by expressing sampling as \(\mathbf{z} = \boldsymbol{\mu} + \boldsymbol{\sigma} \odot \boldsymbol{\epsilon}\) where \(\boldsymbol{\epsilon} \sim \mathcal{N}(0,I)\), we can backpropagate through stochastic computation, enabling gradient-based optimization of the ELBO. The paper provided clear mathematical derivations, proposed practical implementation details (using Gaussian encoders/decoders, closed-form KL), and demonstrated results on images. VAEs offered several advantages over existing approaches: principled probabilistic framework (unlike autoencoders), stable training (unlike early GANs), and tractable lower bound on likelihood (unlike implicit models). The work influenced thousands of follow-up papers exploring VAE variants, applications, and theoretical properties. Reading this paper, one appreciates both the mathematical sophistication (connecting neural networks to variational inference) and the practical insight (the reparameterization trick) that made the method work.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1606.05908">“Tutorial on Variational Autoencoders” (2016)</a></strong><br />
+<em>Author</em>: Carl Doersch<br />
+This tutorial paper provided accessible introduction to VAEs for readers without strong background in variational inference. Doersch carefully explained the intuition behind ELBO (why a lower bound is sufficient, what the terms mean), the reparameterization trick (with visual diagrams showing gradient flow), and practical training considerations. The tutorial addressed common confusions (why Gaussian posteriors, what latent space structure means, how to choose hyperparameters) and connected VAEs to related concepts (autoencoders, GANs, Bayesian inference). While not introducing new methods, this tutorial significantly helped VAE adoption by making the framework accessible to practitioners. It exemplifies how clear exposition—explaining not just what equations are but why they make sense—can have major impact on field by lowering barriers to understanding sophisticated techniques.</p>
+
+<p><strong><a href="https://openreview.net/forum?id=Sy2fzU9gl">“β-VAE: Learning Basic Visual Concepts with a Constrained Variational Framework” (2017)</a></strong><br />
+<em>Authors</em>: Irina Higgins, Loic Matthey, Arka Pal, Christopher Burgess, Xavier Glorot, Matthew Botvinick, Shakir Mohamed, Alexander Lerchner<br />
+This paper introduced β-VAE, a simple modification where the KL term in the loss is weighted by \(\beta &gt; 1\) instead of 1. This seemingly minor change has profound effects on the learned latent representations. Higher β more strongly penalizes KL divergence, encouraging the latent dimensions to be independent (factorized), which often leads to disentangled representations where each dimension captures one interpretable factor of variation. The paper demonstrated that β-VAEs learn to separate factors like shape, size, rotation, and color into different latent dimensions, enabling controlled generation by manipulating specific dimensions. The work connected VAEs to the information bottleneck principle and showed that the right amount of compression (through β) can improve representation quality for downstream tasks. β-VAE has become a standard tool for learning disentangled representations and illustrates how hyperparameters (β) can control qualitative properties of learned representations, not just quantitative metrics like reconstruction error.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1509.00519">“Importance Weighted Autoencoders” (2016)</a></strong><br />
+<em>Authors</em>: Yuri Burda, Roger Grosse, Ruslan Salakhutdinov<br />
+This paper improved VAE’s ELBO through importance sampling, creating a tighter lower bound on log-likelihood. Standard VAE uses a single sample from \(q_\phi(\mathbf{z}|\mathbf{x})\) to estimate the ELBO. IWAE uses multiple samples and importance weighting, giving:</p>
+
+\[\mathcal{L}_{\text{IWAE}} = \mathbb{E}\left[\log \frac{1}{K}\sum_{k=1}^K \frac{p_\theta(\mathbf{x}, \mathbf{z}^{(k)})}{q_\phi(\mathbf{z}^{(k)}|\mathbf{x})}\right]\]
+
+<table>
+  <tbody>
+    <tr>
+      <td>This is a tighter lower bound (approaches true log-likelihood as \(K \to \infty\)) and often generates better samples. The paper showed that the quality improvement comes from better training of the generative model $$p_\theta(\mathbf{x}</td>
+      <td>\mathbf{z})\(, though the inference network\)q_\phi$$ might become less accurate. IWAE demonstrates that even with VAE’s solid theoretical foundation, there’s room for improvement through better variational approximations. The importance weighting idea has influenced subsequent work on improving variational bounds and shows how classical statistical techniques (importance sampling) can enhance neural approaches.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong><a href="https://arxiv.org/abs/1906.00446">“Generating Diverse High-Fidelity Images with VQ-VAE-2” (2019)</a></strong><br />
+<em>Authors</em>: Ali Razavi, Aaron van den Oord, Oriol Vinyals<br />
+This paper introduced VQ-VAE-2, achieving state-of-the-art sample quality for VAE-based models by using discrete latent representations and hierarchical priors. Instead of continuous Gaussian latents, VQ-VAE uses vector quantization—the encoder outputs indices into a learned codebook, and the decoder receives the corresponding codebook vectors. This discreteness allows using powerful autoregressive priors over the latent codes, dramatically improving sample quality. The hierarchical structure (separate latent codes for global and local structure) enables generating high-resolution images. While more complex than standard VAEs, VQ-VAE-2 demonstrated that VAE-based models could compete with GANs in sample quality while maintaining VAE’s advantages of stable training and latent space structure. The work showed that the VAE framework is flexible enough to accommodate discrete latents, hierarchical structure, and sophisticated priors, pushing VAE performance to new levels.</p>
+
+<h2 id="common-pitfalls-and-tricks">Common Pitfalls and Tricks</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td>The most common failure mode in VAE training is posterior collapse, where the encoder learns to ignore the input and output the prior distribution for all inputs: $$q_\phi(\mathbf{z}</td>
+      <td>\mathbf{x}) \approx p(\mathbf{z}) = \mathcal{N}(0,I)\(regardless of\)\mathbf{x}$$. The KL term becomes zero (good for that term!) but the reconstruction term cannot improve because latent codes contain no information about the input. The decoder learns to generate average images (the mean of the training distribution) regardless of latent code. Symptoms include very low KL divergence (approaching 0) and poor reconstructions. This happens when the decoder is too powerful—it can reconstruct reasonably well without using latent information, so the encoder takes the easy route of outputting the prior to minimize KL.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Solutions include: (1) weakening the decoder (fewer layers/parameters), forcing it to rely on latent codes; (2) KL annealing—start training with β=0 (no KL penalty) and gradually increase to β=1, allowing the encoder to discover useful representations before regularization is applied; (3) free bits—only penalize KL if it’s above a threshold, ensuring latent dimensions maintain minimum information content; (4) better optimization—using higher learning rates for the encoder than decoder, giving it advantage in the competition for capacity. Understanding posterior collapse as an optimization pathology rather than fundamental VAE limitation helps implement these solutions appropriately.</p>
+
+<p>Choosing the latent dimension involves a tradeoff between expressiveness and disentanglement. Larger latent dimensions can capture more variation (good for reconstruction) but tend to be less disentangled (dimensions become correlated, harder to interpret). Smaller latent dimensions force more compression and often learn more disentangled representations but may not capture all data variation (poor reconstruction). For MNIST, 10-20 dimensions typically suffice. For CelebA faces, 64-256 dimensions are common. Always validate on both reconstruction quality (quantitative) and latent space interpretability (qualitative).</p>
+
+<p>The choice of β in β-VAE significantly affects outcomes. β=1 is standard VAE, balancing reconstruction and regularization. β&gt;1 (typically 2-10) prioritizes disentanglement, useful when interpretability matters more than perfect reconstruction. β&lt;1 (typically 0.1-0.5) prioritizes reconstruction, useful when generation quality matters more than latent space structure. For representation learning (using VAE features for downstream tasks), β=1-2 often works well. For controllable generation (manipulating specific attributes), β=4-10 provides more disentangled latents. Understanding this knob allows tailoring VAEs to specific application requirements.</p>
+
+<p>A powerful technique for improving sample quality is using more sophisticated decoder distributions than Gaussian or Bernoulli. Mixture of discretized logistics (modeling pixel values as mixture of binned distributions) captures multi-modality better than single Gaussian. Autoregressive decoders (each pixel predicted conditionally on previous pixels) capture dependencies autoencoders’ factorized assumptions miss. These more expressive decoders often generate sharper samples while maintaining VAE’s stable training. The tradeoff is computational cost—autoregressive decoding is slow. Understanding that decoder choice affects both sample quality and training/generation speed guides appropriate architectural decisions.</p>
+
+<p>When using VAE latent codes for downstream tasks (classification, clustering), a decision is whether to use the mean \(\boldsymbol{\mu}\) or sample from \(\mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\sigma}^2)\). For deterministic tasks (classification), using mean provides stable features. For tasks requiring uncertainty (active learning, Bayesian inference), sampling reflects the encoder’s uncertainty. For most applications, the mean works well and is standard practice, but understanding that the full distribution is available enables more sophisticated uses when appropriate.</p>
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<p>Variational Autoencoders combine neural networks with variational inference to create a principled probabilistic framework for generative modeling with latent variables, optimizing the Evidence Lower BOund on log-likelihood as a tractable surrogate for the intractable true likelihood. The encoder learns to map inputs to distributions over latent codes (parameterized as Gaussian with learned mean and variance), while the decoder learns to reconstruct inputs from latent samples, with both trained jointly through the ELBO objective combining reconstruction accuracy and latent distribution regularization. The reparameterization trick—expressing stochastic sampling as deterministic function of parameters and external randomness—enables backpropagation through sampling, making end-to-end training possible with standard gradient descent. The KL divergence between approximate posterior and prior regularizes the latent space to be continuous, complete, and centered around the prior, ensuring samples from the prior decode to realistic outputs and enabling smooth interpolation between examples. β-VAE extends the framework by weighting the KL term, trading off reconstruction quality for latent disentanglement and enabling learned representations where individual dimensions capture interpretable factors of variation. VAEs provide stable training compared to GANs, explicit latent space structure enabling interpolation and manipulation, and a principled probabilistic framework supporting theoretical analysis, though often producing somewhat blurrier samples than adversarially trained models. Understanding VAEs requires appreciating the interplay between deep learning (neural encoders/decoders), probability theory (latent variable models), and optimization (variational bounds), making them both theoretically rich and practically valuable for generation, representation learning, and semi-supervised learning.</p>
+
+<p>Variational autoencoders exemplify how bringing together ideas from different fields—neural networks, variational inference, information theory—can create methods more powerful than the sum of their parts.</p>
+
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter13/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter13/13_00_Introduction/">
+              13 Variational Autoencoders (VAE)
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+    
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

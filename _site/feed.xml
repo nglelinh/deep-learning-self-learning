@@ -1,0 +1,1094 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="http://localhost:4000/deep-learning-self-learning/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/deep-learning-self-learning/" rel="alternate" type="text/html" /><updated>2025-11-09T21:12:51+07:00</updated><id>http://localhost:4000/deep-learning-self-learning/feed.xml</id><title type="html">Deep learning in Data Science</title><subtitle>Deep learning in Data Science</subtitle><author><name>Nguyen Le Linh</name><email>nglelinh@gmail.com</email></author><entry><title type="html">author details</title><link href="http://localhost:4000/deep-learning-self-learning/home/author-details/" rel="alternate" type="text/html" title="author details" /><published>2021-05-20T00:00:00+07:00</published><updated>2021-05-20T00:00:00+07:00</updated><id>http://localhost:4000/deep-learning-self-learning/home/author-details</id><content type="html" xml:base="http://localhost:4000/deep-learning-self-learning/home/author-details/"><![CDATA[]]></content><author><name>Nguyen Le Linh</name><email>nglelinh@gmail.com</email></author><category term="home" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">References and Resources</title><link href="http://localhost:4000/deep-learning-self-learning/reference/26_reference/" rel="alternate" type="text/html" title="References and Resources" /><published>2021-03-28T00:00:00+07:00</published><updated>2021-03-28T00:00:00+07:00</updated><id>http://localhost:4000/deep-learning-self-learning/reference/26_reference</id><content type="html" xml:base="http://localhost:4000/deep-learning-self-learning/reference/26_reference/"><![CDATA[<h2 id="essential-deep-learning-books">Essential Deep Learning Books</h2>
+
+<h3 id="primary-textbooks">Primary Textbooks</h3>
+
+<ol>
+  <li>
+    <p><strong>Goodfellow, I., Bengio, Y., and Courville, A. (2016).</strong> <em><a href="http://www.deeplearningbook.org/">Deep Learning</a></em>. MIT Press.<br />
+The definitive textbook on deep learning theory and mathematics.</p>
+  </li>
+  <li>
+    <p><strong>Géron, A. (2022).</strong> <em>Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow (3rd Edition)</em>. O’Reilly Media.<br />
+Practical guide to implementing deep learning models.</p>
+  </li>
+  <li>
+    <p><strong>Prince, S. J. D. (2023).</strong> <em><a href="https://udlbook.github.io/udlbook/">Understanding Deep Learning</a></em>. MIT Press.<br />
+Modern introduction with excellent visualizations.</p>
+  </li>
+  <li>
+    <p><strong>MIT Deep Learning Book.</strong> From MIT 6.S191 course.<br />
+Rigorous academic treatment of deep learning fundamentals.</p>
+  </li>
+</ol>
+
+<h3 id="domain-specific-books">Domain-Specific Books</h3>
+
+<ol>
+  <li>
+    <p><strong>Shanmugamani, R. (2018).</strong> <em>Deep Learning for Computer Vision</em>. Packt Publishing.</p>
+  </li>
+  <li>
+    <p><strong>Tunstall, L., von Werra, L., and Wolf, T. (2022).</strong> <em>Natural Language Processing with Transformers</em>. O’Reilly Media.</p>
+  </li>
+  <li>
+    <p><strong>Sutton, R. S. and Barto, A. G. (2018).</strong> <em><a href="http://incompleteideas.net/book/the-book-2nd.html">Reinforcement Learning: An Introduction (2nd Edition)</a></em>. MIT Press.</p>
+  </li>
+</ol>
+
+<h2 id="foundational-papers">Foundational Papers</h2>
+
+<h3 id="neural-networks-and-training">Neural Networks and Training</h3>
+
+<ol>
+  <li>
+    <p><strong>Rumelhart, D. E., Hinton, G. E., and Williams, R. J. (1986).</strong> “Learning representations by back-propagating errors.” <em>Nature</em>, 323(6088), 533-536.</p>
+  </li>
+  <li>
+    <p><strong>LeCun, Y., Bottou, L., Bengio, Y., and Haffner, P. (1998).</strong> “Gradient-based learning applied to document recognition.” <em>Proceedings of the IEEE</em>, 86(11), 2278-2324.</p>
+  </li>
+  <li>
+    <p><strong>Glorot, X. and Bengio, Y. (2010).</strong> “Understanding the difficulty of training deep feedforward neural networks.” <em>AISTATS</em>.</p>
+  </li>
+</ol>
+
+<h3 id="optimization-and-regularization">Optimization and Regularization</h3>
+
+<ol>
+  <li>
+    <p><strong>Kingma, D. P. and Ba, J. (2015).</strong> <em><a href="https://arxiv.org/abs/1412.6980">Adam: A Method for Stochastic Optimization</a></em>. ICLR.</p>
+  </li>
+  <li>
+    <p><strong>Ioffe, S. and Szegedy, C. (2015).</strong> <em><a href="https://arxiv.org/abs/1502.03167">Batch Normalization: Accelerating Deep Network Training</a></em>. ICML.</p>
+  </li>
+  <li>
+    <p><strong>Srivastava, N., et al. (2014).</strong> “Dropout: A Simple Way to Prevent Neural Networks from Overfitting.” <em>JMLR</em>, 15, 1929-1958.</p>
+  </li>
+</ol>
+
+<h3 id="convolutional-neural-networks">Convolutional Neural Networks</h3>
+
+<ol>
+  <li>
+    <p><strong>Krizhevsky, A., Sutskever, I., and Hinton, G. E. (2012).</strong> <em><a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks">ImageNet Classification with Deep Convolutional Neural Networks</a></em>. NeurIPS.</p>
+  </li>
+  <li>
+    <p><strong>Simonyan, K. and Zisserman, A. (2015).</strong> <em><a href="https://arxiv.org/abs/1409.1556">Very Deep Convolutional Networks for Large-Scale Image Recognition</a></em>. ICLR.</p>
+  </li>
+  <li>
+    <p><strong>He, K., et al. (2016).</strong> <em><a href="https://arxiv.org/abs/1512.03385">Deep Residual Learning for Image Recognition</a></em>. CVPR.</p>
+  </li>
+</ol>
+
+<h3 id="recurrent-networks-and-sequence-models">Recurrent Networks and Sequence Models</h3>
+
+<ol>
+  <li>
+    <p><strong>Hochreiter, S. and Schmidhuber, J. (1997).</strong> “Long Short-Term Memory.” <em>Neural Computation</em>, 9(8), 1735-1780.</p>
+  </li>
+  <li>
+    <p><strong>Cho, K., et al. (2014).</strong> <em><a href="https://arxiv.org/abs/1406.1078">Learning Phrase Representations using RNN Encoder-Decoder</a></em>. EMNLP.</p>
+  </li>
+</ol>
+
+<h3 id="attention-and-transformers">Attention and Transformers</h3>
+
+<ol>
+  <li>
+    <p><strong>Vaswani, A., et al. (2017).</strong> <em><a href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a></em>. NeurIPS.<br />
+   The foundational Transformer paper.</p>
+  </li>
+  <li>
+    <p><strong>Devlin, J., et al. (2019).</strong> <em><a href="https://arxiv.org/abs/1810.04805">BERT: Pre-training of Deep Bidirectional Transformers</a></em>. NAACL.</p>
+  </li>
+  <li>
+    <p><strong>Radford, A., et al. (2019).</strong> <em><a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">Language Models are Unsupervised Multitask Learners</a></em>. OpenAI.</p>
+  </li>
+</ol>
+
+<h3 id="generative-models">Generative Models</h3>
+
+<ol>
+  <li>
+    <p><strong>Goodfellow, I., et al. (2014).</strong> <em><a href="https://arxiv.org/abs/1406.2661">Generative Adversarial Networks</a></em>. NeurIPS.</p>
+  </li>
+  <li>
+    <p><strong>Kingma, D. P. and Welling, M. (2014).</strong> <em><a href="https://arxiv.org/abs/1312.6114">Auto-Encoding Variational Bayes</a></em>. ICLR.</p>
+  </li>
+  <li>
+    <p><strong>Karras, T., et al. (2019).</strong> <em><a href="https://arxiv.org/abs/1812.04948">A Style-Based Generator Architecture for GANs</a></em>. CVPR.</p>
+  </li>
+</ol>
+
+<h3 id="reinforcement-learning">Reinforcement Learning</h3>
+
+<ol>
+  <li>
+    <p><strong>Mnih, V., et al. (2015).</strong> “Human-level control through deep reinforcement learning.” <em>Nature</em>, 518(7540), 529-533.</p>
+  </li>
+  <li>
+    <p><strong>Silver, D., et al. (2017).</strong> “Mastering the game of Go without human knowledge.” <em>Nature</em>, 550(7676), 354-359.</p>
+  </li>
+</ol>
+
+<h2 id="online-courses-and-resources">Online Courses and Resources</h2>
+
+<ol>
+  <li>
+    <p><strong>Stanford CS231n:</strong> <em><a href="http://cs231n.stanford.edu/">Convolutional Neural Networks for Visual Recognition</a></em></p>
+  </li>
+  <li>
+    <p><strong>Stanford CS224n:</strong> <em><a href="http://web.stanford.edu/class/cs224n/">Natural Language Processing with Deep Learning</a></em></p>
+  </li>
+  <li>
+    <p><strong>MIT 6.S191:</strong> <em><a href="http://introtodeeplearning.com/">Introduction to Deep Learning</a></em></p>
+  </li>
+  <li>
+    <p><strong>Fast.ai:</strong> <em><a href="https://www.fast.ai/">Practical Deep Learning for Coders</a></em></p>
+  </li>
+</ol>
+
+<h2 id="online-resources">Online Resources</h2>
+
+<ol>
+  <li>
+    <p><strong>ArXiv.org:</strong> Pre-print server for latest research papers</p>
+  </li>
+  <li>
+    <p><strong>Papers with Code:</strong> <em><a href="https://paperswithcode.com/">paperwithcode.com</a></em> - Papers with implementations</p>
+  </li>
+  <li>
+    <p><strong>Distill.pub:</strong> Interactive machine learning research explanations</p>
+  </li>
+  <li>
+    <p><strong>PyTorch Tutorials:</strong> <em><a href="https://pytorch.org/tutorials/">pytorch.org/tutorials</a></em></p>
+  </li>
+  <li>
+    <p><strong>TensorFlow Tutorials:</strong> <em><a href="https://www.tensorflow.org/tutorials">tensorflow.org/tutorials</a></em></p>
+  </li>
+</ol>
+
+<h2 id="mathematical-foundations">Mathematical Foundations</h2>
+
+<ol>
+  <li>
+    <p><strong>Wikipedia.</strong> <em><a href="https://en.wikipedia.org/wiki/Backpropagation">Backpropagation</a></em></p>
+  </li>
+  <li>
+    <p><strong>Wikipedia.</strong> <em><a href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient descent</a></em></p>
+  </li>
+  <li>
+    <p><strong>Wikipedia.</strong> <em><a href="https://en.wikipedia.org/wiki/Automatic_differentiation">Automatic differentiation</a></em></p>
+  </li>
+  <li>
+    <p><strong>Wikipedia.</strong> <em><a href="https://en.wikipedia.org/wiki/Cross_entropy">Cross entropy</a></em></p>
+  </li>
+  <li>
+    <p><strong>Wikipedia.</strong> <em><a href="https://en.wikipedia.org/wiki/Softmax_function">Softmax function</a></em></p>
+  </li>
+</ol>
+
+<hr />
+
+<p>For the most up-to-date resources and research, check:</p>
+<ul>
+  <li><a href="https://arxiv.org/">ArXiv.org</a> for latest papers</li>
+  <li><a href="https://paperswithcode.com/">Papers with Code</a> for implementations</li>
+  <li>Course GitHub repository for code examples and notebooks</li>
+</ul>]]></content><author><name>Nguyen Le Linh</name><email>nglelinh@gmail.com</email></author><category term="reference" /><summary type="html"><![CDATA[Essential Deep Learning Books]]></summary></entry><entry><title type="html">makers</title><link href="http://localhost:4000/deep-learning-self-learning/home/makers/" rel="alternate" type="text/html" title="makers" /><published>2021-02-03T00:00:00+07:00</published><updated>2021-02-03T00:00:00+07:00</updated><id>http://localhost:4000/deep-learning-self-learning/home/makers</id><content type="html" xml:base="http://localhost:4000/deep-learning-self-learning/home/makers/"><![CDATA[]]></content><author><name>Nguyen Le Linh</name><email>nglelinh@gmail.com</email></author><category term="home" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">contents</title><link href="http://localhost:4000/deep-learning-self-learning/home/link_to_how_to_contribute/" rel="alternate" type="text/html" title="contents" /><published>2021-01-27T00:00:00+07:00</published><updated>2021-01-27T00:00:00+07:00</updated><id>http://localhost:4000/deep-learning-self-learning/home/link_to_how_to_contribute</id><content type="html" xml:base="http://localhost:4000/deep-learning-self-learning/home/link_to_how_to_contribute/"><![CDATA[]]></content><author><name>Nguyen Le Linh</name><email>nglelinh@gmail.com</email></author><category term="home" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">Course Contents</title><link href="http://localhost:4000/deep-learning-self-learning/home/contents/" rel="alternate" type="text/html" title="Course Contents" /><published>2021-01-20T00:00:00+07:00</published><updated>2021-01-20T00:00:00+07:00</updated><id>http://localhost:4000/deep-learning-self-learning/home/contents</id><content type="html" xml:base="http://localhost:4000/deep-learning-self-learning/home/contents/"><![CDATA[<p>A comprehensive introduction to deep learning, covering neural network fundamentals, modern architectures (CNNs, RNNs, Transformers), training techniques, generative models, and practical applications in computer vision, natural language processing, and beyond.</p>
+
+<h1 id="course-objectives">Course Objectives</h1>
+
+<ul>
+  <li>
+    <p>Provide students with fundamental knowledge of deep learning theory and practice to support their study and research in data science and AI.</p>
+  </li>
+  <li>
+    <p>Enable students to understand, implement, and train deep neural networks from scratch and using modern frameworks.</p>
+  </li>
+  <li>
+    <p>Develop skills in applying deep learning to real-world problems across various domains including computer vision, NLP, and reinforcement learning.</p>
+  </li>
+  <li>
+    <p>Prepare students to read and implement cutting-edge research papers and contribute to the advancement of deep learning.</p>
+  </li>
+</ul>
+
+<h2 id="main-textbooks">Main Textbooks</h2>
+
+<h3 id="primary-references">Primary References</h3>
+
+<p><strong>1. Deep Learning</strong><br />
+<em>Authors</em>: Ian Goodfellow, Yoshua Bengio, and Aaron Courville<br />
+<em>Publisher</em>: MIT Press, 2016<br />
+<em>Online</em>: <a href="http://www.deeplearningbook.org/">deeplearningbook.org</a> (Free)<br />
+The definitive textbook covering theory and mathematics of deep learning.</p>
+
+<p><strong>2. Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow (3rd Edition)</strong><br />
+<em>Author</em>: Aurélien Géron<br />
+<em>Publisher</em>: O’Reilly Media, 2022<br />
+Practical guide to implementing and deploying deep learning models.</p>
+
+<p><strong>3. Understanding Deep Learning</strong><br />
+<em>Author</em>: Simon J.D. Prince<br />
+<em>Publisher</em>: MIT Press, 2023<br />
+<em>Online</em>: <a href="https://udlbook.github.io/udlbook/">udlbook.github.io</a><br />
+Modern introduction with excellent visualizations and intuitive explanations.</p>
+
+<p><strong>4. MIT Deep Learning Book</strong><br />
+From MIT’s Deep Learning course<br />
+Rigorous academic treatment with strong theoretical foundations.</p>
+
+<h2 id="additional-references">Additional References</h2>
+
+<h3 id="computer-vision">Computer Vision</h3>
+<ul>
+  <li><strong>Deep Learning for Computer Vision</strong> by Rajalingappaa Shanmugamani, Packt Publishing, 2018</li>
+  <li>Stanford CS231n Course Materials</li>
+</ul>
+
+<h3 id="natural-language-processing">Natural Language Processing</h3>
+<ul>
+  <li><strong>Natural Language Processing with Transformers</strong> by Lewis Tunstall, Leandro von Werra, and Thomas Wolf, O’Reilly, 2022</li>
+  <li>Stanford CS224n Course Materials</li>
+</ul>
+
+<h3 id="reinforcement-learning">Reinforcement Learning</h3>
+<ul>
+  <li><strong>Reinforcement Learning: An Introduction (2nd Edition)</strong> by Richard S. Sutton and Andrew G. Barto, MIT Press, 2018</li>
+</ul>
+
+<h3 id="research-papers-and-advanced-topics">Research Papers and Advanced Topics</h3>
+<ul>
+  <li>“Attention Is All You Need” - Vaswani et al., 2017 (Transformers)</li>
+  <li>“Generative Adversarial Networks” - Goodfellow et al., 2014 (GANs)</li>
+  <li>“Deep Residual Learning for Image Recognition” - He et al., 2015 (ResNet)</li>
+  <li>ArXiv.org and Papers with Code for latest research</li>
+</ul>
+
+<h2 id="course-materials">Course Materials</h2>
+
+<p>All lecture notes, code examples, and assignments are available in this repository. Each chapter includes:</p>
+<ul>
+  <li>Theoretical explanations with mathematical foundations</li>
+  <li>Python/NumPy implementations for educational clarity</li>
+  <li>Practical examples using PyTorch and TensorFlow</li>
+  <li>Exercises and projects for hands-on learning</li>
+</ul>]]></content><author><name>Nguyen Le Linh</name><email>nglelinh@gmail.com</email></author><category term="home" /><summary type="html"><![CDATA[A comprehensive introduction to deep learning, covering neural network fundamentals, modern architectures (CNNs, RNNs, Transformers), training techniques, generative models, and practical applications in computer vision, natural language processing, and beyond.]]></summary></entry><entry><title type="html">introduction</title><link href="http://localhost:4000/deep-learning-self-learning/home/introduction/" rel="alternate" type="text/html" title="introduction" /><published>2021-01-20T00:00:00+07:00</published><updated>2021-01-20T00:00:00+07:00</updated><id>http://localhost:4000/deep-learning-self-learning/home/introduction</id><content type="html" xml:base="http://localhost:4000/deep-learning-self-learning/home/introduction/"><![CDATA[]]></content><author><name>Nguyen Le Linh</name><email>nglelinh@gmail.com</email></author><category term="home" /><summary type="html"><![CDATA[]]></summary></entry><entry xml:lang="en"><title type="html">00-02-03 Eigenvalues and Eigenvectors</title><link href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/00_02_03_Eigenvalues_and_Eigenvectors/" rel="alternate" type="text/html" title="00-02-03 Eigenvalues and Eigenvectors" /><published>2021-01-01T00:00:00+07:00</published><updated>2021-01-01T00:00:00+07:00</updated><id>http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/00_02_03_Eigenvalues_and_Eigenvectors</id><content type="html" xml:base="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/00_02_03_Eigenvalues_and_Eigenvectors/"><![CDATA[<p>This lesson covers eigenvalues and eigenvectors, which are crucial for understanding the behavior of linear transformations and quadratic functions in deep-learning.</p>
+
+<hr />
+
+<h2 id="definition-and-intuition">Definition and Intuition</h2>
+
+<p>When a matrix transforms a vector, it usually changes both the vector’s direction and its length. However, <strong>eigenvectors</strong> are special vectors that, when transformed by a given matrix, only get scaled but do not change their direction.</p>
+
+<h3 id="mathematical-definition">Mathematical Definition</h3>
+
+<p>For a square matrix \(\mathbf{A}\) and a non-zero vector \(\mathbf{v}\):</p>
+
+<ul>
+  <li>\(\mathbf{v}\) is an <strong>eigenvector</strong> of \(\mathbf{A}\)</li>
+  <li>\(\lambda\) is the corresponding <strong>eigenvalue</strong></li>
+</ul>
+
+<p>if they satisfy the <strong>eigenvalue equation</strong>:</p>
+
+\[\mathbf{A}\mathbf{v} = \lambda\mathbf{v}\]
+
+<h3 id="geometric-interpretation">Geometric Interpretation</h3>
+
+<ul>
+  <li><strong>Eigenvectors:</strong> Non-zero vectors that maintain their direction under the transformation \(\mathbf{A}\)</li>
+  <li><strong>Eigenvalues:</strong> The scalar factors by which the eigenvectors are scaled</li>
+</ul>
+
+<p><strong>Visual Understanding:</strong></p>
+<ul>
+  <li>If \(\lambda &gt; 1\): The eigenvector is stretched</li>
+  <li>If \(0 &lt; \lambda &lt; 1\): The eigenvector is shrunk</li>
+  <li>If \(\lambda &lt; 0\): The eigenvector is scaled and flipped</li>
+  <li>If \(\lambda = 0\): The eigenvector is mapped to the zero vector</li>
+</ul>
+
+<hr />
+
+<h2 id="finding-eigenvalues-and-eigenvectors">Finding Eigenvalues and Eigenvectors</h2>
+
+<h3 id="step-1-find-eigenvalues">Step 1: Find Eigenvalues</h3>
+
+<p>Rearrange the eigenvalue equation:
+\(\mathbf{A}\mathbf{v} = \lambda\mathbf{v}\)
+\(\mathbf{A}\mathbf{v} - \lambda\mathbf{v} = \mathbf{0}\)
+\((\mathbf{A} - \lambda\mathbf{I})\mathbf{v} = \mathbf{0}\)</p>
+
+<p>For a non-trivial solution (\(\mathbf{v} \neq \mathbf{0}\)), the matrix \((\mathbf{A} - \lambda\mathbf{I})\) must be singular, so:</p>
+
+\[\det(\mathbf{A} - \lambda\mathbf{I}) = 0\]
+
+<p>This is called the <strong>characteristic equation</strong>.</p>
+
+<h3 id="step-2-find-eigenvectors">Step 2: Find Eigenvectors</h3>
+
+<p>For each eigenvalue \(\lambda_i\), solve the system:
+\((\mathbf{A} - \lambda_i\mathbf{I})\mathbf{v} = \mathbf{0}\)</p>
+
+<p>The solutions form the <strong>eigenspace</strong> corresponding to \(\lambda_i\).</p>
+
+<hr />
+
+<h2 id="detailed-example">Detailed Example</h2>
+
+<p>Let’s find the eigenvalues and eigenvectors of \(\mathbf{A} = \begin{pmatrix} 3 &amp; 1 \\ 0 &amp; 2 \end{pmatrix}\).</p>
+
+<h3 id="step-1-find-eigenvalues-1">Step 1: Find Eigenvalues</h3>
+
+\[\mathbf{A} - \lambda\mathbf{I} = \begin{pmatrix} 3 &amp; 1 \\ 0 &amp; 2 \end{pmatrix} - \lambda\begin{pmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{pmatrix} = \begin{pmatrix} 3-\lambda &amp; 1 \\ 0 &amp; 2-\lambda \end{pmatrix}\]
+
+\[\det(\mathbf{A} - \lambda\mathbf{I}) = (3-\lambda)(2-\lambda) - (1)(0) = (3-\lambda)(2-\lambda) = 0\]
+
+<p>This gives us \(\lambda_1 = 3\) and \(\lambda_2 = 2\).</p>
+
+<h3 id="step-2-find-eigenvectors-1">Step 2: Find Eigenvectors</h3>
+
+<p><strong>For \(\lambda_1 = 3\):</strong>
+\((\mathbf{A} - 3\mathbf{I})\mathbf{v} = \begin{pmatrix} 0 &amp; 1 \\ 0 &amp; -1 \end{pmatrix}\begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\)</p>
+
+<p>This gives us \(v_2 = 0\) and \(v_1\) can be any non-zero value. So \(\mathbf{v}_1 = \begin{pmatrix} 1 \\ 0 \end{pmatrix}\) (or any scalar multiple).</p>
+
+<p><strong>For \(\lambda_2 = 2\):</strong>
+\((\mathbf{A} - 2\mathbf{I})\mathbf{v} = \begin{pmatrix} 1 &amp; 1 \\ 0 &amp; 0 \end{pmatrix}\begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\)</p>
+
+<p>This gives us \(v_1 + v_2 = 0\), so \(v_2 = -v_1\). Thus \(\mathbf{v}_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix}\) (or any scalar multiple).</p>
+
+<h3 id="verification">Verification</h3>
+
+<p>Let’s verify our results:</p>
+<ul>
+  <li>\(\mathbf{A}\mathbf{v}_1 = \begin{pmatrix} 3 &amp; 1 \\ 0 &amp; 2 \end{pmatrix}\begin{pmatrix} 1 \\ 0 \end{pmatrix} = \begin{pmatrix} 3 \\ 0 \end{pmatrix} = 3\begin{pmatrix} 1 \\ 0 \end{pmatrix} = 3\mathbf{v}_1\) ✓</li>
+  <li>\(\mathbf{A}\mathbf{v}_2 = \begin{pmatrix} 3 &amp; 1 \\ 0 &amp; 2 \end{pmatrix}\begin{pmatrix} 1 \\ -1 \end{pmatrix} = \begin{pmatrix} 2 \\ -2 \end{pmatrix} = 2\begin{pmatrix} 1 \\ -1 \end{pmatrix} = 2\mathbf{v}_2\) ✓</li>
+</ul>
+
+<hr />
+
+<h2 id="properties-and-important-theorems">Properties and Important Theorems</h2>
+
+<h3 id="key-properties">Key Properties</h3>
+
+<ol>
+  <li>
+    <p><strong>Sum of eigenvalues = trace of matrix:</strong>
+\(\sum_{i=1}^n \lambda_i = \text{tr}(\mathbf{A}) = \sum_{i=1}^n a_{ii}\)</p>
+  </li>
+  <li>
+    <p><strong>Product of eigenvalues = determinant of matrix:</strong>
+\(\prod_{i=1}^n \lambda_i = \det(\mathbf{A})\)</p>
+  </li>
+  <li>
+    <p><strong>Eigenvectors corresponding to different eigenvalues are linearly independent</strong></p>
+  </li>
+  <li>
+    <p><strong>If \(\mathbf{A}\) is symmetric, all eigenvalues are real and eigenvectors are orthogonal</strong></p>
+  </li>
+</ol>
+
+<h3 id="eigenvalue-multiplicity">Eigenvalue Multiplicity</h3>
+
+<ul>
+  <li><strong>Algebraic multiplicity:</strong> How many times \(\lambda\) appears as a root of the characteristic polynomial</li>
+  <li><strong>Geometric multiplicity:</strong> The dimension of the eigenspace (number of linearly independent eigenvectors)</li>
+</ul>
+
+<p>For any eigenvalue: geometric multiplicity ≤ algebraic multiplicity</p>
+
+<hr />
+
+<h2 id="diagonalization">Diagonalization</h2>
+
+<p>A matrix \(\mathbf{A}\) is <strong>diagonalizable</strong> if it can be written as:</p>
+
+\[\mathbf{A} = \mathbf{P}\mathbf{D}\mathbf{P}^{-1}\]
+
+<p>where:</p>
+<ul>
+  <li>\(\mathbf{D}\) is a diagonal matrix of eigenvalues</li>
+  <li>\(\mathbf{P}\) is a matrix whose columns are the corresponding eigenvectors</li>
+</ul>
+
+<h3 id="benefits-of-diagonalization">Benefits of Diagonalization</h3>
+
+<ol>
+  <li><strong>Easy computation of powers:</strong> \(\mathbf{A}^k = \mathbf{P}\mathbf{D}^k\mathbf{P}^{-1}\)</li>
+  <li><strong>Understanding behavior:</strong> The eigenvalues determine the transformation’s behavior along each eigenvector direction</li>
+</ol>
+
+<hr />
+
+<h2 id="applications-in-deep-learning">Applications in Deep Learning</h2>
+
+<p>Eigenvalues and eigenvectors are crucial in deep-learning for several reasons:</p>
+
+<h3 id="1-quadratic-forms-and-definiteness">1. Quadratic Forms and Definiteness</h3>
+
+<p>For a quadratic function \(f(\mathbf{x}) = \mathbf{x}^T\mathbf{Q}\mathbf{x}\):</p>
+
+<ul>
+  <li><strong>Positive definite</strong> (\(f(\mathbf{x}) &gt; 0\) for \(\mathbf{x} \neq \mathbf{0}\)): All eigenvalues of \(\mathbf{Q}\) are positive</li>
+  <li><strong>Positive semidefinite</strong> (\(f(\mathbf{x}) \geq 0\)): All eigenvalues are non-negative</li>
+  <li><strong>Negative definite</strong> (\(f(\mathbf{x}) &lt; 0\) for \(\mathbf{x} \neq \mathbf{0}\)): All eigenvalues are negative</li>
+  <li><strong>Indefinite</strong> (\(f(\mathbf{x})\) can be positive or negative): Mixed positive and negative eigenvalues</li>
+</ul>
+
+<h3 id="2-second-order-optimality-conditions">2. Second-Order Optimality Conditions</h3>
+
+<p>For a function \(f(\mathbf{x})\) at a critical point \(\mathbf{x}^*\) (where \(\nabla f(\mathbf{x}^*) = \mathbf{0}\)):</p>
+
+<ul>
+  <li><strong>Local minimum:</strong> Hessian \(\nabla^2 f(\mathbf{x}^*)\) is positive definite (all eigenvalues &gt; 0)</li>
+  <li><strong>Local maximum:</strong> Hessian is negative definite (all eigenvalues &lt; 0)</li>
+  <li><strong>Saddle point:</strong> Hessian is indefinite (mixed eigenvalues)</li>
+</ul>
+
+<h3 id="3-principal-component-analysis-pca">3. Principal Component Analysis (PCA)</h3>
+
+<p>PCA finds the directions of maximum variance in data:</p>
+<ul>
+  <li>Eigenvectors of the covariance matrix give the principal directions</li>
+  <li>Eigenvalues give the variance along each principal direction</li>
+</ul>
+
+<h3 id="4-convergence-analysis">4. Convergence Analysis</h3>
+
+<p>In iterative deep-learning algorithms:</p>
+<ul>
+  <li>The <strong>condition number</strong> \(\kappa = \frac{\lambda_{\max}}{\lambda_{\min}}\) affects convergence speed</li>
+  <li>Large condition numbers lead to slow convergence</li>
+</ul>
+
+<h3 id="5-newtons-method">5. Newton’s Method</h3>
+
+<p>Newton’s method uses the inverse Hessian:
+\(\mathbf{x}_{k+1} = \mathbf{x}_k - [\nabla^2 f(\mathbf{x}_k)]^{-1} \nabla f(\mathbf{x}_k)\)</p>
+
+<p>The eigenvalues of the Hessian determine the method’s behavior and convergence rate.</p>
+
+<hr />
+
+<h2 id="example-deep-learning-application">Example: Deep Learning Application</h2>
+
+<p>Consider minimizing \(f(x, y) = 2x^2 + 3y^2 + 2xy\).</p>
+
+<p>The Hessian is: \(\mathbf{H} = \begin{pmatrix} 4 &amp; 2 \\ 2 &amp; 6 \end{pmatrix}\)</p>
+
+<p><strong>Finding eigenvalues:</strong>
+\(\det(\mathbf{H} - \lambda\mathbf{I}) = (4-\lambda)(6-\lambda) - 4 = \lambda^2 - 10\lambda + 20 = 0\)</p>
+
+\[\lambda = \frac{10 \pm \sqrt{100-80}}{2} = \frac{10 \pm 2\sqrt{5}}{2} = 5 \pm \sqrt{5}\]
+
+<p>Since both eigenvalues are positive (\(\lambda_1 = 5 + \sqrt{5} &gt; 0\) and \(\lambda_2 = 5 - \sqrt{5} &gt; 0\)), the Hessian is positive definite, confirming that the origin is a global minimum.</p>
+
+<p>The condition number is \(\kappa = \frac{5 + \sqrt{5}}{5 - \sqrt{5}} \approx 4.24\), indicating reasonably good conditioning for deep-learning algorithms.</p>
+
+<p>Understanding eigenvalues and eigenvectors provides deep insights into the geometric and analytical properties of deep-learning problems, enabling better algorithm design and convergence analysis.</p>]]></content><author><name>Nguyen Le Linh</name><email>nglelinh@gmail.com</email></author><category term="contents" /><category term="en" /><category term="chapter00" /><summary type="html"><![CDATA[This lesson covers eigenvalues and eigenvectors, which are crucial for understanding the behavior of linear transformations and quadratic functions in deep-learning.]]></summary></entry><entry xml:lang="en"><title type="html">00-02 Basic Linear Algebra</title><link href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/00_02_Basic_Linear_Algebra/" rel="alternate" type="text/html" title="00-02 Basic Linear Algebra" /><published>2021-01-01T00:00:00+07:00</published><updated>2021-01-01T00:00:00+07:00</updated><id>http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/00_02_Basic_Linear_Algebra</id><content type="html" xml:base="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/00_02_Basic_Linear_Algebra/"><![CDATA[<p>This lesson covers essential linear algebra concepts needed for deep-learning, organized into three main sections for systematic learning.</p>]]></content><author><name>Nguyen Le Linh</name><email>nglelinh@gmail.com</email></author><category term="contents" /><category term="en" /><category term="chapter00" /><summary type="html"><![CDATA[This lesson covers essential linear algebra concepts needed for deep-learning, organized into three main sections for systematic learning.]]></summary></entry><entry xml:lang="en"><title type="html">00-03-01 Set Theory Fundamentals</title><link href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/00_03_01_Set_Theory_Fundamentals/" rel="alternate" type="text/html" title="00-03-01 Set Theory Fundamentals" /><published>2021-01-01T00:00:00+07:00</published><updated>2021-01-01T00:00:00+07:00</updated><id>http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/00_03_01_Set_Theory_Fundamentals</id><content type="html" xml:base="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/00_03_01_Set_Theory_Fundamentals/"><![CDATA[<p>This lesson covers fundamental concepts from set theory that provide the mathematical foundation for understanding deep-learning problems, constraints, and feasible regions.</p>
+
+<hr />
+
+<h2 id="introduction-to-set-theory">Introduction to Set Theory</h2>
+
+<p>Set theory provides the foundation for modern mathematics and is essential for understanding deep-learning concepts. A <strong>set</strong> is simply a collection of distinct objects, called elements or members.</p>
+
+<h3 id="basic-notation">Basic Notation</h3>
+
+<ul>
+  <li><strong>Set notation:</strong> \(A = \{1, 2, 3, 4\}\)</li>
+  <li><strong>Element membership:</strong> \(x \in A\) (x is in A) or \(x \notin A\) (x is not in A)</li>
+  <li><strong>Empty set:</strong> \(\emptyset = \{\}\) (the set with no elements)</li>
+  <li><strong>Set builder notation:</strong> \(A = \{x : P(x)\}\) (the set of all x such that property P(x) holds)</li>
+</ul>
+
+<h3 id="examples">Examples</h3>
+
+<ul>
+  <li>\(A = \{1, 2, 3, 4\}\) (explicit listing)</li>
+  <li>\(B = \{x \in \mathbb{R} : x^2 &lt; 4\} = (-2, 2)\) (set builder notation)</li>
+  <li>\(C = \{x \in \mathbb{Z} : x \text{ is even}\}\) (all even integers)</li>
+</ul>
+
+<hr />
+
+<h2 id="basic-set-operations">Basic Set Operations</h2>
+
+<h3 id="sets-and-subsets">Sets and Subsets</h3>
+
+<ul>
+  <li><strong>Subset:</strong> \(A \subseteq B\) means every element of \(A\) is also in \(B\)</li>
+  <li><strong>Proper Subset:</strong> \(A \subset B\) means \(A \subseteq B\) and \(A \neq B\)</li>
+  <li><strong>Set Equality:</strong> \(A = B\) if and only if \(A \subseteq B\) and \(B \subseteq A\)</li>
+</ul>
+
+<p><strong>Examples:</strong></p>
+<ul>
+  <li>
+\[\{1, 2\} \subseteq \{1, 2, 3, 4\}\]
+  </li>
+  <li>
+\[\{1, 2\} \subset \{1, 2, 3, 4\}\]
+  </li>
+  <li>\(\emptyset \subseteq A\) for any set \(A\)</li>
+</ul>
+
+<h3 id="union-and-intersection">Union and Intersection</h3>
+
+<p><strong>Union (\(A \cup B\)):</strong> All elements that are in \(A\) or \(B\) (or both)
+\(A \cup B = \{x : x \in A \text{ or } x \in B\}\)</p>
+
+<p><strong>Intersection (\(A \cap B\)):</strong> All elements that are in both \(A\) and \(B\)
+\(A \cap B = \{x : x \in A \text{ and } x \in B\}\)</p>
+
+<p><strong>Examples:</strong></p>
+<ul>
+  <li>If \(A = \{1, 2, 3\}\) and \(B = \{3, 4, 5\}\), then:
+    <ul>
+      <li>
+\[A \cup B = \{1, 2, 3, 4, 5\}\]
+      </li>
+      <li>
+\[A \cap B = \{3\}\]
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Disjoint Sets:</strong> \(A\) and \(B\) are disjoint if \(A \cap B = \emptyset\)</p>
+
+<h3 id="complement-and-difference">Complement and Difference</h3>
+
+<p><strong>Complement (\(A^c\)):</strong> All elements not in \(A\) (within some universal set \(U\))
+\(A^c = \{x \in U : x \notin A\}\)</p>
+
+<p><strong>Set Difference (\(A \setminus B\)):</strong> Elements in \(A\) but not in \(B\)
+\(A \setminus B = \{x : x \in A \text{ and } x \notin B\}\)</p>
+
+<p><strong>Symmetric Difference:</strong> \((A \setminus B) \cup (B \setminus A) = (A \cup B) \setminus (A \cap B)\)</p>
+
+<h3 id="set-laws">Set Laws</h3>
+
+<p><strong>Commutative Laws:</strong></p>
+<ul>
+  <li>
+\[A \cup B = B \cup A\]
+  </li>
+  <li>
+\[A \cap B = B \cap A\]
+  </li>
+</ul>
+
+<p><strong>Associative Laws:</strong></p>
+<ul>
+  <li>
+\[(A \cup B) \cup C = A \cup (B \cup C)\]
+  </li>
+  <li>
+\[(A \cap B) \cap C = A \cap (B \cap C)\]
+  </li>
+</ul>
+
+<p><strong>Distributive Laws:</strong></p>
+<ul>
+  <li>
+\[A \cap (B \cup C) = (A \cap B) \cup (A \cap C)\]
+  </li>
+  <li>
+\[A \cup (B \cap C) = (A \cup B) \cap (A \cup C)\]
+  </li>
+</ul>
+
+<p><strong>De Morgan’s Laws:</strong></p>
+<ul>
+  <li>
+\[(A \cup B)^c = A^c \cap B^c\]
+  </li>
+  <li>
+\[(A \cap B)^c = A^c \cup B^c\]
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="important-number-sets">Important Number Sets</h2>
+
+<p>Understanding the hierarchy of number systems is crucial for deep-learning:</p>
+
+<h3 id="natural-numbers">Natural Numbers</h3>
+<p>\(\mathbb{N} = \{1, 2, 3, 4, \ldots\}\)
+(Sometimes includes 0: \(\mathbb{N}_0 = \{0, 1, 2, 3, \ldots\}\))</p>
+
+<h3 id="integers">Integers</h3>
+<p>\(\mathbb{Z} = \{\ldots, -2, -1, 0, 1, 2, \ldots\}\)</p>
+
+<h3 id="rational-numbers">Rational Numbers</h3>
+<p>\(\mathbb{Q} = \left\{\frac{p}{q} : p, q \in \mathbb{Z}, q \neq 0\right\}\)</p>
+
+<p>All numbers that can be expressed as fractions.</p>
+
+<h3 id="real-numbers">Real Numbers</h3>
+<p>\(\mathbb{R}\) includes all rational and irrational numbers (like \(\pi\), \(e\), \(\sqrt{2}\)).</p>
+
+<h3 id="complex-numbers">Complex Numbers</h3>
+<p>\(\mathbb{C} = \{a + bi : a, b \in \mathbb{R}, i^2 = -1\}\)</p>
+
+<p><strong>Hierarchy:</strong> \(\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R} \subset \mathbb{C}\)</p>
+
+<hr />
+
+<h2 id="functions-domain-and-range">Functions: Domain and Range</h2>
+
+<p>A <strong>function</strong> \(f: A \to B\) is a rule that assigns to each element in set \(A\) exactly one element in set \(B\).</p>
+
+<h3 id="key-concepts">Key Concepts</h3>
+
+<ul>
+  <li><strong>Domain:</strong> The set \(A\) of all possible input values</li>
+  <li><strong>Codomain:</strong> The set \(B\) where outputs are taken from</li>
+  <li><strong>Range (Image):</strong> The set of all actual output values: \(\text{Range}(f) = \{f(x) : x \in A\} \subseteq B\)</li>
+</ul>
+
+<p><strong>Example:</strong> For \(f(x) = x^2\) with \(f: \mathbb{R} \to \mathbb{R}\):</p>
+<ul>
+  <li>Domain: \(\mathbb{R}\)</li>
+  <li>Codomain: \(\mathbb{R}\)</li>
+  <li>Range: \([0, \infty)\)</li>
+</ul>
+
+<h3 id="types-of-functions">Types of Functions</h3>
+
+<p><strong>Injective (One-to-One):</strong> Each element in the range corresponds to exactly one element in the domain
+\(f(x_1) = f(x_2) \implies x_1 = x_2\)</p>
+
+<p><strong>Surjective (Onto):</strong> Every element in the codomain is in the range
+For every \(y \in B\), there exists \(x \in A\) such that \(f(x) = y\)</p>
+
+<p><strong>Bijective:</strong> Both injective and surjective
+There’s a perfect one-to-one correspondence between domain and codomain.</p>
+
+<p><strong>Examples:</strong></p>
+<ul>
+  <li>\(f(x) = 2x\) on \(\mathbb{R}\) is bijective</li>
+  <li>\(f(x) = x^2\) on \(\mathbb{R}\) is neither injective nor surjective</li>
+  <li>\(f(x) = x^2\) on \([0, \infty) \to [0, \infty)\) is bijective</li>
+</ul>
+
+<hr />
+
+<h2 id="inequalities">Inequalities</h2>
+
+<p>Understanding inequalities is crucial for deep-learning, as constraints are often expressed as inequalities.</p>
+
+<h3 id="basic-inequality-symbols">Basic Inequality Symbols</h3>
+
+<ul>
+  <li>\(a &lt; b\): \(a\) is strictly less than \(b\)</li>
+  <li>\(a \leq b\): \(a\) is less than or equal to \(b\)</li>
+  <li>\(a &gt; b\): \(a\) is strictly greater than \(b\)</li>
+  <li>\(a \geq b\): \(a\) is greater than or equal to \(b\)</li>
+</ul>
+
+<h3 id="properties-of-inequalities">Properties of Inequalities</h3>
+
+<ol>
+  <li>
+    <p><strong>Transitivity:</strong> If \(a \leq b\) and \(b \leq c\), then \(a \leq c\)</p>
+  </li>
+  <li>
+    <p><strong>Addition:</strong> If \(a \leq b\), then \(a + c \leq b + c\) for any \(c\)</p>
+  </li>
+  <li>
+    <p><strong>Multiplication by Positive:</strong> If \(a \leq b\) and \(c &gt; 0\), then \(ac \leq bc\)</p>
+  </li>
+  <li>
+    <p><strong>Multiplication by Negative:</strong> If \(a \leq b\) and \(c &lt; 0\), then \(ac \geq bc\) (inequality flips!)</p>
+  </li>
+</ol>
+
+<h3 id="interval-notation">Interval Notation</h3>
+
+<ul>
+  <li><strong>Open interval:</strong> \((a, b) = \{x \in \mathbb{R} : a &lt; x &lt; b\}\)</li>
+  <li><strong>Closed interval:</strong> \([a, b] = \{x \in \mathbb{R} : a \leq x \leq b\}\)</li>
+  <li><strong>Half-open intervals:</strong> \([a, b)\), \((a, b]\)</li>
+  <li><strong>Unbounded intervals:</strong> \((-\infty, a)\), \([a, \infty)\), \((-\infty, \infty) = \mathbb{R}\)</li>
+</ul>
+
+<hr />
+
+<h2 id="applications-in-deep-learning">Applications in Deep Learning</h2>
+
+<p>Set theory concepts are fundamental to deep-learning:</p>
+
+<h3 id="1-feasible-regions">1. Feasible Regions</h3>
+
+<p>The <strong>feasible region</strong> is the set of all points satisfying the constraints:
+\(S = \{x \in \mathbb{R}^n : g_i(x) \leq 0, i = 1, \ldots, m; h_j(x) = 0, j = 1, \ldots, p\}\)</p>
+
+<h3 id="2-level-sets">2. Level Sets</h3>
+
+<p>For a function \(f: \mathbb{R}^n \to \mathbb{R}\), the <strong>level set</strong> at level \(c\) is:
+\(L_c = \{x \in \mathbb{R}^n : f(x) = c\}\)</p>
+
+<h3 id="3-constraint-qualification">3. Constraint Qualification</h3>
+
+<p>Understanding when constraint sets have “nice” properties (like being closed or having non-empty interior) affects the existence and characterization of optimal solutions.</p>
+
+<h3 id="4-convergence-analysis">4. Convergence Analysis</h3>
+
+<p>Sequences and limits are essential for analyzing whether deep-learning algorithms converge to optimal solutions.</p>
+
+<h3 id="5-set-operations-in-algorithms">5. Set Operations in Algorithms</h3>
+
+<ul>
+  <li><strong>Intersection:</strong> Finding points that satisfy multiple constraints</li>
+  <li><strong>Union:</strong> Combining feasible regions from different scenarios</li>
+  <li><strong>Complement:</strong> Understanding infeasible regions</li>
+</ul>
+
+<p><strong>Example:</strong> In linear programming, the feasible region is:
+\(S = \{x \in \mathbb{R}^n : Ax \leq b, x \geq 0\} = \bigcap_{i=1}^{m} \{x : a_i^T x \leq b_i\} \cap \{x : x \geq 0\}\)</p>
+
+<p>This is the intersection of half-spaces, demonstrating how set operations naturally arise in deep-learning problem formulation.</p>
+
+<p>Understanding set theory provides the rigorous mathematical foundation needed to formulate deep-learning problems precisely and analyze their properties systematically.</p>]]></content><author><name>Nguyen Le Linh</name><email>nglelinh@gmail.com</email></author><category term="contents" /><category term="en" /><category term="chapter00" /><summary type="html"><![CDATA[This lesson covers fundamental concepts from set theory that provide the mathematical foundation for understanding deep-learning problems, constraints, and feasible regions.]]></summary></entry><entry xml:lang="en"><title type="html">00-03-02 Topology in Real Analysis</title><link href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/00_03_02_Topology_in_Real_Analysis/" rel="alternate" type="text/html" title="00-03-02 Topology in Real Analysis" /><published>2021-01-01T00:00:00+07:00</published><updated>2021-01-01T00:00:00+07:00</updated><id>http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/00_03_02_Topology_in_Real_Analysis</id><content type="html" xml:base="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/00_03_02_Topology_in_Real_Analysis/"><![CDATA[<p>This lesson covers essential topological concepts from real analysis that are crucial for understanding the structure of feasible regions, continuity, and the existence of optimal solutions in deep-learning problems.</p>
+
+<hr />
+
+<h2 id="introduction-to-topology">Introduction to Topology</h2>
+
+<p>Topology studies the properties of space that are preserved under continuous deformations. In deep-learning, topological concepts help us understand the structure of feasible regions and the behavior of functions, particularly regarding the existence and characterization of optimal solutions.</p>
+
+<h3 id="metric-spaces-and-distance">Metric Spaces and Distance</h3>
+
+<p>Before discussing topology, we need the concept of distance. In \(\mathbb{R}^n\), the standard <strong>Euclidean distance</strong> between points \(\mathbf{x}\) and \(\mathbf{y}\) is:</p>
+
+\[d(\mathbf{x}, \mathbf{y}) = \|\mathbf{x} - \mathbf{y}\|_2 = \sqrt{\sum_{i=1}^n (x_i - y_i)^2}\]
+
+<h3 id="open-balls-and-neighborhoods">Open Balls and Neighborhoods</h3>
+
+<p>An <strong>open ball</strong> centered at \(\mathbf{x}_0\) with radius \(\epsilon &gt; 0\) is:</p>
+
+\[B(\mathbf{x}_0, \epsilon) = \{\mathbf{y} \in \mathbb{R}^n : d(\mathbf{x}_0, \mathbf{y}) &lt; \epsilon\}\]
+
+<p>This represents all points within distance \(\epsilon\) from \(\mathbf{x}_0\).</p>
+
+<p><strong>Examples:</strong></p>
+<ul>
+  <li>In \(\mathbb{R}\): \(B(0, 1) = (-1, 1)\) (open interval)</li>
+  <li>In \(\mathbb{R}^2\): \(B(\mathbf{0}, 1) = \{(x, y) : x^2 + y^2 &lt; 1\}\) (open unit disk)</li>
+</ul>
+
+<hr />
+
+<h2 id="open-sets">Open Sets</h2>
+
+<p>An <strong>open set</strong> is characterized by the property that it <strong>contains none of its boundary points</strong>.</p>
+
+<h3 id="formal-definition">Formal Definition</h3>
+
+<p>A set \(S\) in \(\mathbb{R}^n\) is <strong>open</strong> if for every point \(\mathbf{x} \in S\), there exists a positive real number \(\epsilon &gt; 0\) such that the open ball \(B(\mathbf{x}, \epsilon)\) is entirely contained within \(S\):</p>
+
+\[\forall \mathbf{x} \in S, \exists \epsilon &gt; 0 : B(\mathbf{x}, \epsilon) \subseteq S\]
+
+<h3 id="intuitive-understanding">Intuitive Understanding</h3>
+
+<p>An open set has the property that if you’re inside it, you can move a small distance in any direction and still remain inside the set. There’s always some “wiggle room” around every point.</p>
+
+<h3 id="examples-of-open-sets">Examples of Open Sets</h3>
+
+<p><strong>In \(\mathbb{R}\):</strong></p>
+<ul>
+  <li>
+\[(0, 1) = \{x : 0 &lt; x &lt; 1\}\]
+  </li>
+  <li>
+\[(-\infty, 5) = \{x : x &lt; 5\}\]
+  </li>
+  <li>\(\mathbb{R}\) itself</li>
+</ul>
+
+<p><strong>In \(\mathbb{R}^2\):</strong></p>
+<ul>
+  <li>\(\{(x, y) : x^2 + y^2 &lt; 1\}\) (open unit disk)</li>
+  <li>\(\{(x, y) : x &gt; 0, y &gt; 0\}\) (first quadrant, excluding axes)</li>
+  <li>\(\mathbb{R}^2\) itself</li>
+</ul>
+
+<p><strong>In \(\mathbb{R}^n\):</strong></p>
+<ul>
+  <li>Any open ball \(B(\mathbf{x}_0, r)\)</li>
+  <li>\(\mathbb{R}^n\) itself</li>
+  <li>\(\emptyset\) (empty set - vacuously open)</li>
+</ul>
+
+<h3 id="properties-of-open-sets">Properties of Open Sets</h3>
+
+<ol>
+  <li>The union of any collection of open sets is open</li>
+  <li>The intersection of finitely many open sets is open</li>
+  <li>\(\mathbb{R}^n\) and \(\emptyset\) are both open</li>
+</ol>
+
+<hr />
+
+<h2 id="closed-sets">Closed Sets</h2>
+
+<p>A <strong>closed set</strong> is defined as a set that contains all of its boundary points. Equivalently, a set \(S\) is closed if its complement \(\mathbb{R}^n \setminus S\) is an <strong>open set</strong>.</p>
+
+<h3 id="formal-definition-1">Formal Definition</h3>
+
+<p>A set \(S\) is <strong>closed</strong> if it contains all its limit points. That is, if a sequence of points \((x_n)\) from \(S\) converges to a point \(\mathbf{x}\), then \(\mathbf{x}\) must also be in \(S\):</p>
+
+\[\text{If } \mathbf{x}_n \in S \text{ for all } n \text{ and } \lim_{n \to \infty} \mathbf{x}_n = \mathbf{x}, \text{ then } \mathbf{x} \in S\]
+
+<h3 id="examples-of-closed-sets">Examples of Closed Sets</h3>
+
+<p><strong>In \(\mathbb{R}\):</strong></p>
+<ul>
+  <li>
+\[[0, 1] = \{x : 0 \leq x \leq 1\}\]
+  </li>
+  <li>
+\[[a, \infty) = \{x : x \geq a\}\]
+  </li>
+  <li>\(\{0\}\) (single point)</li>
+  <li>\(\mathbb{Z}\) (integers)</li>
+</ul>
+
+<p><strong>In \(\mathbb{R}^2\):</strong></p>
+<ul>
+  <li>\(\{(x, y) : x^2 + y^2 \leq 1\}\) (closed unit disk)</li>
+  <li>\(\{(x, y) : x \geq 0, y \geq 0\}\) (first quadrant, including axes)</li>
+  <li>\(\{(0, 0)\}\) (single point)</li>
+</ul>
+
+<p><strong>In \(\mathbb{R}^n\):</strong></p>
+<ul>
+  <li>Any closed ball \(\overline{B}(\mathbf{x}_0, r) = \{\mathbf{x} : d(\mathbf{x}, \mathbf{x}_0) \leq r\}\)</li>
+  <li>\(\mathbb{R}^n\) itself</li>
+  <li>\(\emptyset\) (empty set)</li>
+  <li>Any finite set</li>
+</ul>
+
+<h3 id="properties-of-closed-sets">Properties of Closed Sets</h3>
+
+<ol>
+  <li>The intersection of any collection of closed sets is closed</li>
+  <li>The union of finitely many closed sets is closed</li>
+  <li>\(\mathbb{R}^n\) and \(\emptyset\) are both closed</li>
+</ol>
+
+<h3 id="important-note">Important Note</h3>
+
+<p>Sets can be:</p>
+<ul>
+  <li><strong>Open but not closed:</strong> \((0, 1)\)</li>
+  <li><strong>Closed but not open:</strong> \([0, 1]\)</li>
+  <li><strong>Both open and closed:</strong> \(\mathbb{R}^n\), \(\emptyset\)</li>
+  <li><strong>Neither open nor closed:</strong> \([0, 1)\), \((0, 1]\)</li>
+</ul>
+
+<hr />
+
+<h2 id="boundary-interior-and-closure">Boundary, Interior, and Closure</h2>
+
+<h3 id="boundary">Boundary</h3>
+
+<p>The <strong>boundary</strong> of a set \(S\), denoted \(\partial S\), consists of points that are “on the edge” of the set. A point \(\mathbf{x}\) is a <strong>boundary point</strong> of \(S\) if every open ball centered at \(\mathbf{x}\) intersects both \(S\) and its complement \(S^c\):</p>
+
+\[\partial S = \{\mathbf{x} : \forall \epsilon &gt; 0, B(\mathbf{x}, \epsilon) \cap S \neq \emptyset \text{ and } B(\mathbf{x}, \epsilon) \cap S^c \neq \emptyset\}\]
+
+<h3 id="interior">Interior</h3>
+
+<p>The <strong>interior</strong> of a set \(S\), denoted \(S^\circ\) or \(\text{int}(S)\), includes all points strictly “inside” the set, excluding the boundary:</p>
+
+\[S^\circ = \{\mathbf{x} \in S : \exists \epsilon &gt; 0, B(\mathbf{x}, \epsilon) \subseteq S\}\]
+
+<h3 id="closure">Closure</h3>
+
+<p>The <strong>closure</strong> of a set \(S\), denoted \(\overline{S}\) or \(\text{cl}(S)\), is the smallest closed set containing \(S\):</p>
+
+\[\overline{S} = S \cup \partial S\]
+
+<h3 id="example-analysis">Example Analysis</h3>
+
+<p>For the interval \(S = [0, 1)\) in \(\mathbb{R}\):</p>
+<ul>
+  <li><strong>Interior:</strong> \(S^\circ = (0, 1)\)</li>
+  <li><strong>Boundary:</strong> \(\partial S = \{0, 1\}\)</li>
+  <li><strong>Closure:</strong> \(\overline{S} = [0, 1]\)</li>
+</ul>
+
+<p>For the open disk \(S = \{(x, y) : x^2 + y^2 &lt; 1\}\) in \(\mathbb{R}^2\):</p>
+<ul>
+  <li><strong>Interior:</strong> \(S^\circ = S\) (the set is already open)</li>
+  <li><strong>Boundary:</strong> \(\partial S = \{(x, y) : x^2 + y^2 = 1\}\) (unit circle)</li>
+  <li><strong>Closure:</strong> \(\overline{S} = \{(x, y) : x^2 + y^2 \leq 1\}\) (closed unit disk)</li>
+</ul>
+
+<hr />
+
+<h2 id="compact-sets">Compact Sets</h2>
+
+<p>A <strong>compact set</strong> is one of the most important concepts in deep-learning theory.</p>
+
+<h3 id="definition-in-euclidean-spaces">Definition in Euclidean Spaces</h3>
+
+<p><strong>Heine-Borel Theorem:</strong> In Euclidean spaces (\(\mathbb{R}^n\)), a set is compact if and only if it is both <strong>closed and bounded</strong>.</p>
+
+<ul>
+  <li><strong>Bounded:</strong> A set \(S\) is bounded if it can be contained within some sufficiently large open ball: \(\exists M &gt; 0, \mathbf{x}_0\) such that \(S \subseteq B(\mathbf{x}_0, M)\)</li>
+  <li><strong>Closed:</strong> As defined above</li>
+</ul>
+
+<h3 id="examples-of-compact-sets">Examples of Compact Sets</h3>
+
+<p><strong>In \(\mathbb{R}\):</strong></p>
+<ul>
+  <li>\([a, b]\) (any closed, bounded interval)</li>
+  <li>\(\{0\}\) (single point)</li>
+  <li>Any finite set</li>
+</ul>
+
+<p><strong>In \(\mathbb{R}^2\):</strong></p>
+<ul>
+  <li>\(\{(x, y) : x^2 + y^2 \leq 1\}\) (closed unit disk)</li>
+  <li>\([0, 1] \times [0, 1]\) (unit square)</li>
+  <li>Any finite set of points</li>
+</ul>
+
+<p><strong>In \(\mathbb{R}^n\):</strong></p>
+<ul>
+  <li>Any closed ball \(\overline{B}(\mathbf{x}_0, r)\)</li>
+  <li>Any closed, bounded rectangle \([a_1, b_1] \times [a_2, b_2] \times \cdots \times [a_n, b_n]\)</li>
+</ul>
+
+<h3 id="non-compact-sets">Non-Compact Sets</h3>
+
+<ul>
+  <li>\((0, 1)\) (bounded but not closed)</li>
+  <li>\([0, \infty)\) (closed but not bounded)</li>
+  <li>\(\mathbb{R}^n\) (not bounded)</li>
+  <li>\(\{1, 1/2, 1/3, 1/4, \ldots\}\) (bounded but not closed, since 0 is a limit point not in the set)</li>
+</ul>
+
+<hr />
+
+<h2 id="continuity-of-functions">Continuity of Functions</h2>
+
+<h3 id="point-wise-continuity">Point-wise Continuity</h3>
+
+<p>A function \(f: A \to \mathbb{R}\) is <strong>continuous at a point</strong> \(\mathbf{c} \in A\) if for every \(\varepsilon &gt; 0\), there exists \(\delta &gt; 0\) such that for all \(\mathbf{x} \in A\):</p>
+
+\[\|\mathbf{x} - \mathbf{c}\| &lt; \delta \implies |f(\mathbf{x}) - f(\mathbf{c})| &lt; \varepsilon\]
+
+<p><strong>Intuitive meaning:</strong> Small changes in input lead to small changes in output.</p>
+
+<h3 id="global-continuity">Global Continuity</h3>
+
+<p>\(f\) is <strong>continuous on \(A\)</strong> if it’s continuous at every point in \(A\).</p>
+
+<h3 id="sequential-characterization">Sequential Characterization</h3>
+
+<p>\(f\) is continuous at \(\mathbf{c}\) if and only if for every sequence \((\mathbf{x}_n)\) in \(A\) converging to \(\mathbf{c}\):</p>
+
+\[\lim_{n \to \infty} f(\mathbf{x}_n) = f(\mathbf{c})\]
+
+<hr />
+
+<h2 id="important-theorems-for-deep-learning">Important Theorems for Deep Learning</h2>
+
+<h3 id="extreme-value-theorem">Extreme Value Theorem</h3>
+
+<p><strong>If \(f\) is continuous on a compact set \(K\), then \(f\) attains its maximum and minimum on \(K\).</strong></p>
+
+<p>This is fundamental for deep-learning: it guarantees that continuous objective functions have optimal solutions on compact feasible regions.</p>
+
+<p><strong>Proof idea:</strong> Compactness ensures that the supremum and infimum of \(f\) on \(K\) are actually achieved at points in \(K\).</p>
+
+<h3 id="intermediate-value-theorem">Intermediate Value Theorem</h3>
+
+<p><strong>If \(f\) is continuous on \([a, b]\) and \(y\) is between \(f(a)\) and \(f(b)\), then there exists \(c \in [a, b]\) such that \(f(c) = y\).</strong></p>
+
+<p>This helps establish the existence of solutions to equations \(f(x) = 0\).</p>
+
+<h3 id="bolzano-weierstrass-theorem">Bolzano-Weierstrass Theorem</h3>
+
+<p><strong>Every bounded sequence in \(\mathbb{R}^n\) has a convergent subsequence.</strong></p>
+
+<p>This is crucial for proving convergence of deep-learning algorithms.</p>
+
+<h3 id="weierstrass-approximation-theorem">Weierstrass Approximation Theorem</h3>
+
+<p><strong>Every continuous function on a closed interval can be uniformly approximated by polynomials.</strong></p>
+
+<p>This justifies using polynomial approximations in deep-learning algorithms.</p>
+
+<hr />
+
+<h2 id="applications-in-deep-learning">Applications in Deep Learning</h2>
+
+<h3 id="1-existence-of-solutions">1. Existence of Solutions</h3>
+
+<p><strong>Compact feasible sets guarantee optimal solutions exist:</strong></p>
+<ul>
+  <li>If the feasible region \(S\) is compact and the objective function \(f\) is continuous, then the deep-learning problem \(\min_{\mathbf{x} \in S} f(\mathbf{x})\) has a solution.</li>
+</ul>
+
+<h3 id="2-constraint-qualification">2. Constraint Qualification</h3>
+
+<p>Understanding topological properties of constraint sets:</p>
+<ul>
+  <li><strong>Regular points:</strong> Points where constraint gradients are linearly independent</li>
+  <li><strong>Interior point methods:</strong> Require the feasible region to have non-empty interior</li>
+</ul>
+
+<h3 id="3-convergence-analysis">3. Convergence Analysis</h3>
+
+<p>Analyzing whether deep-learning algorithms converge:</p>
+<ul>
+  <li><strong>Closed sets:</strong> Ensure limit points of convergent sequences remain feasible</li>
+  <li><strong>Compactness:</strong> Guarantees convergent subsequences exist</li>
+</ul>
+
+<h3 id="4-local-vs-global-optima">4. Local vs Global Optima</h3>
+
+<p>Using neighborhoods to define optimality:</p>
+<ul>
+  <li><strong>Local minimum:</strong> \(f(\mathbf{x}^*) \leq f(\mathbf{x})\) for all \(\mathbf{x}\) in some neighborhood of \(\mathbf{x}^*\)</li>
+  <li><strong>Global minimum:</strong> \(f(\mathbf{x}^*) \leq f(\mathbf{x})\) for all \(\mathbf{x}\) in the feasible region</li>
+</ul>
+
+<h3 id="5-feasible-region-analysis">5. Feasible Region Analysis</h3>
+
+<p>Determining properties of constraint sets:</p>
+<ul>
+  <li><strong>Linear constraints:</strong> Define closed sets (half-spaces)</li>
+  <li><strong>Nonlinear constraints:</strong> May create sets that are neither open nor closed</li>
+  <li><strong>Compact feasible regions:</strong> Guarantee existence of optimal solutions</li>
+</ul>
+
+<h3 id="example-portfolio-deep-learning">Example: Portfolio Deep Learning</h3>
+
+<p>Consider minimizing portfolio risk subject to constraints:</p>
+
+\[\begin{align}
+\min_{\mathbf{w}} \quad &amp; \mathbf{w}^T \mathbf{\Sigma} \mathbf{w} \\
+\text{s.t.} \quad &amp; \mathbf{1}^T \mathbf{w} = 1 \\
+&amp; \mathbf{w} \geq \mathbf{0}
+\end{align}\]
+
+<p>The feasible region \(S = \{\mathbf{w} : \mathbf{1}^T \mathbf{w} = 1, \mathbf{w} \geq \mathbf{0}\}\) is:</p>
+<ul>
+  <li><strong>Closed:</strong> It’s the intersection of closed sets</li>
+  <li><strong>Bounded:</strong> The constraint \(\mathbf{1}^T \mathbf{w} = 1\) with \(\mathbf{w} \geq \mathbf{0}\) bounds the feasible region</li>
+  <li><strong>Compact:</strong> Being closed and bounded in \(\mathbb{R}^n\)</li>
+</ul>
+
+<p>Since the objective function \(\mathbf{w}^T \mathbf{\Sigma} \mathbf{w}\) is continuous and \(S\) is compact, the Extreme Value Theorem guarantees that an optimal portfolio exists.</p>
+
+<p>Understanding topology and real analysis provides the rigorous foundation needed to prove that deep-learning problems have solutions and that algorithms will find them. These concepts are essential for both theoretical analysis and practical algorithm design.</p>]]></content><author><name>Nguyen Le Linh</name><email>nglelinh@gmail.com</email></author><category term="contents" /><category term="en" /><category term="chapter00" /><summary type="html"><![CDATA[This lesson covers essential topological concepts from real analysis that are crucial for understanding the structure of feasible regions, continuity, and the existence of optimal solutions in deep-learning problems.]]></summary></entry></feed>

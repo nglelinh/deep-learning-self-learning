@@ -1,0 +1,77 @@
+<!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>{% if page.lang %}{{ site.t[page.lang].description }}{% else %}{{ site.description }}{% endif %}</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item{% if page.title == 'Home' %} active{% endif %}" href="{{ '/' | absolute_url }}">{% t home %}</a>
+
+    {% comment %}
+      The code below dynamically generates a sidebar nav of pages with
+      `layout: page` in the front-matter. See readme for usage.
+    {% endcomment %}
+
+    {% assign current_lang = page.lang | default: site.default_lang %}
+    {% assign pages_list = site.pages | where: "lang", current_lang | sort: "chapter" %}
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    {% for node in pages_list %}
+      {% if node.title != null and node.chapter %}
+        {% if node.layout == "page" %}
+          {% assign is_hidden = node.hidden | default: false %}
+          {% unless is_hidden %}
+            <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url | absolute_url }}">
+              {{node.chapter}}. {{ node.title }}
+              {% if node.lesson_type %}
+                {% if node.lesson_type == 'required' %}
+                  <span class="lesson-badge required">{% t required %}</span>
+                {% elsif node.lesson_type == 'optional' %}
+                  <span class="lesson-badge optional">{% t optional %}</span>
+                {% endif %}
+              {% endif %}
+            </a>
+          {% endunless %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    {% if pages_list.size == 0 %}
+      <div class="sidebar-nav-item" style="color: #999; font-style: italic;">
+        {% if current_lang == 'vi' %}
+          Nội dung tiếng Việt đang được cập nhật...
+        {% else %}
+          Content is being updated...
+        {% endif %}
+      </div>
+      
+      <!-- Hiển thị link chuyển sang ngôn ngữ có nội dung -->
+      {% assign other_lang = current_lang == 'en' ? 'vi' : 'en' %}
+      {% assign other_pages = site.pages | where: "lang", other_lang | sort: "chapter" %}
+      {% if other_pages.size > 0 %}
+        <div class="sidebar-nav-item">
+          <a href="{{ '/contents/' | append: other_lang | append: '/chapter00/' | absolute_url }}" style="color: #268bd2;">
+            {% if current_lang == 'vi' %}
+              → Xem nội dung tiếng Anh
+            {% else %}
+              → View Vietnamese content
+            {% endif %}
+          </a>
+        </div>
+      {% endif %}
+    {% endif %}
+    
+    <span class="sidebar-nav-item">Currently v{{ site.version }}</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; {{ site.time | date: '%Y' }}. All rights reserved.
+    </p>
+  </div>
+</div>

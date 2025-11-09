@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      24-01 Neural Network Interpretability and Explainability &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    24-01 Neural Network Interpretability and Explainability
+    
+      
+        <span class="lesson-badge required large">Required</span>
+      
+    
+  </h1>
+  <h1 id="model-interpretability-understanding-the-black-box">Model Interpretability: Understanding the Black Box</h1>
+
+<h2 id="1-concept-overview">1. Concept Overview</h2>
+
+<p>Neural network interpretability addresses one of deep learning’s most significant challenges: understanding why models make particular predictions. While neural networks achieve remarkable performance on diverse tasks, their decision-making process often appears opaque—millions of parameters interacting through nonlinear transformations make it difficult to trace how inputs map to outputs. This “black box” nature creates problems in high-stakes domains like medicine (why did the model diagnose this condition?), law (why was this defendant classified as high-risk?), and autonomous vehicles (why did the car brake suddenly?), where we need not just accurate predictions but justifications we can audit, trust, and debug.</p>
+
+<p>Understanding the distinction between interpretability and explainability clarifies what we’re seeking. Interpretability means the model’s internal workings are transparent—we can understand the computation from inspection. Simple models like linear regression or decision trees are inherently interpretable; we can see exactly how features combine to produce predictions. Explainability means we can provide post-hoc explanations of why a model made specific predictions, even if the model itself isn’t inherently transparent. Deep neural networks are rarely interpretable (understanding millions of parameters is infeasible) but can be made explainable through techniques that highlight relevant inputs, visualize learned features, or approximate decisions with interpretable surrogates.</p>
+
+<p>The motivation for interpretability extends beyond satisfying curiosity. In scientific applications, understanding what features models use can generate new hypotheses—if a medical imaging model identifies a subtle pattern doctors missed, investigating this pattern might reveal new diagnostic markers. In debugging, interpretability reveals when models exploit spurious correlations (detecting huskies by snow in background rather than dog features) or fail to use relevant features. In safety-critical applications, interpretability enables verification that models behave reasonably across diverse scenarios. In regulated industries, explainability may be legally required for decisions affecting individuals. Understanding these diverse motivations helps appreciate that interpretability isn’t a single goal but multiple related objectives requiring different techniques.</p>
+
+<p>The landscape of interpretability methods is vast, reflecting the multiple ways we might understand neural networks. Saliency methods highlight which input regions most influenced a prediction, answering “what did the model look at?” Activation visualization shows what patterns activate neurons, revealing “what features has the network learned?” Attribution methods decompose predictions into feature contributions, explaining “how much did each input feature matter?” Concept-based explanations identify high-level concepts the model uses, moving beyond pixel or word-level attributions to semantic understanding. Each approach provides different insights, and comprehensive interpretability often requires multiple complementary techniques.</p>
+
+<p>Yet interpretability has fundamental tensions. More interpretable models are often less accurate (linear models vs deep networks). Faithful explanations (accurately describing model behavior) might be complex and hard to understand. Simple explanations might be understandable but unfaithful to actual model behavior. Perfect interpretability might require understanding millions of parameters—as complex as understanding the phenomenon the model learned. These tensions mean interpretability research involves careful tradeoffs between fidelity, simplicity, and utility, without universal solutions that satisfy all desiderata simultaneously.</p>
+
+<h2 id="2-mathematical-foundation">2. Mathematical Foundation</h2>
+
+<p>Interpretability methods often formalize the question “which inputs matter most for this prediction?” through attribution. Given input \(\mathbf{x}\) and model \(f\), compute attribution \(\mathbf{a}\) where \(a_i\) indicates importance of input dimension \(i\) for the prediction \(f(\mathbf{x})\).</p>
+
+<h3 id="gradient-based-saliency">Gradient-Based Saliency</h3>
+
+<p>The simplest attribution uses gradients:</p>
+
+\[\mathbf{a} = \left|\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}}\right|\]
+
+<p>This measures how much the output would change for small changes in each input dimension. Large gradient indicates high sensitivity—that input dimension strongly influences the output. For images, this produces saliency maps highlighting important pixels.</p>
+
+<p>However, gradient can saturate in ReLU networks (gradient is zero or one, not informative about magnitude of change) and doesn’t account for baseline (what are we comparing against?). Improvements address these issues:</p>
+
+<p><strong>Integrated Gradients</strong> accumulates gradients along path from baseline \(\mathbf{x}'\) to input \(\mathbf{x}\):</p>
+
+\[\mathbf{a}_i = (x_i - x_i') \int_{\alpha=0}^1 \frac{\partial f(\mathbf{x}' + \alpha(\mathbf{x} - \mathbf{x}'))}{\partial x_i} d\alpha\]
+
+<p>This satisfies desirable axioms: sensitivity (if input doesn’t affect output, attribution is zero) and implementation invariance (equivalent networks give same attributions).</p>
+
+<h3 id="shap-shapley-additive-explanations">SHAP: Shapley Additive Explanations</h3>
+
+<p>SHAP uses Shapley values from cooperative game theory. The contribution of feature \(i\) is:</p>
+
+\[\phi_i = \sum_{S \subseteq \mathcal{F} \backslash \{i\}} \frac{|S|!(|\mathcal{F}|-|S|-1)!}{|\mathcal{F}|!} [f(S \cup \{i\}) - f(S)]\]
+
+<p>where \(\mathcal{F}\) is all features, \(S\) are feature subsets, \(f(S)\) is model output with only features in \(S\) present (others set to baseline). This computes the average marginal contribution of feature \(i\) across all possible feature coalitions—a fair allocation of prediction among features.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Computing exact Shapley values requires $$2^{</td>
+      <td>\mathcal{F}</td>
+      <td>}$$ model evaluations (exponential in features), so approximations are used. Kernel SHAP approximates through weighted linear regression. For tree-based models, TreeSHAP computes exactly in polynomial time.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="layer-wise-relevance-propagation-lrp">Layer-wise Relevance Propagation (LRP)</h3>
+
+<p>LRP backpropagates relevance from output to input:</p>
+
+\[R_i^{(l)} = \sum_j \frac{z_{ij}}{\sum_k z_{kj}} R_j^{(l+1)}\]
+
+<p>where \(z_{ij} = a_i^{(l)} w_{ij}\) is contribution of neuron \(i\) in layer \(l\) to neuron \(j\) in layer \(l+1\). Starting with \(R_{\text{out}} = f(\mathbf{x})\) at output, relevance propagates backward, decomposing prediction into input contributions satisfying \(\sum_i R_i^{(0)} = f(\mathbf{x})\) (conservation).</p>
+
+<h2 id="3-example--intuition">3. Example / Intuition</h2>
+
+<p>Consider a CNN classifying an image as “dog” with 95% confidence. Without interpretability, we don’t know why. Was it the dog’s face, body shape, background context, or spurious patterns like grass (if all dogs in training had grass backgrounds)?</p>
+
+<p><strong>Gradient saliency</strong> computes \(\partial p_{\text{dog}}/\partial \text{pixels}\). Large gradients highlight pixels that, if changed slightly, would most affect the dog probability. Visualized as a heatmap overlay on the image, we might see high values around the dog’s face and ears—good, the model uses actual dog features. If high values appear in background, the model might be exploiting spurious correlations.</p>
+
+<p><strong>Class Activation Mapping (CAM)</strong> for CNNs with global average pooling shows which regions the final convolutional layer found important. For “dog” class, we compute weighted combination of final conv layer’s feature maps using the classification weights:</p>
+
+\[\text{CAM} = \sum_k w_k^{\text{dog}} \cdot \text{FeatureMap}_k\]
+
+<p>This produces a heatmap at feature map resolution showing which spatial regions contributed to the “dog” prediction. Upsampling to input resolution and overlaying on the image reveals the model focused on the dog’s head and body—interpretable and reassuring.</p>
+
+<p><strong>SHAP values</strong> for a particular prediction might show:</p>
+<ul>
+  <li>Pixel region containing dog face: +0.35 (strong positive contribution)</li>
+  <li>Pixel region with dog body: +0.28</li>
+  <li>Background grass: +0.08 (small contribution - concerning if high)</li>
+  <li>Sky region: -0.02 (slight negative - expected for irrelevant regions)</li>
+</ul>
+
+<p>If grass has high SHAP value, we’ve discovered the model uses spurious correlation (dogs often photographed on grass). We can then collect more diverse training data or use data augmentation to fix this.</p>
+
+<p><strong>Adversarial examples</strong> provide another interpretability lens. By finding minimal input perturbations that change predictions, we reveal model vulnerabilities. If adding imperceptible noise to dog image causes “cat” prediction, the model’s representation is fragile—it hasn’t learned robust features. Studying these adversarial perturbations reveals what features matter: perturbations often add patterns the model strongly associates with target class, revealing learned (but perhaps spurious) class indicators.</p>
+
+<h2 id="4-code-snippet">4. Code Snippet</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="n">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="k">class</span> <span class="nc">GradCAM</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">
+    Gradient-weighted Class Activation Mapping.
+    
+    Visualizes which regions of image are important for prediction
+    by computing gradients of class score with respect to final
+    convolutional layer activations.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">target_layer</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        model: CNN model
+        target_layer: name of convolutional layer to visualize
+        </span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">target_layer</span> <span class="o">=</span> <span class="n">target_layer</span>
+        
+        <span class="c1"># Storage for forward activations and backward gradients
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">activations</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">gradients</span> <span class="o">=</span> <span class="bp">None</span>
+        
+        <span class="c1"># Register hooks
+</span>        <span class="n">self</span><span class="p">.</span><span class="nf">_register_hooks</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">_register_hooks</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Register forward and backward hooks on target layer</span><span class="sh">"""</span>
+        
+        <span class="k">def</span> <span class="nf">forward_hook</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">activations</span> <span class="o">=</span> <span class="n">output</span><span class="p">.</span><span class="nf">detach</span><span class="p">()</span>
+        
+        <span class="k">def</span> <span class="nf">backward_hook</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">grad_input</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">gradients</span> <span class="o">=</span> <span class="n">grad_output</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">detach</span><span class="p">()</span>
+        
+        <span class="c1"># Find target layer
+</span>        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="nf">named_modules</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="n">self</span><span class="p">.</span><span class="n">target_layer</span><span class="p">:</span>
+                <span class="n">module</span><span class="p">.</span><span class="nf">register_forward_hook</span><span class="p">(</span><span class="n">forward_hook</span><span class="p">)</span>
+                <span class="n">module</span><span class="p">.</span><span class="nf">register_full_backward_hook</span><span class="p">(</span><span class="n">backward_hook</span><span class="p">)</span>
+                <span class="k">break</span>
+    
+    <span class="k">def</span> <span class="nf">generate_cam</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_image</span><span class="p">,</span> <span class="n">target_class</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Generate CAM for target class.
+        
+        input_image: (1, 3, H, W)
+        target_class: index of class to explain
+        
+        Returns: (H, W) heatmap
+        </span><span class="sh">"""</span>
+        <span class="c1"># Forward pass
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">model</span><span class="p">(</span><span class="n">input_image</span><span class="p">)</span>
+        
+        <span class="c1"># Backward pass for target class
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        <span class="n">class_score</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">target_class</span><span class="p">]</span>
+        <span class="n">class_score</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        
+        <span class="c1"># Get activations and gradients
+</span>        <span class="n">activations</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">activations</span>  <span class="c1"># (1, C, H, W)
+</span>        <span class="n">gradients</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">gradients</span>  <span class="c1"># (1, C, H, W)
+</span>        
+        <span class="c1"># Global average pool gradients to get weights
+</span>        <span class="n">weights</span> <span class="o">=</span> <span class="n">gradients</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">keepdim</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  <span class="c1"># (1, C, 1, 1)
+</span>        
+        <span class="c1"># Weighted combination of activation maps
+</span>        <span class="n">cam</span> <span class="o">=</span> <span class="p">(</span><span class="n">weights</span> <span class="o">*</span> <span class="n">activations</span><span class="p">).</span><span class="nf">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  <span class="c1"># (1, 1, H, W)
+</span>        
+        <span class="c1"># ReLU (only positive contributions)
+</span>        <span class="n">cam</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="n">cam</span><span class="p">)</span>
+        
+        <span class="c1"># Normalize to [0, 1]
+</span>        <span class="n">cam</span> <span class="o">=</span> <span class="n">cam</span> <span class="o">-</span> <span class="n">cam</span><span class="p">.</span><span class="nf">min</span><span class="p">()</span>
+        <span class="n">cam</span> <span class="o">=</span> <span class="n">cam</span> <span class="o">/</span> <span class="p">(</span><span class="n">cam</span><span class="p">.</span><span class="nf">max</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">cam</span><span class="p">.</span><span class="nf">squeeze</span><span class="p">().</span><span class="nf">cpu</span><span class="p">().</span><span class="nf">numpy</span><span class="p">()</span>
+
+<span class="c1"># Example usage
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Grad-CAM: Visualizing CNN Decisions</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Load pre-trained model
+</span><span class="kn">from</span> <span class="n">torchvision</span> <span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">transforms</span>
+<span class="kn">from</span> <span class="n">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="nf">resnet50</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="sh">'</span><span class="s">DEFAULT</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+
+<span class="c1"># Create Grad-CAM
+</span><span class="n">gradcam</span> <span class="o">=</span> <span class="nc">GradCAM</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">target_layer</span><span class="o">=</span><span class="sh">'</span><span class="s">layer4</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># Load and preprocess image (simulated here)
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Generating Grad-CAM for sample image...</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">input_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span>
+
+<span class="c1"># Get prediction
+</span><span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
+    <span class="n">predicted_class</span> <span class="o">=</span> <span class="n">output</span><span class="p">.</span><span class="nf">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">).</span><span class="nf">item</span><span class="p">()</span>
+    <span class="n">confidence</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">softmax</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="n">predicted_class</span><span class="p">].</span><span class="nf">item</span><span class="p">()</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Predicted class: </span><span class="si">{</span><span class="n">predicted_class</span><span class="si">}</span><span class="s"> with confidence </span><span class="si">{</span><span class="n">confidence</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Generate CAM for predicted class
+</span><span class="n">cam</span> <span class="o">=</span> <span class="n">gradcam</span><span class="p">.</span><span class="nf">generate_cam</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">predicted_class</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">CAM shape: </span><span class="si">{</span><span class="n">cam</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">CAM range: [</span><span class="si">{</span><span class="n">cam</span><span class="p">.</span><span class="nf">min</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">cam</span><span class="p">.</span><span class="nf">max</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">]</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">CAM highlights image regions important for prediction!</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">High values = important regions, low values = irrelevant</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># SHAP approximation
+</span><span class="k">class</span> <span class="nc">SimpleSHAP</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">Simplified SHAP for neural networks</span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">background_data</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        model: neural network
+        background_data: reference dataset for baselines
+        </span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">background</span> <span class="o">=</span> <span class="n">background_data</span>
+    
+    <span class="k">def</span> <span class="nf">explain</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Approximate SHAP values for input x.
+        
+        Uses sampling to approximate Shapley values:
+        repeatedly mask random subsets of features,
+        measure prediction changes.
+        </span><span class="sh">"""</span>
+        <span class="c1"># Get baseline prediction (average over background)
+</span>        <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+            <span class="n">baseline_output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">model</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">background</span><span class="p">).</span><span class="nf">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        
+        <span class="c1"># Generate random feature masks
+</span>        <span class="n">n_features</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span>
+        <span class="n">masks</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">rand</span><span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">n_features</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.5</span>
+        
+        <span class="c1"># Compute predictions with different feature subsets
+</span>        <span class="n">attributions</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">zeros</span><span class="p">(</span><span class="n">n_features</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">masks</span><span class="p">:</span>
+            <span class="c1"># Mask some features (use background average)
+</span>            <span class="n">x_masked</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">clone</span><span class="p">().</span><span class="nf">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">bg_avg</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">background</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">).</span><span class="nf">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">x_masked</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">bg_avg</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span>
+            <span class="n">x_masked</span> <span class="o">=</span> <span class="n">x_masked</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+            
+            <span class="c1"># Compute prediction
+</span>            <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">model</span><span class="p">(</span><span class="n">x_masked</span><span class="p">.</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+            
+            <span class="c1"># Marginal contribution of each feature
+</span>            <span class="n">pred_diff</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">baseline_output</span>
+            <span class="n">attributions</span> <span class="o">+=</span> <span class="n">mask</span><span class="p">.</span><span class="nf">float</span><span class="p">()</span> <span class="o">*</span> <span class="n">pred_diff</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span>
+        
+        <span class="n">attributions</span> <span class="o">/=</span> <span class="n">num_samples</span>
+        
+        <span class="k">return</span> <span class="n">attributions</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">SHAP: Feature Attribution</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Simple example with a linear model (for verification)
+</span><span class="k">class</span> <span class="nc">SimpleModel</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">fc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">simple_model</span> <span class="o">=</span> <span class="nc">SimpleModel</span><span class="p">()</span>
+<span class="n">background</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># Reference data
+</span>
+<span class="n">shap</span> <span class="o">=</span> <span class="nc">SimpleSHAP</span><span class="p">(</span><span class="n">simple_model</span><span class="p">,</span> <span class="n">background</span><span class="p">)</span>
+
+<span class="c1"># Explain a prediction
+</span><span class="n">test_input</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">attributions</span> <span class="o">=</span> <span class="n">shap</span><span class="p">.</span><span class="nf">explain</span><span class="p">(</span><span class="n">test_input</span><span class="p">.</span><span class="nf">squeeze</span><span class="p">(),</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Feature attributions (SHAP values):</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">attributions</span><span class="p">[:</span><span class="mi">5</span><span class="p">].</span><span class="nf">numpy</span><span class="p">())</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Positive = feature increased prediction</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Negative = feature decreased prediction</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Magnitude = importance</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Adversarial examples for probing robustness:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">fgsm_attack</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Fast Gradient Sign Method: minimal perturbation to fool model.
+    
+    Reveals model</span><span class="sh">'</span><span class="s">s decision boundaries and vulnerabilities.
+    Shows what patterns strongly influence predictions.
+    </span><span class="sh">"""</span>
+    <span class="n">image</span><span class="p">.</span><span class="n">requires_grad</span> <span class="o">=</span> <span class="bp">True</span>
+    
+    <span class="c1"># Forward pass
+</span>    <span class="n">output</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">cross_entropy</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+    
+    <span class="c1"># Backward to get gradients
+</span>    <span class="n">model</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+    <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+    
+    <span class="c1"># Create adversarial example
+</span>    <span class="c1"># Move in direction that increases loss (fools model)
+</span>    <span class="n">perturbation</span> <span class="o">=</span> <span class="n">epsilon</span> <span class="o">*</span> <span class="n">image</span><span class="p">.</span><span class="n">grad</span><span class="p">.</span><span class="nf">sign</span><span class="p">()</span>
+    <span class="n">adversarial</span> <span class="o">=</span> <span class="n">image</span> <span class="o">+</span> <span class="n">perturbation</span>
+    
+    <span class="k">return</span> <span class="n">adversarial</span><span class="p">.</span><span class="nf">detach</span><span class="p">()</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Adversarial Examples: Probing Model Robustness</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Simple classifier
+</span><span class="k">class</span> <span class="nc">ToyClassifier</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">conv</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">6</span> <span class="o">*</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">relu</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="nf">conv</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">max_pool2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">fc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">toy_model</span> <span class="o">=</span> <span class="nc">ToyClassifier</span><span class="p">()</span>
+<span class="n">toy_model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+
+<span class="c1"># Original image (random for demo)
+</span><span class="n">original</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">true_label</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">([</span><span class="mi">3</span><span class="p">])</span>
+
+<span class="c1"># Get original prediction
+</span><span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="n">orig_output</span> <span class="o">=</span> <span class="nf">toy_model</span><span class="p">(</span><span class="n">original</span><span class="p">)</span>
+    <span class="n">orig_pred</span> <span class="o">=</span> <span class="n">orig_output</span><span class="p">.</span><span class="nf">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">).</span><span class="nf">item</span><span class="p">()</span>
+    <span class="n">orig_conf</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">softmax</span><span class="p">(</span><span class="n">orig_output</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="n">orig_pred</span><span class="p">].</span><span class="nf">item</span><span class="p">()</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Original prediction: class </span><span class="si">{</span><span class="n">orig_pred</span><span class="si">}</span><span class="s"> (</span><span class="si">{</span><span class="n">orig_conf</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s"> confidence)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Generate adversarial example
+</span><span class="n">adversarial</span> <span class="o">=</span> <span class="nf">fgsm_attack</span><span class="p">(</span><span class="n">toy_model</span><span class="p">,</span> <span class="n">original</span><span class="p">.</span><span class="nf">clone</span><span class="p">(),</span> <span class="n">true_label</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># Test adversarial
+</span><span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="n">adv_output</span> <span class="o">=</span> <span class="nf">toy_model</span><span class="p">(</span><span class="n">adversarial</span><span class="p">)</span>
+    <span class="n">adv_pred</span> <span class="o">=</span> <span class="n">adv_output</span><span class="p">.</span><span class="nf">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">).</span><span class="nf">item</span><span class="p">()</span>
+    <span class="n">adv_conf</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">softmax</span><span class="p">(</span><span class="n">adv_output</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="n">adv_pred</span><span class="p">].</span><span class="nf">item</span><span class="p">()</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Adversarial prediction: class </span><span class="si">{</span><span class="n">adv_pred</span><span class="si">}</span><span class="s"> (</span><span class="si">{</span><span class="n">adv_conf</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s"> confidence)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Measure perturbation
+</span><span class="n">perturbation</span> <span class="o">=</span> <span class="p">(</span><span class="n">adversarial</span> <span class="o">-</span> <span class="n">original</span><span class="p">).</span><span class="nf">abs</span><span class="p">().</span><span class="nf">mean</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Average perturbation: </span><span class="si">{</span><span class="n">perturbation</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">adv_pred</span> <span class="o">!=</span> <span class="n">orig_pred</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">✗ Model fooled by imperceptible perturbation!</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">This reveals model</span><span class="sh">'</span><span class="s">s decision boundary is fragile</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">✓ Model robust to this perturbation</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="5-related-concepts">5. Related Concepts</h2>
+
+<p>Interpretability connects to causality through attempts to move beyond correlation to understanding causal mechanisms. Attribution methods identify correlations between inputs and outputs, but correlation doesn’t imply causation. Causal interpretability seeks to answer “would changing this input feature actually cause the prediction to change?” requiring interventions and counterfactual reasoning beyond standard attribution.</p>
+
+<p>The relationship to uncertainty quantification provides complementary understanding. Interpretability shows why a prediction was made. Uncertainty quantification shows how confident the model is. Together, they provide comprehensive understanding: “the model predicts class A because of feature X, with confidence Y.” Bayesian deep learning, dropout for uncertainty, and ensemble methods complement interpretability by quantifying prediction reliability.</p>
+
+<p>Interpretability relates to fairness and bias detection. If a hiring model uses gender or race features (directly or through proxies), interpretability methods reveal this, enabling auditing for discriminatory behavior. Understanding what features drive predictions is prerequisite for ensuring fairness, though interpretability alone doesn’t guarantee fairness—we must also determine whether identified features are legitimate or biased.</p>
+
+<h2 id="6-fundamental-papers">6. Fundamental Papers</h2>
+
+<p><strong><a href="https://arxiv.org/abs/1312.6034">“Deep Inside Convolutional Networks: Visualising Image Classification Models and Saliency Maps” (2014)</a></strong><br />
+<em>Authors</em>: Karen Simonyan, Andrea Vedaldi, Andrew Zisserman<br />
+Introduced gradient-based saliency maps for CNNs, showing derivatives reveal which pixels matter for predictions. Established visualization as key interpretability tool.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1311.2901">“Visualizing and Understanding Convolutional Networks” (2014)</a></strong><br />
+<em>Authors</em>: Matthew Zeiler, Rob Fergus<br />
+Deconvolution networks visualized what features CNN layers learn. Showed early layers detect edges/colors, middle layers detect textures/patterns, deep layers detect object parts. Foundational for understanding CNN hierarchical features.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1610.02391">“Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization” (2017)</a></strong><br />
+<em>Authors</em>: Ramprasaath Selvaraju, Michael Cogswell, Abhishek Das, Ramakrishna Vedantam, Devi Parikh, Dhruv Batra<br />
+Grad-CAM generates visual explanations by using gradients to weight feature maps, producing class-discriminative localization without modifying architecture. Became standard for CNN interpretability.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1705.07874">“A Unified Approach to Interpreting Model Predictions” (2017)</a></strong><br />
+<em>Authors</em>: Scott Lundberg, Su-In Lee<br />
+SHAP unified multiple attribution methods under Shapley value framework from game theory, providing theoretically grounded explanations with desirable properties. Became standard for tabular data and model-agnostic explanations.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1703.01365">“Axiomatic Attribution for Deep Networks” (2017)</a></strong><br />
+<em>Authors</em>: Mukund Sundararajan, Ankur Taly, Qiqi Yan<br />
+Integrated Gradients satisfied attribution axioms (sensitivity, implementation invariance) that gradient-based methods violate. Provided principled attribution method with theoretical guarantees.</p>
+
+<h2 id="common-pitfalls-and-tricks">Common Pitfalls and Tricks</h2>
+
+<p>Saliency maps can be misleading. High gradient doesn’t always mean high importance—could be artifact of network architecture (batch norm, ReLU) or optimization. Always verify interpretations with ablation (actually remove features and measure impact) or by checking if explanations align with domain knowledge.</p>
+
+<p>Adversarial examples don’t necessarily indicate poor models. All models have adversarial vulnerabilities—it’s a fundamental property of high-dimensional spaces. Focus on robustness to natural perturbations (noise, blur) rather than adversarially crafted worst-cases unless security is critical.</p>
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<p>Neural network interpretability enables understanding why models make predictions through attribution methods (which inputs mattered), visualization techniques (what features were learned), and explanation frameworks (how decisions decompose). Gradient-based saliency highlights input regions with high sensitivity to prediction changes. Grad-CAM visualizes spatial importance in CNNs through gradient-weighted feature maps. SHAP provides theoretically grounded attributions through Shapley values from game theory. Adversarial examples reveal model robustness by finding minimal perturbations changing predictions. Different interpretability methods provide complementary insights—saliency for input importance, activation visualization for learned features, SHAP for faithful attribution—often requiring multiple techniques for comprehensive understanding. Interpretability enables debugging spurious correlations, building trust in high-stakes applications, satisfying regulatory requirements, and generating scientific insights from learned patterns, making it increasingly important as deep learning deployment expands to critical domains requiring explainability beyond accuracy.</p>
+
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter24/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter24/24_00_Introduction/">
+              24 Interpretability and Explainability
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+    
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

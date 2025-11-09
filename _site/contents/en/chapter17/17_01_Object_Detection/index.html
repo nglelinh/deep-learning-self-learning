@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      17-01 Object Detection Fundamentals &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    17-01 Object Detection Fundamentals
+    
+      
+        <span class="lesson-badge required large">Required</span>
+      
+    
+  </h1>
+  <h1 id="object-detection-localization-and-recognition">Object Detection: Localization and Recognition</h1>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Detected-with-YOLO--Schreibtisch-mit-Objekten.jpg/800px-Detected-with-YOLO--Schreibtisch-mit-Objekten.jpg" alt="Object Detection Example" />
+<em>Hình ảnh: Object Detection với YOLO - phát hiện và định vị nhiều vật thể. Nguồn: Wikimedia Commons</em></p>
+
+<h2 id="1-concept-overview">1. Concept Overview</h2>
+
+<p>Object detection extends image classification from answering “what objects are in this image?” to “what objects are present and where are they located?” This seemingly small extension from classification to detection actually requires solving multiple interconnected problems simultaneously: proposing regions that might contain objects (region proposal), classifying what’s in each region (recognition), refining the boundaries of detections (localization), and handling multiple objects of different classes at different scales (multi-scale, multi-class detection). The complexity of coordinating these components while maintaining real-time performance has made object detection one of the most challenging and actively researched areas in computer vision.</p>
+
+<p>The evolution of object detection methods reveals a fascinating progression from traditional computer vision to modern deep learning approaches. Classical methods used hand-crafted features (SIFT, HOG) with sliding windows exhaustively searching every possible location and scale, then applying classifiers like SVMs. This was computationally expensive (evaluating millions of windows per image) and limited by feature quality. The deep learning revolution transformed object detection through learned features and end-to-end trainable systems, enabling dramatic improvements in both accuracy and speed.</p>
+
+<p>Modern object detection has branched into two major paradigms. Two-stage detectors like R-CNN, Fast R-CNN, and Faster R-CNN first propose regions likely to contain objects, then classify and refine these proposals. This explicit separation of region proposal and recognition enables high accuracy through focused computation on promising regions. Single-stage detectors like YOLO and SSD directly predict bounding boxes and class probabilities from regular grid positions, enabling real-time performance by avoiding the proposal stage at the cost of slightly lower accuracy on small objects.</p>
+
+<p>Understanding object detection deeply requires grasping several technical innovations that make modern systems work. Region Proposal Networks learn to generate object proposals rather than using hand-crafted rules, making the entire pipeline differentiable. Anchor boxes provide a way to handle objects of different aspect ratios and sizes through predefined box templates. Non-maximum suppression eliminates duplicate detections, addressing the fact that good detectors typically generate multiple overlapping boxes for each object. Feature pyramid networks enable detecting objects at multiple scales by building feature pyramies with rich semantics at all levels. These components, each solving a specific sub-problem, combine into systems that can detect and localize dozens of objects across multiple categories in milliseconds, enabling applications from autonomous driving to medical image analysis to augmented reality.</p>
+
+<h2 id="2-mathematical-foundation">2. Mathematical Foundation</h2>
+
+<p>Object detection requires formalizing what we’re predicting and how we measure success. An object detection is a tuple \((\text{class}, x, y, w, h)\) specifying the object’s category and bounding box (center coordinates \(x,y\) and dimensions \(w,h\)). For an image with \(N\) objects, the ground truth is a set of such tuples: \(\{(\text{class}_i, x_i, y_i, w_i, h_i)\}_{i=1}^N\). Our detector must predict this set, which is challenging because \(N\) varies across images.</p>
+
+<h3 id="intersection-over-union-iou">Intersection over Union (IoU)</h3>
+
+<p>To measure localization quality, we use Intersection over Union between predicted and ground-truth boxes:</p>
+
+\[\text{IoU}(\text{box}_{\text{pred}}, \text{box}_{\text{gt}}) = \frac{\text{Area}(\text{box}_{\text{pred}} \cap \text{box}_{\text{gt}})}{\text{Area}(\text{box}_{\text{pred}} \cup \text{box}_{\text{gt}})}\]
+
+<p>IoU ranges from 0 (no overlap) to 1 (perfect overlap). Typically, we consider a detection correct if IoU \(\geq 0.5\) and the predicted class matches ground truth. This threshold balances between requiring precise localization and allowing reasonable bounding box variations.</p>
+
+<h3 id="bounding-box-regression">Bounding Box Regression</h3>
+
+<p>Rather than directly predicting box coordinates, modern detectors predict offsets from anchor boxes (predefined reference boxes). Given anchor box \((\hat{x}, \hat{y}, \hat{w}, \hat{h})\) and ground truth \((\bar{x}, \bar{y}, \bar{w}, \bar{h})\), we parameterize targets as:</p>
+
+\[t_x = \frac{\bar{x} - \hat{x}}{\hat{w}}, \quad t_y = \frac{\bar{y} - \hat{y}}{\hat{h}}\]
+
+\[t_w = \log\frac{\bar{w}}{\hat{w}}, \quad t_h = \log\frac{\bar{h}}{\hat{h}}\]
+
+<p>The network predicts \((t_x, t_y, t_w, t_h)\), and we decode to absolute coordinates:</p>
+
+\[x = \hat{x} + \hat{w} \cdot t_x, \quad y = \hat{y} + \hat{h} \cdot t_y\]
+
+\[w = \hat{w} \cdot \exp(t_w), \quad h = \hat{h} \cdot \exp(t_h)\]
+
+<p>This parameterization is more learnable than direct coordinate prediction because offsets are typically small numbers with similar scales, while absolute coordinates span the entire image with very different scales for small versus large objects.</p>
+
+<h3 id="multi-task-loss">Multi-Task Loss</h3>
+
+<p>Object detectors optimize combined losses for classification and localization:</p>
+
+\[\mathcal{L} = \mathcal{L}_{\text{cls}} + \lambda \mathcal{L}_{\text{box}}\]
+
+<p>where \(\mathcal{L}_{\text{cls}}\) is classification loss (cross-entropy) and \(\mathcal{L}_{\text{box}}\) is bounding box regression loss (smooth L1 or IoU loss). The weight \(\lambda\) balances these objectives—too high and the detector focuses on precise localization at the expense of correct classification; too low and classifications are accurate but boxes are poorly localized.</p>
+
+<p>For Faster R-CNN, the classification loss uses cross-entropy over classes plus background:</p>
+
+\[\mathcal{L}_{\text{cls}} = -\log p_{\text{class}}\]
+
+<p>where \(\text{class}\) is the ground-truth class (or background if IoU &lt; 0.5 with all ground-truth boxes).</p>
+
+<p>The box loss is smooth L1:</p>
+
+\[\mathcal{L}_{\text{box}} = \sum_{i \in \{x,y,w,h\}} \text{smooth}_{L1}(t_i - \hat{t}_i)\]
+
+\[\text{smooth}_{L1}(x) = \begin{cases} 0.5x^2 &amp; \text{if } |x| &lt; 1 \\ |x| - 0.5 &amp; \text{otherwise} \end{cases}\]
+
+<p>Smooth L1 is less sensitive to outliers than L2 (quadratic becomes linear for large errors) while being differentiable everywhere (unlike pure L1).</p>
+
+<h3 id="region-proposal-networks-rpn">Region Proposal Networks (RPN)</h3>
+
+<p>Faster R-CNN introduced RPN, a fully convolutional network that predicts object proposals. At each position in the feature map, RPN predicts:</p>
+<ul>
+  <li>Objectness scores: \(k\) anchors × 2 values (object vs background)</li>
+  <li>Box refinements: \(k\) anchors × 4 coordinates</li>
+</ul>
+
+<p>For a \(H \times W\) feature map with \(k=9\) anchors per position, RPN outputs:</p>
+<ul>
+  <li>Objectness: \(H \times W \times 9 \times 2\) scores</li>
+  <li>Box deltas: \(H \times W \times 9 \times 4\) values</li>
+</ul>
+
+<p>Total: \(HW \times 9\) proposals. Non-maximum suppression filters these to top \(\sim\)2000 based on objectness scores, which then go to the detection head.</p>
+
+<p>The RPN loss combines classification (objectness) and regression:</p>
+
+\[\mathcal{L}_{\text{RPN}} = \frac{1}{N_{\text{cls}}}\sum_i \mathcal{L}_{\text{cls}}(p_i, p_i^*) + \frac{\lambda}{N_{\text{box}}}\sum_i p_i^* \mathcal{L}_{\text{box}}(t_i, t_i^*)\]
+
+<p>where \(p_i^* = 1\) if anchor \(i\) overlaps ground-truth with IoU &gt; 0.7 (positive), \(p_i^* = 0\) if IoU &lt; 0.3 (negative), and ignored if in between (to handle ambiguous cases).</p>
+
+<h2 id="3-example--intuition">3. Example / Intuition</h2>
+
+<p>Imagine you’re trying to find and identify all people in a crowded photograph. Your strategy might be:</p>
+
+<ol>
+  <li><strong>Quick scan</strong> for regions likely to contain people (look for head shapes, body outlines)</li>
+  <li><strong>Closer examination</strong> of promising regions (is this actually a person or a statue? Which person is it?)</li>
+  <li><strong>Refinement</strong> of boundaries (exactly where does this person’s bounding box start/end?)</li>
+</ol>
+
+<p>This three-stage process mirrors two-stage object detection. The Region Proposal Network does the quick scan, proposing ~2000 regions that might contain objects (people, cars, dogs, anything). The detection head examines each proposal, classifying what’s there and refining the bounding box. Non-maximum suppression eliminates duplicates (multiple overlapping boxes for the same person).</p>
+
+<p>Consider detecting cars in a street scene. The image might contain:</p>
+<ul>
+  <li>3 cars at different distances (different sizes)</li>
+  <li>2 pedestrians</li>
+  <li>1 traffic sign</li>
+  <li>Complex background (buildings, trees)</li>
+</ul>
+
+<p>A single-stage detector like YOLO divides the image into a grid (say 13×13). Each grid cell predicts:</p>
+<ul>
+  <li>Multiple bounding boxes (say 3, with different aspect ratios: tall, wide, square)</li>
+  <li>Class probabilities for each box</li>
+  <li>Confidence scores (is there an object here?)</li>
+</ul>
+
+<p>For a grid cell at position (5, 8) near a car, it might predict:</p>
+<ul>
+  <li>Box 1: class=car, confidence=0.95, coordinates offset from cell center</li>
+  <li>Box 2: class=background, confidence=0.05</li>
+  <li>Box 3: class=background, confidence=0.02</li>
+</ul>
+
+<p>After processing all 13×13 cells, we have 13×13×3 = 507 predictions. Most are background (confidence near 0). NMS keeps only high-confidence, non-overlapping boxes:</p>
+<ul>
+  <li>Car 1: confidence=0.95, box=[120, 200, 60, 40]</li>
+  <li>Car 2: confidence=0.89, box=[300, 180, 80, 50]</li>
+  <li>Car 3: confidence=0.76, box=[450, 220, 40, 25] (far car, smaller)</li>
+  <li>Person 1: confidence=0.92, box=[200, 150, 30, 80]</li>
+</ul>
+
+<p>The detector has identified all objects, classified them, and localized them with bounding boxes—exactly what object detection requires.</p>
+
+<h2 id="4-code-snippet">4. Code Snippet</h2>
+
+<p>Complete Faster R-CNN style implementation:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="n">torchvision</span>
+<span class="kn">from</span> <span class="n">torchvision.models.detection</span> <span class="kn">import</span> <span class="n">fasterrcnn_resnet50_fpn</span>
+<span class="kn">from</span> <span class="n">torchvision.models.detection.faster_rcnn</span> <span class="kn">import</span> <span class="n">FastRCNNPredictor</span>
+<span class="kn">import</span> <span class="n">torchvision.transforms</span> <span class="k">as</span> <span class="n">T</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Object Detection with Faster R-CNN</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Load pre-trained Faster R-CNN
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">1. Loading Pre-trained Faster R-CNN</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="nf">fasterrcnn_resnet50_fpn</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="sh">'</span><span class="s">DEFAULT</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Faster R-CNN architecture:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  Backbone: ResNet-50 + Feature Pyramid Network</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  Region Proposal Network (RPN): Generates object proposals</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  RoI Pooling: Extracts features from proposals</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  Detection Head: Classifies and refines boxes</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Adapt for custom dataset (e.g., 10 classes + background)
+</span><span class="n">num_classes</span> <span class="o">=</span> <span class="mi">11</span>  <span class="c1"># 10 object classes + background
+</span>
+<span class="c1"># Replace the classifier
+</span><span class="n">in_features</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">roi_heads</span><span class="p">.</span><span class="n">box_predictor</span><span class="p">.</span><span class="n">cls_score</span><span class="p">.</span><span class="n">in_features</span>
+<span class="n">model</span><span class="p">.</span><span class="n">roi_heads</span><span class="p">.</span><span class="n">box_predictor</span> <span class="o">=</span> <span class="nc">FastRCNNPredictor</span><span class="p">(</span><span class="n">in_features</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Adapted for </span><span class="si">{</span><span class="n">num_classes</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s"> object classes + background</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 2. Prepare custom dataset format
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">2. Dataset Format for Object Detection</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">CustomDetectionDataset</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Object detection dataset format.
+    
+    Each sample returns:
+    - image: (3, H, W) tensor
+    - target: dictionary with:
+        - boxes: (N, 4) tensor of [x1, y1, x2, y2] coordinates
+        - labels: (N,) tensor of class indices
+        - (optional) masks, keypoints, etc.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">annotations</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">images</span> <span class="o">=</span> <span class="n">images</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">annotations</span> <span class="o">=</span> <span class="n">annotations</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
+    
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nf">len</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">images</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="c1"># Load image (simulated here)
+</span>        <span class="n">img</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">images</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        
+        <span class="c1"># Get annotations for this image
+</span>        <span class="n">boxes</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">annotations</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="sh">'</span><span class="s">boxes</span><span class="sh">'</span><span class="p">]</span>  <span class="c1"># [[x1,y1,x2,y2], ...]
+</span>        <span class="n">labels</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">annotations</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="sh">'</span><span class="s">labels</span><span class="sh">'</span><span class="p">]</span>  <span class="c1"># [class1, class2, ...]
+</span>        
+        <span class="c1"># Convert to tensors
+</span>        <span class="n">boxes</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">as_tensor</span><span class="p">(</span><span class="n">boxes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">as_tensor</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="p">.</span><span class="n">int64</span><span class="p">)</span>
+        
+        <span class="n">target</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="sh">'</span><span class="s">boxes</span><span class="sh">'</span><span class="p">:</span> <span class="n">boxes</span><span class="p">,</span>
+            <span class="sh">'</span><span class="s">labels</span><span class="sh">'</span><span class="p">:</span> <span class="n">labels</span>
+        <span class="p">}</span>
+        
+        <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">transform</span><span class="p">:</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">transform</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">img</span><span class="p">,</span> <span class="n">target</span>
+
+<span class="c1"># Create dummy data for demonstration
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Creating simulated detection dataset...</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Simulate 100 images with random objects
+</span><span class="n">n_images</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">dummy_images</span> <span class="o">=</span> <span class="p">[</span><span class="n">torch</span><span class="p">.</span><span class="nf">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="mi">800</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n_images</span><span class="p">)]</span>
+
+<span class="c1"># Simulate annotations (random boxes and classes)
+</span><span class="n">dummy_annotations</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n_images</span><span class="p">):</span>
+    <span class="n">n_objects</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)).</span><span class="nf">item</span><span class="p">()</span>  <span class="c1"># 1-4 objects per image
+</span>    
+    <span class="c1"># Random boxes (x1, y1, x2, y2)
+</span>    <span class="n">boxes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n_objects</span><span class="p">):</span>
+        <span class="n">x1</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">700</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)).</span><span class="nf">item</span><span class="p">()</span>
+        <span class="n">y1</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)).</span><span class="nf">item</span><span class="p">()</span>
+        <span class="n">x2</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)).</span><span class="nf">item</span><span class="p">()</span>
+        <span class="n">y2</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">+</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)).</span><span class="nf">item</span><span class="p">()</span>
+        
+        <span class="n">boxes</span><span class="p">.</span><span class="nf">append</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="nf">min</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="mi">800</span><span class="p">),</span> <span class="nf">min</span><span class="p">(</span><span class="n">y2</span><span class="p">,</span> <span class="mi">600</span><span class="p">)])</span>
+        <span class="n">labels</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)).</span><span class="nf">item</span><span class="p">())</span>  <span class="c1"># Classes 1-10
+</span>    
+    <span class="n">dummy_annotations</span><span class="p">.</span><span class="nf">append</span><span class="p">({</span><span class="sh">'</span><span class="s">boxes</span><span class="sh">'</span><span class="p">:</span> <span class="n">boxes</span><span class="p">,</span> <span class="sh">'</span><span class="s">labels</span><span class="sh">'</span><span class="p">:</span> <span class="n">labels</span><span class="p">})</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="nc">CustomDetectionDataset</span><span class="p">(</span><span class="n">dummy_images</span><span class="p">,</span> <span class="n">dummy_annotations</span><span class="p">)</span>
+<span class="n">dataloader</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="nc">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
+                                         <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">collate_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nf">tuple</span><span class="p">(</span><span class="nf">zip</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">)))</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Dataset: </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span><span class="si">}</span><span class="s"> images</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Sample annotation: </span><span class="si">{</span><span class="n">dummy_annotations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 3. Training
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">3. Training Object Detector</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Move model to device
+</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">device</span><span class="p">(</span><span class="sh">'</span><span class="s">cuda</span><span class="sh">'</span> <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="sh">'</span><span class="s">cpu</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Optimizer
+</span><span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="p">.</span><span class="n">requires_grad</span><span class="p">]</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="nc">SGD</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.0005</span><span class="p">)</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>
+<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Training for </span><span class="si">{</span><span class="n">num_epochs</span><span class="si">}</span><span class="s"> epochs...</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">(Using dummy data - in practice, use real annotated images)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">):</span>
+    <span class="n">epoch_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">for</span> <span class="n">images</span><span class="p">,</span> <span class="n">targets</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="p">[</span><span class="n">img</span><span class="p">.</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">images</span><span class="p">]</span>
+        <span class="n">targets</span> <span class="o">=</span> <span class="p">[{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="p">.</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">t</span><span class="p">.</span><span class="nf">items</span><span class="p">()}</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">]</span>
+        
+        <span class="c1"># Forward pass returns loss dict during training
+</span>        <span class="n">loss_dict</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+        
+        <span class="c1"># Combine losses
+</span>        <span class="n">losses</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">loss</span> <span class="k">for</span> <span class="n">loss</span> <span class="ow">in</span> <span class="n">loss_dict</span><span class="p">.</span><span class="nf">values</span><span class="p">())</span>
+        
+        <span class="c1"># Backward
+</span>        <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        <span class="n">losses</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+        
+        <span class="n">epoch_loss</span> <span class="o">+=</span> <span class="n">losses</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="n">num_epochs</span><span class="si">}</span><span class="s">: </span><span class="sh">"</span>
+          <span class="sa">f</span><span class="sh">"</span><span class="s">Loss = </span><span class="si">{</span><span class="n">epoch_loss</span><span class="o">/</span><span class="nf">len</span><span class="p">(</span><span class="n">dataloader</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Training complete!</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># 4. Inference
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">4. Running Inference</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+
+<span class="c1"># Test on one image
+</span><span class="n">test_img</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="mi">800</span><span class="p">).</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="nf">model</span><span class="p">([</span><span class="n">test_img</span><span class="p">])</span>
+
+<span class="n">pred</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Predictions for test image:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Boxes shape: </span><span class="si">{</span><span class="n">pred</span><span class="p">[</span><span class="sh">'</span><span class="s">boxes</span><span class="sh">'</span><span class="p">].</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Labels shape: </span><span class="si">{</span><span class="n">pred</span><span class="p">[</span><span class="sh">'</span><span class="s">labels</span><span class="sh">'</span><span class="p">].</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Scores shape: </span><span class="si">{</span><span class="n">pred</span><span class="p">[</span><span class="sh">'</span><span class="s">scores</span><span class="sh">'</span><span class="p">].</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Filter by confidence threshold
+</span><span class="n">confidence_threshold</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">keep</span> <span class="o">=</span> <span class="n">pred</span><span class="p">[</span><span class="sh">'</span><span class="s">scores</span><span class="sh">'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">confidence_threshold</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Detections with confidence &gt; </span><span class="si">{</span><span class="n">confidence_threshold</span><span class="si">}</span><span class="s">:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  </span><span class="si">{</span><span class="n">keep</span><span class="p">.</span><span class="nf">sum</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span><span class="si">}</span><span class="s"> objects detected</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">keep</span><span class="p">.</span><span class="nf">sum</span><span class="p">().</span><span class="nf">item</span><span class="p">()):</span>
+    <span class="n">box</span> <span class="o">=</span> <span class="n">pred</span><span class="p">[</span><span class="sh">'</span><span class="s">boxes</span><span class="sh">'</span><span class="p">][</span><span class="n">keep</span><span class="p">][</span><span class="n">i</span><span class="p">].</span><span class="nf">cpu</span><span class="p">().</span><span class="nf">numpy</span><span class="p">()</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">pred</span><span class="p">[</span><span class="sh">'</span><span class="s">labels</span><span class="sh">'</span><span class="p">][</span><span class="n">keep</span><span class="p">][</span><span class="n">i</span><span class="p">].</span><span class="nf">item</span><span class="p">()</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">pred</span><span class="p">[</span><span class="sh">'</span><span class="s">scores</span><span class="sh">'</span><span class="p">][</span><span class="n">keep</span><span class="p">][</span><span class="n">i</span><span class="p">].</span><span class="nf">item</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">    Class </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s">: box=</span><span class="si">{</span><span class="n">box</span><span class="p">.</span><span class="nf">round</span><span class="p">()</span><span class="si">}</span><span class="s">, confidence=</span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Implement YOLO-style single-stage detector:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Single-Stage Detection (YOLO-style)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">SimpleSingleStageDetector</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Simplified YOLO-style detector for educational purposes.
+    
+    Architecture:
+    - Backbone CNN extracts features
+    - Detection head predicts boxes + classes for grid cells
+    - Each cell predicts B boxes with (x, y, w, h, confidence, class_probs)
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">num_boxes</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">grid_size</span><span class="o">=</span><span class="mi">13</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">num_classes</span> <span class="o">=</span> <span class="n">num_classes</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">num_boxes</span> <span class="o">=</span> <span class="n">num_boxes</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">grid_size</span> <span class="o">=</span> <span class="n">grid_size</span>
+        
+        <span class="c1"># Backbone (simplified - use any CNN)
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">backbone</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">MaxPool2d</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">MaxPool2d</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">MaxPool2d</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># Detection head
+</span>        <span class="c1"># Each grid cell outputs: B boxes × (5 + num_classes)
+</span>        <span class="c1"># 5 = (x, y, w, h, confidence)
+</span>        <span class="n">output_channels</span> <span class="o">=</span> <span class="n">num_boxes</span> <span class="o">*</span> <span class="p">(</span><span class="mi">5</span> <span class="o">+</span> <span class="n">num_classes</span><span class="p">)</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">detection_head</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="n">output_channels</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        x: (B, 3, H, W) images
+        
+        Returns: (B, grid_size, grid_size, num_boxes, 5+num_classes)
+        </span><span class="sh">"""</span>
+        <span class="c1"># Extract features
+</span>        <span class="n">features</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">backbone</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># (B, 512, grid_size, grid_size)
+</span>        
+        <span class="c1"># Predict detections
+</span>        <span class="n">detections</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">detection_head</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+        
+        <span class="c1"># Reshape to (B, grid, grid, boxes, 5+classes)
+</span>        <span class="n">B</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">detections</span> <span class="o">=</span> <span class="n">detections</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span>
+            <span class="n">B</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">num_boxes</span><span class="p">,</span> <span class="mi">5</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">num_classes</span><span class="p">,</span> 
+            <span class="n">self</span><span class="p">.</span><span class="n">grid_size</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">grid_size</span>
+        <span class="p">)</span>
+        <span class="n">detections</span> <span class="o">=</span> <span class="n">detections</span><span class="p">.</span><span class="nf">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># (B, grid, grid, boxes, ...)
+</span>        
+        <span class="k">return</span> <span class="n">detections</span>
+
+<span class="n">detector</span> <span class="o">=</span> <span class="nc">SimpleSingleStageDetector</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">num_boxes</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">grid_size</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Single-stage detector architecture:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Grid size: </span><span class="si">{</span><span class="mi">13</span><span class="si">}</span><span class="s">×</span><span class="si">{</span><span class="mi">13</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Boxes per cell: 3</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Classes: 10</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Total predictions: 13×13×3 = 507 boxes per image</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Forward pass
+</span><span class="n">test_input</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">416</span><span class="p">,</span> <span class="mi">416</span><span class="p">)</span>  <span class="c1"># Batch of 2, 416×416 images
+</span><span class="n">output</span> <span class="o">=</span> <span class="nf">detector</span><span class="p">(</span><span class="n">test_input</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Output shape: </span><span class="si">{</span><span class="n">output</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (2, 13, 13, 3, 15)
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Dimensions: (batch, grid_y, grid_x, boxes, 5+classes)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Each box prediction has:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - 4 coordinates (x, y, w, h)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - 1 confidence score</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  - 10 class probabilities</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Single forward pass produces all detections - very fast!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="5-related-concepts">5. Related Concepts</h2>
+
+<p>Object detection connects to image classification through its foundation in convolutional feature extraction. The backbone networks (ResNet, VGG, MobileNet) are typically classification networks adapted for detection by removing final classification layers and adding detection heads. The features learned for classification—edges, textures, object parts—transfer naturally to detection because recognizing “this is a car” (classification) and “there’s a car at this location” (detection) both require understanding car appearance. However, detection requires additional capabilities: localizing precisely where objects are, handling multiple objects and scales, and distinguishing object from background. Understanding this connection helps appreciate why ImageNet pre-trained classifiers provide good starting points for detection but require architectural extensions (FPN for multi-scale, RPN for proposals) to reach full detection capability.</p>
+
+<p>The relationship to semantic segmentation illuminates different granularities of visual understanding. Classification assigns one label per image. Detection assigns labels and boxes to multiple objects per image. Semantic segmentation assigns labels to every pixel, delineating object boundaries exactly. Instance segmentation combines detection and segmentation, providing pixel-perfect masks for each object instance. This progression from coarse (image-level) to fine (pixel-level) understanding reflects different application requirements and computational tradeoffs. Detection provides a balance: more informative than classification (where are objects?) without the computational cost of pixel-level segmentation.</p>
+
+<p>Object detection’s connection to attention mechanisms is increasingly important in modern architectures. Transformers are replacing traditional detection heads through DETR (Detection Transformer), which treats object detection as set prediction using attention to directly predict all objects in parallel without anchors or NMS. The attention mechanism learns to attend to object locations and extents, providing an elegant end-to-end trainable alternative to the complex pipelines of traditional detectors. Understanding how attention can replace hand-crafted components like anchors and NMS helps appreciate Transformers’ generality beyond NLP.</p>
+
+<p>The evolution from R-CNN to Fast R-CNN to Faster R-CNN demonstrates systematic optimization of computational bottlenecks. R-CNN ran CNN feature extraction separately for each proposal (2000 forward passes per image—very slow). Fast R-CNN extracted features once for the whole image, then used RoI pooling to get proposal features (single forward pass—much faster). Faster R-CNN made proposal generation part of the network through RPN (fully differentiable, end-to-end trainable). Each innovation addressed a specific inefficiency while maintaining accuracy, showing how systems evolve through targeted improvements rather than complete redesigns.</p>
+
+<h2 id="6-fundamental-papers">6. Fundamental Papers</h2>
+
+<p><strong><a href="https://arxiv.org/abs/1311.2524">“Rich feature hierarchies for accurate object detection and semantic segmentation” (2014)</a></strong><br />
+<em>Authors</em>: Ross Girshick, Jeff Donahue, Trevor Darrell, Jitendra Malik<br />
+R-CNN revolutionized object detection by applying CNNs, previously successful for classification, to detection through region proposals. The approach was conceptually simple: use selective search to propose ~2000 regions per image, extract CNN features from each (forward passing each through AlexNet), then classify regions with SVMs and refine boxes with regression. While computationally expensive (2000 forward passes per image), R-CNN achieved dramatic improvements over traditional methods, demonstrating that learned features vastly outperform hand-crafted features for detection. The paper established the region-based detection paradigm and showed transfer learning (ImageNet pre-training for detection) was highly effective. R-CNN’s success sparked the deep learning revolution in object detection, leading to numerous improvements addressing its computational limitations while maintaining its core insight: detection can be solved through region classification with learned features.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1504.08083">“Fast R-CNN” (2015)</a></strong><br />
+<em>Author</em>: Ross Girshick<br />
+Fast R-CNN addressed R-CNN’s computational bottleneck by sharing CNN computation across proposals through RoI (Region of Interest) pooling. Instead of running CNN separately for each proposal, extract features once for the whole image, then use RoI pooling to extract fixed-size feature vectors for each proposal from the shared feature map. This reduced forward passes from 2000 per image to 1, achieving ~10× speedup while improving accuracy through joint training of feature extraction, classification, and bounding box regression. The paper introduced multi-task loss combining classification and localization, showing that joint training improves both tasks compared to training separately. Fast R-CNN demonstrated that systematic analysis of computational bottlenecks and clever architectural innovations could dramatically improve efficiency without sacrificing accuracy, establishing principles for designing practical detection systems.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1506.01497">“Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks” (2016)</a></strong><br />
+<em>Authors</em>: Shaoqing Ren, Kaiming He, Ross Girshick, Jian Sun<br />
+Faster R-CNN completed the evolution to fully differentiable detection by replacing selective search with Region Proposal Networks, making the entire detection pipeline trainable end-to-end. RPN uses learned convolutional filters to predict objectness and box coordinates at every position in the feature map, generating proposals through learned mechanisms rather than hand-crafted algorithms. This innovation enabled sharing computation between proposal generation and detection, improved proposal quality through supervised training, and achieved near real-time speeds (5 FPS). The anchor box mechanism—predicting offsets from predefined boxes of different aspect ratios and scales—became standard in subsequent detectors. Faster R-CNN set the template for two-stage detection and remained state-of-the-art for years, demonstrating that careful end-to-end design outperforms pipelined approaches with non-differentiable components.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1506.02640">“You Only Look Once: Unified, Real-Time Object Detection” (2016)</a></strong><br />
+<em>Authors</em>: Joseph Redmon, Santosh Divvala, Ross Girshick, Ali Farhadi<br />
+YOLO fundamentally changed object detection by framing it as regression from image pixels directly to bounding box coordinates and class probabilities, enabling real-time detection (45 FPS) through a single forward pass. By dividing images into grids and having each cell predict boxes, YOLO eliminated region proposals and their associated computational cost. While initial accuracy was lower than Faster R-CNN (particularly for small objects), YOLO’s speed enabled real-time applications like autonomous driving and robotics. The paper showed that detection need not follow the two-stage paradigm, inspiring numerous single-stage detectors. YOLO’s end-to-end design philosophy—predicting everything in one shot—demonstrated that simple, unified approaches could compete with complex pipelines when properly designed.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1612.03144">“Feature Pyramid Networks for Object Detection” (2017)</a></strong><br />
+<em>Authors</em>: Tsung-Yi Lin, Piotr Dollár, Ross Girshick, Kaiming He, Bharath Hariharan, Serge Belongie<br />
+FPN addressed multi-scale detection by building feature pyramids with strong semantics at all scales, combining high-resolution but semantically weak low-level features with low-resolution but semantically strong high-level features through top-down pathways and lateral connections. This enables detecting large objects using high-level features and small objects using low-level features enriched with semantic information from higher layers. FPN dramatically improved detection of objects at different scales, particularly small objects which previous methods struggled with. The architectural pattern—building pyramids with both bottom-up (standard CNN) and top-down pathways—has been widely adopted beyond detection to segmentation and other dense prediction tasks. FPN demonstrated that careful multi-scale architecture design addresses fundamental challenges in visual recognition.</p>
+
+<h2 id="common-pitfalls-and-tricks">Common Pitfalls and Tricks</h2>
+
+<p>Anchor box design significantly affects detection performance but is often overlooked. Anchors should match typical object aspect ratios and sizes in your dataset. For pedestrian detection (tall, narrow objects), use anchors like 1:3 and 1:4 aspect ratios. For cars (wider), use 2:1 or 3:2. The k-means clustering on training set bounding boxes can discover good anchor dimensions automatically. Having too many anchors wastes computation without improving accuracy, while too few miss important object types. Typical YOLO uses 9 anchors (3 scales × 3 aspect ratios), Faster R-CNN uses 9 (3 scales × 3 ratios) per position.</p>
+
+<p>Non-maximum suppression threshold selection involves precision-recall tradeoffs. Lower IoU threshold (0.3) suppresses more boxes, reducing duplicates but potentially eliminating valid detections of nearby objects. Higher threshold (0.7) keeps more boxes, detecting nearby objects well but producing duplicates. For crowded scenes (many nearby objects), use higher threshold. For sparse scenes, lower threshold. Understanding that NMS threshold controls this tradeoff allows tuning for specific applications.</p>
+
+<p>Class imbalance in object detection is severe and requires careful handling. Most anchor boxes are background (no object), creating extreme imbalance between background and object classes (often 1000:1 or more). Without handling, the detector learns to predict background for everything (trivial solution achieving 99.9% accuracy). Solutions include hard negative mining (train on hard background examples, ignore easy ones), focal loss (weight loss by difficulty, downweighting easy classifications), and balanced sampling (ensure batches contain similar numbers of object and background examples).</p>
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<p>Object detection extends classification to localizing and recognizing multiple objects per image, requiring simultaneous region proposal, classification, and bounding box regression. Two-stage detectors separate proposal generation from detection, using Region Proposal Networks to generate candidates and detection heads to classify and refine, achieving high accuracy through focused computation on object regions. Single-stage detectors directly predict boxes and classes from grid cells, enabling real-time performance through single forward pass at slight accuracy cost. Intersection over Union measures localization quality, with detections considered correct when IoU with ground-truth exceeds threshold (typically 0.5) and class matches. Anchor boxes provide reference boxes at different scales and aspect ratios, with networks predicting offsets rather than absolute coordinates, improving training stability. Feature pyramids enable multi-scale detection by combining high-level semantic features with high-resolution spatial features. Non-maximum suppression eliminates duplicate detections by keeping highest-confidence boxes and suppressing overlapping boxes. Multi-task training jointly optimizes classification and localization, with losses balanced to achieve both accurate recognition and precise localization. Understanding object detection requires appreciating how these components coordinate to handle variable numbers of objects at different scales, positions, and classes while maintaining real-time or near-real-time performance for practical applications.</p>
+
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter17/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter17/17_00_Introduction/">
+              17 Computer Vision Applications
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+    
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

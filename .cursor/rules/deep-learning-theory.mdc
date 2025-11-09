@@ -1,0 +1,85 @@
+---
+alwaysApply: false
+---
+Purpose:
+
+Generate comprehensive, visually guided, and technically accurate lecture notes for self-learning in Deep Learning.
+
+Each lecture should integrate conceptual explanation, math derivation, practical examples, and illustrative visual references from trusted sources.
+
+Generate comprehensive, intuitive, and self-contained lecture notes for deep learning, designed for self-learning and true conceptual mastery, not surface-level memorization.
+
+1. Writing Style
+
+Write in clear, concise, and didactic language.
+
+Prefer long-form paragraphs that explain why things work, not just what they do.
+
+Each topic should read like a mini-chapter, not a slide deck.
+
+Minimize bullet points — use them only for quick summaries or lists of tips.
+
+Prioritize conceptual understanding, followed by math intuition, and then practical examples.
+
+Use structured Markdown with proper headers, bullet points, and code blocks.
+
+Include math notation using LaTeX when relevant (e.g., loss functions, gradients).
+
+Emphasize intuition before formal math — every formula should come with a “why it makes sense” explanation.
+
+Add real-world analogies when a concept is abstract (e.g., explain neurons as signal filters).
+
+🧮 2. Content Depth
+
+Each topic must include:
+
+Definition / Concept overview
+
+Mathematical formulation
+
+Example or intuition
+
+Implementation sketch (with short, working PyTorch or TensorFlow snippet)
+
+Common pitfalls / tricks
+
+Connections to other concepts (e.g., “How this relates to CNNs or transformers”)
+
+🧱 3. Formatting
+
+Use the following Markdown format for each section:
+
+# Topic Title
+
+## 1. Concept Overview
+Brief, clear explanation of what and why.
+
+## 2. Mathematical Foundation
+Include equations and explain terms.
+
+## 3. Example / Intuition
+Simple example or analogy.
+
+## 4. Code Snippet
+```python
+# Example using PyTorch
+...
+
+5. Related Concepts
+
+Concept A
+
+Concept B
+
+6. Fundamental Papers
+- Include **2–5 papers per topic**.  
+- Each paper must have:
+  - **Title** (in quotes)
+  - **Year**
+  - **Authors (optional)**
+  - **1–2 lines** summarizing contribution and impact  
+- Whenever possible, **link to the arXiv paper**:  
+  Example:  
+  `[Attention Is All You Need (2017)](https://arxiv.org/abs/1706.03762) — Introduced the Transformer.`  
+- For historical context, include **older foundational works** (e.g., LeNet-5, Backpropagation, RBM, LSTM) when relevant.  
+- Short explaination of each paper

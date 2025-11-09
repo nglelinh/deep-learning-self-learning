@@ -1,0 +1,99 @@
+/**
+ * Reusable Content Box Styles
+ * Provides consistent styling for different types of content boxes in markdown
+ */
+
+/* Base box style - shared properties */
+.content-box {
+  padding: 15px;
+  border-radius: 8px;
+  margin: 20px 0;
+  border-left: 4px solid transparent;
+}
+
+/* Key Insight Box - Yellow background for important concepts */
+.insight-box {
+  background-color: #fff8dc;
+  border-left-color: #f4a261;
+}
+
+/* Interactive Exercise Box - Light blue for hands-on activities */
+.exercise-box {
+  background-color: #f0f8ff;
+  border-left-color: #2a9d8f;
+}
+
+/* Summary/Takeaway Box - Light green for conclusions */
+.summary-box {
+  background-color: #e8f5e8;
+  border-left-color: #52b788;
+}
+
+/* Warning/Problem Box - Light red for alerts */
+.warning-box {
+  background-color: #ffebee;
+  border-left-color: #e63946;
+}
+
+/* Info Box - Light gray for general information */
+.info-box {
+  background-color: #f8f9fa;
+  border-left-color: #6c757d;
+}
+
+/* Note Box - Light purple for side notes */
+.note-box {
+  background-color: #f3e5f5;
+  border-left-color: #9c27b0;
+}
+
+/* Example Box - Light orange for examples */
+.example-box {
+  background-color: #fff3e0;
+  border-left-color: #ff9800;
+}
+
+/* Question Box - Light cyan for self-check questions */
+.question-box {
+  background-color: #e0f7fa;
+  border-left-color: #00acc1;
+}
+
+/* Strong text styling within boxes */
+.content-box strong {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Emoji styling for better visual hierarchy */
+.content-box .emoji-title {
+  font-size: 1.1em;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* List styling within boxes */
+.content-box ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.content-box li {
+  margin: 5px 0;
+}
+
+/* Code styling within boxes */
+.content-box code {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .content-box {
+    margin: 15px 0;
+    padding: 12px;
+  }
+}

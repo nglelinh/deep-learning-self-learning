@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      10-01 Advanced Optimization Algorithms &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    10-01 Advanced Optimization Algorithms
+    
+      
+        <span class="lesson-badge required large">Required</span>
+      
+    
+  </h1>
+  <h1 id="advanced-optimization-beyond-vanilla-gradient-descent">Advanced Optimization: Beyond Vanilla Gradient Descent</h1>
+
+<h2 id="1-concept-overview">1. Concept Overview</h2>
+
+<p>While gradient descent provides the fundamental principle for training neural networks—move parameters in the direction that decreases loss—its vanilla form suffers from several critical limitations that make training deep networks impractical. The learning rate must be carefully tuned: too large causes oscillation or divergence, too small causes painfully slow convergence. The same learning rate is used for all parameters, despite different parameters having different gradient scales and optimal update frequencies. Gradient descent treats all directions in parameter space equally, even though some directions represent ravines (steep in one direction, gentle in another) where we should move carefully. And it has no memory of previous gradients, unable to build momentum to escape shallow local minima or saddle points.</p>
+
+<p>Advanced optimization algorithms address these limitations through various mechanisms: maintaining momentum to accelerate in consistent directions while dampening oscillations; adapting learning rates per parameter based on gradient history, allowing aggressive updates for sparse gradients and conservative updates for frequent large gradients; and incorporating second-order information about the curvature of the loss surface without the prohibitive cost of computing full Hessian matrices. These improvements aren’t minor tweaks but essential techniques that have enabled training increasingly large and complex models—modern language models with billions of parameters simply couldn’t be trained with vanilla gradient descent.</p>
+
+<p>Understanding these optimizers deeply means recognizing that they’re not competing alternatives but tools suited for different scenarios. Stochastic Gradient Descent with momentum excels when the loss surface has clear, consistent gradient directions and is computationally efficient, making it popular for computer vision tasks with large batch sizes. RMSprop adapts learning rates based on recent gradient magnitudes, particularly useful for recurrent networks where gradient scales vary dramatically across time steps. Adam combines momentum and adaptive learning rates, providing good default performance across diverse tasks and becoming the de facto standard for many applications. AdamW improves Adam’s weight decay handling, crucial for training large Transformers. Each optimizer embodies different assumptions about the loss surface and gradient dynamics, and choosing appropriately can mean the difference between a model that trains in hours versus days, or that trains successfully versus not at all.</p>
+
+<p>The evolution of optimization algorithms parallels the evolution of neural architectures. As networks became deeper (requiring techniques to handle vanishing/exploding gradients), optimizers evolved to adapt learning rates and build momentum. As networks became larger (requiring training on smaller batches due to memory constraints), optimizers developed to work effectively with noisy gradient estimates. As tasks diversified (from vision to NLP to reinforcement learning), optimizers became more adaptive to different gradient landscapes. This co-evolution of architectures and optimizers is ongoing—new architectures often require optimizer innovations, and new optimizers enable new architectures.</p>
+
+<p>Yet with all these sophisticated algorithms, the fundamentals remain: we’re still computing gradients via backpropagation and taking steps opposite to these gradients. The advanced optimizers change how we determine step sizes and directions, leveraging gradient history and statistics, but the core principle—iterative refinement based on loss gradients—stays constant. This means that understanding vanilla gradient descent deeply provides the foundation for understanding all variants, which are best seen as sophisticated modifications addressing specific failure modes rather than entirely different approaches.</p>
+
+<h2 id="2-mathematical-foundation">2. Mathematical Foundation</h2>
+
+<p>Let’s build up the mathematics of advanced optimizers systematically, understanding each component’s purpose and how they combine to improve upon vanilla gradient descent. We’ll start with momentum and progress through increasingly sophisticated techniques.</p>
+
+<h3 id="momentum-building-velocity">Momentum: Building Velocity</h3>
+
+<p>Vanilla gradient descent updates parameters using only the current gradient:</p>
+
+\[\theta_t = \theta_{t-1} - \eta \nabla_\theta \mathcal{L}(\theta_{t-1})\]
+
+<p>Momentum introduces a velocity term that accumulates gradients over time:</p>
+
+\[\mathbf{v}_t = \beta \mathbf{v}_{t-1} + \nabla_\theta \mathcal{L}(\theta_{t-1})\]
+
+\[\theta_t = \theta_{t-1} - \eta \mathbf{v}_t\]
+
+<p>where \(\beta \in [0, 1)\) is the momentum coefficient (typically 0.9). The velocity \(\mathbf{v}_t\) is an exponentially weighted moving average of gradients. Expanding the recursion reveals how past gradients influence current updates:</p>
+
+\[\mathbf{v}_t = \nabla_\theta \mathcal{L}(\theta_{t-1}) + \beta \nabla_\theta \mathcal{L}(\theta_{t-2}) + \beta^2 \nabla_\theta \mathcal{L}(\theta_{t-3}) + \ldots\]
+
+<p>Recent gradients have full weight, while older gradients contribute with exponentially decaying weights \(\beta^k\). This creates several beneficial effects. First, if gradients consistently point in the same direction, the velocity builds up, accelerating progress—like a ball rolling downhill gaining speed. Second, if gradients oscillate (positive then negative), the velocity dampens oscillations—opposing gradients partially cancel. Third, momentum can carry the optimization through shallow local minima or flat regions where current gradients are near zero but past gradients indicated a good direction.</p>
+
+<p>The geometric intuition is that momentum transforms the gradient from a force into a velocity. In physics, force (gradient) causes acceleration, leading to velocity changes. Here, the gradient directly contributes to velocity, which determines position updates. This physics analogy isn’t perfect but captures how momentum creates inertia—the optimization continues moving in directions that were previously good even if the current gradient disagrees slightly.</p>
+
+<h3 id="nesterov-accelerated-gradient-nag">Nesterov Accelerated Gradient (NAG)</h3>
+
+<p>A clever modification of momentum computes gradients not at the current position but at the anticipated future position:</p>
+
+\[\mathbf{v}_t = \beta \mathbf{v}_{t-1} + \nabla_\theta \mathcal{L}(\theta_{t-1} - \beta \mathbf{v}_{t-1})\]
+
+\[\theta_t = \theta_{t-1} - \eta \mathbf{v}_t\]
+
+<p>The key difference is \(\nabla_\theta \mathcal{L}(\theta_{t-1} - \beta \mathbf{v}_{t-1})\) instead of \(\nabla_\theta \mathcal{L}(\theta_{t-1})\). We’re computing the gradient at where momentum would take us, then using that gradient to refine the update. This “look ahead” provides a form of correction: if momentum is carrying us toward a bad region, the gradient at the anticipated position will indicate this, allowing us to slow down or change direction.</p>
+
+<p>The improvement over standard momentum is subtle but consistent across many tasks. NAG typically converges faster and overshoots less at minima. The intuition is that standard momentum is reactive (respond to gradients at current position) while NAG is proactive (anticipate where we’re going and plan accordingly). In practice, the difference between momentum and NAG is often small, but NAG is theoretically better motivated and occasionally provides noticeable improvements.</p>
+
+<h3 id="adagrad-adaptive-learning-rates">AdaGrad: Adaptive Learning Rates</h3>
+
+<p>AdaGrad adapts learning rates per parameter based on accumulated squared gradients:</p>
+
+\[\mathbf{G}_t = \mathbf{G}_{t-1} + (\nabla_\theta \mathcal{L}(\theta_{t-1}))^2\]
+
+\[\theta_t = \theta_{t-1} - \frac{\eta}{\sqrt{\mathbf{G}_t + \epsilon}} \odot \nabla_\theta \mathcal{L}(\theta_{t-1})\]
+
+<p>where the square and square root are element-wise, \(\mathbf{G}_t\) accumulates squared gradients, and \(\epsilon\) (typically \(10^{-8}\)) prevents division by zero. The division by \(\sqrt{\mathbf{G}_t}\) means parameters with large accumulated gradients receive smaller updates, while parameters with small accumulated gradients receive larger updates.</p>
+
+<p>This adaptive scaling addresses a key limitation of vanilla gradient descent. In sparse features (common in NLP where most words don’t appear in most documents), some parameters receive gradient updates rarely. AdaGrad gives these infrequent parameters larger updates when they do receive gradients, while frequently updated parameters (corresponding to common features) receive smaller updates. This is particularly valuable in tasks with sparse data or highly variable feature frequencies.</p>
+
+<p>However, AdaGrad has a fatal flaw for long training runs: \(\mathbf{G}_t\) only grows, never shrinks. As training progresses, \(\sqrt{\mathbf{G}_t}\) becomes very large, making effective learning rates approach zero, and learning stops. This aggressive learning rate decay is appropriate for convex optimization where we want to slow down as we approach the minimum, but neural network loss surfaces are non-convex with many local minima, plateaus, and saddle points. Stopping adaptation too early prevents escaping these suboptimal regions.</p>
+
+<h3 id="rmsprop-exponential-moving-average">RMSprop: Exponential Moving Average</h3>
+
+<p>RMSprop fixes AdaGrad’s aggressive decay by using an exponentially weighted moving average of squared gradients instead of accumulation:</p>
+
+\[\mathbf{E}[g^2]_t = \beta \mathbf{E}[g^2]_{t-1} + (1-\beta)(\nabla_\theta \mathcal{L}(\theta_{t-1}))^2\]
+
+\[\theta_t = \theta_{t-1} - \frac{\eta}{\sqrt{\mathbf{E}[g^2]_t + \epsilon}} \odot \nabla_\theta \mathcal{L}(\theta_{t-1})\]
+
+<p>Typical \(\beta = 0.9\) means we consider roughly the last \(1/(1-\beta) = 10\) gradient updates. This allows the algorithm to forget old gradients, so if the gradient scale changes (as we move through different regions of the loss surface), the learning rate adaptation adjusts. RMSprop became particularly popular for training RNNs where gradient scales vary dramatically, and it remains a solid choice when gradient statistics change over training.</p>
+
+<h3 id="adam-adaptive-moment-estimation">Adam: Adaptive Moment Estimation</h3>
+
+<p>Adam combines momentum and RMSprop’s adaptive learning rates, maintaining both first moment (mean) and second moment (uncentered variance) estimates:</p>
+
+<p>\(\mathbf{m}_t = \beta_1 \mathbf{m}_{t-1} + (1-\beta_1) \nabla_\theta \mathcal{L}(\theta_{t-1})\) (momentum term)</p>
+
+<p>\(\mathbf{v}_t = \beta_2 \mathbf{v}_{t-1} + (1-\beta_2) (\nabla_\theta \mathcal{L}(\theta_{t-1}))^2\) (RMSprop term)</p>
+
+<p>These are biased toward zero initially (since \(\mathbf{m}_0 = \mathbf{v}_0 = 0\)). Adam corrects this bias:</p>
+
+\[\hat{\mathbf{m}}_t = \frac{\mathbf{m}_t}{1-\beta_1^t}, \quad \hat{\mathbf{v}}_t = \frac{\mathbf{v}_t}{1-\beta_2^t}\]
+
+<p>The update rule combines both:</p>
+
+\[\theta_t = \theta_{t-1} - \frac{\eta}{\sqrt{\hat{\mathbf{v}}_t} + \epsilon} \odot \hat{\mathbf{m}}_t\]
+
+<p>Default hyperparameters \(\beta_1 = 0.9, \beta_2 = 0.999, \epsilon = 10^{-8}\) work well across many tasks, making Adam popular as a “low-tuning” optimizer. The algorithm adapts to gradient statistics (through \(\mathbf{v}_t\)) while building momentum (through \(\mathbf{m}_t\)), combining benefits of both approaches.</p>
+
+<p>The bias correction deserves careful attention. Early in training, \(\mathbf{m}_t\) and \(\mathbf{v}_t\) are dominated by their initialization at zero, making them biased estimates of true moments. For example, \(\mathbf{m}_1 = (1-\beta_1)g_1\) significantly underestimates \(\mathbb{E}[g]\) when \(\beta_1 = 0.9\). Dividing by \(1-\beta_1^t\) corrects this: \(\hat{\mathbf{m}}_1 = \frac{(1-\beta_1)g_1}{1-\beta_1} = g_1\). As \(t \to \infty\), \(\beta_1^t \to 0\), so the correction factor approaches 1 and has no effect. This ensures good behavior from the first update while asymptotically behaving like uncorrected exponential averages.</p>
+
+<h3 id="adamw-decoupled-weight-decay">AdamW: Decoupled Weight Decay</h3>
+
+<p>A subtle issue with Adam is how it handles L2 regularization (weight decay). Standard practice adds \(\lambda \theta\) to gradients:</p>
+
+\[\nabla \mathcal{L}_{\text{reg}} = \nabla \mathcal{L} + \lambda \theta\]
+
+<p>But in Adam, this regularized gradient gets processed through adaptive learning rates, which can dilute the regularization effect. AdamW decouples weight decay from gradient-based optimization:</p>
+
+\[\mathbf{m}_t = \beta_1 \mathbf{m}_{t-1} + (1-\beta_1) \nabla_\theta \mathcal{L}(\theta_{t-1})\]
+
+\[\mathbf{v}_t = \beta_2 \mathbf{v}_{t-1} + (1-\beta_2) (\nabla_\theta \mathcal{L}(\theta_{t-1}))^2\]
+
+\[\theta_t = \theta_{t-1} - \eta \left(\frac{\hat{\mathbf{m}}_t}{\sqrt{\hat{\mathbf{v}}_t} + \epsilon} + \lambda \theta_{t-1}\right)\]
+
+<p>The weight decay term \(\lambda \theta_{t-1}\) is added after adaptive scaling, ensuring regularization strength is independent of gradient statistics. This seemingly minor change significantly improves generalization, particularly for Transformers and other large models where proper regularization is crucial.</p>
+
+<h2 id="3-example--intuition">3. Example / Intuition</h2>
+
+<p>To understand how different optimizers behave, imagine optimizing a function with a ravine: steep sides and a gentle slope along the bottom toward the minimum. Picture a 2D loss surface where one direction has high curvature (steep) and the perpendicular direction has low curvature (gentle). The minimum lies at the bottom of this ravine.</p>
+
+<p><strong>Vanilla Gradient Descent</strong>: Steps perpendicular to contours of constant loss. In the ravine, gradients point mostly toward the ravine bottom (steep direction), barely along it (gentle direction). We take large steps toward the sides, bounce between them, and make slow progress along the ravine toward the minimum. It’s inefficient—most gradient magnitude is in the wrong direction (perpendicular to the path to minimum) rather than the right direction (along the ravine).</p>
+
+<p><strong>SGD with Momentum</strong>: Accumulates velocity along the ravine as consistent gradients in that direction build up momentum. When gradients oscillate perpendicular to the ravine (positive then negative as we bounce between sides), the velocity in that direction dampens. We accelerate along the ravine while oscillations perpendicular to it are suppressed. The ball rolling downhill analogy is apt—momentum carries us through flat regions and helps escape shallow bowls.</p>
+
+<p><strong>AdaGrad/RMSprop</strong>: Notices that gradients in the steep direction are consistently large, while gradients in the gentle direction are small. It reduces learning rate in the steep direction (to prevent bouncing) and maintains it in the gentle direction (to make progress). This automatically does gradient rescaling based on the different curvatures, allowing larger effective steps along the ravine even with smaller steps perpendicular to it.</p>
+
+<p><strong>Adam</strong>: Combines both mechanisms. Momentum accelerates along the ravine. Adaptive learning rates prevent excessive bouncing. The result is fast, stable progress toward the minimum. Adam also handles the fact that gradient statistics change as we move—early in training, far from the minimum, gradients are large; near the minimum, they shrink. The adaptive scaling adjusts automatically.</p>
+
+<p>Consider a concrete scenario: training a neural network on a dataset with rare but important features. Vanilla SGD updates all parameters equally, so rare features get updated infrequently (only when examples containing them appear). AdaGrad/Adam give these parameters larger effective learning rates (because their \(\mathbf{v}_t\) is smaller, having accumulated fewer gradient updates), allowing them to learn quickly from the few examples they see. Common features, updated frequently, get smaller effective learning rates, preventing overreaction to individual examples. This adaptivity is why Adam often converges faster than SGD, particularly in NLP where vocabulary sparsity is extreme.</p>
+
+<h2 id="4-code-snippet">4. Code Snippet</h2>
+
+<p>Let’s implement optimizers from scratch to understand their mechanics:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="k">class</span> <span class="nc">SGDMomentum</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">
+    Stochastic Gradient Descent with Momentum.
+    
+    Maintains exponentially weighted average of gradients (velocity)
+    and uses this for updates instead of raw gradients. Accelerates
+    in consistent directions, dampens oscillations.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        params: list of parameter arrays to optimize
+        lr: learning rate
+        momentum: coefficient for velocity (β in equations)
+        </span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">lr</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">momentum</span> <span class="o">=</span> <span class="n">momentum</span>
+        
+        <span class="c1"># Initialize velocities to zero
+</span>        <span class="c1"># Each parameter gets its own velocity of same shape
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">velocities</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="nf">zeros_like</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">params</span><span class="p">]</span>
+    
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">grads</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Update parameters using momentum.
+        
+        grads: list of gradients (same structure as params)
+        
+        The velocity update v_t = β*v_{t-1} + g_t creates exponential
+        weighting: recent gradients contribute fully, older gradients
+        contribute with weight β^k. Typical β=0.9 means we effectively
+        average over ~10 recent gradients.
+        </span><span class="sh">"""</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="nf">zip</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">,</span> <span class="n">grads</span><span class="p">)):</span>
+            <span class="c1"># Update velocity: exponential moving average of gradients
+</span>            <span class="n">self</span><span class="p">.</span><span class="n">velocities</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">momentum</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">velocities</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">grad</span>
+            
+            <span class="c1"># Update parameter using velocity
+</span>            <span class="c1"># Note: some formulations use (1-β)*g instead of g
+</span>            <span class="c1"># We follow PyTorch convention
+</span>            <span class="n">param</span> <span class="o">-=</span> <span class="n">self</span><span class="p">.</span><span class="n">lr</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">velocities</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">RMSprop</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">
+    RMSprop: Root Mean Square Propagation.
+    
+    Adapts learning rate per parameter based on exponential moving
+    average of squared gradients. Parameters with consistently large
+    gradients get smaller effective learning rate.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        beta: decay rate for gradient square average
+        epsilon: small constant for numerical stability
+        </span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">lr</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">beta</span> <span class="o">=</span> <span class="n">beta</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="n">epsilon</span>
+        
+        <span class="c1"># Initialize squared gradient averages
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">sq_grads</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="nf">zeros_like</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">params</span><span class="p">]</span>
+    
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">grads</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Update using adaptive learning rates.
+        
+        The division by √E[g²] means parameters with large typical gradients
+        get smaller updates (to prevent instability), while parameters with
+        small typical gradients get larger updates (to make progress).
+        </span><span class="sh">"""</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="nf">zip</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">,</span> <span class="n">grads</span><span class="p">)):</span>
+            <span class="c1"># Update squared gradient moving average
+</span>            <span class="c1"># E[g²]_t = β*E[g²]_{t-1} + (1-β)*g²_t
+</span>            <span class="n">self</span><span class="p">.</span><span class="n">sq_grads</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">beta</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">sq_grads</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> 
+                               <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">beta</span><span class="p">)</span> <span class="o">*</span> <span class="n">grad</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            
+            <span class="c1"># Adaptive learning rate: lr / √E[g²]
+</span>            <span class="c1"># Adding epsilon prevents division by zero
+</span>            <span class="n">adapted_lr</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">lr</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">sq_grads</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">epsilon</span><span class="p">)</span>
+            
+            <span class="c1"># Update parameter
+</span>            <span class="n">param</span> <span class="o">-=</span> <span class="n">adapted_lr</span> <span class="o">*</span> <span class="n">grad</span>
+
+<span class="k">class</span> <span class="nc">Adam</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">
+    Adam: Adaptive Moment Estimation.
+    
+    Combines momentum (first moment) and RMSprop (second moment).
+    Includes bias correction for proper behavior early in training.
+    The de facto standard optimizer for many deep learning tasks.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">beta1</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">beta2</span><span class="o">=</span><span class="mf">0.999</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        beta1: decay rate for first moment (momentum)
+        beta2: decay rate for second moment (RMSprop)
+        
+        Default values work well across many tasks - Adam</span><span class="sh">'</span><span class="s">s strength
+        is robustness to hyperparameter choices.
+        </span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">lr</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">beta1</span> <span class="o">=</span> <span class="n">beta1</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">beta2</span> <span class="o">=</span> <span class="n">beta2</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="n">epsilon</span>
+        
+        <span class="c1"># Initialize moments
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">m</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="nf">zeros_like</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">params</span><span class="p">]</span>  <span class="c1"># First moment
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">v</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="nf">zeros_like</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">params</span><span class="p">]</span>  <span class="c1"># Second moment
+</span>        
+        <span class="n">self</span><span class="p">.</span><span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Time step (for bias correction)
+</span>    
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">grads</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Adam update with bias correction.
+        
+        The bias correction is crucial early in training when m_t and v_t
+        are biased toward zero. Without correction, early updates are too
+        small, slowing initial training. The correction factor 1/(1-β^t)
+        grows as t increases, then approaches 1.
+        </span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># Increment timestep
+</span>        
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="nf">zip</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">,</span> <span class="n">grads</span><span class="p">)):</span>
+            <span class="c1"># Update biased first moment estimate (momentum)
+</span>            <span class="n">self</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">beta1</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">beta1</span><span class="p">)</span> <span class="o">*</span> <span class="n">grad</span>
+            
+            <span class="c1"># Update biased second moment estimate (RMSprop)
+</span>            <span class="n">self</span><span class="p">.</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">beta2</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">beta2</span><span class="p">)</span> <span class="o">*</span> <span class="n">grad</span><span class="o">**</span><span class="mi">2</span>
+            
+            <span class="c1"># Compute bias-corrected moments
+</span>            <span class="c1"># These corrections are largest early (when t is small)
+</span>            <span class="c1"># and approach 1 as t → ∞
+</span>            <span class="n">m_hat</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">beta1</span><span class="o">**</span><span class="n">self</span><span class="p">.</span><span class="n">t</span><span class="p">)</span>
+            <span class="n">v_hat</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">beta2</span><span class="o">**</span><span class="n">self</span><span class="p">.</span><span class="n">t</span><span class="p">)</span>
+            
+            <span class="c1"># Update parameter
+</span>            <span class="c1"># Combines momentum direction (m_hat) with adaptive scaling (√v_hat)
+</span>            <span class="n">param</span> <span class="o">-=</span> <span class="n">self</span><span class="p">.</span><span class="n">lr</span> <span class="o">*</span> <span class="n">m_hat</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">v_hat</span><span class="p">)</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">epsilon</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">AdamW</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">
+    AdamW: Adam with decoupled weight decay.
+    
+    Separates L2 regularization from gradient-based optimization.
+    Better generalization than Adam, especially for Transformers.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">beta1</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">beta2</span><span class="o">=</span><span class="mf">0.999</span><span class="p">,</span> 
+                 <span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">lr</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">beta1</span> <span class="o">=</span> <span class="n">beta1</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">beta2</span> <span class="o">=</span> <span class="n">beta2</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="n">epsilon</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">weight_decay</span> <span class="o">=</span> <span class="n">weight_decay</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">m</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="nf">zeros_like</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">params</span><span class="p">]</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">v</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="nf">zeros_like</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">params</span><span class="p">]</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">grads</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Adam update with decoupled weight decay.
+        
+        Key difference from Adam: weight decay is applied directly to
+        parameters (θ ← θ - λθ) rather than being added to gradients.
+        This ensures regularization strength is independent of adaptive
+        learning rate scaling.
+        </span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="nf">zip</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="p">,</span> <span class="n">grads</span><span class="p">)):</span>
+            <span class="c1"># Update moments (same as Adam)
+</span>            <span class="n">self</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">beta1</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">beta1</span><span class="p">)</span> <span class="o">*</span> <span class="n">grad</span>
+            <span class="n">self</span><span class="p">.</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">beta2</span> <span class="o">*</span> <span class="n">self</span><span class="p">.</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">beta2</span><span class="p">)</span> <span class="o">*</span> <span class="n">grad</span><span class="o">**</span><span class="mi">2</span>
+            
+            <span class="c1"># Bias correction
+</span>            <span class="n">m_hat</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">beta1</span><span class="o">**</span><span class="n">self</span><span class="p">.</span><span class="n">t</span><span class="p">)</span>
+            <span class="n">v_hat</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">beta2</span><span class="o">**</span><span class="n">self</span><span class="p">.</span><span class="n">t</span><span class="p">)</span>
+            
+            <span class="c1"># Update with decoupled weight decay
+</span>            <span class="c1"># Weight decay happens outside adaptive scaling
+</span>            <span class="n">param</span> <span class="o">-=</span> <span class="n">self</span><span class="p">.</span><span class="n">lr</span> <span class="o">*</span> <span class="p">(</span><span class="n">m_hat</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">v_hat</span><span class="p">)</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">epsilon</span><span class="p">)</span> <span class="o">+</span> 
+                               <span class="n">self</span><span class="p">.</span><span class="n">weight_decay</span> <span class="o">*</span> <span class="n">param</span><span class="p">)</span>
+
+<span class="c1"># Demonstrate optimizer comparison on 2D optimization problem
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Comparing Optimizers on Rosenbrock Function</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Rosenbrock: f(x,y) = (1-x)² + 100(y-x²)²</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Minimum at (1, 1), but narrow curved valley makes optimization hard</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">rosenbrock</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">Classic optimization test function with narrow curved valley</span><span class="sh">"""</span>
+    <span class="nf">return </span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="k">def</span> <span class="nf">rosenbrock_grad</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">Gradient of Rosenbrock function</span><span class="sh">"""</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">400</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="mi">200</span><span class="o">*</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="n">dx</span><span class="p">],</span> <span class="p">[</span><span class="n">dy</span><span class="p">]])</span>
+
+<span class="c1"># Initialize parameters (start far from minimum)
+</span><span class="n">theta_sgd</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">]])</span>
+<span class="n">theta_momentum</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">]])</span>
+<span class="n">theta_rmsprop</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">]])</span>
+<span class="n">theta_adam</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">]])</span>
+
+<span class="c1"># Create optimizers
+</span><span class="n">opt_sgd</span> <span class="o">=</span> <span class="nf">type</span><span class="p">(</span><span class="sh">'</span><span class="s">SGD</span><span class="sh">'</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{</span><span class="sh">'</span><span class="s">lr</span><span class="sh">'</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span> <span class="sh">'</span><span class="s">params</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="n">theta_sgd</span><span class="p">]})()</span>
+<span class="n">opt_momentum</span> <span class="o">=</span> <span class="nc">SGDMomentum</span><span class="p">([</span><span class="n">theta_momentum</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">opt_rmsprop</span> <span class="o">=</span> <span class="nc">RMSprop</span><span class="p">([</span><span class="n">theta_rmsprop</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">opt_adam</span> <span class="o">=</span> <span class="nc">Adam</span><span class="p">([</span><span class="n">theta_adam</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">beta1</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">beta2</span><span class="o">=</span><span class="mf">0.999</span><span class="p">)</span>
+
+<span class="c1"># Track trajectories
+</span><span class="n">trajectories</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sh">'</span><span class="s">SGD</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="n">theta_sgd</span><span class="p">.</span><span class="nf">copy</span><span class="p">()],</span>
+    <span class="sh">'</span><span class="s">Momentum</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="n">theta_momentum</span><span class="p">.</span><span class="nf">copy</span><span class="p">()],</span>
+    <span class="sh">'</span><span class="s">RMSprop</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="n">theta_rmsprop</span><span class="p">.</span><span class="nf">copy</span><span class="p">()],</span>
+    <span class="sh">'</span><span class="s">Adam</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span><span class="n">theta_adam</span><span class="p">.</span><span class="nf">copy</span><span class="p">()]</span>
+<span class="p">}</span>
+
+<span class="c1"># Optimize for 500 steps
+</span><span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">500</span><span class="p">):</span>
+    <span class="c1"># Vanilla SGD
+</span>    <span class="n">grad</span> <span class="o">=</span> <span class="nf">rosenbrock_grad</span><span class="p">(</span><span class="n">theta_sgd</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">theta_sgd</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">theta_sgd</span> <span class="o">-=</span> <span class="n">opt_sgd</span><span class="p">.</span><span class="n">lr</span> <span class="o">*</span> <span class="n">grad</span>
+    <span class="n">trajectories</span><span class="p">[</span><span class="sh">'</span><span class="s">SGD</span><span class="sh">'</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="n">theta_sgd</span><span class="p">.</span><span class="nf">copy</span><span class="p">())</span>
+    
+    <span class="c1"># Momentum
+</span>    <span class="n">grad</span> <span class="o">=</span> <span class="nf">rosenbrock_grad</span><span class="p">(</span><span class="n">theta_momentum</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">theta_momentum</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">opt_momentum</span><span class="p">.</span><span class="nf">step</span><span class="p">([</span><span class="n">grad</span><span class="p">])</span>
+    <span class="n">trajectories</span><span class="p">[</span><span class="sh">'</span><span class="s">Momentum</span><span class="sh">'</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="n">theta_momentum</span><span class="p">.</span><span class="nf">copy</span><span class="p">())</span>
+    
+    <span class="c1"># RMSprop
+</span>    <span class="n">grad</span> <span class="o">=</span> <span class="nf">rosenbrock_grad</span><span class="p">(</span><span class="n">theta_rmsprop</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">theta_rmsprop</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">opt_rmsprop</span><span class="p">.</span><span class="nf">step</span><span class="p">([</span><span class="n">grad</span><span class="p">])</span>
+    <span class="n">trajectories</span><span class="p">[</span><span class="sh">'</span><span class="s">RMSprop</span><span class="sh">'</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="n">theta_rmsprop</span><span class="p">.</span><span class="nf">copy</span><span class="p">())</span>
+    
+    <span class="c1"># Adam
+</span>    <span class="n">grad</span> <span class="o">=</span> <span class="nf">rosenbrock_grad</span><span class="p">(</span><span class="n">theta_adam</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">theta_adam</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">opt_adam</span><span class="p">.</span><span class="nf">step</span><span class="p">([</span><span class="n">grad</span><span class="p">])</span>
+    <span class="n">trajectories</span><span class="p">[</span><span class="sh">'</span><span class="s">Adam</span><span class="sh">'</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="n">theta_adam</span><span class="p">.</span><span class="nf">copy</span><span class="p">())</span>
+
+<span class="c1"># Compare final positions
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Final positions after 500 steps:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  SGD:      (</span><span class="si">{</span><span class="n">theta_sgd</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">theta_sgd</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Momentum: (</span><span class="si">{</span><span class="n">theta_momentum</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">theta_momentum</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  RMSprop:  (</span><span class="si">{</span><span class="n">theta_rmsprop</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">theta_rmsprop</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Adam:     (</span><span class="si">{</span><span class="n">theta_adam</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">theta_adam</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  True min: (1.0000, 1.0000)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Observations:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">- Momentum accelerates along the valley</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">- RMSprop adapts to different curvatures</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">- Adam combines benefits of both</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">- Vanilla SGD is slowest (gets stuck in oscillations)</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now demonstrate on actual neural network training:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="n">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">TensorDataset</span>
+
+<span class="c1"># Create simple classification task
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training Neural Network with Different Optimizers</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Generate synthetic data: XOR-like problem
+</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">((</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)).</span><span class="nf">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>  <span class="c1"># XOR
+</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nc">FloatTensor</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nc">FloatTensor</span><span class="p">(</span><span class="n">y</span><span class="p">).</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="nc">TensorDataset</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">dataloader</span> <span class="o">=</span> <span class="nc">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Simple network
+</span><span class="k">class</span> <span class="nc">SimpleNet</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="nc">Sigmoid</span><span class="p">()</span>
+        <span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="nf">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Train with different optimizers
+</span><span class="n">optimizers_to_test</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sh">'</span><span class="s">SGD</span><span class="sh">'</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="nc">SGD</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">SGD+Momentum</span><span class="sh">'</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="nc">SGD</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> 
+                                                   <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">RMSprop</span><span class="sh">'</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="nc">RMSprop</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">Adam</span><span class="sh">'</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">AdamW</span><span class="sh">'</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="nc">AdamW</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> 
+                                            <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">optimizer_fn</span> <span class="ow">in</span> <span class="n">optimizers_to_test</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Training with </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s">...</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># Create fresh model
+</span>    <span class="n">model</span> <span class="o">=</span> <span class="nc">SimpleNet</span><span class="p">()</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="nf">optimizer_fn</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">BCELoss</span><span class="p">()</span>
+    
+    <span class="c1"># Train
+</span>    <span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">epoch_loss</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">X_batch</span><span class="p">,</span> <span class="n">y_batch</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+            <span class="c1"># Forward
+</span>            <span class="n">pred</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">X_batch</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y_batch</span><span class="p">)</span>
+            
+            <span class="c1"># Backward
+</span>            <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+            <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+            <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+            
+            <span class="n">epoch_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
+        
+        <span class="n">losses</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">epoch_loss</span> <span class="o">/</span> <span class="nf">len</span><span class="p">(</span><span class="n">dataloader</span><span class="p">))</span>
+        
+        <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="mi">25</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">:</span><span class="mi">3</span><span class="n">d</span><span class="si">}</span><span class="s">: Loss = </span><span class="si">{</span><span class="n">losses</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># Test accuracy
+</span>    <span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+        <span class="n">accuracy</span> <span class="o">=</span> <span class="p">((</span><span class="n">pred</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">).</span><span class="nf">float</span><span class="p">()</span> <span class="o">==</span> <span class="n">y_train</span><span class="p">).</span><span class="nf">float</span><span class="p">().</span><span class="nf">mean</span><span class="p">()</span>
+    
+    <span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="sh">'</span><span class="s">losses</span><span class="sh">'</span><span class="p">:</span> <span class="n">losses</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">final_loss</span><span class="sh">'</span><span class="p">:</span> <span class="n">losses</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+        <span class="sh">'</span><span class="s">accuracy</span><span class="sh">'</span><span class="p">:</span> <span class="n">accuracy</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
+    <span class="p">}</span>
+
+<span class="c1"># Compare results
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Optimizer Comparison Results</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="sh">'</span><span class="s">Optimizer</span><span class="sh">'</span><span class="si">:</span><span class="o">&lt;</span><span class="mi">15</span><span class="si">}</span><span class="s"> | </span><span class="si">{</span><span class="sh">'</span><span class="s">Final Loss</span><span class="sh">'</span><span class="si">:</span><span class="o">&lt;</span><span class="mi">12</span><span class="si">}</span><span class="s"> | </span><span class="si">{</span><span class="sh">'</span><span class="s">Accuracy</span><span class="sh">'</span><span class="si">:</span><span class="o">&lt;</span><span class="mi">10</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">45</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">results</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="o">&lt;</span><span class="mi">15</span><span class="si">}</span><span class="s"> | </span><span class="si">{</span><span class="n">res</span><span class="p">[</span><span class="sh">'</span><span class="s">final_loss</span><span class="sh">'</span><span class="p">]</span><span class="si">:</span><span class="o">&lt;</span><span class="mf">12.4</span><span class="n">f</span><span class="si">}</span><span class="s"> | </span><span class="si">{</span><span class="n">res</span><span class="p">[</span><span class="sh">'</span><span class="s">accuracy</span><span class="sh">'</span><span class="p">]</span><span class="si">:</span><span class="o">&lt;</span><span class="mf">10.2</span><span class="o">%</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Key observations:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">- Momentum accelerates convergence over vanilla SGD</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">- Adaptive methods (RMSprop, Adam) converge faster</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">- AdamW often best generalization with weight decay</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">- Choice matters: 2-5x speed difference common</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Demonstrate learning rate scheduling:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CosineAnnealingSchedule</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">
+    Cosine annealing learning rate schedule.
+    
+    Gradually decreases learning rate following cosine curve.
+    Often combined with warm restarts for improved performance.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">lr_max</span><span class="p">,</span> <span class="n">lr_min</span><span class="p">,</span> <span class="n">T_max</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        lr_max: maximum learning rate
+        lr_min: minimum learning rate
+        T_max: period of cosine cycle (iterations)
+        </span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">lr_max</span> <span class="o">=</span> <span class="n">lr_max</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">lr_min</span> <span class="o">=</span> <span class="n">lr_min</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">T_max</span> <span class="o">=</span> <span class="n">T_max</span>
+    
+    <span class="k">def</span> <span class="nf">get_lr</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Get learning rate at iteration t</span><span class="sh">"""</span>
+        <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">lr_min</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">lr_max</span> <span class="o">-</span> <span class="n">self</span><span class="p">.</span><span class="n">lr_min</span><span class="p">)</span> <span class="o">*</span> \
+               <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="nf">cos</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">%</span> <span class="n">self</span><span class="p">.</span><span class="n">T_max</span><span class="p">)</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">T_max</span><span class="p">))</span>
+
+<span class="c1"># Example
+</span><span class="n">schedule</span> <span class="o">=</span> <span class="nc">CosineAnnealingSchedule</span><span class="p">(</span><span class="n">lr_max</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">lr_min</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">T_max</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Learning Rate Scheduling</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="n">iterations</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">lrs</span> <span class="o">=</span> <span class="p">[</span><span class="n">schedule</span><span class="p">.</span><span class="nf">get_lr</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">iterations</span><span class="p">]</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Learning rate evolution (first 300 iterations):</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Start: </span><span class="si">{</span><span class="n">lrs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  After 50 iters: </span><span class="si">{</span><span class="n">lrs</span><span class="p">[</span><span class="mi">50</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  After 100 iters: </span><span class="si">{</span><span class="n">lrs</span><span class="p">[</span><span class="mi">100</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s"> (end of cycle, restarts)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  After 150 iters: </span><span class="si">{</span><span class="n">lrs</span><span class="p">[</span><span class="mi">150</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Cosine annealing smoothly reduces LR, enabling fine-tuning near minima</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="5-related-concepts">5. Related Concepts</h2>
+
+<p>The relationship between optimization algorithms and the geometry of loss surfaces illuminates why different optimizers excel in different scenarios. Deep neural network loss surfaces are highly non-convex, featuring local minima, saddle points, and plateaus. Saddle points—where gradients are zero but we’re not at a minimum—are particularly common in high dimensions. Momentum helps escape saddle points by building velocity that carries through regions with zero gradient. Adaptive learning rates help when different directions have vastly different curvatures—common in neural networks where some parameters (like biases) receive consistently similar gradients while others (like weights) have highly variable gradient magnitudes.</p>
+
+<p>The connection to second-order optimization methods provides theoretical context. Newton’s method uses second derivatives (the Hessian matrix) to account for curvature, enabling faster convergence. However, computing and inverting the Hessian for networks with millions of parameters is computationally prohibitive—\(O(n^2)\) memory and \(O(n^3)\) computation. Adaptive learning rate methods like Adam approximate second-order information through gradient statistics (the second moment \(\mathbf{v}_t\) is related to diagonal Hessian entries) without the prohibitive cost. This approximate curvature information, while cruder than full Newton methods, provides enough benefit to significantly accelerate training while remaining computationally practical.</p>
+
+<p>Optimizers interact intimately with batch normalization and other normalization techniques. Batch normalization changes the loss surface geometry, making it smoother and reducing sensitivity to learning rates. This interaction can be subtle: some optimizers that work well without normalization may be less advantageous with it. Adam with batch normalization sometimes converges to worse minima than SGD with momentum, a phenomenon called “generalization gap.” Understanding these interactions guides optimizer choice based on architecture—Transformers (which use layer normalization) often work best with AdamW, while ResNets (with batch normalization) might prefer SGD with momentum for final performance.</p>
+
+<p>The evolution from hand-tuned learning rates to adaptive methods represents a broader trend in deep learning: automating hyperparameter choices. Early neural network training required extensive tuning of learning rates, schedules, and momentum coefficients. Modern adaptive optimizers reduce this burden—Adam’s default hyperparameters work reasonably across diverse tasks. This democratization of deep learning made the field more accessible, though it also created a risk: using black-box optimizers without understanding their assumptions can lead to poor performance in edge cases. The best practitioners understand both the algorithms and when their assumptions break down.</p>
+
+<p>Learning rate schedules connect to the exploration-exploitation tradeoff in optimization. Early in training, we want to explore broadly, taking larger steps to find good regions of parameter space. Later, we want to exploit, taking smaller steps to fine-tune parameters near a minimum. Schedules like cosine annealing or step decay formalize this, reducing learning rate as training progresses. Warm-up schedules do the opposite initially—start with very small learning rate and gradually increase—which helps when using very large batches or when parameters are randomly initialized and initial gradients might be misleading. The Transformer paper’s warm-up schedule \(\eta_t = d_{\text{model}}^{-0.5} \min(t^{-0.5}, t \cdot \text{warmup}^{-1.5})\) has become standard for training large models.</p>
+
+<h2 id="6-fundamental-papers">6. Fundamental Papers</h2>
+
+<p><strong><a href="http://proceedings.mlr.press/v28/sutskever13.html">“On the importance of initialization and momentum in deep learning” (2013)</a></strong><br />
+<em>Authors</em>: Ilya Sutskever, James Martens, George Dahl, Geoffrey Hinton<br />
+This paper rigorously analyzed momentum’s benefits for deep learning, showing it’s not just a minor improvement but essential for training deep networks effectively. The authors demonstrated that momentum combined with proper initialization (they used specific schemes for different layer types) enables training much deeper networks than vanilla SGD. They showed momentum helps escape saddle points and reduces the impact of noisy gradients from mini-batch sampling. Importantly, they provided theoretical analysis of momentum’s dynamics, connecting it to classical optimization theory while demonstrating its specific advantages for non-convex neural network loss surfaces. The paper established Nesterov momentum as particularly effective, slightly but consistently outperforming standard momentum. This work influenced the field’s understanding that optimization algorithms must be tailored to deep learning’s unique challenges—high dimensionality, non-convexity, noisy gradients—rather than simply applying classical optimization methods.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1412.6980">“Adam: A Method for Stochastic Optimization” (2015)</a></strong><br />
+<em>Authors</em>: Diederik P. Kingma, Jimmy Ba<br />
+This paper introduced Adam and demonstrated its effectiveness across diverse tasks including image classification, language modeling, and variational inference. The key contribution was combining adaptive learning rates (like RMSprop) with momentum, while including bias correction to ensure good behavior from the first update. Kingma and Ba showed that Adam requires minimal hyperparameter tuning—default values \(\beta_1=0.9, \beta_2=0.999\) work well across problems—making it accessible to practitioners who can’t afford extensive tuning. The paper’s empirical comparisons showed Adam consistently matching or exceeding other optimizers while being robust to learning rate choice. Adam became the default optimizer for many applications, particularly in NLP where its adaptation to gradient statistics helps with sparse vocabularies. The paper also introduced AdaMax (a variant using \(L_\infty\) norm instead of \(L_2\)) and provided regret bound analysis connecting Adam to online convex optimization theory, though these theoretical aspects are less commonly used than the practical algorithm.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1711.05101">“Decoupled Weight Decay Regularization” (2019)</a></strong><br />
+<em>Authors</em>: Ilya Loshchilov, Frank Hutter<br />
+This paper identified a subtle but important flaw in how Adam handles L2 regularization and proposed AdamW as the solution. The authors showed that adding weight decay to gradients (standard practice) and then applying adaptive learning rates (as Adam does) causes the effective weight decay to vary across parameters based on their gradient statistics. This coupling undermines regularization—parameters with large gradients receive less weight decay, opposite of what’s desirable. AdamW decouples weight decay from gradient-based updates, applying it directly to parameters after the adaptive update. The paper demonstrated improved generalization across multiple benchmarks, particularly for Transformers where proper regularization is crucial. AdamW has largely replaced Adam for training large language models and other Transformer-based systems. The work exemplifies how understanding the interaction between different training components (optimization + regularization) reveals subtle issues that significantly impact practical performance.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1908.03265">“On the Variance of the Adaptive Learning Rate and Beyond” (2020)</a></strong><br />
+<em>Authors</em>: Liyuan Liu, Haoming Jiang, Pengcheng He, Weizhu Chen, Xiaodong Liu, Jianfeng Gao, Jiawei Han<br />
+This paper analyzed why Adam sometimes generalizes worse than SGD despite converging faster, a phenomenon called the “generalization gap.” The authors showed that Adam’s adaptive learning rates can lead to sharp minima (low training loss but poor generalization) while SGD with momentum tends to find flatter minima (better generalization). They proposed RAdam (Rectified Adam), which modifies the bias correction to be more conservative early in training when gradient statistics are unreliable. The paper deepened understanding of the optimization-generalization tradeoff: faster convergence doesn’t always mean better final performance. It showed that variance in adaptive learning rates can be harmful and proposed variance reduction techniques. This work has influenced how practitioners use Adam—recognizing when its adaptive mechanism helps (sparse gradients, varying scales) versus when simpler methods with better generalization properties (SGD+momentum) are preferable.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1907.08610">“Lookahead Optimizer: k steps forward, 1 step back” (2019)</a></strong><br />
+<em>Authors</em>: Michael R. Zhang, James Lucas, Geoffrey Hinton, Jimmy Ba<br />
+This paper introduced a meta-optimization algorithm that wraps around any base optimizer (SGD, Adam, etc.). Lookahead maintains two sets of weights: fast weights updated by the base optimizer and slow weights that periodically synchronize with fast weights. The algorithm runs the base optimizer for \(k\) steps (typically 5-10), then updates slow weights toward the fast weights, then resets fast weights to the slow weights. This reduces variance in optimization trajectory and improves convergence. The paper showed that Lookahead improves performance of base optimizers consistently across tasks, providing more stable training and often better generalization. While less commonly used than Adam or SGD+momentum, Lookahead demonstrates that optimization algorithms can be composed—we can build meta-algorithms that enhance existing optimizers. The paper’s empirical analysis across vision and language tasks established that optimizer design remains an active research area with room for innovation beyond the classics.</p>
+
+<h2 id="common-pitfalls-and-tricks">Common Pitfalls and Tricks</h2>
+
+<p>The most common mistake when using adaptive optimizers like Adam is forgetting to adjust hyperparameters when changing batch size. With vanilla SGD, doubling batch size roughly requires doubling learning rate to maintain equivalent parameter updates (since gradients are averaged over batch). But for Adam, the relationship is more complex because adaptive learning rates already account for gradient magnitudes. A practical rule: when increasing batch size, increase learning rate proportionally but less aggressively (perhaps by \(\sqrt{2}\) instead of \(2\)), and monitor validation performance carefully. Very large batch sizes (thousands) may require learning rate warm-up to prevent early instability.</p>
+
+<p>A subtle issue is optimizer state accumulation when fine-tuning pre-trained models. If you load a pre-trained model and continue training with Adam, the momentum and variance estimates start from zero, not from values appropriate for a nearly-converged model. This can cause instability or prevent fine-tuning from improving the model. The solution: either use a lower learning rate for fine-tuning (allowing gradients to build up optimizer state safely) or reset the optimizer state when loading checkpoints, starting fresh. Understanding that optimizers maintain internal state beyond just parameters helps debug unexpected fine-tuning behavior.</p>
+
+<p>Weight decay in AdamW requires calibration differently than in SGD. For SGD, weight decay around 0.0001-0.001 is typical. For AdamW, values around 0.01-0.1 often work better because the decoupling changes its effective strength. When migrating from Adam to AdamW, don’t just enable weight decay with values tuned for SGD—you’ll likely over-regularize. Start with 0.01 and tune based on train-test gap. This illustrates a broader principle: hyperparameters are not architecture-agnostic but must be tuned within the context of the full training configuration.</p>
+
+<p>Gradient clipping interacts with optimizers in non-obvious ways. For Adam, clipping gradients before the optimizer sees them affects both momentum and variance estimates. If gradients are clipped to norm 5, the maximum second moment becomes 25, bounding the adaptive scaling. This can be beneficial (prevents extremely small effective learning rates) or harmful (prevents adaptation to true gradient scales). For stability, clip gradients for RNNs and Transformers. For maximum Adam adaptivity on well-behaved networks, skip clipping. Understanding this tradeoff helps choose appropriate configurations.</p>
+
+<p>A powerful technique for hyperparameter tuning is cyclical learning rates—varying learning rate between bounds during training. This allows the model to periodically escape local minima it might settle into, potentially finding better solutions. Combined with snapshot ensembling (saving models at different points in the cycle and ensembling their predictions), this can improve performance beyond single-model training with fixed learning rates. The computational cost is minimal (just scheduling) while benefits can be substantial, making it an underutilized trick in the practitioner’s toolkit.</p>
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<p>Advanced optimization algorithms improve upon vanilla gradient descent by incorporating momentum to accelerate in consistent directions and dampen oscillations, and by adapting learning rates per parameter based on gradient history. SGD with momentum builds velocity from exponentially weighted gradient averages, helping traverse ravines and escape plateaus. RMSprop adapts learning rates using exponential averages of squared gradients, automatically scaling updates based on typical gradient magnitudes per parameter. Adam combines both mechanisms while including bias correction for proper early-iteration behavior, becoming the de facto standard for many applications due to robust performance with minimal tuning. AdamW improves Adam by decoupling weight decay from gradient-based updates, ensuring regularization strength is independent of adaptive scaling, crucial for training large Transformers. The choice of optimizer involves tradeoffs between convergence speed, final performance, computational cost, and hyperparameter sensitivity, with no single optimizer dominating all scenarios. Understanding each optimizer’s assumptions—what loss surface geometry it handles well, what gradient statistics it expects—enables matching algorithms to problems effectively. Modern practice often uses Adam or AdamW for initial experimentation due to robustness, potentially switching to SGD with momentum for final training if better generalization is needed. The sophistication of these algorithms shouldn’t obscure the fundamental principle: they’re all using gradients computed via backpropagation to iteratively improve parameters, differing only in how they process gradients into parameter updates.</p>
+
+<p>The evolution of optimization algorithms from vanilla gradient descent to modern adaptive methods represents the field learning to automate aspects of training that previously required expert tuning, democratizing deep learning while also introducing new subtleties that practitioners must understand to train models effectively.</p>
+
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter10/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter10/10_00_Introduction/">
+              10 Deep Learning Algorithms
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+    
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

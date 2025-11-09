@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      07-01 Attention Mechanisms &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    07-01 Attention Mechanisms
+    
+      
+        <span class="lesson-badge required large">Required</span>
+      
+    
+  </h1>
+  <h1 id="attention-mechanisms-learning-where-to-focus">Attention Mechanisms: Learning Where to Focus</h1>
+
+<p><img src="https://raw.githubusercontent.com/tensorflow/nmt/master/nmt/g3doc/img/attention_mechanism.jpg" alt="Attention Mechanism Visualization" />
+<em>Hình ảnh: Minh họa cơ chế Attention trong dịch máy. Nguồn: TensorFlow NMT</em></p>
+
+<h2 id="1-concept-overview">1. Concept Overview</h2>
+
+<p>Attention mechanisms represent one of the most transformative ideas in modern deep learning, fundamentally changing how neural networks process sequential and structured data. The core insight is deceptively simple yet profound: not all parts of the input are equally relevant for making a particular prediction, and the network should learn to focus on the most relevant parts dynamically based on context. This idea, first introduced to address limitations in sequence-to-sequence models for machine translation, has become so central to deep learning that it forms the foundation of Transformers, the dominant architecture in natural language processing and increasingly in computer vision and other domains.</p>
+
+<p>To understand why attention emerged and why it matters so profoundly, we must first appreciate the bottleneck problem it solves. In early encoder-decoder architectures for tasks like machine translation, the encoder processes the entire source sentence into a single fixed-size vector, which the decoder then uses to generate the translation. This fixed-size vector—regardless of whether the source is five words or fifty—must encode all information about the source that might be relevant for generating the target. This is an extreme information bottleneck. Moreover, it violates an intuitive principle of translation: when generating each target word, we should focus primarily on the corresponding source words, not treat all source words equally.</p>
+
+<p>The attention mechanism solves this by allowing the decoder to directly access all encoder hidden states, not just the final one, and to compute a weighted average of these states where the weights reflect relevance to the current decoding step. When translating “The black cat” to French, when generating “noir” (black), the attention mechanism learns to focus heavily on “black” in the source, largely ignoring “the” and “cat.” This dynamic, learned focusing ability eliminates the fixed-size bottleneck and provides interpretability—we can visualize attention weights to see what the model is focusing on, making the translation process more transparent.</p>
+
+<p>The mathematical elegance of attention lies in its generality. At its core, attention is a mechanism for computing weighted averages where the weights are determined by relevance or similarity, typically measured through learned functions. This abstraction applies far beyond machine translation. In image captioning, attention can focus on different image regions when generating different caption words. In reading comprehension, attention can focus on relevant passages when answering questions. In self-attention (used in Transformers), positions in a sequence can attend to each other to build contextualized representations. The same mathematical framework—queries, keys, values, and similarity-based weighting—works across all these domains.</p>
+
+<p>What makes attention particularly powerful is that it’s differentiable and can be trained end-to-end with backpropagation. The network learns what to attend to purely from the training objective, without explicit supervision about which source words correspond to which target words in translation, or which image regions correspond to which caption words. This learned attention often discovers alignments and relationships that match human intuitions, providing both performance gains and interpretability. The attention weights—visualizable as heatmaps showing which inputs the model focused on for each output—give us unprecedented insight into neural network decision-making.</p>
+
+<p>The evolution from simple attention in encoder-decoder models to self-attention in Transformers represents a conceptual leap. In encoder-decoder attention, the decoder (generating output) attends to the encoder (representing input)—a one-way relationship from source to target. Self-attention allows elements within the same sequence to attend to each other bidirectionally. Every word in a sentence can look at every other word to build its representation. This enables capturing complex linguistic relationships like coreference (“The cat” and “it” referring to the same entity), syntactic dependencies, and semantic relationships, all learned automatically from data. Self-attention’s power comes from enabling direct communication between all positions in a sequence, creating \(O(1)\) path lengths for information flow compared to \(O(n)\) in RNNs where information must traverse the sequence linearly.</p>
+
+<h2 id="2-mathematical-foundation">2. Mathematical Foundation</h2>
+
+<p>To understand attention deeply, we must build up from first principles, starting with the simplest formulation and progressing to the sophisticated multi-head self-attention used in Transformers. The core idea is to compute outputs as weighted combinations of values, where weights are determined by the relevance of each value to the current query.</p>
+
+<h3 id="the-general-attention-framework">The General Attention Framework</h3>
+
+<p>Suppose we have a query \(\mathbf{q}\) representing what we’re looking for, a set of keys \(\{\mathbf{k}_1, \ldots, \mathbf{k}_n\}\) representing what each input offers, and corresponding values \(\{\mathbf{v}_1, \ldots, \mathbf{v}_n\}\) representing the actual content. The attention mechanism computes:</p>
+
+<ol>
+  <li><strong>Similarity scores</strong>: \(e_i = \text{score}(\mathbf{q}, \mathbf{k}_i)\) measuring relevance</li>
+  <li><strong>Attention weights</strong>: \(\alpha_i = \frac{\exp(e_i)}{\sum_{j=1}^n \exp(e_j)}\) (softmax normalization)</li>
+  <li><strong>Context vector</strong>: \(\mathbf{c} = \sum_{i=1}^n \alpha_i \mathbf{v}_i\) (weighted sum)</li>
+</ol>
+
+<p>The choice of similarity function \(\text{score}(\mathbf{q}, \mathbf{k}_i)\) gives rise to different attention variants. Let’s examine the most important ones and understand why each design choice matters.</p>
+
+<h3 id="additive-bahdanau-attention">Additive (Bahdanau) Attention</h3>
+
+<p>The first widely successful attention mechanism, introduced for neural machine translation, uses:</p>
+
+\[\text{score}(\mathbf{q}, \mathbf{k}_i) = \mathbf{v}_a^T \tanh(\mathbf{W}_a \mathbf{q} + \mathbf{U}_a \mathbf{k}_i)\]
+
+<p>This additive formulation has several properties worth examining. The query and key are first projected through learned weight matrices \(\mathbf{W}_a\) and \(\mathbf{U}_a\), allowing the model to learn what aspects of the query and key are relevant for computing similarity. These projections happen in the same space (both result in vectors of the same dimension), which are then added and passed through \(\tanh\) nonlinearity. The \(\tanh\) serves dual purposes: it provides nonlinearity (allowing the similarity function to capture complex relationships) and it bounds the pre-softmax scores (preventing extremely large values that would cause softmax saturation).</p>
+
+<p>The final projection through \(\mathbf{v}_a^T\) (a learned vector) combines the features from the tanh layer into a single scalar score. This vector \(\mathbf{v}_a\) can be seen as learning which feature combinations indicate high relevance. The entire similarity function is learned from data through backpropagation—initially random, it adapts to discover what constitutes relevance for the specific task.</p>
+
+<h3 id="multiplicative-luong-attention">Multiplicative (Luong) Attention</h3>
+
+<p>A simpler formulation that often works as well or better:</p>
+
+\[\text{score}(\mathbf{q}, \mathbf{k}_i) = \mathbf{q}^T \mathbf{W}_a \mathbf{k}_i\]
+
+<p>or even more simply (dot-product attention):</p>
+
+\[\text{score}(\mathbf{q}, \mathbf{k}_i) = \mathbf{q}^T \mathbf{k}_i\]
+
+<p>The dot product measures similarity through alignment—high dot product means the query and key point in similar directions in the representation space. This is computationally efficient (just vector dot products) and works well when queries and keys are already in the same semantic space. The learned matrix \(\mathbf{W}_a\) in the general form allows transforming the key before comparison, giving more flexibility.</p>
+
+<p>The dot product formulation becomes particularly elegant when we consider batch processing. With query matrix \(\mathbf{Q} \in \mathbb{R}^{m \times d}\) (\(m\) queries) and key matrix \(\mathbf{K} \in \mathbb{R}^{n \times d}\) (\(n\) keys):</p>
+
+\[\mathbf{E} = \mathbf{Q}\mathbf{K}^T \in \mathbb{R}^{m \times n}\]
+
+<p>This single matrix multiplication computes all \(m \times n\) pairwise similarities simultaneously, perfectly suited for GPU parallelization. This efficiency is one reason dot-product attention became standard in Transformers.</p>
+
+<h3 id="scaled-dot-product-attention">Scaled Dot-Product Attention</h3>
+
+<p>The Transformer uses dot-product attention with a crucial modification—scaling:</p>
+
+\[\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\right) \mathbf{V}\]
+
+<p>where \(d_k\) is the dimension of keys (and queries). Why this scaling? Consider what happens as \(d_k\) grows. If query and key components are independent random variables with mean 0 and variance 1, their dot product has variance \(d_k\). For \(d_k = 512\) (common in Transformers), unnormalized dot products have standard deviation \(\sqrt{512} \approx 22.6\). After softmax, such large magnitudes cause one probability to dominate (approaching 1) with others near 0, creating sharp attention distributions where gradients vanish.</p>
+
+<p>Dividing by \(\sqrt{d_k}\) normalizes the variance back to 1, regardless of dimension. This keeps dot products in a range where softmax has meaningful gradients, allowing the model to learn nuanced attention distributions—attending to multiple positions with varying weights rather than hard selection of a single position. This seemingly minor scaling factor was crucial to making Transformer attention work for large model dimensions.</p>
+
+<h3 id="self-attention-the-key-innovation">Self-Attention: The Key Innovation</h3>
+
+<p>Self-attention applies attention within a single sequence, allowing elements to attend to each other. For a sequence \(\mathbf{X} = [\mathbf{x}_1, \ldots, \mathbf{x}_n]\), we create queries, keys, and values through learned projections:</p>
+
+\[\mathbf{Q} = \mathbf{X}\mathbf{W}^Q, \quad \mathbf{K} = \mathbf{X}\mathbf{W}^K, \quad \mathbf{V} = \mathbf{X}\mathbf{W}^V\]
+
+<p>Each position becomes a query asking “what context is relevant to me?” Its query is compared against all positions’ keys (including its own), producing attention weights that determine how much to incorporate from each position’s value. The output for position \(i\) is:</p>
+
+\[\mathbf{o}_i = \sum_{j=1}^n \alpha_{ij} \mathbf{v}_j, \quad \text{where} \quad \alpha_{ij} = \frac{\exp(\mathbf{q}_i^T \mathbf{k}_j / \sqrt{d_k})}{\sum_{j'=1}^n \exp(\mathbf{q}_i^T \mathbf{k}_{j'} / \sqrt{d_k})}\]
+
+<table>
+  <tbody>
+    <tr>
+      <td>This creates an \(n \times n\) matrix of interactions between all position pairs. Position \(i\) can directly attend to position \(j\) regardless of how far apart they are in the sequence. This direct connectivity is what enables capturing long-range dependencies without the vanishing gradient issues of RNNs—information flows directly from position \(j\) to position \(i\) in one step, not through $$</td>
+      <td>i-j</td>
+      <td>$$ sequential transformations.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="multi-head-attention-multiple-perspectives">Multi-Head Attention: Multiple Perspectives</h3>
+
+<p>A single attention mechanism can learn one type of relationship, but natural language (and many other structured domains) involves multiple simultaneous relationship types. Multi-head attention addresses this by computing attention multiple times in parallel with different learned projections:</p>
+
+\[\text{head}_h = \text{Attention}(\mathbf{X}\mathbf{W}_h^Q, \mathbf{X}\mathbf{W}_h^K, \mathbf{X}\mathbf{W}_h^V)\]
+
+\[\text{MultiHead}(\mathbf{X}) = \text{Concat}(\text{head}_1, \ldots, \text{head}_H) \mathbf{W}^O\]
+
+<p>Each head has its own projection matrices \(\mathbf{W}_h^Q, \mathbf{W}_h^K, \mathbf{W}_h^V\), allowing it to learn different attention patterns. Empirically, different heads specialize: one might learn to attend to syntactically related words, another to semantically similar words, another to simply nearby words. The network discovers these specializations automatically through backpropagation—we don’t specify what each head should do, we merely provide the capacity for specialization through separate parameters.</p>
+
+<p>The typical configuration uses 8 heads with \(d_k = d_v = d_{\text{model}}/8\), meaning each head operates in a lower-dimensional space (64 dimensions if \(d_{\text{model}} = 512\)). This design choice maintains the same total computational cost as single-head full-dimension attention while providing representational advantages of multiple perspectives. The final concatenation and projection through \(\mathbf{W}^O\) integrates information from all heads, allowing them to collaborate rather than operating independently.</p>
+
+<h3 id="masking-in-attention">Masking in Attention</h3>
+
+<p>For many applications, we need to prevent attention to certain positions. Two types of masking are crucial:</p>
+
+<p><strong>Padding mask</strong>: When sequences in a batch have different lengths, we pad shorter sequences. The mask prevents attending to padding tokens:</p>
+
+\[\text{mask}_{ij} = \begin{cases} 1 &amp; \text{if position } j \text{ is real content} \\ 0 &amp; \text{if position } j \text{ is padding} \end{cases}\]
+
+<p><strong>Causal (look-ahead) mask</strong>: For autoregressive generation, position \(i\) cannot attend to positions \(j &gt; i\) (future positions):</p>
+
+\[\text{mask}_{ij} = \begin{cases} 1 &amp; \text{if } j \leq i \\ 0 &amp; \text{if } j &gt; i \end{cases}\]
+
+<p>These masks are applied before softmax by setting masked positions to \(-\infty\):</p>
+
+\[\text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}} + \mathbf{M}\right)\]
+
+<p>where \(\mathbf{M}_{ij} = 0\) if allowed, \(-\infty\) if masked. Since \(\exp(-\infty) = 0\), masked positions receive zero attention weight after softmax.</p>
+
+<h2 id="3-example--intuition">3. Example / Intuition</h2>
+
+<p>To build genuine intuition for how attention works, let’s trace through the mechanics of translating the sentence “I love deep learning” to French “J’aime l’apprentissage profond” using encoder-decoder attention.</p>
+
+<p>The encoder processes the English sentence, producing hidden states \(\mathbf{h}_1^{enc}, \ldots, \mathbf{h}_4^{enc}\) for the four words. These hidden states contain rich representations of each word in context—”deep” is represented not in isolation but as modifying “learning.”</p>
+
+<p>Now the decoder begins generating the French translation. At the first step, it must generate “J’” (I). The decoder has its own hidden state \(\mathbf{s}_1\) representing “about to generate the first word.” This becomes the query: “What source information is relevant for generating the first word?” The encoder hidden states serve as keys and values.</p>
+
+<p>The attention mechanism computes similarities between the query \(\mathbf{s}_1\) and each encoder hidden state:</p>
+
+<p>\(e_{1,1} = \mathbf{s}_1^T \mathbf{W}_a \mathbf{h}_1^{enc}\) (similarity to “I”)
+\(e_{1,2} = \mathbf{s}_1^T \mathbf{W}_a \mathbf{h}_2^{enc}\) (similarity to “love”)
+\(e_{1,3} = \mathbf{s}_1^T \mathbf{W}_a \mathbf{h}_3^{enc}\) (similarity to “deep”)
+\(e_{1,4} = \mathbf{s}_1^T \mathbf{W}_a \mathbf{h}_4^{enc}\) (similarity to “learning”)</p>
+
+<p>Suppose these scores are \([2.5, 0.8, 0.3, 0.2]\). After softmax normalization, we get attention weights approximately \([0.77, 0.14, 0.05, 0.04]\). The model has learned to focus primarily on “I” (0.77) when generating “J’”, which aligns perfectly with the translation.</p>
+
+<p>The context vector is then:</p>
+
+\[\mathbf{c}_1 = 0.77 \cdot \mathbf{h}_1^{enc} + 0.14 \cdot \mathbf{h}_2^{enc} + 0.05 \cdot \mathbf{h}_3^{enc} + 0.04 \cdot \mathbf{h}_4^{enc}\]
+
+<p>This context is heavily influenced by the representation of “I” but includes minor contributions from other words, capturing that even when translating “I”, other context matters (formal vs informal, sentence structure, etc.). The decoder then combines this context with its own state to generate “J’”.</p>
+
+<p>Moving to the third French word “l’apprentissage” (learning), the decoder state \(\mathbf{s}_3\) now asks: “What’s relevant for generating this word?” The attention mechanism might produce weights \([0.03, 0.05, 0.12, 0.80]\), focusing primarily on “learning” (0.80) with some attention to “deep” (0.12) since they form a compound in English. The context vector:</p>
+
+\[\mathbf{c}_3 = 0.03 \cdot \mathbf{h}_1^{enc} + 0.05 \cdot \mathbf{h}_2^{enc} + 0.12 \cdot \mathbf{h}_3^{enc} + 0.80 \cdot \mathbf{h}_4^{enc}\]
+
+<p>This adaptive focus on different source parts for different target words is attention’s power—it solves the alignment problem in translation without explicit alignment annotations.</p>
+
+<p>Now consider self-attention within the English sentence itself. When building a representation for “learning,” we compute its similarity to all words including itself:</p>
+
+<ul>
+  <li>“learning” ↔ “I”: Low similarity (different parts of speech, distant semantically)</li>
+  <li>“learning” ↔ “love”: Medium (syntactically related—”love” governs “learning”)</li>
+  <li>“learning” ↔ “deep”: High (forms compound noun phrase “deep learning”)</li>
+  <li>“learning” ↔ “learning”: High (self-similarity)</li>
+</ul>
+
+<p>After softmax, suppose we get weights \([0.08, 0.17, 0.40, 0.35]\). The contextualized representation becomes:</p>
+
+\[\mathbf{o}_{\text{learning}} = 0.08 \mathbf{v}_I + 0.17 \mathbf{v}_{\text{love}} + 0.40 \mathbf{v}_{\text{deep}} + 0.35 \mathbf{v}_{\text{learning}}\]
+
+<p>This representation now encodes not just “learning” in isolation but “deep learning” as a concept, incorporating information from its modifier. This is how self-attention builds contextualized representations—every word’s representation becomes a function of its relationships to all other words.</p>
+
+<p>The beauty of multi-head attention is that different heads can capture different aspects simultaneously. Head 1 might focus on syntactic dependencies (subject-verb, adjective-noun). Head 2 might focus on semantic relationships (coreference, similarity). Head 3 might use positional patterns (attending to adjacent words). Each head uses different projection matrices \(\mathbf{W}_h^Q, \mathbf{W}_h^K, \mathbf{W}_h^V\), allowing it to implement a different similarity function and thus discover different relationships.</p>
+
+<p>Mathematically, with \(H\) heads and \(d_k = d_v = d_{\text{model}}/H\):</p>
+
+\[\text{head}_h = \text{Attention}(\mathbf{X}\mathbf{W}_h^Q, \mathbf{X}\mathbf{W}_h^K, \mathbf{X}\mathbf{W}_h^V)\]
+
+<p>where \(\mathbf{W}_h^Q, \mathbf{W}_h^K \in \mathbb{R}^{d_{\text{model}} \times d_k}\) and \(\mathbf{W}_h^V \in \mathbb{R}^{d_{\text{model}} \times d_v}\). Each head produces output of dimension \(d_v\), and concatenating \(H\) heads gives dimension \(H \cdot d_v = d_{\text{model}}\), which is then projected:</p>
+
+\[\text{MultiHead}(\mathbf{X}) = [\text{head}_1; \ldots; \text{head}_H] \mathbf{W}^O\]
+
+<p>where \(\mathbf{W}^O \in \mathbb{R}^{d_{\text{model}} \times d_{\text{model}}}\). This final projection integrates information from all heads, allowing them to collaborate. Without it, heads would be completely independent, potentially learning redundant patterns.</p>
+
+<h2 id="4-code-snippet">4. Code Snippet</h2>
+
+<p>Let’s implement attention mechanisms from scratch to understand every detail:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="n">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
+
+<span class="k">class</span> <span class="nc">BahdanauAttention</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">
+    Additive (Bahdanau) attention for encoder-decoder models.
+    
+    This was the first successful attention mechanism for neural machine
+    translation. While more complex than dot-product attention, it</span><span class="sh">'</span><span class="s">s
+    instructive for understanding the general attention framework.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        hidden_dim: dimension of encoder/decoder hidden states
+        
+        We</span><span class="sh">'</span><span class="s">ll learn to project both encoder states and decoder state
+        into a common space where we measure similarity.
+        </span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">hidden_dim</span> <span class="o">=</span> <span class="n">hidden_dim</span>
+        
+        <span class="c1"># Projection matrices
+</span>        <span class="c1"># Wa projects encoder hidden states
+</span>        <span class="c1"># Ua projects decoder state (query)
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">Wa</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.01</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">Ua</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.01</span>
+        
+        <span class="c1"># va projects combined features to scalar score
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">va</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.01</span>
+    
+    <span class="k">def</span> <span class="nf">compute_attention</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">decoder_state</span><span class="p">,</span> <span class="n">encoder_states</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Compute attention weights and context vector.
+        
+        decoder_state: (hidden_dim, 1) - current decoder state (query)
+        encoder_states: list of (hidden_dim, 1) - all encoder states (keys/values)
+        
+        Returns:
+            context: weighted average of encoder states
+            attention_weights: what we attended to (for visualization)
+        </span><span class="sh">"""</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="c1"># Compute score for each encoder state
+</span>        <span class="k">for</span> <span class="n">h_enc</span> <span class="ow">in</span> <span class="n">encoder_states</span><span class="p">:</span>
+            <span class="c1"># Additive scoring: v^T tanh(Wa*h_enc + Ua*s_dec)
+</span>            <span class="c1"># This is more flexible than dot product but more expensive
+</span>            <span class="n">projected_enc</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">Wa</span> <span class="o">@</span> <span class="n">h_enc</span>
+            <span class="n">projected_dec</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">Ua</span> <span class="o">@</span> <span class="n">decoder_state</span>
+            
+            <span class="c1"># Add and pass through tanh
+</span>            <span class="n">combined</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">tanh</span><span class="p">(</span><span class="n">projected_enc</span> <span class="o">+</span> <span class="n">projected_dec</span><span class="p">)</span>
+            
+            <span class="c1"># Project to scalar score
+</span>            <span class="n">score</span> <span class="o">=</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">va</span><span class="p">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">combined</span><span class="p">).</span><span class="nf">item</span><span class="p">()</span>
+            <span class="n">scores</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+        
+        <span class="c1"># Softmax to get attention weights
+</span>        <span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+        <span class="n">exp_scores</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="n">scores</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="nf">max</span><span class="p">(</span><span class="n">scores</span><span class="p">))</span>  <span class="c1"># Subtract max for numerical stability
+</span>        <span class="n">attention_weights</span> <span class="o">=</span> <span class="n">exp_scores</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">exp_scores</span><span class="p">)</span>
+        
+        <span class="c1"># Compute weighted average (context vector)
+</span>        <span class="n">context</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros_like</span><span class="p">(</span><span class="n">encoder_states</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">weight</span><span class="p">,</span> <span class="n">h_enc</span> <span class="ow">in</span> <span class="nf">zip</span><span class="p">(</span><span class="n">attention_weights</span><span class="p">,</span> <span class="n">encoder_states</span><span class="p">):</span>
+            <span class="n">context</span> <span class="o">+=</span> <span class="n">weight</span> <span class="o">*</span> <span class="n">h_enc</span>
+        
+        <span class="k">return</span> <span class="n">context</span><span class="p">,</span> <span class="n">attention_weights</span>
+
+<span class="c1"># Demonstrate attention on simple translation example
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Bahdanau Attention Example: Neural Machine Translation</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Simulate encoder states for "I love deep learning" (4 words)
+# In practice, these come from running encoder RNN
+</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">encoder_states</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
+<span class="n">source_words</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">I</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">love</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">deep</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">learning</span><span class="sh">"</span><span class="p">]</span>
+
+<span class="c1"># Create attention mechanism
+</span><span class="n">attention</span> <span class="o">=</span> <span class="nc">BahdanauAttention</span><span class="p">(</span><span class="n">hidden_dim</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="c1"># Simulate decoder states when generating "J'aime l'apprentissage profond"
+</span><span class="n">target_words</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">J</span><span class="sh">'"</span><span class="p">,</span> <span class="sh">"</span><span class="s">aime</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">l</span><span class="sh">'</span><span class="s">apprentissage</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">profond</span><span class="sh">"</span><span class="p">]</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Attention weights when generating each French word:</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="sh">'</span><span class="s">Target</span><span class="sh">'</span><span class="si">:</span><span class="o">&lt;</span><span class="mi">20</span><span class="si">}</span><span class="s"> | </span><span class="si">{</span><span class="sh">'</span><span class="s">Attention to source words</span><span class="sh">'</span><span class="si">:</span><span class="o">&lt;</span><span class="mi">50</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">72</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">target_word</span> <span class="ow">in</span> <span class="n">target_words</span><span class="p">:</span>
+    <span class="c1"># Simulate decoder state for this target word
+</span>    <span class="n">decoder_state</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1"># Compute attention
+</span>    <span class="n">context</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="n">attention</span><span class="p">.</span><span class="nf">compute_attention</span><span class="p">(</span><span class="n">decoder_state</span><span class="p">,</span> <span class="n">encoder_states</span><span class="p">)</span>
+    
+    <span class="c1"># Display attention distribution
+</span>    <span class="n">weight_str</span> <span class="o">=</span> <span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">.</span><span class="nf">join</span><span class="p">([</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">src</span><span class="si">}</span><span class="s">:</span><span class="si">{</span><span class="n">w</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span> <span class="k">for</span> <span class="n">src</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nf">zip</span><span class="p">(</span><span class="n">source_words</span><span class="p">,</span> <span class="n">weights</span><span class="p">)])</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">target_word</span><span class="si">:</span><span class="o">&lt;</span><span class="mi">20</span><span class="si">}</span><span class="s"> | </span><span class="si">{</span><span class="n">weight_str</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">The model learns to focus on relevant source words for each target word!</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">In a trained model, these alignments would be much sharper.</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now implement the Transformer’s scaled dot-product attention:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ScaledDotProductAttention</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">
+    Scaled dot-product attention as used in Transformers.
+    
+    This is simpler and more efficient than additive attention,
+    while being equally or more effective. The scaling by √d_k
+    is critical for training stability.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">d_k</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">d_k</span> <span class="o">=</span> <span class="n">d_k</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">d_k</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Q: queries (seq_len_q, d_k)
+        K: keys (seq_len_k, d_k)
+        V: values (seq_len_v, d_v) where seq_len_k == seq_len_v
+        mask: optional (seq_len_q, seq_len_k), 1 where allowed, 0 where masked
+        
+        Returns:
+            output: (seq_len_q, d_v)
+            attention_weights: (seq_len_q, seq_len_k)
+        </span><span class="sh">"""</span>
+        <span class="c1"># Compute attention scores: Q·K^T / √d_k
+</span>        <span class="c1"># This is a matrix of all pairwise similarities
+</span>        <span class="n">scores</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">@</span> <span class="n">K</span><span class="p">.</span><span class="n">T</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">scale</span>  <span class="c1"># (seq_len_q, seq_len_k)
+</span>        
+        <span class="c1"># Apply mask if provided
+</span>        <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c1"># Set masked positions to very negative (will be ~0 after softmax)
+</span>            <span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="o">-</span><span class="mf">1e9</span><span class="p">)</span>
+        
+        <span class="c1"># Softmax along key dimension (each query gets probability distribution over keys)
+</span>        <span class="n">attention_weights</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">_softmax</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># Weighted sum of values
+</span>        <span class="n">output</span> <span class="o">=</span> <span class="n">attention_weights</span> <span class="o">@</span> <span class="n">V</span>  <span class="c1"># (seq_len_q, d_v)
+</span>        
+        <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">attention_weights</span>
+    
+    <span class="k">def</span> <span class="nf">_softmax</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Numerically stable softmax</span><span class="sh">"""</span>
+        <span class="n">x_max</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">max</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">exp_x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_max</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">exp_x</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">exp_x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Demonstrate self-attention
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Self-Attention Example: Building Contextualized Representations</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Simulated word embeddings for "The cat sat"
+# In practice, these come from an embedding layer
+</span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="sh">"</span><span class="s">The</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">cat</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">sat</span><span class="sh">"</span><span class="p">]</span>
+<span class="n">d_model</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">words</span><span class="p">),</span> <span class="n">d_model</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Creating contextualized representations using self-attention...</span><span class="se">\n</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Create Q, K, V through linear projections (simplified: use same embeddings)
+# In Transformers, these would be learned projections
+</span><span class="n">d_k</span> <span class="o">=</span> <span class="n">d_v</span> <span class="o">=</span> <span class="n">d_model</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">embeddings</span>  <span class="c1"># Each word queries for relevant context
+</span><span class="n">K</span> <span class="o">=</span> <span class="n">embeddings</span>  <span class="c1"># Each word offers its representation as key
+</span><span class="n">V</span> <span class="o">=</span> <span class="n">embeddings</span>  <span class="c1"># Each word provides its content as value
+</span>
+<span class="c1"># Apply attention
+</span><span class="n">attention_mechanism</span> <span class="o">=</span> <span class="nc">ScaledDotProductAttention</span><span class="p">(</span><span class="n">d_k</span><span class="p">)</span>
+<span class="n">contextualized</span><span class="p">,</span> <span class="n">attn_weights</span> <span class="o">=</span> <span class="n">attention_mechanism</span><span class="p">.</span><span class="nf">forward</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Attention weights (each row shows what that word attended to):</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="sh">'</span><span class="s">Word</span><span class="sh">'</span><span class="si">:</span><span class="o">&lt;</span><span class="mi">6</span><span class="si">}</span><span class="s"> | </span><span class="si">{</span><span class="sh">'</span><span class="s">The</span><span class="sh">'</span><span class="si">:</span><span class="o">&lt;</span><span class="mi">8</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="sh">'</span><span class="s">cat</span><span class="sh">'</span><span class="si">:</span><span class="o">&lt;</span><span class="mi">8</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="sh">'</span><span class="s">sat</span><span class="sh">'</span><span class="si">:</span><span class="o">&lt;</span><span class="mi">8</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span> <span class="o">*</span> <span class="mi">35</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">words</span><span class="p">):</span>
+    <span class="n">weights_str</span> <span class="o">=</span> <span class="sh">"</span><span class="s"> </span><span class="sh">"</span><span class="p">.</span><span class="nf">join</span><span class="p">([</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">w</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">attn_weights</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">word</span><span class="si">:</span><span class="o">&lt;</span><span class="mi">6</span><span class="si">}</span><span class="s"> | </span><span class="si">{</span><span class="n">weights_str</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Contextualized representations incorporate information from attended words.</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"'</span><span class="s">cat</span><span class="sh">'</span><span class="s"> representation now includes context from </span><span class="sh">'</span><span class="s">The</span><span class="sh">'</span><span class="s"> and </span><span class="sh">'</span><span class="s">sat</span><span class="sh">'</span><span class="s">.</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Complete PyTorch multi-head attention implementation:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Multi-head attention as used in Transformers.
+    
+    This implementation shows all details: splitting into heads,
+    computing attention for each head in parallel, and recombining.
+    Modern frameworks optimize this heavily, but understanding the
+    mechanics is crucial.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">d_model</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="k">assert</span> <span class="n">d_model</span> <span class="o">%</span> <span class="n">num_heads</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> \
+            <span class="sa">f</span><span class="sh">"</span><span class="s">d_model (</span><span class="si">{</span><span class="n">d_model</span><span class="si">}</span><span class="s">) must be divisible by num_heads (</span><span class="si">{</span><span class="n">num_heads</span><span class="si">}</span><span class="s">)</span><span class="sh">"</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">d_model</span> <span class="o">=</span> <span class="n">d_model</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">num_heads</span> <span class="o">=</span> <span class="n">num_heads</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">d_k</span> <span class="o">=</span> <span class="n">d_model</span> <span class="o">//</span> <span class="n">num_heads</span>
+        
+        <span class="c1"># Linear projections for Q, K, V (for all heads combined)
+</span>        <span class="c1"># Why combined? GPU efficiency - single matrix multiply vs H separate ones
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">W_q</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">W_k</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">W_v</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        
+        <span class="c1"># Output projection to integrate heads
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">W_o</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>
+        
+        <span class="c1"># Scale for dot-product attention
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">d_k</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">split_heads</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Split last dimension into (num_heads, d_k).
+        
+        Input:  (batch, seq_len, d_model)
+        Output: (batch, num_heads, seq_len, d_k)
+        
+        This reshaping allows each head to operate independently
+        on its d_k dimensional subspace.
+        </span><span class="sh">"""</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">d_k</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="nf">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># (batch, num_heads, seq_len, d_k)
+</span>    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        query, key, value: (batch, seq_len, d_model)
+        mask: optional (batch, 1, seq_len, seq_len) or (batch, 1, 1, seq_len)
+        
+        For self-attention: query = key = value = input sequence
+        For encoder-decoder: query = decoder, key = value = encoder output
+        </span><span class="sh">"""</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">query</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        
+        <span class="c1"># Linear projections in batch
+</span>        <span class="c1"># Each word gets projected to Q, K, V spaces
+</span>        <span class="n">Q</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nc">W_q</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>  <span class="c1"># (batch, seq_len, d_model)
+</span>        <span class="n">K</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nc">W_k</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">V</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nc">W_v</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        
+        <span class="c1"># Split into multiple heads
+</span>        <span class="c1"># Each head works with d_k dimensions
+</span>        <span class="n">Q</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">split_heads</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>  <span class="c1"># (batch, num_heads, seq_len, d_k)
+</span>        <span class="n">K</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">split_heads</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
+        <span class="n">V</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">split_heads</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
+        
+        <span class="c1"># Scaled dot-product attention for all heads in parallel
+</span>        <span class="c1"># Q·K^T gives (batch, num_heads, seq_len_q, seq_len_k)
+</span>        <span class="n">scores</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">matmul</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">.</span><span class="nf">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">self</span><span class="p">.</span><span class="n">scale</span>
+        
+        <span class="c1"># Apply mask if provided
+</span>        <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">scores</span> <span class="o">=</span> <span class="n">scores</span><span class="p">.</span><span class="nf">masked_fill</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1e9</span><span class="p">)</span>
+        
+        <span class="c1"># Softmax to get attention weights
+</span>        <span class="c1"># Each query position gets probability distribution over key positions
+</span>        <span class="n">attn_weights</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="nf">softmax</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">attn_weights</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">dropout</span><span class="p">(</span><span class="n">attn_weights</span><span class="p">)</span>
+        
+        <span class="c1"># Apply attention weights to values
+</span>        <span class="n">context</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">matmul</span><span class="p">(</span><span class="n">attn_weights</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>  <span class="c1"># (batch, num_heads, seq_len, d_k)
+</span>        
+        <span class="c1"># Recombine heads
+</span>        <span class="c1"># Transpose and reshape to (batch, seq_len, d_model)
+</span>        <span class="n">context</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">).</span><span class="nf">contiguous</span><span class="p">()</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">d_model</span><span class="p">)</span>
+        
+        <span class="c1"># Final linear projection
+</span>        <span class="n">output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nc">W_o</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">attn_weights</span>
+
+<span class="c1"># Demonstrate multi-head attention
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Multi-Head Self-Attention Example</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">seq_len</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">d_model</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">num_heads</span> <span class="o">=</span> <span class="mi">8</span>
+
+<span class="c1"># Create multi-head attention
+</span><span class="n">mha</span> <span class="o">=</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">d_model</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">)</span>
+
+<span class="c1"># Random input (simulating embedded sequence)
+</span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
+
+<span class="c1"># Self-attention: query = key = value = x
+</span><span class="n">output</span><span class="p">,</span> <span class="n">attention_weights</span> <span class="o">=</span> <span class="nf">mha</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Input shape: </span><span class="si">{</span><span class="n">x</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (2, 6, 64)
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Output shape: </span><span class="si">{</span><span class="n">output</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (2, 6, 64) - same as input
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Attention weights shape: </span><span class="si">{</span><span class="n">attention_weights</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (2, 8, 6, 6)
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Attention weights: (batch, num_heads, seq_len_q, seq_len_k)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  - 2 batches</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  - 8 heads (each learns different attention pattern)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  - 6×6 attention matrix (each query attends to all keys)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Visualize attention pattern for first batch, first head
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Attention pattern (batch 0, head 0):</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">attn_matrix</span> <span class="o">=</span> <span class="n">attention_weights</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">].</span><span class="nf">detach</span><span class="p">().</span><span class="nf">numpy</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Each row shows what that position attends to:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">attn_matrix</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Each row sums to 1.0: </span><span class="si">{</span><span class="n">attn_matrix</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Demonstrate masked attention (causal mask for autoregressive)
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Masked Self-Attention (Causal Mask for Language Modeling)</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">create_causal_mask</span><span class="p">(</span><span class="n">seq_len</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Create lower triangular mask: position i can only attend to positions ≤ i
+    
+    This prevents information leakage from future tokens during training
+    of autoregressive models like GPT.
+    </span><span class="sh">"""</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">tril</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">ones</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">mask</span>  <span class="c1"># 1 where allowed, 0 where masked
+</span>
+<span class="n">causal_mask</span> <span class="o">=</span> <span class="nf">create_causal_mask</span><span class="p">(</span><span class="n">seq_len</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Causal mask (1 = allowed, 0 = masked future):</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">causal_mask</span><span class="p">.</span><span class="nf">numpy</span><span class="p">().</span><span class="nf">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+
+<span class="c1"># Apply masked attention
+</span><span class="n">output_masked</span><span class="p">,</span> <span class="n">attn_masked</span> <span class="o">=</span> <span class="nf">mha</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">causal_mask</span><span class="p">.</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Masked attention weights (batch 0, head 0):</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">attn_masked_matrix</span> <span class="o">=</span> <span class="n">attn_masked</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">].</span><span class="nf">detach</span><span class="p">().</span><span class="nf">numpy</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">attn_masked_matrix</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Notice: Future positions (upper triangle) have zero attention weight!</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Each position only attends to current and previous positions.</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Complete example showing attention in sequence-to-sequence:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Seq2SeqWithAttention</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Sequence-to-sequence model with attention mechanism.
+    
+    Demonstrates encoder-decoder attention (decoder attending to encoder)
+    which is different from self-attention. This was the original
+    use case for attention mechanisms.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_vocab_size</span><span class="p">,</span> <span class="n">output_vocab_size</span><span class="p">,</span> 
+                 <span class="n">embedding_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="c1"># Encoder: embedding + LSTM
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">encoder_embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Embedding</span><span class="p">(</span><span class="n">input_vocab_size</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">encoder_lstm</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">LSTM</span><span class="p">(</span><span class="n">embedding_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="c1"># Decoder: embedding + LSTM + attention + output
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">decoder_embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Embedding</span><span class="p">(</span><span class="n">output_vocab_size</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">decoder_lstm</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">LSTM</span><span class="p">(</span><span class="n">embedding_dim</span> <span class="o">+</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> 
+                                    <span class="n">batch_first</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="c1"># Attention mechanism (decoder queries encoder)
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">attention</span> <span class="o">=</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">num_heads</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        
+        <span class="c1"># Output projection
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">output_proj</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">output_vocab_size</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Encode source sequence.
+        src: (batch, src_len) token indices
+        
+        Returns all encoder hidden states for attention
+        </span><span class="sh">"""</span>
+        <span class="n">embedded</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">encoder_embedding</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+        <span class="n">encoder_outputs</span><span class="p">,</span> <span class="p">(</span><span class="n">h_n</span><span class="p">,</span> <span class="n">c_n</span><span class="p">)</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">encoder_lstm</span><span class="p">(</span><span class="n">embedded</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">encoder_outputs</span><span class="p">,</span> <span class="p">(</span><span class="n">h_n</span><span class="p">,</span> <span class="n">c_n</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">decode_step</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">tgt_token</span><span class="p">,</span> <span class="n">decoder_state</span><span class="p">,</span> <span class="n">encoder_outputs</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        One decoder step with attention.
+        
+        tgt_token: (batch, 1) current target token
+        decoder_state: (h, c) decoder LSTM state
+        encoder_outputs: (batch, src_len, hidden_dim) to attend to
+        </span><span class="sh">"""</span>
+        <span class="c1"># Embed target token
+</span>        <span class="n">embedded</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">decoder_embedding</span><span class="p">(</span><span class="n">tgt_token</span><span class="p">)</span>  <span class="c1"># (batch, 1, embedding_dim)
+</span>        
+        <span class="c1"># Compute attention over encoder outputs
+</span>        <span class="c1"># Query: current decoder state (use h from LSTM state)
+</span>        <span class="c1"># Keys/Values: encoder outputs
+</span>        <span class="n">query</span> <span class="o">=</span> <span class="n">decoder_state</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># (batch, 1, hidden_dim)
+</span>        <span class="n">context</span><span class="p">,</span> <span class="n">attn_weights</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">attention</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">encoder_outputs</span><span class="p">,</span> 
+                                               <span class="n">encoder_outputs</span><span class="p">)</span>
+        
+        <span class="c1"># Combine embedded input with context from attention
+</span>        <span class="n">lstm_input</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">([</span><span class="n">embedded</span><span class="p">,</span> <span class="n">context</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># Decoder LSTM step
+</span>        <span class="n">output</span><span class="p">,</span> <span class="n">new_state</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">decoder_lstm</span><span class="p">(</span><span class="n">lstm_input</span><span class="p">,</span> <span class="n">decoder_state</span><span class="p">)</span>
+        
+        <span class="c1"># Project to vocabulary
+</span>        <span class="n">logits</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">output_proj</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">logits</span><span class="p">,</span> <span class="n">new_state</span><span class="p">,</span> <span class="n">attn_weights</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">tgt</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Full forward pass for training.
+        Teacher forcing: use true target tokens as decoder inputs
+        </span><span class="sh">"""</span>
+        <span class="c1"># Encode source
+</span>        <span class="n">encoder_outputs</span><span class="p">,</span> <span class="n">encoder_state</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+        
+        <span class="c1"># Initialize decoder state with encoder's final state
+</span>        <span class="n">decoder_state</span> <span class="o">=</span> <span class="n">encoder_state</span>
+        
+        <span class="c1"># Decode target sequence (teacher forcing)
+</span>        <span class="n">batch_size</span><span class="p">,</span> <span class="n">tgt_len</span> <span class="o">=</span> <span class="n">tgt</span><span class="p">.</span><span class="nf">size</span><span class="p">()</span>
+        <span class="n">vocab_size</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">output_proj</span><span class="p">.</span><span class="n">out_features</span>
+        
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">zeros</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">tgt_len</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">tgt_len</span><span class="p">):</span>
+            <span class="c1"># Use true target token at this step (teacher forcing)
+</span>            <span class="n">tgt_token</span> <span class="o">=</span> <span class="n">tgt</span><span class="p">[:,</span> <span class="n">t</span><span class="p">:</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+            
+            <span class="c1"># Decoder step with attention
+</span>            <span class="n">logits</span><span class="p">,</span> <span class="n">decoder_state</span><span class="p">,</span> <span class="n">attn</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">decode_step</span><span class="p">(</span>
+                <span class="n">tgt_token</span><span class="p">,</span> <span class="n">decoder_state</span><span class="p">,</span> <span class="n">encoder_outputs</span><span class="p">)</span>
+            
+            <span class="n">outputs</span><span class="p">[:,</span> <span class="n">t</span><span class="p">:</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">logits</span>
+        
+        <span class="k">return</span> <span class="n">outputs</span>
+
+<span class="c1"># Example usage
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Sequence-to-Sequence with Attention</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="n">src_vocab</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">tgt_vocab</span> <span class="o">=</span> <span class="mi">120</span>
+<span class="n">model</span> <span class="o">=</span> <span class="nc">Seq2SeqWithAttention</span><span class="p">(</span><span class="n">src_vocab</span><span class="p">,</span> <span class="n">tgt_vocab</span><span class="p">)</span>
+
+<span class="c1"># Simulate translation: source [12, 34, 56, 78] → target [23, 45, 67]
+</span><span class="n">src</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">src_vocab</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>  <span class="c1"># Batch of 2, length 4
+</span><span class="n">tgt</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tgt_vocab</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>  <span class="c1"># Batch of 2, length 3
+</span>
+<span class="n">output</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">tgt</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Source shape: </span><span class="si">{</span><span class="n">src</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (2, 4)
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Target shape: </span><span class="si">{</span><span class="n">tgt</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (2, 3)
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Output shape: </span><span class="si">{</span><span class="n">output</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (2, 3, 120)
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Model uses attention to focus on relevant source words for each target word!</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="5-related-concepts">5. Related Concepts</h2>
+
+<p>The relationship between attention mechanisms and human cognitive attention provides useful but imperfect analogies. When humans read, we don’t process all words equally—we focus on content-bearing words, skim over function words, and our eye movements reflect this selective attention. When listening, we focus on the speaker while filtering out background noise. Attention in neural networks captures this principle of selective processing, though the mechanism is quite different from biological attention. The neural attention is soft (weights sum to 1 rather than hard selection) and learned (discovered through backpropagation rather than evolved through biology). These differences matter: soft attention allows gradient flow through all paths (essential for learning), while hard attention would require reinforcement learning to train.</p>
+
+<p>The connection between attention and memory systems is profound. In computer architecture, attention is analogous to content-addressable memory: we query memory based on content similarity rather than fixed addresses. The keys serve as memory addresses, values as memory content, and queries specify what we’re looking for. This parallel extends to database systems where queries select relevant records based on key matching. Understanding attention through this lens helps clarify why the query-key-value decomposition is natural: it mirrors how we retrieve information from any indexed collection.</p>
+
+<p>Attention mechanisms have interesting relationships to traditional machine learning techniques. The attention weights, computed through softmax over similarities, resemble kernel methods in classical machine learning where we compute weighted combinations based on similarity kernels. The difference is that attention learns the similarity function (through the query and key projections) rather than using a fixed kernel like RBF. This learned similarity is more flexible, adapting to task-specific notions of relevance. Understanding this connection helps appreciate attention as part of a longer tradition of similarity-based learning, not an isolated invention.</p>
+
+<p>The evolution from basic attention to self-attention to multi-head self-attention shows progressive generalization. Basic encoder-decoder attention allows decoder to query encoder—a one-directional relationship. Self-attention allows all positions to query each other—any element can attend to any other. Multi-head self-attention computes multiple independent attention patterns—different heads can specialize in different relationship types. This progression from specific to general made attention increasingly powerful and versatile, ultimately enabling its use as the sole mechanism for sequence processing in Transformers.</p>
+
+<p>Attention’s relationship to convolutional operations provides another perspective. Standard convolution uses fixed, learned kernels applied uniformly across the input. Attention can be viewed as dynamic, input-dependent convolution where the kernel (attention weights) changes based on content. A 1×1 convolution in CNNs is nearly equivalent to attention with query equal to keys (all positions attend equally), while attention with learned queries allows focus to vary by position and context. This connection helps understand why Vision Transformers work—attention generalizes convolution’s ability to process spatial structure while adding dynamic, context-dependent weighting.</p>
+
+<p>Finally, attention connects to the broader theme of routing information in neural networks. Skip connections in ResNets route information around layers. Gating in LSTMs routes information through or around the cell state update. Attention routes information from source positions to target positions with learned weights. This routing perspective suggests attention is part of a general pattern: neural networks need mechanisms to selectively pass information through different paths based on content, and learned gating (whether through attention weights, LSTM gates, or other mechanisms) is the standard solution. Understanding this pattern helps recognize when attention-like mechanisms might be useful in novel architectures.</p>
+
+<h2 id="6-fundamental-papers">6. Fundamental Papers</h2>
+
+<p><strong><a href="https://arxiv.org/abs/1409.0473">“Neural Machine Translation by Jointly Learning to Align and Translate” (2015)</a></strong><br />
+<em>Authors</em>: Dzmitry Bahdanau, Kyunghyun Cho, Yoshua Bengio<br />
+This is THE paper that introduced attention mechanisms to neural networks and transformed sequence-to-sequence learning. Bahdanau and colleagues identified the bottleneck problem in encoder-decoder models—compressing the entire source sentence into a single fixed-size vector—and proposed attention as the solution. Their key insight was to let the decoder access all encoder hidden states and learn to weight them based on relevance to the current decoding step. The paper demonstrated dramatic improvements in machine translation, particularly for longer sentences where the bottleneck was most severe. What makes this paper historically significant is not just the performance gains but the general principle it established: neural networks can learn to selectively focus on relevant information through differentiable mechanisms. This principle has been applied far beyond translation to attention mechanisms in image captioning, reading comprehension, speech recognition, and ultimately to self-attention in Transformers. The attention visualization showing alignment between source and target words provided unprecedented interpretability, demonstrating that neural networks could discover linguistic correspondences without explicit supervision.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1508.04025">“Effective Approaches to Attention-based Neural Machine Translation” (2015)</a></strong><br />
+<em>Authors</em>: Minh-Thang Luong, Hieu Pham, Christopher D. Manning<br />
+Introduced shortly after Bahdanau attention, this paper systematically explored attention mechanism design choices and proposed simpler alternatives. Luong attention uses dot-product similarity (\(\mathbf{q}^T \mathbf{k}\)) or general multiplicative (\(\mathbf{q}^T \mathbf{W} \mathbf{k}\)) instead of Bahdanau’s additive formulation, showing these simpler mechanisms often perform better while being more computationally efficient. The paper also distinguished between global attention (attending to all source positions) and local attention (attending to a window around an aligned position), providing options for different computation-accuracy tradeoffs. The careful empirical comparison methodology established best practices for evaluating attention variants. Luong’s dot-product attention, particularly the scaled version, became the foundation for Transformer attention, showing how systematic exploration of architectural choices leads to better designs. The paper also demonstrated that attention could be applied at different granularities (word-level, character-level) and in different configurations (input-feeding, where attention is fed back into the decoder), expanding understanding of attention’s versatility.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1502.03044">“Show, Attend and Tell: Neural Image Caption Generation with Visual Attention” (2015)</a></strong><br />
+<em>Authors</em>: Kelvin Xu, Jimmy Ba, Ryan Kiros, Kyunghyun Cho, Aaron Courville, Ruslan Salakhutdinov, Richard Zemel, Yoshua Bengio<br />
+This paper extended attention from NLP to computer vision, using attention to focus on different image regions when generating different caption words. When generating “red” in “A red car is parked,” the model learns to attend to the car’s color; when generating “parked,” it attends to the scene context. The paper introduced both soft attention (differentiable weighted average, trainable with backpropagation) and hard attention (stochastic selection of single position, requiring reinforcement learning). It demonstrated that attention mechanisms are not domain-specific but represent a general principle applicable wherever selective focus is beneficial. The visualizations showing attention maps overlaid on images provided compelling evidence that the model was learning meaningful correspondences between visual content and language. This work inspired attention applications across modalities and contributed to the eventual development of vision-and-language models like CLIP and multimodal Transformers.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1706.03762">“Attention is All You Need” (2017)</a></strong><br />
+<em>Authors</em>: Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, Illia Polosukhin<br />
+While primarily introducing the Transformer, this paper’s treatment of attention mechanisms themselves was transformative. The authors showed that self-attention—attention within a single sequence—could replace recurrence entirely, not just augment it. The scaled dot-product attention formulation with the \(1/\sqrt{d_k}\) scaling became standard. Multi-head attention, allowing multiple attention patterns to be learned in parallel, addressed the limitation of single-head attention’s inability to capture multiple relationship types simultaneously. The paper demonstrated that attention’s computational properties (fully parallelizable, constant path length between any positions) could be advantages rather than just supplements to recurrent processing. The success of Transformers established attention not as a useful addition to RNNs but as a standalone mechanism sufficient for sequence processing, fundamentally changing how the field approaches sequential data.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1803.02155">“Self-Attention with Relative Position Representations” (2018)</a></strong><br />
+<em>Authors</em>: Peter Shaw, Jakob Uszkoreit, Ashish Vaswani<br />
+This paper addressed a limitation of standard Transformer attention: the reliance on absolute positional encodings added before attention. Shaw and colleagues proposed incorporating relative position information directly into the attention mechanism itself, making attention weights depend not just on content but on the distance between positions. This allows the model to learn patterns like “attend to the word 2 positions before” more naturally than with absolute positions. The paper showed improved performance on translation and other tasks, and relative position encodings have been adopted in many Transformer variants (T5, Transformer-XL). The work illustrates how even after a major architectural innovation (Transformers), refinements addressing subtle limitations continue to improve performance. It also demonstrates the principle that inductive biases (like position matters) should be incorporated where they’re most relevant (in the attention mechanism itself) rather than through separate mechanisms (positional encodings), when possible.</p>
+
+<h2 id="common-pitfalls-and-tricks">Common Pitfalls and Tricks</h2>
+
+<p>A fundamental mistake when implementing attention is forgetting to apply softmax to the attention scores, using raw similarity scores as weights instead. Without softmax normalization, the weighted sum \(\sum_i e_i \mathbf{v}_i\) grows with the number of keys (since we’re summing more terms), making the context vector’s magnitude dependent on sequence length. Softmax ensures weights sum to 1, creating a weighted average rather than weighted sum, so context magnitude is independent of sequence length. This normalization is not optional—it’s essential for stable training and meaningful interpretation of attention weights as probabilities.</p>
+
+<p>Another common error is applying masking incorrectly. When using masks to prevent attention to certain positions (padding or future positions), we must set masked positions to \(-\infty\) (or a very large negative number like -1e9) before softmax, not to 0 after softmax. Setting post-softmax weights to 0 doesn’t affect the gradients properly during backpropagation because the softmax computation graph still includes the masked positions. Setting pre-softmax scores to \(-\infty\) ensures both that the position receives zero weight (since \(\exp(-\infty) = 0\)) and that gradients flow correctly during backpropagation.</p>
+
+<p>The scaling in scaled dot-product attention is frequently omitted in naive implementations, causing subtle training issues. Without dividing by \(\sqrt{d_k}\), dot products have variance proportional to \(d_k\). For large dimensions (512, 1024), this pushes values into softmax saturation regions where one position gets nearly all attention weight and gradients vanish. The model fails to learn distributed attention patterns and may not train at all. The \(\sqrt{d_k}\) scaling is not a minor detail but essential for stable training with high-dimensional representations.</p>
+
+<p>When implementing multi-head attention, a common bug is not properly splitting and recombining dimensions. The reshaping operations—splitting \(d_{\text{model}}\) into \((\text{num\_heads}, d_k)\), computing attention, then concatenating back to \(d_{\text{model}}\)—must preserve the batch and sequence dimensions while shuffling the feature dimension. Getting the transpose and reshape operations in the wrong order produces tensors of correct shape but with scrambled data. Always verify with small examples that information flows correctly: a simple test is checking that with query = key = value and no mask, the output equals the input (identity attention).</p>
+
+<p>A powerful technique for understanding what attention has learned is visualizing attention weights as heatmaps. For encoder-decoder attention in translation, plot source words on one axis, target words on the other, with heatmap intensity showing attention weight. This reveals learned alignments—which source words the model focuses on when generating each target word. For self-attention, the \(n \times n\) matrix shows which positions attend to which other positions. Patterns that emerge—attention to nearby words, attention from pronouns to their antecedents, attention across syntactic dependencies—provide insight into what linguistic structure the model has discovered. This interpretability is one of attention’s major advantages over black-box RNN hidden states.</p>
+
+<p>For computational efficiency with very long sequences, consider sparse attention patterns. Full attention requires \(O(n^2)\) memory and computation where \(n\) is sequence length. For sequences of thousands of tokens (documents, long-form text), this becomes prohibitive. Sparse attention restricts each position to attend to only a subset of positions (e.g., local window plus strided positions), reducing complexity to \(O(n\sqrt{n})\) or even \(O(n)\) while maintaining ability to capture long-range dependencies through multiple layers. Understanding when full attention is necessary versus when sparse patterns suffice helps choose appropriate architectures for different sequence length regimes.</p>
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<p>Attention mechanisms enable neural networks to selectively focus on relevant parts of the input when making predictions, solving the fixed-size bottleneck problem of encoder-decoder models and providing interpretability through visualizable attention weights. The core mathematical framework—computing queries, keys, and values, measuring similarity between queries and keys, using softmax to convert similarities to weights, and computing weighted averages of values—is general enough to apply across domains and tasks. Scaled dot-product attention combines simplicity, efficiency, and effectiveness, scaling similarity scores by \(\sqrt{d_k}\) to maintain reasonable magnitudes regardless of dimensionality. Multi-head attention allows learning multiple attention patterns simultaneously, with different heads discovering different types of relationships (syntactic, semantic, positional) through their separate learned projections. Self-attention applies attention within sequences rather than between encoder and decoder, enabling each position to build representations incorporating information from all other positions with constant path length for information flow. Masking controls which positions can be attended to, enabling both handling of variable-length sequences (padding masks) and autoregressive generation (causal masks). The transition from attention as an augmentation to RNNs to attention as the sole mechanism in Transformers demonstrates how an idea can evolve from useful addition to foundational principle, ultimately transforming an entire field by enabling architectures that are simultaneously more powerful, more interpretable, and more efficient to train than their predecessors.</p>
+
+<p>Attention is not just a technical mechanism but a paradigm shift in how we think about neural network architectures: from fixed processing pipelines to dynamic, learned routing of information based on relevance and context.</p>
+
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter07/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter07/07_00_Introduction/">
+              07 Attention Mechanisms
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+      
+    
+    
+    
+  
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

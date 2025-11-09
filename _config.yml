@@ -1,0 +1,59 @@
+# Setup
+title:               "Deep learning in Data Science"
+description:         'Deep learning in Data Science'
+url:                 https://nglelinh.github.io
+baseurl:             '/deep-learning-self-learning'
+imgurl:              https://nglelinh.github.io/deep-learning-self-learning/img
+paginate:            5
+permalink:           pretty
+
+# Multi-language support
+languages:           ["en", "vi"]
+default_lang:        "en"
+exclude_from_localization: ["javascript", "images", "css", "public"]
+parallel_localization: true
+
+# Language-specific configurations
+t:
+  en:
+    title: "Deep learning in Data Science"
+    description: "Deep learning in Data Science"
+    home: "Home"
+    chapters: "Chapters"
+    language: "Language"
+    switch_language: "Switch to Vietnamese"
+    required: "Required"
+    optional: "Optional"
+  vi:
+    title: "Deep Learning trong Khoa học Dữ liệu"
+    description: "Deep Learning trong Khoa học Dữ liệu"
+    home: "Trang chủ"
+    chapters: "Các chương"
+    language: "Ngôn ngữ"
+    switch_language: "Chuyển sang tiếng Anh"
+    required: "Bắt buộc"
+    optional: "Tùy chọn"
+# About/contact
+author:
+  name:              Nguyen Le Linh
+  email:             nglelinh@gmail.com
+
+# Gems
+plugins:
+  - jekyll-paginate
+  - jekyll-feed
+
+plugins_dir: _plugins
+
+# Collections for multilingual content
+collections:
+  posts:
+    output: true
+    permalink: /:categories/:title/
+
+# Custom vars
+version:             0.0.1
+markdown: kramdown
+
+# Analytics
+google_analytics_id: ""

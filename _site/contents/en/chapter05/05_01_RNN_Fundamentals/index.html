@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      05-01 Recurrent Neural Networks - Fundamentals &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep learning in Data Science</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Home</a>
+
+    
+
+    
+    
+    
+    <!-- Hiển thị các chương có sẵn cho ngôn ngữ hiện tại -->
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter00/">
+              00. Basic Mathematical Concepts
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter01/">
+              01. Introduction to Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter02/">
+              02. Neural Networks Fundamentals
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter03/">
+              03. Training Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter04/">
+              04. Convolutional Neural Networks (CNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter05/">
+              05. Recurrent Neural Networks (RNNs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter06/">
+              06. LSTM and GRU Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter07/">
+              07. Attention Mechanisms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter08/">
+              08. Transformers
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter09/">
+              09. Regularization Techniques
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter10/">
+              10. Deep Learning Algorithms
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter11/">
+              11. Generative Models
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter12/">
+              12. Autoencoders
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter13/">
+              13. Variational Autoencoders (VAE)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter14/">
+              14. Generative Adversarial Networks (GANs)
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter15/">
+              15. Transfer Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter16/">
+              16. Self-Supervised Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter17/">
+              17. Computer Vision Applications
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter18/">
+              18. Natural Language Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter19/">
+              19. Speech and Audio Processing
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter20/">
+              20. Reinforcement Learning Basics
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter21/">
+              21. Deep Reinforcement Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter22/">
+              22. Graph Neural Networks
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter23/">
+              23. Efficient Deep Learning
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter24/">
+              24. Interpretability and Explainability
+              
+            </a>
+          
+        
+      
+    
+      
+        
+          
+          
+            <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/contents/en/chapter25/">
+              25. Advanced Topics and Future Directions
+              
+            </a>
+          
+        
+      
+    
+    
+    <!-- Nếu không có nội dung cho ngôn ngữ hiện tại, hiển thị thông báo -->
+    
+    
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Home">Deep learning in Data Science</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/vi/chapter00/" class="language-switch" title="Switch to Vietnamese">Switch to Vietnamese</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    05-01 Recurrent Neural Networks - Fundamentals
+    
+      
+        <span class="lesson-badge required large">Required</span>
+      
+    
+  </h1>
+  <h1 id="recurrent-neural-networks-processing-sequential-data">Recurrent Neural Networks: Processing Sequential Data</h1>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Recurrent_neural_network_unfold.svg/800px-Recurrent_neural_network_unfold.svg.png" alt="RNN Architecture" />
+<em>Hình ảnh: Kiến trúc RNN và quá trình unfolding theo thời gian. Nguồn: Wikimedia Commons</em></p>
+
+<h2 id="1-concept-overview">1. Concept Overview</h2>
+
+<p>Recurrent Neural Networks represent a fundamentally different approach to neural computation than the feedforward networks we’ve studied so far. While feedforward networks process each input independently, treating a batch of images or feature vectors as unrelated samples, RNNs are designed specifically for sequential data where the order of elements carries meaning and where context from previous elements should influence how we interpret current ones. This seemingly simple idea—adding memory to neural networks—opens up entire domains that feedforward networks cannot adequately address: natural language, where word order determines meaning; speech, where phonemes unfold over time; financial time series, where past trends inform future predictions; and video, where frames form coherent narratives.</p>
+
+<p>The core insight of RNNs is to maintain a hidden state that serves as the network’s memory. At each time step, the network receives a new input and the previous hidden state, processes both through the same set of weights, and produces a new hidden state and output. This recurrence—using the same parameters at every time step while the hidden state evolves—creates a network that can theoretically process sequences of any length while learning temporal patterns through the shared parameters. The elegance lies in parameter sharing across time: just as convolutional networks share weights spatially to detect features regardless of position, RNNs share weights temporally to recognize patterns regardless of when they occur in a sequence.</p>
+
+<p>Understanding why RNNs emerged requires appreciating the fundamental challenge of sequential data: variable length. A sentence might have five words or fifty. An audio clip might last three seconds or three minutes. How do we build neural networks that handle this variability? The naive approach—having separate parameters for each time step—fails immediately because it doesn’t generalize to sequences longer than those seen during training and requires enormous numbers of parameters. The elegant solution RNNs provide is to use the same transformation at each step, with the hidden state carrying forward information from all previous steps. This creates an architecture that’s both parameter-efficient and theoretically capable of modeling arbitrarily long sequences.</p>
+
+<p>However, RNNs are not without profound limitations. The sequential nature that gives them modeling power also makes them computationally slow—we cannot process time step \(t\) until we’ve processed step \(t-1\), preventing the parallelization that GPUs excel at. The need to propagate gradients backward through many time steps leads to vanishing or exploding gradients, making it difficult to learn long-range dependencies. And the fixed-size hidden state creates an information bottleneck—all information from the past must be compressed into this state, which becomes increasingly difficult as sequences grow longer. These limitations motivated the development of LSTM and GRU architectures, and ultimately, the attention mechanisms and Transformers that now dominate sequence modeling.</p>
+
+<p>Yet RNNs remain important to study, not just for historical reasons but because they embody fundamental principles about sequence processing. They introduce the concept of memory in neural networks. They demonstrate both the power and limitations of sequential processing. They reveal challenges in gradient propagation that inform our understanding of training deep networks more broadly. And in certain applications—particularly where sequences are naturally processed online or where computational efficiency on CPUs matters more than GPU throughput—RNNs and their sophisticated variants still have advantages over Transformers.</p>
+
+<h2 id="2-mathematical-foundation">2. Mathematical Foundation</h2>
+
+<p>The mathematical formulation of RNNs reveals both their elegance and their challenges. At each time step \(t\), an RNN maintains a hidden state \(\mathbf{h}_t\) that summarizes all information from the sequence up to that point. Given a new input \(\mathbf{x}_t\), the RNN updates its state according to:</p>
+
+\[\mathbf{h}_t = f(\mathbf{W}_{hh}\mathbf{h}_{t-1} + \mathbf{W}_{xh}\mathbf{x}_t + \mathbf{b}_h)\]
+
+<p>where \(f\) is a nonlinear activation function (typically \(\tanh\) for vanilla RNNs), \(\mathbf{W}_{hh}\) governs how the previous state influences the current state (the recurrent connection), and \(\mathbf{W}_{xh}\) governs how the current input contributes. The bias \(\mathbf{b}_h\) provides a baseline activation level.</p>
+
+<p>This formulation deserves careful scrutiny because it encodes several crucial design decisions. First, the same weight matrices \(\mathbf{W}_{hh}\) and \(\mathbf{W}_{xh}\) are used at every time step. This parameter sharing across time is what enables RNNs to generalize to sequences of different lengths and to learn temporal patterns independent of their absolute position in the sequence. Just as convolutional filters detect edges anywhere in an image through spatial parameter sharing, recurrent weights detect temporal patterns anywhere in a sequence through temporal parameter sharing.</p>
+
+<p>Second, the hidden state \(\mathbf{h}_t\) plays a dual role. It serves as both the network’s memory (encoding information from all previous inputs) and as input to the next time step. This creates a feedback loop: the current state depends on the previous state, which depends on the state before that, creating a chain of dependencies that theoretically extends back to the beginning of the sequence. Mathematically, we can unroll this recursion:</p>
+
+\[\mathbf{h}_t = f(\mathbf{W}_{hh}f(\mathbf{W}_{hh}\mathbf{h}_{t-2} + \mathbf{W}_{xh}\mathbf{x}_{t-1} + \mathbf{b}_h) + \mathbf{W}_{xh}\mathbf{x}_t + \mathbf{b}_h)\]
+
+<p>This shows how \(\mathbf{h}_t\) depends on inputs \(\mathbf{x}_t\) and \(\mathbf{x}_{t-1}\), and continuing the expansion, on all previous inputs back to \(\mathbf{x}_1\). The nested composition of functions is what gives RNNs their power to model complex temporal dependencies, but also what makes them challenging to train—gradients must backpropagate through this entire composition.</p>
+
+<p>The output at each time step is computed from the hidden state:</p>
+
+\[\mathbf{y}_t = g(\mathbf{W}_{hy}\mathbf{h}_t + \mathbf{b}_y)\]
+
+<p>where \(g\) is an activation function chosen based on the task (softmax for classification, linear for regression, sigmoid for multi-label, etc.). Importantly, \(\mathbf{W}_{hy}\) is also shared across time steps. This means we’re using the same “decoder” to interpret the hidden state at every time step, forcing the hidden state to use a consistent representation scheme throughout the sequence.</p>
+
+<p>The dimensions of these matrices matter for understanding computational and representational tradeoffs. If the input dimension is \(d_x\), hidden dimension is \(d_h\), and output dimension is \(d_y\), then:</p>
+<ul>
+  <li>\(\mathbf{W}_{xh} \in \mathbb{R}^{d_h \times d_x}\): Projects input to hidden dimension</li>
+  <li>\(\mathbf{W}_{hh} \in \mathbb{R}^{d_h \times d_h}\): Recurrent connections (most important!)</li>
+  <li>\(\mathbf{W}_{hy} \in \mathbb{R}^{d_y \times d_h}\): Projects hidden to output</li>
+</ul>
+
+<p>The recurrent weight matrix \(\mathbf{W}_{hh}\) is particularly important because it determines how information persists over time. If \(\mathbf{W}_{hh}\) is nearly zero, the hidden state quickly forgets previous inputs. If it’s close to identity, the hidden state changes slowly. Its eigenvalues directly control gradient flow during backpropagation through time, as we’ll see.</p>
+
+<p>Different tasks require different architectural patterns. For sequence classification (sentiment analysis, video classification), we typically process the entire sequence and use only the final hidden state: \(\mathbf{y} = g(\mathbf{W}_{hy}\mathbf{h}_T + \mathbf{b}_y)\). The final state \(\mathbf{h}_T\) must summarize the entire sequence. For sequence labeling (part-of-speech tagging, named entity recognition), we produce outputs at every time step: \(\mathbf{y}_t = g(\mathbf{W}_{hy}\mathbf{h}_t + \mathbf{b}_y)\) for all \(t\). For sequence-to-sequence tasks (machine translation), the encoder RNN processes the input sequence into a final hidden state, which initializes a decoder RNN that generates the output sequence.</p>
+
+<p>Training RNNs requires Backpropagation Through Time (BPTT), which is simply backpropagation applied to the unrolled computational graph of the RNN. The loss over a sequence is typically the sum of losses at each time step:</p>
+
+\[\mathcal{L} = \sum_{t=1}^{T} \mathcal{L}_t(\mathbf{y}_t, \hat{\mathbf{y}}_t)\]
+
+<p>To compute gradients of this loss with respect to \(\mathbf{W}_{hh}\), we must account for the fact that \(\mathbf{W}_{hh}\) affects the hidden state at every time step. The gradient is:</p>
+
+\[\frac{\partial \mathcal{L}}{\partial \mathbf{W}_{hh}} = \sum_{t=1}^{T} \frac{\partial \mathcal{L}_t}{\partial \mathbf{W}_{hh}}\]
+
+<p>Each term \(\frac{\partial \mathcal{L}_t}{\partial \mathbf{W}_{hh}}\) requires backpropagating through all time steps from 1 to \(t\) via the chain rule, because \(\mathbf{W}_{hh}\) influences \(\mathbf{h}_1\), which influences \(\mathbf{h}_2\), and so on up to \(\mathbf{h}_t\). This creates a computational graph that grows with sequence length, leading to both memory challenges (must store all hidden states) and the notorious vanishing/exploding gradient problem.</p>
+
+<p>The gradient flow analysis reveals the core challenge. The gradient of \(\mathbf{h}_t\) with respect to \(\mathbf{h}_k\) (for \(k &lt; t\)) involves a product of Jacobian matrices:</p>
+
+\[\frac{\partial \mathbf{h}_t}{\partial \mathbf{h}_k} = \prod_{i=k+1}^{t} \frac{\partial \mathbf{h}_i}{\partial \mathbf{h}_{i-1}}\]
+
+<p>Each Jacobian \(\frac{\partial \mathbf{h}_i}{\partial \mathbf{h}_{i-1}} = \text{diag}(f'(\mathbf{z}_i)) \mathbf{W}_{hh}\) is the product of the activation derivative (which for \(\tanh\) is bounded by 1) and the recurrent weight matrix. If the largest singular value of \(\mathbf{W}_{hh}\) is less than 1, these products shrink exponentially with the number of time steps, causing vanishing gradients. If it’s greater than 1, they explode exponentially. This is not a minor technical issue but a fundamental challenge in training RNNs to capture long-range dependencies.</p>
+
+<h2 id="3-example--intuition">3. Example / Intuition</h2>
+
+<p>To build genuine intuition for how RNNs process sequences, let’s trace through a concrete example of processing the sentence “The cat sat on the mat” for sentiment analysis. We’ll use a simple RNN with 3-dimensional hidden state (unrealistically small for clarity) to predict positive or negative sentiment.</p>
+
+<p>Initially, before seeing any words, we set \(\mathbf{h}_0 = \mathbf{0}\), representing no information. The first word “The” arrives. Suppose after embedding it becomes \(\mathbf{x}_1 = [0.2, -0.1, 0.5]\). With initialized weights (let’s use small random values):</p>
+
+\[\mathbf{W}_{hh} = \begin{bmatrix} 0.5 &amp; 0.1 &amp; -0.2 \\ -0.1 &amp; 0.6 &amp; 0.3 \\ 0.2 &amp; -0.3 &amp; 0.4 \end{bmatrix}, \quad \mathbf{W}_{xh} = \begin{bmatrix} 0.3 &amp; 0.2 &amp; -0.1 \\ 0.1 &amp; -0.2 &amp; 0.4 \\ -0.2 &amp; 0.3 &amp; 0.1 \end{bmatrix}\]
+
+<p>The hidden state update computes:</p>
+
+\[\mathbf{z}_1 = \mathbf{W}_{hh}\mathbf{h}_0 + \mathbf{W}_{xh}\mathbf{x}_1 + \mathbf{b}_h = \mathbf{0} + \mathbf{W}_{xh}\mathbf{x}_1 + \mathbf{b}_h\]
+
+<p>Since \(\mathbf{h}_0 = \mathbf{0}\), the first hidden state depends only on the first input:</p>
+
+\[\mathbf{h}_1 = \tanh(\mathbf{z}_1) = \tanh\begin{pmatrix}\begin{bmatrix} 0.3 &amp; 0.2 &amp; -0.1 \\ 0.1 &amp; -0.2 &amp; 0.4 \\ -0.2 &amp; 0.3 &amp; 0.1 \end{bmatrix} \begin{bmatrix} 0.2 \\ -0.1 \\ 0.5 \end{bmatrix} + \mathbf{b}_h\end{pmatrix}\]
+
+<p>Let’s say this gives \(\mathbf{h}_1 = [0.1, 0.05, -0.15]\) (after \(\tanh\)). This vector now encodes “having seen ‘The’“—not very informative, but it’s a start. Now “cat” arrives as \(\mathbf{x}_2 = [0.8, 0.3, -0.2]\). The state update now has TWO contributions:</p>
+
+\[\mathbf{z}_2 = \mathbf{W}_{hh}\mathbf{h}_1 + \mathbf{W}_{xh}\mathbf{x}_2 + \mathbf{b}_h\]
+
+<p>The first term \(\mathbf{W}_{hh}\mathbf{h}_1\) carries forward information from “The”, while \(\mathbf{W}_{xh}\mathbf{x}_2\) processes “cat”. The \(\tanh\) nonlinearity combines these:</p>
+
+\[\mathbf{h}_2 = \tanh(\mathbf{z}_2)\]
+
+<p>This new state encodes “having seen ‘The cat’“—it’s been influenced by both words, with the contribution of “The” mediated through \(\mathbf{h}_1\) and the recurrent weights \(\mathbf{W}_{hh}\).</p>
+
+<p>As we continue through “sat”, “on”, “the”, “mat”, each hidden state incorporates more context. By the time we reach the end, \(\mathbf{h}_6\) theoretically encodes the entire sentence’s meaning. We then use this to predict sentiment:</p>
+
+\[\text{sentiment} = \text{sigmoid}(\mathbf{W}_{hy}\mathbf{h}_6 + \mathbf{b}_y)\]
+
+<p>The key insight is that information from “The” at the beginning must flow through \(\mathbf{h}_1 \to \mathbf{h}_2 \to \cdots \to \mathbf{h}_6\) to influence the final prediction. Each transition involves multiplication by \(\mathbf{W}_{hh}\) and passing through \(\tanh\). If \(\mathbf{W}_{hh}\) consistently suppresses signals (eigenvalues &lt; 1), information decays exponentially—this is vanishing gradients. If it amplifies signals (eigenvalues &gt; 1), information explodes—exploding gradients. Maintaining stable information flow over many steps is the central challenge of vanilla RNNs.</p>
+
+<p>Consider what happens during backpropagation. When we compute \(\frac{\partial \mathcal{L}}{\partial \mathbf{W}_{hh}}\), we must account for \(\mathbf{W}_{hh}\) appearing at every time step. The gradient involves products like:</p>
+
+\[\frac{\partial \mathbf{h}_6}{\partial \mathbf{h}_1} = \frac{\partial \mathbf{h}_6}{\partial \mathbf{h}_5} \frac{\partial \mathbf{h}_5}{\partial \mathbf{h}_4} \cdots \frac{\partial \mathbf{h}_2}{\partial \mathbf{h}_1}\]
+
+<p>Each Jacobian \(\frac{\partial \mathbf{h}_{t+1}}{\partial \mathbf{h}_t} = \text{diag}(\tanh'(\mathbf{z}_{t+1})) \mathbf{W}_{hh}\) involves the recurrent weight matrix and the activation derivative.</p>
+
+<p>For \(\tanh\), the derivative is bounded by 1 and typically much smaller (approaching 0 for saturated activations). This means each Jacobian typically has norm less than \(\|\mathbf{W}_{hh}\|\), and their product shrinks exponentially unless \(\|\mathbf{W}_{hh}\|\) is precisely calibrated. In practice, this delicate balancing rarely works for vanilla RNNs, limiting their ability to learn dependencies spanning more than about 10-20 time steps.</p>
+
+<p>The mathematics of different RNN architectures reveals different design philosophies. A many-to-one architecture (sequence → single output) computes \(\mathbf{h}_t\) for all \(t\) but only uses \(\mathbf{h}_T\) for the final prediction, appropriate for classification tasks. A many-to-many architecture with the same length (sequence → sequence of same length) computes outputs \(\mathbf{y}_t = g(\mathbf{W}_{hy}\mathbf{h}_t + \mathbf{b}_y)\) at every time step, useful for tasks like video frame labeling where we want to classify each frame. A many-to-many architecture with different lengths (sequence-to-sequence) requires an encoder-decoder design: the encoder RNN processes the input into a final hidden state \(\mathbf{h}_T^{enc}\), which initializes the decoder RNN: \(\mathbf{h}_0^{dec} = \mathbf{h}_T^{enc}\). The decoder then autoregressively generates output, with each output feeding into the next time step’s input until a special end-of-sequence token is generated.</p>
+
+<p>The computational complexity of RNNs is linear in sequence length: \(O(T \cdot d_h^2)\) where \(T\) is sequence length and \(d_h\) is hidden dimension (dominated by the \(\mathbf{W}_{hh}\mathbf{h}_{t-1}\) multiplication at each step). This seems efficient, but the sequential dependency means we cannot parallelize across time steps. Processing a sequence of length 100 requires 100 sequential matrix multiplications, even with a powerful GPU. Transformers, by contrast, have higher complexity \(O(T^2 d)\) but can process all positions in parallel, making them much faster in practice on modern hardware when \(T\) is not extremely large.</p>
+
+<h2 id="4-code-snippet">4. Code Snippet</h2>
+
+<p>Let’s implement RNNs from first principles to understand every detail, then show modern PyTorch implementations:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="k">class</span> <span class="nc">VanillaRNN</span><span class="p">:</span>
+    <span class="sh">"""</span><span class="s">
+    Vanilla RNN implementation from scratch using NumPy.
+    
+    This implementation prioritizes clarity over efficiency. We</span><span class="sh">'</span><span class="s">ll see exactly
+    how hidden states evolve over time, how gradients flow backward, and where
+    the vanishing gradient problem comes from. Understanding this manual
+    implementation is crucial for debugging RNN training issues and for
+    appreciating what modern frameworks do automatically.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">output_size</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Initialize RNN with careful weight initialization.
+        
+        For RNNs, initialization is even more critical than for feedforward networks.
+        The recurrent weights Whh determine eigenvalues of the hidden state dynamics.
+        If eigenvalues are too large (&gt; 1), hidden states explode. Too small (&lt; 1),
+        they vanish. We initialize to small random values hoping to land in a
+        stable regime, though this often fails for vanilla RNNs.
+        </span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="n">hidden_size</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span>
+        
+        <span class="c1"># Input to hidden weights: map input space to hidden space
+</span>        <span class="c1"># Scale by 1/√hidden_size to maintain variance
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">Wxh</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">input_size</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.01</span>
+        
+        <span class="c1"># Hidden to hidden weights: THE critical matrix for temporal dynamics
+</span>        <span class="c1"># Some initialize to identity + noise for better gradient flow initially
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">Whh</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.01</span>
+        
+        <span class="c1"># Hidden to output weights
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">Why</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.01</span>
+        
+        <span class="c1"># Biases
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">bh</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">((</span><span class="n">hidden_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">by</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">((</span><span class="n">output_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">h_prev</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Forward pass through entire sequence.
+        
+        inputs: list of input vectors [x_1, x_2, ..., x_T], each x_t is (input_size, 1)
+        h_prev: initial hidden state (hidden_size, 1)
+        
+        Returns:
+            outputs: list of output vectors [y_1, y_2, ..., y_T]
+            hidden_states: list of hidden states [h_0, h_1, ..., h_T]
+            
+        We must store ALL hidden states because backpropagation through time
+        needs them. This creates a memory cost linear in sequence length,
+        which becomes prohibitive for very long sequences.
+        </span><span class="sh">"""</span>
+        <span class="n">hidden_states</span> <span class="o">=</span> <span class="p">[</span><span class="n">h_prev</span><span class="p">]</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">h_prev</span>
+        
+        <span class="c1"># Process sequence one step at a time
+</span>        <span class="c1"># This sequential loop is unavoidable in RNNs - we can't parallelize
+</span>        <span class="c1"># across time because h_t depends on h_{t-1}
+</span>        <span class="k">for</span> <span class="n">x_t</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+            <span class="c1"># Hidden state update: combine previous state and current input
+</span>            <span class="c1"># The tanh bounds activations to [-1, 1], preventing explosion
+</span>            <span class="c1"># (though it causes saturation and vanishing gradients)
+</span>            <span class="n">z</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">Whh</span> <span class="o">@</span> <span class="n">h</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">Wxh</span> <span class="o">@</span> <span class="n">x_t</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">bh</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">tanh</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+            <span class="n">hidden_states</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+            
+            <span class="c1"># Compute output from hidden state
+</span>            <span class="c1"># For sequence classification, we'd use only the final output
+</span>            <span class="c1"># For sequence labeling, we use all outputs
+</span>            <span class="n">y</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">Why</span> <span class="o">@</span> <span class="n">h</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">by</span>
+            <span class="n">outputs</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">hidden_states</span>
+    
+    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">hidden_states</span><span class="p">,</span> <span class="n">targets</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        Backpropagation Through Time (BPTT).
+        
+        This is where RNNs get challenging. We must backpropagate gradients
+        not just through layers (as in feedforward networks) but also backward
+        through time. The gradient of the loss with respect to Whh involves
+        contributions from all time steps, creating the long product of Jacobians
+        that leads to vanishing/exploding gradients.
+        </span><span class="sh">"""</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        
+        <span class="c1"># Initialize gradient accumulators
+</span>        <span class="c1"># These will accumulate gradients from all time steps
+</span>        <span class="n">dWxh</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros_like</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">Wxh</span><span class="p">)</span>
+        <span class="n">dWhh</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros_like</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">Whh</span><span class="p">)</span>
+        <span class="n">dWhy</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros_like</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">Why</span><span class="p">)</span>
+        <span class="n">dbh</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros_like</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">bh</span><span class="p">)</span>
+        <span class="n">dby</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros_like</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">by</span><span class="p">)</span>
+        
+        <span class="c1"># Gradient flowing back through time
+</span>        <span class="c1"># Initially zero, will accumulate as we backprop through time
+</span>        <span class="n">dh_next</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">((</span><span class="n">self</span><span class="p">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        
+        <span class="c1"># Backpropagate through time (from T down to 1)
+</span>        <span class="c1"># This is the "backward" in backpropagation through time
+</span>        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">reversed</span><span class="p">(</span><span class="nf">range</span><span class="p">(</span><span class="n">T</span><span class="p">)):</span>
+            <span class="c1"># Output error at this time step
+</span>            <span class="c1"># For MSE loss: dy = y_pred - y_true
+</span>            <span class="n">dy</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">-</span> <span class="n">targets</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+            
+            <span class="c1"># Gradient of output layer parameters
+</span>            <span class="n">dWhy</span> <span class="o">+=</span> <span class="n">dy</span> <span class="o">@</span> <span class="n">hidden_states</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="n">T</span>
+            <span class="n">dby</span> <span class="o">+=</span> <span class="n">dy</span>
+            
+            <span class="c1"># Backprop into hidden state
+</span>            <span class="c1"># Two sources of gradient: from output at this time step (dy)
+</span>            <span class="c1"># and from future time steps (dh_next)
+</span>            <span class="n">dh</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">Why</span><span class="p">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">dy</span> <span class="o">+</span> <span class="n">dh_next</span>
+            
+            <span class="c1"># Backprop through tanh nonlinearity
+</span>            <span class="c1"># tanh'(z) = 1 - tanh^2(z) = 1 - h^2
+</span>            <span class="c1"># This derivative approaches 0 when |h| approaches 1 (saturation)
+</span>            <span class="c1"># causing vanishing gradients
+</span>            <span class="n">dz</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">hidden_states</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">dh</span>
+            
+            <span class="c1"># Gradients of hidden layer parameters
+</span>            <span class="n">dbh</span> <span class="o">+=</span> <span class="n">dz</span>
+            <span class="n">dWxh</span> <span class="o">+=</span> <span class="n">dz</span> <span class="o">@</span> <span class="n">inputs</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">T</span>
+            <span class="n">dWhh</span> <span class="o">+=</span> <span class="n">dz</span> <span class="o">@</span> <span class="n">hidden_states</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">T</span>
+            
+            <span class="c1"># Pass gradient to previous time step
+</span>            <span class="c1"># This is where the product of Jacobians occurs
+</span>            <span class="c1"># dh_next will be used at time step t-1
+</span>            <span class="n">dh_next</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">Whh</span><span class="p">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">dz</span>
+        
+        <span class="c1"># Clip gradients to prevent explosion
+</span>        <span class="c1"># This is a hack, but necessary for vanilla RNNs
+</span>        <span class="c1"># We're treating the symptom (large gradients) not the cause
+</span>        <span class="c1"># (fundamental instability of recurrent dynamics)
+</span>        <span class="k">for</span> <span class="n">grad</span> <span class="ow">in</span> <span class="p">[</span><span class="n">dWxh</span><span class="p">,</span> <span class="n">dWhh</span><span class="p">,</span> <span class="n">dWhy</span><span class="p">,</span> <span class="n">dbh</span><span class="p">,</span> <span class="n">dby</span><span class="p">]:</span>
+            <span class="n">np</span><span class="p">.</span><span class="nf">clip</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">grad</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">dWxh</span><span class="p">,</span> <span class="n">dWhh</span><span class="p">,</span> <span class="n">dWhy</span><span class="p">,</span> <span class="n">dbh</span><span class="p">,</span> <span class="n">dby</span>
+    
+    <span class="k">def</span> <span class="nf">update_parameters</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">dWxh</span><span class="p">,</span> <span class="n">dWhh</span><span class="p">,</span> <span class="n">dWhy</span><span class="p">,</span> <span class="n">dbh</span><span class="p">,</span> <span class="n">dby</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">Standard gradient descent update</span><span class="sh">"""</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">Wxh</span> <span class="o">-=</span> <span class="n">self</span><span class="p">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">dWxh</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">Whh</span> <span class="o">-=</span> <span class="n">self</span><span class="p">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">dWhh</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">Why</span> <span class="o">-=</span> <span class="n">self</span><span class="p">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">dWhy</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">bh</span> <span class="o">-=</span> <span class="n">self</span><span class="p">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">dbh</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">by</span> <span class="o">-=</span> <span class="n">self</span><span class="p">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">dby</span>
+
+<span class="c1"># Demonstrate on simple sequence prediction task
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Vanilla RNN: Predicting Next Number in Sequence</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Task: Given [1, 2, 3], predict [2, 3, 4]
+# This tests if RNN can learn simple sequential pattern
+</span><span class="k">def</span> <span class="nf">generate_sequence_data</span><span class="p">(</span><span class="n">n_sequences</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">seq_length</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Generate training data: sequences of increasing numbers
+    Input: [start, start+1, start+2, ...]
+    Target: [start+1, start+2, start+3, ...]
+    </span><span class="sh">"""</span>
+    <span class="n">sequences_in</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">sequences_target</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n_sequences</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="n">seq</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([</span><span class="n">start</span> <span class="o">+</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">seq_length</span><span class="p">)])</span>
+        <span class="n">sequences_in</span><span class="p">.</span><span class="nf">append</span><span class="p">([</span><span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="n">x</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">seq</span><span class="p">])</span>
+        <span class="n">sequences_target</span><span class="p">.</span><span class="nf">append</span><span class="p">([</span><span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="n">x</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">seq</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="p">[</span><span class="n">seq</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span>
+    
+    <span class="k">return</span> <span class="n">sequences_in</span><span class="p">,</span> <span class="n">sequences_target</span>
+
+<span class="c1"># Create RNN
+</span><span class="n">rnn</span> <span class="o">=</span> <span class="nc">VanillaRNN</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">output_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+
+<span class="c1"># Generate data
+</span><span class="n">train_inputs</span><span class="p">,</span> <span class="n">train_targets</span> <span class="o">=</span> <span class="nf">generate_sequence_data</span><span class="p">(</span><span class="n">n_sequences</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">seq_length</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="c1"># Training loop
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training RNN to predict next number...</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">200</span><span class="p">):</span>
+    <span class="n">epoch_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span> <span class="ow">in</span> <span class="nf">zip</span><span class="p">(</span><span class="n">train_inputs</span><span class="p">,</span> <span class="n">train_targets</span><span class="p">):</span>
+        <span class="c1"># Forward pass
+</span>        <span class="n">h_prev</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">((</span><span class="n">rnn</span><span class="p">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">outputs</span><span class="p">,</span> <span class="n">hidden_states</span> <span class="o">=</span> <span class="n">rnn</span><span class="p">.</span><span class="nf">forward</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">h_prev</span><span class="p">)</span>
+        
+        <span class="c1"># Compute loss (MSE)
+</span>        <span class="n">loss</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">((</span><span class="n">out</span> <span class="o">-</span> <span class="n">tgt</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">out</span><span class="p">,</span> <span class="n">tgt</span> <span class="ow">in</span> <span class="nf">zip</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">))</span>
+        <span class="n">epoch_loss</span> <span class="o">+=</span> <span class="n">np</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        
+        <span class="c1"># Backward pass
+</span>        <span class="n">grads</span> <span class="o">=</span> <span class="n">rnn</span><span class="p">.</span><span class="nf">backward</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">hidden_states</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+        
+        <span class="c1"># Update
+</span>        <span class="n">rnn</span><span class="p">.</span><span class="nf">update_parameters</span><span class="p">(</span><span class="o">*</span><span class="n">grads</span><span class="p">)</span>
+    
+    <span class="n">losses</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">epoch_loss</span> <span class="o">/</span> <span class="nf">len</span><span class="p">(</span><span class="n">train_inputs</span><span class="p">))</span>
+    
+    <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="mi">40</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">:</span><span class="mi">3</span><span class="n">d</span><span class="si">}</span><span class="s">: Average Loss = </span><span class="si">{</span><span class="n">losses</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Test on new sequence
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Testing on new sequence: [10, 11, 12, 13, 14, 15, 16, 17]</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="n">test_input</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">([[</span><span class="n">x</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">]]</span>
+<span class="n">h_test</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">((</span><span class="n">rnn</span><span class="p">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">test_outputs</span><span class="p">,</span> <span class="n">test_hidden</span> <span class="o">=</span> <span class="n">rnn</span><span class="p">.</span><span class="nf">forward</span><span class="p">(</span><span class="n">test_input</span><span class="p">,</span> <span class="n">h_test</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Predictions:</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="nf">zip</span><span class="p">(</span><span class="n">test_input</span><span class="p">,</span> <span class="n">test_outputs</span><span class="p">)):</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  After seeing </span><span class="si">{</span><span class="nf">int</span><span class="p">(</span><span class="n">inp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s">, predict next: </span><span class="si">{</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> (true: </span><span class="si">{</span><span class="nf">int</span><span class="p">(</span><span class="n">inp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">)</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Note: Vanilla RNN struggles with this simple task due to vanishing gradients!</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">This motivates LSTM/GRU architectures we</span><span class="sh">'</span><span class="s">ll cover in the next chapter.</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now let’s see a modern PyTorch implementation that handles these details automatically:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="n">torch.optim</span> <span class="k">as</span> <span class="n">optim</span>
+
+<span class="k">class</span> <span class="nc">RNNSequenceModel</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Modern RNN using PyTorch</span><span class="sh">'</span><span class="s">s built-in RNN layer.
+    
+    PyTorch handles the recurrent computation efficiently, unrolling the loop
+    in optimized C++ code and managing gradients automatically. This is much
+    faster than our NumPy implementation and handles batching elegantly.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">input_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">output_size</span><span class="p">,</span> <span class="n">num_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">(</span><span class="n">RNNSequenceModel</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="c1"># PyTorch's RNN module handles the recurrent computation
+</span>        <span class="c1"># num_layers &gt; 1 creates stacked RNNs (output of one feeds into next)
+</span>        <span class="c1"># batch_first=True means input shape is (batch, seq_len, input_size)
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">rnn</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">RNN</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">num_layers</span><span class="p">,</span> 
+                         <span class="n">batch_first</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nonlinearity</span><span class="o">=</span><span class="sh">'</span><span class="s">tanh</span><span class="sh">'</span><span class="p">)</span>
+        
+        <span class="c1"># Output layer to map hidden state to predictions
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">output_size</span><span class="p">)</span>
+        
+        <span class="n">self</span><span class="p">.</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="n">hidden_size</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">num_layers</span> <span class="o">=</span> <span class="n">num_layers</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">hidden</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        x: (batch, seq_len, input_size)
+        hidden: optional initial hidden state (num_layers, batch, hidden_size)
+        
+        Returns:
+            output: (batch, seq_len, output_size)
+            hidden: final hidden state
+        </span><span class="sh">"""</span>
+        <span class="c1"># If no initial hidden state provided, RNN initializes to zeros
+</span>        <span class="k">if</span> <span class="n">hidden</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">hidden</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">zeros</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">num_layers</span><span class="p">,</span> <span class="n">x</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">self</span><span class="p">.</span><span class="n">hidden_size</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">x</span><span class="p">.</span><span class="n">is_cuda</span><span class="p">:</span>
+                <span class="n">hidden</span> <span class="o">=</span> <span class="n">hidden</span><span class="p">.</span><span class="nf">cuda</span><span class="p">()</span>
+        
+        <span class="c1"># RNN returns:
+</span>        <span class="c1"># - rnn_out: hidden states at all time steps (batch, seq_len, hidden_size)
+</span>        <span class="c1"># - hidden: final hidden state (num_layers, batch, hidden_size)
+</span>        <span class="n">rnn_out</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">rnn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">hidden</span><span class="p">)</span>
+        
+        <span class="c1"># Apply output layer to each time step
+</span>        <span class="c1"># Reshape to (batch * seq_len, hidden_size) for efficient computation
+</span>        <span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">rnn_out</span><span class="p">.</span><span class="n">shape</span>
+        <span class="n">rnn_out</span> <span class="o">=</span> <span class="n">rnn_out</span><span class="p">.</span><span class="nf">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">hidden_size</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">fc</span><span class="p">(</span><span class="n">rnn_out</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="p">.</span><span class="nf">reshape</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">hidden</span>
+
+<span class="c1"># Character-level language model example
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Character-Level Language Model with PyTorch RNN</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Create simple text dataset
+</span><span class="n">text</span> <span class="o">=</span> <span class="sh">"</span><span class="s">hello world, deep learning is amazing! transformers are powerful.</span><span class="sh">"</span>
+<span class="n">chars</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="nf">set</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+<span class="n">char_to_idx</span> <span class="o">=</span> <span class="p">{</span><span class="n">ch</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">chars</span><span class="p">)}</span>
+<span class="n">idx_to_char</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">ch</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">chars</span><span class="p">)}</span>
+<span class="n">vocab_size</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Vocabulary: </span><span class="si">{</span><span class="n">chars</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Vocabulary size: </span><span class="si">{</span><span class="n">vocab_size</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Prepare sequences: given "hell" predict "ello"
+</span><span class="k">def</span> <span class="nf">create_sequences</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">seq_length</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">Create training sequences from text</span><span class="sh">"""</span>
+    <span class="n">sequences</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">targets</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">-</span> <span class="n">seq_length</span><span class="p">):</span>
+        <span class="n">seq</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">seq_length</span><span class="p">]</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">seq_length</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+        
+        <span class="c1"># Convert to indices
+</span>        <span class="n">seq_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">char_to_idx</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">seq</span><span class="p">]</span>
+        <span class="n">target_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">char_to_idx</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">target</span><span class="p">]</span>
+        
+        <span class="n">sequences</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">seq_idx</span><span class="p">)</span>
+        <span class="n">targets</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">target_idx</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">sequences</span><span class="p">,</span> <span class="n">targets</span>
+
+<span class="n">seq_length</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">sequences</span><span class="p">,</span> <span class="n">targets</span> <span class="o">=</span> <span class="nf">create_sequences</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">seq_length</span><span class="p">)</span>
+
+<span class="c1"># Convert to tensors and create one-hot encodings
+</span><span class="k">def</span> <span class="nf">to_onehot</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">Convert index sequences to one-hot encoded tensors</span><span class="sh">"""</span>
+    <span class="n">one_hot</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">:</span>
+        <span class="n">seq_onehot</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">zeros</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">seq</span><span class="p">),</span> <span class="n">vocab_size</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+            <span class="n">seq_onehot</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">one_hot</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">seq_onehot</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="p">.</span><span class="nf">stack</span><span class="p">(</span><span class="n">one_hot</span><span class="p">)</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="nf">to_onehot</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">tensor</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="p">.</span><span class="nb">long</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Dataset: </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span><span class="si">}</span><span class="s"> sequences of length </span><span class="si">{</span><span class="n">seq_length</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Input shape: </span><span class="si">{</span><span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (num_sequences, seq_length, vocab_size)
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Target shape: </span><span class="si">{</span><span class="n">y</span><span class="p">.</span><span class="n">shape</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># (num_sequences, seq_length)
+</span>
+<span class="c1"># Create model
+</span><span class="n">model</span> <span class="o">=</span> <span class="nc">RNNSequenceModel</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> 
+                         <span class="n">output_size</span><span class="o">=</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">num_layers</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Loss and optimizer
+</span><span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">CrossEntropyLoss</span><span class="p">()</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+
+<span class="c1"># Training
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Training character-level language model...</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">train</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">500</span><span class="p">):</span>
+    <span class="c1"># Forward pass
+</span>    <span class="n">outputs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># (batch, seq_len, vocab_size)
+</span>    
+    <span class="c1"># Reshape for cross-entropy: (batch * seq_len, vocab_size)
+</span>    <span class="n">outputs_flat</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">)</span>
+    <span class="n">targets_flat</span> <span class="o">=</span> <span class="n">y</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1"># Compute loss
+</span>    <span class="n">loss</span> <span class="o">=</span> <span class="nf">criterion</span><span class="p">(</span><span class="n">outputs_flat</span><span class="p">,</span> <span class="n">targets_flat</span><span class="p">)</span>
+    
+    <span class="c1"># Backward pass and optimize
+</span>    <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+    <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>  <span class="c1"># BPTT happens here automatically!
+</span>    
+    <span class="c1"># Gradient clipping (essential for RNNs!)
+</span>    <span class="c1"># Without this, gradients can explode and training diverges
+</span>    <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="nf">clip_grad_norm_</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">max_norm</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
+    
+    <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">:</span><span class="mi">3</span><span class="n">d</span><span class="si">}</span><span class="s">: Loss = </span><span class="si">{</span><span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Generate text by sampling from learned distribution
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Generating text from learned RNN</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">generate_text</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">start_text</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Generate text autoregressively using trained RNN.
+    
+    We start with a seed text, predict the next character</span><span class="sh">'</span><span class="s">s probability
+    distribution, sample from it, append to sequence, and repeat.
+    This is autoregressive generation—each prediction conditions on
+    all previous predictions.
+    </span><span class="sh">"""</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+    
+    <span class="c1"># Convert start text to indices
+</span>    <span class="n">current_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">char_to_idx</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">start_text</span><span class="p">]</span>
+    <span class="n">generated</span> <span class="o">=</span> <span class="n">start_text</span>
+    
+    <span class="c1"># Hidden state carries information through generation
+</span>    <span class="n">hidden</span> <span class="o">=</span> <span class="bp">None</span>
+    
+    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="nf">no_grad</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+            <span class="c1"># Prepare input: last seq_length characters (or pad if shorter)
+</span>            <span class="n">input_seq</span> <span class="o">=</span> <span class="n">current_seq</span><span class="p">[</span><span class="o">-</span><span class="n">seq_length</span><span class="p">:]</span> <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">current_seq</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">seq_length</span> <span class="k">else</span> <span class="n">current_seq</span>
+            
+            <span class="c1"># Pad if needed
+</span>            <span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">input_seq</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">seq_length</span><span class="p">:</span>
+                <span class="n">input_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">char_to_idx</span><span class="p">[</span><span class="sh">'</span><span class="s"> </span><span class="sh">'</span><span class="p">]]</span> <span class="o">+</span> <span class="n">input_seq</span>
+            
+            <span class="c1"># Convert to one-hot
+</span>            <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">seq_length</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">input_seq</span><span class="p">):</span>
+                <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            
+            <span class="c1"># Predict next character
+</span>            <span class="n">output</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">hidden</span><span class="p">)</span>
+            
+            <span class="c1"># Get probabilities for next character (last time step)
+</span>            <span class="n">probs</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">softmax</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            
+            <span class="c1"># Sample from distribution (more interesting than argmax)
+</span>            <span class="n">next_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">multinomial</span><span class="p">(</span><span class="n">probs</span><span class="p">,</span> <span class="mi">1</span><span class="p">).</span><span class="nf">item</span><span class="p">()</span>
+            <span class="n">next_char</span> <span class="o">=</span> <span class="n">idx_to_char</span><span class="p">[</span><span class="n">next_idx</span><span class="p">]</span>
+            
+            <span class="n">generated</span> <span class="o">+=</span> <span class="n">next_char</span>
+            <span class="n">current_seq</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">next_idx</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">generated</span>
+
+<span class="c1"># Generate
+</span><span class="n">seed</span> <span class="o">=</span> <span class="sh">"</span><span class="s">deep </span><span class="sh">"</span>
+<span class="n">generated_text</span> <span class="o">=</span> <span class="nf">generate_text</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Seed: </span><span class="sh">'</span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="sh">'"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Generated: </span><span class="sh">'</span><span class="si">{</span><span class="n">generated_text</span><span class="si">}</span><span class="sh">'"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">The model learned character-level patterns!</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">With more data and training, RNNs can generate coherent text.</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Let’s also demonstrate the vanishing gradient problem empirically:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Demonstrating Vanishing Gradients in RNNs</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">analyze_gradient_flow</span><span class="p">(</span><span class="n">sequence_lengths</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">]):</span>
+    <span class="sh">"""</span><span class="s">
+    Show how gradients diminish with sequence length.
+    
+    We</span><span class="sh">'</span><span class="s">ll create sequences of different lengths, compute gradients, and
+    measure their magnitude. This empirically demonstrates why vanilla RNNs
+    struggle with long-range dependencies.
+    </span><span class="sh">"""</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">seq_len</span> <span class="ow">in</span> <span class="n">sequence_lengths</span><span class="p">:</span>
+        <span class="c1"># Create simple RNN
+</span>        <span class="n">rnn_test</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">RNN</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">num_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">batch_first</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="c1"># Random input sequence
+</span>        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="c1"># Forward pass
+</span>        <span class="n">out</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="nf">rnn_test</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        
+        <span class="c1"># Compute loss from FIRST time step output only
+</span>        <span class="c1"># Gradient must backprop through seq_len-1 steps to reach h_1
+</span>        <span class="n">loss</span> <span class="o">=</span> <span class="n">out</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:].</span><span class="nf">sum</span><span class="p">()</span>
+        
+        <span class="c1"># Backward pass
+</span>        <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        
+        <span class="c1"># Measure gradient magnitude at input
+</span>        <span class="n">grad_magnitude</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">grad</span><span class="p">.</span><span class="nf">abs</span><span class="p">().</span><span class="nf">mean</span><span class="p">().</span><span class="nf">item</span><span class="p">()</span>
+        
+        <span class="n">results</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">seq_len</span><span class="p">,</span> <span class="n">grad_magnitude</span><span class="p">))</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Sequence length </span><span class="si">{</span><span class="n">seq_len</span><span class="si">:</span><span class="mi">2</span><span class="n">d</span><span class="si">}</span><span class="s">: Gradient magnitude = </span><span class="si">{</span><span class="n">grad_magnitude</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># Typically see exponential decay in gradient magnitude
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Observation: Gradients decay exponentially with sequence length!</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">This is the vanishing gradient problem that limits vanilla RNNs.</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">results</span>
+
+<span class="n">gradient_analysis</span> <span class="o">=</span> <span class="nf">analyze_gradient_flow</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="5-related-concepts">5. Related Concepts</h2>
+
+<p>The relationship between RNNs and feedforward networks illuminates fundamental principles about network architecture design. Feedforward networks assume inputs are independent, identically distributed samples—the order we present images during training doesn’t matter because each image is processed in isolation. RNNs, by contrast, explicitly model dependencies between sequential inputs through the hidden state. This difference isn’t just about architecture; it reflects different assumptions about data structure. When we choose an RNN over a feedforward network, we’re encoding the inductive bias that temporal or sequential order carries information relevant to the task.</p>
+
+<p>The connection to finite state machines and dynamical systems provides deeper theoretical insight. An RNN with discrete hidden states and hard-threshold activations is essentially a finite state machine, transitioning between states based on inputs. With continuous hidden states and smooth activations, RNNs become continuous dynamical systems described by the difference equation \(\mathbf{h}_{t+1} = f(\mathbf{W}_{hh}\mathbf{h}_t + \mathbf{W}_{xh}\mathbf{x}_t)\). The stability and expressiveness of this dynamical system depend on the spectrum of \(\mathbf{W}_{hh}\)—its eigenvalues determine whether the system is stable, chaotic, or marginally stable. This connection to dynamical systems theory helps explain phenomena like vanishing/exploding gradients and motivates architectures like LSTMs that explicitly manage information flow through gating mechanisms.</p>
+
+<p>The evolution from RNNs to LSTMs to Transformers tells a story about solving fundamental limitations. Vanilla RNNs struggle with long-range dependencies due to vanishing gradients. LSTMs introduce gating mechanisms that create skip connections through time, allowing gradients to flow more easily and information to persist longer. But LSTMs still process sequences sequentially, limiting parallelization. Transformers abandon recurrence entirely, using attention to create direct connections between all time steps, enabling full parallelization at the cost of quadratic complexity in sequence length. Each architecture makes different tradeoffs between expressiveness, trainability, and computational efficiency.</p>
+
+<p>The relationship between RNNs and convolutional networks is subtler but illuminating. Temporal convolution—applying 1D convolution over sequences—can capture some sequential patterns and is fully parallelizable. However, its receptive field grows only linearly with depth (a network with \(L\) layers of kernel size \(k\) has receptive field \(1 + L(k-1)\)), whereas RNNs theoretically have infinite receptive field (the hidden state can remember information from arbitrarily far in the past). This tradeoff between parallelizability (favoring convolution) and theoretically unlimited memory (favoring RNNs) has led to hybrid architectures combining both, like WaveNet for audio generation.</p>
+
+<p>Bidirectional RNNs extend the basic architecture by processing sequences in both forward and backward directions, maintaining two hidden states \(\overrightarrow{\mathbf{h}}_t\) and \(\overleftarrow{\mathbf{h}}_t\). The output at each time step combines information from both: \(\mathbf{y}_t = g(\mathbf{W}_{hy}[\overrightarrow{\mathbf{h}}_t; \overleftarrow{\mathbf{h}}_t] + \mathbf{b}_y)\). This is powerful for tasks where future context is available (like translating a complete sentence) but impossible for real-time prediction where we must make decisions before seeing the complete sequence. The bidirectional design exemplifies how architecture should match task requirements—using future context when available, processing causally when necessary.</p>
+
+<h2 id="6-fundamental-papers">6. Fundamental Papers</h2>
+
+<p><strong><a href="https://doi.org/10.1207/s15516709cog1402_1">“Finding Structure in Time” (1990)</a></strong><br />
+<em>Author</em>: Jeffrey L. Elman<br />
+This seminal paper introduced the Simple Recurrent Network (SRN), now called Elman network, and demonstrated that recurrent connections enable learning temporal patterns. Elman showed that RNNs could learn to predict the next word in simple sentences, discovering grammatical structure without explicit rules. The key insight was that the hidden state develops internal representations of grammatical categories (noun, verb) and sequential dependencies without being told to do so—purely from the prediction task. The paper established RNNs as viable for sequence modeling and influenced subsequent development of more sophisticated recurrent architectures. Elman’s analysis of hidden state dynamics—showing how the state space organizes itself to reflect linguistic structure—demonstrated that neural networks could discover interpretable representations, a theme that continues in modern deep learning research.</p>
+
+<p><strong><a href="https://doi.org/10.1162/089976600300015015">“Learning to Forget: Continual Prediction with LSTM” (2000)</a></strong><br />
+<em>Authors</em>: Felix A. Gers, Jürgen Schmidhuber, Fred Cummins<br />
+While LSTMs were introduced in 1997, this paper made a crucial modification that made them practical: the forget gate. The original LSTM could accumulate information in the cell state but had no mechanism to selectively forget irrelevant information, leading to saturation over long sequences. The forget gate, controlled by \(\mathbf{f}_t = \sigma(\mathbf{W}_f[\mathbf{h}_{t-1}; \mathbf{x}_t] + \mathbf{b}_f)\), allows the network to clear its memory when old information becomes irrelevant. This seemingly simple addition—letting the network learn when to forget—dramatically improved LSTM performance on long sequences and became standard in all subsequent LSTM implementations. The paper demonstrates how architectural details that seem minor can have profound practical impacts.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1211.5063">“On the difficulty of training Recurrent Neural Networks” (2013)</a></strong><br />
+<em>Authors</em>: Razvan Pascanu, Tomas Mikolov, Yoshua Bengio<br />
+This paper provided the definitive analysis of vanishing and exploding gradients in RNNs, moving beyond empirical observations to rigorous mathematical treatment. The authors showed that when backpropagating through \(t\) time steps, gradients involve products of \(t\) Jacobian matrices, and if the largest eigenvalue of these matrices is less than 1, gradients vanish exponentially; if greater than 1, they explode exponentially. Importantly, they showed this isn’t just a training trick issue but a fundamental property of recurrent dynamics. The paper proposed gradient clipping to handle explosions (clip gradient norm to maximum threshold, now standard practice) and analyzed how LSTM’s gating mechanisms create effective paths for gradient flow. This work deepened understanding of why vanilla RNNs fail on long sequences and why architectural innovations like LSTMs are necessary, not optional.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1412.3555">“Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling” (2014)</a></strong><br />
+<em>Authors</em>: Junyoung Chung, Caglar Gulcehre, KyungHyun Cho, Yoshua Bengio<br />
+This paper systematically compared LSTM and GRU (Gated Recurrent Unit) architectures on multiple sequence modeling tasks, providing empirical evidence about when each architecture excels. GRUs, introduced by Cho et al. in 2014, simplify LSTMs by using only two gates instead of three and no separate cell state, reducing parameters by about 25%. The paper showed that GRUs often match LSTM performance while training faster due to fewer parameters. Importantly, it demonstrated that architectural details matter—carefully engineered recurrent mechanisms consistently outperformed vanilla RNNs on long sequences. The paper’s experimental methodology—controlled comparisons on multiple datasets with careful hyperparameter tuning—set a standard for how to evaluate architectural innovations in deep learning.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1506.02078">“Visualizing and Understanding Recurrent Networks” (2015)</a></strong><br />
+<em>Authors</em>: Andrej Karpathy, Justin Johnson, Li Fei-Fei<br />
+This paper investigated what RNNs learn by analyzing their hidden state dynamics on character-level language modeling. By examining which hidden units activate for which input patterns, the authors discovered that RNNs spontaneously develop interpretable internal representations: certain neurons activate for quotes, others for parentheses balancing, others for code indentation. This demonstrated that RNNs don’t just memorize but learn meaningful structure. The paper also introduced techniques for visualizing attention-like patterns in RNNs before explicit attention mechanisms were common. Perhaps most influentially, it made accessible the kind of interpretability analysis that helps us understand what neural networks learn, a methodology that has become standard for analyzing all types of models, not just RNNs.</p>
+
+<h2 id="common-pitfalls-and-tricks">Common Pitfalls and Tricks</h2>
+
+<p>The most common failure mode when training RNNs is gradient explosion, and recognizing its symptoms is crucial for debugging. Training loss suddenly becomes NaN, parameters become infinite, or loss oscillates wildly rather than decreasing smoothly. This happens when the product of gradients through time steps grows exponentially. The standard solution—gradient clipping—is conceptually simple but must be implemented correctly. We compute the global gradient norm across all parameters \(\|\nabla_\theta \mathcal{L}\|_2 = \sqrt{\sum_\theta (\frac{\partial \mathcal{L}}{\partial \theta})^2}\) and if it exceeds a threshold (typically 5-10), we scale all gradients by \(\frac{\text{threshold}}{\|\nabla_\theta \mathcal{L}\|_2}\). This preserves gradient direction while preventing explosive updates. It’s crucial to clip the global norm, not individual gradient values, because we want to preserve the relative magnitudes of gradients for different parameters.</p>
+
+<p>Vanishing gradients are more insidious because they don’t cause obvious training failures—the network trains but simply fails to learn long-range dependencies. Symptoms include the model only using recent context (in language modeling, only considering the last few words) or being unable to learn tasks requiring information from the beginning of long sequences. Detection requires careful analysis: plot gradient magnitudes as a function of backpropagation steps or test specifically on tasks requiring long-range memory. Solutions include switching to LSTM/GRU (which mitigate though don’t eliminate vanishing gradients), using smaller sequence lengths during training (truncated BPTT), or adding auxiliary losses at intermediate time steps to provide more direct gradient paths.</p>
+
+<p>Initialization of recurrent weights deserves special attention because it directly affects gradient flow stability. The standard small random initialization \(\mathbf{W}_{hh} \sim \mathcal{N}(0, 0.01^2)\) often leads to vanishing gradients. A better approach is orthogonal initialization: initialize \(\mathbf{W}_{hh}\) to a random orthogonal matrix (often generated via QR decomposition of a random matrix). Orthogonal matrices preserve vector norms during multiplication, helping gradients neither vanish nor explode, at least initially. This gives training a better starting point, though as weights update, they drift from orthogonality. Another approach is identity initialization plus small random noise: \(\mathbf{W}_{hh} = I + \mathcal{N}(0, 0.001^2)\), encouraging the hidden state to change slowly, which can help with gradient flow.</p>
+
+<p>A subtle but important issue is variable-length sequences in batched training. When training on multiple sequences of different lengths simultaneously, we must handle the fact that some sequences end before others. The solution is padding and masking: pad shorter sequences to match the longest sequence in the batch with a special padding token, then mask the loss so padded positions don’t contribute to gradients. Without masking, the RNN receives meaningless gradient signals from padding, degrading performance. PyTorch’s PackedSequence functionality handles this elegantly, avoiding computation on padded positions entirely.</p>
+
+<p>The choice of hidden state dimension involves important tradeoffs. Larger hidden dimensions provide more capacity to remember complex patterns and longer contexts. However, they increase parameters quadratically (\(\mathbf{W}_{hh}\) has \(d_h^2\) elements), slow computation (each time step requires \(O(d_h^2)\) operations), and can lead to overfitting on small datasets. A common starting point is matching hidden dimension to input dimension or using 128-512 depending on task complexity. For character-level modeling, 128-256 often suffices. For word-level language modeling on large vocabularies, 512-1024 is typical. Always validate on a held-out set and watch for train-test gaps indicating overfitting.</p>
+
+<p>Using teacher forcing during training but autoregressive generation during inference creates train-test mismatch in sequence-to-sequence models. During training with teacher forcing, the decoder receives the true previous token as input, ensuring it sees good inputs even when its predictions are poor. During inference, it must use its own predictions, which may be wrong, leading to compounding errors. This mismatch means the model never learns to recover from its own mistakes during training. Solutions include scheduled sampling (randomly using predicted tokens instead of true tokens during training with increasing probability), or using auxiliary losses that encourage robustness to input perturbations.</p>
+
+<h2 id="key-takeaways">Key Takeaways</h2>
+
+<p>Recurrent Neural Networks introduced the fundamental idea of memory in neural networks through hidden states that persist across time steps, enabling modeling of sequential data where order and context matter. The mathematical elegance of parameter sharing across time—using the same weights at every step—allows RNNs to generalize across sequence lengths while learning temporal patterns. However, this same recurrence creates challenges: sequential processing prevents parallelization, making RNNs slow to train on GPUs; the product of Jacobians through time leads to vanishing or exploding gradients, limiting their ability to learn long-range dependencies; and the fixed-size hidden state creates an information bottleneck for long sequences. Despite these limitations, RNNs established principles—that networks can maintain state, that temporal structure should be explicitly modeled, that we can learn to predict future from past—that influence all subsequent sequence modeling architectures. Understanding RNNs deeply means understanding not just how they work but why they’re designed this way, where they fail, and how later innovations like LSTMs and Transformers address their limitations while building on their insights.</p>
+
+<p>The journey from feedforward networks to RNNs represents a crucial conceptual leap in deep learning: from processing static inputs independently to modeling dynamic processes with memory and temporal structure. This leap opens up vast new applications but introduces new challenges that have driven decades of research and continue to inspire innovation in sequence modeling architectures today.</p>
+
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/en/chapter05/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Back to Chapter Home
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/en/chapter05/05_00_Introduction/">
+              05 Introduction to Recurrent Neural Networks
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+    
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

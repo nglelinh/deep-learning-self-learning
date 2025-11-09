@@ -1,0 +1,56 @@
+---
+layout: default
+---
+
+<h1>{{page.chapter}}. {{page.title}}</h1>
+
+{% assign full_name = page.chapter | prepend: "chapter" %}
+{% assign current_lang = page.lang | default: site.default_lang %}
+{% assign all_posts = site.categories[full_name] | sort_natural %}
+{% assign post_list = all_posts | where: "lang", current_lang %}
+
+{% if page.chapter == "26" %}
+  {% assign full_name = "reference" %}
+  {% assign all_posts = site.categories[full_name] | sort_natural %}
+  {% assign post_list = all_posts | where: "lang", current_lang %}
+{% endif %}
+
+<!-- Get first post and show it -->
+{% assign first_post = post_list | first %}
+{{first_post.content}}
+
+<!-- Remove first element from post_list which is already shown above. -->
+{% assign post_list = post_list | shift %}  
+
+<!-- List up the posts in the chapter -->
+<ul style="list-style: none;">
+{% for post in post_list %}
+  {% assign title_parts = post.title | split: " " %}
+  {% assign subchapter = title_parts | first %}
+  {% assign subchapter_level = subchapter | split: "-" %}
+  {% if subchapter_level.size < 3 %}
+    <li style="text-align:left; vertical-align: middle; margin-left: -2em; margin-top: 5px;" >
+      <a href="{{ post.url | absolute_url }}">{{post.title}}</a>
+      {% if post.lesson_type %}
+        {% if post.lesson_type == 'required' %}
+          <span class="lesson-badge required">{% t required %}</span>
+        {% elsif post.lesson_type == 'optional' %}
+          <span class="lesson-badge optional">{% t optional %}</span>
+        {% endif %}
+      {% endif %}
+    </li>
+  {% endif %}
+  {% if subchapter_level.size >= 3 %}
+    <li style="text-align:left; vertical-align: middle;  margin-left: 0em;" >
+      <a href="{{ post.url | absolute_url }}"> {{ post.title }}</a>
+      {% if post.lesson_type %}
+        {% if post.lesson_type == 'required' %}
+          <span class="lesson-badge required">{% t required %}</span>
+        {% elsif post.lesson_type == 'optional' %}
+          <span class="lesson-badge optional">{% t optional %}</span>
+        {% endif %}
+      {% endif %}
+    </li>
+  {% endif %}
+{% endfor %}
+</ul>
