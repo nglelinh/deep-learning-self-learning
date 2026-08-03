@@ -7,7 +7,6 @@ owner: GitHub Copilot
 lang: en
 categories:
 - chapter00
-lesson_type: required
 ---
 
 This lesson explores the gradient vector and directional derivatives, which are central concepts in deep-learning for understanding how functions change in different directions.

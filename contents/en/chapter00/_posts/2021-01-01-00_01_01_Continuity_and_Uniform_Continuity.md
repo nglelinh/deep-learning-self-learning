@@ -7,7 +7,6 @@ owner: GitHub Copilot
 lang: en
 categories:
 - chapter00
-lesson_type: required
 ---
 
 This lesson introduces the fundamental concepts of continuity and uniform continuity, which are essential for understanding the behavior of functions in deep-learning.

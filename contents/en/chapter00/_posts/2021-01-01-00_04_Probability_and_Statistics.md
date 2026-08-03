@@ -2,7 +2,7 @@
 layout: post
 title: 00-04 Probability and Statistics
 chapter: '00'
-order: 13
+order: 14
 owner: AI Assistant
 categories:
 - chapter00

@@ -7,7 +7,6 @@ owner: Deep Learning Course
 lang: en
 categories:
 - chapter25
-lesson_type: required
 ---
 
 # The Future of Deep Learning: Emerging Trends and Open Challenges
@@ -67,6 +66,21 @@ Consider the progression from GPT-2 (1.5B parameters) to GPT-3 (175B parameters)
 These aren't just quantitative improvements but qualitative capability changes. GPT-3 could follow instructions it wasn't explicitly trained on. GPT-4 can reason about images. These emergent abilities—capabilities that appear suddenly at certain scales—suggest scaling might continue yielding surprises.
 
 Multimodal learning enables novel applications. DALL-E generates images from text: "an astronaut riding a horse in photorealistic style." The model must understand both language (parsing the description) and vision (what astronauts and horses look like, what photorealistic means) and the mapping between them (how linguistic concepts translate to visual features). Future systems might seamlessly process video, audio, and text together, much closer to human-like perception.
+
+### Recommendation systems: multi-objective optimization & responsibility
+
+Short-video platforms show that AI “alignment” is not only about chatbots: every feed swipe is a decision optimizing many metrics at once (watch time, engagement, topic diversity, safety, ad revenue…). That is **multi-objective optimization** — there is no single loss.
+
+![Multi-objective tradeoffs](/deep-learning-self-learning/img/chapter_img/chapter25/recsys_multi_objective.jpg)
+*Figure: Feed ranking must balance many objectives simultaneously, not a single metric. (Illustration from a recommendation-system explainer video)*
+
+Related challenges:
+
+- **Filter bubbles / echo chambers** — pure engagement optimization narrows a user’s world  
+- **Feedback loops** — models amplify past behavior, further skewing future data  
+- **Value alignment** — “maximize time spent” can conflict with digital wellbeing / information diversity  
+
+Future directions (fairness, diversity constraints, causal recsys, human-in-the-loop) sit at the intersection of scaling, alignment, and production ML systems — not only “train a higher-accuracy model.”
 
 ## 4. Code Snippet
 
@@ -171,3 +185,10 @@ Deep learning's future involves scaling to larger models discovering emergent ca
 
 The future of deep learning will be shaped by technical innovations, computational advances, and thoughtful consideration of societal impacts, requiring both ambitious research pushing capabilities forward and careful work ensuring systems benefit humanity.
 
+<!-- video-references -->
+
+## Video references
+
+Some figures in this lesson are screenshots from the following videos (Machine Learning Thực Chiến). URLs kept for attribution and further viewing:
+
+- [Recommendation algorithms (TikTok-style)](https://www.facebook.com/reel/1444915507374636)

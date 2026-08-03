@@ -7,7 +7,6 @@ owner: GitHub Copilot
 lang: en
 categories:
 - chapter00
-lesson_type: required
 ---
 
 This lesson covers fundamental concepts from set theory that provide the mathematical foundation for understanding deep-learning problems, constraints, and feasible regions.

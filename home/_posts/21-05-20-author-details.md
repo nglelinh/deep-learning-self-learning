@@ -1,8 +1,9 @@
 ---
 layout: post
-title: author details
-order: 5
+title: "Author details"
 chapter: home
-owner: jinwoopark
+order: 5
+owner: Deep Learning Course
+lang: en
 hidden: true
 ---

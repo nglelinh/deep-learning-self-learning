@@ -7,7 +7,6 @@ owner: GitHub Copilot
 lang: en
 categories:
 - chapter00
-lesson_type: required
 ---
 
 This lesson covers matrices, matrix operations, and linear transformations, which are fundamental tools for representing and solving deep-learning problems.

@@ -2,12 +2,11 @@
 layout: post
 title: 00-04 Xác Suất và Thống Kê
 chapter: '00'
-order: 13
+order: 14
 owner: AI Assistant
 categories:
 - chapter00
 lang: vi
-lesson_type: required
 ---
 
 ## Xác Suất và Thống Kê cho Tối Ưu Hóa Lồi

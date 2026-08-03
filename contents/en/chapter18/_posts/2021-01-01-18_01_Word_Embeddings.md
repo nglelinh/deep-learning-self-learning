@@ -7,7 +7,6 @@ owner: Deep Learning Course
 lang: en
 categories:
 - chapter18
-lesson_type: required
 ---
 
 # Word Embeddings: Representing Language in Vector Space
@@ -21,9 +20,36 @@ Word embeddings represent one of the most fundamental innovations in natural lan
 
 Understanding why embeddings revolutionized NLP requires appreciating the limitations of discrete word representations. Traditional approaches treated words as atomic symbols—"king," "queen," and "car" were equally distant from each other, sharing no structure. One-hot encoding represents a 50,000-word vocabulary with 50,000-dimensional vectors that are all orthogonal, providing no notion of similarity. This makes learning difficult because the model cannot generalize from seeing "king lives in palace" to understanding "queen lives in palace"—it must learn facts about "queen" independently despite semantic similarity to "king."
 
+### From text → tokens → one-hot / bag-of-words
+
+The first step is always **tokenization**, then a numeric representation.
+
+![Tokenization](/deep-learning-self-learning/img/chapter_img/chapter18/emb_tokenization.jpg)
+*Figure: Sentences are split into tokens before encoding. (Illustration from a Word Embedding / Transformer video)*
+
+![One-hot table](/deep-learning-self-learning/img/chapter_img/chapter18/emb_one_hot_table.jpg)
+*Figure: Each word is a one-hot vector — orthogonal, sparse, no meaning. (Illustration from a Word Embedding / Transformer video)*
+
+![Bag-of-words](/deep-learning-self-learning/img/chapter_img/chapter18/emb_bag_of_words.jpg)
+*Figure: Bag-of-words aggregates one-hots per sentence — word order is lost. (Illustration from a Word Embedding / Transformer video)*
+
+![One-hot / BoW limitations](/deep-learning-self-learning/img/chapter_img/chapter18/emb_onehot_limitations.jpg)
+*Figure: Three main limits — no order, sparsity + dimension explosion, no semantic relations. (Illustration from a Word Embedding / Transformer video)*
+
 Word embeddings solve this by learning continuous representations where similar words cluster together. The distance between "king" and "queen" vectors is small (they're both royalty), while "king" and "car" are distant (semantically unrelated). More remarkably, embedding spaces exhibit analogical relationships through vector arithmetic: the vector from "man" to "woman" is similar to the vector from "king" to "queen," capturing the gender relationship. We can solve analogies through simple vector math: king - man + woman ≈ queen. This emergent structure wasn't explicitly programmed but arose from training on text, demonstrating that embeddings capture deep semantic regularities.
 
-The training objective for learning embeddings is elegantly formulated through the distributional hypothesis from linguistics: words appearing in similar contexts have similar meanings. This simple principle enables unsupervised learning from massive text corpora. Models like Word2Vec and GloVe learn embeddings by predicting context words from target words or vice versa, or by factorizing co-occurrence statistics. The resulting vectors encode lexical semantics, syntactic patterns, and even some world knowledge, all discovered purely from word co-occurrence patterns in text without any labeled data.
+![2D embedding space](/deep-learning-self-learning/img/chapter_img/chapter18/emb_semantic_space_2d.jpg)
+*Figure: Semantically related words cluster (king/queen/man/woman…); distance reflects relations. (Illustration from a Word Embedding / Transformer video)*
+
+![Benefits of vectorization](/deep-learning-self-learning/img/chapter_img/chapter18/emb_vector_arithmetic_benefits.jpg)
+*Figure: Embeddings enable semantic relations, lexical analogies, and automatic feature learning. (Illustration from a Word Embedding / Transformer video)*
+
+The training objective for learning embeddings is elegantly formulated through the distributional hypothesis from linguistics: words appearing in similar contexts have similar meanings. This simple principle enables unsupervised learning from massive text corpora.
+
+![Distributional context around “king”](/deep-learning-self-learning/img/chapter_img/chapter18/emb_distributional_context.jpg)
+*Figure: “King” co-occurs with fight/man/strong… — co-occurrence → nearby embeddings. (Illustration from a Word Embedding / Transformer video)*
+
+Models like Word2Vec and GloVe learn embeddings by predicting context words from target words or vice versa, or by factorizing co-occurrence statistics. The resulting vectors encode lexical semantics, syntactic patterns, and even some world knowledge, all discovered purely from word co-occurrence patterns in text without any labeled data.
 
 The impact of word embeddings on NLP cannot be overstated. They provided the foundation for the deep learning revolution in language processing, enabling neural networks to leverage vast unlabeled text for learning representations that then transfer to downstream tasks. Pre-trained embeddings like Word2Vec and GloVe became standard components in virtually all NLP systems from 2013-2018. While modern contextual embeddings from BERT and GPT have largely superseded static word embeddings for many tasks, understanding static embeddings remains crucial for appreciating how representation learning in NLP evolved and for applications where their simplicity and efficiency remain advantages.
 
@@ -37,7 +63,24 @@ The skip-gram model predicts context words given a target word, based on the dis
 
 $$\max_\theta \frac{1}{T}\sum_{t=1}^T \sum_{-c \leq j \leq c, j \neq 0} \log p(w_{t+j} | w_t; \theta)$$
 
-where $$c$$ is context window size (typically 5), and $$\theta$$ includes the embedding matrix and output weights. The conditional probability uses softmax:
+where $$c$$ is context window size (typically 5), and $$\theta$$ includes the embedding matrix and output weights.
+
+![Context window](/deep-learning-self-learning/img/chapter_img/chapter18/emb_context_window.jpg)
+*Figure: Window size = 1 — the center word learns from neighbors (and vice versa in skip-gram/CBOW). (Illustration from a Word Embedding / Transformer video)*
+
+![CBOW-style: predict the middle word](/deep-learning-self-learning/img/chapter_img/chapter18/emb_cbow_predict_word.jpg)
+*Figure: Two context words (one-hot) → small hidden layer → predict the target word. (Illustration from a Word Embedding / Transformer video)*
+
+![One-hot → hidden projection](/deep-learning-self-learning/img/chapter_img/chapter18/emb_onehot_to_hidden.jpg)
+*Figure: Vocab dimension (e.g. 5) compressed to embedding dim (e.g. 3). (Illustration from a Word Embedding / Transformer video)*
+
+![W1 / W2 training diagram](/deep-learning-self-learning/img/chapter_img/chapter18/emb_w1_w2_training.jpg)
+*Figure: Full pipeline: one-hot × W1 → hidden → × W2 → word logits; compare to true label and update. (Illustration from a Word Embedding / Transformer video)*
+
+![Embedding matrix](/deep-learning-self-learning/img/chapter_img/chapter18/emb_embedding_matrix.jpg)
+*Figure: Embedding matrix $$|V|\times d$$ (e.g. $$5\times 3$$) — each row/column is one word vector. (Illustration from a Word Embedding / Transformer video)*
+
+The conditional probability uses softmax:
 
 $$p(w_O | w_I) = \frac{\exp(\mathbf{v}_{w_O}^T \mathbf{v}_{w_I})}{\sum_{w=1}^{|V|} \exp(\mathbf{v}_w^T \mathbf{v}_{w_I})}$$
 
@@ -273,15 +316,45 @@ print("\nEmbeddings learned semantic relationships from co-occurrence patterns!"
 print("Similar words (cat/dog, car/truck) have similar embeddings.")
 ```
 
-## 5. Related Concepts
+## 5. Beyond words: embeddings in recommendation (two-tower)
+
+The same idea—“nearby vectors = similar”—is not limited to words. In **recommendation systems** (video feeds, e-commerce) we learn:
+
+- **User embedding** $$\mathbf{u} \in \mathbb{R}^d$$ — a snapshot of preferences  
+- **Item embedding** $$\mathbf{v} \in \mathbb{R}^d$$ — a snapshot of content/product  
+
+Matching scores are usually a dot product or cosine: $$s(u,i) = \mathbf{u}^\top \mathbf{v}$$.
+
+![Deep net producing embeddings](/deep-learning-self-learning/img/chapter_img/chapter18/recsys_deep_ranking_nn.jpg)
+*Figure: A feedforward network used to learn representations / rank candidates. (Illustration from a recommendation-system explainer video)*
+
+![128-d embedding vector](/deep-learning-self-learning/img/chapter_img/chapter18/recsys_embedding_128d.jpg)
+*Figure: Network output compressed to a dense vector (e.g. $$1\times 128$$) — a “snapshot” of preference or item. (Illustration from a recommendation-system explainer video)*
+
+**Two-tower models**: one tower encodes the user, one encodes the item; training pulls engaged (user, item) pairs close in embedding space and pushes negatives apart. At scale you precompute all item embeddings and, at serve time, encode the user once then run **nearest-neighbor** (ANN) over billions of items.
+
+![Two-tower: matching two 128-d vectors](/deep-learning-self-learning/img/chapter_img/chapter18/recsys_two_tower_matching.jpg)
+*Figure: Matching two same-dimension embeddings (user vs item) — the core of two-tower retrieval. (Illustration from a recommendation-system explainer video)*
+
+Compared with Word2Vec: instead of word context, the training signal is **behavior** (click, finish watching, purchase). The distributional hypothesis becomes: “users/items that appear in similar interaction ‘contexts’ get nearby embeddings.”
+
+## 6. Related Concepts
 
 Word embeddings connect to distributional semantics, the linguistic theory that word meaning is determined by context. The computational implementation—learning vectors such that words in similar contexts have similar representations—directly operationalizes this theory. Understanding this connection helps appreciate why embeddings work: they're not arbitrary feature engineering but implementations of fundamental linguistic principles.
 
 Embeddings relate to dimensionality reduction techniques like PCA or autoencoders. We're compressing high-dimensional one-hot vectors (vocab size) to low-dimensional dense vectors (embedding size) while preserving semantic information. The learned compression discovers that semantic relationships can be captured in far fewer dimensions than explicit symbol identity, revealing the intrinsic dimensionality of word semantics is much lower than vocabulary size.
 
-The evolution from static embeddings (Word2Vec, GloVe) to contextual embeddings (ELMo, BERT) reflects increasing sophistication. Static embeddings assign one vector per word type, so "bank" (financial) and "bank" (river) have identical representations despite different meanings. Contextual embeddings produce different vectors based on context, resolving polysemy. This evolution shows the field progressing from learning word-level representations to modeling language's context-dependent nature.
+The evolution from static embeddings (Word2Vec, GloVe) to contextual embeddings (ELMo, BERT) reflects increasing sophistication. Static embeddings assign one vector per word type, so "bank" (financial) and "bank" (river) have identical representations despite different meanings. Contextual embeddings produce different vectors based on context, resolving polysemy.
 
-## 6. Fundamental Papers
+![Vector space: fruit vs companies](/deep-learning-self-learning/img/chapter_img/chapter18/sa_vector_space_fruit_vs_companies.jpg)
+*Figure: Fruit cluster (apple/banana/orange…) separated from companies (Google/Microsoft/DeepSeek…). (Illustration from an intro Transformer / Self-Attention video)*
+
+![After self-attention: “Apple” as a company](/deep-learning-self-learning/img/chapter_img/chapter18/sa_contextual_apple_company_vector.jpg)
+*Figure: When the sentence talks about phones/color, the “Apple” vector shifts toward the company sense (logo). (Illustration from an intro Transformer / Self-Attention video)*
+
+This evolution shows the field progressing from learning word-level representations to modeling language's context-dependent nature.
+
+## 7. Fundamental Papers
 
 **["Efficient Estimation of Word Representations in Vector Space" (2013)](https://arxiv.org/abs/1301.3781)**  
 *Authors*: Tomas Mikolov, Kai Chen, Greg Corrado, Jeffrey Dean  
@@ -301,5 +374,14 @@ Using pre-trained embeddings without proper vocabulary alignment causes out-of-v
 
 ## Key Takeaways
 
-Word embeddings represent words as dense continuous vectors where semantic similarity corresponds to geometric proximity, enabling neural networks to generalize across semantically related words through shared vector representations. Skip-gram Word2Vec predicts context from targets using negative sampling for efficiency, while GloVe factorizes co-occurrence matrices, both learning from unlabeled text through distributional hypothesis. The resulting embeddings exhibit remarkable properties including analogical reasoning through vector arithmetic (king - man + woman ≈ queen) and semantic clustering (synonyms have similar vectors), all emerging from co-occurrence patterns without explicit supervision. Pre-trained embeddings like Word2Vec and GloVe transfer to downstream tasks, providing semantic representations that improve performance across NLP applications from sentiment analysis to machine translation. Modern contextual embeddings from BERT provide context-dependent representations addressing polysemy, though static embeddings remain useful for efficiency and interpretability. Understanding word embeddings provides foundation for all representation learning in NLP, demonstrating how neural networks can discover semantic structure purely from text patterns.
+Word embeddings represent words as dense continuous vectors where semantic similarity corresponds to geometric proximity, enabling neural networks to generalize across semantically related words through shared vector representations. Skip-gram Word2Vec predicts context from targets using negative sampling for efficiency, while GloVe factorizes co-occurrence matrices, both learning from unlabeled text through distributional hypothesis. The resulting embeddings exhibit remarkable properties including analogical reasoning through vector arithmetic (king - man + woman ≈ queen) and semantic clustering (synonyms have similar vectors), all emerging from co-occurrence patterns without explicit supervision. The same vector geometry powers **recommendations**: user/item embeddings and two-tower models match preferences to content at massive scale. Pre-trained embeddings like Word2Vec and GloVe transfer to downstream tasks, providing semantic representations that improve performance across NLP applications from sentiment analysis to machine translation. Modern contextual embeddings from BERT provide context-dependent representations addressing polysemy, though static embeddings remain useful for efficiency and interpretability. Understanding word embeddings provides foundation for representation learning in NLP and beyond, demonstrating how neural networks can discover structure purely from data patterns.
 
+<!-- video-references -->
+
+## Video references
+
+Some figures in this lesson are screenshots from the following videos (Machine Learning Thực Chiến). URLs kept for attribution and further viewing:
+
+- [What is a Transformer? Self-Attention for beginners (Part 1)](https://www.facebook.com/reel/930207546288223)
+- [Word embeddings and how Transformers understand language](https://www.facebook.com/reel/1501843101324752)
+- [Recommendation algorithms (TikTok-style)](https://www.facebook.com/reel/1444915507374636)

@@ -7,7 +7,6 @@ owner: Deep Learning Course
 lang: en
 categories:
 - chapter20
-lesson_type: required
 ---
 
 # Reinforcement Learning: Learning from Interaction
@@ -84,6 +83,20 @@ $$Q((4,3), \text{right}) \leftarrow Q((4,3), \text{right}) + \alpha[10 + 0 - Q((
 The Q-value for "go right from position next to goal" increases. Next time the agent reaches (4,3), it's more likely to go right (if using ε-greedy policy based on Q-values).
 
 After more episodes, values propagate backward. Q((4,2), right) increases because it leads to (4,3) which now has high Q-value. Eventually, optimal Q-values form gradient pointing toward goal from every state, and the agent learns to navigate directly to goal from any starting position.
+
+### Application: ε-greedy in recommendation feeds
+
+Video/product feeds also face **exploration–exploitation**: always showing “safe” content locks users in a preference bubble (*filter bubble*); you sometimes need to **explore** new topics.
+
+**ε-greedy** is common: with probability $$1-\varepsilon$$ pick the model’s best action/item (exploit); with probability $$\varepsilon$$ pick at random (explore). Example $$\varepsilon=0.1$$ → ~90% optimal, ~10% random.
+
+![ε-greedy 90% / 10%](/deep-learning-self-learning/img/chapter_img/chapter20/recsys_epsilon_greedy.jpg)
+*Figure: ε-greedy — mostly follow the optimal choice, occasionally try at random. (Illustration from a recommendation-system explainer video)*
+
+![ε-greedy detail in ranking](/deep-learning-self-learning/img/chapter_img/chapter20/recsys_epsilon_greedy_detail.jpg)
+*Figure: Deliberate exploration can surface new topics (e.g. “tech”) even when the model is confident in older interests. (Illustration from a recommendation-system explainer video)*
+
+In recsys the “reward” may be watch-time, likes, or a multi-objective blend — still the familiar MDP/bandit tradeoff between exploration and exploitation.
 
 ## 4. Code Snippet
 
@@ -180,3 +193,10 @@ Exploration-exploitation tradeoff is crucial. Pure exploitation (always best kno
 
 Reinforcement learning trains agents through interaction with environments, learning policies that maximize cumulative rewards through trial and error. MDPs formalize sequential decision-making with states, actions, transitions, and rewards. Value functions estimate expected future returns, providing targets for learning. Q-learning learns optimal action-values through temporal difference updates, enabling learning without environment model. The exploration-exploitation tradeoff requires balancing discovering new strategies versus using known good ones. RL's delayed reward and credit assignment challenges make it harder than supervised learning but enable applications where supervision is unavailable or expensive.
 
+<!-- video-references -->
+
+## Video references
+
+Some figures in this lesson are screenshots from the following videos (Machine Learning Thực Chiến). URLs kept for attribution and further viewing:
+
+- [Recommendation algorithms (TikTok-style)](https://www.facebook.com/reel/1444915507374636)

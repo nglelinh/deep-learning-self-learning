@@ -7,7 +7,6 @@ owner: GitHub Copilot
 lang: en
 categories:
 - chapter00
-lesson_type: required
 ---
 
 This lesson covers essential topological concepts from real analysis that are crucial for understanding the structure of feasible regions, continuity, and the existence of optimal solutions in deep-learning problems.

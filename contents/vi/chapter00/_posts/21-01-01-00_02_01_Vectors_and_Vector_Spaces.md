@@ -7,7 +7,6 @@ owner: GitHub Copilot
 lang: vi
 categories:
 - chapter00
-lesson_type: required
 ---
 
 Bài học này giới thiệu vector, không gian vector, và các khái niệm cơ bản tạo nền tảng để hiểu đại số tuyến tính trong ngữ cảnh tối ưu hóa.

@@ -7,7 +7,6 @@ owner: Deep Learning Course
 lang: en
 categories:
 - chapter02
-lesson_type: required
 ---
 
 # The Perceptron and Artificial Neurons
@@ -43,6 +42,9 @@ $$y = H(z) = \begin{cases}
 0 & \text{if } z < 0
 \end{cases}$$
 
+![Heaviside step function graph](/deep-learning-self-learning/img/chapter_img/chapter02/heaviside_step_function.jpg)
+*Figure: Heaviside step $$H(x)$$ — the output is only $$0$$ or $$1$$. (Illustration from an introductory neural-network video)*
+
 This step function creates a sharp decision boundary. Everything on one side gets classified as positive (1), everything on the other side as negative (0). The geometric interpretation of this is elegant: the weights define a hyperplane in the input space according to the equation $$\mathbf{w}^T \mathbf{x} + b = 0$$. Points are classified based on which side of this hyperplane they fall on.
 
 The weight vector $$\mathbf{w}$$ is perpendicular (orthogonal) to the decision hyperplane. This is a fundamental geometric fact: if two points $$\mathbf{x}_1$$ and $$\mathbf{x}_2$$ lie on the hyperplane, then $$\mathbf{w}^T(\mathbf{x}_1 - \mathbf{x}_2) = 0$$, meaning $$\mathbf{w}$$ is orthogonal to any vector in the hyperplane. The magnitude of $$\mathbf{w}$$ determines how quickly the activation $$z$$ changes as we move perpendicular to the hyperplane, while the bias $$b$$ controls the hyperplane's distance from the origin along the direction of $$\mathbf{w}$$.
@@ -66,6 +68,40 @@ $$a = \sigma\left(\sum_{i=1}^{n} w_i x_i + b\right) = \sigma(\mathbf{w}^T \mathb
 The choice of $$\sigma$$ dramatically affects the neuron's behavior. The sigmoid function $$\sigma(z) = \frac{1}{1+e^{-z}}$$ smoothly transitions between 0 and 1, providing a probabilistic interpretation and crucially, being differentiable everywhere. The hyperbolic tangent $$\tanh(z)$$ ranges from -1 to 1 and is zero-centered, which often improves gradient flow. The Rectified Linear Unit (ReLU), defined as $$\max(0, z)$$, has become dominant in modern deep learning because it's computationally efficient, doesn't saturate for positive inputs (avoiding vanishing gradients), and introduces useful sparsity where negative-activated neurons output exactly zero.
 
 ## 3. Example / Intuition
+
+### 3.1. Geometric intuition: from 1D to 3D
+
+Before returning to AND/XOR, picture the perceptron as a **decision boundary** in input space.
+
+**One dimension (e.g. temperature).** A neuron takes a scalar $$x$$ (°C). Weight and bias place a threshold — say at $$20$$: Inactive on one side, Active on the other. The unit only flips based on which side of that threshold you are on.
+
+![1D boundary: Inactive vs Active](/deep-learning-self-learning/img/chapter_img/chapter02/perceptron_1d_threshold.jpg)
+*Figure: A 1D perceptron places a boundary (e.g. at 20) on the Input Space axis. (Illustration from an introductory neural-network video)*
+
+Flipping the **sign of the weight** reverses the active region. For example, $$\hat{y} = H(-x + 20)$$ is active when $$x$$ is small (Active to the left of 20).
+
+![Flipping the boundary with the weight sign](/deep-learning-self-learning/img/chapter_img/chapter02/perceptron_1d_weight_sign.jpg)
+*Figure: $$\hat{y}=H(-x+20)$$ — a negative weight flips Active/Inactive. (Illustration from an introductory neural-network video)*
+
+**Two dimensions (e.g. Temp + Humidity).** Two features → the decision boundary is a **line**. Class points lie on opposite sides of that line (yellow in the figure below).
+
+![2D decision boundary](/deep-learning-self-learning/img/chapter_img/chapter02/perceptron_2d_decision_boundary.jpg)
+*Figure: Two-input perceptron (Temp, Humidity) and a linear separator in the plane. (Illustration from an introductory neural-network video)*
+
+In compact vector/matrix form:
+
+![Vector form of the perceptron](/deep-learning-self-learning/img/chapter_img/chapter02/perceptron_vector_form.jpg)
+*Figure: $$\hat{y}=H(w_1x_1+w_2x_2+b)=H(\mathbf{W}\mathbf{x}+b)$$. (Illustration from an introductory neural-network video)*
+
+**Three or more dimensions.** Adding a feature (e.g. Wind Speed) makes the boundary a **hyperplane** in input space:
+
+![3D decision hyperplane](/deep-learning-self-learning/img/chapter_img/chapter02/perceptron_3d_hyperplane.jpg)
+*Figure: Three inputs (Temp, Humidity, Wind Speed) and a classifying hyperplane in 3D. (Illustration from an introductory neural-network video)*
+
+![Linearly separable data](/deep-learning-self-learning/img/chapter_img/chapter02/linearly_separable.jpg)
+*Figure: Two *linearly separable* classes — one straight line is enough. When data is not linearly separable, we need nonlinearity and multiple layers. (Illustration from an introductory neural-network video)*
+
+### 3.2. Logic examples: AND and XOR
 
 To truly understand how a perceptron works, let's walk through a concrete example that reveals both its power and limitations. Consider the simple logical AND function, which outputs 1 only when both inputs are 1. While this seems trivial, it was groundbreaking that a machine could learn this relationship from examples alone.
 
@@ -394,3 +430,11 @@ Understanding the geometric interpretation of weights helps debug and interpret 
 ## Key Takeaways
 
 The perceptron, despite its simplicity, introduces fundamental concepts that persist throughout deep learning: the idea that we can learn from examples by adjusting weights based on errors, that weighted combinations of inputs can perform computation, and that linear models have inherent limitations necessitating nonlinearity and depth. Modern neurons extend the perceptron by using smooth, differentiable activation functions, enabling gradient-based learning through arbitrarily deep networks. The choice of activation function profoundly affects training dynamics, with ReLU emerging as the dominant choice for hidden layers due to its computational efficiency and resistance to vanishing gradients. Proper initialization breaks symmetry while maintaining appropriate activation and gradient scales, with He initialization being standard for ReLU networks. Understanding these foundational concepts deeply—not just what the formulas are but why they work and when they fail—is essential for anyone seeking to master deep learning rather than merely apply it superficially.
+
+<!-- video-references -->
+
+## Video references
+
+Some figures in this lesson are screenshots from the following videos (Machine Learning Thực Chiến). URLs kept for attribution and further viewing:
+
+- [Neural network intuition (Perceptron → Deep Learning)](https://www.facebook.com/reel/793200140509765)

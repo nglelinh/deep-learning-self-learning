@@ -2,12 +2,11 @@
 layout: post
 title: 02-04 Forward Propagation
 chapter: '02'
-order: 5
+order: 9
 owner: Deep Learning Course
 lang: en
 categories:
 - chapter02
-lesson_type: required
 ---
 
 This lesson provides a comprehensive understanding of forward propagation, the process by which neural networks make predictions.
@@ -19,6 +18,28 @@ This lesson provides a comprehensive understanding of forward propagation, the p
 **Forward propagation** is the process of computing the output of a neural network given an input. Data "flows forward" through the network from the input layer to the output layer, passing through all hidden layers in sequence.
 
 This is the **inference** or **prediction** phase of a neural network.
+
+### Geometric intuition for one forward step
+
+With a ReLU hidden layer and a $$\sigma$$ output, a compact forward pass is:
+
+$$\mathbf{h} = (W_h \mathbf{x} + b_h)^+,\qquad \hat{\mathbf{y}} = \sigma(W_y \mathbf{h} + b_y)$$
+
+![Forward: ReLU hidden then σ output](/deep-learning-self-learning/img/chapter_img/chapter02/mlp_hidden_relu_forward.jpg)
+*Figure: Pipeline $$x \to h \to \hat{y}$$ with ReLU in the hidden layer and $$\sigma$$ at the output. (Illustration from an introductory neural-network video)*
+
+Each **affine** layer (multiply by $$W$$, add $$b$$) reshapes space; ReLU “folds / cuts” the negative half-space — that nonlinearity is why stacked layers are far more powerful than a single linear map.
+
+![ReLU folding feature space](/deep-learning-self-learning/img/chapter_img/chapter02/feature_space_folding_relu.jpg)
+*Figure: After $$h=(W_h x+b_h)^+$$, point clouds fold/distort nonlinearly in feature space. (Illustration from an introductory neural-network video)*
+
+![Representation after layer transforms](/deep-learning-self-learning/img/chapter_img/chapter02/feature_space_after_transform.jpg)
+*Figure: The same data viewed after successive layers — forward is a sequence of geometric transforms, not only “matrix multiplies on paper”. (Illustration from an introductory neural-network video)*
+
+**Forward = “drawing” the function.** In 1D regression, each $$x$$ through the net yields a point $$(x,\hat{y})$$; repeating over many $$x$$ redraws the learned curve. Hidden neurons light up differently by input region.
+
+![Many predictions on a complex curve](/deep-learning-self-learning/img/chapter_img/chapter02/nn_predictions_complex_curve.jpg)
+*Figure: Repeated forward passes “draw” the approximated function. (Illustration from a video on the nature of neural nets)*
 
 ## The Forward Pass: Step by Step
 
@@ -396,3 +417,11 @@ Need to store activations for each layer (needed for backpropagation).
 
 Now that we understand how networks make predictions, we need to learn how to train them. In the next chapter, we'll cover **backpropagation** and **gradient descent**, the algorithms that enable neural networks to learn from data.
 
+<!-- video-references -->
+
+## Video references
+
+Some figures in this lesson are screenshots from the following videos (Machine Learning Thực Chiến). URLs kept for attribution and further viewing:
+
+- [Neural network intuition (Perceptron → Deep Learning)](https://www.facebook.com/reel/793200140509765)
+- [Neural nets as function approximators](https://www.facebook.com/reel/720970114372332)

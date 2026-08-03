@@ -22,8 +22,6 @@ t:
     chapters: "Chapters"
     language: "Language"
     switch_language: "Switch to Vietnamese"
-    required: "Required"
-    optional: "Optional"
   vi:
     title: "Deep Learning trong Khoa học Dữ liệu"
     description: "Deep Learning trong Khoa học Dữ liệu"
@@ -31,8 +29,6 @@ t:
     chapters: "Các chương"
     language: "Ngôn ngữ"
     switch_language: "Chuyển sang tiếng Anh"
-    required: "Bắt buộc"
-    optional: "Tùy chọn"
 # About/contact
 author:
   name:              Nguyen Le Linh

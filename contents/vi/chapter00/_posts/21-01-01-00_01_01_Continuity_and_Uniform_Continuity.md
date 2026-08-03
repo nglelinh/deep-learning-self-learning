@@ -7,7 +7,6 @@ owner: GitHub Copilot
 lang: vi
 categories:
 - chapter00
-lesson_type: required
 ---
 
 Bài học này giới thiệu các khái niệm cơ bản về tính liên tục và tính liên tục đều, những khái niệm quan trọng để hiểu hành vi của các hàm số trong tối ưu hóa.

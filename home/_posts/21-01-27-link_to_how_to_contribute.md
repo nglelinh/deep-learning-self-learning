@@ -1,9 +1,9 @@
 ---
 layout: post
-title: contents
+title: "How to contribute"
 chapter: home
 order: 2
-owner: kyeongminwoo
+owner: Deep Learning Course
+lang: en
 hidden: true
 ---
-

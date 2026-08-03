@@ -7,7 +7,6 @@ owner: GitHub Copilot
 lang: en
 categories:
 - chapter00
-lesson_type: required
 ---
 
 This lesson introduces vectors, vector spaces, and fundamental concepts that form the foundation for understanding linear algebra in deep-learning contexts.

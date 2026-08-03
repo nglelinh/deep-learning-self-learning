@@ -2,7 +2,7 @@
 layout: post
 title: 00-05 Bài tập trắc nghiệm - Khái niệm cơ bản
 chapter: '00'
-order: 15
+order: 24
 owner: GitHub Copilot
 lang: vi
 categories:

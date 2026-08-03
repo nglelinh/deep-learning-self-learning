@@ -4,6 +4,9 @@ title: "References and Resources"
 chapter: "26"
 order: 1
 owner: "Deep Learning Course"
+lang: en
+categories:
+- reference
 ---
 
 ## Essential Deep Learning Books

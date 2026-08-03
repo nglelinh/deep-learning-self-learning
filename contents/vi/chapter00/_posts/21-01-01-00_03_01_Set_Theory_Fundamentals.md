@@ -7,7 +7,6 @@ owner: GitHub Copilot
 lang: vi
 categories:
 - chapter00
-lesson_type: required
 ---
 
 Bài học này bao gồm các khái niệm cơ bản từ lý thuyết tập hợp cung cấp nền tảng toán học để hiểu các bài toán tối ưu hóa, ràng buộc và vùng khả thi.

@@ -2,12 +2,11 @@
 layout: post
 title: 00-04-03 Likelihood và Ước Lượng Hợp Lý Tối Đa (MLE)
 chapter: '00'
-order: 16
+order: 23
 owner: AI Assistant
 categories:
 - chapter00
 lang: vi
-lesson_type: required
 ---
 
 ## Likelihood và Ước Lượng Hợp Lý Tối Đa

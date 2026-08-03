@@ -7,7 +7,6 @@ owner: Deep Learning Course
 lang: en
 categories:
 - chapter23
-lesson_type: required
 ---
 
 # Efficient Deep Learning: Compression and Acceleration

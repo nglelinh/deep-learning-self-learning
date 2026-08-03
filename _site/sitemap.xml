@@ -18,7 +18,39 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/home/author-details-vi/</loc>
+      
+        <lastmod>2021-05-20T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/reference/26_reference/</loc>
+      
+        <lastmod>2021-03-28T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/reference/26_reference-vi/</loc>
       
         <lastmod>2021-03-28T00:00:00+07:00</lastmod>
       
@@ -50,7 +82,39 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/home/makers-vi/</loc>
+      
+        <lastmod>2021-02-03T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/home/link_to_how_to_contribute/</loc>
+      
+        <lastmod>2021-01-27T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/home/link_to_how_to_contribute-vi/</loc>
       
         <lastmod>2021-01-27T00:00:00+07:00</lastmod>
       
@@ -82,9 +146,2073 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/home/introduction-en/</loc>
+      
+        <lastmod>2021-01-20T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/home/contents/</loc>
       
         <lastmod>2021-01-20T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/home/contents-en/</loc>
+      
+        <lastmod>2021-01-20T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter25/25_01_Future_Directions/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter25/25_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter24/24_01_Model_Interpretability/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter24/24_01_02_Interpretability_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter24/24_01_01_Interpretability_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter24/24_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter23/23_01_Model_Compression/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter23/23_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter22/22_01_GNN_Fundamentals/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter22/22_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter21/21_01_Deep_RL/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter21/21_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter20/20_01_RL_Fundamentals/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter20/20_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter19/19_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter18/18_01_Word_Embeddings/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter18/18_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter17/17_01_Object_Detection/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter17/17_01_02_Object_Detection_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter17/17_01_01_Object_Detection_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter17/17_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter16/16_01_Self_Supervised_Learning/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter16/16_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter15/15_01_Transfer_Learning_Fundamentals/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter15/15_01_02_Transfer_Learning_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter15/15_01_01_Transfer_Learning_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter15/15_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter14/14_01_GAN_Fundamentals/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter14/14_01_02_GAN_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter14/14_01_01_GAN_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter14/14_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter13/13_01_VAE_Fundamentals/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter13/13_01_02_VAE_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter13/13_01_01_VAE_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter13/13_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter12/12_01_Autoencoder_Fundamentals/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter12/12_01_02_Autoencoder_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter12/12_01_02_02_Latent_Space_and_Pitfalls/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter12/12_01_02_01_Autoencoder_Core_Code/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter12/12_01_01_Autoencoder_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter12/12_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter11/11_01_Generative_Models_Fundamentals/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter11/11_01_02_Generative_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter11/11_01_02_02_Toy_GAN_and_Pitfalls/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter11/11_01_02_01_Autoregressive_Code/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter11/11_01_01_Generative_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter11/11_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter10/10_01_Advanced_Optimizers/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter10/10_01_02_Optimizer_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter10/10_01_02_02_Optimizer_Comparisons_and_Pitfalls/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter10/10_01_02_01_Optimizer_Core_Code/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter10/10_01_01_Optimizer_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter10/10_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter09/09_02_Batch_Normalization/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter09/09_02_02_BatchNorm_Placement_and_Variants/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter09/09_02_01_BatchNorm_Mechanics/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter09/09_01_Dropout/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter09/09_01_02_Dropout_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter09/09_01_01_Dropout_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter09/09_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter08/08_01_Transformer_Architecture/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter08/08_01_02_Transformer_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter08/08_01_02_02_Transformer_Demos_and_Pitfalls/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter08/08_01_02_01_Transformer_Core_Code/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter08/08_01_01_Transformer_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter08/08_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter07/07_02_02_Attention_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter07/07_02_02_02_MultiHead_and_Pitfalls/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter07/07_02_02_01_Attention_Core_Code/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter07/07_02_01_Attention_Math/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter07/07_01_Attention_Mechanisms/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter07/07_01_Attention_Basics/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter07/07_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter06/06_01_LSTM_Architecture/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter06/06_01_02_LSTM_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter06/06_01_02_02_Gates_GRU_and_Pitfalls/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter06/06_01_02_01_LSTM_Core_Code/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter06/06_01_01_LSTM_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter06/06_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter05/05_01_RNN_Fundamentals/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter05/05_01_02_RNN_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter05/05_01_02_02_RNN_Language_Model_and_Pitfalls/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter05/05_01_02_01_RNN_Core_Code/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter05/05_01_01_RNN_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter05/05_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter04/04_02_Pooling_and_Architectures/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter04/04_02_02_Classic_CNN_Architectures/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter04/04_02_02_02_VGG_ResNet_and_Evolution/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter04/04_02_02_01_LeNet_AlexNet/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter04/04_02_01_Pooling_Layers/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter04/04_01_Convolutional_Layers/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter04/04_01_04_Convolution_Pitfalls_and_Papers/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter04/04_01_03_Convolution_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter04/04_01_03_02_Convolution_PyTorch/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter04/04_01_03_01_Convolution_NumPy/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter04/04_01_02_Convolution_Intuition_and_Examples/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter04/04_01_01_Convolution_Math_and_Dimensions/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter04/04_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter03/03_04_Training_Techniques/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter03/03_04_02_Monitoring_and_Training_Loop/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter03/03_04_01_Init_Preprocessing_and_Data/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter03/03_03_Backpropagation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter03/03_03_02_Backprop_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter03/03_03_01_Backprop_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter03/03_02_Gradient_Descent/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter03/03_02_02_GD_Implementation_and_Challenges/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter03/03_02_01_GD_Variants_and_Learning_Rate/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter03/03_01_Loss_Functions/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter03/03_01_02_Classification_Losses/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter03/03_01_01_Regression_Losses/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter03/03_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter02/02_04_Forward_Propagation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter02/02_03_Activation_Functions/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter02/02_03_02_Modern_Activations_and_Vanishing_Gradients/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter02/02_03_01_Classic_Activations/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter02/02_02_Neural_Network_Architecture/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter02/02_02_02_Depth_Width_and_Design/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter02/02_02_01_Architecture_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter02/02_01_Perceptron_and_Neurons/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter02/02_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter01/01_01_Why_Deep_Learning/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter01/01_01_02_When_to_Use_DL_and_Ecosystem/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter01/01_01_01_Limitations_and_What_Makes_DL_Different/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter01/01_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter01/01_00_03_Course_Guide_and_How_to_Succeed/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter01/01_00_02_First_MNIST_Walkthrough/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter01/01_00_01_What_Is_Deep_Learning/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
       
 
       
@@ -178,7 +2306,103 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/contents/vi/chapter00/00_04_02_03_Multivariate_and_DL_Applications/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter00/00_04_02_02_Continuous_Distributions/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter00/00_04_02_01_Discrete_Distributions/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/contents/vi/chapter00/00_04_01_Basic_Probability_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter00/00_04_01_03_Random_Variables_and_Deep_Learning/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter00/00_04_01_02_Conditional_Probability_and_Independence/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/vi/chapter00/00_04_01_01_Sample_Spaces_and_Axioms/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
       
@@ -434,6 +2658,38 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/contents/en/chapter24/24_01_02_Interpretability_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter24/24_01_01_Interpretability_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/contents/en/chapter24/24_00_Introduction/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
@@ -642,6 +2898,38 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/contents/en/chapter17/17_01_02_Object_Detection_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter17/17_01_01_Object_Detection_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/contents/en/chapter17/17_00_Introduction/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
@@ -706,6 +2994,38 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/contents/en/chapter15/15_01_02_Transfer_Learning_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter15/15_01_01_Transfer_Learning_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/contents/en/chapter15/15_00_Introduction/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
@@ -723,6 +3043,38 @@
   
     <url>
       <loc>http://localhost:4000/contents/en/chapter14/14_01_GAN_Fundamentals/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter14/14_01_02_GAN_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter14/14_01_01_GAN_Theory/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
       
@@ -770,6 +3122,38 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/contents/en/chapter13/13_01_02_VAE_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter13/13_01_01_VAE_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/contents/en/chapter13/13_00_Introduction/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
@@ -787,6 +3171,70 @@
   
     <url>
       <loc>http://localhost:4000/contents/en/chapter12/12_01_Autoencoder_Fundamentals/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter12/12_01_02_Autoencoder_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter12/12_01_02_02_Latent_Space_and_Pitfalls/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter12/12_01_02_01_Autoencoder_Core_Code/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter12/12_01_01_Autoencoder_Theory/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
       
@@ -834,6 +3282,70 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/contents/en/chapter11/11_01_02_Generative_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter11/11_01_02_02_Toy_GAN_and_Pitfalls/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter11/11_01_02_01_Autoregressive_Code/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter11/11_01_01_Generative_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/contents/en/chapter11/11_00_Introduction/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
@@ -851,6 +3363,70 @@
   
     <url>
       <loc>http://localhost:4000/contents/en/chapter10/10_01_Advanced_Optimizers/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter10/10_01_02_Optimizer_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter10/10_01_02_02_Optimizer_Comparisons_and_Pitfalls/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter10/10_01_02_01_Optimizer_Core_Code/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter10/10_01_01_Optimizer_Theory/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
       
@@ -898,7 +3474,71 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/contents/en/chapter09/09_02_02_BatchNorm_Placement_and_Variants/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter09/09_02_01_BatchNorm_Mechanics/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/contents/en/chapter09/09_01_Dropout/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter09/09_01_02_Dropout_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter09/09_01_01_Dropout_Theory/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
       
@@ -946,7 +3586,135 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/contents/en/chapter08/08_01_02_Transformer_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter08/08_01_02_02_Transformer_Demos_and_Pitfalls/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter08/08_01_02_01_Transformer_Core_Code/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter08/08_01_01_Transformer_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/contents/en/chapter08/08_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter07/07_02_02_Attention_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter07/07_02_02_02_MultiHead_and_Pitfalls/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter07/07_02_02_01_Attention_Core_Code/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter07/07_02_01_Attention_Math/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
       
@@ -1026,6 +3794,70 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/contents/en/chapter06/06_01_02_LSTM_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter06/06_01_02_02_Gates_GRU_and_Pitfalls/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter06/06_01_02_01_LSTM_Core_Code/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter06/06_01_01_LSTM_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/contents/en/chapter06/06_00_Introduction/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
@@ -1043,6 +3875,70 @@
   
     <url>
       <loc>http://localhost:4000/contents/en/chapter05/05_01_RNN_Fundamentals/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter05/05_01_02_RNN_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter05/05_01_02_02_RNN_Language_Model_and_Pitfalls/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter05/05_01_02_01_RNN_Core_Code/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter05/05_01_01_RNN_Theory/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
       
@@ -1090,7 +3986,167 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/contents/en/chapter04/04_02_02_Classic_CNN_Architectures/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter04/04_02_02_02_VGG_ResNet_and_Evolution/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter04/04_02_02_01_LeNet_AlexNet/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter04/04_02_01_Pooling_Layers/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/contents/en/chapter04/04_01_Convolutional_Layers/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter04/04_01_04_Convolution_Pitfalls_and_Papers/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter04/04_01_03_Convolution_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter04/04_01_03_02_Convolution_PyTorch/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter04/04_01_03_01_Convolution_NumPy/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter04/04_01_02_Convolution_Intuition_and_Examples/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter04/04_01_01_Convolution_Math_and_Dimensions/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
       
@@ -1138,7 +4194,71 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/contents/en/chapter03/03_04_02_Monitoring_and_Training_Loop/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter03/03_04_01_Init_Preprocessing_and_Data/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/contents/en/chapter03/03_03_Backpropagation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter03/03_03_02_Backprop_Implementation/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter03/03_03_01_Backprop_Theory/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
       
@@ -1170,7 +4290,71 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/contents/en/chapter03/03_02_02_GD_Implementation_and_Challenges/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter03/03_02_01_GD_Variants_and_Learning_Rate/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/contents/en/chapter03/03_01_Loss_Functions/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter03/03_01_02_Classification_Losses/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter03/03_01_01_Regression_Losses/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
       
@@ -1234,7 +4418,71 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/contents/en/chapter02/02_03_02_Modern_Activations_and_Vanishing_Gradients/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter02/02_03_01_Classic_Activations/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/contents/en/chapter02/02_02_Neural_Network_Architecture/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter02/02_02_02_Depth_Width_and_Design/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter02/02_02_01_Architecture_Theory/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
       
@@ -1298,7 +4546,87 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/contents/en/chapter01/01_01_02_When_to_Use_DL_and_Ecosystem/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter01/01_01_01_Limitations_and_What_Makes_DL_Different/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/contents/en/chapter01/01_00_Introduction/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter01/01_00_03_Course_Guide_and_How_to_Succeed/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter01/01_00_02_First_MNIST_Walkthrough/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter01/01_00_01_What_Is_Deep_Learning/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
       
@@ -1362,7 +4690,103 @@
     </url>
   
     <url>
+      <loc>http://localhost:4000/contents/en/chapter00/00_04_02_03_Multivariate_and_DL_Applications/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter00/00_04_02_02_Continuous_Distributions/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter00/00_04_02_01_Discrete_Distributions/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>http://localhost:4000/contents/en/chapter00/00_04_01_Basic_Probability_Theory/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter00/00_04_01_03_Random_Variables_and_Deep_Learning/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter00/00_04_01_02_Conditional_Probability_and_Independence/</loc>
+      
+        <lastmod>2021-01-01T00:00:00+07:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>http://localhost:4000/contents/en/chapter00/00_04_01_01_Sample_Spaces_and_Axioms/</loc>
       
         <lastmod>2021-01-01T00:00:00+07:00</lastmod>
       

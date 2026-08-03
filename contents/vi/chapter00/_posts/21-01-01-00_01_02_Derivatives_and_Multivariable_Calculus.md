@@ -7,7 +7,6 @@ owner: GitHub Copilot
 lang: vi
 categories:
 - chapter00
-lesson_type: required
 ---
 
 Bài học này bao gồm đạo hàm và các khái niệm giải tích đa biến thiết yếu tạo nền tảng cho lý thuyết và thuật toán tối ưu hóa.

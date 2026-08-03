@@ -7,278 +7,277 @@ owner: GitHub Copilot
 lang: vi
 categories:
 - chapter00
-lesson_type: required
 ---
 
-Bài học này bao gồm các khái niệm tôpô cần thiết từ giải tích thực, rất quan trọng để hiểu cấu trúc của các vùng khả thi, tính liên tục và sự tồn tại của nghiệm tối ưu trong các bài toán tối ưu hóa.
+Bài học này trình bày các khái niệm tôpô (*topology*) cốt yếu từ giải tích thực — nền tảng để hiểu cấu trúc vùng khả thi, tính liên tục và sự tồn tại nghiệm tối ưu trong các bài toán tối ưu hóa.
 
 ---
 
-## Giới thiệu về Tôpô
+## Giới thiệu về tôpô
 
-Tôpô nghiên cứu các tính chất của không gian được bảo toàn dưới các biến dạng liên tục. Trong tối ưu hóa, các khái niệm tôpô giúp chúng ta hiểu cấu trúc của các vùng khả thi và hành vi của các hàm số, đặc biệt liên quan đến sự tồn tại và đặc trưng của nghiệm tối ưu.
+Tôpô nghiên cứu những tính chất của không gian được bảo toàn dưới các biến dạng liên tục. Trong tối ưu hóa, các khái niệm tôpô giúp ta hiểu cấu trúc vùng khả thi và hành vi của hàm số, đặc biệt liên quan đến sự tồn tại và đặc trưng của nghiệm tối ưu.
 
-### Không gian metric và Khoảng cách
+### Không gian metric và khoảng cách
 
-Trước khi thảo luận về tôpô, chúng ta cần khái niệm khoảng cách. Trong $$\mathbb{R}^n$$, **khoảng cách Euclid** chuẩn giữa các điểm $$\mathbf{x}$$ và $$\mathbf{y}$$ là:
+Trước khi bàn về tôpô, ta cần khái niệm khoảng cách. Trong $$\mathbb{R}^n$$, **khoảng cách Euclid** chuẩn giữa hai điểm $$\mathbf{x}$$ và $$\mathbf{y}$$ là:
 
 $$d(\mathbf{x}, \mathbf{y}) = \|\mathbf{x} - \mathbf{y}\|_2 = \sqrt{\sum_{i=1}^n (x_i - y_i)^2}$$
 
-### Hình cầu mở và Lân cận
+### Hình cầu mở và lân cận
 
-Một **hình cầu mở** có tâm tại $$\mathbf{x}_0$$ với bán kính $$\epsilon > 0$$ là:
+Một **hình cầu mở** (*open ball*) tâm $$\mathbf{x}_0$$ bán kính $$\epsilon > 0$$ là:
 
 $$B(\mathbf{x}_0, \epsilon) = \{\mathbf{y} \in \mathbb{R}^n : d(\mathbf{x}_0, \mathbf{y}) < \epsilon\}$$
 
-This represents all points within distance $$\epsilon$$ from $$\mathbf{x}_0$$.
+Tập này gồm mọi điểm cách $$\mathbf{x}_0$$ một khoảng nhỏ hơn $$\epsilon$$.
 
-**Examples:**
-- In $$\mathbb{R}$$: $$B(0, 1) = (-1, 1)$$ (open interval)
-- In $$\mathbb{R}^2$$: $$B(\mathbf{0}, 1) = \{(x, y) : x^2 + y^2 < 1\}$$ (open unit disk)
+**Ví dụ:**
+- Trong $$\mathbb{R}$$: $$B(0, 1) = (-1, 1)$$ (khoảng mở)
+- Trong $$\mathbb{R}^2$$: $$B(\mathbf{0}, 1) = \{(x, y) : x^2 + y^2 < 1\}$$ (đĩa đơn vị mở)
 
 ---
 
-## Open Sets
+## Tập mở
 
-An **open set** is characterized by the property that it **contains none of its boundary points**.
+Một **tập mở** (*open set*) được đặc trưng bởi tính chất: nó **không chứa điểm biên nào** của chính nó.
 
-### Formal Definition
+### Định nghĩa hình thức
 
-A set $$S$$ in $$\mathbb{R}^n$$ is **open** if for every point $$\mathbf{x} \in S$$, there exists a positive real number $$\epsilon > 0$$ such that the open ball $$B(\mathbf{x}, \epsilon)$$ is entirely contained within $$S$$:
+Một tập $$S$$ trong $$\mathbb{R}^n$$ được gọi là **mở** nếu với mọi điểm $$\mathbf{x} \in S$$, tồn tại số thực dương $$\epsilon > 0$$ sao cho hình cầu mở $$B(\mathbf{x}, \epsilon)$$ nằm hoàn toàn trong $$S$$:
 
 $$\forall \mathbf{x} \in S, \exists \epsilon > 0 : B(\mathbf{x}, \epsilon) \subseteq S$$
 
-### Intuitive Understanding
+### Hiểu theo trực giác
 
-An open set has the property that if you're inside it, you can move a small distance in any direction and still remain inside the set. There's always some "wiggle room" around every point.
+Tập mở có tính chất: nếu ta đang ở bên trong tập, ta có thể di chuyển một khoảng nhỏ theo mọi hướng mà vẫn còn trong tập. Xung quanh mọi điểm luôn có một “khoảng trống an toàn”.
 
-### Examples of Open Sets
+### Ví dụ về tập mở
 
-**In $$\mathbb{R}$$:**
+**Trong $$\mathbb{R}$$:**
 - $$(0, 1) = \{x : 0 < x < 1\}$$
 - $$(-\infty, 5) = \{x : x < 5\}$$
-- $$\mathbb{R}$$ itself
+- chính $$\mathbb{R}$$
 
-**In $$\mathbb{R}^2$$:**
-- $$\{(x, y) : x^2 + y^2 < 1\}$$ (open unit disk)
-- $$\{(x, y) : x > 0, y > 0\}$$ (first quadrant, excluding axes)
-- $$\mathbb{R}^2$$ itself
+**Trong $$\mathbb{R}^2$$:**
+- $$\{(x, y) : x^2 + y^2 < 1\}$$ (đĩa đơn vị mở)
+- $$\{(x, y) : x > 0, y > 0\}$$ (góc phần tư thứ nhất, không gồm các trục)
+- chính $$\mathbb{R}^2$$
 
-**In $$\mathbb{R}^n$$:**
-- Any open ball $$B(\mathbf{x}_0, r)$$
-- $$\mathbb{R}^n$$ itself
-- $$\emptyset$$ (empty set - vacuously open)
+**Trong $$\mathbb{R}^n$$:**
+- Mọi hình cầu mở $$B(\mathbf{x}_0, r)$$
+- chính $$\mathbb{R}^n$$
+- $$\emptyset$$ (tập rỗng — mở một cách hiển nhiên theo định nghĩa)
 
-### Properties of Open Sets
+### Tính chất của tập mở
 
-1. The union of any collection of open sets is open
-2. The intersection of finitely many open sets is open
-3. $$\mathbb{R}^n$$ and $$\emptyset$$ are both open
+1. Hợp tùy ý của các tập mở là tập mở
+2. Giao hữu hạn các tập mở là tập mở
+3. $$\mathbb{R}^n$$ và $$\emptyset$$ đều là tập mở
 
 ---
 
-## Closed Sets
+## Tập đóng
 
-A **closed set** is defined as a set that contains all of its boundary points. Equivalently, a set $$S$$ is closed if its complement $$\mathbb{R}^n \setminus S$$ is an **open set**.
+Một **tập đóng** (*closed set*) được định nghĩa là tập chứa tất cả các điểm biên của nó. Tương đương, tập $$S$$ đóng nếu phần bù $$\mathbb{R}^n \setminus S$$ là một **tập mở**.
 
-### Formal Definition
+### Định nghĩa hình thức
 
-A set $$S$$ is **closed** if it contains all its limit points. That is, if a sequence of points $$(x_n)$$ from $$S$$ converges to a point $$\mathbf{x}$$, then $$\mathbf{x}$$ must also be in $$S$$:
+Tập $$S$$ được gọi là **đóng** nếu nó chứa mọi điểm giới hạn của nó. Nghĩa là, nếu một dãy điểm $$(\mathbf{x}_n)$$ trong $$S$$ hội tụ về điểm $$\mathbf{x}$$, thì $$\mathbf{x}$$ cũng phải thuộc $$S$$:
 
-$$\text{If } \mathbf{x}_n \in S \text{ for all } n \text{ and } \lim_{n \to \infty} \mathbf{x}_n = \mathbf{x}, \text{ then } \mathbf{x} \in S$$
+$$\text{Nếu } \mathbf{x}_n \in S \text{ với mọi } n \text{ và } \lim_{n \to \infty} \mathbf{x}_n = \mathbf{x}, \text{ thì } \mathbf{x} \in S$$
 
-### Examples of Closed Sets
+### Ví dụ về tập đóng
 
-**In $$\mathbb{R}$$:**
+**Trong $$\mathbb{R}$$:**
 - $$[0, 1] = \{x : 0 \leq x \leq 1\}$$
 - $$[a, \infty) = \{x : x \geq a\}$$
-- $$\{0\}$$ (single point)
-- $$\mathbb{Z}$$ (integers)
+- $$\{0\}$$ (điểm đơn)
+- $$\mathbb{Z}$$ (tập số nguyên)
 
-**In $$\mathbb{R}^2$$:**
-- $$\{(x, y) : x^2 + y^2 \leq 1\}$$ (closed unit disk)
-- $$\{(x, y) : x \geq 0, y \geq 0\}$$ (first quadrant, including axes)
-- $$\{(0, 0)\}$$ (single point)
+**Trong $$\mathbb{R}^2$$:**
+- $$\{(x, y) : x^2 + y^2 \leq 1\}$$ (đĩa đơn vị đóng)
+- $$\{(x, y) : x \geq 0, y \geq 0\}$$ (góc phần tư thứ nhất, gồm cả các trục)
+- $$\{(0, 0)\}$$ (điểm đơn)
 
-**In $$\mathbb{R}^n$$:**
-- Any closed ball $$\overline{B}(\mathbf{x}_0, r) = \{\mathbf{x} : d(\mathbf{x}, \mathbf{x}_0) \leq r\}$$
-- $$\mathbb{R}^n$$ itself
-- $$\emptyset$$ (empty set)
-- Any finite set
+**Trong $$\mathbb{R}^n$$:**
+- Mọi hình cầu đóng $$\overline{B}(\mathbf{x}_0, r) = \{\mathbf{x} : d(\mathbf{x}, \mathbf{x}_0) \leq r\}$$
+- chính $$\mathbb{R}^n$$
+- $$\emptyset$$ (tập rỗng)
+- Mọi tập hữu hạn
 
-### Properties of Closed Sets
+### Tính chất của tập đóng
 
-1. The intersection of any collection of closed sets is closed
-2. The union of finitely many closed sets is closed
-3. $$\mathbb{R}^n$$ and $$\emptyset$$ are both closed
+1. Giao tùy ý của các tập đóng là tập đóng
+2. Hợp hữu hạn các tập đóng là tập đóng
+3. $$\mathbb{R}^n$$ và $$\emptyset$$ đều là tập đóng
 
-### Important Note
+### Lưu ý quan trọng
 
-Sets can be:
-- **Open but not closed:** $$(0, 1)$$
-- **Closed but not open:** $$[0, 1]$$
-- **Both open and closed:** $$\mathbb{R}^n$$, $$\emptyset$$
-- **Neither open nor closed:** $$[0, 1)$$, $$(0, 1]$$
+Một tập có thể:
+- **Mở nhưng không đóng:** $$(0, 1)$$
+- **Đóng nhưng không mở:** $$[0, 1]$$
+- **Vừa mở vừa đóng:** $$\mathbb{R}^n$$, $$\emptyset$$
+- **Không mở cũng không đóng:** $$[0, 1)$$, $$(0, 1]$$
 
 ---
 
-## Boundary, Interior, and Closure
+## Biên, phần trong và bao đóng
 
-### Boundary
+### Biên
 
-The **boundary** of a set $$S$$, denoted $$\partial S$$, consists of points that are "on the edge" of the set. A point $$\mathbf{x}$$ is a **boundary point** of $$S$$ if every open ball centered at $$\mathbf{x}$$ intersects both $$S$$ and its complement $$S^c$$:
+**Biên** (*boundary*) của tập $$S$$, ký hiệu $$\partial S$$, gồm các điểm “nằm trên mép” của tập. Điểm $$\mathbf{x}$$ là **điểm biên** của $$S$$ nếu mọi hình cầu mở tâm $$\mathbf{x}$$ đều giao cả $$S$$ lẫn phần bù $$S^c$$:
 
-$$\partial S = \{\mathbf{x} : \forall \epsilon > 0, B(\mathbf{x}, \epsilon) \cap S \neq \emptyset \text{ and } B(\mathbf{x}, \epsilon) \cap S^c \neq \emptyset\}$$
+$$\partial S = \{\mathbf{x} : \forall \epsilon > 0, B(\mathbf{x}, \epsilon) \cap S \neq \emptyset \text{ và } B(\mathbf{x}, \epsilon) \cap S^c \neq \emptyset\}$$
 
-### Interior
+### Phần trong
 
-The **interior** of a set $$S$$, denoted $$S^\circ$$ or $$\text{int}(S)$$, includes all points strictly "inside" the set, excluding the boundary:
+**Phần trong** (*interior*) của tập $$S$$, ký hiệu $$S^\circ$$ hoặc $$\text{int}(S)$$, gồm mọi điểm nằm “bên trong” tập một cách chặt, không gồm biên:
 
 $$S^\circ = \{\mathbf{x} \in S : \exists \epsilon > 0, B(\mathbf{x}, \epsilon) \subseteq S\}$$
 
-### Closure
+### Bao đóng
 
-The **closure** of a set $$S$$, denoted $$\overline{S}$$ or $$\text{cl}(S)$$, is the smallest closed set containing $$S$$:
+**Bao đóng** (*closure*) của tập $$S$$, ký hiệu $$\overline{S}$$ hoặc $$\text{cl}(S)$$, là tập đóng nhỏ nhất chứa $$S$$:
 
 $$\overline{S} = S \cup \partial S$$
 
-### Example Analysis
+### Phân tích ví dụ
 
-For the interval $$S = [0, 1)$$ in $$\mathbb{R}$$:
-- **Interior:** $$S^\circ = (0, 1)$$
-- **Boundary:** $$\partial S = \{0, 1\}$$
-- **Closure:** $$\overline{S} = [0, 1]$$
+Với khoảng $$S = [0, 1)$$ trong $$\mathbb{R}$$:
+- **Phần trong:** $$S^\circ = (0, 1)$$
+- **Biên:** $$\partial S = \{0, 1\}$$
+- **Bao đóng:** $$\overline{S} = [0, 1]$$
 
-For the open disk $$S = \{(x, y) : x^2 + y^2 < 1\}$$ in $$\mathbb{R}^2$$:
-- **Interior:** $$S^\circ = S$$ (the set is already open)
-- **Boundary:** $$\partial S = \{(x, y) : x^2 + y^2 = 1\}$$ (unit circle)
-- **Closure:** $$\overline{S} = \{(x, y) : x^2 + y^2 \leq 1\}$$ (closed unit disk)
-
----
-
-## Compact Sets
-
-A **compact set** is one of the most important concepts in deep-learning theory.
-
-### Definition in Euclidean Spaces
-
-**Heine-Borel Theorem:** In Euclidean spaces ($$\mathbb{R}^n$$), a set is compact if and only if it is both **closed and bounded**.
-
-- **Bounded:** A set $$S$$ is bounded if it can be contained within some sufficiently large open ball: $$\exists M > 0, \mathbf{x}_0$$ such that $$S \subseteq B(\mathbf{x}_0, M)$$
-- **Closed:** As defined above
-
-### Examples of Compact Sets
-
-**In $$\mathbb{R}$$:**
-- $$[a, b]$$ (any closed, bounded interval)
-- $$\{0\}$$ (single point)
-- Any finite set
-
-**In $$\mathbb{R}^2$$:**
-- $$\{(x, y) : x^2 + y^2 \leq 1\}$$ (closed unit disk)
-- $$[0, 1] \times [0, 1]$$ (unit square)
-- Any finite set of points
-
-**In $$\mathbb{R}^n$$:**
-- Any closed ball $$\overline{B}(\mathbf{x}_0, r)$$
-- Any closed, bounded rectangle $$[a_1, b_1] \times [a_2, b_2] \times \cdots \times [a_n, b_n]$$
-
-### Non-Compact Sets
-
-- $$(0, 1)$$ (bounded but not closed)
-- $$[0, \infty)$$ (closed but not bounded)
-- $$\mathbb{R}^n$$ (not bounded)
-- $$\{1, 1/2, 1/3, 1/4, \ldots\}$$ (bounded but not closed, since 0 is a limit point not in the set)
+Với đĩa mở $$S = \{(x, y) : x^2 + y^2 < 1\}$$ trong $$\mathbb{R}^2$$:
+- **Phần trong:** $$S^\circ = S$$ (tập đã mở sẵn)
+- **Biên:** $$\partial S = \{(x, y) : x^2 + y^2 = 1\}$$ (đường tròn đơn vị)
+- **Bao đóng:** $$\overline{S} = \{(x, y) : x^2 + y^2 \leq 1\}$$ (đĩa đơn vị đóng)
 
 ---
 
-## Continuity of Functions
+## Tập compact
 
-### Point-wise Continuity
+**Tập compact** (*compact set*) là một trong những khái niệm quan trọng nhất trong lý thuyết tối ưu hóa.
 
-A function $$f: A \to \mathbb{R}$$ is **continuous at a point** $$\mathbf{c} \in A$$ if for every $$\varepsilon > 0$$, there exists $$\delta > 0$$ such that for all $$\mathbf{x} \in A$$:
+### Định nghĩa trong không gian Euclid
+
+**Định lý Heine–Borel:** Trong không gian Euclid ($$\mathbb{R}^n$$), một tập compact khi và chỉ khi nó vừa **đóng** vừa **bị chặn**.
+
+- **Bị chặn:** tập $$S$$ bị chặn nếu nó nằm trong một hình cầu mở đủ lớn: $$\exists M > 0, \mathbf{x}_0$$ sao cho $$S \subseteq B(\mathbf{x}_0, M)$$
+- **Đóng:** như định nghĩa ở trên
+
+### Ví dụ về tập compact
+
+**Trong $$\mathbb{R}$$:**
+- $$[a, b]$$ (mọi đoạn đóng, bị chặn)
+- $$\{0\}$$ (điểm đơn)
+- Mọi tập hữu hạn
+
+**Trong $$\mathbb{R}^2$$:**
+- $$\{(x, y) : x^2 + y^2 \leq 1\}$$ (đĩa đơn vị đóng)
+- $$[0, 1] \times [0, 1]$$ (hình vuông đơn vị)
+- Mọi tập hữu hạn các điểm
+
+**Trong $$\mathbb{R}^n$$:**
+- Mọi hình cầu đóng $$\overline{B}(\mathbf{x}_0, r)$$
+- Mọi hình hộp chữ nhật đóng, bị chặn $$[a_1, b_1] \times [a_2, b_2] \times \cdots \times [a_n, b_n]$$
+
+### Các tập không compact
+
+- $$(0, 1)$$ (bị chặn nhưng không đóng)
+- $$[0, \infty)$$ (đóng nhưng không bị chặn)
+- $$\mathbb{R}^n$$ (không bị chặn)
+- $$\{1, 1/2, 1/3, 1/4, \ldots\}$$ (bị chặn nhưng không đóng, vì $$0$$ là điểm giới hạn không thuộc tập)
+
+---
+
+## Tính liên tục của hàm số
+
+### Liên tục tại một điểm
+
+Hàm $$f: A \to \mathbb{R}$$ **liên tục tại điểm** $$\mathbf{c} \in A$$ nếu với mọi $$\varepsilon > 0$$, tồn tại $$\delta > 0$$ sao cho với mọi $$\mathbf{x} \in A$$:
 
 $$\|\mathbf{x} - \mathbf{c}\| < \delta \implies |f(\mathbf{x}) - f(\mathbf{c})| < \varepsilon$$
 
-**Intuitive meaning:** Small changes in input lead to small changes in output.
+**Ý nghĩa trực giác:** thay đổi nhỏ của đầu vào dẫn đến thay đổi nhỏ của đầu ra.
 
-### Global Continuity
+### Liên tục toàn cục
 
-$$f$$ is **continuous on $$A$$** if it's continuous at every point in $$A$$.
+$$f$$ **liên tục trên $$A$$** nếu nó liên tục tại mọi điểm của $$A$$.
 
-### Sequential Characterization
+### Đặc trưng theo dãy
 
-$$f$$ is continuous at $$\mathbf{c}$$ if and only if for every sequence $$(\mathbf{x}_n)$$ in $$A$$ converging to $$\mathbf{c}$$:
+$$f$$ liên tục tại $$\mathbf{c}$$ khi và chỉ khi với mọi dãy $$(\mathbf{x}_n)$$ trong $$A$$ hội tụ về $$\mathbf{c}$$:
 
 $$\lim_{n \to \infty} f(\mathbf{x}_n) = f(\mathbf{c})$$
 
 ---
 
-## Important Theorems for Deep Learning
+## Các định lý quan trọng cho tối ưu hóa
 
-### Extreme Value Theorem
+### Định lý giá trị cực trị (*Extreme Value Theorem*)
 
-**If $$f$$ is continuous on a compact set $$K$$, then $$f$$ attains its maximum and minimum on $$K$$.**
+**Nếu $$f$$ liên tục trên tập compact $$K$$ thì $$f$$ đạt cực đại và cực tiểu trên $$K$$.**
 
-This is fundamental for deep-learning: it guarantees that continuous objective functions have optimal solutions on compact feasible regions.
+Đây là định lý nền tảng trong tối ưu hóa: nó đảm bảo rằng hàm mục tiêu liên tục có nghiệm tối ưu trên vùng khả thi compact.
 
-**Proof idea:** Compactness ensures that the supremum and infimum of $$f$$ on $$K$$ are actually achieved at points in $$K$$.
+**Ý tưởng chứng minh:** tính compact bảo đảm rằng supremum và infimum của $$f$$ trên $$K$$ thực sự đạt được tại các điểm thuộc $$K$$.
 
-### Intermediate Value Theorem
+### Định lý giá trị trung gian (*Intermediate Value Theorem*)
 
-**If $$f$$ is continuous on $$[a, b]$$ and $$y$$ is between $$f(a)$$ and $$f(b)$$, then there exists $$c \in [a, b]$$ such that $$f(c) = y$$.**
+**Nếu $$f$$ liên tục trên $$[a, b]$$ và $$y$$ nằm giữa $$f(a)$$ và $$f(b)$$, thì tồn tại $$c \in [a, b]$$ sao cho $$f(c) = y$$.**
 
-This helps establish the existence of solutions to equations $$f(x) = 0$$.
+Định lý này giúp thiết lập sự tồn tại nghiệm của phương trình $$f(x) = 0$$.
 
-### Bolzano-Weierstrass Theorem
+### Định lý Bolzano–Weierstrass
 
-**Every bounded sequence in $$\mathbb{R}^n$$ has a convergent subsequence.**
+**Mọi dãy bị chặn trong $$\mathbb{R}^n$$ đều có dãy con hội tụ.**
 
-This is crucial for proving convergence of deep-learning algorithms.
+Định lý này then chốt khi chứng minh hội tụ của các thuật toán tối ưu.
 
-### Weierstrass Approximation Theorem
+### Định lý xấp xỉ Weierstrass
 
-**Every continuous function on a closed interval can be uniformly approximated by polynomials.**
+**Mọi hàm liên tục trên đoạn đóng đều có thể được xấp xỉ đều bởi đa thức.**
 
-This justifies using polynomial approximations in deep-learning algorithms.
+Định lý này biện minh cho việc dùng xấp xỉ đa thức trong các thuật toán tối ưu.
 
 ---
 
-## Applications in Deep Learning
+## Ứng dụng trong tối ưu hóa
 
-### 1. Existence of Solutions
+### 1. Sự tồn tại nghiệm
 
-**Compact feasible sets guarantee optimal solutions exist:**
-- If the feasible region $$S$$ is compact and the objective function $$f$$ is continuous, then the deep-learning problem $$\min_{\mathbf{x} \in S} f(\mathbf{x})$$ has a solution.
+**Vùng khả thi compact bảo đảm tồn tại nghiệm tối ưu:**
+- Nếu vùng khả thi $$S$$ compact và hàm mục tiêu $$f$$ liên tục, thì bài toán tối ưu $$\min_{\mathbf{x} \in S} f(\mathbf{x})$$ có nghiệm.
 
-### 2. Constraint Qualification
+### 2. Điều kiện quy chuẩn ràng buộc (*constraint qualification*)
 
-Understanding topological properties of constraint sets:
-- **Regular points:** Points where constraint gradients are linearly independent
-- **Interior point methods:** Require the feasible region to have non-empty interior
+Hiểu các tính chất tôpô của tập ràng buộc:
+- **Điểm chính quy:** các điểm tại đó gradient của ràng buộc độc lập tuyến tính
+- **Phương pháp điểm trong:** đòi hỏi vùng khả thi có phần trong khác rỗng
 
-### 3. Convergence Analysis
+### 3. Phân tích hội tụ
 
-Analyzing whether deep-learning algorithms converge:
-- **Closed sets:** Ensure limit points of convergent sequences remain feasible
-- **Compactness:** Guarantees convergent subsequences exist
+Phân tích liệu thuật toán tối ưu có hội tụ hay không:
+- **Tập đóng:** bảo đảm các điểm giới hạn của dãy hội tụ vẫn khả thi
+- **Tính compact:** bảo đảm tồn tại dãy con hội tụ
 
-### 4. Local vs Global Optima
+### 4. Cực trị địa phương và toàn cục
 
-Using neighborhoods to define optimality:
-- **Local minimum:** $$f(\mathbf{x}^*) \leq f(\mathbf{x})$$ for all $$\mathbf{x}$$ in some neighborhood of $$\mathbf{x}^*$$
-- **Global minimum:** $$f(\mathbf{x}^*) \leq f(\mathbf{x})$$ for all $$\mathbf{x}$$ in the feasible region
+Dùng lân cận để định nghĩa tính tối ưu:
+- **Cực tiểu địa phương:** $$f(\mathbf{x}^*) \leq f(\mathbf{x})$$ với mọi $$\mathbf{x}$$ trong một lân cận nào đó của $$\mathbf{x}^*$$
+- **Cực tiểu toàn cục:** $$f(\mathbf{x}^*) \leq f(\mathbf{x})$$ với mọi $$\mathbf{x}$$ trong vùng khả thi
 
-### 5. Feasible Region Analysis
+### 5. Phân tích vùng khả thi
 
-Determining properties of constraint sets:
-- **Linear constraints:** Define closed sets (half-spaces)
-- **Nonlinear constraints:** May create sets that are neither open nor closed
-- **Compact feasible regions:** Guarantee existence of optimal solutions
+Xác định tính chất của tập ràng buộc:
+- **Ràng buộc tuyến tính:** xác định các tập đóng (nửa không gian)
+- **Ràng buộc phi tuyến:** có thể tạo ra các tập vừa không mở vừa không đóng
+- **Vùng khả thi compact:** bảo đảm tồn tại nghiệm tối ưu
 
-### Example: Portfolio Deep Learning
+### Ví dụ: Tối ưu danh mục đầu tư
 
-Consider minimizing portfolio risk subject to constraints:
+Xét bài toán cực tiểu hóa rủi ro danh mục với các ràng buộc:
 
 $$\begin{align}
 \min_{\mathbf{w}} \quad & \mathbf{w}^T \mathbf{\Sigma} \mathbf{w} \\
@@ -286,11 +285,11 @@ $$\begin{align}
 & \mathbf{w} \geq \mathbf{0}
 \end{align}$$
 
-The feasible region $$S = \{\mathbf{w} : \mathbf{1}^T \mathbf{w} = 1, \mathbf{w} \geq \mathbf{0}\}$$ is:
-- **Closed:** It's the intersection of closed sets
-- **Bounded:** The constraint $$\mathbf{1}^T \mathbf{w} = 1$$ with $$\mathbf{w} \geq \mathbf{0}$$ bounds the feasible region
-- **Compact:** Being closed and bounded in $$\mathbb{R}^n$$
+Vùng khả thi $$S = \{\mathbf{w} : \mathbf{1}^T \mathbf{w} = 1, \mathbf{w} \geq \mathbf{0}\}$$ là:
+- **Đóng:** giao của các tập đóng
+- **Bị chặn:** ràng buộc $$\mathbf{1}^T \mathbf{w} = 1$$ cùng với $$\mathbf{w} \geq \mathbf{0}$$ chặn vùng khả thi
+- **Compact:** vừa đóng vừa bị chặn trong $$\mathbb{R}^n$$
 
-Since the objective function $$\mathbf{w}^T \mathbf{\Sigma} \mathbf{w}$$ is continuous and $$S$$ is compact, the Extreme Value Theorem guarantees that an optimal portfolio exists.
+Vì hàm mục tiêu $$\mathbf{w}^T \mathbf{\Sigma} \mathbf{w}$$ liên tục và $$S$$ compact, Định lý giá trị cực trị bảo đảm tồn tại danh mục tối ưu.
 
-Understanding topology and real analysis provides the rigorous foundation needed to prove that deep-learning problems have solutions and that algorithms will find them. These concepts are essential for both theoretical analysis and practical algorithm design.
+Hiểu tôpô và giải tích thực cung cấp nền tảng chặt chẽ để chứng minh sự tồn tại nghiệm của bài toán tối ưu và khả năng thuật toán tìm được nghiệm đó. Các khái niệm này thiết yếu cho cả phân tích lý thuyết lẫn thiết kế thuật toán thực tiễn.

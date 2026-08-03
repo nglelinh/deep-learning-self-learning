@@ -354,7 +354,6 @@ class OptimizationSearch {
           <p class="search-result-content">${highlightedContent}</p>
           <div class="search-result-meta">
             ${result.owner ? `<span class="search-result-owner">${result.owner}</span>` : ''}
-            ${result.lesson_type ? `<span class="search-result-type">${result.lesson_type}</span>` : ''}
           </div>
         </div>
       `;

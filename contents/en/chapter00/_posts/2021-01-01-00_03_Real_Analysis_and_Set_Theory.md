@@ -7,7 +7,6 @@ owner: GitHub Copilot
 lang: en
 categories:
 - chapter00
-lesson_type: required
 ---
 
 This lesson covers essential concepts from real analysis and set theory needed for deep-learning, organized into two main sections for comprehensive understanding.

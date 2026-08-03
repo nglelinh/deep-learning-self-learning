@@ -7,7 +7,6 @@ owner: Deep Learning Course
 lang: en
 categories:
 - chapter16
-lesson_type: required
 ---
 
 # Self-Supervised Learning: Learning from Data Itself

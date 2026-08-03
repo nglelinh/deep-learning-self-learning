@@ -7,7 +7,6 @@ owner: Deep Learning Course
 lang: en
 categories:
 - chapter22
-lesson_type: required
 ---
 
 # Graph Neural Networks: Deep Learning on Graphs

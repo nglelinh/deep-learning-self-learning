@@ -1,0 +1,3697 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <style>
+    .MathJax {
+      padding: 2em 0.3em;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <title>
+    
+      18-01 Nhúng Từ và Biểu diễn Ngôn ngữ &middot; Deep learning in Data Science
+    
+  </title>
+
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/poole.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/syntax.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/lanyon.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/github-markdown.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/multilang.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/search.css">
+  <link rel="stylesheet" href="/deep-learning-self-learning/public/css/content-boxes.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Lunr.js for search functionality -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+
+  <link rel="apple-touch-icon-precomposed" sizes="122x144" href="http://localhost:4000/deep-learning-self-learning/public/logo.png">
+  <link rel="shortcut icon" href="http://localhost:4000/deep-learning-self-learning/public/convex-logo-144x144.png">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/deep-learning-self-learning/atom.xml">
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+</head>
+
+
+  <body class="sidebar-overlay">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Deep Learning trong Khoa học Dữ liệu</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/deep-learning-self-learning/">Trang chủ</a>
+
+    
+
+    
+    
+    
+
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="00">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-00"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/">
+                  00. Các khái niệm toán học cơ bản
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-00"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_Introduction/"
+                       data-code="00"
+                       data-depth="0"
+                       style="--depth: 0">
+                      00 Giới thiệu
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_01_Calculus/"
+                       data-code="00-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      00-01 Giải tích
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_01_01_Continuity_and_Uniform_Continuity/"
+                       data-code="00-01-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      00-01-01 Tính liên tục và Tính liên tục đều
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_01_02_Derivatives_and_Multivariable_Calculus/"
+                       data-code="00-01-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      00-01-02 Đạo hàm và Giải tích đa biến
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_01_03_Gradient_and_Directional_Derivatives/"
+                       data-code="00-01-03"
+                       data-depth="2"
+                       style="--depth: 2">
+                      00-01-03 Gradient và Đạo hàm theo hướng
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_01_04_Taylor_Series/"
+                       data-code="00-01-04"
+                       data-depth="2"
+                       style="--depth: 2">
+                      00-01-04 Chuỗi Taylor
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_02_Basic_Linear_Algebra/"
+                       data-code="00-02"
+                       data-depth="1"
+                       style="--depth: 1">
+                      00-02 Đại số tuyến tính cơ bản
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_02_01_Vectors_and_Vector_Spaces/"
+                       data-code="00-02-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      00-02-01 Vector và Không gian Vector
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_02_02_Matrices_and_Linear_Transformations/"
+                       data-code="00-02-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      00-02-02 Ma trận và Phép biến đổi tuyến tính
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_02_03_Eigenvalues_and_Eigenvectors/"
+                       data-code="00-02-03"
+                       data-depth="2"
+                       style="--depth: 2">
+                      00-02-03 Giá trị riêng và Vector riêng
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_03_Real_Analysis_and_Set_Theory/"
+                       data-code="00-03"
+                       data-depth="1"
+                       style="--depth: 1">
+                      00-03 Giải tích thực và Lý thuyết tập hợp
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_03_01_Set_Theory_Fundamentals/"
+                       data-code="00-03-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      00-03-01 Cơ sở Lý thuyết tập hợp
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_03_02_Topology_in_Real_Analysis/"
+                       data-code="00-03-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      00-03-02 Tôpô trong Giải tích thực
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_04_Probability_and_Statistics/"
+                       data-code="00-04"
+                       data-depth="1"
+                       style="--depth: 1">
+                      00-04 Xác Suất và Thống Kê
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_04_01_Basic_Probability_Theory/"
+                       data-code="00-04-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      00-04-01 Lý Thuyết Xác Suất Cơ Bản
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_04_01_01_Sample_Spaces_and_Axioms/"
+                       data-code="00-04-01-01"
+                       data-depth="3"
+                       style="--depth: 3">
+                      00-04-01-01 Không Gian Mẫu và Tiên Đề Xác Suất
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_04_01_02_Conditional_Probability_and_Independence/"
+                       data-code="00-04-01-02"
+                       data-depth="3"
+                       style="--depth: 3">
+                      00-04-01-02 Xác Suất Có Điều Kiện và Tính Độc Lập
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_04_01_03_Random_Variables_and_Deep_Learning/"
+                       data-code="00-04-01-03"
+                       data-depth="3"
+                       style="--depth: 3">
+                      00-04-01-03 Biến Ngẫu Nhiên và Deep Learning
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_04_02_Common_Probability_Distributions/"
+                       data-code="00-04-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      00-04-02 Các Phân Phối Xác Suất Thông Dụng
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_04_02_01_Discrete_Distributions/"
+                       data-code="00-04-02-01"
+                       data-depth="3"
+                       style="--depth: 3">
+                      00-04-02-01 Phân Phối Rời Rạc
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_04_02_02_Continuous_Distributions/"
+                       data-code="00-04-02-02"
+                       data-depth="3"
+                       style="--depth: 3">
+                      00-04-02-02 Phân Phối Liên Tục
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_04_02_03_Multivariate_and_DL_Applications/"
+                       data-code="00-04-02-03"
+                       data-depth="3"
+                       style="--depth: 3">
+                      00-04-02-03 Phân Phối Đa Biến và Ứng Dụng
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_04_03_Likelihood_and_Maximum_Likelihood_Estimation/"
+                       data-code="00-04-03"
+                       data-depth="2"
+                       style="--depth: 2">
+                      00-04-03 Likelihood và Ước Lượng Hợp Lý Tối Đa (MLE)
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter00/00_05_Quiz_Basic_Concepts/"
+                       data-code="00-05"
+                       data-depth="1"
+                       style="--depth: 1">
+                      00-05 Bài tập trắc nghiệm - Khái niệm cơ bản
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="01">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-01"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter01/">
+                  01. Giới thiệu Deep Learning
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-01"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter01/01_00_Introduction/"
+                       data-code="01"
+                       data-depth="0"
+                       style="--depth: 0">
+                      01 Giới thiệu về Học sâu
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter01/01_00_01_What_Is_Deep_Learning/"
+                       data-code="01-00-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      01-00-01 Học sâu là gì
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter01/01_00_02_First_MNIST_Walkthrough/"
+                       data-code="01-00-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      01-00-02 Bước đầu với MNIST
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter01/01_00_03_Course_Guide_and_How_to_Succeed/"
+                       data-code="01-00-03"
+                       data-depth="2"
+                       style="--depth: 2">
+                      01-00-03 Hướng dẫn khóa học và cách học hiệu quả
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter01/01_01_Why_Deep_Learning/"
+                       data-code="01-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      01-01 Vì sao học sâu?
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter01/01_01_01_Limitations_and_What_Makes_DL_Different/"
+                       data-code="01-01-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      01-01-01 Hạn chế của học máy truyền thống và điều làm học sâu khác biệt
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter01/01_01_02_When_to_Use_DL_and_Ecosystem/"
+                       data-code="01-01-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      01-01-02 Khi nào dùng học sâu và hệ sinh thái
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="02">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-02"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter02/">
+                  02. Cơ sở mạng neuron
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-02"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter02/02_00_Introduction/"
+                       data-code="02"
+                       data-depth="0"
+                       style="--depth: 0">
+                      02 Giới thiệu về Mạng Neuron
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter02/02_01_Perceptron_and_Neurons/"
+                       data-code="02-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      02-01 Perceptron và Neuron Nhân tạo
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter02/02_02_Neural_Network_Architecture/"
+                       data-code="02-02"
+                       data-depth="1"
+                       style="--depth: 1">
+                      02-02 Kiến trúc Mạng Neuron
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter02/02_02_01_Architecture_Theory/"
+                       data-code="02-02-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      02-02-01 Lý thuyết Kiến trúc Mạng Neuron
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter02/02_02_02_Depth_Width_and_Design/"
+                       data-code="02-02-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      02-02-02 Độ sâu, Độ rộng và Mẫu Thiết kế
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter02/02_03_Activation_Functions/"
+                       data-code="02-03"
+                       data-depth="1"
+                       style="--depth: 1">
+                      02-03 Hàm Kích hoạt Chi tiết
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter02/02_03_01_Classic_Activations/"
+                       data-code="02-03-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      02-03-01 Hàm Kích hoạt Cổ điển
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter02/02_03_02_Modern_Activations_and_Vanishing_Gradients/"
+                       data-code="02-03-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      02-03-02 Hàm Kích hoạt Hiện đại và Gradient Biến mất
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter02/02_04_Forward_Propagation/"
+                       data-code="02-04"
+                       data-depth="1"
+                       style="--depth: 1">
+                      02-04 Lan truyền Xuôi
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="03">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-03"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter03/">
+                  03. Huấn luyện mạng neuron
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-03"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter03/03_00_Introduction/"
+                       data-code="03"
+                       data-depth="0"
+                       style="--depth: 0">
+                      03 Giới thiệu về Huấn luyện Mạng Neuron
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter03/03_01_Loss_Functions/"
+                       data-code="03-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      03-01 Hàm Mất mát
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter03/03_01_01_Regression_Losses/"
+                       data-code="03-01-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      03-01-01 Hàm Mất mát cho Hồi quy
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter03/03_01_02_Classification_Losses/"
+                       data-code="03-01-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      03-01-02 Hàm Mất mát Phân loại và Lựa chọn
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter03/03_02_Gradient_Descent/"
+                       data-code="03-02"
+                       data-depth="1"
+                       style="--depth: 1">
+                      03-02 Gradient Descent
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter03/03_02_01_GD_Variants_and_Learning_Rate/"
+                       data-code="03-02-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      03-02-01 Các Biến thể Gradient Descent và Learning Rate
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter03/03_02_02_GD_Implementation_and_Challenges/"
+                       data-code="03-02-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      03-02-02 Triển khai Gradient Descent và Thách thức
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter03/03_03_Backpropagation/"
+                       data-code="03-03"
+                       data-depth="1"
+                       style="--depth: 1">
+                      03-03 Thuật toán Lan truyền Ngược
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter03/03_03_01_Backprop_Theory/"
+                       data-code="03-03-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      03-03-01 Lý thuyết Lan truyền Ngược và Ví dụ Tính toán
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter03/03_03_02_Backprop_Implementation/"
+                       data-code="03-03-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      03-03-02 Triển khai Lan truyền Ngược
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter03/03_04_Training_Techniques/"
+                       data-code="03-04"
+                       data-depth="1"
+                       style="--depth: 1">
+                      03-04 Kỹ thuật Huấn luyện Thực tế
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter03/03_04_01_Init_Preprocessing_and_Data/"
+                       data-code="03-04-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      03-04-01 Khởi tạo, Tiền xử lý, Batch và Chia tập
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter03/03_04_02_Monitoring_and_Training_Loop/"
+                       data-code="03-04-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      03-04-02 Giám sát, Dừng sớm và Vòng lặp Huấn luyện
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="04">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-04"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter04/">
+                  04. Mạng neuron tích chập (CNN)
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-04"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter04/04_00_Introduction/"
+                       data-code="04"
+                       data-depth="0"
+                       style="--depth: 0">
+                      04 Giới thiệu về Mạng Neuron Tích chập
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter04/04_01_Convolutional_Layers/"
+                       data-code="04-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      04-01 Tầng Tích chập
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter04/04_01_01_Convolution_Math_and_Dimensions/"
+                       data-code="04-01-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      04-01-01 Toán học Tích chập và Kích thước
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter04/04_01_02_Convolution_Intuition_and_Examples/"
+                       data-code="04-01-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      04-01-02 Trực giác Tích chập và Ví dụ
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter04/04_01_03_Convolution_Implementation/"
+                       data-code="04-01-03"
+                       data-depth="2"
+                       style="--depth: 2">
+                      04-01-03 Cài đặt Tích chập
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter04/04_01_03_01_Convolution_NumPy/"
+                       data-code="04-01-03-01"
+                       data-depth="3"
+                       style="--depth: 3">
+                      04-01-03-01 Cài đặt Tích chập bằng NumPy
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter04/04_01_03_02_Convolution_PyTorch/"
+                       data-code="04-01-03-02"
+                       data-depth="3"
+                       style="--depth: 3">
+                      04-01-03-02 Tích chập PyTorch và Khối CNN
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter04/04_01_04_Convolution_Pitfalls_and_Papers/"
+                       data-code="04-01-04"
+                       data-depth="2"
+                       style="--depth: 2">
+                      04-01-04 Khái niệm Liên quan, Cạm bẫy và Bài báo về Tích chập
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter04/04_02_Pooling_and_Architectures/"
+                       data-code="04-02"
+                       data-depth="1"
+                       style="--depth: 1">
+                      04-02 Tầng Gộp và Kiến trúc CNN
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter04/04_02_01_Pooling_Layers/"
+                       data-code="04-02-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      04-02-01 Tầng Gộp
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter04/04_02_02_Classic_CNN_Architectures/"
+                       data-code="04-02-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      04-02-02 Kiến trúc CNN Kinh điển
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter04/04_02_02_01_LeNet_AlexNet/"
+                       data-code="04-02-02-01"
+                       data-depth="3"
+                       style="--depth: 3">
+                      04-02-02-01 LeNet và AlexNet
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter04/04_02_02_02_VGG_ResNet_and_Evolution/"
+                       data-code="04-02-02-02"
+                       data-depth="3"
+                       style="--depth: 3">
+                      04-02-02-02 VGG, ResNet và Tiến hóa Kiến trúc
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="05">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-05"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter05/">
+                  05. Mạng neuron hồi quy (RNN)
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-05"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter05/05_00_Introduction/"
+                       data-code="05"
+                       data-depth="0"
+                       style="--depth: 0">
+                      05 Giới thiệu về Mạng Neuron Hồi quy
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter05/05_01_RNN_Fundamentals/"
+                       data-code="05-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      05-01 Mạng Neuron Hồi quy - Cơ bản
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter05/05_01_01_RNN_Theory/"
+                       data-code="05-01-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      05-01-01 Lý thuyết và Trực giác RNN
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter05/05_01_02_RNN_Implementation/"
+                       data-code="05-01-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      05-01-02 Triển khai RNN
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter05/05_01_02_01_RNN_Core_Code/"
+                       data-code="05-01-02-01"
+                       data-depth="3"
+                       style="--depth: 3">
+                      05-01-02-01 Triển khai Cốt lõi RNN
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter05/05_01_02_02_RNN_Language_Model_and_Pitfalls/"
+                       data-code="05-01-02-02"
+                       data-depth="3"
+                       style="--depth: 3">
+                      05-01-02-02 Mô hình ngôn ngữ cấp ký tự, Papers và Bẫy thường gặp
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="06">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-06"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter06/">
+                  06. LSTM và GRU
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-06"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter06/06_00_Introduction/"
+                       data-code="06"
+                       data-depth="0"
+                       style="--depth: 0">
+                      06 LSTM và GRU - Kiến trúc Hồi quy Nâng cao
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter06/06_01_LSTM_Architecture/"
+                       data-code="06-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      06-01 Mạng Long Short-Term Memory
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter06/06_01_01_LSTM_Theory/"
+                       data-code="06-01-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      06-01-01 Lý thuyết LSTM và GRU
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter06/06_01_02_LSTM_Implementation/"
+                       data-code="06-01-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      06-01-02 Triển khai LSTM
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter06/06_01_02_01_LSTM_Core_Code/"
+                       data-code="06-01-02-01"
+                       data-depth="3"
+                       style="--depth: 3">
+                      06-01-02-01 Triển khai Cốt lõi LSTM
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter06/06_01_02_02_Gates_GRU_and_Pitfalls/"
+                       data-code="06-01-02-02"
+                       data-depth="3"
+                       style="--depth: 3">
+                      06-01-02-02 Phân tích Cổng, GRU và Bẫy thường gặp
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="07">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-07"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter07/">
+                  07. Cơ chế Attention
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-07"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter07/07_00_Introduction/"
+                       data-code="07"
+                       data-depth="0"
+                       style="--depth: 0">
+                      07 Cơ chế Chú ý
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter07/07_01_Attention_Basics/"
+                       data-code="07-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      07-01 Cơ sở về Cơ chế Chú ý
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter07/07_01_Attention_Mechanisms/"
+                       data-code="07-02"
+                       data-depth="1"
+                       style="--depth: 1">
+                      07-02 Cơ chế Chú ý Đi sâu
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter07/07_02_01_Attention_Math/"
+                       data-code="07-02-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      07-02-01 Toán học Attention
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter07/07_02_02_Attention_Implementation/"
+                       data-code="07-02-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      07-02-02 Cài đặt Attention
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter07/07_02_02_01_Attention_Core_Code/"
+                       data-code="07-02-02-01"
+                       data-depth="3"
+                       style="--depth: 3">
+                      07-02-02-01 Cài đặt Attention Cốt lõi
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter07/07_02_02_02_MultiHead_and_Pitfalls/"
+                       data-code="07-02-02-02"
+                       data-depth="3"
+                       style="--depth: 3">
+                      07-02-02-02 Multi-Head Attention, Papers và Cạm bẫy
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="08">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-08"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter08/">
+                  08. Kiến trúc Transformer
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-08"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter08/08_00_Introduction/"
+                       data-code="08"
+                       data-depth="0"
+                       style="--depth: 0">
+                      08 Kiến trúc Transformer
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter08/08_01_Transformer_Architecture/"
+                       data-code="08-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      08-01 Kiến trúc Transformer
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter08/08_01_01_Transformer_Theory/"
+                       data-code="08-01-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      08-01-01 Lý thuyết Transformer
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter08/08_01_02_Transformer_Implementation/"
+                       data-code="08-01-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      08-01-02 Cài đặt Transformer
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter08/08_01_02_01_Transformer_Core_Code/"
+                       data-code="08-01-02-01"
+                       data-depth="3"
+                       style="--depth: 3">
+                      08-01-02-01 Cài đặt Cốt lõi Transformer
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter08/08_01_02_02_Transformer_Demos_and_Pitfalls/"
+                       data-code="08-01-02-02"
+                       data-depth="3"
+                       style="--depth: 3">
+                      08-01-02-02 Demo, Bài báo và Bẫy Transformer
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="09">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-09"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter09/">
+                  09. Kỹ thuật chính quy hóa
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-09"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter09/09_00_Introduction/"
+                       data-code="09"
+                       data-depth="0"
+                       style="--depth: 0">
+                      09 Kỹ thuật Chính quy hóa
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter09/09_01_Dropout/"
+                       data-code="09-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      09-01 Chính quy hóa Dropout
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter09/09_01_01_Dropout_Theory/"
+                       data-code="09-01-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      09-01-01 Lý thuyết và Trực giác Dropout
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter09/09_01_02_Dropout_Implementation/"
+                       data-code="09-01-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      09-01-02 Cài đặt Dropout và Cạm bẫy
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter09/09_02_Batch_Normalization/"
+                       data-code="09-02"
+                       data-depth="1"
+                       style="--depth: 1">
+                      09-02 Chuẩn hóa Batch
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter09/09_02_01_BatchNorm_Mechanics/"
+                       data-code="09-02-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      09-02-01 Cơ chế Chuẩn hóa Batch
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter09/09_02_02_BatchNorm_Placement_and_Variants/"
+                       data-code="09-02-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      09-02-02 Vị trí BN, Biến thể và Mẹo
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="10">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-10"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter10/">
+                  10. Thuật toán tối ưu nâng cao
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-10"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter10/10_00_Introduction/"
+                       data-code="10"
+                       data-depth="0"
+                       style="--depth: 0">
+                      10 Thuật toán Học sâu
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter10/10_01_Advanced_Optimizers/"
+                       data-code="10-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      10-01 Thuật toán Tối ưu Nâng cao
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter10/10_01_01_Optimizer_Theory/"
+                       data-code="10-01-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      10-01-01 Lý thuyết Bộ tối ưu
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter10/10_01_02_Optimizer_Implementation/"
+                       data-code="10-01-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      10-01-02 Cài đặt Bộ tối ưu
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter10/10_01_02_01_Optimizer_Core_Code/"
+                       data-code="10-01-02-01"
+                       data-depth="3"
+                       style="--depth: 3">
+                      10-01-02-01 Cài đặt Cốt lõi Bộ tối ưu
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter10/10_01_02_02_Optimizer_Comparisons_and_Pitfalls/"
+                       data-code="10-01-02-02"
+                       data-depth="3"
+                       style="--depth: 3">
+                      10-01-02-02 So sánh Bộ tối ưu, Bài báo và Cạm bẫy
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="11">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-11"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter11/">
+                  11. Mô hình sinh (Generative Models)
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-11"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter11/11_00_Introduction/"
+                       data-code="11"
+                       data-depth="0"
+                       style="--depth: 0">
+                      11 Giới thiệu về Mô hình Sinh
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter11/11_01_Generative_Models_Fundamentals/"
+                       data-code="11-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      11-01 Mô hình Sinh - Các Khái niệm Cốt lõi
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter11/11_01_01_Generative_Theory/"
+                       data-code="11-01-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      11-01-01 Lý thuyết Mô hình Sinh
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter11/11_01_02_Generative_Implementation/"
+                       data-code="11-01-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      11-01-02 Cài đặt Mô hình Sinh
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter11/11_01_02_01_Autoregressive_Code/"
+                       data-code="11-01-02-01"
+                       data-depth="3"
+                       style="--depth: 3">
+                      11-01-02-01 Cài đặt Mô hình Tự hồi quy
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter11/11_01_02_02_Toy_GAN_and_Pitfalls/"
+                       data-code="11-01-02-02"
+                       data-depth="3"
+                       style="--depth: 3">
+                      11-01-02-02 GAN Toy, Bài báo và Bẫy thường gặp
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="12">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-12"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter12/">
+                  12. Autoencoder
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-12"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter12/12_00_Introduction/"
+                       data-code="12"
+                       data-depth="0"
+                       style="--depth: 0">
+                      12 Autoencoder
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter12/12_01_Autoencoder_Fundamentals/"
+                       data-code="12-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      12-01 Nền tảng Autoencoder
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter12/12_01_01_Autoencoder_Theory/"
+                       data-code="12-01-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      12-01-01 Lý thuyết Autoencoder
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter12/12_01_02_Autoencoder_Implementation/"
+                       data-code="12-01-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      12-01-02 Cài đặt Autoencoder
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter12/12_01_02_01_Autoencoder_Core_Code/"
+                       data-code="12-01-02-01"
+                       data-depth="3"
+                       style="--depth: 3">
+                      12-01-02-01 Cài đặt Cốt lõi Autoencoder
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-3"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter12/12_01_02_02_Latent_Space_and_Pitfalls/"
+                       data-code="12-01-02-02"
+                       data-depth="3"
+                       style="--depth: 3">
+                      12-01-02-02 Không gian Ẩn, Bài báo và Bẫy thường gặp
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="13">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-13"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter13/">
+                  13. Variational Autoencoder (VAE)
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-13"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter13/13_00_Introduction/"
+                       data-code="13"
+                       data-depth="0"
+                       style="--depth: 0">
+                      13 Variational Autoencoder (VAE)
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter13/13_01_VAE_Fundamentals/"
+                       data-code="13-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      13-01 Variational Autoencoder
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter13/13_01_01_VAE_Theory/"
+                       data-code="13-01-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      13-01-01 Lý thuyết VAE
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter13/13_01_02_VAE_Implementation/"
+                       data-code="13-01-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      13-01-02 Cài đặt VAE
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="14">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-14"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter14/">
+                  14. Mạng sinh đối kháng (GAN)
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-14"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter14/14_00_Introduction/"
+                       data-code="14"
+                       data-depth="0"
+                       style="--depth: 0">
+                      14 Mạng Sinh Đối kháng (GAN)
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter14/14_01_GAN_Fundamentals/"
+                       data-code="14-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      14-01 Mạng Sinh Đối kháng
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter14/14_01_01_GAN_Theory/"
+                       data-code="14-01-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      14-01-01 Lý thuyết GAN
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter14/14_01_02_GAN_Implementation/"
+                       data-code="14-01-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      14-01-02 Cài đặt GAN
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="15">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-15"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter15/">
+                  15. Học chuyển giao (Transfer Learning)
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-15"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter15/15_00_Introduction/"
+                       data-code="15"
+                       data-depth="0"
+                       style="--depth: 0">
+                      15 Học Chuyển giao
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter15/15_01_Transfer_Learning_Fundamentals/"
+                       data-code="15-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      15-01 Nền tảng Học Chuyển giao
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter15/15_01_01_Transfer_Learning_Theory/"
+                       data-code="15-01-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      15-01-01 Lý thuyết Học Chuyển giao
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter15/15_01_02_Transfer_Learning_Implementation/"
+                       data-code="15-01-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      15-01-02 Cài đặt Học Chuyển giao
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="16">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-16"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter16/">
+                  16. Học tự giám sát (Self-Supervised Learning)
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-16"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter16/16_00_Introduction/"
+                       data-code="16"
+                       data-depth="0"
+                       style="--depth: 0">
+                      16 Học Tự giám sát
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter16/16_01_Self_Supervised_Learning/"
+                       data-code="16-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      16-01 Học Tự giám sát
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="17">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-17"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter17/">
+                  17. Ứng dụng thị giác máy tính
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-17"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter17/17_00_Introduction/"
+                       data-code="17"
+                       data-depth="0"
+                       style="--depth: 0">
+                      17 Ứng dụng Thị giác Máy tính
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter17/17_01_Object_Detection/"
+                       data-code="17-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      17-01 Cơ sở Phát hiện Đối tượng
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter17/17_01_01_Object_Detection_Theory/"
+                       data-code="17-01-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      17-01-01 Lý thuyết Phát hiện Đối tượng
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter17/17_01_02_Object_Detection_Implementation/"
+                       data-code="17-01-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      17-01-02 Cài đặt Phát hiện Đối tượng
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter is-open"
+                 data-chapter="18">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="true"
+                          aria-controls="sidebar-lessons-18"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter18/">
+                  18. Xử lý ngôn ngữ tự nhiên
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-18"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     >
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter18/18_00_Introduction/"
+                       data-code="18"
+                       data-depth="0"
+                       style="--depth: 0">
+                      18 Xử lý Ngôn ngữ Tự nhiên
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1 active"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter18/18_01_Word_Embeddings/"
+                       data-code="18-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      18-01 Nhúng Từ và Biểu diễn Ngôn ngữ
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="19">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-19"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter19/">
+                  19. Xử lý tiếng nói và âm thanh
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-19"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter19/19_00_Introduction/"
+                       data-code="19"
+                       data-depth="0"
+                       style="--depth: 0">
+                      19 Xử lý Tiếng nói và Âm thanh
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="20">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-20"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter20/">
+                  20. Cơ sở học tăng cường
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-20"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter20/20_00_Introduction/"
+                       data-code="20"
+                       data-depth="0"
+                       style="--depth: 0">
+                      20 Cơ sở Học Tăng cường
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter20/20_01_RL_Fundamentals/"
+                       data-code="20-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      20-01 Cơ sở Học Tăng cường
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="21">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-21"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter21/">
+                  21. Học tăng cường sâu
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-21"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter21/21_00_Introduction/"
+                       data-code="21"
+                       data-depth="0"
+                       style="--depth: 0">
+                      21 Học Tăng cường Sâu
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter21/21_01_Deep_RL/"
+                       data-code="21-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      21-01 Học Tăng cường Sâu
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="22">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-22"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter22/">
+                  22. Mạng neuron trên đồ thị (GNN)
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-22"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter22/22_00_Introduction/"
+                       data-code="22"
+                       data-depth="0"
+                       style="--depth: 0">
+                      22 Mạng Neuron Đồ thị
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter22/22_01_GNN_Fundamentals/"
+                       data-code="22-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      22-01 Mạng Neuron Đồ thị
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="23">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-23"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter23/">
+                  23. Deep learning hiệu quả
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-23"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter23/23_00_Introduction/"
+                       data-code="23"
+                       data-depth="0"
+                       style="--depth: 0">
+                      23 Học sâu Hiệu quả
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter23/23_01_Model_Compression/"
+                       data-code="23-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      23-01 Nén Mô hình và Hiệu quả
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="24">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-24"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter24/">
+                  24. Diễn giải và giải thích mô hình
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-24"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter24/24_00_Introduction/"
+                       data-code="24"
+                       data-depth="0"
+                       style="--depth: 0">
+                      24 Khả năng Diễn giải và Giải thích
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter24/24_01_Model_Interpretability/"
+                       data-code="24-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      24-01 Diễn giải và Giải thích Mạng Neuron
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter24/24_01_01_Interpretability_Theory/"
+                       data-code="24-01-01"
+                       data-depth="2"
+                       style="--depth: 2">
+                      24-01-01 Lý thuyết Diễn giải
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-2"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter24/24_01_02_Interpretability_Implementation/"
+                       data-code="24-01-02"
+                       data-depth="2"
+                       style="--depth: 2">
+                      24-01-02 Cài đặt Diễn giải
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+      
+        
+          
+          
+            
+            
+            
+            
+            
+            
+            
+            
+
+            <div class="sidebar-chapter"
+                 data-chapter="25">
+              <div class="sidebar-chapter-header">
+                
+                  <button type="button"
+                          class="sidebar-collapse-btn sidebar-chapter-btn"
+                          aria-expanded="false"
+                          aria-controls="sidebar-lessons-25"
+                          title="Mở/đóng bài học">
+                    <span class="sidebar-collapse-icon" aria-hidden="true"></span>
+                  </button>
+                
+
+                <a class="sidebar-nav-item sidebar-chapter-link"
+                   href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter25/">
+                  25. Hướng phát triển tương lai
+                </a>
+              </div>
+
+              
+                <div id="sidebar-lessons-25"
+                     class="sidebar-lesson-list"
+                     data-nest-sections="true"
+                     hidden>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-0"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter25/25_00_Introduction/"
+                       data-code="25"
+                       data-depth="0"
+                       style="--depth: 0">
+                      25 Chủ đề Nâng cao và Hướng Phát triển Tương lai
+                    </a>
+                  
+                    
+                    
+                    
+                    
+
+                    <a class="sidebar-nav-item sidebar-lesson depth-1"
+                       href="http://localhost:4000/deep-learning-self-learning/contents/vi/chapter25/25_01_Future_Directions/"
+                       data-code="25-01"
+                       data-depth="1"
+                       style="--depth: 1">
+                      25-01 Hướng Phát triển Tương lai của Học sâu
+                    </a>
+                  
+                </div>
+              
+            </div>
+          
+        
+      
+    
+
+    
+
+    <span class="sidebar-nav-item">Currently v0.0.1</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2026. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap github-md-body">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/deep-learning-self-learning/" title="Trang chủ">Deep Learning trong Khoa học Dữ liệu</a>
+            <small></small>
+          </h3>
+          <!-- Header Actions: Language Toggle and GitHub Link -->
+          <div class="header-actions">
+            <div class="language-toggle">
+              <a href="/deep-learning-self-learning/contents/en/chapter18/18_01_Word_Embeddings/" class="language-switch" title="Chuyển sang tiếng Anh">Chuyển sang tiếng Anh</a>
+            </div>
+            <a class="github-logo__wrapper" target="_blank" href="https://github.com/nglelinh/deep-learning-self-learning" title="Github">
+             <svg class="github-logo" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"><linearGradient id="rL2wppHyxHVbobwndsT6Ca" x1="4" x2="44" y1="23.508" y2="23.508" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4c4c4c"/><stop offset="1" stop-color="#343434"/></linearGradient><path fill="url(#rL2wppHyxHVbobwndsT6Ca)" d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36	C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"/><path d="M30.01,41.996L30,36.198c0-0.939-0.22-1.856-0.642-2.687c5.641-1.133,8.386-4.468,8.386-10.177	c0-2.255-0.665-4.246-1.976-5.92c0.1-0.317,0.174-0.645,0.22-0.981c0.188-1.369-0.023-2.264-0.193-2.984l-0.027-0.116	c-0.186-0.796-0.409-1.364-0.418-1.388l-0.111-0.282l-0.111-0.282l-0.302-0.032l-0.303-0.032c0,0-0.199-0.021-0.501-0.021	c-0.419,0-1.04,0.042-1.627,0.241l-0.196,0.066c-0.74,0.249-1.439,0.485-2.417,1.069c-0.286,0.171-0.599,0.366-0.934,0.584	C27.334,12.881,25.705,12.69,24,12.69c-1.722,0-3.365,0.192-4.889,0.571c-0.339-0.22-0.654-0.417-0.942-0.589	c-0.978-0.584-1.677-0.819-2.417-1.069l-0.196-0.066c-0.585-0.199-1.207-0.241-1.626-0.241c-0.302,0-0.501,0.021-0.501,0.021	l-0.302,0.032l-0.3,0.031l-0.112,0.281l-0.113,0.283c-0.01,0.026-0.233,0.594-0.419,1.391l-0.027,0.115	c-0.17,0.719-0.381,1.615-0.193,2.983c0.048,0.346,0.125,0.685,0.23,1.011c-1.285,1.666-1.936,3.646-1.936,5.89	c0,5.695,2.748,9.028,8.397,10.17c-0.194,0.388-0.345,0.798-0.452,1.224c-0.197,0.067-0.378,0.112-0.538,0.137	c-0.238,0.036-0.487,0.054-0.739,0.054c-0.686,0-1.225-0.134-1.435-0.259c-0.313-0.186-0.872-0.727-1.414-1.518	c-0.463-0.675-1.185-1.558-1.992-1.927c-0.698-0.319-1.437-0.502-2.029-0.502c-0.138,0-0.265,0.01-0.376,0.028	c-0.517,0.082-0.949,0.366-1.184,0.78c-0.203,0.357-0.235,0.773-0.088,1.141c0.219,0.548,0.851,0.985,1.343,1.255	c0.242,0.133,0.765,0.619,1.07,1.109c0.229,0.368,0.335,0.63,0.482,0.992c0.087,0.215,0.183,0.449,0.313,0.732	c0.47,1.022,1.937,1.924,2.103,2.023c0.806,0.483,2.161,0.638,3.157,0.683l0.123,0.003c0,0,0.001,0,0.001,0	c0.24,0,0.57-0.023,1.004-0.071v2.613c0.002,0.529-0.537,0.649-1.25,0.638l0.547,0.184C19.395,43.572,21.645,44,24,44	c2.355,0,4.605-0.428,6.703-1.176l0.703-0.262C30.695,42.538,30.016,42.422,30.01,41.996z" opacity=".05"/><path d="M30.781,42.797c-0.406,0.047-1.281-0.109-1.281-0.795v-5.804c0-1.094-0.328-2.151-0.936-3.052	c5.915-0.957,8.679-4.093,8.679-9.812c0-2.237-0.686-4.194-2.039-5.822c0.137-0.365,0.233-0.75,0.288-1.147	c0.175-1.276-0.016-2.086-0.184-2.801l-0.027-0.116c-0.178-0.761-0.388-1.297-0.397-1.319l-0.111-0.282l-0.303-0.032	c0,0-0.178-0.019-0.449-0.019c-0.381,0-0.944,0.037-1.466,0.215l-0.196,0.066c-0.714,0.241-1.389,0.468-2.321,1.024	c-0.332,0.198-0.702,0.431-1.101,0.694C27.404,13.394,25.745,13.19,24,13.19c-1.762,0-3.435,0.205-4.979,0.61	c-0.403-0.265-0.775-0.499-1.109-0.699c-0.932-0.556-1.607-0.784-2.321-1.024l-0.196-0.066c-0.521-0.177-1.085-0.215-1.466-0.215	c-0.271,0-0.449,0.019-0.449,0.019l-0.302,0.032l-0.113,0.283c-0.009,0.022-0.219,0.558-0.397,1.319l-0.027,0.116	c-0.169,0.715-0.36,1.524-0.184,2.8c0.056,0.407,0.156,0.801,0.298,1.174c-1.327,1.62-1.999,3.567-1.999,5.795	c0,5.703,2.766,8.838,8.686,9.806c-0.395,0.59-0.671,1.255-0.813,1.964c-0.33,0.13-0.629,0.216-0.891,0.256	c-0.263,0.04-0.537,0.06-0.814,0.06c-0.69,0-1.353-0.129-1.69-0.329c-0.44-0.261-1.057-0.914-1.572-1.665	c-0.35-0.51-1.047-1.417-1.788-1.755c-0.635-0.29-1.298-0.457-1.821-0.457c-0.11,0-0.21,0.008-0.298,0.022	c-0.366,0.058-0.668,0.252-0.828,0.534c-0.128,0.224-0.149,0.483-0.059,0.708c0.179,0.448,0.842,0.85,1.119,1.002	c0.335,0.184,0.919,0.744,1.254,1.284c0.251,0.404,0.37,0.697,0.521,1.067c0.085,0.209,0.178,0.437,0.304,0.712	c0.331,0.719,1.353,1.472,1.905,1.803c0.754,0.452,2.154,0.578,2.922,0.612l0.111,0.002c0.299,0,0.8-0.045,1.495-0.135v3.177	c0,0.779-0.991,0.81-1.234,0.81c-0.031,0,0.503,0.184,0.503,0.184C19.731,43.64,21.822,44,24,44c2.178,0,4.269-0.36,6.231-1.003	C30.231,42.997,30.812,42.793,30.781,42.797z" opacity=".07"/><path fill="#fff" d="M36.744,23.334c0-2.31-0.782-4.226-2.117-5.728c0.145-0.325,0.296-0.761,0.371-1.309	c0.172-1.25-0.031-2-0.203-2.734s-0.375-1.25-0.375-1.25s-0.922-0.094-1.703,0.172s-1.453,0.469-2.422,1.047	c-0.453,0.27-0.909,0.566-1.27,0.806C27.482,13.91,25.785,13.69,24,13.69c-1.801,0-3.513,0.221-5.067,0.652	c-0.362-0.241-0.821-0.539-1.277-0.811c-0.969-0.578-1.641-0.781-2.422-1.047s-1.703-0.172-1.703-0.172s-0.203,0.516-0.375,1.25	s-0.375,1.484-0.203,2.734c0.077,0.562,0.233,1.006,0.382,1.333c-1.31,1.493-2.078,3.397-2.078,5.704	c0,5.983,3.232,8.714,9.121,9.435c-0.687,0.726-1.148,1.656-1.303,2.691c-0.387,0.17-0.833,0.33-1.262,0.394	c-1.104,0.167-2.271,0-2.833-0.333s-1.229-1.083-1.729-1.813c-0.422-0.616-1.031-1.331-1.583-1.583	c-0.729-0.333-1.438-0.458-1.833-0.396c-0.396,0.063-0.583,0.354-0.5,0.563c0.083,0.208,0.479,0.521,0.896,0.75	c0.417,0.229,1.063,0.854,1.438,1.458c0.418,0.674,0.5,1.063,0.854,1.833c0.249,0.542,1.101,1.219,1.708,1.583	c0.521,0.313,1.562,0.491,2.688,0.542c0.389,0.018,1.308-0.096,2.083-0.206v3.75c0,0.639-0.585,1.125-1.191,1.013	C19.756,43.668,21.833,44,24,44c2.166,0,4.243-0.332,6.19-0.984C29.585,43.127,29,42.641,29,42.002v-5.804	c0-1.329-0.527-2.53-1.373-3.425C33.473,32.071,36.744,29.405,36.744,23.334z M11.239,32.727c-0.154-0.079-0.237-0.225-0.185-0.328	c0.052-0.103,0.22-0.122,0.374-0.043c0.154,0.079,0.237,0.225,0.185,0.328S11.393,32.806,11.239,32.727z M12.451,33.482	c-0.081,0.088-0.255,0.06-0.389-0.062s-0.177-0.293-0.096-0.381c0.081-0.088,0.255-0.06,0.389,0.062S12.532,33.394,12.451,33.482z M13.205,34.732c-0.102,0.072-0.275,0.005-0.386-0.15s-0.118-0.34-0.016-0.412s0.275-0.005,0.386,0.15	C13.299,34.475,13.307,34.66,13.205,34.732z M14.288,35.673c-0.069,0.112-0.265,0.117-0.437,0.012s-0.256-0.281-0.187-0.393	c0.069-0.112,0.265-0.117,0.437-0.012S14.357,35.561,14.288,35.673z M15.312,36.594c-0.213-0.026-0.371-0.159-0.353-0.297	c0.017-0.138,0.204-0.228,0.416-0.202c0.213,0.026,0.371,0.159,0.353,0.297C15.711,36.529,15.525,36.62,15.312,36.594z M16.963,36.833c-0.227-0.013-0.404-0.143-0.395-0.289c0.009-0.146,0.2-0.255,0.427-0.242c0.227,0.013,0.404,0.143,0.395,0.289	C17.381,36.738,17.19,36.846,16.963,36.833z M18.521,36.677c-0.242,0-0.438-0.126-0.438-0.281s0.196-0.281,0.438-0.281	c0.242,0,0.438,0.126,0.438,0.281S18.762,36.677,18.521,36.677z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">
+    18-01 Nhúng Từ và Biểu diễn Ngôn ngữ
+  </h1>
+  <h1 id="nhúng-từ-biểu-diễn-ngôn-ngữ-trong-không-gian-vectơ">Nhúng Từ: Biểu diễn Ngôn ngữ trong Không gian Vectơ</h1>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Word2vec.png/800px-Word2vec.png" alt="Word2Vec Visualization" />
+<em>Hình ảnh: Minh họa nhúng Word2Vec trong không gian vectơ. Nguồn: Wikimedia Commons</em></p>
+
+<h2 id="1-tổng-quan-khái-niệm">1. Tổng quan khái niệm</h2>
+<p>Nhúng từ (<em>word embedding</em>) là một trong những đổi mới nền tảng nhất của xử lý ngôn ngữ tự nhiên, thay đổi cách ta biểu diễn và xử lý văn bản trong hệ thống học máy. Ý tưởng cốt lõi thanh lịch nhưng có tác động sâu: biểu diễn mỗi từ bằng một vectơ dày đặc các số thực (thường 100–300 chiều) sao cho các từ gần nghĩa có vectơ tương tự. Biểu diễn vectơ liên tục này thay thế các biểu diễn thưa cũ như mã hóa one-hot (vectơ hàng nghìn chiều, toàn số 0 trừ một vị trí) bằng các nhúng gọn, mang nghĩa, nắm bắt quan hệ ngữ nghĩa qua thuộc tính hình học trong không gian vectơ.</p>
+
+<p>Để hiểu vì sao nhúng làm thay đổi NLP, cần thấy hạn chế của biểu diễn từ rời rạc. Các cách tiếp cận truyền thống coi từ là ký hiệu nguyên tử — “king”, “queen” và “car” cách đều nhau, không chia sẻ cấu trúc. One-hot biểu diễn từ vựng 50.000 từ bằng vectơ 50.000 chiều trực giao, không có khái niệm tương tự. Điều này làm việc học khó vì mô hình không thể tổng quát hóa từ “king lives in palace” sang “queen lives in palace” — nó phải học sự kiện về “queen” độc lập dù gần nghĩa với “king”.</p>
+
+<h3 id="từ-văn-bản--token--one-hot--bag-of-words">Từ văn bản → token → one-hot / bag-of-words</h3>
+
+<p>Bước đầu luôn là <strong>tokenization</strong> (tách từ/token), rồi gán biểu diễn số.</p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/emb_tokenization.jpg" alt="Tokenization" />
+<em>Hình: Câu được tách thành các token trước khi mã hóa. (Minh họa từ video Word Embedding / Transformer)</em></p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/emb_one_hot_table.jpg" alt="Bảng one-hot" />
+<em>Hình: Mỗi từ một vector one-hot — trực giao, thưa, không mang nghĩa. (Minh họa từ video Word Embedding / Transformer)</em></p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/emb_bag_of_words.jpg" alt="Bag-of-words" />
+<em>Hình: Bag-of-words gộp one-hot theo câu — mất thứ tự từ. (Minh họa từ video Word Embedding / Transformer)</em></p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/emb_onehot_limitations.jpg" alt="Hạn chế one-hot / BoW" />
+<em>Hình: Ba hạn chế chính — không thứ tự, thưa + nổ chiều, không quan hệ ngữ nghĩa. (Minh họa từ video Word Embedding / Transformer)</em></p>
+
+<p>Nhúng từ giải quyết điều này bằng cách học biểu diễn liên tục nơi các từ tương tự tụ cụm. Khoảng cách giữa vectơ “king” và “queen” nhỏ (cùng hoàng tộc), trong khi “king” và “car” xa nhau (không liên quan ngữ nghĩa). Đáng chú ý hơn, không gian nhúng thể hiện quan hệ loại suy qua phép toán vectơ: vectơ từ “man” đến “woman” tương tự vectơ từ “king” đến “queen”, nắm bắt quan hệ giới. Ta có thể giải loại suy bằng số học vectơ đơn giản: king − man + woman ≈ queen. Cấu trúc nổi này không được lập trình tường minh mà nảy sinh từ huấn luyện trên văn bản, cho thấy nhúng nắm bắt các quy luật ngữ nghĩa sâu.</p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/emb_semantic_space_2d.jpg" alt="Không gian nhúng 2D" />
+<em>Hình: Từ gần nghĩa tụ cụm (vua/nữ hoàng/nam/nữ…); khoảng cách phản ánh quan hệ. (Minh họa từ video Word Embedding / Transformer)</em></p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/emb_vector_arithmetic_benefits.jpg" alt="Lợi ích vector hóa" />
+<em>Hình: Embedding cho phép quan hệ ngữ nghĩa, suy luận từ vựng, và học đặc trưng tự động. (Minh họa từ video Word Embedding / Transformer)</em></p>
+
+<p>Mục tiêu huấn luyện để học nhúng được xây dựng thanh lịch qua <em>giả thuyết phân bố</em> (<em>distributional hypothesis</em>) trong ngôn ngữ học: các từ xuất hiện trong ngữ cảnh tương tự có nghĩa tương tự. Nguyên lý đơn giản này cho phép học không giám sát từ kho ngữ liệu văn bản khổng lồ.</p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/emb_distributional_context.jpg" alt="Ngữ cảnh phân bố quanh “vua”" />
+<em>Hình: Từ “vua” thường đi với ngữ cảnh chiến đấu, nam giới, mạnh mẽ… — đồng xuất hiện → embedding gần. (Minh họa từ video Word Embedding / Transformer)</em></p>
+
+<p>Các mô hình như Word2Vec và GloVe học nhúng bằng cách dự đoán từ ngữ cảnh từ từ đích (hoặc ngược lại), hoặc bằng cách phân rã thống kê đồng xuất hiện. Các vectơ thu được mã hóa ngữ nghĩa từ vựng, mẫu cú pháp, thậm chí một phần tri thức thế giới — tất cả khám phá thuần từ mẫu đồng xuất hiện trong văn bản mà không cần dữ liệu có nhãn.</p>
+
+<p>Tác động của nhúng từ đối với NLP không thể phóng đại. Chúng đặt nền cho cuộc cách mạng học sâu trong xử lý ngôn ngữ, cho phép mạng neuron tận dụng văn bản không nhãn khổng lồ để học biểu diễn rồi chuyển giao sang tác vụ hạ nguồn. Nhúng tiền huấn luyện như Word2Vec và GloVe trở thành thành phần chuẩn trong hầu hết hệ thống NLP giai đoạn 2013–2018. Dù nhúng ngữ cảnh hiện đại từ BERT và GPT đã phần lớn thay thế nhúng từ tĩnh cho nhiều tác vụ, hiểu nhúng tĩnh vẫn then chốt để nắm lộ trình tiến hóa của học biểu diễn trong NLP và cho các ứng dụng nơi tính đơn giản và hiệu quả của chúng vẫn là lợi thế.</p>
+
+<h2 id="2-nền-tảng-toán-học">2. Nền tảng toán học</h2>
+<p>Nhúng từ ánh xạ ký hiệu rời rạc (từ) sang vectơ liên tục theo cách nắm bắt độ tương tự ngữ nghĩa. Hình thức hóa: ta có từ vựng \(V\) kích thước \(|V|\) và học ma trận nhúng \(\mathbf{E} \in \mathbb{R}^{d \times |V|}\) trong đó cột \(\mathbf{e}_w \in \mathbb{R}^d\) là nhúng của từ \(w\). Chiều nhúng điển hình \(d = 100\text{-}300\), nhỏ hơn nhiều so với kích thước từ vựng (10.000–100.000).</p>
+
+<h3 id="word2vec-mô-hình-skip-gram">Word2Vec: Mô hình Skip-gram</h3>
+
+<p>Mô hình skip-gram dự đoán từ ngữ cảnh cho trước từ đích, dựa trên giả thuyết phân bố. Với kho ngữ liệu các từ \(w_1, w_2, \ldots, w_T\), mục tiêu là:</p>
+
+\[\max_\theta \frac{1}{T}\sum_{t=1}^T \sum_{-c \leq j \leq c, j \neq 0} \log p(w_{t+j} | w_t; \theta)\]
+
+<p>trong đó \(c\) là kích thước cửa sổ ngữ cảnh (thường 5), và \(\theta\) gồm ma trận nhúng cùng trọng số đầu ra.</p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/emb_context_window.jpg" alt="Cửa sổ ngữ cảnh" />
+<em>Hình: Window size = 1 — từ tâm học từ láng giềng (và ngược lại trong skip-gram/CBOW). (Minh họa từ video Word Embedding / Transformer)</em></p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/emb_cbow_predict_word.jpg" alt="CBOW-style: dự đoán từ giữa" />
+<em>Hình: Hai từ ngữ cảnh (one-hot) → lớp ẩn nhỏ → dự đoán từ đích. (Minh họa từ video Word Embedding / Transformer)</em></p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/emb_onehot_to_hidden.jpg" alt="One-hot → projection ẩn" />
+<em>Hình: Chiều vocab (ví dụ 5) nén xuống embedding dim (ví dụ 3). (Minh họa từ video Word Embedding / Transformer)</em></p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/emb_w1_w2_training.jpg" alt="Ma trận W1, W2 khi huấn luyện" />
+<em>Hình: Pipeline đầy đủ: one-hot × W1 → ẩn → × W2 → logit từ; so với nhãn thật để cập nhật. (Minh họa từ video Word Embedding / Transformer)</em></p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/emb_embedding_matrix.jpg" alt="Embedding matrix" />
+<em>Hình: Ma trận nhúng \(|V|\times d\) (ví dụ \(5\times 3\)) — mỗi hàng/cột là vector một từ. (Minh họa từ video Word Embedding / Transformer)</em></p>
+
+<p>Xác suất có điều kiện dùng softmax:</p>
+
+\[p(w_O | w_I) = \frac{\exp(\mathbf{v}_{w_O}^T \mathbf{v}_{w_I})}{\sum_{w=1}^{|V|} \exp(\mathbf{v}_w^T \mathbf{v}_{w_I})}\]
+
+<p>trong đó \(\mathbf{v}_{w_I}\) là nhúng đầu vào của từ \(w_I\) và \(\mathbf{v}_{w_O}\) là nhúng đầu ra của \(w_O\). Tính softmax này đòi hỏi tổng trên toàn từ vựng (đắt!), thúc đẩy các xấp xỉ.</p>
+
+<p><strong>Lấy mẫu âm</strong> (<em>negative sampling</em>) xấp xỉ softmax bằng cách lấy mẫu vài ví dụ âm thay vì tổng trên mọi từ:</p>
+
+\[\log \sigma(\mathbf{v}_{w_O}^T \mathbf{v}_{w_I}) + \sum_{i=1}^k \mathbb{E}_{w_i \sim P_n(w)}[\log \sigma(-\mathbf{v}_{w_i}^T \mathbf{v}_{w_I})]\]
+
+<p>trong đó \(\sigma\) là sigmoid, \(k\) là số mẫu âm (thường 5–20), và \(P_n(w)\) là phân bố nhiễu (thường unigram lũy thừa 3/4 để lấy mẫu quá các từ hiếm). Điều này chuyển bài toán đa lớp thành \(k+1\) phân loại nhị phân, khả thi ngay cả với từ vựng lớn.</p>
+
+<p>Tính chất đáng chú ý của nhúng Word2Vec là quan hệ ngữ nghĩa được mã hóa như phép tịnh tiến tuyến tính trong không gian vectơ:</p>
+
+\[\mathbf{e}_{\text{queen}} \approx \mathbf{e}_{\text{king}} - \mathbf{e}_{\text{man}} + \mathbf{e}_{\text{woman}}\]
+
+\[\mathbf{e}_{\text{Paris}} \approx \mathbf{e}_{\text{France}} - \mathbf{e}_{\text{Germany}} + \mathbf{e}_{\text{Berlin}}\]
+
+<p>Các loại suy này không được huấn luyện tường minh mà nảy sinh từ giả thuyết phân bố: “king” và “queen” xuất hiện trong ngữ cảnh tương tự (hoàng gia, ngai vàng, cung điện), cũng như “king” và “man” (ngữ cảnh giới), tạo hình học vectơ phản ánh các mẫu ngữ nghĩa này.</p>
+
+<h3 id="glove-global-vectors">GloVe: Global Vectors</h3>
+
+<p>GloVe tiếp cận khác, phân rã trực tiếp thống kê đồng xuất hiện từ. Gọi \(X_{ij}\) là số lần từ \(j\) xuất hiện trong ngữ cảnh của từ \(i\). GloVe tối thiểu hóa:</p>
+
+\[J = \sum_{i,j=1}^{|V|} f(X_{ij})(\mathbf{w}_i^T \tilde{\mathbf{w}}_j + b_i + \tilde{b}_j - \log X_{ij})^2\]
+
+<p>trong đó \(\mathbf{w}_i\) và \(\tilde{\mathbf{w}}_j\) là nhúng từ và ngữ cảnh, \(b_i, \tilde{b}_j\) là độ lệch, và \(f(X_{ij})\) là hàm trọng số:</p>
+
+\[f(x) = \begin{cases} (x/x_{\max})^\alpha &amp; \text{if } x &lt; x_{\max} \\ 1 &amp; \text{otherwise} \end{cases}\]
+
+<p>Hàm này giảm trọng số các đồng xuất hiện thường xuyên (đã được biểu diễn tốt) và giới hạn ảnh hưởng của các cặp rất thường. GloVe kết hợp lợi ích của phương pháp phân rã ma trận toàn cục (tận dụng thống kê toàn kho ngữ liệu) với phương pháp cửa sổ ngữ cảnh cục bộ (Word2Vec), thường sinh nhúng cạnh tranh hoặc vượt Word2Vec.</p>
+
+<h2 id="3-ví-dụ--trực-giác">3. Ví dụ / Trực giác</h2>
+
+<p>Hãy tưởng tượng học nhúng cho từ vựng nhỏ: {cat, dog, car, truck, animal, vehicle}. Ban đầu, vectơ ngẫu nhiên. Khi xử lý văn bản:</p>
+
+<p>“The cat is an animal” → “cat” và “animal” đồng xuất hiện<br />
+“The dog is an animal” → “dog” và “animal” đồng xuất hiện<br />
+“The car is a vehicle” → “car” và “vehicle” đồng xuất hiện<br />
+“The truck is a vehicle” → “truck” và “vehicle” đồng xuất hiện</p>
+
+<p>Mô hình điều chỉnh vectơ sao cho:</p>
+<ul>
+  <li>“cat” và “dog” trở nên gần nhau (cùng xuất hiện với “animal”)</li>
+  <li>“car” và “truck” trở nên gần nhau (cùng xuất hiện với “vehicle”)</li>
+  <li>“cat” và “car” giữ khoảng cách (xuất hiện trong ngữ cảnh khác)</li>
+</ul>
+
+<p>Sau khi thấy đủ văn bản, không gian nhúng 2D có thể tổ chức như:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     animal
+        ↑
+    dog • cat
+        |
+    ----+---- 
+        |
+  truck • car
+        ↓
+     vehicle
+</code></pre></div></div>
+
+<p>Các phạm trù ngữ nghĩa (động vật vs phương tiện) tụ cụm, và trong mỗi phạm trù các mục tương tự nằm gần nhau. Ta có thể tính:</p>
+
+<p>“cat” − “animal” ≈ “dog” − “animal” (cùng chỉ từ phạm trù đến thể hiện)<br />
+“car” + “vehicle” ≈ “truck” (phạm trù + tương tự cho mục tương tự)</p>
+
+<p>Cấu trúc hình học này cho phép tổng quát hóa: nếu mô hình học sự kiện về “cat”, nó có thể chuyển giao sang “dog” qua độ tương tự vectơ.</p>
+
+<h2 id="4-mã-minh-họa">4. Mã minh họa</h2>
+<p>Cài đặt Word2Vec đầy đủ:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">import</span> <span class="n">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="k">class</span> <span class="nc">Word2VecSkipGram</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Skip-gram Word2Vec with negative sampling.
+    
+    Learns word embeddings by predicting context words from target words.
+    Uses negative sampling to make training efficient.
+    </span><span class="sh">"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        
+        <span class="c1"># Input and output embeddings
+</span>        <span class="c1"># Input: embeddings used when word is target
+</span>        <span class="c1"># Output: embeddings used when word is context
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">input_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">output_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="p">)</span>
+        
+        <span class="c1"># Initialize with small random values
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">input_embeddings</span><span class="p">.</span><span class="n">weight</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="nf">uniform_</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">/</span><span class="n">embedding_dim</span><span class="p">,</span> 
+                                                   <span class="mf">0.5</span><span class="o">/</span><span class="n">embedding_dim</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">output_embeddings</span><span class="p">.</span><span class="n">weight</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="nf">zero_</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">target_words</span><span class="p">,</span> <span class="n">context_words</span><span class="p">,</span> <span class="n">negative_words</span><span class="p">):</span>
+        <span class="sh">"""</span><span class="s">
+        target_words: (batch,) target word indices
+        context_words: (batch,) context word indices (positive examples)
+        negative_words: (batch, k) negative samples
+        
+        Returns negative log-likelihood
+        </span><span class="sh">"""</span>
+        <span class="c1"># Get embeddings
+</span>        <span class="n">target_embeds</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">input_embeddings</span><span class="p">(</span><span class="n">target_words</span><span class="p">)</span>  <span class="c1"># (batch, emb_dim)
+</span>        <span class="n">context_embeds</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">output_embeddings</span><span class="p">(</span><span class="n">context_words</span><span class="p">)</span>  <span class="c1"># (batch, emb_dim)
+</span>        <span class="n">neg_embeds</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">output_embeddings</span><span class="p">(</span><span class="n">negative_words</span><span class="p">)</span>  <span class="c1"># (batch, k, emb_dim)
+</span>        
+        <span class="c1"># Positive scores (target-context similarity)
+</span>        <span class="n">pos_scores</span> <span class="o">=</span> <span class="p">(</span><span class="n">target_embeds</span> <span class="o">*</span> <span class="n">context_embeds</span><span class="p">).</span><span class="nf">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (batch,)
+</span>        <span class="n">pos_loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">torch</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">sigmoid</span><span class="p">(</span><span class="n">pos_scores</span><span class="p">)).</span><span class="nf">mean</span><span class="p">()</span>
+        
+        <span class="c1"># Negative scores (target-negative dissimilarity)
+</span>        <span class="n">neg_scores</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">bmm</span><span class="p">(</span><span class="n">neg_embeds</span><span class="p">,</span> <span class="n">target_embeds</span><span class="p">.</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)).</span><span class="nf">squeeze</span><span class="p">()</span>  <span class="c1"># (batch, k)
+</span>        <span class="n">neg_loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">torch</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">sigmoid</span><span class="p">(</span><span class="o">-</span><span class="n">neg_scores</span><span class="p">)).</span><span class="nf">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">).</span><span class="nf">mean</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="n">pos_loss</span> <span class="o">+</span> <span class="n">neg_loss</span>
+
+<span class="c1"># Prepare training data
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Training Word2Vec Embeddings</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># Simple corpus for demonstration
+</span><span class="n">corpus</span> <span class="o">=</span> <span class="sh">"""</span><span class="s">
+the cat sat on the mat .
+the dog sat on the rug .
+the cat and the dog are animals .
+the car is a vehicle .
+the truck is a vehicle .
+cats and dogs are pets .
+cars and trucks are vehicles .
+</span><span class="sh">"""</span><span class="p">.</span><span class="nf">lower</span><span class="p">().</span><span class="nf">split</span><span class="p">()</span>
+
+<span class="c1"># Build vocabulary
+</span><span class="n">vocab</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="nf">set</span><span class="p">(</span><span class="n">corpus</span><span class="p">))</span>
+<span class="n">word_to_idx</span> <span class="o">=</span> <span class="p">{</span><span class="n">w</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">vocab</span><span class="p">)}</span>
+<span class="n">idx_to_word</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">w</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">vocab</span><span class="p">)}</span>
+<span class="n">vocab_size</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Corpus: </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span><span class="si">}</span><span class="s"> words</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Vocabulary: </span><span class="si">{</span><span class="n">vocab_size</span><span class="si">}</span><span class="s"> unique words</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Sample vocab: </span><span class="si">{</span><span class="n">vocab</span><span class="p">[</span><span class="si">:</span><span class="mi">10</span><span class="p">]</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Generate training pairs
+</span><span class="k">def</span> <span class="nf">generate_training_data</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="n">word_to_idx</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">Generate (target, context) pairs</span><span class="sh">"""</span>
+    <span class="n">pairs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">corpus</span><span class="p">):</span>
+        <span class="n">target_idx</span> <span class="o">=</span> <span class="n">word_to_idx</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+        
+        <span class="c1"># Get context (words within window)
+</span>        <span class="n">context_start</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="n">window_size</span><span class="p">)</span>
+        <span class="n">context_end</span> <span class="o">=</span> <span class="nf">min</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">),</span> <span class="n">i</span> <span class="o">+</span> <span class="n">window_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">context_start</span><span class="p">,</span> <span class="n">context_end</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>  <span class="c1"># Don't pair with self
+</span>                <span class="n">context_idx</span> <span class="o">=</span> <span class="n">word_to_idx</span><span class="p">[</span><span class="n">corpus</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span>
+                <span class="n">pairs</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">target_idx</span><span class="p">,</span> <span class="n">context_idx</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">pairs</span>
+
+<span class="n">pairs</span> <span class="o">=</span> <span class="nf">generate_training_data</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="n">word_to_idx</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Generated </span><span class="si">{</span><span class="nf">len</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span><span class="si">}</span><span class="s"> training pairs</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Sample pairs: </span><span class="si">{</span><span class="n">pairs</span><span class="p">[</span><span class="si">:</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Train Word2Vec
+</span><span class="n">model</span> <span class="o">=</span> <span class="nc">Word2VecSkipGram</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Small dim for demo
+</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Training embeddings...</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">500</span><span class="p">):</span>
+    <span class="n">epoch_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">for</span> <span class="n">target_idx</span><span class="p">,</span> <span class="n">context_idx</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
+        <span class="c1"># Sample negatives
+</span>        <span class="n">neg_indices</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        
+        <span class="c1"># To tensors
+</span>        <span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nc">LongTensor</span><span class="p">([</span><span class="n">target_idx</span><span class="p">])</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nc">LongTensor</span><span class="p">([</span><span class="n">context_idx</span><span class="p">])</span>
+        <span class="n">negatives</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nc">LongTensor</span><span class="p">(</span><span class="n">neg_indices</span><span class="p">).</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        
+        <span class="c1"># Forward
+</span>        <span class="n">loss</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">negatives</span><span class="p">)</span>
+        
+        <span class="c1"># Backward
+</span>        <span class="n">optimizer</span><span class="p">.</span><span class="nf">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="p">.</span><span class="nf">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="p">.</span><span class="nf">step</span><span class="p">()</span>
+        
+        <span class="n">epoch_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">:</span><span class="mi">3</span><span class="n">d</span><span class="si">}</span><span class="s">: Loss = </span><span class="si">{</span><span class="n">epoch_loss</span><span class="o">/</span><span class="nf">len</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Analyze learned embeddings
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span> <span class="o">+</span> <span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Analyzing Learned Embeddings</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">=</span><span class="sh">"</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">input_embeddings</span><span class="p">.</span><span class="n">weight</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="nf">numpy</span><span class="p">()</span>
+
+<span class="c1"># Find nearest neighbors
+</span><span class="k">def</span> <span class="nf">find_nearest</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">,</span> <span class="n">word_to_idx</span><span class="p">,</span> <span class="n">idx_to_word</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">Find k nearest words to query word</span><span class="sh">"""</span>
+    <span class="n">word_idx</span> <span class="o">=</span> <span class="n">word_to_idx</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+    <span class="n">word_vec</span> <span class="o">=</span> <span class="n">embeddings</span><span class="p">[</span><span class="n">word_idx</span><span class="p">]</span>
+    
+    <span class="c1"># Compute cosine similarities
+</span>    <span class="n">similarities</span> <span class="o">=</span> <span class="n">embeddings</span> <span class="o">@</span> <span class="n">word_vec</span> <span class="o">/</span> <span class="p">(</span>
+        <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="nf">norm</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="nf">norm</span><span class="p">(</span><span class="n">word_vec</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-10</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Get top k (excluding self)
+</span>    <span class="n">top_k</span> <span class="o">=</span> <span class="n">similarities</span><span class="p">.</span><span class="nf">argsort</span><span class="p">()[</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="p">[(</span><span class="n">idx_to_word</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">similarities</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">top_k</span><span class="p">]</span>
+
+<span class="c1"># Test semantic similarity
+</span><span class="n">test_words</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">cat</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">dog</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">car</span><span class="sh">'</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">test_words</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_to_idx</span><span class="p">:</span>
+        <span class="n">neighbors</span> <span class="o">=</span> <span class="nf">find_nearest</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">,</span> <span class="n">word_to_idx</span><span class="p">,</span> <span class="n">idx_to_word</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="se">\n</span><span class="s">Nearest to </span><span class="sh">'</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="sh">'</span><span class="s">: </span><span class="si">{</span><span class="n">neighbors</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">Embeddings learned semantic relationships from co-occurrence patterns!</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Similar words (cat/dog, car/truck) have similar embeddings.</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="5-mở-rộng-nhúng-trong-hệ-thống-gợi-ý-two-tower">5. Mở rộng: nhúng trong hệ thống gợi ý (two-tower)</h2>
+
+<p>Cùng ý tưởng “vector gần nhau = tương tự” không chỉ áp dụng cho từ. Trong <strong>hệ thống gợi ý</strong> (feed video, e-commerce), ta học:</p>
+
+<ul>
+  <li><strong>User embedding</strong> \(\mathbf{u} \in \mathbb{R}^d\) — “ảnh chụp” sở thích người dùng</li>
+  <li><strong>Item embedding</strong> \(\mathbf{v} \in \mathbb{R}^d\) — “ảnh chụp” nội dung/sản phẩm</li>
+</ul>
+
+<p>Điểm khớp thường là tích vô hướng hoặc cosine: \(s(u,i) = \mathbf{u}^\top \mathbf{v}\).</p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/recsys_deep_ranking_nn.jpg" alt="Mạng sâu sinh embedding" />
+<em>Hình: Mạng feedforward dùng để học biểu diễn / xếp hạng ứng viên. (Minh họa từ video giải thích recommendation system)</em></p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/recsys_embedding_128d.jpg" alt="Embedding chiều 128" />
+<em>Hình: Đầu ra mạng nén thành vector dày đặc (ví dụ \(1\times 128\)) — “ảnh chụp” sở thích hoặc item. (Minh họa từ video giải thích recommendation system)</em></p>
+
+<p><strong>Mô hình hai tháp (<em>two-tower</em>)</strong>: một tháp encode user, một tháp encode item; huấn luyện để cặp (user, item đã tương tác) gần nhau trong không gian nhúng, cặp âm xa nhau. Lợi thế quy mô: precompute toàn bộ item embedding, lúc serving chỉ cần encode user rồi <strong>nearest-neighbor</strong> (ANN) trên hàng tỷ item.</p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/recsys_two_tower_matching.jpg" alt="Two-tower: khớp hai vector 128-d" />
+<em>Hình: So khớp hai embedding cùng chiều (user vs item) — trực giác của two-tower retrieval. (Minh họa từ video giải thích recommendation system)</em></p>
+
+<p>So với Word2Vec: thay vì ngữ cảnh từ, tín hiệu huấn luyện là <strong>hành vi</strong> (click, xem hết, mua). Giả thuyết phân bố trở thành: “user/item xuất hiện trong ‘ngữ cảnh’ tương tác tương tự thì embedding gần nhau”.</p>
+
+<h2 id="6-khái-niệm-liên-quan">6. Khái niệm liên quan</h2>
+<p>Nhúng từ gắn với ngữ nghĩa phân bố (<em>distributional semantics</em>) — lý thuyết ngôn ngữ học cho rằng nghĩa từ được xác định bởi ngữ cảnh. Việc cài đặt tính toán — học vectơ sao cho từ trong ngữ cảnh tương tự có biểu diễn tương tự — chính là hiện thực hóa lý thuyết này. Hiểu mối liên hệ giúp đánh giá vì sao nhúng hoạt động: chúng không phải kỹ thuật đặc trưng tùy tiện mà là cài đặt các nguyên lý ngôn ngữ học cơ bản.</p>
+
+<p>Nhúng liên quan đến các kỹ thuật giảm chiều như PCA hoặc autoencoder. Ta nén vectơ one-hot chiều cao (kích thước từ vựng) thành vectơ dày đặc chiều thấp (kích thước nhúng) trong khi bảo toàn thông tin ngữ nghĩa. Phép nén học được khám phá rằng quan hệ ngữ nghĩa có thể nắm bắt bằng ít chiều hơn nhiều so với danh tính ký hiệu tường minh, cho thấy chiều nội tại của ngữ nghĩa từ thấp hơn nhiều so với kích thước từ vựng.</p>
+
+<p>Sự tiến hóa từ nhúng tĩnh (Word2Vec, GloVe) đến nhúng ngữ cảnh (ELMo, BERT) phản ánh sự tinh vi ngày càng tăng. Nhúng tĩnh gán một vectơ cho mỗi loại từ, nên “bank” (tài chính) và “bank” (bờ sông) có cùng biểu diễn dù nghĩa khác. Nhúng ngữ cảnh sinh vectơ khác nhau theo ngữ cảnh, giải quyết đa nghĩa.</p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/sa_vector_space_fruit_vs_companies.jpg" alt="Không gian vector: trái cây vs công ty" />
+<em>Hình: Cụm “táo / chuối / cam…” tách khỏi “Google / Microsoft / DeepSeek…”. (Minh họa từ video Transformer / Self-Attention nhập môn)</em></p>
+
+<p><img src="/deep-learning-self-learning/img/chapter_img/chapter18/sa_contextual_apple_company_vector.jpg" alt="Sau self-attention: “Apple” theo nghĩa công ty" />
+<em>Hình: Khi câu nói về điện thoại/màu cam, vector “Apple” trôi về phía nghĩa hãng (logo). (Minh họa từ video Transformer / Self-Attention nhập môn)</em></p>
+
+<p>Lộ trình này cho thấy lĩnh vực tiến từ học biểu diễn cấp từ sang mô hình hóa bản chất phụ thuộc ngữ cảnh của ngôn ngữ.</p>
+
+<h2 id="7-các-bài-báo-nền-tảng">7. Các Bài báo Nền tảng</h2>
+
+<p><strong><a href="https://arxiv.org/abs/1301.3781">“Efficient Estimation of Word Representations in Vector Space” (2013)</a></strong><br />
+<em>Tác giả</em>: Tomas Mikolov, Kai Chen, Greg Corrado, Jeffrey Dean<br />
+Word2Vec giới thiệu các phương pháp hiệu quả (skip-gram và CBOW) để học nhúng từ ở quy mô lớn. Thủ tục huấn luyện lấy mẫu âm cho phép xử lý hàng tỷ từ, khiến nhúng thực tiễn với từ vựng lớn. Bài báo chứng minh các tính chất ngữ nghĩa đáng chú ý — loại suy giải bằng số học vectơ — cho thấy nhúng nắm bắt mẫu ngôn ngữ tinh vi. Tính đơn giản, hiệu quả và chất lượng của Word2Vec khiến nó được áp dụng rộng rãi, thiết lập nhúng như nền tảng của NLP.</p>
+
+<p><strong><a href="https://aclanthology.org/D14-1162/">“GloVe: Global Vectors for Word Representation” (2014)</a></strong><br />
+<em>Tác giả</em>: Jeffrey Pennington, Richard Socher, Christopher Manning<br />
+GloVe kết hợp phân rã ma trận toàn cục với ngữ cảnh cục bộ, phân rã ma trận đồng xuất hiện từ để học nhúng. Phương pháp đạt hiệu năng cạnh tranh hoặc vượt Word2Vec đồng thời cung cấp diễn giải trực quan qua thống kê đồng xuất hiện. GloVe cho thấy các mục tiêu huấn luyện khác nhau có thể sinh nhúng chất lượng cao tương tự, gợi ý bản thân biểu diễn quan trọng hơn thủ tục huấn luyện cụ thể.</p>
+
+<p><strong><a href="https://arxiv.org/abs/1802.05365">“Deep contextualized word representations” (2018)</a></strong><br />
+<em>Tác giả</em>: Matthew Peters, Mark Neumann, Mohit Iyyer, Matt Gardner, Christopher Clark, Kenton Lee, Luke Zettlemoyer<br />
+ELMo giới thiệu nhúng ngữ cảnh từ LSTM hai chiều sâu, biểu diễn mỗi từ khác nhau theo ngữ cảnh câu. Điều này giải quyết hạn chế của nhúng tĩnh với đa nghĩa và nghĩa phụ thuộc ngữ cảnh. ELMo cho thấy mô hình ngôn ngữ sâu học các loại thông tin khác nhau ở các tầng khác nhau (cú pháp ở tầng thấp, ngữ nghĩa ở tầng cao), và kết hợp các tầng cải thiện tác vụ hạ nguồn. ELMo đại diện cho bước chuyển từ biểu diễn tĩnh sang ngữ cảnh, mở đường cho BERT và Transformer.</p>
+
+<h2 id="bẫy-thường-gặp-và-mẹo">Bẫy Thường gặp và Mẹo</h2>
+
+<p>Dùng nhúng tiền huấn luyện mà không căn chỉnh từ vựng đúng cách gây vấn đề ngoài từ vựng (<em>out-of-vocabulary</em>). Nếu từ vựng tác vụ chứa từ không có trong nhúng tiền huấn luyện, cần chiến lược: dùng nhúng dưới từ (BPE, WordPiece), khởi tạo từ thiếu từ các từ tương tự (nếu thiếu “coronavirus”, lấy trung bình “virus” và “corona”), hoặc tinh chỉnh nhúng trên văn bản miền chuyên biệt.</p>
+
+<h2 id="điểm-chính-cần-nhớ">Điểm Chính Cần Nhớ</h2>
+
+<p>Nhúng từ biểu diễn từ bằng vectơ liên tục dày đặc, trong đó độ tương tự ngữ nghĩa tương ứng với gần gũi hình học, cho phép mạng neuron tổng quát hóa qua các từ gần nghĩa nhờ biểu diễn vectơ dùng chung. Skip-gram Word2Vec dự đoán ngữ cảnh từ đích dùng lấy mẫu âm để hiệu quả, trong khi GloVe phân rã ma trận đồng xuất hiện — cả hai học từ văn bản không nhãn qua giả thuyết phân bố. Nhúng thu được thể hiện các tính chất đáng chú ý gồm suy luận loại suy qua số học vectơ (king − man + woman ≈ queen) và tụ cụm ngữ nghĩa (từ đồng nghĩa có vectơ tương tự), tất cả nảy sinh từ mẫu đồng xuất hiện mà không cần giám sát tường minh. Cùng hình học vector xuất hiện trong <strong>gợi ý</strong>: user/item embedding và mô hình two-tower khớp sở thích với nội dung ở quy mô lớn. Nhúng tiền huấn luyện như Word2Vec và GloVe chuyển giao sang tác vụ hạ nguồn, cung cấp biểu diễn ngữ nghĩa cải thiện hiệu năng trên các ứng dụng NLP từ phân tích cảm xúc đến dịch máy. Nhúng ngữ cảnh hiện đại từ BERT cung cấp biểu diễn phụ thuộc ngữ cảnh giải quyết đa nghĩa, dù nhúng tĩnh vẫn hữu ích về hiệu quả và khả năng diễn giải. Hiểu nhúng từ đặt nền cho mọi học biểu diễn trong NLP (và ngoài NLP), chứng minh cách mạng neuron có thể khám phá cấu trúc thuần từ mẫu dữ liệu.</p>
+
+<!-- video-references -->
+
+<h2 id="nguồn-video-tham-chiếu">Nguồn video (tham chiếu)</h2>
+
+<p>Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:</p>
+
+<ul>
+  <li><a href="https://www.facebook.com/reel/930207546288223">Transformer là gì? Self-Attention siêu dễ hiểu (Phần 1)</a></li>
+  <li><a href="https://www.facebook.com/reel/1501843101324752">Word Embedding và Transformer hiểu ngôn ngữ</a></li>
+  <li><a href="https://www.facebook.com/reel/1444915507374636">Thuật toán gợi ý (TikTok-style recommendation)</a></li>
+</ul>
+
+</div>
+
+<!-- Back to Chapter Home Link -->
+
+  
+  
+  <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
+    <a href="/deep-learning-self-learning/contents/vi/chapter18/" style="text-decoration: none; color: #007bff; font-weight: bold;">
+      ← Quay lại đầu chương
+    </a>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="related">
+  <ul class="related-posts">
+    
+      
+        <li>
+          <h2>Previous Post</h2>
+          <h3>
+            <a href="/deep-learning-self-learning/contents/vi/chapter18/18_00_Introduction/">
+              18 Xử lý Ngôn ngữ Tự nhiên
+            </a>
+          </h3>
+        </li>
+      
+    
+      
+    
+    
+    
+  
+    
+  
+  </ul>
+</div>
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="convex-deep-learning-for-all/convex-deep-learning-for-all.github.io"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/deep-learning-self-learning/public/js/script.js'></script>
+    <script src='/deep-learning-self-learning/public/js/multilang.js'></script>
+    <script src='/deep-learning-self-learning/public/js/search.js'></script>
+  </body>
+</html>

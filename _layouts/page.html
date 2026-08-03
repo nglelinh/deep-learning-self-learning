@@ -31,25 +31,11 @@ layout: default
   {% if subchapter_level.size < 3 %}
     <li style="text-align:left; vertical-align: middle; margin-left: -2em; margin-top: 5px;" >
       <a href="{{ post.url | absolute_url }}">{{post.title}}</a>
-      {% if post.lesson_type %}
-        {% if post.lesson_type == 'required' %}
-          <span class="lesson-badge required">{% t required %}</span>
-        {% elsif post.lesson_type == 'optional' %}
-          <span class="lesson-badge optional">{% t optional %}</span>
-        {% endif %}
-      {% endif %}
     </li>
   {% endif %}
   {% if subchapter_level.size >= 3 %}
     <li style="text-align:left; vertical-align: middle;  margin-left: 0em;" >
       <a href="{{ post.url | absolute_url }}"> {{ post.title }}</a>
-      {% if post.lesson_type %}
-        {% if post.lesson_type == 'required' %}
-          <span class="lesson-badge required">{% t required %}</span>
-        {% elsif post.lesson_type == 'optional' %}
-          <span class="lesson-badge optional">{% t optional %}</span>
-        {% endif %}
-      {% endif %}
     </li>
   {% endif %}
 {% endfor %}

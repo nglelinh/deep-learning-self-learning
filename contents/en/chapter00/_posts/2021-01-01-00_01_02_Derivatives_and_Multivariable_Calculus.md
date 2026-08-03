@@ -7,7 +7,6 @@ owner: GitHub Copilot
 lang: en
 categories:
 - chapter00
-lesson_type: required
 ---
 
 This lesson covers derivatives and essential multivariable calculus concepts that form the foundation for deep-learning theory and algorithms.
