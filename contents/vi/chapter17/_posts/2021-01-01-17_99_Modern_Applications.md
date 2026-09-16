@@ -14,7 +14,11 @@ lesson_type: optional
 
 > Bài này là **tùy chọn**. Nó **không** thay lý thuyết detector một/hai giai đoạn hay ghi chú YOLO / Faster R-CNN. Nó phủ các mô hình 2023–2025 trong sản phẩm: **SAM/SAM 2**, **RT-DETR**, **Grounding DINO**, và dòng YOLO hiện tại.
 
-Ý IoU / NMS / ghép cặp của chương vẫn quyết định hộp có đúng không. Kiến trúc quanh chúng đã đổi.
+Ý IoU / NMS / ghép cặp của chương vẫn quyết định hộp có đúng không:
+
+$$\mathrm{IoU}(A,B) = \frac{|A\cap B|}{|A\cup B|}.$$
+
+Kiến trúc quanh các chỉ số ấy đã đổi.
 
 ## 1. Phân đoạn theo prompt: SAM và SAM 2
 

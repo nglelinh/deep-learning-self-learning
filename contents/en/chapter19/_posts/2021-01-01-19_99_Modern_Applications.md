@@ -16,7 +16,11 @@ lesson_type: optional
 
 ## 1. Whisper as the ASR default
 
-[Radford et al., 2022](https://arxiv.org/abs/2212.04356) train an encoder–decoder Transformer on weakly supervised multilingual speech. Later **large-v2 / large-v3** checkpoints and [faster-whisper](https://github.com/SYSTRAN/faster-whisper) (CTranslate2) are what data teams call from Python. The architecture is Chapter 08; the application is robust ASR without a language-specific HMM.
+[Radford et al., 2022](https://arxiv.org/abs/2212.04356) train an encoder–decoder Transformer on weakly supervised multilingual speech. The decoder factorizes
+
+$$p(y\mid x) = \prod_t p(y_t \mid y_{<t}, x),$$
+
+where $$x$$ is a log-mel spectrogram. Later **large-v2 / large-v3** checkpoints and [faster-whisper](https://github.com/SYSTRAN/faster-whisper) (CTranslate2) are what data teams call from Python. The architecture is Chapter 08; the application is robust ASR without a language-specific HMM.
 
 ## 2. Concrete applications
 

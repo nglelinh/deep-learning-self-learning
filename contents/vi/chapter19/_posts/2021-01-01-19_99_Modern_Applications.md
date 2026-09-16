@@ -16,7 +16,11 @@ lesson_type: optional
 
 ## 1. Whisper như mặc định ASR
 
-[Radford et al., 2022](https://arxiv.org/abs/2212.04356) huấn luyện Transformer encoder–decoder trên tiếng nói đa ngữ giám sát yếu. Checkpoint **large-v2 / large-v3** sau đó và [faster-whisper](https://github.com/SYSTRAN/faster-whisper) (CTranslate2) là thứ đội dữ liệu gọi từ Python. Kiến trúc là Chương 08; ứng dụng là ASR bền mà không cần HMM theo ngôn ngữ.
+[Radford et al., 2022](https://arxiv.org/abs/2212.04356) huấn luyện Transformer encoder–decoder trên tiếng nói đa ngữ giám sát yếu. Decoder phân tích
+
+$$p(y\mid x) = \prod_t p(y_t \mid y_{<t}, x),$$
+
+trong đó $$x$$ là spectrogram log-mel. Checkpoint **large-v2 / large-v3** sau đó và [faster-whisper](https://github.com/SYSTRAN/faster-whisper) (CTranslate2) là thứ đội dữ liệu gọi từ Python. Kiến trúc là Chương 08; ứng dụng là ASR bền mà không cần HMM theo ngôn ngữ.
 
 ## 2. Ứng dụng cụ thể
 

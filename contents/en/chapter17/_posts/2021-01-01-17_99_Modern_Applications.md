@@ -14,7 +14,11 @@ lesson_type: optional
 
 > This lesson is **optional**. It does **not** replace two-stage vs one-stage detection theory or the YOLO / Faster R-CNN notes. It covers the 2023–2025 models used in products: **SAM/SAM 2**, **RT-DETR**, **Grounding DINO**, and current YOLO lines.
 
-The matching / IoU / NMS ideas in this chapter still decide whether a box is correct. The architectures around them changed.
+The matching / IoU / NMS ideas in this chapter still decide whether a box is correct:
+
+$$\mathrm{IoU}(A,B) = \frac{|A\cap B|}{|A\cup B|}.$$
+
+The architectures around those metrics changed.
 
 ## 1. Promptable segmentation: SAM and SAM 2
 
