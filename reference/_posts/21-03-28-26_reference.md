@@ -25,6 +25,8 @@ categories:
 4. **MIT Deep Learning Book.** From MIT 6.S191 course.  
    Rigorous academic treatment of deep learning fundamentals.
 
+**Practice supplement:** Kashani, S., and Ivry, A. *[Deep Learning Interviews](https://arxiv.org/abs/2201.00650)* (arXiv:2201.00650). Free solved interview / exam problems. Course track: lesson **01-98**. GitHub: [interviews.ai](https://github.com/BoltzmannEntropy/interviews.ai). Download the PDF from arXiv; this site does not reprint the question bank.
+
 ### Domain-Specific Books
 
 5. **Shanmugamani, R. (2018).** *Deep Learning for Computer Vision*. Packt Publishing.

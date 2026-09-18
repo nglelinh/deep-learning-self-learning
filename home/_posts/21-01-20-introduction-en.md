@@ -30,4 +30,6 @@ The main curriculum is available in **English and Vietnamese**. Editions are ali
 5. **Chapters 11–15** — generative models and transfer learning.  
 6. **Chapters 16–25** — applications and future directions.
 
+Optional interview drill: after the matching theory lesson, use **01-98 Deep Learning Interviews practice track** (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) and the chapter `*-98` companions.
+
 Happy learning.

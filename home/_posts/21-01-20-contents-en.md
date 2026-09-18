@@ -44,6 +44,11 @@ Modern introduction with excellent visualizations and intuitive explanations.
 From MIT's Deep Learning course  
 Rigorous academic treatment with strong theoretical foundations.
 
+**5. Deep Learning Interviews**  
+*Authors*: Shlomo Kashani and Amir Ivry  
+*Online*: [arXiv:2201.00650](https://arxiv.org/abs/2201.00650) (free PDF) · [GitHub](https://github.com/BoltzmannEntropy/interviews.ai)  
+Solved interview- and exam-style problems. This course adds an optional practice track — start at **01-98 Deep Learning Interviews practice track** — with original prompts only. Download the book from arXiv; do not expect a reprint here.
+
 ## Additional References
 
 ### Computer Vision

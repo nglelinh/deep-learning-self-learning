@@ -125,7 +125,7 @@ categories:
 
 - **Bài báo**: ArXiv.org, Papers with Code
 - **Khóa học**: Fast.ai, Stanford CS231n/CS224n
-- **Sách**: Deep Learning (Goodfellow), Dive into Deep Learning
+- **Sách**: Deep Learning (Goodfellow), Dive into Deep Learning, Deep Learning Interviews (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) — lộ trình luyện tùy chọn ở **01-98**
 - **Cuộc thi**: Kaggle, AIcrowd
 - **Cộng đồng**: Reddit r/MachineLearning, Discord
 

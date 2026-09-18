@@ -253,6 +253,12 @@ To deepen your understanding, we recommend these essential deep learning books:
 - Mathematical proofs and derivations
 - **Use for**: Academic depth, research preparation
 
+### 5. **Deep Learning Interviews** by Shlomo Kashani and Amir Ivry
+- **Free solved interview / exam problems**
+- PDF: [arXiv:2201.00650](https://arxiv.org/abs/2201.00650) — GitHub: [interviews.ai](https://github.com/BoltzmannEntropy/interviews.ai)
+- This course maps book *themes* (not reprinted questions) onto optional `*-98` companions
+- **Use for**: Interview drill after the matching theory lesson; start at **01-98**
+
 ### How to Use These Books
 
 **Beginner Path**:

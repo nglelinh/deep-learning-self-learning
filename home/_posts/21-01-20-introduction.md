@@ -30,4 +30,6 @@ Toàn bộ nội dung chính có **bản tiếng Anh** và **bản tiếng Việ
 5. **Chương 11–15** — mô hình sinh và học chuyển giao.  
 6. **Chương 16–25** — ứng dụng và hướng mở rộng.
 
+Luyện phỏng vấn tùy chọn: sau bài lý thuyết khớp, dùng **01-98 Lộ trình luyện Deep Learning Interviews** (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) và các bài companion `*-98` theo chương.
+
 Chúc bạn học tập hiệu quả.
