@@ -13,3 +13,5 @@ Deep Learning is at the heart of data science. Whether you're training a neural 
 
 
 **Optional (2022–2026):** After the core math notes, see **00-99 Modern Applications and Updates** for autodiff compilers (JAX, `torch.compile`) and how gradients, matrices, and likelihoods show up in scientific ML and scaling-law training.
+
+**Optional (interview practice):** After the probability and calculus notes, see **00-98 Interviews Practice** for original prompts on entropy / KL and autodiff; the full solved bank is the free *Deep Learning Interviews* PDF ([arXiv:2201.00650](https://arxiv.org/abs/2201.00650)).

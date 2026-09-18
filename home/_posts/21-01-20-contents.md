@@ -44,6 +44,11 @@ Giới thiệu hiện đại, trực quan, chú trọng minh họa.
 Từ khóa học Deep Learning của MIT  
 Cách tiếp cận học thuật chặt chẽ với nền tảng lý thuyết vững.
 
+**5. Deep Learning Interviews**  
+*Tác giả*: Shlomo Kashani và Amir Ivry  
+*Trực tuyến*: [arXiv:2201.00650](https://arxiv.org/abs/2201.00650) (PDF miễn phí) · [GitHub](https://github.com/BoltzmannEntropy/interviews.ai)  
+Bài toán phỏng vấn / thi cử đã giải. Khóa này thêm lộ trình luyện tùy chọn — bắt đầu từ **01-98 Lộ trình luyện Deep Learning Interviews** — chỉ với câu gốc. Tải sách từ arXiv; đừng chờ bản in lại ở đây.
+
 ## Tài liệu bổ sung
 
 ### Thị giác máy tính

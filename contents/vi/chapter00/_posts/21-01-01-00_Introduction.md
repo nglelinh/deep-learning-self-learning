@@ -13,3 +13,5 @@ Tối ưu hóa là trái tim của khoa học dữ liệu. Dù bạn đang huấ
 
 
 **Tùy chọn (2022–2026):** Sau các ghi chú toán cốt lõi, xem **00-99 Ứng dụng và cập nhật hiện đại** về compiler autodiff (JAX, `torch.compile`) và cách gradient, ma trận, hợp lý xuất hiện trong scientific ML cùng huấn luyện theo scaling law.
+
+**Tùy chọn (luyện phỏng vấn):** Sau ghi chú xác suất và giải tích, xem **00-98 Luyện phỏng vấn** cho câu gốc về entropy / KL và autodiff; ngân hàng đã giải đầy đủ là PDF miễn phí *Deep Learning Interviews* ([arXiv:2201.00650](https://arxiv.org/abs/2201.00650)).

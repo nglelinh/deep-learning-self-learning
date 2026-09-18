@@ -14,6 +14,7 @@ This course provides a complete learning path from neural network basics to cutt
 - **Real-world applications** in computer vision, NLP, and beyond
 - **Mathematical foundations** with clear explanations
 - **Modern architectures** including Transformers and attention mechanisms
+- **Optional interview practice track** mapped to Kashani & Ivry, *Deep Learning Interviews* ([arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) — original prompts only; start at lesson **01-98**
 
 ## 📚 Course Structure
 
@@ -102,6 +103,9 @@ Jump directly to topics of interest:
 - Natural Language Processing → Chapters 05-08, 18
 - Generative AI → Chapters 11-14
 - Reinforcement Learning → Chapters 20-21
+
+### Interview practice (optional)
+After the matching theory lesson, use the bilingual **01-98 Deep Learning Interviews practice track** and the chapter `*-98` companions. Download the free PDF from [arXiv:2201.00650](https://arxiv.org/abs/2201.00650); this repository does not copy the book’s question bank.
 
 ### Reference Material
 Use as a reference for:
@@ -212,6 +216,12 @@ This course is built upon these excellent deep learning resources:
    - Comprehensive coverage of fundamentals
    - Strong theoretical foundations
    - From MIT's deep learning course
+
+5. **Deep Learning Interviews** by Shlomo Kashani and Amir Ivry
+   - Free solved interview / exam problems mapped onto this course as an optional practice track
+   - Start at lesson **01-98 Deep Learning Interviews practice track** (English and Vietnamese)
+   - PDF: [arXiv:2201.00650](https://arxiv.org/abs/2201.00650) — GitHub: [interviews.ai](https://github.com/BoltzmannEntropy/interviews.ai)
+   - Download the book from arXiv; this repo does not reprint its question bank
 
 ### Course Inspirations
 

@@ -25,6 +25,8 @@ categories:
 4. **MIT Deep Learning Book.** Từ khóa học MIT 6.S191.  
    Cách tiếp cận học thuật chặt chẽ về nền tảng học sâu.
 
+**Bổ sung luyện tập:** Kashani, S., và Ivry, A. *[Deep Learning Interviews](https://arxiv.org/abs/2201.00650)* (arXiv:2201.00650). Bài toán phỏng vấn / thi cử đã giải, miễn phí. Lộ trình khóa: bài **01-98**. GitHub: [interviews.ai](https://github.com/BoltzmannEntropy/interviews.ai). Tải PDF từ arXiv; trang này không in lại ngân hàng câu hỏi.
+
 ### Sách theo lĩnh vực
 
 5. **Shanmugamani, R. (2018).** *Deep Learning for Computer Vision*. Packt Publishing.

@@ -125,7 +125,7 @@ categories:
 
 - **Papers**: ArXiv.org, Papers with Code
 - **Courses**: Fast.ai, Stanford CS231n/CS224n
-- **Books**: Deep Learning (Goodfellow), Dive into Deep Learning
+- **Books**: Deep Learning (Goodfellow), Dive into Deep Learning, Deep Learning Interviews (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) — optional practice track in **01-98**
 - **Competitions**: Kaggle, AIcrowd
 - **Communities**: Reddit r/MachineLearning, Discord servers
 

@@ -253,6 +253,12 @@ Học sâu trở nên thực tế nhờ GPU:
 - Chứng minh và suy diễn toán học
 - **Dùng cho**: chiều sâu học thuật, chuẩn bị nghiên cứu
 
+### 5. **Deep Learning Interviews** của Shlomo Kashani và Amir Ivry
+- **Bài toán phỏng vấn / thi cử đã giải, miễn phí**
+- PDF: [arXiv:2201.00650](https://arxiv.org/abs/2201.00650) — GitHub: [interviews.ai](https://github.com/BoltzmannEntropy/interviews.ai)
+- Khóa này ánh xạ *chủ đề* sách (không in lại câu hỏi) sang các bài `*-98` tùy chọn
+- **Dùng cho**: luyện phỏng vấn sau bài lý thuyết khớp; bắt đầu ở **01-98**
+
 ### Cách dùng các sách này
 
 **Lộ trình người mới**:
