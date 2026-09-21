@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "References and Resources"
-chapter: "26"
+chapter: "27"
 order: 1
 owner: "Deep Learning Course"
 lang: en

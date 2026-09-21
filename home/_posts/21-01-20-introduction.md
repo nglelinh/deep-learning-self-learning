@@ -28,7 +28,8 @@ Toàn bộ nội dung chính có **bản tiếng Anh** và **bản tiếng Việ
 3. **Chương 04–08** — CNN, chuỗi, LSTM, attention, Transformer.  
 4. **Chương 09–10** — chính quy hóa và tối ưu.  
 5. **Chương 11–15** — mô hình sinh và học chuyển giao.  
-6. **Chương 16–25** — ứng dụng và hướng mở rộng.
+6. **Chương 16–25** — ứng dụng và hướng mở rộng.  
+7. **Chương 26** — hub LLM chuyên biệt (tiền huấn luyện, prompting, phác thảo căn chỉnh, phục vụ, chưng cất).
 
 Luyện phỏng vấn tùy chọn: sau bài lý thuyết khớp, dùng **01-98 Lộ trình luyện Deep Learning Interviews** (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) và các bài companion `*-98` theo chương.
 

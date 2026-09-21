@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Tài liệu tham khảo và nguồn học liệu"
-chapter: "26"
+chapter: "27"
 order: 1
 owner: "Deep Learning Course"
 lang: vi

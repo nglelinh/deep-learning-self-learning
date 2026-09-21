@@ -7,7 +7,7 @@ owner: Deep Learning Course
 lang: en
 ---
 
-A comprehensive introduction to deep learning, covering neural network fundamentals, modern architectures (CNNs, RNNs, Transformers), training techniques, generative models, and practical applications in computer vision, natural language processing, and beyond.
+A comprehensive introduction to deep learning, covering neural network fundamentals, modern architectures (CNNs, RNNs, Transformers), training techniques, generative models, practical applications in computer vision and natural language processing, and a dedicated **Chapter 26** hub on large language models (pretraining, prompting, alignment, serving, and distillation).
 
 # Course Objectives
 
@@ -64,6 +64,8 @@ Solved interview- and exam-style problems. This course adds an optional practice
 
 ### Research Papers and Advanced Topics
 - "Attention Is All You Need" - Vaswani et al., 2017 (Transformers)
+- "Distilling the Knowledge in a Neural Network" - Hinton, Vinyals, and Dean, 2015 (knowledge distillation; LLM-era continuation in Chapter 26)
+- "Language Models are Few-Shot Learners" - Brown et al., 2020 (in-context learning)
 - "Generative Adversarial Networks" - Goodfellow et al., 2014 (GANs)
 - "Deep Residual Learning for Image Recognition" - He et al., 2015 (ResNet)
 - ArXiv.org and Papers with Code for latest research

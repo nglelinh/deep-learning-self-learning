@@ -18,7 +18,7 @@ Cắt tỉa loại bỏ tham số hoặc kết nối không cần thiết, khai 
 
 Lượng tử hóa giảm độ chính xác số, biểu diễn trọng số và kích hoạt bằng ít bit hơn (số nguyên 8-bit thay vì float 32-bit), giảm bộ nhớ 4× và cho phép số học nguyên nhanh hơn trên nhiều bộ xử lý. Lượng tử hóa sau huấn luyện (*post-training quantization*) áp dụng cho mô hình đã huấn luyện mà không cần huấn luyện lại. Huấn luyện nhận biết lượng tử hóa (*quantization-aware training*) đưa lượng tử hóa vào vòng lặp huấn luyện, cho phép mạng thích ứng với độ chính xác giảm.
 
-Chưng cất tri thức chuyển tri thức từ mạng “giáo viên” lớn sang mạng “học sinh” nhỏ bằng cách huấn luyện học sinh khớp dự đoán của giáo viên (mục tiêu mềm) chứ không chỉ nhãn cứng. Học sinh học từ sự bất định của giáo viên và độ tương tự giữa các lớp, thường đạt hiệu năng tốt hơn huấn luyện chỉ trên nhãn dù nhỏ hơn nhiều.
+Chưng cất tri thức chuyển tri thức từ mạng “giáo viên” lớn sang mạng “học sinh” nhỏ bằng cách huấn luyện học sinh khớp dự đoán của giáo viên (mục tiêu mềm) chứ không chỉ nhãn cứng. Học sinh học từ sự bất định của giáo viên và độ tương tự giữa các lớp, thường đạt hiệu năng tốt hơn huấn luyện chỉ trên nhãn dù nhỏ hơn nhiều. **Với chưng cất thời LLM** — vì sao khớp logit đủ từ vựng trở nên vụng, chưng cất dữ liệu tổng hợp / phản hồi, và dùng hợp lệ so với không được phép — xem **Chương 26**, bài **26-05**. Bài này giữ bức tranh cổ điển với không gian đầu ra cố định.
 
 Các kiến trúc hiệu quả như MobileNet và EfficientNet được thiết kế vì hiệu quả ngay từ đầu qua tích chập tách theo chiều sâu (*depthwise separable convolution*), tìm kiếm kiến trúc neuron, và mở rộng quy mô cẩn thận. Chúng đạt độ chính xác cạnh tranh với một phần tính toán/tham số so với kiến trúc chuẩn.
 

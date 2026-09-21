@@ -36,7 +36,7 @@ Pick one mode and stay honest about timing:
 
 Work closed-book first. Then check the course hint. Only then open the PDF for additional solved Q&A.
 
-## Study plan: book themes → course chapters 00–25
+## Study plan: book themes → course chapters 00–26
 
 The book is organized by interview themes, not by this course's chapter numbers. Use the table as a routing sheet. Theme names below are **high-level labels** only — they are not a table of contents reprint.
 
@@ -55,6 +55,7 @@ The book is organized by interview themes, not by this course's chapter numbers.
 | 16–23 | SSL, CV apps, NLP, speech, RL, GNN, efficiency | No Volume I home. Volume II plan mentions detection, segmentation, NLP, RL — use the matching course chapter | hub only |
 | 24 | Interpretability | Related discussion only; Bayesian *uncertainty* lives in 25 | hub only |
 | 25 | Advanced topics | Bayesian deep learning and probabilistic thinking | **25-98** |
+| 26 | Large language models | No Volume I home — use this course’s LLM hub (pretraining, prompting, alignment, distillation) | **26-06** |
 
 ### Themes with no course chapter of their own
 
@@ -110,6 +111,7 @@ After the matching theory lesson, open:
 - **10-98** — Adam-family optimizers
 - **15-98** — feature extraction and transfer
 - **25-98** — Bayesian / uncertainty themes
+- **26-06** — LLM hub (prompting, serving, distillation; original prompts only)
 
 Each companion has 3–6 **original** prompts with short hints. They do not rewrite theory.
 
