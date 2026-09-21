@@ -65,4 +65,4 @@ ViT cộng decoder ngôn ngữ (LLaVA, 2023; các hệ lớp GPT-4V sau đó) t�
 
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
-Hoàn thành suy diễn encoder–decoder và Transformer PyTorch đồ chơi trước. Bài này chỉ đặt tên **stack sản phẩm LLM** xây trên suy diễn đó.
+Hoàn thành suy diễn encoder–decoder và Transformer PyTorch đồ chơi trước. Bài này chỉ đặt tên **stack sản phẩm LLM** xây trên suy diễn đó. Công thức và Mermaid cho RMSNorm → attention + RoPE → SwiGLU, cùng sổ sách tham số / FLOP, nằm ở **26-07**.

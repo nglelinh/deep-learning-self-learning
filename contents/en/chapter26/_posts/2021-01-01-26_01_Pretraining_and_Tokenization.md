@@ -49,7 +49,84 @@ def next_token_loss(logits, input_ids):
     )
 ```
 
-## 2. Why we do not train on raw characters (or raw words)
+The rest of this lesson is the **math the last layer actually uses**, then the tokenizer and the window. If a formula already lives in Chapters 02–03 or 10, we only restate the LM-shaped version.
+
+## 2. Softmax, cross-entropy, and $$\partial\mathcal{L}/\partial z = p - t$$
+
+At one position the model emits logits $$z \in \mathbb{R}^{V}$$. Softmax is
+
+$$p_i = \frac{e^{z_i}}{\sum_{j=1}^{V} e^{z_j}}.$$
+
+The LM loss on a one-hot target $$t$$ (the observed next token) is cross-entropy
+
+$$\mathcal{L} = -\sum_{i=1}^{V} t_i \log p_i = -\log p_{t^*},$$
+
+where $$t^*$$ is the index of the true token. Differentiating through softmax gives the interview identity
+
+$$\frac{\partial \mathcal{L}}{\partial z} = p - t.$$
+
+That is the same cancellation Chapter 03 shows for CE + softmax on a small classifier. The LM does it at every time step, with $$V$$ in the tens or hundreds of thousands.
+
+**CE, KL, and entropy.** For any two discrete distributions $$p^*$$ and $$p$$,
+
+$$\mathrm{CE}(p^*, p) = H(p^*) + \mathrm{KL}(p^* \| p).$$
+
+A one-hot $$p^*$$ has $$H(p^*) = 0$$, so token-level CE **is** $$\mathrm{KL}(\text{one-hot} \| p)$$ **is** negative log-likelihood. When the target is a *soft* teacher (distillation, **26-05**), $$H(p^*)$$ is a constant w.r.t. the student and the extra signal is the KL. Temperature-scaled softmax in 26-05 is this identity with a flatter $$p^*$$.
+
+## 3. Log-sum-exp and why FlashAttention talks about “online softmax”
+
+Naive $$e^{z_i}$$ overflows when logits are large. The stable rewrite subtracts the row max $$m = \max_j z_j$$:
+
+$$\log\sum_j e^{z_j} = m + \log\sum_j e^{z_j - m}, \qquad p_i = \exp\big(z_i - \mathrm{LSE}(z)\big).$$
+
+That is **log-sum-exp**. The same algebra can be run *incrementally*: if you have already seen a prefix of logits with running max $$m$$ and running sum $$s = \sum e^{z-m}$$, and a new block arrives with max $$m'$$, you rescale
+
+$$s \leftarrow s\, e^{m - m_{\mathrm{new}}} + \sum_{\text{new}} e^{z - m_{\mathrm{new}}}, \quad m_{\mathrm{new}} = \max(m, m').$$
+
+Keep a matching running weighted sum of values and you have **online softmax** — the numerical story inside [FlashAttention](https://arxiv.org/abs/2205.14135), without any CUDA. Lesson **26-07** uses this as the reason the $$L\times L$$ matrix never has to land in HBM.
+
+## 4. The linear layer: math $$XW$$ vs PyTorch $$W$$
+
+A batch of hidden states $$X \in \mathbb{R}^{B \times d_{\mathrm{in}}}$$ and a math textbook write
+
+$$Y = X W + b, \qquad W \in \mathbb{R}^{d_{\mathrm{in}} \times d_{\mathrm{out}}}.$$
+
+`torch.nn.Linear(n_in, n_out)` stores `weight` with shape **$$(n_{\mathrm{out}}, n_{\mathrm{in}})$$** and computes $$X W^\top + b$$. Same affine map; the stored matrix is the textbook $$W$$ *transposed*. When you count parameters in **26-07**, use $$d_{\mathrm{in}} \times d_{\mathrm{out}}$$ and do not double-count because of the layout. When you port a paper, check which convention the authors drew.
+
+## 5. Activations the FFN actually uses
+
+Chapter 02 already has the pictures. The LM-relevant three:
+
+$$
+\begin{aligned}
+\mathrm{ReLU}(z) &= \max(0, z), \\
+\mathrm{SiLU}(z) = \mathrm{Swish}(z) &= z\,\sigma(z), \\
+\mathrm{SwiGLU}(x) &= \big(\mathrm{SiLU}(x W_{\mathrm{gate}}) \odot (x W_{\mathrm{up}})\big) W_{\mathrm{down}}.
+\end{aligned}
+$$
+
+ReLU is the 2017 FFN. SiLU is the smooth gate. SwiGLU is the *block* (three matrices, Hadamard gate) that **26-07** puts in the decoder diagram. GELU (Chapter 02) still appears in older GPT-style FFNs; it is not a third theory.
+
+## 6. Adam / AdamW: moments, and which parameters decay
+
+Pretraining almost always uses **AdamW** ([Loshchilov & Hutter, 2019](https://arxiv.org/abs/1711.05101)), not raw Adam ([Kingma & Ba, 2015](https://arxiv.org/abs/1412.6980)). The moments are the Chapter 10 ones:
+
+$$
+\begin{aligned}
+m_t &= \beta_1 m_{t-1} + (1-\beta_1) g_t, \\
+v_t &= \beta_2 v_{t-1} + (1-\beta_2) g_t^{\odot 2}, \\
+\hat{m}_t &= \frac{m_t}{1-\beta_1^t}, \quad
+\hat{v}_t = \frac{v_t}{1-\beta_2^t}.
+\end{aligned}
+$$
+
+Adam applies an adaptive step and, if you add L2 to the *loss*, that L2 gradient is also rescaled by $$\sqrt{\hat{v}}$$ — so “weight decay” is no longer a uniform pull toward zero. AdamW **decouples** the decay:
+
+$$\theta_t = \theta_{t-1} - \eta \left( \frac{\hat{m}_t}{\sqrt{\hat{v}_t}+\varepsilon} + \lambda \theta_{t-1} \right).$$
+
+**Which parameters get $$\lambda > 0$$?** The usual LLM convention (Hugging Face `AdamW`, Llama-style trainers): apply decay to **2-D weight matrices** (attention and FFN projections, often the embedding / LM head). Do **not** decay 1-D tensors: biases (if any) and RMSNorm / LayerNorm gains. Those scales are not “weights that should shrink”; decaying them fights the normalizer. Details live in **10-01**; this paragraph is only the LM checklist.
+
+## 7. Why we do not train on raw characters (or raw words)
 
 Characters make sequences very long and waste capacity on spelling. Whole words explode the vocabulary and fail on rare or new spellings. **Subword** tokenization sits in between: frequent words stay one token; rare words split into reusable pieces.
 
@@ -67,7 +144,7 @@ Intuition, not a training recipe:
 
 Chapter 18’s embedding table $$E \in \mathbb{R}^{V \times d}$$ is exactly layer 0 of this model: each token ID becomes a vector, then (in modern decoders) a positional method such as RoPE is applied inside attention (optional lesson **08-99**).
 
-## 3. The context window
+## 8. The context window
 
 Self-attention in a vanilla Transformer mixes every pair of positions in the window. If the window length is $$L$$, one layer costs $$O(L^2)$$ in attention (plus cheap position-wise MLPs). So $$L$$ is both a **capability** limit and a **compute/memory** limit.
 
@@ -79,17 +156,20 @@ What the window actually bounds:
 
 Extensions (sliding windows, grouped-query attention, extra-long RoPE scaling) change the constants; they do not remove the idea that the model has a finite working tape.
 
-## 4. Pretraining data, briefly
+## 9. Pretraining data, briefly
 
 Pretraining corpora mix web text, books, code, and filtered crawls. You do not need a secret mix to understand the objective. You *do* need to remember:
 
 - The loss rewards **fluency and corpus statistics**, not truth. Hallucination is not a separate bug; it is next-token sampling from an imperfect $$p_\theta$$.
 - Data filters and deduplication are part of the model. Two LMs with the same architecture can behave differently because the corpus differed.
-- Scaling (Chapter 25) relates loss to parameters, tokens, and compute. This chapter assumes that curve exists; it does not re-fit it.
+- Scaling (Chapter 25; train-time sketch in **26-07**) relates loss to parameters, tokens, and compute. This lesson assumes that curve exists; it does not re-fit it.
 
 ## Key takeaways
 
 - Pretraining = maximize next-token likelihood under a causal mask.
+- Softmax + CE collapses to $$\partial\mathcal{L}/\partial z = p - t$$. CE = entropy + KL; one-hot targets make that just NLL.
+- Log-sum-exp is the stable softmax; the incremental version is the FlashAttention narrative (**26-07**).
+- PyTorch `Linear` stores $$W$$ as $$(n_{\mathrm{out}}, n_{\mathrm{in}})$$ and applies $$X W^\top$$. AdamW decays 2-D weights, not norm gains.
 - The tokenizer defines the discrete alphabet; BPE and SentencePiece are the two practical stories.
 - Context length $$L$$ is the working memory of attention — and the size of the KV-cache you will pay for at serve time.
 - The same softmax-over-$$V$$ view that makes pretraining simple is what makes **classical logit distillation expensive** for LMs (continue in **26-05**).

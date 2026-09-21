@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 26-03 Căn chỉnh: SFT đến tối ưu sở thích
+title: "26-03 Căn chỉnh: SFT đến tối ưu sở thích"
 chapter: '26'
 order: 4
 owner: Deep Learning Course
@@ -29,20 +29,58 @@ LM tiền huấn luyện  →  SFT (minh họa)  →  tối ưu sở thích
 
 **Giai đoạn C — tối ưu sở thích không vòng lấy mẫu.** [Rafailov et al., 2023](https://arxiv.org/abs/2305.18290) (DPO) viết lại cực tiểu RL có ràng buộc thành loss phân loại trên cùng các cặp $$(y_w, y_l)$$, so $$\pi_\theta$$ với tham chiếu đóng băng $$\pi_{\mathrm{ref}}$$. Không mô hình thưởng và không bộ lấy mẫu PPO lúc huấn luyện. Các stack nguồn mở (ví dụ [trl](https://github.com/huggingface/trl)) khiến đây thành công thức mặc định cho nhiều mô hình instruct 2024–2025.
 
-Bạn **không** cần suy diễn lại DPO ở đây. Nhớ hợp đồng:
+Mục tiếp theo viết **các mục tiêu mức cao** để bạn đọc được tóm tắt bài báo. Bạn **không** cần suy diễn lại DPO ở đây. Nhớ hợp đồng:
 
 $$\text{SFT cố định phần đỡ (loại câu trả lời tồn tại); sở thích đánh trọng số lại phần đỡ đó.}$$
 
 Nếu dữ liệu SFT không bao giờ hiện từ chối, trích dẫn, hay gọi công cụ, huấn luyện sở thích không thể bịa các kỹ năng đó chỉ từ một số vô hướng “hơn/kém.”
 
-## 2. Căn chỉnh *không* phải là gì
+## 2. Các mục tiêu bạn cần viết được (không phải biến thể tối nghĩa)
+
+Coi LM như chính sách $$\pi_\theta(y\mid x)$$ phát chuỗi token $$y$$ cho prompt $$x$$. Toán PPO / advantage đầy đủ ở lại Chương 20–21; **21-99** là bản tóm tắt hình LM. Ta bỏ các họ có tên (IPO, KTO, ORPO, …) trừ khi bạn tự mở những bài đó.
+
+**Policy gradient (dạng REINFORCE).** Một lợi tức hoặc advantage $$\hat{A}$$ nhân hàm điểm:
+
+$$\nabla_\theta J(\theta) \approx \mathbb{E}_{x,y\sim\pi_\theta}\big[\,\hat{A}(x,y)\,\nabla_\theta \log\pi_\theta(y\mid x)\,\big].$$
+
+Với LM tự hồi quy, $$\log\pi_\theta(y\mid x) = \sum_t \log\pi_\theta(y_t\mid x, y_{<t})$$ — cùng tổng như NLL của SFT, với *trọng số* $$\hat{A}$$ thay vì “luôn 1.”
+
+**RLHF như thưởng có regularize KL.** Sau khi khớp mô hình thưởng $$r_\phi$$ trên các cặp, mục tiêu thông thường ([Ouyang et al., 2022](https://arxiv.org/abs/2203.02155)) là
+
+$$\max_\theta\; \mathbb{E}_{x\sim\mathcal{D},\, y\sim\pi_\theta}\big[r_\phi(x,y)\big] - \beta\,\mathrm{KL}\big(\pi_\theta(\cdot\mid x)\,\|\,\pi_{\mathrm{ref}}(\cdot\mid x)\big).$$
+
+Số hạng KL là lý do chính sách không sụp thành phương ngữ đánh lừa $$r_\phi$$ mà người không thích. $$\pi_{\mathrm{ref}}$$ thường là checkpoint SFT.
+
+**PPO clip (bộ tối ưu, không phải sản phẩm).** PPO ([Schulman et al., 2017](https://arxiv.org/abs/1707.06347)) cực đại hóa surrogate *cắt* trên tỉ số xác suất $$r_t(\theta) = \pi_\theta(a_t\mid s_t)/\pi_{\mathrm{old}}(a_t\mid s_t)$$:
+
+$$L^{\mathrm{CLIP}}(\theta) = \mathbb{E}\Big[\min\big(r_t(\theta)\,\hat{A}_t,\; \mathrm{clip}(r_t(\theta), 1-\varepsilon, 1+\varepsilon)\,\hat{A}_t\big)\Big].$$
+
+Trong LM, $$a_t$$ là một token và $$s_t$$ là tiền tố. InstructGPT dùng vòng này; nó đắt (bộ lấy mẫu, thường có đầu value, bất ổn).
+
+**DPO (sở thích không bộ lấy mẫu).** [Rafailov et al., 2023](https://arxiv.org/abs/2305.18290) giải bài toán regularize KL dạng đóng và được loss *phân loại* trên cùng các cặp $$(y_w, y_l)$$:
+
+$$\mathcal{L}_{\mathrm{DPO}}(\theta) = -\log\sigma\Big(\beta\log\frac{\pi_\theta(y_w\mid x)}{\pi_{\mathrm{ref}}(y_w\mid x)} - \beta\log\frac{\pi_\theta(y_l\mid x)}{\pi_{\mathrm{ref}}(y_l\mid x)}\Big).$$
+
+Trực giác: nâng khoảng thưởng ẩn giữa bản thắng và bản thua, đo bằng log-odds *so với tham chiếu*. Không $$r_\phi$$ và không rollout PPO lúc huấn luyện. Đó là hợp đồng; suy diễn nằm trong bài báo và ở **21-99**.
+
+```mermaid
+flowchart LR
+  sft["Chinh sach SFT"] --> pairs["Cap so thich thang / thua"]
+  pairs --> rm["RLHF: khop mo hinh thuong"]
+  rm --> ppo["PPO voi thuong tru KL"]
+  pairs --> dpo["DPO: phan loai cap vs tham chieu"]
+  ppo --> aligned["Chinh sach da can chinh"]
+  dpo --> aligned
+```
+
+## 3. Căn chỉnh *không* phải là gì
 
 - **Không thay truy hồi.** Sở thích không thêm sự kiện chưa từng có trong tiền huấn luyện hay trong prompt (Chương 18-99).
 - **Không phải chứng minh an toàn đầy đủ.** Người đánh giá mã hóa một chính sách; họ không chứng nhận độ bền. Jailbreak và lệch phân bố vẫn là bài toán đánh giá.
 - **Không chỉ là RL.** RLHF là một cách cài. DPO, các loss theo cặp khác, và cả pipeline chỉ-SFT cẩn thận đều là căn chỉnh *theo nghĩa sản phẩm*.
 - **Không trùng chưng cất.** Chưng cất chép hành vi giáo viên vào học sinh nhỏ hơn (**26-05**). Căn chỉnh đổi *hành vi nào* được ưa. Bạn có thể chưng cất một giáo viên đã căn chỉnh; đó là cách phổ biến cho các tầng sản phẩm nhỏ.
 
-## 3. Phác thảo tự học bạn có thể vẽ trên giấy
+## 4. Phác thảo tự học bạn có thể vẽ trên giấy
 
 Với một prompt $$x$$:
 
@@ -53,16 +91,24 @@ Với một prompt $$x$$:
 
 Nếu bạn giải thích được vì sao số hạng KL / tham chiếu tồn tại (reward hacking, sụp phong cách), bạn sẵn sàng cho Chương 21-99. Nếu chỉ cần câu chuyện sản phẩm, dừng ở đây.
 
-## 4. Đi tiếp ở đâu trong khóa này
+## 5. Đi tiếp ở đâu trong khóa này
 
 - **Chương 20–21** — trạng thái, hành động, lợi tức, PPO.
 - **21-99** — RLHF, DPO, GRPO cho mô hình lý luận.
 - **26-04** — phục vụ chính sách đã căn chỉnh với chi phí thấp.
 - **26-05** — thu nhỏ giáo viên đã căn chỉnh mà không thu thập sở thích lại từ đầu.
 
+## Đọc thêm
+
+- Ouyang et al., 2022. [Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155) (InstructGPT / RLHF + PPO).
+- Schulman et al., 2017. [Proximal Policy Optimization Algorithms](https://arxiv.org/abs/1707.06347).
+- Rafailov et al., 2023. [Direct Preference Optimization](https://arxiv.org/abs/2305.18290).
+- Cảm hứng bản đồ chủ đề (không trích): [Alisa’s Book of LLMs](https://alisawuffles.notion.site/alisa-s-book-of-llms).
+
 ## Điểm chính cần nhớ
 
 - Căn chỉnh trong chương này = SFT rồi đánh trọng số lại theo sở thích.
-- RLHF thêm mô hình thưởng và vòng RL; DPO bỏ cả hai lúc huấn luyện.
+- Viết được ba dòng: policy gradient $$\hat{A}\nabla\log\pi$$; RLHF = thưởng trừ $$\beta\,\mathrm{KL}$$ về tham chiếu; PPO cắt tỉ số xác suất.
+- DPO là cùng cực tiểu regularize KL dưới dạng loss logistic trên $$(y_w, y_l)$$ — không mô hình thưởng lúc huấn luyện.
 - Kỹ năng đến từ dữ liệu (và công cụ); sở thích xếp hạng kỹ năng bạn đã có.
 - Suy diễn RL đầy đủ ở lại Chương 20–21 — đừng nhân bản ở đây.

@@ -55,7 +55,7 @@ Sách sắp theo chủ đề phỏng vấn, không theo số chương khóa họ
 | 16–23 | SSL, CV, NLP, tiếng nói, RL, GNN, hiệu năng | Volume I không có nhà. Volume II dự kiến detection, segmentation, NLP, RL — dùng chương khóa khớp | chỉ trên hub |
 | 24 | Giải thích mô hình | Chỉ bàn liên quan; *bất định* Bayesian nằm ở 25 | chỉ trên hub |
 | 25 | Chủ đề nâng cao | Học sâu Bayesian và tư duy xác suất | **25-98** |
-| 26 | Mô hình ngôn ngữ lớn | Volume I không có nhà — dùng hub LLM của khóa (tiền huấn luyện, prompting, căn chỉnh, chưng cất) | **26-06** |
+| 26 | Mô hình ngôn ngữ lớn | Volume I không có nhà — dùng hub LLM của khóa (toán tiền huấn luyện, prompting, căn chỉnh, phục vụ, chưng cất, nội tại) | **26-06** |
 
 ### Chủ đề không có chương riêng
 
@@ -111,7 +111,7 @@ Sau bài lý thuyết khớp, mở:
 - **10-98** — bộ tối ưu họ Adam
 - **15-98** — tách đặc trưng và chuyển giao
 - **25-98** — chủ đề Bayesian / bất định
-- **26-06** — hub LLM (prompting, phục vụ, chưng cất; chỉ câu gốc)
+- **26-06** — hub LLM (toán tiền huấn luyện, phục vụ, nội tại, chưng cất; chỉ câu gốc)
 
 Mỗi companion có 3–6 câu **gốc** kèm gợi ý ngắn. Chúng không viết lại lý thuyết.
 

@@ -55,4 +55,4 @@ và đặt trước nhánh residual (pre-norm). Đó là câu chuyện tỷ lệ
 
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
-Dùng bài perceptron và hàm kích hoạt để hiểu $$z$$ và $$\sigma$$. Bài này chỉ ghi **cách đóng gói** (SwiGLU, RMSNorm, residual) khi bạn mở checkpoint LLM 2025 hoặc model card `timm`.
+Dùng bài perceptron và hàm kích hoạt để hiểu $$z$$ và $$\sigma$$. Bài này chỉ ghi **cách đóng gói** (SwiGLU, RMSNorm, residual) khi bạn mở checkpoint LLM 2025 hoặc model card `timm`. Chương **26-07** đặt đóng gói đó lên cả stack decoder (RoPE, GQA, sổ sách).

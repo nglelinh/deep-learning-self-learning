@@ -7,7 +7,7 @@ owner: Deep Learning Course
 lang: vi
 ---
 
-Khóa học giới thiệu toàn diện về học sâu (*deep learning*), bao gồm nền tảng mạng neuron, các kiến trúc hiện đại (CNN, RNN, Transformer), kỹ thuật huấn luyện, mô hình sinh, ứng dụng thực tiễn trong thị giác máy tính và xử lý ngôn ngữ tự nhiên, cùng **Chương 26** — hub chuyên về mô hình ngôn ngữ lớn (tiền huấn luyện, prompting, căn chỉnh, phục vụ, và chưng cất).
+Khóa học giới thiệu toàn diện về học sâu (*deep learning*), bao gồm nền tảng mạng neuron, các kiến trúc hiện đại (CNN, RNN, Transformer), kỹ thuật huấn luyện, mô hình sinh, ứng dụng thực tiễn trong thị giác máy tính và xử lý ngôn ngữ tự nhiên, cùng **Chương 26** — hub chuyên về mô hình ngôn ngữ lớn (toán tiền huấn luyện, prompting, căn chỉnh, phục vụ, chưng cất, và sổ sách decoder hiện đại).
 
 # Mục tiêu khóa học
 

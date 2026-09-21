@@ -148,7 +148,7 @@ If the teacher also wrote a rationale, store it *inside* `completion` (or as a s
 
 - Hinton, G., Vinyals, O., and Dean, J. (2015). [Distilling the Knowledge in a Neural Network](https://arxiv.org/abs/1503.02531). Historical source for soft targets, temperature, and dark knowledge.
 - Machine Learning Mastery — [A Gentle Introduction to Model Distillation](https://machinelearningmastery.com/a-gentle-introduction-to-model-distillation/) (Chugani, 2026). Extra tutorial framing of classical vs LLM-era families; **cited as further reading, not copied here**.
-- This course: **23-01 Model Compression** (pruning, quantization, classical KD) and **23-99** (GPTQ / AWQ / speculative decoding — complementary, not a substitute for a student).
+- This course: **23-01 Model Compression** (pruning, quantization, classical KD) and **23-99** (GPTQ / AWQ / speculative decoding — complementary, not a substitute for a student). Serving-time draft-and-verify is also in **26-04**; FLOP / memory accounting before you pick a student size is in **26-07**.
 - Optional technical pointers (not assigned): DistilBERT ([Sanh et al., 2019](https://arxiv.org/abs/1910.01108)); rationale-style distillation such as Distilling Step-by-Step ([Hsieh et al., 2023](https://arxiv.org/abs/2305.02301)); MiniLLM ([Gu et al., 2024](https://arxiv.org/abs/2306.08543)).
 
 ## Key takeaways

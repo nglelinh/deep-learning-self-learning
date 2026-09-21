@@ -66,3 +66,4 @@ Chép các mục này và thử trên bất kỳ mô hình instruct mở nào:
 - ICL là few-shot *trong cửa sổ*, không phải bộ tối ưu vòng trong ẩn bạn được miễn phí.
 - Tuân thủ chỉ dẫn chủ yếu là đổi **dữ liệu** (SFT) trên cùng loss next-token.
 - Sở thích căn chỉnh là một đổi tiếp — bài **26-03** — không thay cho một prompt rõ.
+- Lấy mẫu lúc giải mã (nhiệt độ, top-$$k$$ / top-$$p$$) là nút phục vụ, không phải kiểu prompt mới — **26-04**.

@@ -66,3 +66,4 @@ Write these down and try them on any open instruct model:
 - ICL is few-shot *in the window*, not a hidden inner-loop optimizer you get for free.
 - Instruction-following is mostly a **data** change (SFT) on top of the same next-token loss.
 - Alignment preferences are a further change — lesson **26-03** — not a substitute for a clear prompt.
+- Decode-time sampling (temperature, top-$$k$$ / top-$$p$$) is a serving knob, not a new prompt type — **26-04**.
