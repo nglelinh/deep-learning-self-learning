@@ -7,7 +7,7 @@ owner: Deep Learning Course
 lang: vi
 ---
 
-Khóa học giới thiệu toàn diện về học sâu (*deep learning*), bao gồm nền tảng mạng neuron, các kiến trúc hiện đại (CNN, RNN, Transformer), kỹ thuật huấn luyện, mô hình sinh, và ứng dụng thực tiễn trong thị giác máy tính, xử lý ngôn ngữ tự nhiên cùng nhiều lĩnh vực liên quan.
+Khóa học giới thiệu toàn diện về học sâu (*deep learning*), bao gồm nền tảng mạng neuron, các kiến trúc hiện đại (CNN, RNN, Transformer), kỹ thuật huấn luyện, mô hình sinh, ứng dụng thực tiễn trong thị giác máy tính và xử lý ngôn ngữ tự nhiên, cùng **Chương 26** — hub chuyên về mô hình ngôn ngữ lớn (tiền huấn luyện, prompting, căn chỉnh, phục vụ, và chưng cất).
 
 # Mục tiêu khóa học
 
@@ -64,6 +64,8 @@ Bài toán phỏng vấn / thi cử đã giải. Khóa này thêm lộ trình lu
 
 ### Bài báo và chủ đề nâng cao
 - “Attention Is All You Need” — Vaswani et al., 2017 (Transformer)  
+- “Distilling the Knowledge in a Neural Network” — Hinton, Vinyals và Dean, 2015 (chưng cất tri thức; phần tiếp thời LLM ở Chương 26)  
+- “Language Models are Few-Shot Learners” — Brown et al., 2020 (học trong ngữ cảnh)  
 - “Generative Adversarial Networks” — Goodfellow et al., 2014 (GAN)  
 - “Deep Residual Learning for Image Recognition” — He et al., 2015 (ResNet)  
 - ArXiv.org và Papers with Code cho nghiên cứu mới nhất

@@ -13,6 +13,9 @@ layout: default
 {% if page.chapter %}
   {% assign chapter_path = page.lang | default: site.default_lang | append: "/chapter" | append: page.chapter | append: "/" %}
   {% assign chapter_url = "/contents/" | append: chapter_path %}
+  {% if page.categories contains "reference" or page.chapter == "27" %}
+    {% assign chapter_url = "/reference/" %}
+  {% endif %}
   <div style="margin-top: 20px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #007bff;">
     <a href="{{ site.baseurl }}{{ chapter_url }}" style="text-decoration: none; color: #007bff; font-weight: bold;">
       ← {% if page.lang == 'vi' %}Quay lại đầu chương{% else %}Back to Chapter Home{% endif %}

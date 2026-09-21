@@ -36,7 +36,7 @@ Chọn một chế độ và giữ kỷ luật thời gian:
 
 Làm đóng sách trước. Rồi xem gợi ý khóa học. Chỉ sau đó mới mở PDF để đọc thêm Q&A đã giải.
 
-## Kế hoạch học: chủ đề sách → chương 00–25
+## Kế hoạch học: chủ đề sách → chương 00–26
 
 Sách sắp theo chủ đề phỏng vấn, không theo số chương khóa học. Dùng bảng như tờ chỉ đường. Tên chủ đề dưới đây chỉ là **nhãn mức cao** — không phải mục lục sao chép.
 
@@ -55,6 +55,7 @@ Sách sắp theo chủ đề phỏng vấn, không theo số chương khóa họ
 | 16–23 | SSL, CV, NLP, tiếng nói, RL, GNN, hiệu năng | Volume I không có nhà. Volume II dự kiến detection, segmentation, NLP, RL — dùng chương khóa khớp | chỉ trên hub |
 | 24 | Giải thích mô hình | Chỉ bàn liên quan; *bất định* Bayesian nằm ở 25 | chỉ trên hub |
 | 25 | Chủ đề nâng cao | Học sâu Bayesian và tư duy xác suất | **25-98** |
+| 26 | Mô hình ngôn ngữ lớn | Volume I không có nhà — dùng hub LLM của khóa (tiền huấn luyện, prompting, căn chỉnh, chưng cất) | **26-06** |
 
 ### Chủ đề không có chương riêng
 
@@ -110,6 +111,7 @@ Sau bài lý thuyết khớp, mở:
 - **10-98** — bộ tối ưu họ Adam
 - **15-98** — tách đặc trưng và chuyển giao
 - **25-98** — chủ đề Bayesian / bất định
+- **26-06** — hub LLM (prompting, phục vụ, chưng cất; chỉ câu gốc)
 
 Mỗi companion có 3–6 câu **gốc** kèm gợi ý ngắn. Chúng không viết lại lý thuyết.
 

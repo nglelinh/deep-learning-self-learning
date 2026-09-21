@@ -27,7 +27,7 @@
           {% unless is_hidden %}
             {% assign chapter_count = chapter_count | plus: 1 %}
             {% assign cat = node.chapter | prepend: "chapter" %}
-            {% if node.chapter == "26" %}
+            {% if node.chapter == "27" %}
               {% assign cat = "reference" %}
             {% endif %}
             {% assign chapter_posts = site.categories[cat] %}

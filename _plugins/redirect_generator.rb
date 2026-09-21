@@ -13,7 +13,7 @@ module Jekyll
 
     def create_chapter_redirects(site)
       # Redirect từ /contents/chapter01/ đến /contents/en/chapter01/
-      (0..25).each do |i|
+      (0..26).each do |i|
         chapter_num = i.to_s.rjust(2, '0')
         old_path = "contents/chapter#{chapter_num}/index.html"
         new_path = "/contents/en/chapter#{chapter_num}/"

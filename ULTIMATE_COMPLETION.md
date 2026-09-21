@@ -408,7 +408,8 @@ This Deep Learning course represents:
 **Ch 17-19**: Applications (3 chapters, 1 deep) ✅  
 **Ch 20-21**: Reinforcement Learning (2 chapters) ✅  
 **Ch 22-25**: Specialized Topics (4 chapters) ✅  
-**Ch 26**: References ✅  
+**Ch 26**: Large Language Models hub ✅  
+**Ch 27 / Reference**: References and resources ✅  
 
 **Coverage**: 100% of major DL topics  
 **Depth**: Graduate-level throughout  

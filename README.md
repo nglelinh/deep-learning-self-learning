@@ -8,7 +8,7 @@ This course provides a complete learning path from neural network basics to cutt
 
 ### 🌟 Key Features
 
-- **25+ Comprehensive Chapters** covering all aspects of deep learning
+- **26 Comprehensive Chapters** covering all aspects of deep learning, including a dedicated LLM hub
 - **Hands-on Python/NumPy implementations** for educational clarity
 - **Progressive learning path** from basics to advanced topics
 - **Real-world applications** in computer vision, NLP, and beyond
@@ -60,6 +60,9 @@ This course provides a complete learning path from neural network basics to cutt
 - **Chapter 24**: Interpretability and Explainability
 - **Chapter 25**: Advanced Topics and Future Directions
 
+### Part IX: Language Models at Scale (Chapter 26)
+- **Chapter 26**: Large Language Models (pretraining, prompting, alignment sketch, serving, and LLM-era distillation)
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -96,16 +99,18 @@ Follow chapters in order for a complete learning experience:
 4. Learn training techniques (Chapters 09-10)
 5. Explore generative models (Chapters 11-14)
 6. Study applications (Chapters 17-19)
+7. Treat LLMs as a dedicated track (Chapter 26) after Transformers and, optionally, after Ch.23 / Ch.20–21
 
 ### Topic-Specific Learning
 Jump directly to topics of interest:
 - Computer Vision → Chapters 04, 17
-- Natural Language Processing → Chapters 05-08, 18
+- Natural Language Processing → Chapters 05-08, 18, 26
+- Large Language Models → Chapter 26 (architecture recap in 07–08; compression / KD recap in 23)
 - Generative AI → Chapters 11-14
 - Reinforcement Learning → Chapters 20-21
 
 ### Interview practice (optional)
-After the matching theory lesson, use the bilingual **01-98 Deep Learning Interviews practice track** and the chapter `*-98` companions. Download the free PDF from [arXiv:2201.00650](https://arxiv.org/abs/2201.00650); this repository does not copy the book’s question bank.
+After the matching theory lesson, use the bilingual **01-98 Deep Learning Interviews practice track** and the chapter `*-98` companions (LLM-era original prompts live in **26-06**). Download the free PDF from [arXiv:2201.00650](https://arxiv.org/abs/2201.00650); this repository does not copy the book’s question bank.
 
 ### Reference Material
 Use as a reference for:
@@ -165,6 +170,7 @@ class NeuralNetwork:
 
 ### Modern Topics
 - Transformers and attention mechanisms
+- Large language models (pretraining, prompting, alignment, distillation)
 - Self-supervised learning
 - Graph neural networks
 - Model interpretability
