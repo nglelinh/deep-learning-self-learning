@@ -7,7 +7,7 @@ owner: Deep Learning Course
 lang: en
 ---
 
-A comprehensive introduction to deep learning, covering neural network fundamentals, modern architectures (CNNs, RNNs, Transformers), training techniques, generative models, practical applications in computer vision and natural language processing, and a dedicated **Chapter 26** hub on large language models (pretraining, prompting, alignment, serving, and distillation).
+A comprehensive introduction to deep learning, covering neural network fundamentals, modern architectures (CNNs, RNNs, Transformers), training techniques, generative models, practical applications in computer vision and natural language processing, and a dedicated **Chapter 26** hub on large language models (pretraining math, prompting, alignment, serving, distillation, and modern-decoder accounting).
 
 # Course Objectives
 

@@ -12,6 +12,24 @@
     }
   </style>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("pre code.language-mermaid").forEach(function (code) {
+        var pre = code.parentElement;
+        var div = document.createElement("div");
+        div.className = "mermaid";
+        div.textContent = code.textContent;
+        pre.replaceWith(div);
+      });
+      if (window.mermaid) {
+        mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "strict" });
+      }
+    });
+  </script>
+  <style>
+    .mermaid { margin: 1.25rem 0; overflow-x: auto; }
+  </style>
 
   <title>
     {% if page.title == "Home" %}

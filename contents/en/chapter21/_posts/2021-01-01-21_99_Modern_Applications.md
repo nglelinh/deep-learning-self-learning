@@ -59,4 +59,4 @@ No sampling loop at train time. DPO and cousins (IPO, KTO, ORPO) became the defa
 
 ## 5. How this complements the core notes
 
-Implement DQN/PPO ideas from the chapter first. This lesson only adds **preference optimization for LMs** (RLHF/DPO/GRPO) — not a new Bellman backup.
+Implement DQN/PPO ideas from the chapter first. This lesson only adds **preference optimization for LMs** (RLHF/DPO/GRPO) — not a new Bellman backup. The Chapter 26 map (SFT → reward / PPO → DPO, with the same DPO display) is **26-03**.

@@ -58,4 +58,4 @@ Mistral-style **sliding-window** attention and various linear-attention papers t
 
 ## 5. How this complements the core notes
 
-Write the NumPy attention and multi-head pitfalls first. This lesson only adds **kernels, KV-cache, and GQA** — the products you will meet in every LLM codebase.
+Write the NumPy attention and multi-head pitfalls first. This lesson only adds **kernels, KV-cache, and GQA** — the products you will meet in every LLM codebase. Chapter **26-07** retells FlashAttention as tiling + online softmax (no CUDA) and puts GQA next to the decoder-block diagram; **26-04** is the serving-time KV-cache.

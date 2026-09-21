@@ -58,4 +58,4 @@ Attention **cửa sổ trượt** kiểu Mistral và các bài linear-attention 
 
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
-Viết attention NumPy và bài pitfalls multi-head trước. Bài này chỉ thêm **kernel, KV-cache, và GQA** — thứ bạn gặp trong mọi codebase LLM.
+Viết attention NumPy và bài pitfalls multi-head trước. Bài này chỉ thêm **kernel, KV-cache, và GQA** — thứ bạn gặp trong mọi codebase LLM. Chương **26-07** kể lại FlashAttention như lát + softmax trực tuyến (không CUDA) và đặt GQA cạnh sơ đồ khối decoder; **26-04** là KV-cache lúc phục vụ.

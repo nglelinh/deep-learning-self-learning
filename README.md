@@ -61,7 +61,7 @@ This course provides a complete learning path from neural network basics to cutt
 - **Chapter 25**: Advanced Topics and Future Directions
 
 ### Part IX: Language Models at Scale (Chapter 26)
-- **Chapter 26**: Large Language Models (pretraining, prompting, alignment sketch, serving, and LLM-era distillation)
+- **Chapter 26**: Large Language Models (pretraining math, prompting, alignment objectives, serving, distillation, and modern-decoder accounting in **26-07**)
 
 ## 🚀 Getting Started
 
@@ -105,7 +105,7 @@ Follow chapters in order for a complete learning experience:
 Jump directly to topics of interest:
 - Computer Vision → Chapters 04, 17
 - Natural Language Processing → Chapters 05-08, 18, 26
-- Large Language Models → Chapter 26 (architecture recap in 07–08; compression / KD recap in 23)
+- Large Language Models → Chapter 26 (architecture recap in 07–08; compression / KD recap in 23; modern-block accounting in 26-07)
 - Generative AI → Chapters 11-14
 - Reinforcement Learning → Chapters 20-21
 

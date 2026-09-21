@@ -65,4 +65,4 @@ ViT ([Dosovitskiy et al., 2021](https://arxiv.org/abs/2010.11929)) plus a langua
 
 ## 5. How this complements the core notes
 
-Complete the encoder–decoder derivation and the toy PyTorch Transformer first. This lesson only names the **LLM product stack** built on that derivation.
+Complete the encoder–decoder derivation and the toy PyTorch Transformer first. This lesson only names the **LLM product stack** built on that derivation. Formulas and Mermaid for RMSNorm → attention + RoPE → SwiGLU, plus parameter / FLOP accounting, live in **26-07**.

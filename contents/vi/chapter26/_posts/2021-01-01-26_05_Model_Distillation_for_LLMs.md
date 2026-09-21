@@ -148,7 +148,7 @@ Nếu giáo viên cũng viết lập luận, lưu nó *trong* `completion` (ho�
 
 - Hinton, G., Vinyals, O., và Dean, J. (2015). [Distilling the Knowledge in a Neural Network](https://arxiv.org/abs/1503.02531). Nguồn lịch sử cho mục tiêu mềm, nhiệt độ, và tri thức tối.
 - Machine Learning Mastery — [A Gentle Introduction to Model Distillation](https://machinelearningmastery.com/a-gentle-introduction-to-model-distillation/) (Chugani, 2026). Khung hướng dẫn thêm về họ cổ điển so với thời LLM; **trích như đọc thêm, không sao chép ở đây**.
-- Khóa này: **23-01 Nén mô hình** (cắt tỉa, lượng tử, KD cổ điển) và **23-99** (GPTQ / AWQ / speculative decoding — bổ sung, không thay học sinh).
+- Khóa này: **23-01 Nén mô hình** (cắt tỉa, lượng tử, KD cổ điển) và **23-99** (GPTQ / AWQ / speculative decoding — bổ sung, không thay học sinh). Nháp-và-xác-nhận lúc phục vụ cũng ở **26-04**; sổ sách FLOP / bộ nhớ trước khi chọn cỡ học sinh ở **26-07**.
 - Con trỏ kỹ thuật tùy chọn (không bắt buộc): DistilBERT ([Sanh et al., 2019](https://arxiv.org/abs/1910.01108)); chưng cất kiểu lập luận như Distilling Step-by-Step ([Hsieh et al., 2023](https://arxiv.org/abs/2305.02301)); MiniLLM ([Gu et al., 2024](https://arxiv.org/abs/2306.08543)).
 
 ## Điểm chính cần nhớ

@@ -59,4 +59,4 @@ Không vòng lấy mẫu lúc train. DPO và họ hàng (IPO, KTO, ORPO) thành 
 
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
-Cài ý tưởng DQN/PPO của chương trước. Bài này chỉ thêm **tối ưu preference cho LM** (RLHF/DPO/GRPO) — không phải backup Bellman mới.
+Cài ý tưởng DQN/PPO của chương trước. Bài này chỉ thêm **tối ưu preference cho LM** (RLHF/DPO/GRPO) — không phải backup Bellman mới. Bản đồ Chương 26 (SFT → thưởng / PPO → DPO, cùng công thức DPO) là **26-03**.

@@ -55,4 +55,4 @@ and place it *before* the residual branch (pre-norm). That is an activation-scal
 
 ## 5. How this complements the core notes
 
-Use the perceptron and activation lessons to understand $$z$$ and $$\sigma$$. This note only documents the **packaging** (SwiGLU, RMSNorm, residuals) you will see when you open a 2025 LLM or `timm` model card.
+Use the perceptron and activation lessons to understand $$z$$ and $$\sigma$$. This note only documents the **packaging** (SwiGLU, RMSNorm, residuals) you will see when you open a 2025 LLM or `timm` model card. Chapter **26-07** puts that packaging on a full decoder stack (RoPE, GQA, accounting).
