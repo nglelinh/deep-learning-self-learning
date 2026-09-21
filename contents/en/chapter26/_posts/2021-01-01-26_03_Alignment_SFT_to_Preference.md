@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 26-03 Alignment: SFT to Preference Optimization
+title: "26-03 Alignment: SFT to Preference Optimization"
 chapter: '26'
 order: 4
 owner: Deep Learning Course

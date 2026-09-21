@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 26-03 Căn chỉnh: SFT đến tối ưu sở thích
+title: "26-03 Căn chỉnh: SFT đến tối ưu sở thích"
 chapter: '26'
 order: 4
 owner: Deep Learning Course
