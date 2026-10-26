@@ -317,3 +317,9 @@ Batch Normalization revolutionized deep learning by making networks much easier 
 
 **Next**: We'll explore L1/L2 regularization, early stopping, and data augmentation to complete our regularization toolkit!
 
+
+## Video tham khảo
+
+- **xem trước** [Why Does Batch Norm Work? (C2W3L06)](https://www.youtube.com/watch?v=nUUqwaxLnWs) — DeepLearningAI, English. So placement debates (before or after the activation) have a mechanism under them.
+- [Building makemore Part 3: Activations & Gradients, BatchNorm](https://www.youtube.com/watch?v=P6sfmUTpUmc) — Andrej Karpathy, English. Where the norm actually sits in a modern block, and what breaks if the batch is tiny.
+- [Lecture 7 | Training Neural Networks II](https://www.youtube.com/watch?v=_JB0AO7QxSA) — Stanford University School of Engineering, English. Layer-norm style alternatives show up in this second training lecture's modern-architecture discussion.

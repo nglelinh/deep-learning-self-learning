@@ -63,3 +63,9 @@ You cannot increase $$\lambda$$ because the train loss is already high. Give one
 ## Attribution
 
 Kashani, S., and Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Download the PDF from arXiv for the full solved Q&A. This page is original course practice, not a reprint.
+
+## Video tham khảo
+
+- **xem trước** [Machine Learning Fundamentals: Bias and Variance](https://www.youtube.com/watch?v=EuBBz3bI-aA) — StatQuest with Josh Starmer, English. The overfitting prompts.
+- [Regularization Part 1: Ridge (L2) Regression](https://www.youtube.com/watch?v=Q81RR3yKn30) — StatQuest with Josh Starmer, English. L2 weight decay is the classical regularizer those prompts still ask for.
+- [Dropout Regularization (C2W1L06)](https://www.youtube.com/watch?v=D8PJAL-MZv8) — DeepLearningAI, English. Dropout is the neural-net regularizer to set beside L2.

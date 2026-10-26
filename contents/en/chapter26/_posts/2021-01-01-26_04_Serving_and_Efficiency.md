@@ -123,3 +123,9 @@ Also do not distill a teacher you are not licensed or contracted to train from. 
 - Quantization and batching are the default efficiency tools (Chapter 23 / 23-99).
 - Distillation is the tool for a *new, smaller* network that *imitates* a teacher.
 - Decide “cache / quantize / retrieve” before “train a student.”
+
+## Video tham khảo
+
+- **xem trước** [Faster LLMs: Accelerate Inference with Speculative Decoding](https://www.youtube.com/watch?v=VkWlLSTdHs8) — IBM Technology, English. Speculative decoding is the draft-and-verify speedup this lesson explains.
+- [How LLMs survive in low precision | Quantization Fundamentals](https://www.youtube.com/watch?v=qoQJq5UwV1c) — Julia Turc, English. Quantization, the lesson's first cheap serving win.
+- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, English. Temperature sampling is implemented in this build; the lesson contrasts it with top-k and top-p. The video is long; the sampling section is the relevant part.

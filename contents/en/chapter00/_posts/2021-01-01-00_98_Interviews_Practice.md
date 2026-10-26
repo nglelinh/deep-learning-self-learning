@@ -67,3 +67,9 @@ For $$f(\mathbf{x}) = \tfrac12\mathbf{x}^\top A\mathbf{x}$$ with $$A$$ symmetric
 ## Attribution
 
 Kashani, S., and Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Download the PDF from arXiv for the full solved Q&A. This page is original course practice, not a reprint.
+
+## Video tham khảo
+
+- **xem trước** [MaDL - Information and Entropy](https://www.youtube.com/watch?v=pXh53lqPkHs) — Tübingen Machine Learning, English. Entropy is the information-theory prompt this practice set asks you to compute.
+- [MaDL - Kullback-Leibler Divergence](https://www.youtube.com/watch?v=vPvnpC0PNVQ) — Tübingen Machine Learning, English. KL divergence is the second information-theory object in these prompts.
+- [The paradox of the derivative | Chapter 2, Essence of calculus](https://www.youtube.com/watch?v=9vKqVkMQHKk) — 3Blue1Brown, English. The calculus prompts are about the derivative; this is the picture to redraw before answering.

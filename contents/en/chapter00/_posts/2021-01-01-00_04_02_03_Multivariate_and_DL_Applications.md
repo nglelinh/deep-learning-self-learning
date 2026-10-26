@@ -306,3 +306,9 @@ canvas {
     margin: 20px 0;
 }
 </style>
+
+## Video tham khảo
+
+- **xem trước** [Multivariate Normal (Gaussian) Distribution Explained](https://www.youtube.com/watch?v=UVvuwv-ne1I) — DataMListic, English. The multivariate Gaussian is the joint distribution this lesson builds.
+- [MaDL - Expectation, Variance and Covariance](https://www.youtube.com/watch?v=kmRm3XIND8M) — Tübingen Machine Learning, English. Covariance is the matrix inside that Gaussian, and the lesson's link to features that move together.
+- [MaDL - Common Probability Distributions](https://www.youtube.com/watch?v=NbzVwvE_syQ) — Tübingen Machine Learning, English. Shows where the multivariate families sit relative to the one-dimensional distributions of the previous lesson.

@@ -516,3 +516,9 @@ $$\ell(\beta_0, \beta_1) = \sum_{i=1}^{n} \left[ y_i \log(p_i) + (1-y_i) \log(1-
 
 
 
+
+## Video tham khảo
+
+- **xem trước** [In Statistics, Probability is not Likelihood.](https://www.youtube.com/watch?v=pYxNSUDSFH4) — StatQuest with Josh Starmer, tiếng Anh. Likelihood không phải xác suất của tham số, đúng cảnh báo bài mở đầu.
+- [Maximum Likelihood, clearly explained!!!](https://www.youtube.com/watch?v=XepXtl9YKwc) — StatQuest with Josh Starmer, tiếng Anh. Hợp lý cực đại là argmax của hàm đó, cùng nghĩa với ví dụ tung đồng xu trong ghi chú.
+- [Maximum Likelihood for the Binomial Distribution, Clearly Explained!!!](https://www.youtube.com/watch?v=4KKV9yZCoM4) — StatQuest with Josh Starmer, tiếng Anh. Tính likelihood nhị thức từng bước, đúng phép tính năm lần tung mà bài làm tay.

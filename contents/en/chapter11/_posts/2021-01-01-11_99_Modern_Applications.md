@@ -55,3 +55,9 @@ This is the 2023–2025 “cleaner ODE” story that many new image/video models
 ## 6. How this complements the core notes
 
 Learn MLE, implicit vs explicit density, and the toy GAN in this chapter first. Diffusion and flow matching are the **update to the family tree**, not a replacement for those definitions. Details of VAEs and GANs stay in Chapters 13–14.
+
+## Video tham khảo
+
+- **xem trước** [Flow-Matching vs Diffusion Models explained side by side](https://www.youtube.com/watch?v=firXjwZ_6KI) — AI Coffee Break with Letitia, English. Flow matching beside denoising diffusion is the 2022–2026 landscape this note draws.
+- [But how do AI images and videos actually work? | Guest video by Welch Labs](https://www.youtube.com/watch?v=iv-5mZ_9CPY) — 3Blue1Brown, English. How a diffusion model actually turns noise into an image, including classifier-free guidance.
+- [How does Stable Diffusion work? – Latent Diffusion Models EXPLAINED](https://www.youtube.com/watch?v=J87hffSMB60) — AI Coffee Break with Letitia, English. Latent diffusion, the practical form those ideas shipped in.

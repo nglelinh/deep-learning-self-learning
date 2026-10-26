@@ -168,3 +168,9 @@ Hiểu về vector và không gian vector là rất quan trọng cho tối ưu h
 6. **Tổ hợp Tuyến tính:** Vùng khả thi thường được định nghĩa như tổ hợp tuyến tính của vector (bao lồi, hình nón, v.v.).
 
 Khung không gian vector cung cấp nền tảng toán học để xây dựng và giải quyết các bài toán tối ưu hóa một cách có hệ thống.
+
+## Video tham khảo
+
+- **xem trước** [Vectors | Chapter 1, Essence of linear algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs) — 3Blue1Brown, tiếng Anh. Biết vector là gì, trước khi xét span, cơ sở và chiều.
+- [Linear combinations, span, and basis vectors | Chapter 2, Essence of linear algebra](https://www.youtube.com/watch?v=k7RM-ot2NWY) — 3Blue1Brown, tiếng Anh. Tổ hợp tuyến tính, span và cơ sở là phần độc lập tuyến tính và chiều của bài.
+- [Dot products and duality | Chapter 9, Essence of linear algebra](https://www.youtube.com/watch?v=LyGKycYT2v0) — 3Blue1Brown, tiếng Anh. Tích vô hướng ở đây là tích trong của bài; chuẩn Euclid là độ dài do tích đó cảm sinh.

@@ -55,3 +55,9 @@ Meta’s [LLaMA](https://arxiv.org/abs/2302.13971) / [Llama 2](https://arxiv.org
 ## 5. How this complements the core notes
 
 The “What is deep learning” and MNIST lessons still define the field. This note only updates *where* a newcomer starts in 2026: pretrained weights, hubs, and scaling-law budgeting — not a new definition of a neural network.
+
+## Video tham khảo
+
+- **xem trước** [Large Language Models explained briefly](https://www.youtube.com/watch?v=LPZh9BOjkQs) — 3Blue1Brown, English. A short account of pretraining, transformers, and RLHF, which is the 2022–2026 default this note describes.
+- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, English. The longer map of the same workflow: data, training, and what a deployed model is.
+- [MIT 6.S191 (2024): Language Models and New Frontiers](https://www.youtube.com/watch?v=N1fbskTpwZ0) — Alexander Amini, English. MIT's 2024 frontier lecture is the 'what shipped recently' companion to the citations in this note.

@@ -548,3 +548,9 @@ Một số hình minh họa trong bài được trích từ các video sau (Mach
 - [LLM Tập 4: Attention Mechanism (Q–K–V, quan hệ kết nối toàn phần)](https://www.facebook.com/reel/1467113421464723)
 - [Transformer là gì? Self-Attention siêu dễ hiểu (Phần 1)](https://www.facebook.com/reel/930207546288223)
 - [Công thức Attention: tự tay tính Q, K, V](https://www.facebook.com/reel/1806844676942638)
+
+## Video tham khảo
+
+- **xem trước** [Attention for Neural Networks, Clearly Explained!!!](https://www.youtube.com/watch?v=PSs6nxngL6k) — StatQuest with Josh Starmer, tiếng Anh. Attention như một đường thêm từ mỗi đầu vào tới mỗi bước, trước mọi khối transformer.
+- [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, tiếng Anh. Số học Q, K, V mà bài sau đó viết đầy đủ.
+- [Cách cơ chế Attention trong kiến trúc Transformer](https://www.youtube.com/watch?v=L_2bT6hnGSQ) — namkuner, tiếng Việt. Cơ chế attention trong transformer, bằng tiếng Việt.

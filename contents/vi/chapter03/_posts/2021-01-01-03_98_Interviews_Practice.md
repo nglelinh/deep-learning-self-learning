@@ -69,3 +69,9 @@ Nêu một triệu chứng huấn luyện mà Hessian *đường chéo* (hoặc 
 ## Ghi công
 
 Kashani, S., và Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Tải PDF từ arXiv để xem toàn bộ Q&A đã giải. Trang này là bài luyện gốc của khóa, không phải bản in lại.
+
+## Video tham khảo
+
+- **xem trước** [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0) — Andrej Karpathy, tiếng Anh. Các câu về autodiff.
+- [Backpropagation calculus | Deep Learning Chapter 4](https://www.youtube.com/watch?v=tIeHLnjs5U8) — 3Blue1Brown, tiếng Anh. Quy tắc dây chuyền vô hướng mà các câu đó yêu cầu viết.
+- [StatQuest: Logistic Regression](https://www.youtube.com/watch?v=yIYKR4sgzI8) — StatQuest with Josh Starmer, tiếng Anh. Hồi quy logistic là họ câu thứ ba trong bài luyện này.

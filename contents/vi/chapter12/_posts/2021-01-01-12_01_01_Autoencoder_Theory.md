@@ -91,3 +91,9 @@ $$\mathbf{z}_{1.0} = \mathbf{z}_8 \to$$ giải mã thành "8"
 Nếu nội suy mượt, ta thấy biến hình dần. Nếu có gián đoạn, ta có thể nhận đầu ra phi thực tế tại các điểm trung gian. Chất lượng nội suy này là chỉ báo chẩn đoán liệu không gian ẩn có cấu trúc tốt hay không.
 
 Autoencoder khử nhiễu thêm một bước ngoặt thú vị. Giả sử ta làm hỏng một "7" bằng cách ngẫu nhiên đặt zero 20% pixel. Ảnh hỏng mơ hồ — có thể là "7" hỏng hoặc có thể là "1". Autoencoder khử nhiễu phải dùng ngữ cảnh (pixel chưa hỏng) để suy ra chữ số gốc khả dĩ nhất. Điều này đòi hỏi hiểu cấu trúc chữ số, không chỉ ghi nhớ mẫu pixel. Encoder học trích xuất đặc trưng robust dù nhiễu, và decoder học sinh chữ số hoàn chỉnh từ bằng chứng một phần. Biểu diễn học được thường hữu ích hơn cho tác vụ downstream so với autoencoder vanilla vì chúng bị buộc nắm cấu trúc ngữ nghĩa thay vì thống kê pixel mức thấp.
+
+## Video tham khảo
+
+- **xem trước** [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, tiếng Anh. Dựng lại là tín hiệu huấn luyện, không cần nhãn.
+- [Lecture 13 | Generative Models](https://www.youtube.com/watch?v=5WoItGTWV54) — Stanford University School of Engineering, tiếng Anh. Phân biệt undercomplete và overcomplete mà phần lý thuyết cần.
+- [MIT 6.S191 (2024): Deep Generative Modeling](https://www.youtube.com/watch?v=Dmm4UG-6jxA) — Alexander Amini, tiếng Anh. Cách nhìn nút thắt thông tin của cùng mục tiêu.

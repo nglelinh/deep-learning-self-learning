@@ -301,3 +301,9 @@ canvas {
     margin: 20px 0;
 }
 </style>
+
+## Video tham khảo
+
+- **xem trước** [MaDL - Random Variables and Probability Distributions](https://www.youtube.com/watch?v=bvBukLjHZh8) — Tübingen Machine Learning, tiếng Anh. Biến ngẫu nhiên là hàm trên không gian mẫu, đúng cách bài nhìn dữ liệu và dự đoán.
+- [Random Variables and Probability Distributions](https://www.youtube.com/watch?v=lHCpYeFvTs0) — Dr Nic's Maths and Stats, tiếng Anh. Một lượt cụ thể ngắn về biến ngẫu nhiên rời rạc và liên tục trước bảng phân phối.
+- [MaDL - Expectation, Variance and Covariance](https://www.youtube.com/watch?v=kmRm3XIND8M) — Tübingen Machine Learning, tiếng Anh. Kỳ vọng và phương sai là các đại lượng tóm tắt mà bài dùng khi đầu ra mạng là ngẫu nhiên.

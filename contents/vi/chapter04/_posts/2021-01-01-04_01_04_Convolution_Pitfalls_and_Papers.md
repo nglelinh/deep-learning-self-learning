@@ -226,3 +226,9 @@ Tầng tích chập là nền tảng của thị giác máy tính trong học s�
 
 
 **Tiếp theo**: Tầng gộp và các kiến trúc CNN hoàn chỉnh (LeNet, AlexNet, VGG, ResNet)!
+
+## Video tham khảo
+
+- **xem trước** [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, tiếng Anh. Các cạm bẫy xuất hiện ngay khi kênh và stride tương tác.
+- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, tiếng Anh. Một phát biểu năm 2024 về cạm bẫy nào trong số đó vẫn còn đáng kể.
+- [C4W2L04 Why ResNets Work](https://www.youtube.com/watch?v=RYth6EbBUqM) — DeepLearningAI, tiếng Anh. Vì sao một chồng tích chập thuần bị xuống cấp, đúng cạm bẫy mức bài báo mà phần ResNet nói tới.

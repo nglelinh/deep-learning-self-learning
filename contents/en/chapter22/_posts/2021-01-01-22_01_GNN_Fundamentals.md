@@ -157,3 +157,9 @@ Oversmoothing occurs with many GNN layers—node representations become indistin
 
 Graph Neural Networks process graph-structured data through message passing, iteratively updating node representations by aggregating information from neighbors through learned, permutation-invariant functions. GCNs use normalized adjacency matrices for spectral graph convolution. GraphSAGE samples neighborhoods for scalability. Graph attention networks learn neighbor importance through attention. Applications span social networks, molecules, knowledge graphs, and recommendation systems. GNNs enable deep learning on irregular, relational data where CNNs and RNNs don't apply, opening graph-structured domains to modern AI.
 
+
+## Video tham khảo
+
+- **xem trước** [Graph Neural Networks Explained: A Clear Guide to GNN Basics & Models](https://www.youtube.com/watch?v=eGoszzMkGfU) — IBM Technology, English. Nodes, edges, and a permutation-invariant update.
+- [Message Passing: How Graph Neural Networks Actually Work](https://www.youtube.com/watch?v=1DmNdMUbDkg) — The Synthetic Mind, English. The sum-over-neighbors step the lesson's formula writes.
+- [Linear transformations and matrices | Chapter 3, Essence of linear algebra](https://www.youtube.com/watch?v=kYB8IZa5AuE) — 3Blue1Brown, English. The linear map applied after that sum is an ordinary matrix, which is easy to forget.

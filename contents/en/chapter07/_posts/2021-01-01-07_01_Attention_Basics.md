@@ -551,3 +551,9 @@ Some figures in this lesson are screenshots from the following videos (Machine L
 - [LLM Ep.4: Attention Mechanism (Q–K–V, fully connected relations)](https://www.facebook.com/reel/1467113421464723)
 - [What is a Transformer? Self-Attention for beginners (Part 1)](https://www.facebook.com/reel/930207546288223)
 - [Attention formula: hand-compute Q, K, V](https://www.facebook.com/reel/1806844676942638)
+
+## Video tham khảo
+
+- **xem trước** [Attention for Neural Networks, Clearly Explained!!!](https://www.youtube.com/watch?v=PSs6nxngL6k) — StatQuest with Josh Starmer, English. Attention as an extra path from each input to each step, before any transformer block.
+- [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, English. The Q, K, V arithmetic the lesson then writes in full.
+- [Sequence-to-Sequence (seq2seq) Encoder-Decoder Neural Networks, Clearly Explained!!!](https://www.youtube.com/watch?v=L8HKweZIOmg) — StatQuest with Josh Starmer, English. The encoder-decoder the original attention path was bolted onto.

@@ -63,3 +63,9 @@ Một MLP ánh xạ $$784\to 256\to 256\to 10$$ có bias. Bao nhiêu vô hướn
 ## Ghi công
 
 Kashani, S., và Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Tải PDF từ arXiv để xem toàn bộ Q&A đã giải. Trang này là bài luyện gốc của khóa, không phải bản in lại.
+
+## Video tham khảo
+
+- **xem trước** [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Trước các câu về neuron và hàm kích hoạt.
+- [Neural Networks Pt. 3: ReLU In Action!!!](https://www.youtube.com/watch?v=68BZ5f7P94E) — StatQuest with Josh Starmer, tiếng Anh. Điểm gãy của ReLU là câu hay gặp; video tính nó.
+- [Why Non-linear Activation Functions (C1W3L07)](https://www.youtube.com/watch?v=NkOv_k7r6no) — DeepLearningAI, tiếng Anh. Vì sao hàm kích hoạt không được tuyến tính là câu chuẩn còn lại.

@@ -112,3 +112,9 @@ Deep networks can learn to approximate:
 - Physical simulations
 - Complex decision boundaries
 
+
+## Video tham khảo
+
+- **xem trước** [Machine Learning vs Deep Learning](https://www.youtube.com/watch?v=q6kJ71tEYqM) — IBM Technology, English. The boundary between feature engineering and learned representations.
+- [The Essential Main Ideas of Neural Networks](https://www.youtube.com/watch?v=CqOfi41LfDw) — StatQuest with Josh Starmer, English. Shows a dataset a straight line cannot fit and a small network can, which is the limitation the lesson names.
+- [MIT Introduction to Deep Learning (2024) | 6.S191](https://www.youtube.com/watch?v=ErnWZxJovaM) — Alexander Amini, English. Puts that contrast in a full training story: data, compute, and depth together.

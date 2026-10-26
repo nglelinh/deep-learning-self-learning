@@ -59,3 +59,9 @@ Mistral-style **sliding-window** attention and various linear-attention papers t
 ## 5. How this complements the core notes
 
 Write the NumPy attention and multi-head pitfalls first. This lesson only adds **kernels, KV-cache, and GQA** — the products you will meet in every LLM codebase. Chapter **26-07** retells FlashAttention as tiling + online softmax (no CUDA) and puts GQA next to the decoder-block diagram; **26-04** is the serving-time KV-cache.
+
+## Video tham khảo
+
+- **xem trước** [How FlashAttention Accelerates Generative AI Revolution](https://www.youtube.com/watch?v=gBMO1JZav44) — Jia-Bin Huang, English. FlashAttention computes the same attention with less memory traffic, which is this note's claim.
+- [FlashAttention - Tri Dao | Stanford MLSys #67](https://www.youtube.com/watch?v=gMOAud7hZg4) — Stanford MLSys Seminars, English. Tri Dao's own seminar on that algorithm. It is long and canonical; use it after the short version.
+- [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, English. The exact attention formula FlashAttention is not approximating away.

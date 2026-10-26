@@ -53,3 +53,9 @@ Tách $$\beta$$-VAE kém thời thượng hơn 2018, nhưng nút thắt **biến
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Suy ra ELBO và mẹo tái tham số trước. Bài này chỉ cho thấy **$$z$$ được tiêu thụ ở đâu** trong sản phẩm 2022–2026 — không phải cận dưới chứng cứ mới.
+
+## Video tham khảo
+
+- **xem trước** [How does Stable Diffusion work? – Latent Diffusion Models EXPLAINED](https://www.youtube.com/watch?v=J87hffSMB60) — AI Coffee Break with Letitia, tiếng Anh. VAE của Stable Diffusion là hậu duệ đã triển khai mà ghi chú mô tả.
+- [Variational Autoencoders](https://www.youtube.com/watch?v=9zKuYvjFFS8) — Arxiv Insights, tiếng Anh. ELBO mà VAE đó vẫn huấn luyện, kể cả khi nó chỉ là bộ nén đứng trước khuếch tán.
+- [But how do AI images and videos actually work? | Guest video by Welch Labs](https://www.youtube.com/watch?v=iv-5mZ_9CPY) — 3Blue1Brown, tiếng Anh. Mô hình khuếch tán làm gì với latent của VAE.

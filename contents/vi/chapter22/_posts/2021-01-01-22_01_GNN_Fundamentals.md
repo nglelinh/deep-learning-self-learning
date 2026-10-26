@@ -152,3 +152,9 @@ Làm mịn quá mức (*oversmoothing*) xảy ra với nhiều tầng GNN — bi
 ## Điểm Chính Cần Nhớ
 
 Mạng neuron đồ thị xử lý dữ liệu cấu trúc đồ thị qua truyền thông điệp, cập nhật lặp biểu diễn nút bằng cách gộp thông tin từ láng giềng qua các hàm học được, bất biến hoán vị. GCN dùng ma trận kề chuẩn hóa cho tích chập đồ thị phổ. GraphSAGE lấy mẫu lân cận để mở rộng quy mô. Mạng attention đồ thị học tầm quan trọng láng giềng qua attention. Ứng dụng trải mạng xã hội, phân tử, đồ thị tri thức và hệ thống gợi ý. GNN cho phép học sâu trên dữ liệu quan hệ, không đều nơi CNN và RNN không áp dụng được, mở các miền cấu trúc đồ thị cho AI hiện đại.
+
+## Video tham khảo
+
+- **xem trước** [Graph Neural Networks Explained: A Clear Guide to GNN Basics & Models](https://www.youtube.com/watch?v=eGoszzMkGfU) — IBM Technology, tiếng Anh. Nút, cạnh và một phép cập nhật bất biến hoán vị.
+- [Message Passing: How Graph Neural Networks Actually Work](https://www.youtube.com/watch?v=1DmNdMUbDkg) — The Synthetic Mind, tiếng Anh. Bước tổng trên hàng xóm mà công thức bài viết.
+- [Linear transformations and matrices | Chapter 3, Essence of linear algebra](https://www.youtube.com/watch?v=kYB8IZa5AuE) — 3Blue1Brown, tiếng Anh. Ánh xạ tuyến tính áp sau tổng đó là một ma trận thường, điều dễ quên.

@@ -15,3 +15,9 @@ Tối ưu hóa là trái tim của khoa học dữ liệu. Dù bạn đang huấ
 **Tùy chọn (2022–2026):** Sau các ghi chú toán cốt lõi, xem **00-99 Ứng dụng và cập nhật hiện đại** về compiler autodiff (JAX, `torch.compile`) và cách gradient, ma trận, hợp lý xuất hiện trong scientific ML cùng huấn luyện theo scaling law.
 
 **Tùy chọn (luyện phỏng vấn):** Sau ghi chú xác suất và giải tích, xem **00-98 Luyện phỏng vấn** cho câu gốc về entropy / KL và autodiff; ngân hàng đã giải đầy đủ là PDF miễn phí *Deep Learning Interviews* ([arXiv:2201.00650](https://arxiv.org/abs/2201.00650)).
+
+## Video tham khảo
+
+- **xem trước** [MaDL - Introduction](https://www.youtube.com/watch?v=gq0m_2Glz0g) — Tübingen Machine Learning, tiếng Anh. Đây là tour ngắn về đại số tuyến tính, giải tích và xác suất mà chương này giả định trước khi vào mạng.
+- [Vectors | Chapter 1, Essence of linear algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs) — 3Blue1Brown, tiếng Anh. Cách nhìn vector ở đây là cách các bài sau dùng cho trọng số, kích hoạt và điểm dữ liệu.
+- [L01.4 Probability Axioms](https://www.youtube.com/watch?v=pA83XtLeVig) — MIT OpenCourseWare, tiếng Anh. Ba tiên đề xác suất là quy tắc mà nửa xác suất của chương không rời khỏi.

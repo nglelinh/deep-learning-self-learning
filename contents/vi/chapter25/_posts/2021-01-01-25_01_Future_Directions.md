@@ -188,3 +188,9 @@ Tương lai của học sâu sẽ được định hình bởi đổi mới kỹ
 Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
 
 - [Thuật toán gợi ý (TikTok-style recommendation)](https://www.facebook.com/reel/1444915507374636)
+
+## Video tham khảo
+
+- **xem trước** [Chinchilla Explained: Compute-Optimal Massive Language Models](https://www.youtube.com/watch?v=PZXN7jm9IC0) — Edan Meyer, tiếng Anh. Scaling tối ưu theo tính toán là phần luật lũy thừa của bài.
+- [MIT 6.S191 (2024): Language Models and New Frontiers](https://www.youtube.com/watch?v=N1fbskTpwZ0) — Alexander Amini, tiếng Anh. Mô hình đa phương thức và các bài toán mở, phần còn lại trong khảo sát của bài.
+- [Large Language Models explained briefly](https://www.youtube.com/watch?v=LPZh9BOjkQs) — 3Blue1Brown, tiếng Anh. Một hình ngắn về các mô hình ngôn ngữ phần scaling đang nói tới.

@@ -54,3 +54,9 @@ VQ-VAE / VQGAN remain the discrete bottleneck for image and video tokenizers (Ma
 ## 5. How this complements the core notes
 
 Implement the NumPy/PyTorch autoencoder and the latent-space pitfalls first. This lesson only shows **where those latents go** in 2022–2026 systems (diffusion, codecs, MAE) — not a new reconstruction derivation.
+
+## Video tham khảo
+
+- **xem trước** [How does Stable Diffusion work? – Latent Diffusion Models EXPLAINED](https://www.youtube.com/watch?v=J87hffSMB60) — AI Coffee Break with Letitia, English. Stable Diffusion's latent is the autoencoder this note says diffusion now lives in.
+- [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, English. The plain autoencoder that latent was generalized from.
+- [But how do AI images and videos actually work? | Guest video by Welch Labs](https://www.youtube.com/watch?v=iv-5mZ_9CPY) — 3Blue1Brown, English. The diffusion process that runs in that latent space.

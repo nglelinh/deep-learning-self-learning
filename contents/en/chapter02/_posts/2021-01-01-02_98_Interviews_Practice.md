@@ -63,3 +63,9 @@ An MLP maps $$784\to 256\to 256\to 10$$ with biases. How many scalars are traine
 ## Attribution
 
 Kashani, S., and Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Download the PDF from arXiv for the full solved Q&A. This page is original course practice, not a reprint.
+
+## Video tham khảo
+
+- **xem trước** [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, English. Before the neuron and activation prompts.
+- [Neural Networks Pt. 3: ReLU In Action!!!](https://www.youtube.com/watch?v=68BZ5f7P94E) — StatQuest with Josh Starmer, English. ReLU's kink is a common prompt; the video computes it.
+- [Why Non-linear Activation Functions (C1W3L07)](https://www.youtube.com/watch?v=NkOv_k7r6no) — DeepLearningAI, English. Why the activation cannot be linear is the other standard prompt.

@@ -53,3 +53,9 @@ Robot và quảng cáo vẫn dựng simulator để MDP rẻ. Định nghĩa $$P
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Học trạng thái, lợi tức, và phương trình Bellman trước. Bài này chỉ đặt tên **các MDP đã giao hàng** (bandit, log offline, RLHF) — không phải định nghĩa mới của hàm giá trị.
+
+## Video tham khảo
+
+- **xem trước** [Reinforcement Learning with Human Feedback (RLHF), Clearly Explained!!!](https://www.youtube.com/watch?v=qPN_XZcJf_s) — StatQuest with Josh Starmer, tiếng Anh. RLHF là một MDP có phần thưởng từ sở thích người, đúng khẳng định của ghi chú.
+- [Reinforcement Learning from Human Feedback (RLHF) Explained](https://www.youtube.com/watch?v=T_X4XFwKX8k) — IBM Technology, tiếng Anh. Một cắt ngắn kiểu bài giảng doanh nghiệp của cùng vòng lặp.
+- [RL Course by David Silver - Lecture 2: Markov Decision Process](https://www.youtube.com/watch?v=lfHX2hHRMVQ) — Google DeepMind, tiếng Anh. Từ vựng MDP mà ghi chú nói bạn đã có.

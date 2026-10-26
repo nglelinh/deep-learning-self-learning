@@ -94,3 +94,9 @@ If interpolation is smooth, we see gradual morphing. If there are discontinuitie
 
 Denoising autoencoders add an interesting twist. Suppose we corrupt a "7" by randomly zeroing 20% of pixels. The corrupted image is ambiguous—it could be a damaged "7" or possibly a "1". The denoising autoencoder must use context (uncorrupted pixels) to infer the most likely original digit. This requires understanding digit structure, not just memorizing pixel patterns. The encoder learns to extract robust features despite corruption, and the decoder learns to generate complete digits from partial evidence. The learned representations are often more useful for downstream tasks than those from vanilla autoencoders because they're forced to capture semantic structure rather than low-level pixel statistics.
 
+
+## Video tham khảo
+
+- **xem trước** [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, English. Reconstruction as the training signal, with no labels.
+- [Lecture 13 | Generative Models](https://www.youtube.com/watch?v=5WoItGTWV54) — Stanford University School of Engineering, English. The undercomplete versus overcomplete distinction the theory section needs.
+- [MIT 6.S191 (2024): Deep Generative Modeling](https://www.youtube.com/watch?v=Dmm4UG-6jxA) — Alexander Amini, English. The information-bottleneck view of the same objective.

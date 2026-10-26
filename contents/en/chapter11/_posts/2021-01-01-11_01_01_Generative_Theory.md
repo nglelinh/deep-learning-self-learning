@@ -144,3 +144,9 @@ $$p_{\text{data}}(\mathbf{x}) = 0.5 \mathcal{N}(\mathbf{x}; [2, 2], I) + 0.5 \ma
 
 Each approach successfully generates from both modes if trained properly, but they differ in how they represent the distribution, training stability, and generation procedure. Understanding these differences through simple examples builds intuition for their behavior on complex data like images.
 
+
+## Video tham khảo
+
+- **xem trước** [MIT 6.S191 (2024): Deep Generative Modeling](https://www.youtube.com/watch?v=Dmm4UG-6jxA) — Alexander Amini, English. Fitting p_model to p_data is the theory lesson's goal.
+- [Lecture 13 | Generative Models](https://www.youtube.com/watch?v=5WoItGTWV54) — Stanford University School of Engineering, English. Autoregressive factorization, latent variables, and adversarial training as three answers to that goal.
+- [In Statistics, Probability is not Likelihood.](https://www.youtube.com/watch?v=pYxNSUDSFH4) — StatQuest with Josh Starmer, English. Likelihood is not a probability of the parameters; the lesson's objective depends on that distinction.

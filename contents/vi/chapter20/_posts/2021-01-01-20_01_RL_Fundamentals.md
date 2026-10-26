@@ -196,3 +196,9 @@ Học tăng cường huấn luyện tác tử qua tương tác với môi trư�
 Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
 
 - [Thuật toán gợi ý (TikTok-style recommendation)](https://www.facebook.com/reel/1444915507374636)
+
+## Video tham khảo
+
+- **xem trước** [RL Course by David Silver - Lecture 1: Introduction to Reinforcement Learning](https://www.youtube.com/watch?v=2pWv7GOvuf0) — Google DeepMind, tiếng Anh. Phần thưởng, chính sách và giá trị.
+- [RL Course by David Silver - Lecture 2: Markov Decision Process](https://www.youtube.com/watch?v=lfHX2hHRMVQ) — Google DeepMind, tiếng Anh. Trạng thái, hành động và phương trình Bellman là toán của bài.
+- [Reinforcement Learning with Neural Networks: Essential Concepts](https://www.youtube.com/watch?v=9hbQieQh7-o) — StatQuest with Josh Starmer, tiếng Anh. Cùng các đối tượng đó khi một mạng neuron được phép biểu diễn chúng, đúng phần bài xem trước.

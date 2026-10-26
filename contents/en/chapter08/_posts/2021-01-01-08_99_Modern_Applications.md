@@ -66,3 +66,9 @@ ViT ([Dosovitskiy et al., 2021](https://arxiv.org/abs/2010.11929)) plus a langua
 ## 5. How this complements the core notes
 
 Complete the encoder–decoder derivation and the toy PyTorch Transformer first. This lesson only names the **LLM product stack** built on that derivation. Formulas and Mermaid for RMSNorm → attention + RoPE → SwiGLU, plus parameter / FLOP accounting, live in **26-07**.
+
+## Video tham khảo
+
+- **xem trước** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, English. The baseline block this note says has since changed in detail but not in outline.
+- [How might LLMs store facts | Deep Learning Chapter 7](https://www.youtube.com/watch?v=9-Jl0dxWQs8) — 3Blue1Brown, English. The MLP-as-memory view of what a modern decoder block still computes.
+- [How FlashAttention Accelerates Generative AI Revolution](https://www.youtube.com/watch?v=gBMO1JZav44) — Jia-Bin Huang, English. The attention implementation change (FlashAttention) the note treats as a systems upgrade, not a new formula.

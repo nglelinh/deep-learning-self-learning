@@ -365,3 +365,9 @@ Used neural architecture search to find efficient baseline architectures, then p
 7. **Pre-trained models** (transfer learning) are the standard starting point for most vision tasks. ImageNet pre-training transfers remarkably well to other domains.
 
 **Next chapter**: Recurrent Neural Networks for sequential data!
+
+## Video tham khảo
+
+- **xem trước** [Residual Networks (ResNet) \[Physics Informed Machine Learning\]](https://www.youtube.com/watch?v=w1UsKanMatM) — Steve Brunton, English. A residual block is the VGG-style stack plus a skip, which is this lesson's turning point.
+- [C4W2L04 Why ResNets Work](https://www.youtube.com/watch?v=RYth6EbBUqM) — DeepLearningAI, English. Why that skip lets depth increase without the training collapse the lesson describes.
+- [Lecture 9 | CNN Architectures](https://www.youtube.com/watch?v=DAOcjicFr1Y) — Stanford University School of Engineering, English. The lineup from VGG to ResNet so the evolution section has a single timeline.

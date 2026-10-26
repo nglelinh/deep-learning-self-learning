@@ -435,3 +435,9 @@ Perceptron, dù đơn giản, giới thiệu các khái niệm nền tảng vẫ
 Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
 
 - [Trực giác mạng nơ-ron (Perceptron → Deep Learning)](https://www.facebook.com/reel/793200140509765)
+
+## Video tham khảo
+
+- **xem trước** [The Perceptron Explained](https://www.youtube.com/watch?v=i1G7PXZMnSc) — Alice Heiman, tiếng Anh. Perceptron là tổng có trọng số cộng ngưỡng, đúng mô hình mở đầu của bài.
+- [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Cho thấy điều gì đổi khi nhiều perceptron được xếp chồng và ngưỡng trở thành hàm kích hoạt trơn.
+- [Tất tần tật về Neural Network trong 12 phút](https://www.youtube.com/watch?v=sWPNm_GhhCA) — Việt Nguyễn AI, tiếng Việt. Cùng câu chuyện từ neuron tới mạng, bằng tiếng Việt.

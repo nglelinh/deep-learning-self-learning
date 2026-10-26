@@ -58,3 +58,9 @@ A common 2024–2026 pattern: Transformer (or Mamba) for the backbone, **LSTM de
 ## 5. How this complements the core notes
 
 Derive forget/input/output gates from the theory lesson first. This note only adds **xLSTM** and the remaining industrial LSTM/GRU use cases — it does not change the gate equations.
+
+## Video tham khảo
+
+- **xem trước** [XLSTM - Extended LSTMs with sLSTM and mLSTM (paper explained)](https://www.youtube.com/watch?v=0aWGTNS03PU) — AI Bites, English. xLSTM (exponential gates and a matrix memory) is the 2024 update this note is about.
+- [Long Short-Term Memory (LSTM), Clearly Explained](https://www.youtube.com/watch?v=YCzL96nL7j0) — StatQuest with Josh Starmer, English. The 1997 cell xLSTM is extending, so the new gates have a baseline.
+- [Illustrated Guide to LSTM's and GRU's: A step by step explanation](https://www.youtube.com/watch?v=8HyCNIVRbSU) — The AI Hacker, English. The gate diagrams you need in order to see what sLSTM and mLSTM change.

@@ -329,3 +329,9 @@ Adversarial examples don't necessarily indicate poor models. All models have adv
 
 Neural network interpretability enables understanding why models make predictions through attribution methods (which inputs mattered), visualization techniques (what features were learned), and explanation frameworks (how decisions decompose). Gradient-based saliency highlights input regions with high sensitivity to prediction changes. Grad-CAM visualizes spatial importance in CNNs through gradient-weighted feature maps. SHAP provides theoretically grounded attributions through Shapley values from game theory. Adversarial examples reveal model robustness by finding minimal perturbations changing predictions. Different interpretability methods provide complementary insights—saliency for input importance, activation visualization for learned features, SHAP for faithful attribution—often requiring multiple techniques for comprehensive understanding. Interpretability enables debugging spurious correlations, building trust in high-stakes applications, satisfying regulatory requirements, and generating scientific insights from learned patterns, making it increasingly important as deep learning deployment expands to critical domains requiring explainability beyond accuracy.
 
+
+## Video tham khảo
+
+- **xem trước** [Explainable AI explained! | #3 LIME](https://www.youtube.com/watch?v=d6j6bofhj2M) — DeepFindr, English. A method you can implement as a weighted local model.
+- [SHAP values for beginners | What they mean and their applications](https://www.youtube.com/watch?v=MQ6fFDwjuco) — A Data Odyssey, English. What the SHAP library is computing if you call it instead of writing the sum.
+- [Lecture 12 | Visualizing and Understanding](https://www.youtube.com/watch?v=6wcs6szJWMY) — Stanford University School of Engineering, English. The visualization pitfalls (interpretations that look meaningful and are not).

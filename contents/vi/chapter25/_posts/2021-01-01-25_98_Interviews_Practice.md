@@ -63,3 +63,9 @@ Bạn phải đặt prior lên tham số bias trong mô hình logistic đặc t�
 ## Ghi công
 
 Kashani, S., và Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Tải PDF từ arXiv để xem toàn bộ Q&A đã giải. Trang này là bài luyện gốc của khóa, không phải bản in lại.
+
+## Video tham khảo
+
+- **xem trước** [MaDL - Bayesian Decision Theory](https://www.youtube.com/watch?v=j4yxsEQqPMI) — Tübingen Machine Learning, tiếng Anh. Quyết định Bayes là chủ đề của bài luyện này.
+- [Bayes theorem, the geometry of changing beliefs](https://www.youtube.com/watch?v=HZGCoVF3YvM) — 3Blue1Brown, tiếng Anh. Định lý Bayes, đẳng thức các câu bắt đầu từ đó.
+- [MaDL - Kullback-Leibler Divergence](https://www.youtube.com/watch?v=vPvnpC0PNVQ) — Tübingen Machine Learning, tiếng Anh. Phân kỳ KL, phép so bất định các câu thường yêu cầu.

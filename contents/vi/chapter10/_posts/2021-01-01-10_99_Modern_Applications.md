@@ -62,3 +62,9 @@ Báo cáo cắt số bước kiểu GPT so với AdamW ở chất lượng tươ
 ## 6. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Học Adam và so sánh Rosenbrock trước. Bài này chỉ thêm phương pháp **sau-AdamW** dùng trong paper và speedrun 2023–2026 — không thay các cài đặt optimizer trong chương.
+
+## Video tham khảo
+
+- **xem trước** [Optimization for Deep Learning (Momentum, RMSprop, AdaGrad, Adam)](https://www.youtube.com/watch?v=NE88eqLngkg) — DeepBean, tiếng Anh. Lion, Sophia và Muon là các thành viên sau của họ momentum/Adam mà video này xếp hàng.
+- [Adam Optimization Algorithm (C2W2L08)](https://www.youtube.com/watch?v=JXQT_vxqwIs) — DeepLearningAI, tiếng Anh. Adam là phép cập nhật các phương pháp 2023–2024 được đo với.
+- [Lecture 7 | Training Neural Networks II](https://www.youtube.com/watch?v=_JB0AO7QxSA) — Stanford University School of Engineering, tiếng Anh. Ngữ cảnh bài huấn luyện về vì sao một bộ tối ưu mới là thay đổi nhỏ cạnh dữ liệu và lịch học.

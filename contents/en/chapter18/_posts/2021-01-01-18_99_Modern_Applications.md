@@ -55,3 +55,9 @@ Subword vocabularies decide cost and multilingual quality. [Sennrich et al., BPE
 ## 5. How this complements the core notes
 
 Finish the Word2Vec arithmetic and the “static vs contextual” note first. This lesson only adds **RAG, instruction-tuned generators, and modern tokenizers** — not a new skip-gram derivation.
+
+## Video tham khảo
+
+- **xem trước** [Large Language Models explained briefly](https://www.youtube.com/watch?v=LPZh9BOjkQs) — 3Blue1Brown, English. A static word vector is no longer the whole model; this short video is the generated-answer stack the note describes.
+- [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, English. Contextual embeddings inside a transformer, the replacement for one vector per word type.
+- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, English. What you do with those contextual states once the model can answer.

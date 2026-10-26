@@ -204,3 +204,9 @@ with torch.no_grad():
     print(f"Sample mean: {samples_ar.mean(dim=0).numpy()}")
     print(f"Data mean:   {data_tensor.mean(dim=0).numpy()}")
 
+
+## Video tham khảo
+
+- **xem trước** [The spelled-out intro to language modeling: building makemore](https://www.youtube.com/watch?v=PaCmpygFfXo) — Andrej Karpathy, English. Next-character prediction is the autoregressive model this lesson codes.
+- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, English. The same factorization inside a transformer, once the bigram model is too small.
+- [Sequence-to-Sequence (seq2seq) Encoder-Decoder Neural Networks, Clearly Explained!!!](https://www.youtube.com/watch?v=L8HKweZIOmg) — StatQuest with Josh Starmer, English. Sequence-to-sequence as the conditional version of that product of probabilities.

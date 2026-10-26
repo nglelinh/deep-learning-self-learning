@@ -165,3 +165,9 @@ $$\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[1]}} = \frac{\partial \mathc
 
 In the next lesson, we'll explore forward propagation in detail with concrete examples.
 
+
+## Video tham khảo
+
+- **xem trước** [The GELU, SiLU and SwiGLU activation functions, clearly explained!!!](https://www.youtube.com/watch?v=2FaI2Fen1mQ) — StatQuest with Josh Starmer, English. GELU, SiLU, and SwiGLU are the modern functions this lesson adds after ReLU.
+- [Vanishing/Exploding Gradients (C2W1L10)](https://www.youtube.com/watch?v=qhXZsFVxGKo) — DeepLearningAI, English. Vanishing and exploding gradients are the failure mode the lesson uses to justify those choices.
+- [Neural Networks Pt. 3: ReLU In Action!!!](https://www.youtube.com/watch?v=68BZ5f7P94E) — StatQuest with Josh Starmer, English. ReLU is the baseline those newer functions are compared with.

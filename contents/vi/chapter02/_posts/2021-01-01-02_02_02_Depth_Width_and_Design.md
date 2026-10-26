@@ -266,3 +266,9 @@ Việc tìm kiến trúc tối ưu thường thực hiện qua:
 Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
 
 - [Mạng nơ-ron là bộ xấp xỉ hàm](https://www.facebook.com/reel/720970114372332)
+
+## Video tham khảo
+
+- **xem trước** [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Điều độ sâu thêm mang lại, trước phần mẫu thiết kế.
+- [Vanishing/Exploding Gradients (C2W1L10)](https://www.youtube.com/watch?v=qhXZsFVxGKo) — DeepLearningAI, tiếng Anh. Gradient biến mất là lý do độ sâu ngây thơ thất bại, đúng điều phần thiết kế của bài đang phản ứng.
+- [The GELU, SiLU and SwiGLU activation functions, clearly explained!!!](https://www.youtube.com/watch?v=2FaI2Fen1mQ) — StatQuest with Josh Starmer, tiếng Anh. GELU, SiLU và SwiGLU là các lựa chọn theo lớp hiện đại mà phần thiết kế hướng tới.

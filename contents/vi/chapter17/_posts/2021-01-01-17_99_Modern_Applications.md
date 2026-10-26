@@ -54,3 +54,9 @@ Ultralytics **YOLOv8 / YOLO11** giữ công thức một giai đoạn tích ch�
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Cài ghép cặp detector và đường R-CNN/YOLO của chương trước. Bài này chỉ thêm đầu **theo prompt và từ vựng mở** dùng trong pipeline 2023–2026.
+
+## Video tham khảo
+
+- **xem trước** [Explaining the Segment Anything Model - Network architecture, Dataset, Training](https://www.youtube.com/watch?v=OhxJkqD1vuE) — Neural Breakdown with AVB, tiếng Anh. Segment Anything là bộ phân đoạn theo prompt mà ghi chú mô tả.
+- [Lecture 11 | Detection and Segmentation](https://www.youtube.com/watch?v=nDPWywWRIRo) — Stanford University School of Engineering, tiếng Anh. Bài toán phát hiện và phân đoạn cổ điển mà SAM khái quát.
+- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, tiếng Anh. Backbone thị giác bên dưới đầu theo prompt đó.

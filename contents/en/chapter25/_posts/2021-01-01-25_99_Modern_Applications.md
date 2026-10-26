@@ -57,3 +57,9 @@ Serving 70B models for every click is not a “future problem”: quantization (
 ## 5. How this complements the core notes
 
 Keep the chapter’s discussion of scaling, NAS, continual learning, and safety. This lesson only pins **test-time compute, agents, and open VLMs** as the items that moved from “future” to “default product” between 2024 and 2026.
+
+## Video tham khảo
+
+- **xem trước** [Deep Dive into LLMs like ChatGPT](https://www.youtube.com/watch?v=7xTGNNLPyMI) — Andrej Karpathy, English. Karpathy's 2025 deep dive includes inference-time reasoning, the knob this note adds on top of pretraining. It is long and canonical.
+- [Chinchilla Explained: Compute-Optimal Massive Language Models](https://www.youtube.com/watch?v=PZXN7jm9IC0) — Edan Meyer, English. Chinchilla is the train-time law the note says test-time compute does not replace.
+- [MIT 6.S191 (2024): Language Models and New Frontiers](https://www.youtube.com/watch?v=N1fbskTpwZ0) — Alexander Amini, English. The 2024 frontier lecture for agents and multimodal systems the note lists next.

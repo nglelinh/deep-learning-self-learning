@@ -133,3 +133,9 @@ To understand how different optimizers behave, imagine optimizing a function wit
 
 Consider a concrete scenario: training a neural network on a dataset with rare but important features. Vanilla SGD updates all parameters equally, so rare features get updated infrequently (only when examples containing them appear). AdaGrad/Adam give these parameters larger effective learning rates (because their $$\mathbf{v}_t$$ is smaller, having accumulated fewer gradient updates), allowing them to learn quickly from the few examples they see. Common features, updated frequently, get smaller effective learning rates, preventing overreaction to individual examples. This adaptivity is why Adam often converges faster than SGD, particularly in NLP where vocabulary sparsity is extreme.
 
+
+## Video tham khảo
+
+- **xem trước** [Optimization for Deep Learning (Momentum, RMSprop, AdaGrad, Adam)](https://www.youtube.com/watch?v=NE88eqLngkg) — DeepBean, English. Each method is an average of past gradients, which is the theory.
+- [Gradient Descent, Step-by-Step](https://www.youtube.com/watch?v=sDv4f4s2SB8) — StatQuest with Josh Starmer, English. The un-averaged step those methods start from.
+- [Gradient descent, how neural networks learn | Deep Learning Chapter 2](https://www.youtube.com/watch?v=IHZwWFHWa-w) — 3Blue1Brown, English. Why any of this is descending a cost, before the moment bookkeeping.

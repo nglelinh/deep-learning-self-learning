@@ -80,3 +80,9 @@ Phép này sinh bản đồ nhiệt ở độ phân giải bản đồ đặc tr
 Nếu cỏ có giá trị SHAP cao, ta đã phát hiện mô hình dùng tương quan giả (chó thường được chụp trên cỏ). Ta có thể thu thập dữ liệu huấn luyện đa dạng hơn hoặc dùng tăng cường dữ liệu để sửa.
 
 **Ví dụ đối kháng** (*adversarial example*) cung cấp một lăng kính diễn giải khác. Bằng cách tìm nhiễu đầu vào tối thiểu thay đổi dự đoán, ta tiết lộ lỗ hổng mô hình. Nếu thêm nhiễu không nhận thức được vào ảnh chó gây dự đoán “mèo”, biểu diễn của mô hình mong manh — nó chưa học đặc trưng vững. Nghiên cứu các nhiễu đối kháng này tiết lộ đặc trưng nào quan trọng: nhiễu thường thêm mẫu mà mô hình liên kết mạnh với lớp đích, tiết lộ chỉ báo lớp học được (nhưng có thể giả).
+
+## Video tham khảo
+
+- **xem trước** [SHAP values for beginners | What they mean and their applications](https://www.youtube.com/watch?v=MQ6fFDwjuco) — A Data Odyssey, tiếng Anh. Một giá trị SHAP là phần công bằng của dự đoán, định nghĩa chính của lý thuyết.
+- [Lecture 12 | Visualizing and Understanding](https://www.youtube.com/watch?v=6wcs6szJWMY) — Stanford University School of Engineering, tiếng Anh. Hình dung đặc trưng, truyền thống lý thuyết còn lại trong bài (một đơn vị đáp ứng với cái gì).
+- [Explainable AI explained! | #3 LIME](https://www.youtube.com/watch?v=d6j6bofhj2M) — DeepFindr, tiếng Anh. Một bộ thay thế tuyến tính cục bộ, để SHAP không phải câu chuyện hình thức duy nhất.

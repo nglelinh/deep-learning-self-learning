@@ -59,3 +59,9 @@ trong đó $$\widehat{\nabla \mathcal{L}}$$ tính bằng BF16/FP16. Tràn số �
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Làm worksheet backprop và trainer NumPy trước. Bài này chỉ trả lời “ngành thêm gì quanh băng”: compiler, AMP, backward đã fuse — không phải quy tắc học mới.
+
+## Video tham khảo
+
+- **xem trước** [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0) — Andrej Karpathy, tiếng Anh. Quy tắc dây chuyền không đổi; ý ghi chú là bộ lập lịch quanh nó đã đổi.
+- [Adam Optimization Algorithm (C2W2L08)](https://www.youtube.com/watch?v=JXQT_vxqwIs) — DeepLearningAI, tiếng Anh. Adam là bộ lập lịch mặc định mà ghi chú đặt cạnh gradient descent thuần.
+- [Optimization for Deep Learning (Momentum, RMSprop, AdaGrad, Adam)](https://www.youtube.com/watch?v=NE88eqLngkg) — DeepBean, tiếng Anh. Momentum, RMSProp, AdaGrad và Adam trong một phép so, đúng khẳng định 'bộ lập lịch khác'.

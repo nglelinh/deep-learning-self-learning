@@ -302,3 +302,9 @@ canvas {
     margin: 20px 0;
 }
 </style>
+
+## Video tham khảo
+
+- **xem trước** [MaDL - Random Variables and Probability Distributions](https://www.youtube.com/watch?v=bvBukLjHZh8) — Tübingen Machine Learning, English. A random variable is a function on the sample space, which is how the lesson treats data and predictions.
+- [Random Variables and Probability Distributions](https://www.youtube.com/watch?v=lHCpYeFvTs0) — Dr Nic's Maths and Stats, English. A short concrete pass over discrete and continuous random variables before the distribution catalog.
+- [MaDL - Expectation, Variance and Covariance](https://www.youtube.com/watch?v=kmRm3XIND8M) — Tübingen Machine Learning, English. Expectation and variance are the summaries the lesson uses when a network's output is random.

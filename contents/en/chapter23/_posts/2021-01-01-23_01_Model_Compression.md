@@ -134,3 +134,9 @@ MobileNets use depthwise separable convolutions, reducing computation 8-9× vers
 
 Model compression makes deep learning practical on resource-constrained devices through pruning (removing unnecessary parameters), quantization (reducing numerical precision), knowledge distillation (transferring large model knowledge to small models), and efficient architectures (designed for efficiency from scratch). These techniques enable 10-100× compression with minimal accuracy loss, democratizing deep learning deployment beyond cloud servers to edge devices, enabling real-time inference, and reducing environmental impact through lower computational requirements.
 
+
+## Video tham khảo
+
+- **xem trước** [Lecture 15 | Efficient Methods and Hardware for Deep Learning](https://www.youtube.com/watch?v=eZdOkDtYMoo) — Stanford University School of Engineering, English. Pruning, quantization, and the hardware constraints together.
+- [How LLMs survive in low precision | Quantization Fundamentals](https://www.youtube.com/watch?v=qoQJq5UwV1c) — Julia Turc, English. Low-precision weights, the quantization section's subject.
+- [2.3 Knowledge Distillation | Geoffery Hinton | Soft Labels | Softmax with Temperature](https://www.youtube.com/watch?v=g1r4Esohw-g) — AI_Snippets, English. Hinton's soft labels and temperature, the classical distillation the lesson stops at before Chapter 26.

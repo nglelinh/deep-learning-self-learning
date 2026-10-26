@@ -158,3 +158,9 @@ Nếu giáo viên cũng viết lập luận, lưu nó *trong* `completion` (ho�
 - Thực hành hiện đại tụ thành chưng cất **phản hồi (tổng hợp)**, **đặc trưng**, và **logit**.
 - Chưng cất trong nhà / có giấy phép là việc hiệu năng chuẩn; huấn luyện trên API bị cấm là vấn đề điều khoản và rò năng lực, không phải thuật toán mới.
 - KL có nhiệt độ là *hình dung* đúng; tệp SFT do giáo viên viết là thứ hầu hết học sinh LLM thực sự huấn luyện trên đó.
+
+## Video tham khảo
+
+- **xem trước** [Knowledge Distillation: How LLMs train each other](https://www.youtube.com/watch?v=jrJKRYAdh7I) — Julia Turc, tiếng Anh. Một mô hình ngôn ngữ lớn dạy một mô hình nhỏ hơn như thế nào, đúng nửa hiện đại của bài.
+- [2.3 Knowledge Distillation | Geoffery Hinton | Soft Labels | Softmax with Temperature](https://www.youtube.com/watch?v=g1r4Esohw-g) — AI_Snippets, tiếng Anh. Chưng cất nhãn mềm cổ điển và nhiệt độ, phần ôn Chương 23.
+- [How LLMs survive in low precision | Quantization Fundamentals](https://www.youtube.com/watch?v=qoQJq5UwV1c) — Julia Turc, tiếng Anh. Vì sao khớp cả phân phối từ vựng thì đắt, đúng phản đối của bài với KD logit ngây thơ.

@@ -299,3 +299,9 @@ Next: demos, papers in narrative form, and operational pitfalls.
 Some figures in this lesson are screenshots from the following videos (Machine Learning Thực Chiến). URLs kept for attribution and further viewing:
 
 - [Position Encoding in Transformers (step by step)](https://www.facebook.com/reel/1306224801415127)
+
+## Video tham khảo
+
+- **xem trước** [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, English. The core modules. The video is long; it is the canonical from-scratch implementation of this lesson.
+- [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, English. Keep the data-flow picture beside the notebook.
+- [Positional embeddings in transformers EXPLAINED | Demystifying positional encodings.](https://www.youtube.com/watch?v=1biZfFLPRSY) — AI Coffee Break with Letitia, English. Add this when the token embeddings have no position and the model ignores order.

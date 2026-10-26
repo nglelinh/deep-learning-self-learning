@@ -264,3 +264,9 @@ show_attn_shapes(torch.randn(2, 5, 16), torch.randn(2, 9, 16), torch.randn(2, 9,
 4. Unit test trên shape nhỏ bắt được 90% lỗi attention.  
 
 Bài kế: **multi-head attention**, demo phong phú hơn, papers, và phác thảo seq2seq.
+
+## Video tham khảo
+
+- **xem trước** [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Có bản cài tích vô hướng có tỉ lệ từng dòng. Video dài; phần attention là phần khớp bài này.
+- [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, tiếng Anh. Kích thước của Q, K và V để kiểm với mã.
+- [A Dive Into Multihead Attention, Self-Attention and Cross-Attention](https://www.youtube.com/watch?v=mmzRYGCfTzc) — Machine Learning Studio, tiếng Anh. Cần thêm gì sau khi lõi một head đã chạy.

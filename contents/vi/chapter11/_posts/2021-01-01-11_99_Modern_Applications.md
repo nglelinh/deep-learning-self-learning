@@ -55,3 +55,9 @@ $$\mathcal{L}_{\mathrm{FM}} = \mathbb{E}_{t,\mathbf{x},\mathbf{z}}\big\| v_\thet
 ## 6. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Học MLE, mật độ hiện/ẩn, và GAN đồ chơi trong chương này trước. Khuếch tán và flow matching là **cập nhật cây họ**, không thay các định nghĩa đó. Chi tiết VAE và GAN ở lại Chương 13–14.
+
+## Video tham khảo
+
+- **xem trước** [Flow-Matching vs Diffusion Models explained side by side](https://www.youtube.com/watch?v=firXjwZ_6KI) — AI Coffee Break with Letitia, tiếng Anh. Flow matching cạnh khuếch tán khử nhiễu là bức tranh 2022–2026 ghi chú vẽ.
+- [But how do AI images and videos actually work? | Guest video by Welch Labs](https://www.youtube.com/watch?v=iv-5mZ_9CPY) — 3Blue1Brown, tiếng Anh. Một mô hình khuếch tán thực sự biến nhiễu thành ảnh như thế nào, gồm classifier-free guidance.
+- [How does Stable Diffusion work? – Latent Diffusion Models EXPLAINED](https://www.youtube.com/watch?v=J87hffSMB60) — AI Coffee Break with Letitia, tiếng Anh. Khuếch tán trên không gian ẩn, dạng thực tế các ý đó được đưa ra dùng.

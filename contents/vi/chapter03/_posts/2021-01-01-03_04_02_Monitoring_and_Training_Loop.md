@@ -289,3 +289,9 @@ for trial in range(num_trials):
 - **Tinh chỉnh siêu tham số** thiết yếu cho hiệu năng tối ưu
 
 Với các kỹ thuật này, ta đã có đủ công cụ để huấn luyện mạng neuron hiệu quả. Chương tiếp theo trình bày Mạng Neuron Tích chập cho các tác vụ thị giác máy tính!
+
+## Video tham khảo
+
+- **xem trước** [Other Regularization Methods (C2W1L08)](https://www.youtube.com/watch?v=BOCLq2gpcGU) — DeepLearningAI, tiếng Anh. Dừng sớm là một phương pháp chính quy bài bảo bạn theo dõi.
+- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, tiếng Anh. Vòng lặp ghi loss và gọi bộ tối ưu, đúng phần mã.
+- [Lecture 7 | Training Neural Networks II](https://www.youtube.com/watch?v=_JB0AO7QxSA) — Stanford University School of Engineering, tiếng Anh. Siêu tham số và đường cong huấn luyện là thứ phần giám sát đang nhìn.

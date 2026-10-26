@@ -61,3 +61,9 @@ which is the same likelihood / expectation language as the probability notes, ap
 ## 5. How this complements the core notes
 
 Keep using the calculus and linear-algebra lessons to compute $$\nabla f$$ and matrix factorizations by hand. This optional note only shows where those objects now live in compilers and scientific ML — it does not replace the derivations.
+
+## Video tham khảo
+
+- **xem trước** [Backpropagation calculus | Deep Learning Chapter 4](https://www.youtube.com/watch?v=tIeHLnjs5U8) — 3Blue1Brown, English. Reverse-mode autodiff is the chain rule this note says PyTorch and JAX still implement.
+- [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0) — Andrej Karpathy, English. Builds that reverse-mode product in code, which is the executable form of the calculus chapter.
+- [Visualizing the chain rule and product rule | Chapter 4, Essence of calculus](https://www.youtube.com/watch?v=YG15m2VwSjA) — 3Blue1Brown, English. The one-variable chain rule being differentiated here is the identity the note writes as Df = Dg · Dh.

@@ -306,3 +306,9 @@ canvas {
     margin: 20px 0;
 }
 </style>
+
+## Video tham khảo
+
+- **xem trước** [Multivariate Normal (Gaussian) Distribution Explained](https://www.youtube.com/watch?v=UVvuwv-ne1I) — DataMListic, tiếng Anh. Gauss đa biến là phân phối đồng thời mà bài dựng.
+- [MaDL - Expectation, Variance and Covariance](https://www.youtube.com/watch?v=kmRm3XIND8M) — Tübingen Machine Learning, tiếng Anh. Hiệp phương sai là ma trận bên trong Gauss đó, và là cầu nối của bài tới các đặc trưng cùng biến thiên.
+- [MaDL - Common Probability Distributions](https://www.youtube.com/watch?v=NbzVwvE_syQ) — Tübingen Machine Learning, tiếng Anh. Cho thấy các họ đa biến nằm đâu so với phân phối một chiều của bài trước.

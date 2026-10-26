@@ -385,3 +385,9 @@ Some figures in this lesson are screenshots from the following videos (Machine L
 - [What is a Transformer? Self-Attention for beginners (Part 1)](https://www.facebook.com/reel/930207546288223)
 - [Word embeddings and how Transformers understand language](https://www.facebook.com/reel/1501843101324752)
 - [Recommendation algorithms (TikTok-style)](https://www.facebook.com/reel/1444915507374636)
+
+## Video tham khảo
+
+- **xem trước** [Word Embedding and Word2Vec, Clearly Explained!!!](https://www.youtube.com/watch?v=viZrOnJclY0) — StatQuest with Josh Starmer, English. Skip-gram and the distributional hypothesis are this lesson's core.
+- [The Illustrated Word2vec - A Gentle Intro to Word Embeddings in Machine Learning](https://www.youtube.com/watch?v=ISPId9Lhc1g) — Jay Alammar, English. A visual pass over the same vectors, useful for the analogy examples.
+- [Lecture 2 | Word Vector Representations: word2vec](https://www.youtube.com/watch?v=ERibwqs9p38) — Stanford University School of Engineering, English. The softmax objective and the negative-sampling shortcut the math section writes.

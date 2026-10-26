@@ -53,3 +53,9 @@ Robotics and ads still build a simulator so the MDP is cheap. The definition of 
 ## 5. How this complements the core notes
 
 Learn states, returns, and Bellman equations first. This lesson only names the **MDPs that shipped** (bandits, offline logs, RLHF) — not a new definition of a value function.
+
+## Video tham khảo
+
+- **xem trước** [Reinforcement Learning with Human Feedback (RLHF), Clearly Explained!!!](https://www.youtube.com/watch?v=qPN_XZcJf_s) — StatQuest with Josh Starmer, English. RLHF is an MDP whose reward comes from human preferences, which is this note's claim.
+- [Reinforcement Learning from Human Feedback (RLHF) Explained](https://www.youtube.com/watch?v=T_X4XFwKX8k) — IBM Technology, English. A shorter corporate-lecture cut of the same loop.
+- [RL Course by David Silver - Lecture 2: Markov Decision Process](https://www.youtube.com/watch?v=lfHX2hHRMVQ) — Google DeepMind, English. The MDP vocabulary the note says you already have.

@@ -51,3 +51,9 @@ Whisper + [pyannote](https://github.com/pyannote/pyannote-audio) is the 2023–2
 ## 5. How this complements the core notes
 
 Use this chapter’s intro as the map (spectrograms, DeepSpeech, WaveNet). This lesson only updates the **checkpoints and codecs** you would install in 2026.
+
+## Video tham khảo
+
+- **xem trước** [OpenAI's Whisper Model Explained](https://www.youtube.com/watch?v=uFOkMme19Zs) — What's AI by Louis-François Bouchard, English. Whisper as the default ASR system this note describes.
+- [Mel Frequency Cepstral Coefficients (MFCC) Explained](https://www.youtube.com/watch?v=SJo7vPgRlBQ) — DataMListic, English. The mel features that kind of model still starts from.
+- [Mel-Frequency Cepstral Coefficients Explained Easily](https://www.youtube.com/watch?v=4_SH2nfbQZ8) — Valerio Velardo - The Sound of AI, English. How those features are built, so the Whisper input is not a black box.

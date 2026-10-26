@@ -67,3 +67,9 @@ Chép các mục này và thử trên bất kỳ mô hình instruct mở nào:
 - Tuân thủ chỉ dẫn chủ yếu là đổi **dữ liệu** (SFT) trên cùng loss next-token.
 - Sở thích căn chỉnh là một đổi tiếp — bài **26-03** — không thay cho một prompt rõ.
 - Lấy mẫu lúc giải mã (nhiệt độ, top-$$k$$ / top-$$p$$) là nút phục vụ, không phải kiểu prompt mới — **26-04**.
+
+## Video tham khảo
+
+- **xem trước** [What Is In-Context Learning in Deep Learning?](https://www.youtube.com/watch?v=As9a15poQHs) — Deep Learning with Yacine, tiếng Anh. Học trong ngữ cảnh là điều kiện hóa trên các ví dụ nằm trong prompt, đúng bài này.
+- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, tiếng Anh. Một prompt là thêm token trong cùng mô hình token kế; đúng phần đầu của bài.
+- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Bạn có thể thấy prompt không gì hơn tiền tố mà bộ lấy mẫu tiếp tục.

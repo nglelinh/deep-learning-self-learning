@@ -233,3 +233,9 @@ for s in [1, 1000, 4000, 10000]:
 4. Most production pain is **masks, PE, precision, and $$O(L^2)$$**, not the softmax formula.  
 
 You now have a complete Chapter 08 path: introduction → theory → implementation → demos/pitfalls. From here you can specialize into large language models, encoder-only NLU, or Vision Transformers using the same algebraic skeleton.
+
+## Video tham khảo
+
+- **xem trước** [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, English. The sampling demo and the pitfalls of an unmasked or untied implementation.
+- [Transformer Neural Networks, ChatGPT's foundation, Clearly Explained!!!](https://www.youtube.com/watch?v=zxQyTK8quyY) — StatQuest with Josh Starmer, English. A cleaner diagram of failure modes such as missing the residual path.
+- [How might LLMs store facts | Deep Learning Chapter 7](https://www.youtube.com/watch?v=9-Jl0dxWQs8) — 3Blue1Brown, English. What the MLP inside the block can store, which is the lesson's deeper reading of a working demo.

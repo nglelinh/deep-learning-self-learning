@@ -228,3 +228,9 @@ Convolutional layers are the foundation of computer vision in deep learning. Mas
 
 
 **Next**: Pooling layers and complete CNN architectures (LeNet, AlexNet, VGG, ResNet)!
+
+## Video tham khảo
+
+- **xem trước** [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, English. The pitfalls that show up as soon as channels and stride interact.
+- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, English. A 2024 statement of which of those pitfalls still matter.
+- [C4W2L04 Why ResNets Work](https://www.youtube.com/watch?v=RYth6EbBUqM) — DeepLearningAI, English. Why a plain stack of convolutions degrades, the paper-level pitfall the ResNet note is about.

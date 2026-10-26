@@ -69,3 +69,9 @@ Name one training symptom that a *diagonal* Hessian (or just per-parameter secon
 ## Attribution
 
 Kashani, S., and Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Download the PDF from arXiv for the full solved Q&A. This page is original course practice, not a reprint.
+
+## Video tham khảo
+
+- **xem trước** [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0) — Andrej Karpathy, English. The autodiff prompts.
+- [Backpropagation calculus | Deep Learning Chapter 4](https://www.youtube.com/watch?v=tIeHLnjs5U8) — 3Blue1Brown, English. The scalar chain rule those prompts ask you to write.
+- [StatQuest: Logistic Regression](https://www.youtube.com/watch?v=yIYKR4sgzI8) — StatQuest with Josh Starmer, English. Logistic regression is the third prompt family in this practice set.

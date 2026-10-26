@@ -290,3 +290,9 @@ for trial in range(num_trials):
 
 With these techniques, you're equipped to train neural networks effectively. The next chapter covers Convolutional Neural Networks for computer vision tasks!
 
+
+## Video tham khảo
+
+- **xem trước** [Other Regularization Methods (C2W1L08)](https://www.youtube.com/watch?v=BOCLq2gpcGU) — DeepLearningAI, English. Early stopping is one of the regularization methods this lesson tells you to watch.
+- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, English. The loop that logs loss and applies the optimizer, which is the code section.
+- [Lecture 7 | Training Neural Networks II](https://www.youtube.com/watch?v=_JB0AO7QxSA) — Stanford University School of Engineering, English. Hyperparameters and training curves are what the monitoring section is looking at.

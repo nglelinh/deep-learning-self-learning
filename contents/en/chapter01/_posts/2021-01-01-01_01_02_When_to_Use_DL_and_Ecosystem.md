@@ -343,3 +343,9 @@ The field continues to evolve rapidly with new architectures, techniques, and ap
 Some figures in this lesson are screenshots from the following videos (Machine Learning Thực Chiến). URLs kept for attribution and further viewing:
 
 - [Recommendation algorithms (TikTok-style)](https://www.facebook.com/reel/1444915507374636)
+
+## Video tham khảo
+
+- **xem trước** [AI, Machine Learning, Deep Learning and Generative AI Explained](https://www.youtube.com/watch?v=qYNweeDHiyU) — IBM Technology, English. Decide when the problem is actually a deep-learning problem rather than a classical one.
+- [MIT Introduction to Deep Learning (2024) | 6.S191](https://www.youtube.com/watch?v=ErnWZxJovaM) — Alexander Amini, English. The tools segment names the frameworks and the data scale the lesson's ecosystem section assumes.
+- [Machine Learning vs Deep Learning](https://www.youtube.com/watch?v=q6kJ71tEYqM) — IBM Technology, English. A short check against using a deep model when a simpler model already fits.

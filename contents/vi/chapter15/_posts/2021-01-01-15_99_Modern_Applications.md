@@ -53,3 +53,9 @@ CNN nhỏ, mạng bảng từ đầu, và miền lệch nặng có nhiều nhãn
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Làm bài fine-tune ResNet/BERT trước. Bài này chỉ thêm công thức chuyển giao **hạng thấp / lượng tử** đã thay “mở đóng ba lớp cuối” cho LLM.
+
+## Video tham khảo
+
+- **xem trước** [QLoRA: Efficient Finetuning of Quantized LLMs | Tim Dettmers](https://www.youtube.com/watch?v=fQirE9N5q_Y) — AMLD Intelligence Summit, tiếng Anh. QLoRA là tinh chỉnh hạng thấp trên mô hình lượng tử hóa, đúng phương pháp chuyển giao ghi chú thêm. Bài nói là của Tim Dettmers tại AMLD.
+- [How LLMs survive in low precision | Quantization Fundamentals](https://www.youtube.com/watch?v=qoQJq5UwV1c) — Julia Turc, tiếng Anh. Số học độ chính xác thấp mà QLoRA phụ thuộc.
+- [Fine-tuning a Neural Network explained](https://www.youtube.com/watch?v=5T-iXNNiwIs) — deeplizard, tiếng Anh. Tinh chỉnh thông thường, để biến thể lượng tử hóa là đổi cách làm, không đổi lý do.

@@ -32,3 +32,9 @@ Toán học cho biết attention *tính* cái gì. Cài đặt cho biết ta có
 | Reshape multi-head: `(B,L,H,d)` ↔ `(B,H,L,d)` | Transpose sai làm xáo trộn đặc trưng mà vẫn “chạy” |
 
 Bắt đầu với **Cài đặt cốt lõi**, rồi tiếp tục multi-head và các cạm bẫy.
+
+## Video tham khảo
+
+- **xem trước** [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, tiếng Anh. Các bài mã đang cài một công thức bạn đã tính một lần.
+- [A Dive Into Multihead Attention, Self-Attention and Cross-Attention](https://www.youtube.com/watch?v=mmzRYGCfTzc) — Machine Learning Studio, tiếng Anh. Bản đồ module: self, cross và multi-head.
+- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Attention được viết bằng Python, đúng đích của bài lập trình.

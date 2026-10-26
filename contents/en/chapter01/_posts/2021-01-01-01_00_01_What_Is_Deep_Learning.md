@@ -180,3 +180,8 @@ This hierarchical, distributed representation also explains deep learning's samp
 Some figures in this lesson are screenshots from the following videos (Machine Learning Thực Chiến). URLs kept for attribution and further viewing:
 
 - [Neural nets as function approximators](https://www.facebook.com/reel/720970114372332)
+
+## Video tham khảo
+
+- **xem trước** [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, English. Layered neurons as a function approximator are the definition this lesson builds.
+- [The Essential Main Ideas of Neural Networks](https://www.youtube.com/watch?v=CqOfi41LfDw) — StatQuest with Josh Starmer, English. A slower pass over the same nodes, weights, and squiggle-fitting idea, with every quantity labeled.

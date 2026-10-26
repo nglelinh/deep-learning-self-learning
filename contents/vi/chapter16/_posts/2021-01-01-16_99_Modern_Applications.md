@@ -53,3 +53,9 @@ MLM và ghép cặp kiểu CLIP vẫn là trụ NLP/đa phương thức. SimCLR 
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Giữ suy diễn NT-Xent và công thức MLM của BERT. Bài này chỉ đặt tên **checkpoint 2023–2025** (DINOv2, SigLIP, JEPA) bạn sẽ tải thay vì huấn luyện SimCLR từ đầu.
+
+## Video tham khảo
+
+- **xem trước** [DINOv2 from Meta AI - Finally a Foundational Model in Computer Vision?](https://www.youtube.com/watch?v=csEgtSh7jV4) — AI Papers Academy, tiếng Anh. DINOv2 là backbone thị giác đóng băng mà ghi chú nói bạn dùng được mà không tinh chỉnh mọi thứ.
+- [DINO: Emerging Properties in Self-Supervised Vision Transformers (Facebook AI Research Explained)](https://www.youtube.com/watch?v=h3ij3F3cPIk) — Yannic Kilcher, tiếng Anh. DINO, tiền thân mà phương pháp của ghi chú mở rộng.
+- [Contrastive Learning with SimCLR | Deep Learning Animated](https://www.youtube.com/watch?v=UqJauYELn6c) — Deepia, tiếng Anh. Mục tiêu tương phản mà các mô hình thị giác tự giám sát lớn lên từ đó.

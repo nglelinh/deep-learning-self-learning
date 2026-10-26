@@ -57,3 +57,9 @@ Phục vụ mô hình 70B cho mọi cú nhấp không còn là “vấn đề t�
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Giữ thảo luận scaling, NAS, học liên tục, và an toàn của chương. Bài này chỉ ghim **compute lúc suy luận, agent, và VLM mở** như thứ đã chuyển từ “tương lai” sang “sản phẩm mặc định” giữa 2024 và 2026.
+
+## Video tham khảo
+
+- **xem trước** [Deep Dive into LLMs like ChatGPT](https://www.youtube.com/watch?v=7xTGNNLPyMI) — Andrej Karpathy, tiếng Anh. Bài đi sâu 2025 của Karpathy gồm suy luận lúc inference, núm ghi chú thêm lên trên tiền huấn luyện. Video dài và là nguồn chuẩn.
+- [Chinchilla Explained: Compute-Optimal Massive Language Models](https://www.youtube.com/watch?v=PZXN7jm9IC0) — Edan Meyer, tiếng Anh. Chinchilla là luật lúc huấn luyện mà ghi chú nói tính toán lúc kiểm không thay thế.
+- [MIT 6.S191 (2024): Language Models and New Frontiers](https://www.youtube.com/watch?v=N1fbskTpwZ0) — Alexander Amini, tiếng Anh. Bài biên 2024 cho các tác tử và hệ đa phương thức mà ghi chú liệt kê tiếp.

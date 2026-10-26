@@ -63,3 +63,9 @@ In a residual block $$ \mathbf{y} = \mathbf{x} + \mathcal{F}(\mathbf{x}) $$, wri
 ## Attribution
 
 Kashani, S., and Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Download the PDF from arXiv for the full solved Q&A. This page is original course practice, not a reprint.
+
+## Video tham khảo
+
+- **xem trước** [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, English. Before the convolution-arithmetic prompts.
+- [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, English. Output-shape questions are answered by the formulas in this lecture.
+- [But what is a convolution?](https://www.youtube.com/watch?v=KuXjwB4LzSA) — 3Blue1Brown, English. Use this if a prompt asks what a kernel is detecting, not how big the output is.

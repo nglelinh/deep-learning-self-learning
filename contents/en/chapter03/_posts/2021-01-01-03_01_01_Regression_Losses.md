@@ -128,3 +128,9 @@ where $$\delta$$ is a threshold parameter.
 **Disadvantages:**
 - Requires tuning $$\delta$$ hyperparameter
 
+
+## Video tham khảo
+
+- **xem trước** [Gradient descent, how neural networks learn | Deep Learning Chapter 2](https://www.youtube.com/watch?v=IHZwWFHWa-w) — 3Blue1Brown, English. The squared difference between prediction and target is the regression cost this lesson defines.
+- [Lecture 3 | Loss Functions and Optimization](https://www.youtube.com/watch?v=h7iBpEHGVNc) — Stanford University School of Engineering, English. Places mean squared error among the other losses you will swap in later.
+- [Gradient Descent, Step-by-Step](https://www.youtube.com/watch?v=sDv4f4s2SB8) — StatQuest with Josh Starmer, English. Shows a concrete loss surface being walked, which is what a regression loss looks like once parameters move.

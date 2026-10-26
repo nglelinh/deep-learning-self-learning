@@ -55,3 +55,9 @@ Many one-step generators (SD-Turbo, LCM-LoRA-style distillations, UFOGen-class w
 ## 5. How this complements the core notes
 
 Train the toy GAN and read the mode-collapse notes first. This lesson only answers “why is StyleGAN still in production while DALL·E-class demos use diffusion?”
+
+## Video tham khảo
+
+- **xem trước** [AI generated faces - StyleGAN explained!](https://www.youtube.com/watch?v=4LNO8nLxF4Y) — AI Bites, English. StyleGAN is the face-synthesis stack this note's 2022–2023 section describes.
+- [A Friendly Introduction to Generative Adversarial Networks (GANs)](https://www.youtube.com/watch?v=8L11aMN5KY8) — Luis Serrano Academy, English. The original two-player game StyleGAN did not replace.
+- [What are GANs (Generative Adversarial Networks)?](https://www.youtube.com/watch?v=TpMIssRdhco) — IBM Technology, English. A short baseline if StyleGAN's style space is hard to separate from a vanilla GAN.

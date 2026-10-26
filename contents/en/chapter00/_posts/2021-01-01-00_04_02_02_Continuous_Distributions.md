@@ -394,3 +394,9 @@ canvas {
     margin: 20px 0;
 }
 </style>
+
+## Video tham khảo
+
+- **xem trước** [The Normal Distribution, Clearly Explained!!!](https://www.youtube.com/watch?v=rzFX5NWojp0) — StatQuest with Josh Starmer, English. The normal density is the continuous distribution this lesson centers on.
+- [The Main Ideas behind Probability Distributions](https://www.youtube.com/watch?v=oI3hZJqXJuc) — StatQuest with Josh Starmer, English. Density versus mass is the distinction you need before any continuous formula.
+- [MaDL - Common Probability Distributions](https://www.youtube.com/watch?v=NbzVwvE_syQ) — Tübingen Machine Learning, English. Places the Gaussian among the other continuous families (exponential and others) the lesson lists.

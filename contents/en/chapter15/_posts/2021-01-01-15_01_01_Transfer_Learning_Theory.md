@@ -110,3 +110,9 @@ The tiny change (0.0001 learning rate) adapts the feature slightly without destr
 
 Results: With feature extraction, we might achieve 85% accuracy on bird classification. With fine-tuning, 92% accuracy. Training from scratch with our 500 images: perhaps 60% accuracy (severe overfitting). The transfer learning advantage is dramatic and practical.
 
+
+## Video tham khảo
+
+- **xem trước** [Fine-tuning a Neural Network explained](https://www.youtube.com/watch?v=5T-iXNNiwIs) — deeplizard, English. Which layers to freeze is the theory question.
+- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, English. Why early conv layers transfer and late layers do not, in a 2024 lecture.
+- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, English. A concrete feature hierarchy to point at while you choose the cut.

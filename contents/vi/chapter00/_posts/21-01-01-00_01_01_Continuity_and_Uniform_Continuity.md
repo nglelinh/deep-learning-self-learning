@@ -108,3 +108,9 @@ Ba loại tính liên tục tạo thành một thứ bậc của các điều ki
 **Ví dụ 4: $$f(x) = \sqrt{x}$$**
 - **Trên $$[0,1]$$**: Liên tục và liên tục đều, nhưng không phải Lipschitz (đạo hàm không bị chặn gần $$x = 0$$)
 - **Trên $$[a,1]$$ với $$a > 0$$**: Lipschitz với $$L = 1/(2\sqrt{a})$$
+
+## Video tham khảo
+
+- **xem trước** [Continuity at a point | Limits and continuity | AP Calculus AB | Khan Academy](https://www.youtube.com/watch?v=3KMqU5j7irw) — Khan Academy, tiếng Anh. Liên tục tại một điểm là định nghĩa bài bắt đầu từ đó.
+- [Limits, L'Hôpital's rule, and epsilon delta definitions | Chapter 7, Essence of calculus](https://www.youtube.com/watch?v=kfF40MiS7zA) — 3Blue1Brown, tiếng Anh. Ngôn ngữ epsilon-delta ở nửa sau là ngôn ngữ dùng để nâng liên tục từng điểm lên liên tục đều.
+- [Real Analysis | Intro to uniform continuity.](https://www.youtube.com/watch?v=gioaYgOQ3AQ) — Michael Penn, tiếng Anh. Đây đúng phần liên tục đều: một delta dùng được trên cả một tập, là định nghĩa thứ hai của bài.

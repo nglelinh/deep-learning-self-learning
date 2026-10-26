@@ -120,3 +120,9 @@ Each companion has 3–6 **original** prompts with short hints. They do not rewr
 Kashani, S., and Ivry, A. *Deep Learning Interviews*. arXiv:2201.00650. GitHub: [BoltzmannEntropy/interviews.ai](https://github.com/BoltzmannEntropy/interviews.ai).
 
 The solved question bank is the authors' work. This course only cites the title, authors, arXiv id, and theme names, then adds original practice of its own. **Students download the book from arXiv** (or the official GitHub / interviews.ai links). Do not vendor a local copy of the PDF in this repository and do not paste substantial book text into pull requests.
+
+## Video tham khảo
+
+- **xem trước** [MIT Introduction to Deep Learning (2024) | 6.S191](https://www.youtube.com/watch?v=ErnWZxJovaM) — Alexander Amini, English. The syllabus-level picture this practice track maps interview topics onto.
+- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, English. Use this for the modern half of the track (models that did not exist when older interview books were written).
+- [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0) — Andrej Karpathy, English. The track expects you to derive a backward pass; this is the worked derivation.

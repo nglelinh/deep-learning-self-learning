@@ -269,3 +269,9 @@ show_attn_shapes(torch.randn(2, 5, 16), torch.randn(2, 9, 16), torch.randn(2, 9,
 4. Unit tests on tiny shapes catch 90% of attention bugs.  
 
 Next lesson: **multi-head attention**, richer demos, papers, and a seq2seq sketch.
+
+## Video tham khảo
+
+- **xem trước** [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, English. A line-by-line scaled dot-product implementation. It is long; the attention section is the part that matches this lesson.
+- [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, English. The shapes of Q, K, and V to check against the code.
+- [A Dive Into Multihead Attention, Self-Attention and Cross-Attention](https://www.youtube.com/watch?v=mmzRYGCfTzc) — Machine Learning Studio, English. What to add after the single-head core works.

@@ -124,3 +124,9 @@ Understanding gradients and directional derivatives is crucial for:
 5. **Step Size Selection**: Determining how far to move in the gradient direction
 
 The gradient provides both the direction to move and information about how quickly the function is changing, making it the foundation for most deep-learning algorithms.
+
+## Video tham khảo
+
+- **xem trước** [Directional Derivatives | What's the slope in any direction?](https://www.youtube.com/watch?v=GJODOGq7cAY) — Dr. Trefor Bazett, English. The directional derivative is the slope in a chosen direction, and the gradient is the direction of steepest ascent.
+- [MaDL - Vector Calculus](https://www.youtube.com/watch?v=rh885pI4lPA) — Tübingen Machine Learning, English. Puts the gradient, directional derivative, and Jacobian in the notation this course uses for vector-valued maps.
+- [Continuity vs Partial Derivatives vs Differentiability | My Favorite Multivariable Function](https://www.youtube.com/watch?v=6Wi1kT9kR1M) — Dr. Trefor Bazett, English. Shows why a gradient can exist in a weaker sense than full differentiability, which is the distinction the level-curve section relies on.

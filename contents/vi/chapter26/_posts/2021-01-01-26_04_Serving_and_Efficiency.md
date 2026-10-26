@@ -123,3 +123,9 @@ Cũng đừng chưng cất giáo viên mà bạn không được cấp phép ho�
 - Lượng tử hóa và gom batch là công cụ hiệu năng mặc định (Chương 23 / 23-99).
 - Chưng cất là công cụ cho một mạng *mới, nhỏ hơn* *bắt chước* giáo viên.
 - Quyết định “cache / lượng tử / truy hồi” trước “huấn luyện học sinh.”
+
+## Video tham khảo
+
+- **xem trước** [Faster LLMs: Accelerate Inference with Speculative Decoding](https://www.youtube.com/watch?v=VkWlLSTdHs8) — IBM Technology, tiếng Anh. Speculative decoding là cách tăng tốc nháp-rồi-xác nhận mà bài giải thích.
+- [How LLMs survive in low precision | Quantization Fundamentals](https://www.youtube.com/watch?v=qoQJq5UwV1c) — Julia Turc, tiếng Anh. Lượng tử hóa, thắng lợi phục vụ rẻ đầu tiên của bài.
+- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Lấy mẫu theo nhiệt độ được cài trong bản dựng này; bài đem nó so với top-k và top-p. Video dài; phần lấy mẫu là phần liên quan.

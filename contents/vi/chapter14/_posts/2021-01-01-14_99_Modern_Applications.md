@@ -55,3 +55,9 @@ Nhiều generator một bước (SD-Turbo, chưng cất kiểu LCM-LoRA, họ UF
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Huấn luyện GAN đồ chơi và đọc ghi chú mode-collapse trước. Bài này chỉ trả lời “vì sao StyleGAN vẫn trong production trong khi demo lớp DALL·E dùng khuếch tán?”
+
+## Video tham khảo
+
+- **xem trước** [AI generated faces - StyleGAN explained!](https://www.youtube.com/watch?v=4LNO8nLxF4Y) — AI Bites, tiếng Anh. StyleGAN là chồng tổng hợp khuôn mặt mà phần 2022–2023 của ghi chú mô tả.
+- [A Friendly Introduction to Generative Adversarial Networks (GANs)](https://www.youtube.com/watch?v=8L11aMN5KY8) — Luis Serrano Academy, tiếng Anh. Trò chơi hai người ban đầu mà StyleGAN không thay thế.
+- [What are GANs (Generative Adversarial Networks)?](https://www.youtube.com/watch?v=TpMIssRdhco) — IBM Technology, tiếng Anh. Một mốc ngắn nếu không gian style của StyleGAN khó tách khỏi GAN thuần.

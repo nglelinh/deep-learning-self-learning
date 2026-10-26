@@ -123,3 +123,9 @@ Sau khi xử lý tất cả 13×13 ô, ta có 13×13×3 = 507 dự đoán. Hầu
 - Người 1: confidence=0.92, box=[200, 150, 30, 80]
 
 Bộ phát hiện đã nhận diện mọi đối tượng, phân loại chúng và định vị bằng hộp bao — đúng những gì phát hiện đối tượng yêu cầu.
+
+## Video tham khảo
+
+- **xem trước** [How YOLO Object Detection Works](https://www.youtube.com/watch?v=svn9-xV7wjk) — DeepBean, tiếng Anh. Một lượt xuôi dự đoán các hộp, đúng thiết kế chính của lý thuyết.
+- [Lecture 11 | Detection and Segmentation](https://www.youtube.com/watch?v=nDPWywWRIRo) — Stanford University School of Engineering, tiếng Anh. IoU và việc gán dự đoán với ground truth, phần toán video ngắn bỏ qua.
+- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Các đặc trưng tích chập cả hai video đều giả định.

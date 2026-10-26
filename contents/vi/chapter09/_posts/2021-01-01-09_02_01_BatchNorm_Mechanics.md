@@ -182,3 +182,9 @@ print(f"Test dùng thống kê chạy")
 - Làm mặt loss mượt hơn
 - Gradient dễ dự đoán hơn
 - Tối ưu dễ dàng hơn
+
+## Video tham khảo
+
+- **xem trước** [Why Does Batch Norm Work? (C2W3L06)](https://www.youtube.com/watch?v=nUUqwaxLnWs) — DeepLearningAI, tiếng Anh. Công thức chuẩn hóa trung bình-phương sai rồi co giãn lại.
+- [Building makemore Part 3: Activations & Gradients, BatchNorm](https://www.youtube.com/watch?v=P6sfmUTpUmc) — Andrej Karpathy, tiếng Anh. Các thống kê đó được tính trong mã, để phép rút theo kênh nhìn thấy được.
+- [Lecture 6 | Training Neural Networks I](https://www.youtube.com/watch?v=wEoyxE0GP2M) — Stanford University School of Engineering, tiếng Anh. Khẳng định ổn định huấn luyện ban đầu mà phần cơ chế đang biện minh.

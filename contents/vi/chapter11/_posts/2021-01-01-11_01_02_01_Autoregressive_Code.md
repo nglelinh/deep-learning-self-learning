@@ -205,3 +205,9 @@ with torch.no_grad():
     print(f"Mean dữ liệu:   {data_tensor.mean(dim=0).numpy()}")
 
 ```
+
+## Video tham khảo
+
+- **xem trước** [The spelled-out intro to language modeling: building makemore](https://www.youtube.com/watch?v=PaCmpygFfXo) — Andrej Karpathy, tiếng Anh. Dự đoán ký tự kế là mô hình tự hồi quy bài lập trình.
+- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Cùng phép phân tích đó bên trong một transformer, khi mô hình bigram đã quá nhỏ.
+- [Sequence-to-Sequence (seq2seq) Encoder-Decoder Neural Networks, Clearly Explained!!!](https://www.youtube.com/watch?v=L8HKweZIOmg) — StatQuest with Josh Starmer, tiếng Anh. Sequence-to-sequence như bản có điều kiện của tích xác suất đó.

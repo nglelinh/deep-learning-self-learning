@@ -44,3 +44,9 @@ Token ids
 | Dropout chỉ ở chế độ train | `model.eval()` khi suy luận |
 
 Bắt đầu với **Cài đặt cốt lõi**.
+
+## Video tham khảo
+
+- **xem trước** [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Bản đồ module (attention, MLP, khối, đầu mô hình ngôn ngữ) được dựng trên video.
+- [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Các phương trình các module đó phải khớp.
+- [Transformer Neural Networks, ChatGPT's foundation, Clearly Explained!!!](https://www.youtube.com/watch?v=zxQyTK8quyY) — StatQuest with Josh Starmer, tiếng Anh. Một cách gắn nhãn thứ hai cho khối nếu một lỗi kích thước khó khoanh vùng.

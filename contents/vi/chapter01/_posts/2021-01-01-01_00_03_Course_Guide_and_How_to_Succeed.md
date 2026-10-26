@@ -201,3 +201,9 @@ Bài mở đầu này thiết lập hiểu biết nền tảng cần thiết cho
 Với hiểu biết khái niệm từ phần giới thiệu này và cơ chế chi tiết ở chương sau, ta sẽ sẵn sàng hiểu thuật toán huấn luyện, tự triển khai mạng, và đánh giá đúng các kiến trúc tinh vi đang vận hành các hệ thống AI hiện đại.
 
 **Ghi nhớ**: Học sâu, về bản chất, là để dữ liệu bộc lộ cấu trúc của chính nó thay vì áp đặt giả định của con người. Sự chuyển paradigm này — từ đặc trưng thủ công sang biểu diễn được học — là điều khiến học sâu vừa mạnh mẽ vừa khác về triết lý so với các cách tiếp cận truyền thống. Khi tiến qua khóa học, nguyên lý này sẽ hiện diện dưới nhiều hình thức khác nhau qua các miền và kiến trúc.
+
+## Video tham khảo
+
+- **xem trước** [MIT Introduction to Deep Learning (2024) | 6.S191](https://www.youtube.com/watch?v=ErnWZxJovaM) — Alexander Amini, tiếng Anh. Thấy một khóa nhập môn nghiêm túc xếp tiên quyết, hàm mất mát và huấn luyện, khớp lộ trình của hướng dẫn này.
+- [AI, Machine Learning, Deep Learning and Generative AI Explained](https://www.youtube.com/watch?v=qYNweeDHiyU) — IBM Technology, tiếng Anh. Dùng video này để đặt phần ứng dụng (thị giác, ngôn ngữ, mô hình sinh) trước khi chọn đường đi qua các chương.
+- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, tiếng Anh. Các chương sau chỉ tới mô hình ngôn ngữ lớn; bài nói này là bản đồ của đích đó.

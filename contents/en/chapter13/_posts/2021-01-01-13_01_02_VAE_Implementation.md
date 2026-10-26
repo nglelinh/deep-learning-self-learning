@@ -382,3 +382,9 @@ Variational Autoencoders combine neural networks with variational inference to c
 
 Variational autoencoders exemplify how bringing together ideas from different fields—neural networks, variational inference, information theory—can create methods more powerful than the sum of their parts.
 
+
+## Video tham khảo
+
+- **xem trước** [Variational Autoencoders](https://www.youtube.com/watch?v=9zKuYvjFFS8) — Arxiv Insights, English. The sampling path the code has to follow: reparameterize, then decode.
+- [MIT 6.S191 (2024): Deep Generative Modeling](https://www.youtube.com/watch?v=Dmm4UG-6jxA) — Alexander Amini, English. The implementation pitfalls (posterior collapse, blurry samples) this lesson lists.
+- [MaDL - Kullback-Leibler Divergence](https://www.youtube.com/watch?v=vPvnpC0PNVQ) — Tübingen Machine Learning, English. The KL piece to check if the loss is only reconstruction.

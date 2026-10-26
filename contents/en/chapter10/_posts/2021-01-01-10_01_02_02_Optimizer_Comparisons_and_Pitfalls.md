@@ -290,3 +290,9 @@ Advanced optimization algorithms improve upon vanilla gradient descent by incorp
 
 The evolution of optimization algorithms from vanilla gradient descent to modern adaptive methods represents the field learning to automate aspects of training that previously required expert tuning, democratizing deep learning while also introducing new subtleties that practitioners must understand to train models effectively.
 
+
+## Video tham khảo
+
+- **xem trước** [Optimization for Deep Learning (Momentum, RMSprop, AdaGrad, Adam)](https://www.youtube.com/watch?v=NE88eqLngkg) — DeepBean, English. The comparison the lesson asks you to make.
+- [Adam Optimization Algorithm (C2W2L08)](https://www.youtube.com/watch?v=JXQT_vxqwIs) — DeepLearningAI, English. Adam's failure modes (the bias correction, the learning-rate scale) are in this short derivation.
+- [Stochastic Gradient Descent, Clearly Explained!!!](https://www.youtube.com/watch?v=vMh0zPT0tLI) — StatQuest with Josh Starmer, English. SGD is the baseline those comparisons keep losing or beating.

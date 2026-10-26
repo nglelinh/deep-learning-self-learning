@@ -216,3 +216,9 @@ $$\text{minimize } \mathbf{w}^T\mathbf{\Sigma}\mathbf{w}$$
 trong đó $$\mathbf{w}$$ là vector trọng số danh mục và $$\mathbf{\Sigma}$$ là ma trận hiệp phương sai của lợi suất tài sản.
 
 Nắm vững ma trận và phép biến đổi tuyến tính cung cấp công cụ để phát biểu, phân tích và giải hiệu quả một lớp rộng các bài toán tối ưu hóa.
+
+## Video tham khảo
+
+- **xem trước** [Linear transformations and matrices | Chapter 3, Essence of linear algebra](https://www.youtube.com/watch?v=kYB8IZa5AuE) — 3Blue1Brown, tiếng Anh. Ma trận là ánh xạ tuyến tính mà bài nghiên cứu, không chỉ là bảng số.
+- [Matrix multiplication as composition | Chapter 4, Essence of linear algebra](https://www.youtube.com/watch?v=XkY2DOUCWMU) — 3Blue1Brown, tiếng Anh. Nhân ma trận như phép hợp là quy tắc nhân khi xếp các ánh xạ mà bài mô tả.
+- [Inverse matrices, column space and null space | Chapter 7, Essence of linear algebra](https://www.youtube.com/watch?v=uQhTuRlWMxw) — 3Blue1Brown, tiếng Anh. Nghịch đảo, không gian cột và không gian hạch là các ma trận đặc biệt và điều kiện giải được ở cuối bài.

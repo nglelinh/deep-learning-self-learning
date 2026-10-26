@@ -67,3 +67,9 @@ Write these down and try them on any open instruct model:
 - Instruction-following is mostly a **data** change (SFT) on top of the same next-token loss.
 - Alignment preferences are a further change — lesson **26-03** — not a substitute for a clear prompt.
 - Decode-time sampling (temperature, top-$$k$$ / top-$$p$$) is a serving knob, not a new prompt type — **26-04**.
+
+## Video tham khảo
+
+- **xem trước** [What Is In-Context Learning in Deep Learning?](https://www.youtube.com/watch?v=As9a15poQHs) — Deep Learning with Yacine, English. In-context learning is conditioning on examples inside the prompt, which is this lesson.
+- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, English. A prompt is more tokens in the same next-token model; that is the lesson's first section.
+- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, English. You can see a prompt as nothing but the prefix the sampler continues.

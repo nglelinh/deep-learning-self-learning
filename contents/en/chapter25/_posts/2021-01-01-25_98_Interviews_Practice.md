@@ -63,3 +63,9 @@ You must put a prior on a bias parameter in a well-specified logistic model (Cha
 ## Attribution
 
 Kashani, S., and Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Download the PDF from arXiv for the full solved Q&A. This page is original course practice, not a reprint.
+
+## Video tham khảo
+
+- **xem trước** [MaDL - Bayesian Decision Theory](https://www.youtube.com/watch?v=j4yxsEQqPMI) — Tübingen Machine Learning, English. Bayesian decisions are this practice set's theme.
+- [Bayes theorem, the geometry of changing beliefs](https://www.youtube.com/watch?v=HZGCoVF3YvM) — 3Blue1Brown, English. Bayes' theorem, the identity those prompts start from.
+- [MaDL - Kullback-Leibler Divergence](https://www.youtube.com/watch?v=vPvnpC0PNVQ) — Tübingen Machine Learning, English. KL divergence, the uncertainty comparison the prompts often ask for.

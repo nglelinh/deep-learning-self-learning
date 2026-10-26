@@ -334,3 +334,9 @@ Generative Adversarial Networks learn to generate realistic data by training two
 
 The GAN framework demonstrates that competition can be a powerful learning signal, a principle that has influenced deep learning far beyond generative modeling.
 
+
+## Video tham khảo
+
+- **xem trước** [A Friendly Introduction to Generative Adversarial Networks (GANs)](https://www.youtube.com/watch?v=8L11aMN5KY8) — Luis Serrano Academy, English. The alternating updates the code performs.
+- [What are GANs (Generative Adversarial Networks)?](https://www.youtube.com/watch?v=TpMIssRdhco) — IBM Technology, English. A compact reminder of which network receives which loss.
+- [The Math Behind Generative Adversarial Networks Clearly Explained!](https://www.youtube.com/watch?v=Gib_kiXgnvA) — Normalized Nerd, English. Use this when the implementation's loss sign does not match the theory.

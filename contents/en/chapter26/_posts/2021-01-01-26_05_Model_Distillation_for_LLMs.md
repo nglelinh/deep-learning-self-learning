@@ -158,3 +158,9 @@ If the teacher also wrote a rationale, store it *inside* `completion` (or as a s
 - Modern practice clusters into **response (synthetic)**, **feature**, and **logit** distillation.
 - In-house / licensed distillation is standard efficiency work; training on a forbidden API is a terms-and-leakage problem, not a new algorithm.
 - A temperature-scaled KL is the right *picture*; a teacher-written SFT file is what most LLM students actually train on.
+
+## Video tham khảo
+
+- **xem trước** [Knowledge Distillation: How LLMs train each other](https://www.youtube.com/watch?v=jrJKRYAdh7I) — Julia Turc, English. How a large language model teaches a smaller one, which is this lesson's modern half.
+- [2.3 Knowledge Distillation | Geoffery Hinton | Soft Labels | Softmax with Temperature](https://www.youtube.com/watch?v=g1r4Esohw-g) — AI_Snippets, English. Classical soft-label distillation and the temperature, the Chapter 23 refresh.
+- [How LLMs survive in low precision | Quantization Fundamentals](https://www.youtube.com/watch?v=qoQJq5UwV1c) — Julia Turc, English. Why matching a full vocabulary distribution is expensive, the lesson's objection to naive logit KD.

@@ -124,3 +124,9 @@ Hiểu gradient và đạo hàm theo hướng là then chốt cho:
 5. **Chọn độ dài bước**: xác định khoảng di chuyển dọc theo hướng gradient
 
 Gradient cung cấp đồng thời hướng cần di chuyển và thông tin về tốc độ biến thiên của hàm, do đó là nền tảng của hầu hết các thuật toán tối ưu hóa.
+
+## Video tham khảo
+
+- **xem trước** [Directional Derivatives | What's the slope in any direction?](https://www.youtube.com/watch?v=GJODOGq7cAY) — Dr. Trefor Bazett, tiếng Anh. Đạo hàm theo hướng là độ dốc theo một hướng đã chọn, và gradient là hướng tăng nhanh nhất.
+- [MaDL - Vector Calculus](https://www.youtube.com/watch?v=rh885pI4lPA) — Tübingen Machine Learning, tiếng Anh. Đặt gradient, đạo hàm theo hướng và Jacobian vào ký hiệu khóa dùng cho ánh xạ nhận giá trị vector.
+- [Continuity vs Partial Derivatives vs Differentiability | My Favorite Multivariable Function](https://www.youtube.com/watch?v=6Wi1kT9kR1M) — Dr. Trefor Bazett, tiếng Anh. Cho thấy vì sao gradient có thể tồn tại theo nghĩa yếu hơn khả vi đầy đủ, đúng phân biệt mà phần đường mức dựa vào.

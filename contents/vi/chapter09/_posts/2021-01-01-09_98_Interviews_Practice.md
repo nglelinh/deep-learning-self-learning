@@ -63,3 +63,9 @@ Bạn không tăng được $$\lambda$$ vì loss train đã cao. Đưa một b�
 ## Ghi công
 
 Kashani, S., và Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Tải PDF từ arXiv để xem toàn bộ Q&A đã giải. Trang này là bài luyện gốc của khóa, không phải bản in lại.
+
+## Video tham khảo
+
+- **xem trước** [Machine Learning Fundamentals: Bias and Variance](https://www.youtube.com/watch?v=EuBBz3bI-aA) — StatQuest with Josh Starmer, tiếng Anh. Các câu về quá khớp.
+- [Regularization Part 1: Ridge (L2) Regression](https://www.youtube.com/watch?v=Q81RR3yKn30) — StatQuest with Josh Starmer, tiếng Anh. Suy giảm trọng số L2 là bộ chính quy cổ điển các câu đó vẫn hỏi.
+- [Dropout Regularization (C2W1L06)](https://www.youtube.com/watch?v=D8PJAL-MZv8) — DeepLearningAI, tiếng Anh. Dropout là bộ chính quy mạng neuron để đặt cạnh L2.

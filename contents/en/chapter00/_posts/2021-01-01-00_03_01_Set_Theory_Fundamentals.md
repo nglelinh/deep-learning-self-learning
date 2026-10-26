@@ -213,3 +213,9 @@ $$S = \{x \in \mathbb{R}^n : Ax \leq b, x \geq 0\} = \bigcap_{i=1}^{m} \{x : a_i
 This is the intersection of half-spaces, demonstrating how set operations naturally arise in deep-learning problem formulation.
 
 Understanding set theory provides the rigorous mathematical foundation needed to formulate deep-learning problems precisely and analyze their properties systematically.
+
+## Video tham khảo
+
+- **xem trước** [Intro to Sets | Examples, Notation & Properties](https://www.youtube.com/watch?v=B1v2-nGXNzs) — Dr. Trefor Bazett, English. Set notation, operations, and what a function's domain and codomain are.
+- [INTRODUCTION to SET THEORY - DISCRETE MATHEMATICS](https://www.youtube.com/watch?v=tyDKR4FG3Yw) — TrevTutor, English. A fuller pass over unions, intersections, and the number sets the lesson lists.
+- [MaDL - Sets, Scalars, Vectors, Matrices and Tensors](https://www.youtube.com/watch?v=JzIjCkouIGg) — Tübingen Machine Learning, English. Connects those sets to the scalars, vectors, and tensors the rest of the course actually computes with.

@@ -54,3 +54,9 @@ VQ-VAE / VQGAN vẫn là nút thắt rời rạc cho tokenizer ảnh và video (
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Cài autoencoder NumPy/PyTorch và bài pitfalls không gian ẩn trước. Bài này chỉ cho thấy **latent ấy đi đâu** trong hệ 2022–2026 (khuếch tán, codec, MAE) — không phải suy diễn tái tạo mới.
+
+## Video tham khảo
+
+- **xem trước** [How does Stable Diffusion work? – Latent Diffusion Models EXPLAINED](https://www.youtube.com/watch?v=J87hffSMB60) — AI Coffee Break with Letitia, tiếng Anh. Latent của Stable Diffusion là autoencoder mà ghi chú nói khuếch tán đang sống trong đó.
+- [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, tiếng Anh. Autoencoder thuần mà latent đó được khái quát từ.
+- [But how do AI images and videos actually work? | Guest video by Welch Labs](https://www.youtube.com/watch?v=iv-5mZ_9CPY) — 3Blue1Brown, tiếng Anh. Quá trình khuếch tán chạy trong không gian ẩn đó.

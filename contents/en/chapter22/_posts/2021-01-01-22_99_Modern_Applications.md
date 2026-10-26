@@ -49,3 +49,9 @@ Production recommenders still run **bipartite GNNs** or two-tower embeddings (Pi
 ## 4. How this complements the core notes
 
 Write a message-passing layer first. This lesson only adds **graph Transformers** and **AlphaFold 3** as the applications that cite this chapter’s ideas in 2024–2026.
+
+## Video tham khảo
+
+- **xem trước** [Graph Neural Networks Explained: A Clear Guide to GNN Basics & Models](https://www.youtube.com/watch?v=eGoszzMkGfU) — IBM Technology, English. Message passing is what a graph transformer still does, with a learned attention mask.
+- [Message Passing: How Graph Neural Networks Actually Work](https://www.youtube.com/watch?v=1DmNdMUbDkg) — The Synthetic Mind, English. A single round, so the graph-transformer block has a baseline.
+- [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, English. Self-attention is the mixer that block uses once neighbors are not the only tokens it may read.

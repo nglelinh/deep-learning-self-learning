@@ -107,3 +107,9 @@ Trọng số cập nhật: $$w_{\text{fine}} = 0.523 - 0.0001 \times 0.015 = 0.5
 Thay đổi nhỏ (learning rate 0.0001) thích ứng đặc trưng nhẹ mà không phá hủy cấu trúc hữu ích học từ ImageNet. Trên hàng nghìn trọng số, các thích ứng nhỏ này tích lũy để chuyên hóa mạng cho chim trong khi bảo toàn hiểu biết thị giác tổng quát.
 
 Kết quả: Với trích xuất đặc trưng, ta có thể đạt 85% độ chính xác phân loại chim. Với tinh chỉnh, 92% độ chính xác. Huấn luyện từ đầu với 500 ảnh của ta: có lẽ 60% độ chính xác (overfitting nghiêm trọng). Lợi thế học chuyển giao kịch tính và thực tiễn.
+
+## Video tham khảo
+
+- **xem trước** [Fine-tuning a Neural Network explained](https://www.youtube.com/watch?v=5T-iXNNiwIs) — deeplizard, tiếng Anh. Đóng băng lớp nào là câu hỏi lý thuyết.
+- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, tiếng Anh. Vì sao các lớp tích chập sớm chuyển được còn lớp muộn thì không, trong một bài 2024.
+- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Một phân cấp đặc trưng cụ thể để chỉ vào khi bạn chọn chỗ cắt.

@@ -224,3 +224,9 @@ Chỉ lấy cảm hứng và bản đồ chủ đề — **không** phải ngu�
 - FLOPs chiều xuôi $$\sim 2 N T$$; chiều ngược $$\sim 2\times$$; huấn luyện $$\sim 6 N T$$. Bộ nhớ suy luận $$\approx$$ trọng số + KV.
 - Tối ưu kiểu Chinchilla: chia ngân sách FLOP cho **cả** $$N$$ lẫn $$T$$. Trích Kaplan và Hoffmann; đừng bịa đường loss.
 - RNN nén quá khứ vào $$h_t$$; Transformer đọc lại cache cỡ $$O(L)$$. SSM cố lấy cả hai.
+
+## Video tham khảo
+
+- **xem trước** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Khối decoder bài yêu cầu bạn vẽ (attention, rồi MLP).
+- [How FlashAttention Accelerates Generative AI Revolution](https://www.youtube.com/watch?v=gBMO1JZav44) — Jia-Bin Huang, tiếng Anh. FlashAttention như một câu chuyện lưu lượng bộ nhớ, đúng cách bài muốn nó được kể.
+- [Chinchilla Explained: Compute-Optimal Massive Language Models](https://www.youtube.com/watch?v=PZXN7jm9IC0) — Edan Meyer, tiếng Anh. Scaling kiểu Chinchilla, phần sổ sách định tính.

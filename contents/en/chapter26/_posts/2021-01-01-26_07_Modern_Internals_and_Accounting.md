@@ -224,3 +224,9 @@ Inspiration and topic map only — **not** a source to quote. Rewrite was done i
 - Forward FLOPs $$\sim 2 N T$$; backward $$\sim 2\times$$ that; train $$\sim 6 N T$$. Inference memory $$\approx$$ weights + KV.
 - Chinchilla-style optimality: split a FLOP budget across **both** $$N$$ and $$T$$. Cite Kaplan and Hoffmann; do not invent a loss curve.
 - RNNs compress the past into $$h_t$$; Transformers reread a cache of size $$O(L)$$. SSMs try to get both.
+
+## Video tham khảo
+
+- **xem trước** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, English. The decoder block this lesson asks you to draw (attention, then MLP).
+- [How FlashAttention Accelerates Generative AI Revolution](https://www.youtube.com/watch?v=gBMO1JZav44) — Jia-Bin Huang, English. FlashAttention as a memory-traffic story, which is how the lesson wants it told.
+- [Chinchilla Explained: Compute-Optimal Massive Language Models](https://www.youtube.com/watch?v=PZXN7jm9IC0) — Edan Meyer, English. Chinchilla-style scaling, the qualitative accounting section.

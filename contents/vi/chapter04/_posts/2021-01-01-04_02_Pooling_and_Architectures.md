@@ -15,3 +15,9 @@ Phần này hoàn thiện bộ công cụ CNN: **gộp** (*pooling*) để giả
 2. **Kiến trúc CNN Kinh điển** — LeNet, AlexNet, VGG, ResNet, bài báo, và điểm then chốt
 
 Hãy đọc bài về pooling trước, rồi khảo sát kiến trúc.
+
+## Video tham khảo
+
+- **xem trước** [Max Pooling in Convolutional Neural Networks explained](https://www.youtube.com/watch?v=ZjM_XQa5s6s) — deeplizard, tiếng Anh. Max pooling là nửa giảm mẫu của khối này.
+- [Lecture 9 | CNN Architectures](https://www.youtube.com/watch?v=DAOcjicFr1Y) — Stanford University School of Engineering, tiếng Anh. Nửa kiến trúc: từ LeNet tới ResNet.
+- [Residual Networks (ResNet) \[Physics Informed Machine Learning\]](https://www.youtube.com/watch?v=w1UsKanMatM) — Steve Brunton, tiếng Anh. Kết nối tắt của ResNet, kiến trúc cuối khối đi tới.

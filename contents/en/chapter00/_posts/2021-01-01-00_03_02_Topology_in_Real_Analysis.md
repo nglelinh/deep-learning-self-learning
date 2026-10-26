@@ -293,3 +293,9 @@ The feasible region $$S = \{\mathbf{w} : \mathbf{1}^T \mathbf{w} = 1, \mathbf{w}
 Since the objective function $$\mathbf{w}^T \mathbf{\Sigma} \mathbf{w}$$ is continuous and $$S$$ is compact, the Extreme Value Theorem guarantees that an optimal portfolio exists.
 
 Understanding topology and real analysis provides the rigorous foundation needed to prove that deep-learning problems have solutions and that algorithms will find them. These concepts are essential for both theoretical analysis and practical algorithm design.
+
+## Video tham khảo
+
+- **xem trước** [Intro to Open Sets (with Examples) | Real Analysis](https://www.youtube.com/watch?v=pnWgj8jjs3w) — Wrath of Math, English. An open set is defined by a ball around every point, which is this lesson's starting definition.
+- [Identifying Open, Closed, and Compact Sets | Real Analysis Exercises](https://www.youtube.com/watch?v=0_mottmadEU) — Wrath of Math, English. Works examples that separate open, closed, and compact sets, including boundary and closure.
+- [Open Covers, Finite Subcovers, and Compact Sets | Real Analysis](https://www.youtube.com/watch?v=dAz9ax-bjzU) — Wrath of Math, English. Compactness via open covers is the theorem-level definition the lesson uses for extreme-value arguments.

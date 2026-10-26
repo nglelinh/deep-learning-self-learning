@@ -168,3 +168,9 @@ Understanding vectors and vector spaces is crucial for deep-learning because:
 6. **Linear Combinations:** Feasible regions are often defined as linear combinations of vectors (convex hulls, cones, etc.).
 
 The vector space framework provides the mathematical foundation for formulating and solving deep-learning problems systematically.
+
+## Video tham khảo
+
+- **xem trước** [Vectors | Chapter 1, Essence of linear algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs) — 3Blue1Brown, English. What a vector is, before span, basis, and dimension.
+- [Linear combinations, span, and basis vectors | Chapter 2, Essence of linear algebra](https://www.youtube.com/watch?v=k7RM-ot2NWY) — 3Blue1Brown, English. Linear combinations, span, and basis are the independence and dimension section of this lesson.
+- [Dot products and duality | Chapter 9, Essence of linear algebra](https://www.youtube.com/watch?v=LyGKycYT2v0) — 3Blue1Brown, English. The dot product here is the inner product in the lesson; the Euclidean norm is the length it induces.

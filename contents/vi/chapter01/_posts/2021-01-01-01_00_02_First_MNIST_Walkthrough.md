@@ -223,3 +223,9 @@ Kiến trúc Transformer được giới thiệu ở đây đã trở thành n�
 **["Deep Residual Learning for Image Recognition" (2016)](https://arxiv.org/abs/1512.03385)**  
 *Tác giả*: Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun  
 ResNet giới thiệu skip connection, cho phép huấn luyện mạng sâu hàng trăm tầng bằng cách cung cấp đường đi gradient trực tiếp. Ngoài chiến thắng ImageNet 2015, công trình này thay đổi căn bản cách ta nghĩ về kiến trúc sâu — độ sâu là then chốt, nhưng mạng cần đổi mới kiến trúc (skip connection, chuẩn hóa cẩn thận) để huấn luyện hiệu quả. Các nguyên lý của ResNet xuất hiện trong hầu hết kiến trúc sâu hiện đại.
+
+## Video tham khảo
+
+- **xem trước** [PyTorch Course (2022), Part 4: Image Classification (MNIST)](https://www.youtube.com/watch?v=gBw0u_5u0qU) — Mr. P Solver, tiếng Anh. Nếu bạn sắp chạy vòng lặp huấn luyện MNIST mà bài phác thảo.
+- [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Mạng chữ số viết tay là mô hình khái niệm đứng sau vòng lặp đó.
+- [Lecture 4 | Introduction to Neural Networks](https://www.youtube.com/watch?v=d14TUNcbn1k) — Stanford University School of Engineering, tiếng Anh. Bài giảng mạng neuron của Stanford đặt bộ phân loại đó vào ngôn ngữ của các bài toán sau.

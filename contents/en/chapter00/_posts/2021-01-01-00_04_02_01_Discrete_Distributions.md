@@ -336,3 +336,9 @@ canvas {
     margin: 20px 0;
 }
 </style>
+
+## Video tham khảo
+
+- **xem trước** [The Binomial Distribution and Test, Clearly Explained!!!](https://www.youtube.com/watch?v=J8jNoF-K8E8) — StatQuest with Josh Starmer, English. Bernoulli trials and the binomial distribution are the main discrete models in the lesson.
+- [Binomial distributions | Probabilities of probabilities, part 1](https://www.youtube.com/watch?v=8idr1WZ1A7Q) — 3Blue1Brown, English. A geometric view of the same binomial probabilities, useful when the count of successes is the random variable.
+- [An Introduction to the Poisson Distribution](https://www.youtube.com/watch?v=jmqZG6roVqU) — jbstatistics, English. The Poisson distribution is the other discrete family the lesson typically sets next to the binomial.

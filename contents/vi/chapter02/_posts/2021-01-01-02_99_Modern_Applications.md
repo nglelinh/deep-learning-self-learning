@@ -56,3 +56,9 @@ và đặt trước nhánh residual (pre-norm). Đó là câu chuyện tỷ lệ
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Dùng bài perceptron và hàm kích hoạt để hiểu $$z$$ và $$\sigma$$. Bài này chỉ ghi **cách đóng gói** (SwiGLU, RMSNorm, residual) khi bạn mở checkpoint LLM 2025 hoặc model card `timm`. Chương **26-07** đặt đóng gói đó lên cả stack decoder (RoPE, GQA, sổ sách).
+
+## Video tham khảo
+
+- **xem trước** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Khối MLP trong transformer là lớp kết nối đầy đủ hiện đại mà ghi chú mô tả.
+- [The GELU, SiLU and SwiGLU activation functions, clearly explained!!!](https://www.youtube.com/watch?v=2FaI2Fen1mQ) — StatQuest with Josh Starmer, tiếng Anh. SwiGLU là hàm kích hoạt khối đó thực sự dùng.
+- [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Bức tranh neuron xếp chồng ban đầu, để so sánh 'từ một neuron tới MLP' của ghi chú có chỗ đứng.

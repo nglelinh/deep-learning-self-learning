@@ -222,3 +222,9 @@ Bắt đầu với learning rate rất nhỏ và tăng dần đến giá trị m
 $$\eta_t = \eta_0 \cdot \min\left(1, \frac{t}{T_{\text{warmup}}}\right)$$
 
 **Trường hợp dùng**: Huấn luyện batch lớn, transformer
+
+## Video tham khảo
+
+- **xem trước** [Gradient descent, how neural networks learn | Deep Learning Chapter 2](https://www.youtube.com/watch?v=IHZwWFHWa-w) — 3Blue1Brown, tiếng Anh. Learning rate là độ dài bước trên mặt chi phí mà bài nghiên cứu.
+- [Gradient Descent, Step-by-Step](https://www.youtube.com/watch?v=sDv4f4s2SB8) — StatQuest with Josh Starmer, tiếng Anh. Tính một bước cập nhật bằng tay để batch, ngẫu nhiên và mini-batch dễ tách.
+- [Gradient Descent là gì? | Tự học AI từ con số 0](https://www.youtube.com/watch?v=f3h5CU1808g) — Gà AI, tiếng Việt. Gradient descent qua ví dụ, bằng tiếng Việt.

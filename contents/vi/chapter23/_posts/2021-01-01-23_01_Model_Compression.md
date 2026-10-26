@@ -129,3 +129,9 @@ MobileNets dùng tích chập tách theo chiều sâu, giảm tính toán 8–9�
 ## Điểm Chính Cần Nhớ
 
 Nén mô hình làm cho học sâu thực tiễn trên thiết bị hạn chế tài nguyên qua cắt tỉa (loại bỏ tham số không cần thiết), lượng tử hóa (giảm độ chính xác số), chưng cất tri thức (chuyển tri thức mô hình lớn sang mô hình nhỏ), và kiến trúc hiệu quả (thiết kế vì hiệu quả ngay từ đầu). Các kỹ thuật này cho phép nén 10–100× với mất độ chính xác tối thiểu, dân chủ hóa triển khai học sâu ngoài máy chủ đám mây sang thiết bị biên, cho phép suy luận thời gian thực, và giảm tác động môi trường qua yêu cầu tính toán thấp hơn.
+
+## Video tham khảo
+
+- **xem trước** [Lecture 15 | Efficient Methods and Hardware for Deep Learning](https://www.youtube.com/watch?v=eZdOkDtYMoo) — Stanford University School of Engineering, tiếng Anh. Tỉa, lượng tử hóa và các ràng buộc phần cứng cùng lúc.
+- [How LLMs survive in low precision | Quantization Fundamentals](https://www.youtube.com/watch?v=qoQJq5UwV1c) — Julia Turc, tiếng Anh. Trọng số độ chính xác thấp, chủ đề của phần lượng tử hóa.
+- [2.3 Knowledge Distillation | Geoffery Hinton | Soft Labels | Softmax with Temperature](https://www.youtube.com/watch?v=g1r4Esohw-g) — AI_Snippets, tiếng Anh. Nhãn mềm và nhiệt độ của Hinton, phần chưng cất cổ điển bài dừng lại trước Chương 26.

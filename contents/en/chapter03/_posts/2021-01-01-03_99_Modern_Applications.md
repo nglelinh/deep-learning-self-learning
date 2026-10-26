@@ -59,3 +59,9 @@ where $$\widehat{\nabla \mathcal{L}}$$ was computed in BF16/FP16. Overflow is av
 ## 5. How this complements the core notes
 
 Work the backprop worksheet and the NumPy trainer first. This lesson only answers “what industry added around the tape”: compilers, AMP, and fused backwards — not a new learning rule.
+
+## Video tham khảo
+
+- **xem trước** [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0) — Andrej Karpathy, English. The chain rule did not change; this note's point is that the scheduler around it did.
+- [Adam Optimization Algorithm (C2W2L08)](https://www.youtube.com/watch?v=JXQT_vxqwIs) — DeepLearningAI, English. Adam is the default scheduler the note contrasts with plain gradient descent.
+- [Optimization for Deep Learning (Momentum, RMSprop, AdaGrad, Adam)](https://www.youtube.com/watch?v=NE88eqLngkg) — DeepBean, English. Momentum, RMSProp, AdaGrad, and Adam in one comparison, which is the 'different scheduler' claim.

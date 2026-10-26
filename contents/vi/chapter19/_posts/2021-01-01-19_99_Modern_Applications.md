@@ -51,3 +51,9 @@ Whisper + [pyannote](https://github.com/pyannote/pyannote-audio) là pipeline gh
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Dùng phần mở đầu chương làm bản đồ (spectrogram, DeepSpeech, WaveNet). Bài này chỉ cập nhật **checkpoint và codec** bạn sẽ cài năm 2026.
+
+## Video tham khảo
+
+- **xem trước** [OpenAI's Whisper Model Explained](https://www.youtube.com/watch?v=uFOkMme19Zs) — What's AI by Louis-François Bouchard, tiếng Anh. Whisper như hệ ASR mặc định ghi chú mô tả.
+- [Mel Frequency Cepstral Coefficients (MFCC) Explained](https://www.youtube.com/watch?v=SJo7vPgRlBQ) — DataMListic, tiếng Anh. Các đặc trưng mel mà kiểu mô hình đó vẫn bắt đầu từ.
+- [Mel-Frequency Cepstral Coefficients Explained Easily](https://www.youtube.com/watch?v=4_SH2nfbQZ8) — Valerio Velardo - The Sound of AI, tiếng Anh. Các đặc trưng đó được dựng thế nào, để đầu vào Whisper không phải hộp đen.

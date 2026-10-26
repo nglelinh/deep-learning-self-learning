@@ -173,3 +173,9 @@ Pretraining corpora mix web text, books, code, and filtered crawls. You do not n
 - The tokenizer defines the discrete alphabet; BPE and SentencePiece are the two practical stories.
 - Context length $$L$$ is the working memory of attention — and the size of the KV-cache you will pay for at serve time.
 - The same softmax-over-$$V$$ view that makes pretraining simple is what makes **classical logit distillation expensive** for LMs (continue in **26-05**).
+
+## Video tham khảo
+
+- **xem trước** [Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE) — Andrej Karpathy, English. Byte-pair encoding and the tokenizer are this lesson's second half. The video is long and is the canonical build.
+- [LLM Tokenizers Explained: BPE Encoding, WordPiece and SentencePiece](https://www.youtube.com/watch?v=hL4ZnAWSyuU) — DataMListic, English. A short comparison of BPE, WordPiece, and SentencePiece before that build.
+- [The spelled-out intro to language modeling: building makemore](https://www.youtube.com/watch?v=PaCmpygFfXo) — Andrej Karpathy, English. Next-token cross-entropy on characters, the objective the lesson writes before tokens get merged.

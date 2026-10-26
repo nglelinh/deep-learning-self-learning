@@ -316,3 +316,9 @@ def depthwise_separable_block(x):
 Chuẩn hóa Batch đã cách mạng hóa học sâu bằng cách làm mạng dễ huấn luyện hơn rất nhiều. Nó giờ là thành phần chuẩn trong hầu hết kiến trúc hiện đại.
 
 **Tiếp theo**: Ta sẽ khám phá chính quy hóa L1/L2, dừng sớm, và tăng cường dữ liệu để hoàn thiện bộ công cụ chính quy hóa!
+
+## Video tham khảo
+
+- **xem trước** [Why Does Batch Norm Work? (C2W3L06)](https://www.youtube.com/watch?v=nUUqwaxLnWs) — DeepLearningAI, tiếng Anh. Các tranh luận về vị trí (trước hay sau kích hoạt) có một cơ chế bên dưới.
+- [Building makemore Part 3: Activations & Gradients, BatchNorm](https://www.youtube.com/watch?v=P6sfmUTpUmc) — Andrej Karpathy, tiếng Anh. Chuẩn hóa thực sự nằm đâu trong một khối hiện đại, và cái gì vỡ nếu batch quá nhỏ.
+- [Lecture 7 | Training Neural Networks II](https://www.youtube.com/watch?v=_JB0AO7QxSA) — Stanford University School of Engineering, tiếng Anh. Các lựa chọn kiểu layer norm xuất hiện trong phần kiến trúc hiện đại của bài huấn luyện thứ hai.
