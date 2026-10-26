@@ -90,6 +90,17 @@ module Jekyll
       elsif current_url.start_with?("/contents/")
         # Nếu URL hiện tại không có ngôn ngữ, thêm ngôn ngữ khác
         other_url = current_url.gsub("/contents/", "/contents/#{other_lang}/")
+      elsif current_url.start_with?("/reference")
+        current_post = site.posts.docs.find { |p| p.url == current_url }
+        if current_post && current_post.data['chapter'] && current_post.data['order']
+          matching_post = site.posts.docs.find do |post|
+            post.data['lang'] == other_lang &&
+              post.data['chapter'] == current_post.data['chapter'] &&
+              post.data['order'] == current_post.data['order']
+          end
+          other_url = matching_post.url if matching_post
+        end
+        other_url ||= current_lang == 'en' ? '/reference/vi/' : '/reference/'
       else
         # Mặc định chuyển về chapter00 của ngôn ngữ khác
         other_url = "/contents/#{other_lang}/chapter00/"
