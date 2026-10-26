@@ -250,3 +250,9 @@ canvas {
     margin: 20px 0;
 }
 </style>
+
+## Video tham khảo
+
+- **xem trước** [Conditional Probabilities, Clearly Explained!!!](https://www.youtube.com/watch?v=_IgyaD7vOOA) — StatQuest with Josh Starmer, tiếng Anh. P(A|B) là định nghĩa đầu tiên của cả bài.
+- [Independence in Probability](https://www.youtube.com/watch?v=2nDYX8IKrwo) — Steve Brunton, tiếng Anh. Độc lập là khẳng định thứ hai: xác suất có điều kiện thu về xác suất biên.
+- [Xác suất có điều kiện (Conditional probability) | Công thức nhân xác suất](https://www.youtube.com/watch?v=EsIW9oLsqiI) — TOÁN HỌC MUÔN NƠI, tiếng Việt. Cùng định nghĩa xác suất có điều kiện, bằng tiếng Việt, kèm công thức nhân.

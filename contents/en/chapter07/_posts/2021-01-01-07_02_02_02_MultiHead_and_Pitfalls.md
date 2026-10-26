@@ -320,3 +320,9 @@ Some figures in this lesson are screenshots from the following videos (Machine L
 
 - [Attention formula: hand-compute Q, K, V](https://www.facebook.com/reel/1806844676942638)
 - [Attention in Transformers (Self, Masked, Cross, Multi-Head)](https://www.facebook.com/reel/1007473105556936)
+
+## Video tham khảo
+
+- **xem trước** [A Dive Into Multihead Attention, Self-Attention and Cross-Attention](https://www.youtube.com/watch?v=mmzRYGCfTzc) — Machine Learning Studio, English. Multi-head is several attention maps, not a bigger single softmax.
+- [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, English. Masking, which is the pitfall section's causal constraint.
+- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, English. A coded causal mask, so the pitfall is visible as an indexing bug if you omit it.

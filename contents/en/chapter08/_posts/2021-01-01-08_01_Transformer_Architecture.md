@@ -33,3 +33,9 @@ This section is the heart of the chapter: how attention pieces from Chapter 07 a
 If theory feels abstract, open the matching class in Core Code, run a forward pass on random tokens, then return to the equations.
 
 Continue with **Transformer Theory**.
+
+## Video tham khảo
+
+- **xem trước** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, English. The data flow the theory and code lessons share.
+- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, English. The code lesson's destination: a GPT built from that block.
+- [Transformer Neural Networks, ChatGPT's foundation, Clearly Explained!!!](https://www.youtube.com/watch?v=zxQyTK8quyY) — StatQuest with Josh Starmer, English. Use this if you want every tensor named before opening the code.

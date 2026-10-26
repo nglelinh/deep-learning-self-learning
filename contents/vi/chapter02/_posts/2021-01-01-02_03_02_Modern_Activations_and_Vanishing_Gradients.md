@@ -164,3 +164,9 @@ $$\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[1]}} = \frac{\partial \mathc
 - Lựa chọn hàm kích hoạt ảnh hưởng đáng kể đến huấn luyện và hiệu năng
 
 Ở bài tiếp theo, ta sẽ xét lan truyền xuôi chi tiết với các ví dụ cụ thể.
+
+## Video tham khảo
+
+- **xem trước** [The GELU, SiLU and SwiGLU activation functions, clearly explained!!!](https://www.youtube.com/watch?v=2FaI2Fen1mQ) — StatQuest with Josh Starmer, tiếng Anh. GELU, SiLU và SwiGLU là các hàm hiện đại bài thêm sau ReLU.
+- [Vanishing/Exploding Gradients (C2W1L10)](https://www.youtube.com/watch?v=qhXZsFVxGKo) — DeepLearningAI, tiếng Anh. Gradient biến mất và bùng nổ là kiểu hỏng mà bài dùng để biện minh các lựa chọn đó.
+- [Neural Networks Pt. 3: ReLU In Action!!!](https://www.youtube.com/watch?v=68BZ5f7P94E) — StatQuest with Josh Starmer, tiếng Anh. ReLU là mốc để các hàm mới hơn được so.

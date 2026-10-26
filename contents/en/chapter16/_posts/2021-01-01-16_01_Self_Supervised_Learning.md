@@ -129,3 +129,9 @@ BERT's masked language modeling is self-supervised learning, creating supervisio
 
 Self-supervised learning creates supervision automatically from data structure, enabling learning from massive unlabeled datasets through pretext tasks like masked prediction or contrastive learning. Contrastive methods learn by distinguishing augmented views of same example from different examples, learning invariances to augmentations while capturing semantic content. Masked prediction tasks like BERT's MLM learn to predict missing parts from context, requiring deep understanding of data structure. Self-supervised pre-training often matches or exceeds supervised pre-training for transfer learning, demonstrating that task-agnostic learning from unlabeled data produces versatile representations.
 
+
+## Video tham khảo
+
+- **xem trước** [Contrastive Learning with SimCLR | Deep Learning Animated](https://www.youtube.com/watch?v=UqJauYELn6c) — Deepia, English. The NT-Xent loss on two views of one image is the contrastive section.
+- [DINO: Emerging Properties in Self-Supervised Vision Transformers (Facebook AI Research Explained)](https://www.youtube.com/watch?v=h3ij3F3cPIk) — Yannic Kilcher, English. DINO's emerging segmentation is the paper the lesson cites for self-distillation.
+- [But what is cross-entropy? | Compression is Intelligence Part 2](https://www.youtube.com/watch?v=GlYgs6v2YfU) — 3Blue1Brown, English. Cross-entropy on a masked target is the language pretext (BERT-style) the lesson writes next to NT-Xent.

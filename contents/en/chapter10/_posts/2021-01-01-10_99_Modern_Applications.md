@@ -62,3 +62,9 @@ Reported to cut GPT-style steps versus AdamW at similar quality. Still a researc
 ## 6. How this complements the core notes
 
 Learn Adam and the Rosenbrock comparison first. This lesson only adds **post-AdamW** methods used in 2023–2026 papers and speedruns — it does not replace the optimizer implementations in this chapter.
+
+## Video tham khảo
+
+- **xem trước** [Optimization for Deep Learning (Momentum, RMSprop, AdaGrad, Adam)](https://www.youtube.com/watch?v=NE88eqLngkg) — DeepBean, English. Lion, Sophia, and Muon are later members of the momentum/Adam family this video lines up.
+- [Adam Optimization Algorithm (C2W2L08)](https://www.youtube.com/watch?v=JXQT_vxqwIs) — DeepLearningAI, English. Adam is the update those 2023–2024 methods are measured against.
+- [Lecture 7 | Training Neural Networks II](https://www.youtube.com/watch?v=_JB0AO7QxSA) — Stanford University School of Engineering, English. The training-lecture context for why a new optimizer is a small change next to data and schedule.

@@ -112,3 +112,9 @@ Nếu bạn giải thích được vì sao số hạng KL / tham chiếu tồn t
 - DPO là cùng cực tiểu regularize KL dưới dạng loss logistic trên $$(y_w, y_l)$$ — không mô hình thưởng lúc huấn luyện.
 - Kỹ năng đến từ dữ liệu (và công cụ); sở thích xếp hạng kỹ năng bạn đã có.
 - Suy diễn RL đầy đủ ở lại Chương 20–21 — đừng nhân bản ở đây.
+
+## Video tham khảo
+
+- **xem trước** [Reinforcement Learning with Human Feedback (RLHF), Clearly Explained!!!](https://www.youtube.com/watch?v=qPN_XZcJf_s) — StatQuest with Josh Starmer, tiếng Anh. Bức tranh ba giai đoạn (tiền huấn luyện, SFT, sở thích) là bài này.
+- [Direct Preference Optimization (DPO) - How to fine-tune LLMs directly without reinforcement learning](https://www.youtube.com/watch?v=k2pD3k1485A) — Luis Serrano Academy, tiếng Anh. DPO, mục tiêu sở thích bài yêu cầu bạn viết được.
+- [Reinforcement Learning from Human Feedback (RLHF) Explained](https://www.youtube.com/watch?v=T_X4XFwKX8k) — IBM Technology, tiếng Anh. RLHF với một mô hình thưởng, giai đoạn mà DPO được đưa ra như phương án khác.

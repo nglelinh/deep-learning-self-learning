@@ -126,3 +126,8 @@ Three stacked 3×3 convolutions have:
 This insight from VGGNet (2014) revolutionized CNN architecture design.
 
 ---
+
+## Video tham khảo
+
+- **xem trước** [But what is a convolution?](https://www.youtube.com/watch?v=KuXjwB4LzSA) — 3Blue1Brown, English. Kernels as detectors (edges, then patterns) are the intuition section.
+- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, English. Shows those detectors on actual image patches.

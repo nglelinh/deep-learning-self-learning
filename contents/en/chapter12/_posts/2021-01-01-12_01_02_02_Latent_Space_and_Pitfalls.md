@@ -244,3 +244,9 @@ Autoencoders learn efficient data representations by training to reconstruct inp
 
 The autoencoder framework exemplifies a recurring theme in machine learning: learning through reconstruction, where we force models to discover structure by requiring them to recreate data through constraints or transformations that make trivial solutions impossible.
 
+
+## Video tham khảo
+
+- **xem trước** [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, English. A latent code that only reconstructs can still be useless to sample from.
+- [Variational Autoencoders](https://www.youtube.com/watch?v=9zKuYvjFFS8) — Arxiv Insights, English. The variational fix for that pitfall, which is the next chapter rather than a patch in this one.
+- [How does Stable Diffusion work? – Latent Diffusion Models EXPLAINED](https://www.youtube.com/watch?v=J87hffSMB60) — AI Coffee Break with Letitia, English. A modern latent space that is actually sampled, so the pitfall has a destination.

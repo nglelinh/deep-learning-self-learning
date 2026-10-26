@@ -223,3 +223,9 @@ $$\eta_t = \eta_0 \cdot \min\left(1, \frac{t}{T_{\text{warmup}}}\right)$$
 
 **Use case**: Large batch training, transformers
 
+
+## Video tham khảo
+
+- **xem trước** [Gradient descent, how neural networks learn | Deep Learning Chapter 2](https://www.youtube.com/watch?v=IHZwWFHWa-w) — 3Blue1Brown, English. The learning rate is the step length on the cost surface this lesson studies.
+- [Gradient Descent, Step-by-Step](https://www.youtube.com/watch?v=sDv4f4s2SB8) — StatQuest with Josh Starmer, English. Computes one update by hand so batch, stochastic, and mini-batch are easier to tell apart.
+- [Stochastic Gradient Descent, Clearly Explained!!!](https://www.youtube.com/watch?v=vMh0zPT0tLI) — StatQuest with Josh Starmer, English. Stochastic updates are the variant the lesson recommends once the dataset no longer fits in one step.

@@ -38,3 +38,9 @@ Nếu một công thức trong 07-02-01 còn trừu tượng, hãy nhảy sang d
 - **Tiến tới Chương 08 (Transformer)** để xếp chồng self-attention với khối feed-forward, residual và positional encoding.
 
 Khi sẵn sàng, tiếp tục với **Toán học Attention**.
+
+## Video tham khảo
+
+- **xem trước** [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, tiếng Anh. Khối đi sâu của chương: attention tích vô hướng có tỉ lệ.
+- [Attention for Neural Networks, Clearly Explained!!!](https://www.youtube.com/watch?v=PSs6nxngL6k) — StatQuest with Josh Starmer, tiếng Anh. Bản mô hình chuỗi, để self-attention không phải mẫu duy nhất.
+- [A Dive Into Multihead Attention, Self-Attention and Cross-Attention](https://www.youtube.com/watch?v=mmzRYGCfTzc) — Machine Learning Studio, tiếng Anh. Multi-head, self-attention và cross-attention, đúng các thứ khối này tách ra.

@@ -286,3 +286,9 @@ Một số hình minh họa trong bài được trích từ các video sau (Mach
 
 - [Trực giác mạng nơ-ron (Perceptron → Deep Learning)](https://www.facebook.com/reel/793200140509765)
 - [Mạng nơ-ron là bộ xấp xỉ hàm](https://www.facebook.com/reel/720970114372332)
+
+## Video tham khảo
+
+- **xem trước** [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Một lớp là ánh xạ affine rồi tới phi tuyến, đúng công thức bài viết.
+- [The Essential Main Ideas of Neural Networks](https://www.youtube.com/watch?v=CqOfi41LfDw) — StatQuest with Josh Starmer, tiếng Anh. Đi một lớp ẩn với mọi kích thước ma trận nhìn thấy được.
+- [Lecture 4 | Introduction to Neural Networks](https://www.youtube.com/watch?v=d14TUNcbn1k) — Stanford University School of Engineering, tiếng Anh. Phát biểu cùng phương trình lớp dưới dạng bài giảng, gồm vì sao phép hợp là mục đích của độ sâu.

@@ -183,3 +183,9 @@ print(f"Test uses running statistics")
 - Gradients more predictable
 - Easier optimization
 
+
+## Video tham khảo
+
+- **xem trước** [Why Does Batch Norm Work? (C2W3L06)](https://www.youtube.com/watch?v=nUUqwaxLnWs) — DeepLearningAI, English. The mean-variance normalize-and-rescale formula.
+- [Building makemore Part 3: Activations & Gradients, BatchNorm](https://www.youtube.com/watch?v=P6sfmUTpUmc) — Andrej Karpathy, English. Those statistics computed in code, so the per-channel reduction is visible.
+- [Lecture 6 | Training Neural Networks I](https://www.youtube.com/watch?v=wEoyxE0GP2M) — Stanford University School of Engineering, English. The original training-stabilization claim the mechanics are justifying.

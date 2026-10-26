@@ -254,3 +254,9 @@ with torch.no_grad():
     print(f"Shape tái tạo: {recon_ae_imgs.shape}")
 
 ```
+
+## Video tham khảo
+
+- **xem trước** [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, tiếng Anh. Hình hai module mà mã cốt lõi nên có.
+- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, tiếng Anh. Bộ tối ưu, hàm mất mát và bước, sau khi encode và decode đã có.
+- [Lecture 13 | Generative Models](https://www.youtube.com/watch?v=5WoItGTWV54) — Stanford University School of Engineering, tiếng Anh. Một bản dựng lại lành mạnh trông như thế nào, để một lỗi nhìn thấy được.

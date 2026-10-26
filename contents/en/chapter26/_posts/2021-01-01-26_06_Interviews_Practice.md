@@ -99,3 +99,9 @@ Under a fixed training-FLOP budget $$C \approx 6NT$$, what did Kaplan-style advi
 ## How to use these
 
 Speak the answer out loud in 90 seconds, then check the discussion. If you need RL math, open **21-99**, not this page. If you need classical KD formulas, open **23-01** and **26-05**. If you need the decoder diagram or FLOPs, open **26-07**.
+
+## Video tham khảo
+
+- **xem trước** [Deep Dive into LLMs like ChatGPT](https://www.youtube.com/watch?v=7xTGNNLPyMI) — Andrej Karpathy, English. Before the hub's interview prompts on what is actually trained and how it is served.
+- [But what is cross-entropy? | Compression is Intelligence Part 2](https://www.youtube.com/watch?v=GlYgs6v2YfU) — 3Blue1Brown, English. Cross-entropy and the softmax gradient, which one prompt asks you to derive.
+- [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, English. The modern block another prompt asks you to name and then count.

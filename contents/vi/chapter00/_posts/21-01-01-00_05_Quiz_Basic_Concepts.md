@@ -882,3 +882,9 @@ document.addEventListener('keydown', function(event) {
     }
 });
 </script>
+
+## Video tham khảo
+
+- **xem trước** [Continuity at a point | Limits and continuity | AP Calculus AB | Khan Academy](https://www.youtube.com/watch?v=3KMqU5j7irw) — Khan Academy, tiếng Anh. Nếu các câu trắc nghiệm về liên tục là phần còn chưa chắc.
+- [Vectors | Chapter 1, Essence of linear algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs) — 3Blue1Brown, tiếng Anh. Dùng video này cho các câu về vector: một mũi tên trong R^n thực sự là gì.
+- [L01.4 Probability Axioms](https://www.youtube.com/watch?v=pA83XtLeVig) — MIT OpenCourseWare, tiếng Anh. Dùng video này cho các câu về tiên đề trước khi làm lại phần xác suất.

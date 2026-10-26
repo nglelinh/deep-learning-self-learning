@@ -130,3 +130,35 @@ For the most up-to-date resources and research, check:
 - [ArXiv.org](https://arxiv.org/) for latest papers
 - [Papers with Code](https://paperswithcode.com/) for implementations
 - Course GitHub repository for code examples and notebooks
+
+## Videos by chapter
+
+One verified video per chapter. Open the matching lesson for the full set of 1–3 videos and the note on what to watch.
+
+- **00.** [MaDL - Introduction](https://www.youtube.com/watch?v=gq0m_2Glz0g) — Tübingen Machine Learning, English. Math the rest of the course assumes: vectors, calculus, and probability in one short tour.
+- **01.** [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, English. A layered network as a function approximator, the picture Chapter 1 starts from.
+- **02.** [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, English. From one neuron to a stack of layers.
+- **03.** [Gradient descent, how neural networks learn | Deep Learning Chapter 2](https://www.youtube.com/watch?v=IHZwWFHWa-w) — 3Blue1Brown, English. Training as walking downhill on a cost.
+- **04.** [But what is a convolution?](https://www.youtube.com/watch?v=KuXjwB4LzSA) — 3Blue1Brown, English. Convolution as a sliding local mix.
+- **05.** [Recurrent Neural Networks (RNNs), Clearly Explained!!!](https://www.youtube.com/watch?v=AsNTP8Kwu80) — StatQuest with Josh Starmer, English. A hidden state as memory for sequences.
+- **06.** [Long Short-Term Memory (LSTM), Clearly Explained](https://www.youtube.com/watch?v=YCzL96nL7j0) — StatQuest with Josh Starmer, English. The LSTM cell state and its gates.
+- **07.** [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, English. Queries, keys, and values.
+- **08.** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, English. The transformer block.
+- **09.** [Dropout Regularization (C2W1L06)](https://www.youtube.com/watch?v=D8PJAL-MZv8) — DeepLearningAI, English. Dropout as a regularizer.
+- **10.** [Adam Optimization Algorithm (C2W2L08)](https://www.youtube.com/watch?v=JXQT_vxqwIs) — DeepLearningAI, English. The Adam update.
+- **11.** [MIT 6.S191 (2024): Deep Generative Modeling](https://www.youtube.com/watch?v=Dmm4UG-6jxA) — Alexander Amini, English. The 2024 map of generative models.
+- **12.** [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, English. Encode, bottleneck, decode.
+- **13.** [Variational Autoencoders](https://www.youtube.com/watch?v=9zKuYvjFFS8) — Arxiv Insights, English. A latent distribution, not a point.
+- **14.** [A Friendly Introduction to Generative Adversarial Networks (GANs)](https://www.youtube.com/watch?v=8L11aMN5KY8) — Luis Serrano Academy, English. The generator–discriminator game.
+- **15.** [Fine-tuning a Neural Network explained](https://www.youtube.com/watch?v=5T-iXNNiwIs) — deeplizard, English. Fine-tuning a pretrained network.
+- **16.** [Contrastive Learning with SimCLR | Deep Learning Animated](https://www.youtube.com/watch?v=UqJauYELn6c) — Deepia, English. Contrastive self-supervision.
+- **17.** [How YOLO Object Detection Works](https://www.youtube.com/watch?v=svn9-xV7wjk) — DeepBean, English. One-pass object detection.
+- **18.** [Word Embedding and Word2Vec, Clearly Explained!!!](https://www.youtube.com/watch?v=viZrOnJclY0) — StatQuest with Josh Starmer, English. A word as a learned vector.
+- **19.** [Mel Frequency Cepstral Coefficients (MFCC) Explained](https://www.youtube.com/watch?v=SJo7vPgRlBQ) — DataMListic, English. MFCCs, the features a speech model consumes.
+- **20.** [RL Course by David Silver - Lecture 1: Introduction to Reinforcement Learning](https://www.youtube.com/watch?v=2pWv7GOvuf0) — Google DeepMind, English. Agents, rewards, and policies.
+- **21.** [Lecture 14 | Deep Reinforcement Learning](https://www.youtube.com/watch?v=lvoHnicueoE) — Stanford University School of Engineering, English. DQN and policy gradients.
+- **22.** [Graph Neural Networks Explained: A Clear Guide to GNN Basics & Models](https://www.youtube.com/watch?v=eGoszzMkGfU) — IBM Technology, English. Message passing on a graph.
+- **23.** [Lecture 15 | Efficient Methods and Hardware for Deep Learning](https://www.youtube.com/watch?v=eZdOkDtYMoo) — Stanford University School of Engineering, English. Pruning, quantization, and distillation.
+- **24.** [Lecture 12 | Visualizing and Understanding](https://www.youtube.com/watch?v=6wcs6szJWMY) — Stanford University School of Engineering, English. Looking inside a trained network.
+- **25.** [MIT 6.S191 (2024): Language Models and New Frontiers](https://www.youtube.com/watch?v=N1fbskTpwZ0) — Alexander Amini, English. What the 2024 frontier lecture still treats as open.
+- **26.** [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, English. What a large language model is.

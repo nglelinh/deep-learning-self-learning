@@ -120,3 +120,9 @@ Mỗi companion có 3–6 câu **gốc** kèm gợi ý ngắn. Chúng không vi�
 Kashani, S., và Ivry, A. *Deep Learning Interviews*. arXiv:2201.00650. GitHub: [BoltzmannEntropy/interviews.ai](https://github.com/BoltzmannEntropy/interviews.ai).
 
 Ngân hàng câu hỏi đã giải là tác phẩm của các tác giả. Khóa này chỉ trích tiêu đề, tác giả, mã arXiv, và tên chủ đề, rồi thêm bài luyện gốc của riêng mình. **Người học tải sách từ arXiv** (hoặc GitHub / interviews.ai chính thức). Đừng đưa bản PDF vào kho này và đừng dán nguyên văn đáng kể của sách vào pull request.
+
+## Video tham khảo
+
+- **xem trước** [MIT Introduction to Deep Learning (2024) | 6.S191](https://www.youtube.com/watch?v=ErnWZxJovaM) — Alexander Amini, tiếng Anh. Bức tranh mức đề cương mà lộ trình luyện ánh xạ các chủ đề phỏng vấn vào đó.
+- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, tiếng Anh. Dùng video này cho nửa hiện đại của lộ trình (các mô hình chưa có khi sách phỏng vấn cũ được viết).
+- [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0) — Andrej Karpathy, tiếng Anh. Lộ trình đòi bạn tự suy lan truyền ngược; đây là phép suy đã làm sẵn.

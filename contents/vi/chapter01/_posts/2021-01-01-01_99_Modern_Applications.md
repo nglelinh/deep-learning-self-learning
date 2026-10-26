@@ -55,3 +55,9 @@ Các pipeline bảng và SQL bọc LLM quanh pandas, scikit-learn, truy vấn kh
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Các bài “Học sâu là gì” và MNIST vẫn định nghĩa lĩnh vực. Bài này chỉ cập nhật *chỗ* người mới bắt đầu năm 2026: trọng số pretrained, hub, và ngân sách theo scaling law — không phải định nghĩa mới của mạng neuron.
+
+## Video tham khảo
+
+- **xem trước** [Large Language Models explained briefly](https://www.youtube.com/watch?v=LPZh9BOjkQs) — 3Blue1Brown, tiếng Anh. Một kể ngắn về tiền huấn luyện, transformer và RLHF, đúng mặc định 2022–2026 mà ghi chú mô tả.
+- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, tiếng Anh. Bản đồ dài hơn của cùng quy trình: dữ liệu, huấn luyện, và mô hình đã triển khai là gì.
+- [MIT 6.S191 (2024): Language Models and New Frontiers](https://www.youtube.com/watch?v=N1fbskTpwZ0) — Alexander Amini, tiếng Anh. Bài giảng biên 2024 của MIT là phần đi kèm 'cái gì vừa được dùng thật' cho các trích dẫn trong ghi chú.

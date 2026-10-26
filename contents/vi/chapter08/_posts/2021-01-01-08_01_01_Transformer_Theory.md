@@ -329,3 +329,9 @@ Một số hình minh họa trong bài được trích từ các video sau (Mach
 
 - [Attention trong Transformer (Self, Masked, Cross, Multi-Head)](https://www.facebook.com/reel/1007473105556936)
 - [Position Encoding trong Transformer (từng bước)](https://www.facebook.com/reel/1306224801415127)
+
+## Video tham khảo
+
+- **xem trước** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Nhúng, attention, MLP, softmax và nhiệt độ là các mảnh của bài lý thuyết.
+- [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, tiếng Anh. Bước attention bên trong khối đó, ở độ chi tiết phần toán cần.
+- [Tất cả những gì bạn cần biết về Transformer trong 35 phút](https://www.youtube.com/watch?v=Gc0HXCWT0IA) — Việt Nguyễn AI, tiếng Việt. Một tour tiếng Việt qua cùng khối.

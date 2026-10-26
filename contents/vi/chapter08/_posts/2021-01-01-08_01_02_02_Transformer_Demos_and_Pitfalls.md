@@ -226,3 +226,9 @@ for s in [1, 1000, 4000, 10000]:
 4. Hầu hết nỗi đau sản xuất nằm ở **mask, PE, precision, và $$O(L^2)$$**, không phải công thức softmax.  
 
 Bạn hiện có lộ trình Chương 08 đầy đủ: giới thiệu → lý thuyết → cài đặt → demo/bẫy. Từ đây có thể chuyên sâu vào mô hình ngôn ngữ lớn, NLU chỉ-encoder, hoặc Vision Transformer trên cùng bộ khung đại số này.
+
+## Video tham khảo
+
+- **xem trước** [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Demo lấy mẫu và các cạm bẫy của bản cài không che hoặc không buộc tham số.
+- [Transformer Neural Networks, ChatGPT's foundation, Clearly Explained!!!](https://www.youtube.com/watch?v=zxQyTK8quyY) — StatQuest with Josh Starmer, tiếng Anh. Một sơ đồ sạch hơn của các kiểu hỏng, chẳng hạn thiếu đường thặng dư.
+- [How might LLMs store facts | Deep Learning Chapter 7](https://www.youtube.com/watch?v=9-Jl0dxWQs8) — 3Blue1Brown, tiếng Anh. Thứ MLP bên trong khối có thể lưu, đúng cách đọc sâu hơn của bài về một demo đã chạy.

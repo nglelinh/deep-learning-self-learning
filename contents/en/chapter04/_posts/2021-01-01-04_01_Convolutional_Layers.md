@@ -17,3 +17,9 @@ This lesson covers convolutional layers — the core building block of CNNs — 
 4. **Related Concepts, Pitfalls, and Papers** — connections to other layers, common mistakes, practical tricks, and foundational papers
 
 Work through each section in order before moving on to pooling and classic architectures.
+
+## Video tham khảo
+
+- **xem trước** [But what is a convolution?](https://www.youtube.com/watch?v=KuXjwB4LzSA) — 3Blue1Brown, English. Before the math, intuition, and code lessons split one operation apart.
+- [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, English. The lecture that carries the operation into a layer with channels.
+- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, English. A fully worked image example of the same layer.

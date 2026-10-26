@@ -293,3 +293,9 @@ Vùng khả thi $$S = \{\mathbf{w} : \mathbf{1}^T \mathbf{w} = 1, \mathbf{w} \ge
 Vì hàm mục tiêu $$\mathbf{w}^T \mathbf{\Sigma} \mathbf{w}$$ liên tục và $$S$$ compact, Định lý giá trị cực trị bảo đảm tồn tại danh mục tối ưu.
 
 Hiểu tôpô và giải tích thực cung cấp nền tảng chặt chẽ để chứng minh sự tồn tại nghiệm của bài toán tối ưu và khả năng thuật toán tìm được nghiệm đó. Các khái niệm này thiết yếu cho cả phân tích lý thuyết lẫn thiết kế thuật toán thực tiễn.
+
+## Video tham khảo
+
+- **xem trước** [Intro to Open Sets (with Examples) | Real Analysis](https://www.youtube.com/watch?v=pnWgj8jjs3w) — Wrath of Math, tiếng Anh. Tập mở được định nghĩa bằng một quả cầu quanh mỗi điểm, đúng định nghĩa mở đầu của bài.
+- [Identifying Open, Closed, and Compact Sets | Real Analysis Exercises](https://www.youtube.com/watch?v=0_mottmadEU) — Wrath of Math, tiếng Anh. Làm ví dụ tách tập mở, tập đóng và tập compact, gồm biên và bao đóng.
+- [Open Covers, Finite Subcovers, and Compact Sets | Real Analysis](https://www.youtube.com/watch?v=dAz9ax-bjzU) — Wrath of Math, tiếng Anh. Tính compact qua phủ mở là định nghĩa mức định lý mà bài dùng cho lập luận cực trị.

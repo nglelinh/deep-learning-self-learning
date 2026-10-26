@@ -57,3 +57,9 @@ Chúng bổ sung, không trùng, bộ lượng tử tổng quát của chương:
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Giữ suy diễn pruning / KD / MobileNet. Bài này chỉ thêm **PTQ riêng LLM, GGUF, speculative decoding, và MoE** — công cụ khi “mô hình” là Transformer 7B–70B.
+
+## Video tham khảo
+
+- **xem trước** [How LLMs survive in low precision | Quantization Fundamentals](https://www.youtube.com/watch?v=qoQJq5UwV1c) — Julia Turc, tiếng Anh. Lượng tử hóa sau huấn luyện cho mô hình ngôn ngữ là ghi chú này.
+- [QLoRA: Efficient Finetuning of Quantized LLMs | Tim Dettmers](https://www.youtube.com/watch?v=fQirE9N5q_Y) — AMLD Intelligence Summit, tiếng Anh. QLoRA, lần tinh chỉnh giữ ở 4-bit, của Tim Dettmers.
+- [Knowledge Distillation: How LLMs train each other](https://www.youtube.com/watch?v=jrJKRYAdh7I) — Julia Turc, tiếng Anh. Chưng cất như cách khác để có một mô hình triển khai nhỏ hơn.

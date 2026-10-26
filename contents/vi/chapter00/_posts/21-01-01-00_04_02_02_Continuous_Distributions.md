@@ -394,3 +394,9 @@ canvas {
     margin: 20px 0;
 }
 </style>
+
+## Video tham khảo
+
+- **xem trước** [The Normal Distribution, Clearly Explained!!!](https://www.youtube.com/watch?v=rzFX5NWojp0) — StatQuest with Josh Starmer, tiếng Anh. Mật độ chuẩn là phân phối liên tục mà bài lấy làm trung tâm.
+- [The Main Ideas behind Probability Distributions](https://www.youtube.com/watch?v=oI3hZJqXJuc) — StatQuest with Josh Starmer, tiếng Anh. Mật độ so với khối xác suất là phân biệt cần có trước mọi công thức liên tục.
+- [MaDL - Common Probability Distributions](https://www.youtube.com/watch?v=NbzVwvE_syQ) — Tübingen Machine Learning, tiếng Anh. Đặt Gauss cạnh các họ liên tục khác (mũ và những họ còn lại) mà bài liệt kê.

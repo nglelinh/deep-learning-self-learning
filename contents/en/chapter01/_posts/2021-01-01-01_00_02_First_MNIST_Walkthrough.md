@@ -224,3 +224,9 @@ The Transformer architecture introduced here has become the foundation of modern
 *Authors*: Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun  
 ResNet introduced skip connections that enabled training networks hundreds of layers deep by providing direct gradient pathways. Beyond winning ImageNet 2015, this work fundamentally changed how we think about deep architectures—depth is crucial, but networks need architectural innovations (skip connections, careful normalization) to train effectively. ResNet's principles appear in most modern deep architectures.
 
+
+## Video tham khảo
+
+- **xem trước** [PyTorch Course (2022), Part 4: Image Classification (MNIST)](https://www.youtube.com/watch?v=gBw0u_5u0qU) — Mr. P Solver, English. If you are about to run the MNIST training loop the lesson sketches.
+- [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, English. The handwritten-digit network is the conceptual model behind that loop.
+- [Lecture 4 | Introduction to Neural Networks](https://www.youtube.com/watch?v=d14TUNcbn1k) — Stanford University School of Engineering, English. Stanford's neural-net lecture puts the same classifier in the language of the later math lessons.

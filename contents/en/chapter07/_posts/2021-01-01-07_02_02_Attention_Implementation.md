@@ -33,3 +33,9 @@ Mathematics tells you *what* attention computes. Implementation tells you whethe
 | Multi-head reshape: `(B,L,H,d)` ↔ `(B,H,L,d)` | Wrong transpose silently scrambles features |
 
 Start with **Core Implementation**, then continue to multi-head and pitfalls.
+
+## Video tham khảo
+
+- **xem trước** [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, English. So the code lessons are implementing a formula you have already computed once.
+- [A Dive Into Multihead Attention, Self-Attention and Cross-Attention](https://www.youtube.com/watch?v=mmzRYGCfTzc) — Machine Learning Studio, English. The module map: self, cross, and multi-head.
+- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, English. Attention written in Python, which is the coding lesson's target.

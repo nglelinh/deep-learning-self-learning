@@ -192,3 +192,9 @@ The future of deep learning will be shaped by technical innovations, computation
 Some figures in this lesson are screenshots from the following videos (Machine Learning Thực Chiến). URLs kept for attribution and further viewing:
 
 - [Recommendation algorithms (TikTok-style)](https://www.facebook.com/reel/1444915507374636)
+
+## Video tham khảo
+
+- **xem trước** [Chinchilla Explained: Compute-Optimal Massive Language Models](https://www.youtube.com/watch?v=PZXN7jm9IC0) — Edan Meyer, English. Compute-optimal scaling is the power-law section of this lesson.
+- [MIT 6.S191 (2024): Language Models and New Frontiers](https://www.youtube.com/watch?v=N1fbskTpwZ0) — Alexander Amini, English. Multimodal models and open problems, the rest of the lesson's survey.
+- [Large Language Models explained briefly](https://www.youtube.com/watch?v=LPZh9BOjkQs) — 3Blue1Brown, English. A short picture of the language models the scaling section is about.

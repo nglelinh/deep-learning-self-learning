@@ -55,3 +55,9 @@ Một đồng đội “tách đặc trưng” bằng cách lấy bản đồ $$
 ## Ghi công
 
 Kashani, S., và Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Tải PDF từ arXiv để xem toàn bộ Q&A đã giải. Trang này là bài luyện gốc của khóa, không phải bản in lại.
+
+## Video tham khảo
+
+- **xem trước** [Fine-tuning a Neural Network explained](https://www.youtube.com/watch?v=5T-iXNNiwIs) — deeplizard, tiếng Anh. Các câu về tách đặc trưng so với tinh chỉnh.
+- [Pytorch Transfer Learning and Fine Tuning Tutorial](https://www.youtube.com/watch?v=qaDe0qQZ5AQ) — Aladdin Persson, tiếng Anh. Cần nói được tham số nào vẫn nhận gradient.
+- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Vì sao các bộ lọc sớm là thứ đáng giữ.

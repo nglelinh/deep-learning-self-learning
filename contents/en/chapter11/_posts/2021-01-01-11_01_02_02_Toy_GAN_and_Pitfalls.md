@@ -248,3 +248,9 @@ Generative models learn to understand and reproduce data distributions, enabling
 
 Generative models demonstrate that neural networks can discover and internalize the statistical structure underlying complex data, learning representations that enable not just recognition but creation—a capability that edges closer to what we might consider genuine understanding.
 
+
+## Video tham khảo
+
+- **xem trước** [The Math Behind Generative Adversarial Networks Clearly Explained!](https://www.youtube.com/watch?v=Gib_kiXgnvA) — Normalized Nerd, English. The minimax objective is the toy GAN's loss.
+- [A Friendly Introduction to Generative Adversarial Networks (GANs)](https://www.youtube.com/watch?v=8L11aMN5KY8) — Luis Serrano Academy, English. A friendlier pass over the same two-player game before you code it.
+- [What are GANs (Generative Adversarial Networks)?](https://www.youtube.com/watch?v=TpMIssRdhco) — IBM Technology, English. A picture of generator versus discriminator if the math video stalls.

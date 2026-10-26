@@ -216,3 +216,9 @@ $$\text{minimize } \mathbf{w}^T\mathbf{\Sigma}\mathbf{w}$$
 where $$\mathbf{w}$$ is the vector of portfolio weights and $$\mathbf{\Sigma}$$ is the covariance matrix of asset returns.
 
 Understanding matrices and linear transformations provides the tools to formulate, analyze, and solve a wide variety of deep-learning problems efficiently.
+
+## Video tham khảo
+
+- **xem trước** [Linear transformations and matrices | Chapter 3, Essence of linear algebra](https://www.youtube.com/watch?v=kYB8IZa5AuE) — 3Blue1Brown, English. A matrix is the linear map the lesson studies, not a grid of numbers.
+- [Matrix multiplication as composition | Chapter 4, Essence of linear algebra](https://www.youtube.com/watch?v=XkY2DOUCWMU) — 3Blue1Brown, English. Matrix multiplication as composition is the product rule for stacking the layers this lesson describes.
+- [Inverse matrices, column space and null space | Chapter 7, Essence of linear algebra](https://www.youtube.com/watch?v=uQhTuRlWMxw) — 3Blue1Brown, English. Inverses, column space, and null space are the special matrices and solvability facts at the end of the lesson.

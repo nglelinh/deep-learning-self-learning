@@ -99,3 +99,9 @@ Dưới ngân sách FLOP huấn luyện cố định $$C \approx 6NT$$, lời kh
 ## Cách dùng
 
 Nói đáp án thành tiếng trong 90 giây, rồi đối chiếu phần thảo luận. Nếu cần toán RL, mở **21-99**, không phải trang này. Nếu cần công thức KD cổ điển, mở **23-01** và **26-05**. Nếu cần sơ đồ decoder hoặc FLOPs, mở **26-07**.
+
+## Video tham khảo
+
+- **xem trước** [Deep Dive into LLMs like ChatGPT](https://www.youtube.com/watch?v=7xTGNNLPyMI) — Andrej Karpathy, tiếng Anh. Trước các câu phỏng vấn của hub về cái gì thực sự được huấn luyện và nó được phục vụ ra sao.
+- [But what is cross-entropy? | Compression is Intelligence Part 2](https://www.youtube.com/watch?v=GlYgs6v2YfU) — 3Blue1Brown, tiếng Anh. Cross-entropy và gradient softmax, đúng một câu yêu cầu bạn suy.
+- [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Khối hiện đại mà một câu khác yêu cầu bạn gọi tên rồi đếm.

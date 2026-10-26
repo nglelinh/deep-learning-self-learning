@@ -230,3 +230,9 @@ This massive reduction comes from two properties:
 2. **Parameter sharing**: Same filter weights used at all spatial locations
 
 ---
+
+## Video tham khảo
+
+- **xem trước** [But what is a convolution?](https://www.youtube.com/watch?v=KuXjwB4LzSA) — 3Blue1Brown, English. The sum that defines a convolution.
+- [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, English. Output height and width as functions of kernel, padding, and stride are derived in this lecture.
+- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, English. Numbers on a tiny image so the dimension formula is checkable by hand.

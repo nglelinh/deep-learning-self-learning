@@ -57,3 +57,9 @@ LayerNorm / RMSNorm replaced BatchNorm in sequence models (already in Chapter 09
 ## 5. How this complements the core notes
 
 Keep the dropout inverted-dropout derivation and the BatchNorm placement notes. This lesson only adds **SAM** and **DropPath**, and warns that foundation-model recipes drifted away from heavy unit dropout.
+
+## Video tham khảo
+
+- **xem trước** [Sharpness-Aware Minimization (SAM) in 7 minutes](https://www.youtube.com/watch?v=k6-jJ58MFKU) — Yuxiang "Shawn" Wang, English. Sharpness-aware minimization is the 2021–2026 generalization method this note adds.
+- [Overfitting in a Neural Network explained](https://www.youtube.com/watch?v=DEMmkFC6IGM) — deeplizard, English. The overfitting problem SAM is still trying to solve.
+- [Machine Learning Fundamentals: Bias and Variance](https://www.youtube.com/watch?v=EuBBz3bI-aA) — StatQuest with Josh Starmer, English. Bias and variance, so the sharpness story has the older vocabulary next to it.

@@ -295,3 +295,9 @@ Task Type?
 
 In the next lesson, we'll learn about gradient descent, the algorithm that uses these loss functions to update network parameters.
 
+
+## Video tham khảo
+
+- **xem trước** [StatQuest: Logistic Regression](https://www.youtube.com/watch?v=yIYKR4sgzI8) — StatQuest with Josh Starmer, English. Logistic loss for a yes/no label is the binary section.
+- [But what is cross-entropy? | Compression is Intelligence Part 2](https://www.youtube.com/watch?v=GlYgs6v2YfU) — 3Blue1Brown, English. Cross-entropy is the multi-class loss, derived from coding length rather than as a formula to memorize.
+- [Softmax Regression (C2W3L08)](https://www.youtube.com/watch?v=LLux1SW--oM) — DeepLearningAI, English. Softmax regression is the multi-class head the lesson asks you to choose when labels are one of K classes.

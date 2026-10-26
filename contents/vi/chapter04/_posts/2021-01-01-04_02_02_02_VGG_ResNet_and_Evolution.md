@@ -365,3 +365,9 @@ Dùng tìm kiếm kiến trúc neuron để tìm kiến trúc baseline hiệu qu
 7. **Mô hình tiền huấn luyện** (transfer learning) là điểm xuất phát chuẩn cho hầu hết tác vụ thị giác. Tiền huấn luyện ImageNet chuyển giao rất tốt sang các miền khác.
 
 **Chương tiếp theo**: Mạng Neuron Hồi quy cho dữ liệu tuần tự!
+
+## Video tham khảo
+
+- **xem trước** [Residual Networks (ResNet) \[Physics Informed Machine Learning\]](https://www.youtube.com/watch?v=w1UsKanMatM) — Steve Brunton, tiếng Anh. Một khối thặng dư là chồng kiểu VGG cộng một đường tắt, đúng bước ngoặt của bài.
+- [C4W2L04 Why ResNets Work](https://www.youtube.com/watch?v=RYth6EbBUqM) — DeepLearningAI, tiếng Anh. Vì sao đường tắt đó cho phép tăng độ sâu mà không sụp huấn luyện như bài mô tả.
+- [Lecture 9 | CNN Architectures](https://www.youtube.com/watch?v=DAOcjicFr1Y) — Stanford University School of Engineering, tiếng Anh. Hàng từ VGG tới ResNet để phần tiến hóa có một dòng thời gian.

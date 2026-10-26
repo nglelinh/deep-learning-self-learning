@@ -302,3 +302,9 @@ $$\text{softplus}'(z) = \frac{e^z}{1 + e^z} = \sigma(z)$$
 Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
 
 - [Trực giác mạng nơ-ron (Perceptron → Deep Learning)](https://www.facebook.com/reel/793200140509765)
+
+## Video tham khảo
+
+- **xem trước** [Why Non-linear Activation Functions (C1W3L07)](https://www.youtube.com/watch?v=NkOv_k7r6no) — DeepLearningAI, tiếng Anh. Các tính chất một hàm kích hoạt hữu ích phải có.
+- [Neural Networks Pt. 3: ReLU In Action!!!](https://www.youtube.com/watch?v=68BZ5f7P94E) — StatQuest with Josh Starmer, tiếng Anh. ReLU trong một lượt lan truyền xuôi bằng số, đúng ví dụ tính cho danh sách cổ điển (bậc thang, sigmoid, tanh, ReLU).
+- [Neural Networks Part 5: ArgMax and SoftMax](https://www.youtube.com/watch?v=KpKog-L9veg) — StatQuest with Josh Starmer, tiếng Anh. Softmax là kích hoạt đầu ra mà bảng so sánh cần cho đầu phân loại.

@@ -352,3 +352,9 @@ Transfer learning leverages pre-trained models to achieve strong performance on 
 
 Transfer learning exemplifies how deep learning matured from requiring massive datasets for every task to enabling strong performance with limited task-specific data through strategic reuse of learned knowledge.
 
+
+## Video tham khảo
+
+- **xem trước** [Pytorch Transfer Learning and Fine Tuning Tutorial](https://www.youtube.com/watch?v=qaDe0qQZ5AQ) — Aladdin Persson, English. Load a pretrained model, replace the head, and train.
+- [Fine-tuning a Neural Network explained](https://www.youtube.com/watch?v=5T-iXNNiwIs) — deeplizard, English. The freeze-or-not decision that code is implementing.
+- [PyTorch Tutorial 14 - Convolutional Neural Network (CNN)](https://www.youtube.com/watch?v=pDdP0TFzsoQ) — Patrick Loeber, English. How the backbone you are freezing was built, if its layer names are unfamiliar.

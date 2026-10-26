@@ -57,3 +57,9 @@ LayerNorm / RMSNorm thay BatchNorm trong mô hình chuỗi (đã có trong biế
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Giữ suy diễn inverted-dropout và ghi chú vị trí BatchNorm. Bài này chỉ thêm **SAM** và **DropPath**, và cảnh báo công thức foundation model đã rời dropout đơn vị nặng.
+
+## Video tham khảo
+
+- **xem trước** [Sharpness-Aware Minimization (SAM) in 7 minutes](https://www.youtube.com/watch?v=k6-jJ58MFKU) — Yuxiang "Shawn" Wang, tiếng Anh. Cực tiểu hóa ý thức độ sắc là phương pháp tổng quát hóa 2021–2026 mà ghi chú thêm.
+- [Overfitting in a Neural Network explained](https://www.youtube.com/watch?v=DEMmkFC6IGM) — deeplizard, tiếng Anh. Bài toán quá khớp mà SAM vẫn đang cố giải.
+- [Machine Learning Fundamentals: Bias and Variance](https://www.youtube.com/watch?v=EuBBz3bI-aA) — StatQuest with Josh Starmer, tiếng Anh. Bias và phương sai, để câu chuyện độ sắc có từ vựng cũ đứng cạnh.

@@ -126,3 +126,9 @@ After processing all 13×13 cells, we have 13×13×3 = 507 predictions. Most are
 
 The detector has identified all objects, classified them, and localized them with bounding boxes—exactly what object detection requires.
 
+
+## Video tham khảo
+
+- **xem trước** [How YOLO Object Detection Works](https://www.youtube.com/watch?v=svn9-xV7wjk) — DeepBean, English. One forward pass predicts boxes, which is the theory's main design.
+- [Lecture 11 | Detection and Segmentation](https://www.youtube.com/watch?v=nDPWywWRIRo) — Stanford University School of Engineering, English. IoU and the assignment of predictions to ground truth, the math the short video skips.
+- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, English. The convolutional features both videos assume.

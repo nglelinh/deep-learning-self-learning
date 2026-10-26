@@ -53,3 +53,9 @@ Interpretability is now a **governance** input: can we locate a “deception” 
 ## 5. How this complements the core notes
 
 Run LIME/SHAP and saliency from the chapter first. This lesson only adds **LLM mechanistic tools** (SAEs, circuits) that appeared after the classic XAI catalog.
+
+## Video tham khảo
+
+- **xem trước** [A Window  Into LLMs | Sparse Autoencoders Explained](https://www.youtube.com/watch?v=TKozVZoXAYs) — Papers Are Wonderful, English. Sparse autoencoders on activations are the feature-finding method this note describes.
+- [The Dark Matter of AI \[Mechanistic Interpretability\]](https://www.youtube.com/watch?v=UGO_Ehywuxc) — Welch Labs, English. Welch Labs on mechanistic interpretability, the program those autoencoders belong to.
+- [Lecture 12 | Visualizing and Understanding](https://www.youtube.com/watch?v=6wcs6szJWMY) — Stanford University School of Engineering, English. The older visualization program this line of work is continuing.

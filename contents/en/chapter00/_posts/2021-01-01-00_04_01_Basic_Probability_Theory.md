@@ -16,3 +16,9 @@ This lesson covers basic probability theory for deep learning, split into focuse
 3. **Random Variables and Deep Learning** — random variables, MLE connection, and key takeaways
 
 Interactive demos are included in each section.
+
+## Video tham khảo
+
+- **xem trước** [L01.4 Probability Axioms](https://www.youtube.com/watch?v=pA83XtLeVig) — MIT OpenCourseWare, English. The axiom lesson this overview introduces.
+- [Conditional Probabilities, Clearly Explained!!!](https://www.youtube.com/watch?v=_IgyaD7vOOA) — StatQuest with Josh Starmer, English. Conditional probability is the second lesson in the block.
+- [MaDL - Random Variables and Probability Distributions](https://www.youtube.com/watch?v=bvBukLjHZh8) — Tübingen Machine Learning, English. Random variables are the third lesson, tied to how a network sees data.

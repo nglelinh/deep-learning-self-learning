@@ -336,3 +336,9 @@ canvas {
     margin: 20px 0;
 }
 </style>
+
+## Video tham khảo
+
+- **xem trước** [The Binomial Distribution and Test, Clearly Explained!!!](https://www.youtube.com/watch?v=J8jNoF-K8E8) — StatQuest with Josh Starmer, tiếng Anh. Phép thử Bernoulli và phân phối nhị thức là các mô hình rời rạc chính của bài.
+- [Binomial distributions | Probabilities of probabilities, part 1](https://www.youtube.com/watch?v=8idr1WZ1A7Q) — 3Blue1Brown, tiếng Anh. Cách nhìn hình học cho cùng xác suất nhị thức, hữu ích khi số lần thành công là biến ngẫu nhiên.
+- [An Introduction to the Poisson Distribution](https://www.youtube.com/watch?v=jmqZG6roVqU) — jbstatistics, tiếng Anh. Phân phối Poisson là họ rời rạc còn lại mà bài đặt cạnh nhị thức.

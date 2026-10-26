@@ -311,3 +311,9 @@ class ScheduledDropout:
 Dropout vẫn là một trong những kỹ thuật chính quy hóa đơn giản nhất nhưng hiệu quả nhất trong học sâu!
 
 **Tiếp theo**: Chuẩn hóa Batch — kỹ thuật mạnh khác đã cách mạng hóa huấn luyện!
+
+## Video tham khảo
+
+- **xem trước** [Dropout Regularization (C2W1L06)](https://www.youtube.com/watch?v=D8PJAL-MZv8) — DeepLearningAI, tiếng Anh. Trước khi viết mặt nạ, gồm hệ số inverted dropout.
+- [Lecture 6 | Training Neural Networks I](https://www.youtube.com/watch?v=wEoyxE0GP2M) — Stanford University School of Engineering, tiếng Anh. Vòng lặp huấn luyện áp mặt nạ đó chỉ ở chế độ train như thế nào.
+- [Regularization (C2W1L04)](https://www.youtube.com/watch?v=6g0t3Phly2M) — DeepLearningAI, tiếng Anh. Cạm bẫy để dropout vẫn bật lúc đánh giá, đúng điều bài cảnh báo.

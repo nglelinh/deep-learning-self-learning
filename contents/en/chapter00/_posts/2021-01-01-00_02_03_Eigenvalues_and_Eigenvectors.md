@@ -195,3 +195,8 @@ Since both eigenvalues are positive ($$\lambda_1 = 5 + \sqrt{5} > 0$$ and $$\lam
 The condition number is $$\kappa = \frac{5 + \sqrt{5}}{5 - \sqrt{5}} \approx 4.24$$, indicating reasonably good conditioning for deep-learning algorithms.
 
 Understanding eigenvalues and eigenvectors provides deep insights into the geometric and analytical properties of deep-learning problems, enabling better algorithm design and convergence analysis.
+
+## Video tham khảo
+
+- **xem trước** [Eigenvectors and eigenvalues | Chapter 14, Essence of linear algebra](https://www.youtube.com/watch?v=PFDu9oVAE-g) — 3Blue1Brown, English. The geometric definition: Av is a scaled copy of v.
+- [MaDL - Eigenvalue and Singular Value Decomposition](https://www.youtube.com/watch?v=-GcrsEqzmsA) — Tübingen Machine Learning, English. Computes eigenvalues and the SVD the lesson's diagonalization section leads into.

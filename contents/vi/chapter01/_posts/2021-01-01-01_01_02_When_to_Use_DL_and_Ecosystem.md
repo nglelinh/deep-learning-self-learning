@@ -343,3 +343,9 @@ Lĩnh vực tiếp tục tiến hóa nhanh với kiến trúc, kỹ thuật và 
 Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
 
 - [Thuật toán gợi ý (TikTok-style recommendation)](https://www.facebook.com/reel/1444915507374636)
+
+## Video tham khảo
+
+- **xem trước** [AI, Machine Learning, Deep Learning and Generative AI Explained](https://www.youtube.com/watch?v=qYNweeDHiyU) — IBM Technology, tiếng Anh. Quyết định bài toán có thực sự là học sâu hay vẫn là bài toán cổ điển.
+- [MIT Introduction to Deep Learning (2024) | 6.S191](https://www.youtube.com/watch?v=ErnWZxJovaM) — Alexander Amini, tiếng Anh. Đoạn công cụ gọi tên framework và quy mô dữ liệu mà phần hệ sinh thái của bài giả định.
+- [Machine Learning vs Deep Learning](https://www.youtube.com/watch?v=q6kJ71tEYqM) — IBM Technology, tiếng Anh. Một phép kiểm ngắn trước khi dùng mô hình sâu trong khi mô hình đơn giản đã khớp.

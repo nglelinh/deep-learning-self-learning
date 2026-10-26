@@ -53,3 +53,9 @@ Masked language modeling and CLIP-style pairing are still the NLP/multimodal wor
 ## 5. How this complements the core notes
 
 Keep the NT-Xent derivation and the BERT MLM formula. This lesson only names the **2023–2025 checkpoints** (DINOv2, SigLIP, JEPA) you will load instead of training SimCLR from scratch.
+
+## Video tham khảo
+
+- **xem trước** [DINOv2 from Meta AI - Finally a Foundational Model in Computer Vision?](https://www.youtube.com/watch?v=csEgtSh7jV4) — AI Papers Academy, English. DINOv2 is the frozen vision backbone this note says you can use without fine-tuning everything.
+- [DINO: Emerging Properties in Self-Supervised Vision Transformers (Facebook AI Research Explained)](https://www.youtube.com/watch?v=h3ij3F3cPIk) — Yannic Kilcher, English. DINO, the predecessor the note's method extends.
+- [Contrastive Learning with SimCLR | Deep Learning Animated](https://www.youtube.com/watch?v=UqJauYELn6c) — Deepia, English. The contrastive objective those self-supervised vision models grew out of.

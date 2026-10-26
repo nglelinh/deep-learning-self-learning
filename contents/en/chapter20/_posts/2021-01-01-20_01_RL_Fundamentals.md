@@ -200,3 +200,9 @@ Reinforcement learning trains agents through interaction with environments, lear
 Some figures in this lesson are screenshots from the following videos (Machine Learning Thực Chiến). URLs kept for attribution and further viewing:
 
 - [Recommendation algorithms (TikTok-style)](https://www.facebook.com/reel/1444915507374636)
+
+## Video tham khảo
+
+- **xem trước** [RL Course by David Silver - Lecture 1: Introduction to Reinforcement Learning](https://www.youtube.com/watch?v=2pWv7GOvuf0) — Google DeepMind, English. Reward, policy, and value.
+- [RL Course by David Silver - Lecture 2: Markov Decision Process](https://www.youtube.com/watch?v=lfHX2hHRMVQ) — Google DeepMind, English. States, actions, and the Bellman equation are this lesson's mathematics.
+- [Reinforcement Learning with Neural Networks: Essential Concepts](https://www.youtube.com/watch?v=9hbQieQh7-o) — StatQuest with Josh Starmer, English. The same objects once a neural net is allowed to represent them, which the lesson previews.

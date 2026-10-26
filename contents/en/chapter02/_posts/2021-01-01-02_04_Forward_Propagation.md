@@ -425,3 +425,9 @@ Some figures in this lesson are screenshots from the following videos (Machine L
 
 - [Neural network intuition (Perceptron → Deep Learning)](https://www.facebook.com/reel/793200140509765)
 - [Neural nets as function approximators](https://www.facebook.com/reel/720970114372332)
+
+## Video tham khảo
+
+- **xem trước** [Forward Propagation in a Deep Network (C1W4L02)](https://www.youtube.com/watch?v=a8i2eJin0lY) — DeepLearningAI, English. The forward equations, one layer at a time, are this lesson.
+- [Forward and Backward Propagation (C1W4L06)](https://www.youtube.com/watch?v=qzPQ8cEsVK8) — DeepLearningAI, English. Puts the forward pass next to the backward pass so the shapes you just computed have a destination.
+- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, English. The same forward pass inside a PyTorch training step, which is the implementation section.

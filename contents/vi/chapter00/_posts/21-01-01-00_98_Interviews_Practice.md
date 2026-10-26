@@ -67,3 +67,9 @@ Với $$f(\mathbf{x}) = \tfrac12\mathbf{x}^\top A\mathbf{x}$$ và $$A$$ đối x
 ## Ghi công
 
 Kashani, S., và Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Tải PDF từ arXiv để xem toàn bộ Q&A đã giải. Trang này là bài luyện gốc của khóa, không phải bản in lại.
+
+## Video tham khảo
+
+- **xem trước** [MaDL - Information and Entropy](https://www.youtube.com/watch?v=pXh53lqPkHs) — Tübingen Machine Learning, tiếng Anh. Entropy là câu lý thuyết thông tin mà bài luyện yêu cầu tính.
+- [MaDL - Kullback-Leibler Divergence](https://www.youtube.com/watch?v=vPvnpC0PNVQ) — Tübingen Machine Learning, tiếng Anh. Phân kỳ KL là đối tượng lý thuyết thông tin thứ hai trong các câu này.
+- [The paradox of the derivative | Chapter 2, Essence of calculus](https://www.youtube.com/watch?v=9vKqVkMQHKk) — 3Blue1Brown, tiếng Anh. Các câu giải tích xoay quanh đạo hàm; đây là hình cần vẽ lại trước khi trả lời.

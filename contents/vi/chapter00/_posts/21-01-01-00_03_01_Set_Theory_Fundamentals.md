@@ -213,3 +213,9 @@ $$S = \{x \in \mathbb{R}^n : Ax \leq b, x \geq 0\} = \bigcap_{i=1}^{m} \{x : a_i
 Đây là giao của các nửa không gian, minh họa cách các phép toán tập hợp xuất hiện tự nhiên trong việc xây dựng bài toán tối ưu hóa.
 
 Hiểu biết về lý thuyết tập hợp cung cấp nền tảng toán học chặt chẽ cần thiết để xây dựng các bài toán tối ưu hóa một cách chính xác và phân tích các tính chất của chúng một cách hệ thống.
+
+## Video tham khảo
+
+- **xem trước** [Intro to Sets | Examples, Notation & Properties](https://www.youtube.com/watch?v=B1v2-nGXNzs) — Dr. Trefor Bazett, tiếng Anh. Ký hiệu tập, phép toán, và miền xác định cùng miền giá trị của hàm.
+- [INTRODUCTION to SET THEORY - DISCRETE MATHEMATICS](https://www.youtube.com/watch?v=tyDKR4FG3Yw) — TrevTutor, tiếng Anh. Một lượt đầy đủ hơn về hợp, giao và các tập số mà bài liệt kê.
+- [MaDL - Sets, Scalars, Vectors, Matrices and Tensors](https://www.youtube.com/watch?v=JzIjCkouIGg) — Tübingen Machine Learning, tiếng Anh. Nối các tập đó với vô hướng, vector và tensor mà phần còn lại của khóa thực sự tính trên đó.

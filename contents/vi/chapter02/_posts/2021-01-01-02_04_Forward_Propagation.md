@@ -425,3 +425,9 @@ Một số hình minh họa trong bài được trích từ các video sau (Mach
 
 - [Trực giác mạng nơ-ron (Perceptron → Deep Learning)](https://www.facebook.com/reel/793200140509765)
 - [Mạng nơ-ron là bộ xấp xỉ hàm](https://www.facebook.com/reel/720970114372332)
+
+## Video tham khảo
+
+- **xem trước** [Forward Propagation in a Deep Network (C1W4L02)](https://www.youtube.com/watch?v=a8i2eJin0lY) — DeepLearningAI, tiếng Anh. Phương trình lan truyền xuôi, từng lớp một, đúng là bài này.
+- [Forward and Backward Propagation (C1W4L06)](https://www.youtube.com/watch?v=qzPQ8cEsVK8) — DeepLearningAI, tiếng Anh. Đặt lượt xuôi cạnh lượt ngược để các kích thước vừa tính có chỗ đi tới.
+- [Xây dựng mạng nơ-ron nhân tạo từ con số 0 | Writing a Neural Network from scratch](https://www.youtube.com/watch?v=VBviWbusHd8) — Học Lập Trình cùng Phát, tiếng Việt. Một bản mã tiếng Việt viết lan truyền xuôi từ đầu.

@@ -66,3 +66,9 @@ ViT cộng decoder ngôn ngữ (LLaVA, 2023; các hệ lớp GPT-4V sau đó) t�
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Hoàn thành suy diễn encoder–decoder và Transformer PyTorch đồ chơi trước. Bài này chỉ đặt tên **stack sản phẩm LLM** xây trên suy diễn đó. Công thức và Mermaid cho RMSNorm → attention + RoPE → SwiGLU, cùng sổ sách tham số / FLOP, nằm ở **26-07**.
+
+## Video tham khảo
+
+- **xem trước** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Khối mốc mà ghi chú nói đã đổi chi tiết nhưng không đổi dàn ý.
+- [How might LLMs store facts | Deep Learning Chapter 7](https://www.youtube.com/watch?v=9-Jl0dxWQs8) — 3Blue1Brown, tiếng Anh. Cách nhìn MLP-như-bộ-nhớ về thứ một khối decoder hiện đại vẫn tính.
+- [How FlashAttention Accelerates Generative AI Revolution](https://www.youtube.com/watch?v=gBMO1JZav44) — Jia-Bin Huang, tiếng Anh. Thay đổi cách cài attention (FlashAttention) mà ghi chú coi là nâng cấp hệ thống, không phải công thức mới.

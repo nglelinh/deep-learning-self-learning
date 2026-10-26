@@ -253,3 +253,9 @@ def train_val_test_split(X, Y, train_ratio=0.8, val_ratio=0.1):
     
     return (X_train, Y_train), (X_val, Y_val), (X_test, Y_test)
 ```
+
+## Video tham khảo
+
+- **xem trước** [L11.6 Xavier Glorot and Kaiming He Initialization](https://www.youtube.com/watch?v=ScWTYHQra5E) — Sebastian Raschka, tiếng Anh. Khởi tạo Xavier và He là quy tắc tỉ lệ trọng số bài phát biểu.
+- [Lecture 6 | Training Neural Networks I](https://www.youtube.com/watch?v=wEoyxE0GP2M) — Stanford University School of Engineering, tiếng Anh. Ngữ cảnh bài giảng cho các quy tắc đó, cộng tiền xử lý và batch.
+- [Train, Test, & Validation Sets explained](https://www.youtube.com/watch?v=Zi-0rlM4RDs) — deeplizard, tiếng Anh. Vì sao bài chia dữ liệu thành train, validation và test trước khi chạy epoch.

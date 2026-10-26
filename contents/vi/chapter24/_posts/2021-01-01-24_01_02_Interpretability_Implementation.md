@@ -326,3 +326,9 @@ Ví dụ đối kháng không nhất thiết chỉ ra mô hình kém. Mọi mô 
 ## Điểm Chính Cần Nhớ
 
 Diễn giải mạng neuron cho phép hiểu vì sao mô hình đưa ra dự đoán qua phương pháp gán công trạng (đầu vào nào quan trọng), kỹ thuật trực quan hóa (đặc trưng nào được học), và khung giải thích (quyết định phân rã ra sao). Saliency dựa trên gradient làm nổi bật vùng đầu vào có độ nhạy cao với thay đổi dự đoán. Grad-CAM trực quan hóa tầm quan trọng không gian trong CNN qua bản đồ đặc trưng cân trọng gradient. SHAP cung cấp gán công trạng có nền tảng lý thuyết qua giá trị Shapley từ lý thuyết trò chơi. Ví dụ đối kháng tiết lộ độ vững chắc mô hình bằng cách tìm nhiễu tối thiểu thay đổi dự đoán. Các phương pháp diễn giải khác nhau cung cấp góc nhìn bổ sung — saliency cho tầm quan trọng đầu vào, trực quan hóa kích hoạt cho đặc trưng học được, SHAP cho gán công trạng trung thực — thường đòi hỏi nhiều kỹ thuật cho hiểu biết toàn diện. Diễn giải cho phép gỡ lỗi tương quan giả, xây dựng niềm tin trong ứng dụng rủi ro cao, đáp ứng yêu cầu quy định, và sinh hiểu biết khoa học từ mẫu học được, ngày càng quan trọng khi triển khai học sâu mở rộng sang các miền then chốt đòi hỏi khả năng giải thích vượt ngoài độ chính xác.
+
+## Video tham khảo
+
+- **xem trước** [Explainable AI explained! | #3 LIME](https://www.youtube.com/watch?v=d6j6bofhj2M) — DeepFindr, tiếng Anh. Một phương pháp cài được như một mô hình cục bộ có trọng số.
+- [SHAP values for beginners | What they mean and their applications](https://www.youtube.com/watch?v=MQ6fFDwjuco) — A Data Odyssey, tiếng Anh. Thư viện SHAP đang tính gì nếu bạn gọi nó thay vì viết tổng.
+- [Lecture 12 | Visualizing and Understanding](https://www.youtube.com/watch?v=6wcs6szJWMY) — Stanford University School of Engineering, tiếng Anh. Các cạm bẫy hình dung (các diễn giải trông có nghĩa nhưng không phải).

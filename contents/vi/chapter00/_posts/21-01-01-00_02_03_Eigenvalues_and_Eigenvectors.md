@@ -195,3 +195,9 @@ Vì cả hai giá trị riêng đều dương ($$\lambda_1 = 5 + \sqrt{5} > 0$$ 
 Số điều kiện là $$\kappa = \frac{5 + \sqrt{5}}{5 - \sqrt{5}} \approx 4{,}24$$, cho thấy bài toán có điều kiện số khá tốt đối với các thuật toán tối ưu.
 
 Hiểu giá trị riêng và vector riêng mang lại cái nhìn sâu về các tính chất hình học và giải tích của bài toán tối ưu hóa, từ đó hỗ trợ thiết kế thuật toán và phân tích hội tụ tốt hơn.
+
+## Video tham khảo
+
+- **xem trước** [Eigenvectors and eigenvalues | Chapter 14, Essence of linear algebra](https://www.youtube.com/watch?v=PFDu9oVAE-g) — 3Blue1Brown, tiếng Anh. Lấy định nghĩa hình học: Av là bản sao của v được phóng to.
+- [MaDL - Eigenvalue and Singular Value Decomposition](https://www.youtube.com/watch?v=-GcrsEqzmsA) — Tübingen Machine Learning, tiếng Anh. Tính giá trị riêng và SVD mà phần chéo hóa của bài dẫn tới.
+- [Phân tích giá trị riêng | Khoa học dữ liệu cơ bản](https://www.youtube.com/watch?v=OnLGH_5Ovg4) — Mat-chan, tiếng Việt. Bài tiếng Việt đi qua phân tích giá trị riêng trong bối cảnh dữ liệu.

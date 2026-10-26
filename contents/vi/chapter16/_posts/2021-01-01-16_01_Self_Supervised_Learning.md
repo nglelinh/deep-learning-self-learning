@@ -124,3 +124,9 @@ Mô hình ngôn ngữ che dấu của BERT là học tự giám sát, tạo giá
 ## Điểm Chính Cần Nhớ
 
 Học tự giám sát tạo tín hiệu giám sát tự động từ cấu trúc dữ liệu, cho phép học trên các tập không nhãn quy mô lớn thông qua pretext task như dự đoán bị che hoặc học đối chiếu. Các phương pháp đối chiếu học bằng cách phân biệt các góc nhìn tăng cường của cùng một mẫu với các mẫu khác, học tính bất biến với tăng cường đồng thời nắm bắt nội dung ngữ nghĩa. Các tác vụ dự đoán bị che như MLM của BERT học dự đoán phần còn thiếu từ ngữ cảnh, đòi hỏi hiểu sâu cấu trúc dữ liệu. Tiền huấn luyện tự giám sát thường ngang hoặc vượt tiền huấn luyện có giám sát trong học chuyển giao, cho thấy học bất chấp tác vụ từ dữ liệu không nhãn sinh ra biểu diễn linh hoạt và đa dụng.
+
+## Video tham khảo
+
+- **xem trước** [Contrastive Learning with SimCLR | Deep Learning Animated](https://www.youtube.com/watch?v=UqJauYELn6c) — Deepia, tiếng Anh. Mất mát NT-Xent trên hai góc nhìn của một ảnh là phần tương phản.
+- [DINO: Emerging Properties in Self-Supervised Vision Transformers (Facebook AI Research Explained)](https://www.youtube.com/watch?v=h3ij3F3cPIk) — Yannic Kilcher, tiếng Anh. Phân đoạn nổi lên của DINO là bài báo bài dẫn cho tự chưng cất.
+- [But what is cross-entropy? | Compression is Intelligence Part 2](https://www.youtube.com/watch?v=GlYgs6v2YfU) — 3Blue1Brown, tiếng Anh. Cross-entropy trên một đích bị che là nhiệm vụ giả ngôn ngữ (kiểu BERT) bài viết cạnh NT-Xent.

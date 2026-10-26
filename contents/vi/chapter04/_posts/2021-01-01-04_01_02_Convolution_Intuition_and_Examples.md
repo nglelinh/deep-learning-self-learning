@@ -126,3 +126,9 @@ Ba tích chập 3×3 xếp chồng có:
 Hiểu biết này từ VGGNet (2014) đã cách mạng hóa thiết kế kiến trúc CNN.
 
 ---
+
+## Video tham khảo
+
+- **xem trước** [But what is a convolution?](https://www.youtube.com/watch?v=KuXjwB4LzSA) — 3Blue1Brown, tiếng Anh. Kernel như bộ dò (cạnh, rồi mẫu) là phần trực giác.
+- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Cho các bộ dò đó trên các mảng ảnh thật.
+- [CNN là gì? | Hiểu Nhanh Mạng Nơ-ron Tích Chập \[PODCAST\]](https://www.youtube.com/watch?v=YlgdXkzjo3Q) — Gà AI, tiếng Việt. Cùng trực giác cửa sổ trượt, bằng tiếng Việt.

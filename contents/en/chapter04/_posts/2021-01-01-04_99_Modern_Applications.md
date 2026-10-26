@@ -50,3 +50,9 @@ High-resolution dense prediction, strict latency on mobile NPUs, and small-data 
 ## 5. How this complements the core notes
 
 Keep the convolution-dimension worksheets. This lesson only answers “what replaced VGG/ResNet *in practice* after 2022”: modern ConvNets plus vision foundation models — not a new definition of a filter.
+
+## Video tham khảo
+
+- **xem trước** [ConvNeXt: A ConvNet for the 2020s – Paper Explained (with animations)](https://www.youtube.com/watch?v=QqejV0LNDHA) — AI Coffee Break with Letitia, English. ConvNeXt is the conv net that borrowed transformer training, which is this note's claim.
+- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, English. The modern conv-net lecture those training tricks sit on top of.
+- [Residual Networks (ResNet) \[Physics Informed Machine Learning\]](https://www.youtube.com/watch?v=w1UsKanMatM) — Steve Brunton, English. The residual block ConvNeXt did not throw away.

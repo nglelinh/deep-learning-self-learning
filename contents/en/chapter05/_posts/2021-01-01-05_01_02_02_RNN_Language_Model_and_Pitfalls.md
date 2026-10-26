@@ -264,3 +264,9 @@ Recurrent Neural Networks introduced the fundamental idea of memory in neural ne
 
 The journey from feedforward networks to RNNs represents a crucial conceptual leap in deep learning: from processing static inputs independently to modeling dynamic processes with memory and temporal structure. This leap opens up vast new applications but introduces new challenges that have driven decades of research and continue to inspire innovation in sequence modeling architectures today.
 
+
+## Video tham khảo
+
+- **xem trước** [The spelled-out intro to language modeling: building makemore](https://www.youtube.com/watch?v=PaCmpygFfXo) — Andrej Karpathy, English. The character language model and the loss it trains.
+- [Sequence-to-Sequence (seq2seq) Encoder-Decoder Neural Networks, Clearly Explained!!!](https://www.youtube.com/watch?v=L8HKweZIOmg) — StatQuest with Josh Starmer, English. Encoder-decoder sequence models are the related architecture the pitfalls section compares.
+- [Vanishing/Exploding Gradients (C2W1L10)](https://www.youtube.com/watch?v=qhXZsFVxGKo) — DeepLearningAI, English. Vanishing gradients through a long product are the BPTT failure this lesson warns about.

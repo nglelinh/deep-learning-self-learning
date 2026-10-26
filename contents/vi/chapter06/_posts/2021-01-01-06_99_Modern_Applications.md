@@ -58,3 +58,9 @@ Mẫu 2024–2026 phổ biến: Transformer (hoặc Mamba) làm xương sống, 
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Suy ra cổng forget/input/output từ bài lý thuyết trước. Bài này chỉ thêm **xLSTM** và các use case LSTM/GRU công nghiệp còn lại — không đổi phương trình cổng.
+
+## Video tham khảo
+
+- **xem trước** [XLSTM - Extended LSTMs with sLSTM and mLSTM (paper explained)](https://www.youtube.com/watch?v=0aWGTNS03PU) — AI Bites, tiếng Anh. xLSTM (cổng mũ và bộ nhớ ma trận) là bản cập nhật 2024 ghi chú nói tới.
+- [Long Short-Term Memory (LSTM), Clearly Explained](https://www.youtube.com/watch?v=YCzL96nL7j0) — StatQuest with Josh Starmer, tiếng Anh. Ô năm 1997 mà xLSTM đang mở rộng, để các cổng mới có mốc so.
+- [Illustrated Guide to LSTM's and GRU's: A step by step explanation](https://www.youtube.com/watch?v=8HyCNIVRbSU) — The AI Hacker, tiếng Anh. Các sơ đồ cổng cần có để thấy sLSTM và mLSTM đổi cái gì.

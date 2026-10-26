@@ -268,3 +268,9 @@ Gradients become too small or too large in deep networks.
 
 In the next lesson, we'll explore **backpropagation**, the algorithm that efficiently computes gradients in neural networks.
 
+
+## Video tham khảo
+
+- **xem trước** [Gradient Descent, Step-by-Step](https://www.youtube.com/watch?v=sDv4f4s2SB8) — StatQuest with Josh Starmer, English. A convergence check you can code: stop when the step gets small.
+- [Stochastic Gradient Descent, Clearly Explained!!!](https://www.youtube.com/watch?v=vMh0zPT0tLI) — StatQuest with Josh Starmer, English. Noise in the stochastic gradient is the main challenge the implementation section has to live with.
+- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, English. The training loop that actually applies the update, which is the code half of this lesson.

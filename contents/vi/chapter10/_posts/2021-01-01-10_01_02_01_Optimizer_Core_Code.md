@@ -205,3 +205,9 @@ class AdamW:
             # Weight decay xảy ra ngoài scale thích nghi
             param -= self.lr * (m_hat / (np.sqrt(v_hat) + self.epsilon) + 
                                self.weight_decay * param)
+
+## Video tham khảo
+
+- **xem trước** [Adam Optimization Algorithm (C2W2L08)](https://www.youtube.com/watch?v=JXQT_vxqwIs) — DeepLearningAI, tiếng Anh. Viết hai dòng moment trước mọi lớp bọc framework.
+- [Optimization for Deep Learning (Momentum, RMSprop, AdaGrad, Adam)](https://www.youtube.com/watch?v=NE88eqLngkg) — DeepBean, tiếng Anh. Dùng video này để kiểm momentum và RMSProp không phải cùng một bộ đệm.
+- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, tiếng Anh. Lời gọi step() sẽ thay phép cập nhật viết tay sau khi chúng khớp.

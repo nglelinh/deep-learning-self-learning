@@ -311,3 +311,9 @@ print(f"  Bước huấn luyện - Loss: {loss:.4f}, Accuracy: {acc:.4f}")
 ```
 
 ---
+
+## Video tham khảo
+
+- **xem trước** [PyTorch Tutorial 14 - Convolutional Neural Network (CNN)](https://www.youtube.com/watch?v=pDdP0TFzsoQ) — Patrick Loeber, tiếng Anh. Một module Conv2d, rồi một khối CNN nhỏ, đúng bài này.
+- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, tiếng Anh. Các khối đó được xếp trong một mạng tích chập thật như thế nào.
+- [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, tiếng Anh. Thứ tự đối số (N, C, H, W) mà module giả định.

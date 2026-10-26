@@ -54,3 +54,9 @@ Ultralytics **YOLOv8 / YOLO11** keep the convolutional one-stage recipe. Use the
 ## 5. How this complements the core notes
 
 Implement the detector matching and the chapter’s R-CNN/YOLO path first. This lesson only adds **promptable and open-vocabulary** heads used in 2023–2026 pipelines.
+
+## Video tham khảo
+
+- **xem trước** [Explaining the Segment Anything Model - Network architecture, Dataset, Training](https://www.youtube.com/watch?v=OhxJkqD1vuE) — Neural Breakdown with AVB, English. The Segment Anything model is the promptable segmenter this note describes.
+- [Lecture 11 | Detection and Segmentation](https://www.youtube.com/watch?v=nDPWywWRIRo) — Stanford University School of Engineering, English. The classical detection and segmentation problem SAM generalizes.
+- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, English. The vision backbone underneath that promptable head.

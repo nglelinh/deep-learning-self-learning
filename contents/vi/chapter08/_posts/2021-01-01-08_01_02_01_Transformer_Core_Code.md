@@ -292,3 +292,9 @@ Tiếp theo: demo, bài báo dạng tường thuật, và bẫy vận hành.
 Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
 
 - [Position Encoding trong Transformer (từng bước)](https://www.facebook.com/reel/1306224801415127)
+
+## Video tham khảo
+
+- **xem trước** [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Các module cốt lõi. Video dài; đây là bản cài từ đầu chuẩn của bài này.
+- [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Giữ hình luồng dữ liệu cạnh notebook.
+- [Positional embeddings in transformers EXPLAINED | Demystifying positional encodings.](https://www.youtube.com/watch?v=1biZfFLPRSY) — AI Coffee Break with Letitia, tiếng Anh. Thêm video này khi nhúng token không có vị trí và mô hình bỏ qua thứ tự.

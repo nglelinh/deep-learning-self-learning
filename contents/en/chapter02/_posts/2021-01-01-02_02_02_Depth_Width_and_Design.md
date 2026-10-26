@@ -266,3 +266,9 @@ In the next lesson, we'll explore activation functions in more detail and unders
 Some figures in this lesson are screenshots from the following videos (Machine Learning Thực Chiến). URLs kept for attribution and further viewing:
 
 - [Neural nets as function approximators](https://www.facebook.com/reel/720970114372332)
+
+## Video tham khảo
+
+- **xem trước** [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, English. What extra depth buys, before the design-pattern section.
+- [Vanishing/Exploding Gradients (C2W1L10)](https://www.youtube.com/watch?v=qhXZsFVxGKo) — DeepLearningAI, English. Vanishing gradients are the reason naive depth fails, which this lesson's design section is reacting to.
+- [The GELU, SiLU and SwiGLU activation functions, clearly explained!!!](https://www.youtube.com/watch?v=2FaI2Fen1mQ) — StatQuest with Josh Starmer, English. GELU, SiLU, and SwiGLU are the modern per-layer choices the design section points toward.

@@ -141,3 +141,9 @@ $$p_{\text{data}}(\mathbf{x}) = 0.5 \mathcal{N}(\mathbf{x}; [2, 2], I) + 0.5 \ma
 **GAN**: Generator học ánh xạ nhiễu 1D $$z$$ thành điểm 2D sao cho discriminator (thấy cả mẫu thật từ hai Gaussian và mẫu sinh) không thể phân biệt thật/giả. Generator có thể học một hàm phi tuyến ánh xạ $$z \in [-3, 0]$$ tới mode thứ nhất và $$z \in [0, 3]$$ tới mode thứ hai.
 
 Mỗi cách tiếp cận thành công sinh từ cả hai mode nếu huấn luyện đúng, nhưng chúng khác nhau về cách biểu diễn phân phối, ổn định huấn luyện và thủ tục sinh. Hiểu các khác biệt này qua ví dụ đơn giản xây dựng trực giác cho hành vi của chúng trên dữ liệu phức tạp như ảnh.
+
+## Video tham khảo
+
+- **xem trước** [MIT 6.S191 (2024): Deep Generative Modeling](https://www.youtube.com/watch?v=Dmm4UG-6jxA) — Alexander Amini, tiếng Anh. Khớp p_model với p_data là mục tiêu của bài lý thuyết.
+- [Lecture 13 | Generative Models](https://www.youtube.com/watch?v=5WoItGTWV54) — Stanford University School of Engineering, tiếng Anh. Phân tích tự hồi quy, biến ẩn và huấn luyện đối kháng như ba câu trả lời cho mục tiêu đó.
+- [In Statistics, Probability is not Likelihood.](https://www.youtube.com/watch?v=pYxNSUDSFH4) — StatQuest with Josh Starmer, tiếng Anh. Likelihood không phải xác suất của tham số; mục tiêu của bài phụ thuộc phân biệt đó.

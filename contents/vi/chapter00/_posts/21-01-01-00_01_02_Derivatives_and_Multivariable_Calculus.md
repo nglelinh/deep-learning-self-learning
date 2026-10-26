@@ -121,3 +121,9 @@ $$h'(x) = \frac{\partial f}{\partial x} \cdot 1 + \frac{\partial f}{\partial y} 
 Đặt $$h'(x) = 0$$ cho $$x = 1/2$$, vậy điểm tối ưu là $$(1/2, 1/2)$$.
 
 Điều này minh họa cách các khái niệm giải tích đa biến làm việc cùng nhau để giải quyết các bài toán tối ưu hóa một cách hệ thống.
+
+## Video tham khảo
+
+- **xem trước** [The paradox of the derivative | Chapter 2, Essence of calculus](https://www.youtube.com/watch?v=9vKqVkMQHKk) — 3Blue1Brown, tiếng Anh. Lấy đạo hàm một biến mà bài dùng như tốc độ thay đổi.
+- [What are derivatives in 3D? Intro to Partial Derivatives](https://www.youtube.com/watch?v=EoEV5-_mLeM) — Dr. Trefor Bazett, tiếng Anh. Đạo hàm riêng là tốc độ theo từng tọa độ mà phần đa biến thêm vào khi đầu vào là vector.
+- [Visualizing the chain rule and product rule | Chapter 4, Essence of calculus](https://www.youtube.com/watch?v=YG15m2VwSjA) — 3Blue1Brown, tiếng Anh. Quy tắc dây chuyền được hình dung ở đây là trường hợp một biến; quy tắc đa biến của bài là cùng một tích đạo hàm dọc theo phép hợp.

@@ -111,3 +111,9 @@ Mạng sâu có thể học xấp xỉ:
 - Chiến lược game
 - Mô phỏng vật lý
 - Ranh giới quyết định phức tạp
+
+## Video tham khảo
+
+- **xem trước** [Machine Learning vs Deep Learning](https://www.youtube.com/watch?v=q6kJ71tEYqM) — IBM Technology, tiếng Anh. Ranh giới giữa chế tác đặc trưng và biểu diễn được học.
+- [The Essential Main Ideas of Neural Networks](https://www.youtube.com/watch?v=CqOfi41LfDw) — StatQuest with Josh Starmer, tiếng Anh. Cho một tập dữ liệu đường thẳng không khớp được còn mạng nhỏ thì khớp, đúng hạn chế bài nêu.
+- [MIT Introduction to Deep Learning (2024) | 6.S191](https://www.youtube.com/watch?v=ErnWZxJovaM) — Alexander Amini, tiếng Anh. Đặt sự tương phản đó vào một câu chuyện huấn luyện đầy đủ: dữ liệu, tính toán và độ sâu cùng lúc.

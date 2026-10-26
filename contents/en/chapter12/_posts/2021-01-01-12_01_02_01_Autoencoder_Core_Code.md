@@ -254,3 +254,9 @@ with torch.no_grad():
     print(f"Original shape: {originals.shape}")
     print(f"Reconstructions shape: {recon_ae_imgs.shape}")
 
+
+## Video tham khảo
+
+- **xem trước** [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, English. The two-module shape the core code should have.
+- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, English. Optimizer, loss, and step, once encode and decode exist.
+- [Lecture 13 | Generative Models](https://www.youtube.com/watch?v=5WoItGTWV54) — Stanford University School of Engineering, English. What a healthy reconstruction looks like, so a bug is visible.

@@ -46,3 +46,9 @@ This foundation will be essential as we explore how probabilistic models lead to
 <div style="background: #e8f4fd; padding: 15px; border-left: 4px solid #2196F3; margin: 20px 0;">
 <strong>💡 Learning Path:</strong> Start with basic probability concepts, then explore how they connect to deep-learning through maximum likelihood estimation and Bayesian methods. Each lesson builds toward understanding how uncertainty and randomness create deep-learning problems.
 </div>
+
+## Video tham khảo
+
+- **xem trước** [L01.4 Probability Axioms](https://www.youtube.com/watch?v=pA83XtLeVig) — MIT OpenCourseWare, English. The axioms are the floor under every distribution in this block.
+- [MaDL - Random Variables and Probability Distributions](https://www.youtube.com/watch?v=bvBukLjHZh8) — Tübingen Machine Learning, English. Random variables and distributions, in the notation used for deep learning.
+- [MaDL - Common Probability Distributions](https://www.youtube.com/watch?v=NbzVwvE_syQ) — Tübingen Machine Learning, English. The named families (Bernoulli through Gaussian) that the distribution lessons specialize.

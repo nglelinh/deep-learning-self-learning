@@ -112,3 +112,9 @@ If you can explain why the KL / reference term exists (reward hacking, style col
 - DPO is the same KL-regularized optimum as a logistic loss on $$(y_w, y_l)$$ — no reward model at train time.
 - Skills come from data (and tools); preferences rank skills you already have.
 - Full RL derivations stay in Chapters 20–21 — do not duplicate them here.
+
+## Video tham khảo
+
+- **xem trước** [Reinforcement Learning with Human Feedback (RLHF), Clearly Explained!!!](https://www.youtube.com/watch?v=qPN_XZcJf_s) — StatQuest with Josh Starmer, English. The three-stage picture (pretrain, SFT, preference) is this lesson.
+- [Direct Preference Optimization (DPO) - How to fine-tune LLMs directly without reinforcement learning](https://www.youtube.com/watch?v=k2pD3k1485A) — Luis Serrano Academy, English. DPO, the preference objective the lesson asks you to be able to write.
+- [Reinforcement Learning from Human Feedback (RLHF) Explained](https://www.youtube.com/watch?v=T_X4XFwKX8k) — IBM Technology, English. RLHF with a reward model, the stage DPO is offered as an alternative to.

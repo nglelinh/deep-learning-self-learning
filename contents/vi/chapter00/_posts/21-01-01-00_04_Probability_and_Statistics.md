@@ -46,3 +46,9 @@ Nền tảng này sẽ rất quan trọng khi chúng ta khám phá cách các m�
 <div style="background: #e8f4fd; padding: 15px; border-left: 4px solid #2196F3; margin: 20px 0;">
 <strong>💡 Lộ Trình Học:</strong> Bắt đầu với các khái niệm xác suất cơ bản, sau đó khám phá cách chúng kết nối với tối ưu hóa thông qua ước lượng hợp lý tối đa và phương pháp Bayes. Mỗi bài học xây dựng hướng tới việc hiểu cách sự bất định và ngẫu nhiên tạo ra các bài toán tối ưu hóa.
 </div>
+
+## Video tham khảo
+
+- **xem trước** [L01.4 Probability Axioms](https://www.youtube.com/watch?v=pA83XtLeVig) — MIT OpenCourseWare, tiếng Anh. Các tiên đề là nền của mọi phân phối trong khối này.
+- [MaDL - Random Variables and Probability Distributions](https://www.youtube.com/watch?v=bvBukLjHZh8) — Tübingen Machine Learning, tiếng Anh. Biến ngẫu nhiên và phân phối, theo ký hiệu dùng cho học sâu.
+- [MaDL - Common Probability Distributions](https://www.youtube.com/watch?v=NbzVwvE_syQ) — Tübingen Machine Learning, tiếng Anh. Các họ có tên (Bernoulli tới Gauss) mà các bài phân phối đi sâu.

@@ -173,3 +173,9 @@ Ngữ liệu tiền huấn luyện trộn văn bản web, sách, mã nguồn, v�
 - Tokenizer định nghĩa bảng chữ cái rời rạc; BPE và SentencePiece là hai câu chuyện thực dụng.
 - Độ dài ngữ cảnh $$L$$ là bộ nhớ làm việc của attention — và kích thước KV-cache bạn sẽ trả lúc phục vụ.
 - Cùng góc nhìn softmax-trên-$$V$$ khiến tiền huấn luyện đơn giản cũng khiến **chưng cất logit cổ điển đắt** với LM (tiếp ở **26-05**).
+
+## Video tham khảo
+
+- **xem trước** [Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE) — Andrej Karpathy, tiếng Anh. Mã hóa cặp byte và tokenizer là nửa sau của bài. Video dài và là bản dựng chuẩn.
+- [LLM Tokenizers Explained: BPE Encoding, WordPiece and SentencePiece](https://www.youtube.com/watch?v=hL4ZnAWSyuU) — DataMListic, tiếng Anh. Một so sánh ngắn giữa BPE, WordPiece và SentencePiece trước bản dựng đó.
+- [The spelled-out intro to language modeling: building makemore](https://www.youtube.com/watch?v=PaCmpygFfXo) — Andrej Karpathy, tiếng Anh. Cross-entropy token kế trên ký tự, mục tiêu bài viết trước khi các token được gộp.

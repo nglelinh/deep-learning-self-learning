@@ -381,3 +381,9 @@ Một số hình minh họa trong bài được trích từ các video sau (Mach
 - [Transformer là gì? Self-Attention siêu dễ hiểu (Phần 1)](https://www.facebook.com/reel/930207546288223)
 - [Word Embedding và Transformer hiểu ngôn ngữ](https://www.facebook.com/reel/1501843101324752)
 - [Thuật toán gợi ý (TikTok-style recommendation)](https://www.facebook.com/reel/1444915507374636)
+
+## Video tham khảo
+
+- **xem trước** [Word Embedding and Word2Vec, Clearly Explained!!!](https://www.youtube.com/watch?v=viZrOnJclY0) — StatQuest with Josh Starmer, tiếng Anh. Skip-gram và giả thuyết phân bố là lõi của bài.
+- [The Illustrated Word2vec - A Gentle Intro to Word Embeddings in Machine Learning](https://www.youtube.com/watch?v=ISPId9Lhc1g) — Jay Alammar, tiếng Anh. Một lượt trực quan qua cùng các vector, hữu ích cho các ví dụ loại suy.
+- [Lecture 2 | Word Vector Representations: word2vec](https://www.youtube.com/watch?v=ERibwqs9p38) — Stanford University School of Engineering, tiếng Anh. Mục tiêu softmax và lối tắt negative sampling mà phần toán viết.

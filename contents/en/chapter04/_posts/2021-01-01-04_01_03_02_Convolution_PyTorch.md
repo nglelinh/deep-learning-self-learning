@@ -311,3 +311,9 @@ print(f"  Training step - Loss: {loss:.4f}, Accuracy: {acc:.4f}")
 ```
 
 ---
+
+## Video tham khảo
+
+- **xem trước** [PyTorch Tutorial 14 - Convolutional Neural Network (CNN)](https://www.youtube.com/watch?v=pDdP0TFzsoQ) — Patrick Loeber, English. A Conv2d module, then a small CNN block, which is this lesson.
+- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, English. How those blocks are stacked in a real conv net.
+- [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, English. The argument order (N, C, H, W) the module assumes.

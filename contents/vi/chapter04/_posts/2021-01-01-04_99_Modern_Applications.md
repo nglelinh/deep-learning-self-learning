@@ -50,3 +50,9 @@ Dự đoán dày ở độ phân giải cao, latency nghiêm trên NPU di độn
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Giữ worksheet chiều tích chập. Bài này chỉ trả lời “thực tế cái gì thay VGG/ResNet sau 2022”: ConvNet hiện đại cộng foundation model thị giác — không phải định nghĩa mới của bộ lọc.
+
+## Video tham khảo
+
+- **xem trước** [ConvNeXt: A ConvNet for the 2020s – Paper Explained (with animations)](https://www.youtube.com/watch?v=QqejV0LNDHA) — AI Coffee Break with Letitia, tiếng Anh. ConvNeXt là mạng tích chập mượn cách huấn luyện transformer, đúng khẳng định của ghi chú.
+- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, tiếng Anh. Bài mạng tích chập hiện đại mà các mẹo huấn luyện đó đặt lên trên.
+- [Residual Networks (ResNet) \[Physics Informed Machine Learning\]](https://www.youtube.com/watch?v=w1UsKanMatM) — Steve Brunton, tiếng Anh. Khối thặng dư mà ConvNeXt không vứt đi.

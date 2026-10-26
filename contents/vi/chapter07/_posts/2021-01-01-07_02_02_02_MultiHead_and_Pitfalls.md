@@ -317,3 +317,9 @@ Một số hình minh họa trong bài được trích từ các video sau (Mach
 
 - [Công thức Attention: tự tay tính Q, K, V](https://www.facebook.com/reel/1806844676942638)
 - [Attention trong Transformer (Self, Masked, Cross, Multi-Head)](https://www.facebook.com/reel/1007473105556936)
+
+## Video tham khảo
+
+- **xem trước** [A Dive Into Multihead Attention, Self-Attention and Cross-Attention](https://www.youtube.com/watch?v=mmzRYGCfTzc) — Machine Learning Studio, tiếng Anh. Multi-head là nhiều bản đồ attention, không phải một softmax lớn hơn.
+- [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, tiếng Anh. Che (masking), đúng ràng buộc nhân quả của phần cạm bẫy.
+- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Một mặt nạ nhân quả trong mã, để cạm bẫy hiện ra như lỗi chỉ số nếu bạn bỏ nó.

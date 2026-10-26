@@ -206,3 +206,9 @@ class AdamW:
             param -= self.lr * (m_hat / (np.sqrt(v_hat) + self.epsilon) + 
                                self.weight_decay * param)
 
+
+## Video tham khảo
+
+- **xem trước** [Adam Optimization Algorithm (C2W2L08)](https://www.youtube.com/watch?v=JXQT_vxqwIs) — DeepLearningAI, English. Write the two moment lines before any framework wrapper.
+- [Optimization for Deep Learning (Momentum, RMSprop, AdaGrad, Adam)](https://www.youtube.com/watch?v=NE88eqLngkg) — DeepBean, English. Use this to check that momentum and RMSProp are not the same buffer.
+- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, English. The step() call that should replace your hand-written update once it matches.

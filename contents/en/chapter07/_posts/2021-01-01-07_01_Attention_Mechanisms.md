@@ -38,3 +38,9 @@ If a formula in 07-02-01 feels abstract, jump to the matching demo in 07-02-02-0
 - **Forward to Chapter 08 (Transformers)** for stacking self-attention with feed-forward blocks, residuals, and positional encodings.
 
 Proceed to **Attention Mathematics** when ready.
+
+## Video tham khảo
+
+- **xem trước** [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, English. The chapter's deep block: scaled dot-product attention.
+- [Attention for Neural Networks, Clearly Explained!!!](https://www.youtube.com/watch?v=PSs6nxngL6k) — StatQuest with Josh Starmer, English. The sequence-model version, so self-attention is not the only pattern.
+- [A Dive Into Multihead Attention, Self-Attention and Cross-Attention](https://www.youtube.com/watch?v=mmzRYGCfTzc) — Machine Learning Studio, English. Multi-head, self-attention, and cross-attention, which this block separates.

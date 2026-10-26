@@ -249,3 +249,9 @@ canvas {
     margin: 20px 0;
 }
 </style>
+
+## Video tham khảo
+
+- **xem trước** [Conditional Probabilities, Clearly Explained!!!](https://www.youtube.com/watch?v=_IgyaD7vOOA) — StatQuest with Josh Starmer, English. P(A|B) is the whole lesson's first definition.
+- [Independence in Probability](https://www.youtube.com/watch?v=2nDYX8IKrwo) — Steve Brunton, English. Independence is the second claim: the conditional probability collapses to the marginal.
+- [Bayes' Theorem, Clearly Explained!!!!](https://www.youtube.com/watch?v=9wCnvr7Xw4E) — StatQuest with Josh Starmer, English. Bayes' theorem is the rearrangement of the definition the lesson uses to swap condition and claim.

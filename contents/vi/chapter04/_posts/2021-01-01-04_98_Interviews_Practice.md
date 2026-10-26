@@ -63,3 +63,9 @@ Trong khối residual $$ \mathbf{y} = \mathbf{x} + \mathcal{F}(\mathbf{x}) $$, v
 ## Ghi công
 
 Kashani, S., và Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Tải PDF từ arXiv để xem toàn bộ Q&A đã giải. Trang này là bài luyện gốc của khóa, không phải bản in lại.
+
+## Video tham khảo
+
+- **xem trước** [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Trước các câu về số học tích chập.
+- [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, tiếng Anh. Các câu về kích thước đầu ra được trả lời bằng công thức trong bài giảng này.
+- [But what is a convolution?](https://www.youtube.com/watch?v=KuXjwB4LzSA) — 3Blue1Brown, tiếng Anh. Dùng video này nếu câu hỏi kernel đang dò cái gì, chứ không hỏi đầu ra lớn bao nhiêu.

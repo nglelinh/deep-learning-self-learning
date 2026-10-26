@@ -61,3 +61,9 @@ cùng ngôn ngữ kỳ vọng / hợp lý như các bài xác suất, áp vào n
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Vẫn dùng các bài giải tích và đại số để tính $$\nabla f$$ và phân tích ma trận bằng tay. Bài tùy chọn chỉ chỉ chỗ các đối tượng ấy sống trong compiler và scientific ML — không thay các chứng minh.
+
+## Video tham khảo
+
+- **xem trước** [Backpropagation calculus | Deep Learning Chapter 4](https://www.youtube.com/watch?v=tIeHLnjs5U8) — 3Blue1Brown, tiếng Anh. Autodiff kiểu ngược là quy tắc dây chuyền mà ghi chú nói PyTorch và JAX vẫn cài.
+- [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0) — Andrej Karpathy, tiếng Anh. Dựng tích chế độ ngược đó trong mã, đúng dạng chạy được của chương giải tích.
+- [Visualizing the chain rule and product rule | Chapter 4, Essence of calculus](https://www.youtube.com/watch?v=YG15m2VwSjA) — 3Blue1Brown, tiếng Anh. Quy tắc dây chuyền một biến được đạo hàm ở đây là đẳng thức ghi chú viết thành Df = Dg · Dh.

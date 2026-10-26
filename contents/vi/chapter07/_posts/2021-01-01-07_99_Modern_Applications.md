@@ -59,3 +59,9 @@ Attention **cửa sổ trượt** kiểu Mistral và các bài linear-attention 
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Viết attention NumPy và bài pitfalls multi-head trước. Bài này chỉ thêm **kernel, KV-cache, và GQA** — thứ bạn gặp trong mọi codebase LLM. Chương **26-07** kể lại FlashAttention như lát + softmax trực tuyến (không CUDA) và đặt GQA cạnh sơ đồ khối decoder; **26-04** là KV-cache lúc phục vụ.
+
+## Video tham khảo
+
+- **xem trước** [How FlashAttention Accelerates Generative AI Revolution](https://www.youtube.com/watch?v=gBMO1JZav44) — Jia-Bin Huang, tiếng Anh. FlashAttention tính cùng attention với ít lưu lượng bộ nhớ hơn, đúng khẳng định của ghi chú.
+- [FlashAttention - Tri Dao | Stanford MLSys #67](https://www.youtube.com/watch?v=gMOAud7hZg4) — Stanford MLSys Seminars, tiếng Anh. Seminar của chính Tri Dao về thuật toán đó. Video dài và là nguồn gốc; dùng sau bản ngắn.
+- [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, tiếng Anh. Công thức attention đúng mà FlashAttention không đem ra xấp xỉ cho mất.

@@ -60,3 +60,9 @@ No sampling loop at train time. DPO and cousins (IPO, KTO, ORPO) became the defa
 ## 5. How this complements the core notes
 
 Implement DQN/PPO ideas from the chapter first. This lesson only adds **preference optimization for LMs** (RLHF/DPO/GRPO) — not a new Bellman backup. The Chapter 26 map (SFT → reward / PPO → DPO, with the same DPO display) is **26-03**.
+
+## Video tham khảo
+
+- **xem trước** [Proximal Policy Optimization (PPO) for LLMs Explained Intuitively](https://www.youtube.com/watch?v=8jtAzxUwDj0) — Julia Turc, English. PPO is the policy-gradient method this note uses for RLHF.
+- [Direct Preference Optimization (DPO) - How to fine-tune LLMs directly without reinforcement learning](https://www.youtube.com/watch?v=k2pD3k1485A) — Luis Serrano Academy, English. DPO, the preference objective the note sets beside PPO.
+- [Reinforcement Learning with Human Feedback (RLHF), Clearly Explained!!!](https://www.youtube.com/watch?v=qPN_XZcJf_s) — StatQuest with Josh Starmer, English. The human-feedback loop both algorithms are optimizing.

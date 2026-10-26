@@ -228,3 +228,9 @@ Sự giảm mạnh này đến từ hai tính chất:
 2. **Chia sẻ tham số**: Cùng trọng số bộ lọc dùng ở mọi vị trí không gian
 
 ---
+
+## Video tham khảo
+
+- **xem trước** [But what is a convolution?](https://www.youtube.com/watch?v=KuXjwB4LzSA) — 3Blue1Brown, tiếng Anh. Tổng định nghĩa tích chập.
+- [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, tiếng Anh. Chiều cao và chiều rộng đầu ra theo kernel, padding và stride được suy trong bài giảng này.
+- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Các số trên một ảnh nhỏ để công thức kích thước kiểm được bằng tay.

@@ -83,3 +83,9 @@ If grass has high SHAP value, we've discovered the model uses spurious correlati
 
 **Adversarial examples** provide another interpretability lens. By finding minimal input perturbations that change predictions, we reveal model vulnerabilities. If adding imperceptible noise to dog image causes "cat" prediction, the model's representation is fragile—it hasn't learned robust features. Studying these adversarial perturbations reveals what features matter: perturbations often add patterns the model strongly associates with target class, revealing learned (but perhaps spurious) class indicators.
 
+
+## Video tham khảo
+
+- **xem trước** [SHAP values for beginners | What they mean and their applications](https://www.youtube.com/watch?v=MQ6fFDwjuco) — A Data Odyssey, English. A SHAP value is a fair share of the prediction, the theory's main definition.
+- [Lecture 12 | Visualizing and Understanding](https://www.youtube.com/watch?v=6wcs6szJWMY) — Stanford University School of Engineering, English. Feature visualization, the other theoretical tradition in the lesson (what a unit responds to).
+- [Explainable AI explained! | #3 LIME](https://www.youtube.com/watch?v=d6j6bofhj2M) — DeepFindr, English. A local linear surrogate, so SHAP is not the only formal story.

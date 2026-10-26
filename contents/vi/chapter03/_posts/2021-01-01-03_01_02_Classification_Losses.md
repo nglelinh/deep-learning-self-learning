@@ -294,3 +294,9 @@ Loại tác vụ?
 - **Lựa chọn mất mát** nên khớp với tác vụ và đặc điểm dữ liệu
 
 Ở bài tiếp theo, ta sẽ học về gradient descent, thuật toán dùng các hàm mất mát này để cập nhật tham số mạng.
+
+## Video tham khảo
+
+- **xem trước** [StatQuest: Logistic Regression](https://www.youtube.com/watch?v=yIYKR4sgzI8) — StatQuest with Josh Starmer, tiếng Anh. Mất mát logistic cho nhãn có/không là phần nhị phân.
+- [But what is cross-entropy? | Compression is Intelligence Part 2](https://www.youtube.com/watch?v=GlYgs6v2YfU) — 3Blue1Brown, tiếng Anh. Cross-entropy là mất mát đa lớp, suy từ độ dài mã hóa chứ không phải công thức để học thuộc.
+- [Softmax Regression (C2W3L08)](https://www.youtube.com/watch?v=LLux1SW--oM) — DeepLearningAI, tiếng Anh. Hồi quy softmax là đầu đa lớp mà bài yêu cầu chọn khi nhãn thuộc một trong K lớp.

@@ -312,3 +312,9 @@ class ScheduledDropout:
 Dropout remains one of the simplest yet most effective regularization techniques in deep learning!
 
 **Next**: Batch Normalization - another powerful technique that revolutionized training!
+
+## Video tham khảo
+
+- **xem trước** [Dropout Regularization (C2W1L06)](https://www.youtube.com/watch?v=D8PJAL-MZv8) — DeepLearningAI, English. Before writing the mask, including the inverted-dropout scaling.
+- [Lecture 6 | Training Neural Networks I](https://www.youtube.com/watch?v=wEoyxE0GP2M) — Stanford University School of Engineering, English. How a training loop applies that mask only in train mode.
+- [Regularization (C2W1L04)](https://www.youtube.com/watch?v=6g0t3Phly2M) — DeepLearningAI, English. The pitfalls of leaving dropout on at evaluation, which this lesson warns about.

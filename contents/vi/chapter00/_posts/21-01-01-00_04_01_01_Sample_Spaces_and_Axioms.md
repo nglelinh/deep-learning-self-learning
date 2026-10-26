@@ -284,3 +284,9 @@ canvas {
     margin: 20px 0;
 }
 </style>
+
+## Video tham khảo
+
+- **xem trước** [L01.4 Probability Axioms](https://www.youtube.com/watch?v=pA83XtLeVig) — MIT OpenCourseWare, tiếng Anh. Không gian mẫu, biến cố và ba tiên đề đúng là nội dung bài này.
+- [The Main Ideas behind Probability Distributions](https://www.youtube.com/watch?v=oI3hZJqXJuc) — StatQuest with Josh Starmer, tiếng Anh. Cho thấy độ đo xác suất trên không gian mẫu đó trở thành một phân phối như thế nào.
+- [Bayes theorem, the geometry of changing beliefs](https://www.youtube.com/watch?v=HZGCoVF3YvM) — 3Blue1Brown, tiếng Anh. Quy tắc Bayes là một đẳng thức trong cùng các tiên đề, hữu ích khi các biến cố không còn độc lập.

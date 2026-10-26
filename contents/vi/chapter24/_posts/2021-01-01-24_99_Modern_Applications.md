@@ -53,3 +53,9 @@ Diễn giải giờ là đầu vào **quản trị**: ta có định vị đư�
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Chạy LIME/SHAP và saliency của chương trước. Bài này chỉ thêm **công cụ cơ chế LLM** (SAE, mạch) xuất hiện sau catalog XAI cổ điển.
+
+## Video tham khảo
+
+- **xem trước** [A Window  Into LLMs | Sparse Autoencoders Explained](https://www.youtube.com/watch?v=TKozVZoXAYs) — Papers Are Wonderful, tiếng Anh. Autoencoder thưa trên activation là phương pháp tìm đặc trưng ghi chú mô tả.
+- [The Dark Matter of AI \[Mechanistic Interpretability\]](https://www.youtube.com/watch?v=UGO_Ehywuxc) — Welch Labs, tiếng Anh. Welch Labs về diễn giải cơ chế, chương trình các autoencoder đó thuộc về.
+- [Lecture 12 | Visualizing and Understanding](https://www.youtube.com/watch?v=6wcs6szJWMY) — Stanford University School of Engineering, tiếng Anh. Chương trình hình dung cũ hơn mà hướng này đang nối tiếp.

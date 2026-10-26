@@ -267,3 +267,9 @@ Gradient trở nên quá nhỏ hoặc quá lớn trong mạng sâu.
 - **Thách thức** gồm cực tiểu địa phương, điểm yên ngựa, và vấn đề gradient
 
 Ở bài tiếp theo, ta sẽ xét **lan truyền ngược**, thuật toán tính gradient hiệu quả trong mạng neuron.
+
+## Video tham khảo
+
+- **xem trước** [Gradient Descent, Step-by-Step](https://www.youtube.com/watch?v=sDv4f4s2SB8) — StatQuest with Josh Starmer, tiếng Anh. Một tiêu chí hội tụ có thể lập trình: dừng khi bước đủ nhỏ.
+- [Stochastic Gradient Descent, Clearly Explained!!!](https://www.youtube.com/watch?v=vMh0zPT0tLI) — StatQuest with Josh Starmer, tiếng Anh. Nhiễu trong gradient ngẫu nhiên là thách thức chính phần cài đặt phải sống cùng.
+- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, tiếng Anh. Vòng lặp huấn luyện thực sự áp dụng phép cập nhật, đúng nửa mã của bài.

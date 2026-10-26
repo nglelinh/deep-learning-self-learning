@@ -130,3 +130,9 @@ Số hạng weight decay $$\lambda \theta_{t-1}$$ được thêm sau scale thíc
 **Adam**: Kết hợp cả hai cơ chế. Momentum tăng tốc dọc hẻm. Learning rate thích nghi ngăn nảy quá mức. Kết quả là tiến trình nhanh, ổn định về cực tiểu. Adam cũng xử lý thực tế rằng thống kê gradient thay đổi khi ta di chuyển — đầu huấn luyện, xa cực tiểu, gradient lớn; gần cực tiểu, chúng thu nhỏ. Scale thích nghi điều chỉnh tự động.
 
 Xét một kịch bản cụ thể: huấn luyện mạng neuron trên tập dữ liệu với đặc trưng hiếm nhưng quan trọng. SGD thuần túy cập nhật mọi tham số như nhau, nên đặc trưng hiếm được cập nhật không thường xuyên (chỉ khi các mẫu chứa chúng xuất hiện). AdaGrad/Adam cho các tham số này learning rate hiệu dụng lớn hơn (vì $$\mathbf{v}_t$$ của chúng nhỏ hơn, đã tích lũy ít cập nhật gradient hơn), cho phép chúng học nhanh từ ít mẫu chúng thấy. Đặc trưng phổ biến, cập nhật thường xuyên, nhận learning rate hiệu dụng nhỏ hơn, ngăn phản ứng thái quá với từng mẫu. Tính thích nghi này là lý do Adam thường hội tụ nhanh hơn SGD, đặc biệt trong NLP nơi độ thưa từ vựng cực đoan.
+
+## Video tham khảo
+
+- **xem trước** [Optimization for Deep Learning (Momentum, RMSprop, AdaGrad, Adam)](https://www.youtube.com/watch?v=NE88eqLngkg) — DeepBean, tiếng Anh. Mỗi phương pháp là một trung bình của gradient quá khứ, đúng phần lý thuyết.
+- [Gradient Descent, Step-by-Step](https://www.youtube.com/watch?v=sDv4f4s2SB8) — StatQuest with Josh Starmer, tiếng Anh. Bước chưa lấy trung bình mà các phương pháp bắt đầu từ đó.
+- [Gradient descent, how neural networks learn | Deep Learning Chapter 2](https://www.youtube.com/watch?v=IHZwWFHWa-w) — 3Blue1Brown, tiếng Anh. Vì sao tất cả việc này là đi xuống một chi phí, trước khi ghi sổ moment.

@@ -108,3 +108,9 @@ The three types of continuity form a hierarchy of increasingly strong conditions
 **Example 4: $$f(x) = \sqrt{x}$$**
 - **On $$[0,1]$$**: Continuous and uniformly continuous, but not Lipschitz (derivative unbounded near $$x = 0$$)
 - **On $$[a,1]$$ for $$a > 0$$**: Lipschitz with $$L = 1/(2\sqrt{a})$$
+
+## Video tham khảo
+
+- **xem trước** [Continuity at a point | Limits and continuity | AP Calculus AB | Khan Academy](https://www.youtube.com/watch?v=3KMqU5j7irw) — Khan Academy, English. Continuity at a single point is the definition the lesson starts from.
+- [Limits, L'Hôpital's rule, and epsilon delta definitions | Chapter 7, Essence of calculus](https://www.youtube.com/watch?v=kfF40MiS7zA) — 3Blue1Brown, English. The epsilon-delta language in the second half is the same language used to upgrade pointwise continuity to uniform continuity.
+- [Real Analysis | Intro to uniform continuity.](https://www.youtube.com/watch?v=gioaYgOQ3AQ) — Michael Penn, English. This is the uniform-continuity strengthening itself: one delta that works on a whole set, which is the lesson's second definition.

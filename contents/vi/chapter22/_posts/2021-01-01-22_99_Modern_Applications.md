@@ -49,3 +49,9 @@ Hệ gợi ý production vẫn chạy **GNN hai phía** hoặc embedding two-tow
 ## 4. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Viết một lớp truyền tin trước. Bài này chỉ thêm **Graph Transformer** và **AlphaFold 3** như ứng dụng trích ý tưởng chương này trong 2024–2026.
+
+## Video tham khảo
+
+- **xem trước** [Graph Neural Networks Explained: A Clear Guide to GNN Basics & Models](https://www.youtube.com/watch?v=eGoszzMkGfU) — IBM Technology, tiếng Anh. Truyền thông điệp là việc một graph transformer vẫn làm, với một mặt nạ attention được học.
+- [Message Passing: How Graph Neural Networks Actually Work](https://www.youtube.com/watch?v=1DmNdMUbDkg) — The Synthetic Mind, tiếng Anh. Một vòng đơn, để khối graph transformer có mốc so.
+- [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Self-attention là bộ trộn khối đó dùng khi hàng xóm không còn là token duy nhất nó được đọc.

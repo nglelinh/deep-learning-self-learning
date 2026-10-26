@@ -180,3 +180,9 @@ Biểu diễn phân cấp, phân tán này cũng giải thích hiệu quả mẫ
 Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
 
 - [Mạng nơ-ron là bộ xấp xỉ hàm](https://www.facebook.com/reel/720970114372332)
+
+## Video tham khảo
+
+- **xem trước** [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Neuron xếp lớp như bộ xấp xỉ hàm là định nghĩa bài dựng.
+- [The Essential Main Ideas of Neural Networks](https://www.youtube.com/watch?v=CqOfi41LfDw) — StatQuest with Josh Starmer, tiếng Anh. Một lượt chậm hơn trên cùng nút, trọng số và ý tưởng khớp đường cong, mọi đại lượng đều được gắn nhãn.
+- [Tất tần tật về Neural Network trong 12 phút](https://www.youtube.com/watch?v=sWPNm_GhhCA) — Việt Nguyễn AI, tiếng Việt. Cùng mạng xếp lớp, giải thích bằng tiếng Việt.

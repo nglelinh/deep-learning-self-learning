@@ -53,3 +53,9 @@ Tiny CNNs, from-scratch tabular nets, and cases where the whole representation m
 ## 5. How this complements the core notes
 
 Do the ResNet/BERT fine-tune homework first. This lesson only adds the **low-rank / quantized** transfer recipe that replaced “unfreeze the last three layers” for LLMs.
+
+## Video tham khảo
+
+- **xem trước** [QLoRA: Efficient Finetuning of Quantized LLMs | Tim Dettmers](https://www.youtube.com/watch?v=fQirE9N5q_Y) — AMLD Intelligence Summit, English. QLoRA is quantized low-rank fine-tuning, the transfer method this note adds. The talk is Tim Dettmers at AMLD.
+- [How LLMs survive in low precision | Quantization Fundamentals](https://www.youtube.com/watch?v=qoQJq5UwV1c) — Julia Turc, English. The low-precision arithmetic QLoRA depends on.
+- [Fine-tuning a Neural Network explained](https://www.youtube.com/watch?v=5T-iXNNiwIs) — deeplizard, English. Ordinary fine-tuning, so the quantized variant is a change of how, not of why.

@@ -57,3 +57,9 @@ Already sketched in Chapter 15 optional: 4-bit base, 16-bit adapters. Serving th
 ## 5. How this complements the core notes
 
 Keep the pruning / KD / MobileNet derivations. This lesson only adds **LLM-specific PTQ, GGUF, speculative decoding, and MoE** — the tools you use when the “model” is a 7B–70B Transformer.
+
+## Video tham khảo
+
+- **xem trước** [How LLMs survive in low precision | Quantization Fundamentals](https://www.youtube.com/watch?v=qoQJq5UwV1c) — Julia Turc, English. Post-training quantization of language models is this note.
+- [QLoRA: Efficient Finetuning of Quantized LLMs | Tim Dettmers](https://www.youtube.com/watch?v=fQirE9N5q_Y) — AMLD Intelligence Summit, English. QLoRA, the fine-tune that stays in 4-bit, from Tim Dettmers.
+- [Knowledge Distillation: How LLMs train each other](https://www.youtube.com/watch?v=jrJKRYAdh7I) — Julia Turc, English. Distillation as the other way to get a smaller deployed model.

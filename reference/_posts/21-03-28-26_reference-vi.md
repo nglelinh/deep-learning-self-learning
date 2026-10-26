@@ -131,3 +131,35 @@ categories:
 - [ArXiv.org](https://arxiv.org/) cho bài báo mới  
 - [Papers with Code](https://paperswithcode.com/) cho cài đặt kèm paper  
 - Kho GitHub của khóa học cho ví dụ mã và notebook  
+
+## Video theo chương
+
+Một video đã kiểm tra cho mỗi chương. Mở bài tương ứng để có đủ 1–3 video và dòng ghi chú.
+
+- **00.** [MaDL - Introduction](https://www.youtube.com/watch?v=gq0m_2Glz0g) — Tübingen Machine Learning, tiếng Anh. Phần toán phần còn lại của khóa giả định: vector, giải tích và xác suất trong một tour ngắn.
+- **01.** [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Mạng xếp lớp như bộ xấp xỉ hàm, hình Chương 1 bắt đầu từ đó.
+- **02.** [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Từ một neuron tới một chồng lớp.
+- **03.** [Gradient descent, how neural networks learn | Deep Learning Chapter 2](https://www.youtube.com/watch?v=IHZwWFHWa-w) — 3Blue1Brown, tiếng Anh. Huấn luyện là đi xuống dốc trên một chi phí.
+- **04.** [But what is a convolution?](https://www.youtube.com/watch?v=KuXjwB4LzSA) — 3Blue1Brown, tiếng Anh. Tích chập như một phép trộn cục bộ trượt.
+- **05.** [Recurrent Neural Networks (RNNs), Clearly Explained!!!](https://www.youtube.com/watch?v=AsNTP8Kwu80) — StatQuest with Josh Starmer, tiếng Anh. Trạng thái ẩn như bộ nhớ cho chuỗi.
+- **06.** [Long Short-Term Memory (LSTM), Clearly Explained](https://www.youtube.com/watch?v=YCzL96nL7j0) — StatQuest with Josh Starmer, tiếng Anh. Trạng thái tế bào LSTM và các cổng.
+- **07.** [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, tiếng Anh. Query, key và value.
+- **08.** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Khối transformer.
+- **09.** [Dropout Regularization (C2W1L06)](https://www.youtube.com/watch?v=D8PJAL-MZv8) — DeepLearningAI, tiếng Anh. Dropout như một bộ chính quy.
+- **10.** [Adam Optimization Algorithm (C2W2L08)](https://www.youtube.com/watch?v=JXQT_vxqwIs) — DeepLearningAI, tiếng Anh. Phép cập nhật Adam.
+- **11.** [MIT 6.S191 (2024): Deep Generative Modeling](https://www.youtube.com/watch?v=Dmm4UG-6jxA) — Alexander Amini, tiếng Anh. Bản đồ mô hình sinh năm 2024.
+- **12.** [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, tiếng Anh. Mã hóa, nút thắt, giải mã.
+- **13.** [Variational Autoencoders](https://www.youtube.com/watch?v=9zKuYvjFFS8) — Arxiv Insights, tiếng Anh. Một phân phối ẩn, không phải một điểm.
+- **14.** [A Friendly Introduction to Generative Adversarial Networks (GANs)](https://www.youtube.com/watch?v=8L11aMN5KY8) — Luis Serrano Academy, tiếng Anh. Trò chơi bộ sinh và bộ phân biệt.
+- **15.** [Fine-tuning a Neural Network explained](https://www.youtube.com/watch?v=5T-iXNNiwIs) — deeplizard, tiếng Anh. Tinh chỉnh một mạng đã tiền huấn luyện.
+- **16.** [Contrastive Learning with SimCLR | Deep Learning Animated](https://www.youtube.com/watch?v=UqJauYELn6c) — Deepia, tiếng Anh. Tự giám sát tương phản.
+- **17.** [How YOLO Object Detection Works](https://www.youtube.com/watch?v=svn9-xV7wjk) — DeepBean, tiếng Anh. Phát hiện đối tượng trong một lượt.
+- **18.** [Word Embedding and Word2Vec, Clearly Explained!!!](https://www.youtube.com/watch?v=viZrOnJclY0) — StatQuest with Josh Starmer, tiếng Anh. Một từ là một vector được học.
+- **19.** [Mel Frequency Cepstral Coefficients (MFCC) Explained](https://www.youtube.com/watch?v=SJo7vPgRlBQ) — DataMListic, tiếng Anh. MFCC, đặc trưng một mô hình tiếng nói tiêu thụ.
+- **20.** [RL Course by David Silver - Lecture 1: Introduction to Reinforcement Learning](https://www.youtube.com/watch?v=2pWv7GOvuf0) — Google DeepMind, tiếng Anh. Tác tử, phần thưởng và chính sách.
+- **21.** [Lecture 14 | Deep Reinforcement Learning](https://www.youtube.com/watch?v=lvoHnicueoE) — Stanford University School of Engineering, tiếng Anh. DQN và policy gradient.
+- **22.** [Graph Neural Networks Explained: A Clear Guide to GNN Basics & Models](https://www.youtube.com/watch?v=eGoszzMkGfU) — IBM Technology, tiếng Anh. Truyền thông điệp trên đồ thị.
+- **23.** [Lecture 15 | Efficient Methods and Hardware for Deep Learning](https://www.youtube.com/watch?v=eZdOkDtYMoo) — Stanford University School of Engineering, tiếng Anh. Tỉa, lượng tử hóa và chưng cất.
+- **24.** [Lecture 12 | Visualizing and Understanding](https://www.youtube.com/watch?v=6wcs6szJWMY) — Stanford University School of Engineering, tiếng Anh. Nhìn vào trong một mạng đã huấn luyện.
+- **25.** [MIT 6.S191 (2024): Language Models and New Frontiers](https://www.youtube.com/watch?v=N1fbskTpwZ0) — Alexander Amini, tiếng Anh. Những gì bài giảng biên 2024 vẫn coi là mở.
+- **26.** [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, tiếng Anh. Mô hình ngôn ngữ lớn là gì.

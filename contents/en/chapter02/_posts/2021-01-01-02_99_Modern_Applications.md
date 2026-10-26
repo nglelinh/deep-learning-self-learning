@@ -56,3 +56,9 @@ and place it *before* the residual branch (pre-norm). That is an activation-scal
 ## 5. How this complements the core notes
 
 Use the perceptron and activation lessons to understand $$z$$ and $$\sigma$$. This note only documents the **packaging** (SwiGLU, RMSNorm, residuals) you will see when you open a 2025 LLM or `timm` model card. Chapter **26-07** puts that packaging on a full decoder stack (RoPE, GQA, accounting).
+
+## Video tham khảo
+
+- **xem trước** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, English. The MLP block inside a transformer is the modern fully connected layer this note describes.
+- [The GELU, SiLU and SwiGLU activation functions, clearly explained!!!](https://www.youtube.com/watch?v=2FaI2Fen1mQ) — StatQuest with Josh Starmer, English. SwiGLU is the activation that block actually uses.
+- [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, English. The original stacked-neuron picture, so the note's 'from one neuron to an MLP' comparison stays grounded.

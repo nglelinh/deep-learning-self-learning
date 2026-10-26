@@ -55,3 +55,9 @@ Từ vựng subword quyết định chi phí và chất lượng đa ngữ. BPE 
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Xong số học Word2Vec và ghi chú “tĩnh vs ngữ cảnh” trước. Bài này chỉ thêm **RAG, bộ sinh tinh chỉnh chỉ dẫn, và tokenizer hiện đại** — không phải suy diễn skip-gram mới.
+
+## Video tham khảo
+
+- **xem trước** [Large Language Models explained briefly](https://www.youtube.com/watch?v=LPZh9BOjkQs) — 3Blue1Brown, tiếng Anh. Một vector từ tĩnh không còn là cả mô hình; video ngắn này là chồng câu trả lời được sinh mà ghi chú mô tả.
+- [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Nhúng theo ngữ cảnh bên trong transformer, thứ thay cho một vector mỗi loại từ.
+- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, tiếng Anh. Bạn làm gì với các trạng thái theo ngữ cảnh đó khi mô hình đã trả lời được.

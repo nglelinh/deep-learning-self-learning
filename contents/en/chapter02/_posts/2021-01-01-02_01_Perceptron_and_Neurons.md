@@ -438,3 +438,9 @@ The perceptron, despite its simplicity, introduces fundamental concepts that per
 Some figures in this lesson are screenshots from the following videos (Machine Learning Thực Chiến). URLs kept for attribution and further viewing:
 
 - [Neural network intuition (Perceptron → Deep Learning)](https://www.facebook.com/reel/793200140509765)
+
+## Video tham khảo
+
+- **xem trước** [The Perceptron Explained](https://www.youtube.com/watch?v=i1G7PXZMnSc) — Alice Heiman, English. The perceptron is a weighted sum plus a threshold, which is this lesson's opening model.
+- [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, English. Shows what changes when many perceptrons are stacked and the threshold becomes a smooth activation.
+- [Why Non-linear Activation Functions (C1W3L07)](https://www.youtube.com/watch?v=NkOv_k7r6no) — DeepLearningAI, English. Why a purely linear neuron is not enough, the step the lesson takes after the single perceptron.

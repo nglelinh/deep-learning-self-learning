@@ -57,3 +57,9 @@ On-device keyword spotting, some forecasting baselines, and teaching labs still 
 ## 5. How this complements the core notes
 
 Implement the vanilla RNN and the pitfalls lesson first. This note only contrasts **modern linear recurrences** with Transformers — it does not replace the unfolding / BPTT derivation.
+
+## Video tham khảo
+
+- **xem trước** [MAMBA and State Space Models explained | SSM explained](https://www.youtube.com/watch?v=vrF3MtGwD0Y) — AI Coffee Break with Letitia, English. State-space models are the 2023–2024 reason a recurrence did not disappear behind transformers.
+- [Recurrent Neural Networks (RNNs), Clearly Explained!!!](https://www.youtube.com/watch?v=AsNTP8Kwu80) — StatQuest with Josh Starmer, English. The hidden state those newer recurrences still keep.
+- [MIT 6.S191 (2024): Recurrent Neural Networks, Transformers, and Attention](https://www.youtube.com/watch?v=dqoEU9Ac3ek) — Alexander Amini, English. Where a 2024 course still teaches RNNs next to attention.

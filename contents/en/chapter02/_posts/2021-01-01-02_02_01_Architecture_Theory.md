@@ -288,3 +288,9 @@ Some figures in this lesson are screenshots from the following videos (Machine L
 
 - [Neural network intuition (Perceptron → Deep Learning)](https://www.facebook.com/reel/793200140509765)
 - [Neural nets as function approximators](https://www.facebook.com/reel/720970114372332)
+
+## Video tham khảo
+
+- **xem trước** [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, English. A layer is an affine map followed by a nonlinearity, the formula this lesson writes.
+- [The Essential Main Ideas of Neural Networks](https://www.youtube.com/watch?v=CqOfi41LfDw) — StatQuest with Josh Starmer, English. Walks one hidden layer with every matrix shape visible.
+- [Lecture 4 | Introduction to Neural Networks](https://www.youtube.com/watch?v=d14TUNcbn1k) — Stanford University School of Engineering, English. States the same layer equation in lecture form, including why composition is the point of depth.

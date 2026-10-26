@@ -379,3 +379,9 @@ Cuối cùng, hiểu rằng lan truyền ngược chỉ là triển khai hiệu 
 Lan truyền ngược về cơ bản là áp dụng hiệu quả quy tắc dây chuyền của giải tích để tính gradient trong mạng neuron. Hiệu quả của nó — tính tất cả gradient trong thời gian tỷ lệ với một lần lan truyền xuôi — làm huấn luyện mạng sâu khả thi. Thuật toán xử lý các lớp theo thứ tự ngược, truyền sai số ngược và dùng các giá trị lan truyền xuôi đã cache để tính gradient tham số. Sự đơn giản đẹp đẽ của $$\boldsymbol{\delta}^{[L]} = \mathbf{a}^{[L]} - \mathbf{y}$$ cho lớp đầu ra với cặp mất mát/kích hoạt phù hợp không phải ngẫu nhiên mà là thiết kế cẩn thận. Các framework hiện đại tự động hóa lan truyền ngược qua vi phân tự động, xây đồ thị tính toán và áp dụng vi phân reverse-mode. Hiểu sâu lan truyền ngược nghĩa là hiểu không chỉ cơ chế mà cả vì sao — vì sao ta cache giá trị, vì sao gradient biến mất hoặc bùng nổ, vì sao một số lựa chọn thiết kế đơn giản hóa gradient — và hiểu biết này thiết yếu để gỡ lỗi thất bại huấn luyện, thiết kế kiến trúc mới, và thực sự làm chủ học sâu thay vì chỉ áp dụng nó.
 
 Hành trình từ triển khai lan truyền ngược thủ công đến dùng nó liền mạch qua PyTorch phản ánh hành trình từ hiểu biết đến ứng dụng, và cả hai đều cần thiết cho sự thành thạo.
+
+## Video tham khảo
+
+- **xem trước** [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0) — Andrej Karpathy, tiếng Anh. Lan truyền ngược như một động cơ autograd đọc được từng dòng.
+- [Neural Networks Pt. 2: Backpropagation Main Ideas](https://www.youtube.com/watch?v=IN2XmBhILt4) — StatQuest with Josh Starmer, tiếng Anh. Bức tranh quy tắc dây chuyền vô hướng để để cạnh mã.
+- [Xây dựng mạng nơ-ron nhân tạo từ con số 0 | Writing a Neural Network from scratch](https://www.youtube.com/watch?v=VBviWbusHd8) — Học Lập Trình cùng Phát, tiếng Việt. Một mạng tiếng Việt viết từ đầu, gồm bước ngược.

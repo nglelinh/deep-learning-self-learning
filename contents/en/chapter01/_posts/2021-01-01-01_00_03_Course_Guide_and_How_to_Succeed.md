@@ -203,3 +203,9 @@ In the next chapter, we'll dive into **Neural Networks Fundamentals** and unders
 Armed with the conceptual understanding from this introduction and the detailed mechanics from the next chapter, you'll be ready to understand training algorithms, implement your own networks, and appreciate the sophisticated architectures that power modern AI systems.
 
 **Remember**: Deep learning is fundamentally about letting data reveal its own structure rather than imposing our assumptions. This paradigm shift—from hand-crafted features to learned representations—is what makes deep learning both powerful and philosophically different from traditional approaches. As you progress through this course, you'll see this principle manifest in countless ways across different domains and architectures.
+
+## Video tham khảo
+
+- **xem trước** [MIT Introduction to Deep Learning (2024) | 6.S191](https://www.youtube.com/watch?v=ErnWZxJovaM) — Alexander Amini, English. How a serious intro course sequences prerequisites, loss, and training, matching this guide's roadmap.
+- [AI, Machine Learning, Deep Learning and Generative AI Explained](https://www.youtube.com/watch?v=qYNweeDHiyU) — IBM Technology, English. Use this to place the applications section (vision, language, generative models) before choosing a path through the chapters.
+- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, English. The later chapters point at large language models; this talk is the map of that destination.

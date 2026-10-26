@@ -57,3 +57,9 @@ Nhận từ khóa trên thiết bị, một số baseline dự báo, và phòng 
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Cài RNN gốc và bài pitfalls trước. Bài này chỉ đối chiếu **hồi quy tuyến tính hiện đại** với Transformer — không thay suy diễn unfolding / BPTT.
+
+## Video tham khảo
+
+- **xem trước** [MAMBA and State Space Models explained | SSM explained](https://www.youtube.com/watch?v=vrF3MtGwD0Y) — AI Coffee Break with Letitia, tiếng Anh. Mô hình không gian trạng thái là lý do 2023–2024 một phép truy hồi không biến mất sau transformer.
+- [Recurrent Neural Networks (RNNs), Clearly Explained!!!](https://www.youtube.com/watch?v=AsNTP8Kwu80) — StatQuest with Josh Starmer, tiếng Anh. Trạng thái ẩn mà các phép truy hồi mới hơn vẫn giữ.
+- [MIT 6.S191 (2024): Recurrent Neural Networks, Transformers, and Attention](https://www.youtube.com/watch?v=dqoEU9Ac3ek) — Alexander Amini, tiếng Anh. Chỗ một khóa 2024 vẫn dạy RNN cạnh attention.

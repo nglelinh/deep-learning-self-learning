@@ -60,3 +60,9 @@ Không vòng lấy mẫu lúc train. DPO và họ hàng (IPO, KTO, ORPO) thành 
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
 Cài ý tưởng DQN/PPO của chương trước. Bài này chỉ thêm **tối ưu preference cho LM** (RLHF/DPO/GRPO) — không phải backup Bellman mới. Bản đồ Chương 26 (SFT → thưởng / PPO → DPO, cùng công thức DPO) là **26-03**.
+
+## Video tham khảo
+
+- **xem trước** [Proximal Policy Optimization (PPO) for LLMs Explained Intuitively](https://www.youtube.com/watch?v=8jtAzxUwDj0) — Julia Turc, tiếng Anh. PPO là phương pháp policy gradient ghi chú dùng cho RLHF.
+- [Direct Preference Optimization (DPO) - How to fine-tune LLMs directly without reinforcement learning](https://www.youtube.com/watch?v=k2pD3k1485A) — Luis Serrano Academy, tiếng Anh. DPO, mục tiêu sở thích ghi chú đặt cạnh PPO.
+- [Reinforcement Learning with Human Feedback (RLHF), Clearly Explained!!!](https://www.youtube.com/watch?v=qPN_XZcJf_s) — StatQuest with Josh Starmer, tiếng Anh. Vòng phản hồi người mà cả hai thuật toán đang tối ưu.

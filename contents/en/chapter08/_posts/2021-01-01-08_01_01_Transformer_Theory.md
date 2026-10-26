@@ -336,3 +336,9 @@ Some figures in this lesson are screenshots from the following videos (Machine L
 
 - [Attention in Transformers (Self, Masked, Cross, Multi-Head)](https://www.facebook.com/reel/1007473105556936)
 - [Position Encoding in Transformers (step by step)](https://www.facebook.com/reel/1306224801415127)
+
+## Video tham khảo
+
+- **xem trước** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, English. Embeddings, attention, MLP, softmax, and temperature are the theory lesson's pieces.
+- [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, English. The attention step inside that block, at the resolution the math section needs.
+- [Positional embeddings in transformers EXPLAINED | Demystifying positional encodings.](https://www.youtube.com/watch?v=1biZfFLPRSY) — AI Coffee Break with Letitia, English. Positional encodings, the piece a bag of tokens otherwise lacks.

@@ -53,3 +53,9 @@ $$\beta$$-VAE-style disentanglement is less fashionable than in 2018, but **vari
 ## 5. How this complements the core notes
 
 Derive the ELBO and the reparameterization trick first. This lesson only shows **where $$z$$ is consumed** in 2022–2026 products — not a new evidence lower bound.
+
+## Video tham khảo
+
+- **xem trước** [How does Stable Diffusion work? – Latent Diffusion Models EXPLAINED](https://www.youtube.com/watch?v=J87hffSMB60) — AI Coffee Break with Letitia, English. The Stable Diffusion VAE is the deployed descendant this note describes.
+- [Variational Autoencoders](https://www.youtube.com/watch?v=9zKuYvjFFS8) — Arxiv Insights, English. The ELBO that VAE still trains, even when it is only a compressor in front of diffusion.
+- [But how do AI images and videos actually work? | Guest video by Welch Labs](https://www.youtube.com/watch?v=iv-5mZ_9CPY) — 3Blue1Brown, English. What the diffusion model does with the VAE's latent.
