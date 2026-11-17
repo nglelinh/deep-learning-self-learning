@@ -227,6 +227,8 @@ for s in [1, 1000, 4000, 10000]:
 
 Bạn hiện có lộ trình Chương 08 đầy đủ: giới thiệu → lý thuyết → cài đặt → demo/bẫy. Từ đây có thể chuyên sâu vào mô hình ngôn ngữ lớn, NLU chỉ-encoder, hoặc Vision Transformer trên cùng bộ khung đại số này.
 
+Để quan sát một GPT-2 *đã tiền huấn luyện* mà không cần viết vòng lặp huấn luyện, tiếp tục với **08-02 Transformer Explainer**: bản trực quan hóa trên trình duyệt về embedding, các đầu attention, temperature, và lấy mẫu top-k / top-p.
+
 ## Video tham khảo
 
 - **xem trước** [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Demo lấy mẫu và các cạm bẫy của bản cài không che hoặc không buộc tham số.

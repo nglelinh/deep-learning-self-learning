@@ -2,7 +2,7 @@
 layout: post
 title: 08-99 Ứng dụng và cập nhật hiện đại (2022–2026)
 chapter: '08'
-order: 7
+order: 8
 owner: Deep Learning Course
 lang: vi
 categories:
