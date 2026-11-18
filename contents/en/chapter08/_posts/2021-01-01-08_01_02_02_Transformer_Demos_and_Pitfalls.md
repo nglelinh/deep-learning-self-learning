@@ -234,6 +234,8 @@ for s in [1, 1000, 4000, 10000]:
 
 You now have a complete Chapter 08 path: introduction → theory → implementation → demos/pitfalls. From here you can specialize into large language models, encoder-only NLU, or Vision Transformers using the same algebraic skeleton.
 
+To inspect a *pretrained* GPT-2 without writing a training loop, continue to **08-02 Transformer Explainer**: an in-browser visualization of embeddings, attention heads, temperature, and top-k / top-p sampling.
+
 ## Video tham khảo
 
 - **xem trước** [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, English. The sampling demo and the pitfalls of an unmasked or untied implementation.
