@@ -11,131 +11,131 @@ categories:
 
 # Transformer Explainer
 
-Các phương trình trong chương này nói *Transformer tính gì*. [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) cho bạn *nhìn thấy* những phép tính đó trên một mô hình ngôn ngữ thật, không cần cài đặt và không cần GPU. Công cụ chạy trực tiếp trên trình duyệt một mô hình **GPT-2 (small)** còn sống (124 triệu tham số, 12 khối Transformer xếp chồng), nên mọi con số bạn thấy đều là lượt truyền xuôi thật cho prompt bạn gõ.
+Các phương trình trong chương này mô tả *những gì Transformer tính toán*, còn [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) cho phép bạn *quan sát trực tiếp* các phép tính đó trên một mô hình ngôn ngữ thực tế mà không cần cài đặt hay dùng GPU. Công cụ chạy trực tiếp trên trình duyệt mô hình **GPT-2 (small)** (124 triệu tham số, 12 khối Transformer xếp chồng), nên mọi con số hiển thị đều là kết quả truyền xuôi thật từ prompt bạn nhập.
 
 ![Tổng quan Transformer Explainer](/deep-learning-self-learning/img/chapter_img/chapter08/transformer_explainer_summary.png)
-*Giao diện tương tác: prompt được tách token, rồi đi qua embedding, multi-head self-attention, và MLP. Nguồn: Polo Club of Data Science, Georgia Tech, [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) (giấy phép MIT).*
+*Giao diện tương tác: prompt được tách token, sau đó đi qua embedding, multi-head self-attention và MLP. Nguồn: Polo Club of Data Science, Georgia Tech, [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) (giấy phép MIT).*
 
-Hãy mở công cụ trước, rồi dùng bài này như bản đồ hướng dẫn:
+Bạn nên mở công cụ trước rồi dùng bài này như tài liệu hướng dẫn đối chiếu:
 
 - **Demo trực tiếp:** [poloclub.github.io/transformer-explainer](https://poloclub.github.io/transformer-explainer/)
 - **Mã nguồn:** [github.com/poloclub/transformer-explainer](https://github.com/poloclub/transformer-explainer)
 - **Bài báo (CHI 2026):** [Cho et al., “Transformer Explainer…”](https://doi.org/10.1145/3772318.3791725) ([PDF](https://poloclub.github.io/papers/26-chi-transformer-explainer.pdf), [arXiv:2408.04619](https://arxiv.org/abs/2408.04619))
 - **Video demo:** [YouTube](https://www.youtube.com/watch?v=TFUc41G2ikY)
 
-Trang được thiết kế để khám phá cả màn hình (hover trọng số attention, mở rộng tầng, kéo thanh trượt). Khóa học vì thế dẫn ra demo trực tiếp, thay vì nhúng công cụ vào một khung nhỏ.
+Do giao diện được thiết kế để tương tác toàn màn hình (di chuột xem trọng số attention, mở rộng từng tầng, kéo thanh trượt), khóa học dẫn liên kết trực tiếp tới trang demo thay vì nhúng vào khung nhỏ.
 
 ## 1. Tổng quan khái niệm
 
-GPT-2 là Transformer **chỉ có decoder**: nó dự đoán token kế tiếp khi đã biết mọi token bên trái. Đây là kiến trúc hẹp hơn một chút so với sơ đồ encoder–decoder trong “Attention Is All You Need,” vốn còn self-attention phía encoder và cross-attention giữa encoder với decoder. Những khối bạn đã học vẫn xuất hiện, chỉ được sắp xếp cho mô hình ngôn ngữ nhân quả:
+GPT-2 là Transformer **chỉ có decoder**: mô hình dự đoán token tiếp theo dựa trên toàn bộ các token đứng bên trái. Kiến trúc này gọn hơn sơ đồ encoder–decoder trong *"Attention Is All You Need"* (vốn có thêm self-attention phía encoder và cross-attention giữa hai phía), nhưng vẫn giữ nguyên các khối cơ bản:
 
-1. **Embedding** — token trở thành vector, cộng thêm tín hiệu vị trí.
-2. **Các khối Transformer** — mỗi khối gồm **self-attention** đa đầu (giao tiếp giữa các vị trí) rồi đến **MLP** (tính toán trên từng vị trí), kèm kết nối thặng dư (*residual*).
-3. **Xác suất đầu ra** — một lớp tuyến tính cộng softmax biến trạng thái ẩn cuối thành phân phối trên từ vựng, rồi lấy mẫu token kế tiếp từ phân phối đó.
+1. **Embedding** — ánh xạ token thành vectơ và cộng thêm tín hiệu vị trí.
+2. **Các khối Transformer** — mỗi khối gồm **self-attention** đa đầu (trao đổi thông tin giữa các vị trí) tiếp nối bởi **MLP** (biến đổi cục bộ từng vị trí), đi kèm kết nối phần dư (*residual*).
+3. **Xác suất đầu ra** — lớp tuyến tính kết hợp softmax chuyển trạng thái ẩn cuối thành phân phối xác suất trên toàn bộ từ vựng để lấy mẫu token kế tiếp.
 
-GPT-2 (small) dùng từ vựng 50.257 token và embedding 768 chiều. Mười hai khối có cùng cấu trúc; phần trực quan hóa thường mở **Block 1** và ghi chú rằng còn mười một khối giống vậy phía sau. Mô hình trong trình duyệt được chuyển từ nanoGPT của Andrej Karpathy và chạy bằng ONNX Runtime, nên các giá trị cập nhật tức thì khi bạn sửa prompt hoặc chỉnh tham số lấy mẫu.
+GPT-2 (small) sử dụng bộ từ vựng 50.257 token và chiều embedding 768. Cả 12 khối đều có cùng cấu trúc; giao diện thường mở chi tiết **Block 1** và chú thích 11 khối còn lại phía sau. Mô hình trong trình duyệt được chuyển đổi từ nanoGPT của Andrej Karpathy và chạy qua ONNX Runtime, giúp các giá trị cập nhật tức thì khi bạn đổi prompt hoặc điều chỉnh tham số lấy mẫu.
 
 ![Hình teaser có chú thích của toàn bộ giao diện](/deep-learning-self-learning/img/chapter_img/chapter08/transformer_explainer_teaser.jpg)
-*Hình teaser chính thức của toàn bộ giao diện (đã đổi kích thước cho trang khóa học). (A) gõ prompt và sinh token kế tiếp; (B) đổi temperature và cách lấy mẫu; (C) mở rộng phép tính attention (tích vô hướng, scale và mask nhân quả, softmax). Nguồn: Polo Club of Data Science, Georgia Tech, [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) (giấy phép MIT).*
+*Hình tổng quan giao diện chính thức (đã điều chỉnh kích thước cho trang khóa học): (A) nhập prompt và sinh token kế tiếp; (B) điều chỉnh nhiệt độ và chế độ lấy mẫu; (C) mở rộng chi tiết phép tính attention (tích vô hướng, chia tỉ lệ kèm mask nhân quả, softmax). Nguồn: Polo Club of Data Science, Georgia Tech, [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) (giấy phép MIT).*
 
-## 2. Từng phần của bản trực quan hóa cho thấy gì
+## 2. Ý nghĩa từng phần trên giao diện
 
-### Embedding, tokenization và mã hóa vị trí
+### Embedding, tách token và mã hóa vị trí
 
-Hãy mở cột **Embedding**. Prompt trước hết được **tách token**. GPT-2 dùng từ vựng đơn vị con (*subword*): những từ trọn vẹn như `Data` hay `visualization` có thể là một token, trong khi `empowers` bị tách thành `em` và `powers`. Mỗi token có một id nguyên và một **token embedding** 768 chiều đã được học.
+Khi mở cột **Embedding**, prompt trước tiên được tách thành các token con (*subword*): những từ phổ biến như `Data` hay `visualization` giữ nguyên một token, trong khi `empowers` được tách thành `em` và `powers`. Mỗi token ứng với một chỉ số nguyên và một vectơ **token embedding** 768 chiều đã học.
 
 ![Embedding: token, token embedding và mã hóa vị trí](/deep-learning-self-learning/img/chapter_img/chapter08/transformer_explainer_embedding.png)
-*Bốn bước embedding cho prompt “Data visualization empowers users to”: (1) token, (2) token embedding kèm id trong từ vựng, (3) mã hóa vị trí, (4) tổng cuối. Nguồn: Polo Club of Data Science, Georgia Tech, [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) (giấy phép MIT).*
+*Bốn bước embedding cho prompt "Data visualization empowers users to": (1) tách token, (2) tra cứu token embedding theo id, (3) mã hóa vị trí, (4) cộng hai vectơ. Nguồn: Polo Club of Data Science, Georgia Tech, [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) (giấy phép MIT).*
 
-**Mã hóa vị trí được cộng, không phải nối.** GPT-2 *không* dùng bảng sine/cosine cố định của bài báo Transformer gốc; nó học một ma trận embedding vị trí khi huấn luyện rồi cộng vào token embedding. Điểm cần nắm vẫn giống bài lý thuyết: self-attention vốn không biết thứ tự, nên phải “tiêm” thông tin vị trí bằng cách nào đó. Sau phép cộng, mỗi hàng là một vector mang cả “token này là gì” và “nó đứng ở đâu trong prompt.”
+**Mã hóa vị trí được cộng trực tiếp thay vì ghép nối.** Khác với bảng sin–cos cố định của Transformer gốc, GPT-2 học một ma trận embedding vị trí trong lúc huấn luyện rồi cộng vào token embedding. Nguyên tắc cốt lõi vẫn không đổi: vì self-attention thuần không tự nhận biết thứ tự, mỗi vectơ đầu vào sau phép cộng cần mang đồng thời thông tin nội dung và vị trí của token.
 
-### Query, key, value và self-attention đa đầu
+### Query, Key, Value và multi-head self-attention
 
-Từ các embedding đó, mô hình tạo các vector **query (Q)**, **key (K)** và **value (V)**. Với GPT-2 (small), đây chỉ là một phép nhân ma trận: embedding kích thước $$(6, 768)$$ nhân với ma trận trọng số $$(768, 2304)$$ đã học, cộng bias, cho ra tensor $$(6, 2304)$$. 2304 cột chính là $$3 \times 768$$ — Q, K và V được nối lại — rồi được tách ra cho **12 đầu attention**.
+Từ các vectơ embedding đó, mô hình tính **query (Q)**, **key (K)** và **value (V)**. Ở GPT-2 (small), thao tác này gom thành một phép nhân ma trận duy nhất: đầu vào kích thước $$(6, 768)$$ nhân với ma trận trọng số $$(768, 2304)$$ cộng độ lệch, cho ra tensor $$(6, 2304)$$. Con số 2304 bằng $$3 \times 768$$ (tương ứng Q, K, V ghép lại), sau đó được tách thành **12 đầu attention**.
 
 ![Tính Q, K và V từ embedding](/deep-learning-self-learning/img/chapter_img/chapter08/transformer_explainer_qkv.png)
-*Embedding nhân với ma trận trọng số QKV gộp (cộng bias) cho ra Q, K và V đã nối. Nguồn: Polo Club of Data Science, Georgia Tech, [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) (giấy phép MIT).*
+*Nhân embedding với ma trận trọng số QKV gộp (cộng độ lệch) để thu đồng thời Q, K và V. Nguồn: Polo Club of Data Science, Georgia Tech, [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) (giấy phép MIT).*
 
-Một phép so sánh hữu ích, cũng được chính công cụ dùng: **query** là câu bạn gõ vào ô tìm kiếm, **key** là tiêu đề các trang có thể khớp, còn **value** là nội dung trang bạn thực sự đọc. Attention là phép tra cứu mềm: mỗi token hỏi “những token trước nào liên quan đến mình?” rồi trộn các value tương ứng.
+Có thể hình dung theo ẩn dụ tìm kiếm mà chính công cụ sử dụng: **query** là từ khóa bạn nhập, **key** là tiêu đề các trang để đối chiếu, còn **value** là nội dung trang bạn đọc sau khi khớp. Attention thực hiện phép tra cứu mềm: mỗi token xác định các token đứng trước có liên quan nhất rồi lấy tổ hợp có trọng số của các value tương ứng.
 
 ![Scaled dot-product attention với mask nhân quả](/deep-learning-self-learning/img/chapter_img/chapter08/transformer_explainer_attention.png)
-*Một đầu attention: tích vô hướng Q–K, scale và mask nhân quả, rồi softmax (và dropout khi huấn luyện). Cấu trúc tam giác dưới là quy tắc của decoder: một token không được nhìn tương lai. Nguồn: Polo Club of Data Science, Georgia Tech, [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) (giấy phép MIT).*
+*Một đầu attention: tích vô hướng Q–K, chia tỉ lệ kèm mask nhân quả, rồi softmax (kèm dropout khi huấn luyện). Dạng tam giác dưới thể hiện ràng buộc của decoder: không được nhìn thấy token tương lai. Nguồn: Polo Club of Data Science, Georgia Tech, [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) (giấy phép MIT).*
 
 Đi từ trái sang phải qua ba ma trận:
 
-1. **Tích vô hướng** $$QK^{\top}$$ đo độ tương đồng thô giữa mọi query và mọi key.
-2. **Scale và mask** chia cho $$\sqrt{d_k}$$ (đúng hệ số $$1/\sqrt{d_k}$$ ở Chương 07) và áp **mask nhân quả**, gán $$-\infty$$ cho các vị trí tương lai để chúng không được chú ý khi dự đoán token kế tiếp.
-3. **Softmax** biến mỗi hàng thành phân phối xác suất trên các vị trí được phép. Các trọng số đó nhân với $$V$$ để ra đầu ra của đầu attention.
+1. **Tích vô hướng** $$QK^{\top}$$ đo độ tương đồng thô giữa mọi cặp query và key.
+2. **Chia tỉ lệ và áp mask** chia cho $$\sqrt{d_k}$$ (hệ số $$1/\sqrt{d_k}$$ ở Chương 07) và áp **mặt nạ nhân quả** gán $$-\infty$$ cho các vị trí tương lai.
+3. **Softmax** chuẩn hóa từng hàng thành phân phối xác suất trên các vị trí hợp lệ, sau đó nhân với $$V$$ để ra đầu ra của đầu attention.
 
-Bạn có thể đổi đầu (1 trong 12) và hover lên token để xem một token đang chú ý những vị trí nào. Các đầu thường chuyên môn hóa khác nhau: đầu này bắt cú pháp gần, đầu kia bắt liên hệ ngữ nghĩa dài hơn. Đầu ra của các đầu được nối lại rồi chiếu qua một lớp tuyến tính trước khi tiếp tục trên dòng residual.
+Bạn có thể chuyển đổi giữa 12 đầu và di chuột lên từng token để quan sát mức chú ý của nó. Các đầu thường chuyên biệt hóa theo vai trò khác nhau (như cú pháp cục bộ hoặc liên kết ngữ nghĩa xa). Cuối cùng, đầu ra của 12 đầu được nối lại và chiếu qua lớp tuyến tính trước khi cộng vào luồng phần dư.
 
-### MLP
+### Khối MLP
 
-Sau khi attention đã *định tuyến* thông tin giữa các token, **MLP** (mạng feed-forward hai tầng) *tinh chỉnh* từng token một cách độc lập. Ở GPT-2 (small), độ rộng ẩn nở từ 768 lên $$4 \times 768 = 3072$$ với kích hoạt GELU, rồi chiếu trở lại 768. Kết nối thặng dư nằm quanh khối để biểu diễn gốc vẫn đi tiếp được.
+Sau khi attention định tuyến thông tin giữa các vị trí, **MLP** (mạng feed-forward hai tầng) xử lý độc lập từng token. Trong GPT-2 (small), lớp ẩn mở rộng từ 768 lên $$4 \times 768 = 3072$$ với hàm kích hoạt GELU, rồi chiếu trở lại 768 chiều, bao bọc bởi kết nối phần dư.
 
 ![MLP nở lên 3072 chiều với đường residual](/deep-learning-self-learning/img/chapter_img/chapter08/transformer_explainer_mlp.png)
-*MLP theo từng vị trí nở mỗi token thành vector ẩn 3072 chiều, rồi ghi trở lại dòng residual. Nguồn: Polo Club of Data Science, Georgia Tech, [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) (giấy phép MIT).*
+*MLP theo từng vị trí mở rộng mỗi token lên 3072 chiều rồi chiếu lại 768 chiều và cộng vào đường phần dư. Nguồn: Polo Club of Data Science, Georgia Tech, [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) (giấy phép MIT).*
 
-### Xác suất đầu ra, temperature và lấy mẫu
+### Xác suất đầu ra, nhiệt độ (temperature) và lấy mẫu
 
-Sau cả 12 khối, một lớp tuyến tính ánh xạ vị trí cuối thành **logit** — một điểm số cho mỗi phần tử trong từ vựng. Softmax biến logit thành phân phối xác suất của token kế tiếp.
+Sau 12 khối Transformer, lớp tuyến tính cuối ánh xạ trạng thái ở vị trí cuối thành **logit** — một điểm số cho mỗi từ trong từ vựng — rồi softmax chuyển thành phân phối xác suất cho token tiếp theo.
 
-Temperature là một phép tính rất nhỏ nhưng ảnh hưởng lớn: các logit được chia cho $$T$$ *trước* softmax.
+Tham số **temperature** ($$T$$) chia toàn bộ logit cho $$T$$ *trước* bước softmax:
 
-- $$T = 1$$: phân phối không đổi.
-- $$T < 1$$: phân phối nhọn hơn; mô hình trông tự tin và xác định hơn.
-- $$T > 1$$: phân phối dẹt hơn; các token xếp hạng thấp có xác suất cao hơn — người ta thường gọi đó là “sáng tạo” hơn (và cũng dễ sai hơn).
+- $$T = 1$$: giữ nguyên phân phối gốc.
+- $$T < 1$$: phân phối sắc nét hơn, ưu tiên các ứng viên xác suất cao (ổn định và ít ngẫu nhiên hơn).
+- $$T > 1$$: phân phối phẳng hơn, tăng cơ hội cho các ứng viên xếp hạng thấp (đa dạng hơn nhưng cũng dễ lệch ngữ cảnh hơn).
 
-Hai bộ lọc phổ biến rồi hạn chế tập token được lấy mẫu:
+Hai bộ lọc phổ biến giúp giới hạn tập ứng viên trước khi lấy mẫu:
 
-- **Top-k:** chỉ giữ $$k$$ token có xác suất cao nhất; phần còn lại bị gán $$-\infty$$ và nhận xác suất 0.
-- **Top-p** (nucleus sampling): giữ tập token nhỏ nhất sao cho tổng xác suất vượt ngưỡng $$p$$.
+- **Top-k:** chỉ giữ $$k$$ token có điểm cao nhất; phần còn lại bị gán $$-\infty$$ để nhận xác suất 0.
+- **Top-p** (*nucleus sampling*): giữ tập token nhỏ nhất có tổng xác suất tích lũy đạt ngưỡng $$p$$.
 
 ![Temperature, lấy mẫu top-k và xác suất token kế tiếp](/deep-learning-self-learning/img/chapter_img/chapter08/transformer_explainer_softmax.png)
-*Với temperature 0.8 và top-k = 5, logit được scale, các token ngoài top năm bị loại, rồi softmax cho phân phối token kế tiếp. Ở đây “visualize” dẫn đầu với 54,67% cho prompt “…users to”. Nguồn: Polo Club of Data Science, Georgia Tech, [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) (giấy phép MIT).*
+*Với temperature 0.8 và top-k = 5, logit được chia tỉ lệ, các token ngoài top 5 bị loại rồi áp softmax cho phân phối token kế tiếp. Với prompt “…users to”, từ "visualize" dẫn đầu với 54,67%. Nguồn: Polo Club of Data Science, Georgia Tech, [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) (giấy phép MIT).*
 
-Trong hình, temperature 0,8 biến logit $$-135.91$$ thành giá trị đã scale $$-169.89$$ (đúng bằng $$-135.91 / 0.8$$). Sau top-k, `quickly`, `explore` và `find` không còn là ứng viên. Lấy mẫu không phải lúc nào cũng chọn $$\arg\max$$: ngay với thiết lập này, “create” vẫn còn khoảng 21% xác suất.
+Trong hình minh họa, temperature 0.8 chuyển logit $$-135.91$$ thành $$-169.89$$ ($$-135.91 / 0.8$$). Sau lọc top-k, các từ `quickly`, `explore` và `find` bị loại khỏi danh sách ứng viên. Vì bước cuối là lấy mẫu xác suất chứ không luôn lấy $$\arg\max$$, từ *"create"* vẫn có khoảng 21% cơ hội được chọn.
 
-## 3. Bài tập hướng dẫn
+## 3. Bài tập thực hành có hướng dẫn
 
-Mở [demo trực tiếp](https://poloclub.github.io/transformer-explainer/) và làm lần lượt các bước sau, ghi câu trả lời ngắn khi đi. Prompt mặc định “Data visualization empowers users to” là điểm xuất phát tốt.
+Hãy mở [demo trực tiếp](https://poloclub.github.io/transformer-explainer/) và thực hiện lần lượt các bước sau với prompt mặc định *"Data visualization empowers users to"*:
 
-1. **Đọc cách tách token.** Mở Embedding. Những từ nào còn nguyên một token, từ nào bị tách? Vì sao từ vựng đơn vị con lại làm vậy?
-2. **Kiểm tra phép cộng vị trí.** Xác nhận mỗi embedding cuối là token embedding cộng vector vị trí (0, 1, 2, …). Nếu bỏ phép cộng này thì điều gì sẽ sai? (Phần ablation trong **08-01-02-02** là phiên bản lập trình của đúng câu hỏi này.)
-3. **Quan sát một đầu attention.** Mở một đầu ở Block 1, hover lên token cuối, và ghi những token trước nào nhận trọng số lớn nhất. Đổi sang đầu khác. Hai đầu có đồng ý với nhau không?
-4. **Tìm mask nhân quả.** Trong ma trận “Scaling · Mask”, chỉ ra những vị trí bị chặn. Vì sao mô hình chỉ có decoder phải giấu tương lai, ngay cả khi bạn đang xem một *prompt* mà bạn đã gõ sẵn?
-5. **Quét temperature.** Để temperature gần 0,1 rồi gần 1,5, không đổi prompt. Mô tả thanh xác suất thay đổi thế nào. Bạn sẽ chọn mức nào khi cần một câu hoàn thành đáng tin, và mức nào khi muốn đa dạng hơn?
-6. **So sánh top-k và top-p.** Giữ temperature cố định (thử 0,8), đặt top-k bằng 1, rồi bằng 5, sau đó chuyển sang top-p. Điều gì xảy ra với các token nằm ngoài ngưỡng? Điều đó hiện thế nào ở cột Softmax?
-7. **Dùng câu của bạn.** Gõ một prompt tiếng Anh ngắn (hoặc trộn tiếng Anh và tiếng Việt) rồi nhấn Generate. Danh sách token kế tiếp có khớp kỳ vọng không? Nếu không, hãy nhớ đây là GPT-2 small, không phải LLM hiện đại đã tinh chỉnh theo chỉ dẫn — cùng họ kiến trúc, nhưng không cùng năng lực.
+1. **Quan sát tách token:** Mở cột Embedding. Từ nào giữ nguyên một token, từ nào bị tách nhỏ? Lý do bộ từ vựng *subword* hoạt động như vậy là gì?
+2. **Kiểm tra phép cộng vị trí:** Xác nhận mỗi vectơ đầu vào là tổng của token embedding và vectơ vị trí (0, 1, 2, …). Điều gì sẽ sai nếu bỏ bước này? (Đối chiếu với phần *ablation* trong bài **08-01-02-02**.)
+3. **So sánh các đầu attention:** Mở một đầu ở Block 1, di chuột lên token cuối và ghi lại các token trước có trọng số cao nhất, rồi đổi sang một đầu khác để so sánh mức độ tương đồng.
+4. **Kiểm tra mặt nạ nhân quả:** Trong ma trận *"Scaling · Mask"*, xác định vùng bị che. Giải thích vì sao mô hình chỉ-decoder vẫn phải che các vị trí tương lai ngay cả khi toàn bộ prompt đã được nhập sẵn.
+5. **Thử nghiệm temperature:** Giữ nguyên prompt, lần lượt đặt temperature gần 0.1 rồi gần 1.5 và nhận xét sự thay đổi của biểu đồ xác suất.
+6. **So sánh top-k và top-p:** Giữ temperature ở 0.8, thử `top-k = 1`, `top-k = 5`, rồi chuyển sang `top-p`. Quan sát cách các token ngoài ngưỡng biến mất ở cột Softmax.
+7. **Thử với prompt riêng:** Nhập một câu tiếng Anh ngắn (hoặc trộn tiếng Anh và tiếng Việt) rồi nhấn Generate. Lưu ý rằng đây là GPT-2 small chứ không phải LLM hiện đại đã tinh chỉnh theo chỉ dẫn, nên năng lực dự đoán có giới hạn dù dùng chung nền tảng kiến trúc.
 
 ## 4. Khái niệm liên quan
 
-- **Chương 07** — scaled dot-product attention, multi-head attention, và mask nhân quả chính là những ma trận mà explainer vẽ ra.
-- **08-01-01 Lý thuyết Transformer** — mã hóa vị trí và toàn bộ khối (attention + FFN + residual + norm). Chi tiết GPT-2 cần nhớ: PE tuyệt đối được học, không phải sine/cosine.
-- **08-01-02-02 Demo, bài báo và bẫy thường gặp** — một mô hình nhỏ bạn tự huấn luyện; dùng explainer khi muốn *soi* một GPT-2 đã tiền huấn luyện mà không phải viết vòng lặp huấn luyện.
-- **Chương 26** — tokenization, giải mã và lấy mẫu ở quy mô LLM; bài này là phần xem trước trực quan của những lựa chọn giải mã đó.
+- **Chương 07**: scaled dot-product attention, multi-head attention và mặt nạ nhân quả chính là các ma trận hiển thị trong công cụ.
+- **08-01-01 Lý thuyết Transformer**: mã hóa vị trí và cấu trúc khối hoàn chỉnh (lưu ý GPT-2 dùng PE tuyệt đối học được thay vì sin–cos cố định).
+- **08-01-02-02 Demo, bài báo và bẫy thường gặp**: tự huấn luyện mô hình nhỏ; kết hợp với Explainer để quan sát một mô hình đã tiền huấn luyện thực tế.
+- **Chương 26**: tokenization, giải mã và chiến lược lấy mẫu ở quy mô LLM.
 
 ## 5. Các bài báo nền tảng
 
 1. **[Transformer Explainer (Cho et al., CHI 2026)](https://doi.org/10.1145/3772318.3791725)**  
-   Hệ thống tương tác mà bài học này xoay quanh: GPT-2 chạy trực tiếp trên trình duyệt, với tổng quan luồng dữ liệu và các góc nhìn khi cần về embedding, attention, và xác suất token kế tiếp. Bản thảo cũng có trên [arXiv:2408.04619](https://arxiv.org/abs/2408.04619).
+   Công trình giới thiệu công cụ trực quan hóa tương tác GPT-2 chạy trên trình duyệt này (bản thảo trên [arXiv:2408.04619](https://arxiv.org/abs/2408.04619)).
 
 2. **[Language Models are Unsupervised Multitask Learners (GPT-2, Radford et al., 2019)](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf)**  
-   Họ mô hình chỉ có decoder đang chạy bên trong bản trực quan hóa.
+   Dòng mô hình chỉ-decoder đang vận hành bên trong công cụ.
 
 3. **[Attention Is All You Need (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762)**  
-   Transformer encoder–decoder gốc; hãy so sánh với chồng chỉ có decoder mà bạn thấy trong explainer.
+   Kiến trúc Transformer encoder–decoder gốc dùng để đối chiếu với kiến trúc chỉ-decoder trong Explainer.
 
-## 6. Điểm then chốt
+## 6. Điểm chính
 
-1. Transformer sinh văn bản là bộ dự đoán token kế tiếp: embedding → các khối xếp chồng (attention + MLP) → softmax trên từ vựng.
-2. Trọng số attention không phải đồ trang trí — chúng là độ tương đồng đã chuẩn hóa và đã mask, quyết định mỗi token thu thập ngữ cảnh thế nào.
-3. Temperature, top-k và top-p không huấn luyện lại mô hình; chúng chỉ định hình lại cùng một vector logit thành một phân phối lấy mẫu khác.
-4. GPT-2 small đủ nhỏ để chạy trên trình duyệt và đủ lớn để khiến kiến trúc trở nên cụ thể. Hãy coi nó là kính hiển vi cho Chương 08, không phải vật thay thế cho một LLM hiện đại.
+1. Transformer sinh văn bản hoạt động theo quy trình dự đoán token kế tiếp: embedding → các khối attention + MLP xếp chồng → softmax trên từ vựng.
+2. Trọng số attention là độ tương đồng đã chuẩn hóa và áp mặt nạ, quyết định trực tiếp cách mỗi token tổng hợp ngữ cảnh.
+3. Temperature, top-k và top-p không thay đổi trọng số mô hình mà chỉ biến đổi phân phối xác suất lấy mẫu từ cùng một vectơ logit.
+4. GPT-2 small đủ gọn để chạy trực tiếp trong trình duyệt và đủ rõ để minh họa cụ thể từng phép toán của Chương 08.
 
 ## Ghi nguồn và giấy phép
 
-Transformer Explainer do Aeree Cho, Grace C. Kim, Alexander Karpekov, Alec Helbling, Jay Wang, Seongmin Lee, Benjamin Hoover và Polo Chau tạo ra tại Georgia Institute of Technology (Polo Club of Data Science). Phần mềm được phát hành theo [giấy phép MIT](https://github.com/poloclub/transformer-explainer/blob/main/LICENSE). Các hình trong bài được sao chép hoặc đổi kích thước từ các tệp chính thức `static/preview` và `static/article_assets` trong [kho công khai](https://github.com/poloclub/transformer-explainer); hình teaser được thu từ 8135×3895 xuống 2400×1149 cho trang khóa học. Nếu dùng công cụ trong bài viết, hãy trích dẫn bài báo CHI 2026:
+Transformer Explainer do Aeree Cho, Grace C. Kim, Alexander Karpekov, Alec Helbling, Jay Wang, Seongmin Lee, Benjamin Hoover và Polo Chau phát triển tại Georgia Institute of Technology (Polo Club of Data Science), phát hành theo [giấy phép MIT](https://github.com/poloclub/transformer-explainer/blob/main/LICENSE). Các hình trong bài được trích hoặc điều chỉnh kích thước từ thư mục chính thức `static/preview` và `static/article_assets` trong [kho mã nguồn công khai](https://github.com/poloclub/transformer-explainer) (hình teaser được thu từ 8135×3895 xuống 2400×1149 cho trang khóa học). Khi trích dẫn công cụ, sử dụng mục BibTeX sau:
 
 ```bibtex
 @inproceedings{cho2026transformer,
@@ -149,6 +149,6 @@ Transformer Explainer do Aeree Cho, Grace C. Kim, Alexander Karpekov, Alec Helbl
 
 ## Video tham khảo
 
-- **xem trước** [Transformer Explainer Demo](https://www.youtube.com/watch?v=TFUc41G2ikY) — Polo Club / Georgia Tech, tiếng Anh. Một lượt đi ngắn qua bản trực quan hóa GPT-2 trực tiếp mà bài này dùng.
-- [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Cùng câu chuyện embedding → attention → MLP → softmax, ở dạng hoạt hình thay vì mô hình sống.
-- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Bản cài nanoGPT mà mô hình trong trình duyệt được chuyển từ đó.
+- **Xem trước:** [Transformer Explainer Demo](https://www.youtube.com/watch?v=TFUc41G2ikY) — Polo Club / Georgia Tech (tiếng Anh). Giới thiệu nhanh cách tương tác với công cụ trực quan hóa GPT-2 dùng trong bài.
+- [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown (tiếng Anh). Minh họa bằng hoạt hình cùng luồng embedding → attention → MLP → softmax.
+- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy (tiếng Anh). Mã nguồn nanoGPT làm nền chuyển đổi cho mô hình chạy trên trình duyệt.

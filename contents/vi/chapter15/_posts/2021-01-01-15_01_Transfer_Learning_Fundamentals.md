@@ -9,13 +9,13 @@ categories:
 - chapter15
 ---
 
-Học chuyển giao:
+Nội dung nền tảng về học chuyển giao gồm hai phần:
 
-1. **Lý thuyết** — khái niệm, chiến lược, trực giác
-2. **Cài đặt** — trích xuất đặc trưng so với tinh chỉnh, bài báo, bẫy thường gặp
+1. **Lý thuyết** — khái niệm cốt lõi, các chiến lược chuyển giao, lý thuyết thích ứng miền và ví dụ minh họa.
+2. **Cài đặt** — so sánh trích xuất đặc trưng và tinh chỉnh trong PyTorch, bài báo nền tảng và các cạm bẫy thường gặp.
 
 ## Video tham khảo
 
-- **xem trước** [Fine-tuning a Neural Network explained](https://www.youtube.com/watch?v=5T-iXNNiwIs) — deeplizard, tiếng Anh. Tách đặc trưng so với tinh chỉnh.
-- [Pytorch Transfer Learning and Fine Tuning Tutorial](https://www.youtube.com/watch?v=qaDe0qQZ5AQ) — Aladdin Persson, tiếng Anh. Cả hai chiến lược trong mã.
-- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Các đặc trưng thị giác sớm mà hai chiến lược tái sử dụng.
+- **Xem trước:** [Fine-tuning a Neural Network explained](https://www.youtube.com/watch?v=5T-iXNNiwIs) — deeplizard, tiếng Anh. Phân biệt rõ chiến lược trích xuất đặc trưng và tinh chỉnh.
+- [Pytorch Transfer Learning and Fine Tuning Tutorial](https://www.youtube.com/watch?v=qaDe0qQZ5AQ) — Aladdin Persson, tiếng Anh. Minh họa cả hai chiến lược bằng mã PyTorch.
+- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Giải thích các đặc trưng thị giác tầng sớm được tái sử dụng trong cả hai chiến lược.

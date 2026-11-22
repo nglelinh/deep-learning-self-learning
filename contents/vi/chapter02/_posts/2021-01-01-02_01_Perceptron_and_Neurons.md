@@ -15,25 +15,27 @@ categories:
 *Hình ảnh: Sơ đồ cấu trúc của một Perceptron. Nguồn: Wikimedia Commons*
 
 ## 1. Tổng quan khái niệm
-Hành trình vào học sâu bắt đầu bằng việc hiểu khối xây dựng cơ bản nhất: neuron nhân tạo (*artificial neuron*). Dù học sâu hiện đại đã phát triển xa vượt khỏi perceptron đơn giản do Frank Rosenblatt giới thiệu năm 1958, việc nắm điểm xuất phát lịch sử này là thiết yếu để hiểu vì sao các mạng neuron đương đại được thiết kế như hiện nay. Perceptron đại diện cho nỗ lực đầu tiên của con người nhằm tạo ra một máy có thể học từ ví dụ, mô phỏng theo cách cực kỳ đơn giản hóa cách neuron sinh học xử lý thông tin.
 
-Về cốt lõi, perceptron là một bộ phân loại nhị phân. Nó nhận nhiều đầu vào số, kết hợp chúng bằng các trọng số đã học, và sinh một đầu ra nhị phân chỉ ra đầu vào thuộc lớp nào trong hai lớp. Điều làm cơ chế tưởng chừng đơn giản này sâu sắc là nó có thể học các trọng số đó tự động từ ví dụ, điều chỉnh lặp lại cho đến khi phân loại đúng dữ liệu huấn luyện. Khả năng học này, dù thô sơ so với chuẩn mực hiện đại, đã mang tính cách mạng vào thời điểm đó và đặt nền tảng khái niệm cho mọi phát triển sau này của mạng neuron.
+Hành trình tìm hiểu học sâu bắt đầu từ đơn vị cơ bản nhất: neuron nhân tạo (*artificial neuron*). Dù học sâu hiện đại đã tiến rất xa so với perceptron đơn giản do Frank Rosenblatt giới thiệu năm 1958, việc nắm rõ điểm xuất phát lịch sử này giúp ta hiểu vì sao các mạng neuron ngày nay lại được thiết kế như vậy. Perceptron là một trong những nỗ lực đầu tiên nhằm xây dựng hệ thống có thể tự học từ ví dụ, lấy cảm hứng đơn giản hóa từ cách neuron sinh học xử lý thông tin.
 
-Hiểu perceptron là then chốt vì nó giới thiệu nhiều khái niệm vẫn tồn tại xuyên suốt học sâu. Ý niệm đầu vào có trọng số nắm bắt việc các đặc trưng khác nhau đóng góp khác nhau vào quyết định. Hạng tử độ lệch (*bias*) cho phép biên quyết định dịch xa gốc tọa độ. Quy tắc học minh họa cách điều chỉnh tham số dựa trên sai số. Có lẽ quan trọng nhất, hạn chế cơ bản của perceptron — không giải được các bài toán không tách tuyến tính như XOR — trực tiếp thúc đẩy nhu cầu nhiều lớp và các kiến trúc sâu định hình học sâu hiện đại.
+Về bản chất, perceptron là một bộ phân loại nhị phân. Nó nhận nhiều đầu vào dạng số, kết hợp chúng thông qua các trọng số (*weights*) học được, rồi đưa ra một đầu ra nhị phân cho biết mẫu dữ liệu thuộc lớp nào trong hai lớp. Điểm quan trọng ở cơ chế này là khả năng tự động học trọng số từ dữ liệu: thuật toán lặp lại việc điều chỉnh trọng số cho đến khi phân loại đúng các mẫu huấn luyện. Dù đơn giản so với chuẩn mực hiện đại, ý tưởng này đã tạo ra bước ngoặt lớn vào thời điểm ra đời và đặt nền móng cho toàn bộ lĩnh vực mạng neuron sau này.
 
-Sự chuyển từ perceptron sang neuron nhân tạo hiện đại nằm ở việc thay hàm bước cứng bằng các hàm kích hoạt trơn, khả vi. Thay đổi tưởng nhỏ này mang hệ quả sâu sắc. Hàm kích hoạt trơn cho phép học dựa trên gradient qua lan truyền ngược, cho phép huấn luyện mạng nhiều lớp. Chúng đưa vào phi tuyến tính cần thiết để mạng neuron xấp xỉ các hàm phức tạp. Lựa chọn hàm kích hoạt ảnh hưởng mọi thứ từ tốc độ huấn luyện đến khả năng biểu diễn các kiểu mẫu nhất định, khiến đây trở thành một trong những quyết định kiến trúc quan trọng nhất trong học sâu.
+Hiểu rõ perceptron rất cần thiết vì nó giới thiệu nhiều khái niệm cốt lõi vẫn được dùng xuyên suốt học sâu. Cơ chế tổng có trọng số phản ánh mức độ đóng góp khác nhau của từng đặc trưng vào quyết định cuối cùng. Hạng tử độ lệch (*bias*) cho phép dịch chuyển biên quyết định ra khỏi gốc tọa độ. Quy tắc học minh họa cách cập nhật tham số dựa trên sai số dự đoán. Quan trọng hơn cả, hạn chế căn bản của perceptron — không thể giải các bài toán không tách tuyến tính như XOR — đã trực tiếp thúc đẩy sự ra đời của mạng nhiều lớp và các kiến trúc sâu trong học sâu hiện đại.
+
+Bước chuyển từ perceptron sang neuron nhân tạo hiện đại nằm ở việc thay thế hàm bước cứng bằng các hàm kích hoạt trơn và khả vi. Thay đổi tưởng chừng nhỏ này lại có tác động rất lớn: hàm kích hoạt trơn cho phép tối ưu dựa trên gradient thông qua lan truyền ngược (*backpropagation*), từ đó huấn luyện được mạng nhiều lớp. Đồng thời, chúng bổ sung tính phi tuyến cần thiết để mạng neuron xấp xỉ các hàm phức tạp. Việc lựa chọn hàm kích hoạt ảnh hưởng trực tiếp đến tốc độ hội tụ cũng như khả năng biểu diễn dữ liệu, khiến đây trở thành một quyết định kiến trúc quan trọng trong học sâu.
 
 ## 2. Nền tảng toán học
+
 ![Biological vs Artificial Neuron](https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Blausen_0657_MultipolarNeuron.png/500px-Blausen_0657_MultipolarNeuron.png)
 *Hình ảnh: Neuron sinh học (trái) đã truyền cảm hứng cho neuron nhân tạo. Nguồn: Wikimedia Commons*
 
-Perceptron thực hiện một phép tính đáng kể đơn giản, song việc hiểu công thức toán học của nó hé lộ những hiểu biết sâu về bộ phân loại tuyến tính và biên quyết định. Cho vectơ đầu vào $$\mathbf{x} = (x_1, x_2, \ldots, x_n)$$ trong đó mỗi $$x_i$$ là một đặc trưng, và vectơ trọng số tương ứng $$\mathbf{w} = (w_1, w_2, \ldots, w_n)$$, perceptron trước hết tính tổng có trọng số:
+Perceptron thực hiện một phép tính khá đơn giản, nhưng công thức toán học của nó làm rõ bản chất của bộ phân loại tuyến tính và biên quyết định. Cho vector đầu vào $$\mathbf{x} = (x_1, x_2, \ldots, x_n)$$ với mỗi $$x_i$$ là một đặc trưng, và vector trọng số tương ứng $$\mathbf{w} = (w_1, w_2, \ldots, w_n)$$, perceptron trước hết tính tổng có trọng số:
 
 $$z = \sum_{i=1}^{n} w_i x_i + b = \mathbf{w}^T \mathbf{x} + b$$
 
-Đại lượng $$z$$, thường gọi là tiền kích hoạt (*pre-activation*) hoặc logit, biểu diễn tổ hợp tuyến tính của các đầu vào. Mỗi trọng số $$w_i$$ quyết định mức độ mạnh mà đầu vào tương ứng $$x_i$$ ảnh hưởng quyết định cuối. Hạng tử độ lệch $$b$$ cung cấp một ngưỡng cho phép đặt biên quyết định tối ưu trong không gian đầu vào, độc lập với việc mọi đầu vào có bằng không hay không.
+Đại lượng $$z$$, thường gọi là giá trị tiền kích hoạt (*pre-activation*) hoặc logit, biểu diễn tổ hợp tuyến tính của các đầu vào. Mỗi trọng số $$w_i$$ quyết định mức độ ảnh hưởng của đặc trưng $$x_i$$ tới kết quả cuối cùng. Hạng tử độ lệch $$b$$ đóng vai trò như một ngưỡng dịch chuyển, giúp đặt biên quyết định ở vị trí phù hợp trong không gian đầu vào thay vì buộc phải đi qua gốc tọa độ.
 
-Perceptron sau đó áp dụng hàm bước Heaviside lên tổ hợp tuyến tính này để sinh đầu ra nhị phân:
+Tiếp theo, perceptron áp dụng hàm bước Heaviside lên tổ hợp tuyến tính này để tạo ra đầu ra nhị phân:
 
 $$y = H(z) = \begin{cases} 
 1 & \text{if } z \geq 0 \\
@@ -41,81 +43,82 @@ $$y = H(z) = \begin{cases}
 \end{cases}$$
 
 ![Đồ thị hàm bước Heaviside](/deep-learning-self-learning/img/chapter_img/chapter02/heaviside_step_function.jpg)
-*Hình: Hàm bước Heaviside $$H(x)$$ — đầu ra chỉ nhận giá trị $$0$$ hoặc $$1$$. (Minh họa từ video nhập môn neural network)*
+*Hình: Hàm bước Heaviside $$H(x)$$ — đầu ra chỉ nhận giá trị $$0$$ hoặc $$1$$. (Minh họa từ video nhập môn mạng neuron)*
 
-Hàm bước tạo ra biên quyết định sắc nét. Mọi điểm ở một phía được phân vào lớp dương (1), phía còn lại vào lớp âm (0). Diễn giải hình học thanh lịch: các trọng số định nghĩa một siêu phẳng trong không gian đầu vào theo phương trình $$\mathbf{w}^T \mathbf{x} + b = 0$$. Các điểm được phân loại dựa trên phía của siêu phẳng mà chúng rơi vào.
+Hàm bước tạo ra một biên quyết định sắc nét: mọi điểm ở một phía được gán nhãn dương (1), phía còn lại được gán nhãn âm (0). Về mặt hình học, các trọng số xác định một siêu phẳng (*hyperplane*) trong không gian đầu vào theo phương trình $$\mathbf{w}^T \mathbf{x} + b = 0$$, và các điểm dữ liệu được phân loại tùy theo phía của siêu phẳng mà chúng nằm trên đó.
 
-Vectơ trọng số $$\mathbf{w}$$ vuông góc (trực giao) với siêu phẳng quyết định. Đây là sự thật hình học cơ bản: nếu hai điểm $$\mathbf{x}_1$$ và $$\mathbf{x}_2$$ nằm trên siêu phẳng thì $$\mathbf{w}^T(\mathbf{x}_1 - \mathbf{x}_2) = 0$$, nghĩa là $$\mathbf{w}$$ trực giao với mọi vectơ trong siêu phẳng. Độ lớn của $$\mathbf{w}$$ quyết định tốc độ thay đổi của kích hoạt $$z$$ khi ta di chuyển vuông góc với siêu phẳng, trong khi độ lệch $$b$$ điều khiển khoảng cách của siêu phẳng tới gốc tọa độ theo hướng của $$\mathbf{w}$$.
+Vector trọng số $$\mathbf{w}$$ vuông góc (trực giao) với siêu phẳng quyết định. Có thể thấy ngay điều này: nếu hai điểm $$\mathbf{x}_1$$ và $$\mathbf{x}_2$$ cùng nằm trên siêu phẳng thì $$\mathbf{w}^T(\mathbf{x}_1 - \mathbf{x}_2) = 0$$, chứng tỏ $$\mathbf{w}$$ trực giao với mọi vector nằm trong siêu phẳng. Độ lớn của $$\mathbf{w}$$ quyết định tốc độ biến thiên của $$z$$ khi di chuyển theo phương vuông góc với siêu phẳng, còn độ lệch $$b$$ điều khiển khoảng cách từ siêu phẳng tới gốc tọa độ dọc theo hướng $$\mathbf{w}$$.
 
-Thuật toán học perceptron cung cấp cách đơn giản mà thanh lịch để tìm trọng số phù hợp khi dữ liệu tách tuyến tính được. Bắt đầu từ trọng số ban đầu (thường bằng không hoặc giá trị ngẫu nhiên nhỏ), thuật toán xử lý từng mẫu huấn luyện $$(\mathbf{x}_i, y_i)$$. Khi dự đoán đúng, không làm gì. Khi phân loại sai, nó điều chỉnh trọng số theo:
+Thuật toán học perceptron đưa ra cách đơn giản để tìm bộ trọng số phù hợp khi dữ liệu tách tuyến tính được. Bắt đầu từ các trọng số khởi tạo (thường bằng 0 hoặc giá trị ngẫu nhiên nhỏ), thuật toán duyệt qua từng mẫu huấn luyện $$(\mathbf{x}_i, y_i)$$. Nếu dự đoán đúng, trọng số được giữ nguyên; nếu phân loại sai, thuật toán cập nhật theo công thức:
 
-     $$\mathbf{w} \leftarrow \mathbf{w} + \eta (y_i - \hat{y}_i) \mathbf{x}_i$$
-     $$b \leftarrow b + \eta (y_i - \hat{y}_i)$$
-   
-Ở đây $$\eta$$ là tốc độ học (*learning rate*) điều khiển kích thước bước, và $$(y_i - \hat{y}_i)$$ là sai số. Nếu nhãn thật là 1 nhưng ta dự đoán 0, sai số là +1, và ta dịch trọng số theo hướng của $$\mathbf{x}_i$$, khiến đầu vào này có khả năng cao hơn được phân vào lớp 1 sau này. Nếu ta dự đoán 1 nhưng thật là 0, ta dịch xa $$\mathbf{x}_i$$. Trực giác hình học này — di chuyển biên quyết định về phía các điểm phân loại đúng và ra xa các điểm phân loại sai — nằm dưới nền tảng của nhiều phương pháp học máy.
+$$\mathbf{w} \leftarrow \mathbf{w} + \eta (y_i - \hat{y}_i) \mathbf{x}_i$$
 
-Định lý Hội tụ Perceptron đảm bảo rằng nếu dữ liệu huấn luyện tách tuyến tính được, thuật toán sẽ tìm được siêu phẳng tách trong hữu hạn bước. Tuy nhiên, định lý cũng hé lộ hạn chế cơ bản của perceptron: nó không giải được các bài toán trong đó các lớp không tách tuyến tính. Ví dụ kinh điển là bài toán XOR, trong đó các lớp dương và âm xen kẽ sao cho không có đường thẳng nào (hoặc siêu phẳng ở chiều cao hơn) tách được chúng. Hạn chế này đã khơi mào "mùa đông AI" đầu tiên vào những năm 1970 khi rõ ràng rằng perceptron một lớp không giải được nhiều bài toán thực tế.
+$$b \leftarrow b + \eta (y_i - \hat{y}_i)$$
 
-Neuron nhân tạo hiện đại khắc phục các hạn chế này trong khi giữ lại hiểu biết cốt lõi về tổng có trọng số. Thay cho hàm bước, ta áp dụng hàm kích hoạt trơn $$\sigma$$:
+Trong đó, $$\eta$$ là tốc độ học (*learning rate*) điều chỉnh kích thước bước cập nhật, còn $$(y_i - \hat{y}_i)$$ là sai số. Khi nhãn thật là 1 nhưng mô hình dự đoán 0, sai số bằng +1 nên trọng số được dịch chuyển theo hướng của $$\mathbf{x}_i$$, làm tăng khả năng mẫu này được phân vào lớp 1 ở các lần sau. Ngược lại, khi dự đoán 1 nhưng nhãn thật là 0, trọng số được dịch ra xa $$\mathbf{x}_i$$. Trực giác hình học này — xoay và dịch biên quyết định để phân tách đúng các điểm dữ liệu — là nền tảng của nhiều thuật toán học máy.
+
+Định lý Hội tụ Perceptron đảm bảo rằng nếu tập dữ liệu huấn luyện tách tuyến tính được, thuật toán sẽ tìm ra siêu phẳng phân tách sau hữu hạn bước. Tuy nhiên, định lý này cũng bộc lộ giới hạn căn bản của perceptron: nó không thể giải quyết các bài toán mà hai lớp không tách tuyến tính được. Ví dụ kinh điển là hàm XOR, nơi các điểm lớp dương và lớp âm nằm xen kẽ nhau khiến không tồn tại đường thẳng (hay siêu phẳng ở không gian nhiều chiều) nào phân tách được chúng. Hạn chế này là một trong những nguyên nhân dẫn đến "mùa đông AI" đầu tiên vào thập niên 1970, khi người ta nhận ra perceptron một lớp không đủ khả năng giải nhiều bài toán thực tế.
+
+Neuron nhân tạo hiện đại khắc phục hạn chế đó trong khi vẫn giữ lại phép tính cốt lõi là tổng có trọng số. Thay cho hàm bước, ta sử dụng một hàm kích hoạt trơn $$\sigma$$:
 
 $$a = \sigma\left(\sum_{i=1}^{n} w_i x_i + b\right) = \sigma(\mathbf{w}^T \mathbf{x} + b)$$
 
 ![Activation Functions](https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Gjl-t%28x%29.svg/500px-Gjl-t%28x%29.svg.png)
 *Hình ảnh: Các hàm kích hoạt phổ biến (Sigmoid, Tanh, ReLU). Nguồn: Wikimedia Commons*
 
-Lựa chọn $$\sigma$$ ảnh hưởng mạnh hành vi của neuron. Hàm sigmoid $$\sigma(z) = \frac{1}{1+e^{-z}}$$ chuyển tiếp trơn giữa 0 và 1, cung cấp diễn giải xác suất và, then chốt, khả vi mọi nơi. Tang hyperbolic $$\tanh(z)$$ nằm trong $$-1$$ đến $$1$$ và tâm tại không, thường cải thiện luồng gradient. Đơn vị tuyến tính chỉnh lưu (ReLU), định nghĩa là $$\max(0, z)$$, đã trở thành thống trị trong học sâu hiện đại vì hiệu quả tính toán, không bão hòa với đầu vào dương (tránh gradient biến mất), và tạo độ thưa hữu ích khi các neuron kích hoạt âm cho ra đúng bằng không.
+Cách chọn hàm $$\sigma$$ tác động lớn đến hành vi của neuron. Hàm sigmoid $$\sigma(z) = \frac{1}{1+e^{-z}}$$ chuyển tiếp mượt giữa 0 và 1, cho phép diễn giải như xác suất và quan trọng nhất là khả vi tại mọi điểm. Hàm tang hyperbolic $$\tanh(z)$$ nhận giá trị trong khoảng $$(-1, 1)$$ và đối xứng quanh 0, thường giúp luồng gradient ổn định hơn. Đơn vị tuyến tính chỉnh lưu (ReLU), định nghĩa là $$\max(0, z)$$, trở thành lựa chọn phổ biến nhất trong học sâu hiện đại vì tính toán nhanh, không bị bão hòa ở miền dương (giảm hiện tượng gradient biến mất) và tạo ra biểu diễn thưa khi các đầu vào âm đều cho đầu ra bằng 0.
 
 ## 3. Ví dụ / Trực giác
 
 ### 3.1. Trực giác hình học: từ 1D đến 3D
 
-Trước khi quay lại AND/XOR, hãy “nhìn” perceptron như một **ranh giới** trong không gian đầu vào.
+Trước khi quay lại bài toán AND và XOR, hãy hình dung perceptron như một **ranh giới** trong không gian đầu vào.
 
-**Một chiều (ví dụ nhiệt độ).** Neuron nhận một số $$x$$ (độ C). Bias và weight đặt một ngưỡng — ví dụ tại $$20$$: phía Inactive, phía kia Active. Perceptron chỉ “bật/tắt” theo phía của ngưỡng đó.
+**Một chiều (ví dụ nhiệt độ):** Neuron nhận một giá trị $$x$$ (độ C). Trọng số và độ lệch xác định một ngưỡng — chẳng hạn tại $$20$$: một phía là trạng thái *Inactive*, phía kia là *Active*. Perceptron chỉ thực hiện việc bật hoặc tắt tùy thuộc đầu vào nằm bên nào của ngưỡng.
 
 ![Ranh giới 1D: Inactive vs Active](/deep-learning-self-learning/img/chapter_img/chapter02/perceptron_1d_threshold.jpg)
-*Hình: Perceptron 1D đặt ranh giới (ví dụ tại vị trí 20) trên trục Input Space. (Minh họa từ video nhập môn neural network)*
+*Hình: Perceptron 1D đặt ranh giới (ví dụ tại vị trí 20) trên trục Input Space. (Minh họa từ video nhập môn mạng neuron)*
 
-Đổi **dấu weight** đảo chiều vùng kích hoạt. Ví dụ $$\hat{y} = H(-x + 20)$$ kích hoạt khi $$x$$ nhỏ (Active bên trái ngưỡng 20).
+Khi đổi **dấu của trọng số**, vùng kích hoạt sẽ đảo ngược. Ví dụ, $$\hat{y} = H(-x + 20)$$ kích hoạt khi $$x$$ nhỏ (vùng *Active* nằm bên trái ngưỡng 20).
 
 ![Đảo ranh giới bằng dấu weight](/deep-learning-self-learning/img/chapter_img/chapter02/perceptron_1d_weight_sign.jpg)
-*Hình: $$\hat{y}=H(-x+20)$$ — weight âm đảo vùng Active/Inactive. (Minh họa từ video nhập môn neural network)*
+*Hình: $$\hat{y}=H(-x+20)$$ — trọng số âm đảo ngược vùng Active và Inactive. (Minh họa từ video nhập môn mạng neuron)*
 
-**Hai chiều (ví dụ Temp + Humidity).** Hai đặc trưng → biên quyết định là một **đường thẳng**. Các điểm hai lớp nằm hai phía đường (vàng trong hình dưới).
+**Hai chiều (ví dụ Temp và Humidity):** Với hai đặc trưng, biên quyết định trở thành một **đường thẳng** trên mặt phẳng. Các điểm thuộc hai lớp nằm về hai phía của đường thẳng (đường màu vàng trong hình dưới).
 
 ![Biên quyết định 2D](/deep-learning-self-learning/img/chapter_img/chapter02/perceptron_2d_decision_boundary.jpg)
-*Hình: Perceptron hai đầu vào (Temp, Humidity) và đường phân tách tuyến tính trên mặt phẳng. (Minh họa từ video nhập môn neural network)*
+*Hình: Perceptron hai đầu vào (Temp, Humidity) và đường phân tách tuyến tính trên mặt phẳng. (Minh họa từ video nhập môn mạng neuron)*
 
-Công thức gọn bằng vector/matrix:
+Ta có thể viết gọn phép tính dưới dạng vector/ma trận:
 
 ![Dạng vector của perceptron](/deep-learning-self-learning/img/chapter_img/chapter02/perceptron_vector_form.jpg)
-*Hình: $$\hat{y}=H(w_1x_1+w_2x_2+b)=H(\mathbf{W}\mathbf{x}+b)$$. (Minh họa từ video nhập môn neural network)*
+*Hình: $$\hat{y}=H(w_1x_1+w_2x_2+b)=H(\mathbf{W}\mathbf{x}+b)$$. (Minh họa từ video nhập môn mạng neuron)*
 
-**Ba chiều trở lên.** Thêm feature (ví dụ Wind Speed) → biên là **siêu phẳng** trong không gian đầu vào:
+**Ba chiều trở lên:** Khi thêm đặc trưng thứ ba (ví dụ Wind Speed), biên quyết định mở rộng thành một **siêu phẳng** trong không gian đầu vào:
 
 ![Siêu phẳng quyết định 3D](/deep-learning-self-learning/img/chapter_img/chapter02/perceptron_3d_hyperplane.jpg)
-*Hình: Ba đầu vào (Temp, Humidity, Wind Speed) và siêu phẳng phân loại trong không gian 3D. (Minh họa từ video nhập môn neural network)*
+*Hình: Ba đầu vào (Temp, Humidity, Wind Speed) và siêu phẳng phân loại trong không gian 3D. (Minh họa từ video nhập môn mạng neuron)*
 
 ![Dữ liệu tách tuyến tính được](/deep-learning-self-learning/img/chapter_img/chapter02/linearly_separable.jpg)
-*Hình: Hai lớp *linearly separable* — một đường thẳng đủ để tách. Khi không tách được tuyến tính, cần phi tuyến và nhiều lớp. (Minh họa từ video nhập môn neural network)*
+*Hình: Hai lớp tách tuyến tính được (*linearly separable*) — chỉ cần một đường thẳng để phân tách. Khi dữ liệu không tách tuyến tính được, cần bổ sung tính phi tuyến và nhiều lớp. (Minh họa từ video nhập môn mạng neuron)*
 
 ### 3.2. Ví dụ logic: AND và XOR
 
-Để thực sự hiểu cách perceptron hoạt động, ta xét một ví dụ cụ thể hé lộ cả sức mạnh lẫn hạn chế của nó. Xét hàm logic AND đơn giản, cho ra 1 chỉ khi cả hai đầu vào đều là 1. Dù trông tầm thường, việc một máy học được quan hệ này chỉ từ ví dụ từng là bước đột phá.
+Để hiểu rõ hơn cách perceptron vận hành, hãy xét một ví dụ cụ thể cho thấy cả ưu điểm lẫn giới hạn của nó: hàm logic AND, chỉ trả về 1 khi cả hai đầu vào đều bằng 1. Dù bài toán này đơn giản, việc một mô hình có thể tự học quan hệ logic chỉ từ các ví dụ đã là một bước tiến quan trọng vào thời điểm đó.
 
-Giả sử ta muốn perceptron học AND từ các ví dụ: (0,0)→0, (0,1)→0, (1,0)→0, (1,1)→1. Khởi tạo $$w_1 = 0, w_2 = 0, b = 0$$ và dùng learning rate $$\eta = 1$$. Với mẫu đầu (0,0) nhãn 0, dự đoán là $$H(0 \cdot 0 + 0 \cdot 0 + 0) = H(0) = 1$$, sai! Sai số là $$0 - 1 = -1$$, nên ta cập nhật: $$w_1 \leftarrow 0 + 1 \cdot (-1) \cdot 0 = 0$$, $$w_2 \leftarrow 0$$, $$b \leftarrow 0 + 1 \cdot (-1) = -1$$. Giờ ta có độ lệch -1, cung cấp một ngưỡng.
+Giả sử ta muốn perceptron học hàm AND từ bốn mẫu: $$(0,0) \to 0$$, $$(0,1) \to 0$$, $$(1,0) \to 0$$, $$(1,1) \to 1$$. Khởi tạo $$w_1 = 0, w_2 = 0, b = 0$$ và chọn tốc độ học $$\eta = 1$$. Với mẫu đầu tiên $$(0,0)$$ có nhãn 0, mô hình dự đoán $$H(0 \cdot 0 + 0 \cdot 0 + 0) = H(0) = 1$$, bị sai. Sai số là $$0 - 1 = -1$$, nên ta cập nhật: $$w_1 \leftarrow 0 + 1 \cdot (-1) \cdot 0 = 0$$, $$w_2 \leftarrow 0$$, $$b \leftarrow 0 + 1 \cdot (-1) = -1$$. Lúc này độ lệch đã trở thành -1, tạo ra một ngưỡng kích hoạt.
 
-Tiếp tục quá trình qua các mẫu huấn luyện, perceptron cuối cùng hội tụ về các trọng số như $$w_1 = 1, w_2 = 1, b = -1.5$$. Kiểm chứng: Với đầu vào (1,1), ta được $$z = 1 \cdot 1 + 1 \cdot 1 - 1.5 = 0.5$$, nên $$H(0.5) = 1$$ ✓. Với (1,0), $$z = 1 \cdot 1 + 1 \cdot 0 - 1.5 = -0.5$$, nên $$H(-0.5) = 0$$ ✓. Perceptron đã học yêu cầu cả hai đầu vào cùng vượt ngưỡng 1.5 khi kết hợp.
+Tiếp tục lặp qua các mẫu huấn luyện, perceptron sẽ hội tụ về một bộ tham số chẳng hạn như $$w_1 = 1, w_2 = 1, b = -1.5$$. Kiểm tra lại: với đầu vào $$(1,1)$$, ta có $$z = 1 \cdot 1 + 1 \cdot 1 - 1.5 = 0.5$$, suy ra $$H(0.5) = 1$$ ✓. Với $$(1,0)$$, ta có $$z = 1 \cdot 1 + 1 \cdot 0 - 1.5 = -0.5$$, suy ra $$H(-0.5) = 0$$ ✓. Như vậy, perceptron đã học được quy tắc rằng cả hai đầu vào phải cùng bằng 1 để tổng vượt ngưỡng 1.5.
 
-Bây giờ xét vì sao bài toán XOR bất khả với một perceptron đơn. XOR cho ra 1 khi các đầu vào khác nhau: (0,0)→0, (0,1)→1, (1,0)→1, (1,1)→0. Nếu vẽ các điểm này trong không gian 2D, các mẫu dương (0,1) và (1,0) nằm chéo đối diện, còn mẫu âm (0,0) và (1,1) ở đường chéo kia. Không có đường thẳng nào tách được các lớp — ta cần biên phi tuyến, như đường cong hoặc nhiều đoạn thẳng. Bất khả hình học này hé lộ hạn chế tính toán cơ bản: mô hình tuyến tính một lớp không nắm bắt được một số quan hệ logic nhất định.
+Bây giờ hãy xét vì sao một perceptron đơn lẻ không thể giải bài toán XOR. Hàm XOR trả về 1 khi hai đầu vào khác nhau: $$(0,0) \to 0$$, $$(0,1) \to 1$$, $$(1,0) \to 1$$, $$(1,1) \to 0$$. Khi biểu diễn bốn điểm này trên mặt phẳng 2D, hai mẫu dương $$(0,1)$$ và $$(1,0)$$ nằm trên một đường chéo, còn hai mẫu âm $$(0,0)$$ và $$(1,1)$$ nằm trên đường chéo kia. Không có đường thẳng nào có thể tách riêng hai nhóm này — ta cần một biên quyết định phi tuyến, chẳng hạn một đường cong hoặc tổ hợp nhiều đoạn thẳng. Giới hạn hình học này cho thấy một mô hình tuyến tính một lớp không thể biểu diễn mọi quan hệ logic.
 
-Hạn chế này thúc đẩy phát triển mạng nhiều lớp. Nếu xếp hai perceptron nuôi vào một perceptron thứ ba, ta có thể giải XOR. Lớp đầu có thể học phát hiện $$x_1$$ OR $$x_2$$, và $$x_1$$ AND $$x_2$$, còn lớp thứ hai học "OR nhưng không AND", đúng bằng XOR. Điều này minh họa nguyên lý then chốt: độ sâu (nhiều lớp) cho phép học các biên quyết định ngày càng phức tạp. Mỗi lớp bổ sung có thể kết hợp đặc trưng từ các lớp trước theo cách mới, mở rộng theo cấp số nhân không gian các hàm biểu diễn được.
+Chính hạn chế này đã thúc đẩy sự phát triển của mạng nhiều lớp. Nếu xếp hai perceptron ở lớp đầu rồi nối đầu ra của chúng vào một perceptron thứ ba ở lớp sau, ta có thể giải được XOR: lớp đầu học cách phát hiện $$x_1 \text{ OR } x_2$$ và $$x_1 \text{ AND } x_2$$, còn lớp thứ hai học quy tắc "OR nhưng không AND", tức là đúng bằng XOR. Ví dụ này minh họa một nguyên lý cốt lõi: tăng độ sâu (nhiều lớp) cho phép mạng học các biên quyết định phức tạp hơn. Mỗi lớp mới kết hợp các đặc trưng từ lớp trước theo những cách mới, mở rộng mạnh mẽ tập các hàm mà mạng có thể biểu diễn.
 
-Cảm hứng sinh học, dù không hoàn hảo, cung cấp trực giác hữu ích. Neuron thật trong não nhận tín hiệu qua dendrite, tích hợp tín hiệu trong thân tế bào (soma), và phát điện thế hoạt động dọc axon nếu tín hiệu tích hợp vượt ngưỡng. Độ mạnh synapse tương ứng trọng số của ta — synapse mạnh hơn đóng góp nhiều hơn vào việc neuron có phát xung hay không. Tuy nhiên, ta phải cẩn thận không đẩy phép ẩn dụ quá xa. Neuron sinh học phức tạp hơn nhiều so với neuron nhân tạo, với hóa sinh tinh vi, tính toán dendrite phức tạp, và động lực thời gian mà mô hình tổng có trọng số đơn giản của ta không nắm bắt. Neuron nhân tạo là công cụ kỹ thuật lấy cảm hứng từ sinh học, không phải mô hình chính xác của chức năng não.
+Sự liên hệ với sinh học, dù chỉ mang tính gần đúng, vẫn đem lại trực giác hữu ích. Neuron sinh học trong não nhận tín hiệu qua sợi nhánh (*dendrite*), tổng hợp tín hiệu tại thân tế bào (*soma*), và phát xung điện thế hoạt động dọc theo sợi trục (*axon*) khi tín hiệu vượt ngưỡng. Độ mạnh của khớp nối synapse tương ứng với trọng số — synapse càng mạnh thì ảnh hưởng tới việc neuron có phát xung hay không càng lớn. Tuy nhiên, không nên diễn giải phép ẩn dụ này quá sát nghĩa. Neuron sinh học phức tạp hơn rất nhiều, với các cơ chế hóa sinh, quá trình xử lý trên sợi nhánh và động lực học theo thời gian mà mô hình tổng có trọng số đơn giản không thể tái hiện. Neuron nhân tạo là một mô hình toán học và kỹ thuật lấy cảm hứng từ sinh học, chứ không phải bản mô phỏng chính xác hoạt động của não bộ.
 
 ## 4. Đoạn Mã
 
-Ta triển khai cả perceptron cổ điển và neuron hiện đại để hiểu sự giống và khác nhau. Bắt đầu với triển khai NumPy sạch làm lộ rõ quá trình học:
+Dưới đây là cài đặt của cả perceptron cổ điển và neuron hiện đại để so sánh điểm giống và khác nhau giữa chúng. Trước tiên là phiên bản NumPy cho perceptron cổ điển nhằm thể hiện rõ quá trình cập nhật trọng số:
 
 ```python
 import numpy as np
@@ -231,7 +234,7 @@ print(f"Errors remaining: {perceptron_xor.errors_[-1]}")
 print("\nNote: Perceptron cannot solve XOR because it's not linearly separable!")
 ```
 
-Bây giờ ta triển khai neuron hiện đại với hàm kích hoạt trơn cho phép học dựa trên gradient:
+Tiếp theo là cài đặt neuron hiện đại bằng PyTorch với các hàm kích hoạt trơn, cho phép huấn luyện dựa trên gradient:
 
 ```python
 import torch
@@ -344,7 +347,7 @@ print(f"\nSuccess! The network learned XOR, something a single perceptron cannot
 print("This demonstrates why depth (multiple layers) is fundamental to neural networks.")
 ```
 
-Ta cũng hiểu cách các hàm kích hoạt khác nhau định hình hành vi neuron bằng cách xét ảnh hưởng của chúng lên cùng một đầu vào:
+Ta cũng có thể so sánh trực tiếp cách các hàm kích hoạt khác nhau tác động lên cùng một tập giá trị đầu vào:
 
 ```python
 # So sánh các hàm kích hoạt
@@ -374,70 +377,70 @@ print("  - Sigmoid: Always positive, good for probabilities but can saturate")
 print("  - Tanh: Zero-centered (outputs can be negative), better gradient flow than sigmoid")
 ```
 
-Lý do ReLU trở nên thống trị xứng đáng được giải thích sâu hơn. Khi dùng sigmoid hoặc tanh, gradient trở nên rất nhỏ khi đầu vào có độ lớn lớn (dương hoặc âm). "Bão hòa" này nghĩa là trong lan truyền ngược, gradient suy giảm khi truyền ngược qua các lớp, khiến việc huấn luyện mạng sâu trở nên khó khăn. ReLU không bão hòa với đầu vào dương — gradient đúng bằng 1 — cho phép gradient chảy không đổi qua nhiều lớp. Tính chất này cho phép huấn luyện mạng sâu hơn nhiều và then chốt với cuộc cách mạng học sâu thập niên 2010.
+Lý do ReLU trở nên phổ biến rộng rãi nằm ở đặc tính của đạo hàm. Với sigmoid hoặc tanh, khi đầu vào có độ lớn cao (dương hoặc âm), độ dốc trở nên rất nhỏ. Hiện tượng bão hòa này làm gradient suy giảm nhanh khi truyền ngược qua nhiều lớp, gây khó khăn cho việc huấn luyện mạng sâu. Ngược lại, ReLU không bị bão hòa ở miền dương — đạo hàm luôn bằng 1 — giúp gradient truyền qua nhiều lớp mà không bị suy giảm. Tính chất này đóng vai trò quan trọng giúp huấn luyện được các mạng sâu hơn nhiều trong thập niên 2010.
 
-Tuy nhiên, ReLU đưa vào thách thức riêng: bài toán "ReLU chết". Nếu đầu vào của một neuron luôn âm trong huấn luyện, đầu ra luôn bằng không, và gradient cũng luôn bằng không, nghĩa là nó không bao giờ cập nhật và thực chất đã chết. Điều này có thể xảy ra với khởi tạo kém hoặc learning rate quá cao. Các biến thể như Leaky ReLU ($$\max(\alpha z, z)$$ với $$\alpha \approx 0.01$$) khắc phục bằng cách cho phép giá trị âm nhỏ, đảm bảo gradient không bao giờ biến mất hoàn toàn.
+Tuy vậy, ReLU cũng có nhược điểm riêng là hiện tượng "ReLU chết" (*dying ReLU*). Nếu đầu vào của một neuron luôn mang giá trị âm trong quá trình huấn luyện, đầu ra và đạo hàm của nó đều bằng 0, khiến trọng số không còn được cập nhật nữa. Tình trạng này thường xảy ra khi khởi tạo kém hoặc tốc độ học quá lớn. Các biến thể như Leaky ReLU ($$\max(\alpha z, z)$$ với $$\alpha \approx 0.01$$) khắc phục điểm yếu này bằng cách giữ lại một độ dốc nhỏ ở miền âm, đảm bảo gradient không triệt tiêu hoàn toàn.
 
 ## 5. Các Khái niệm Liên quan
 
-Hiểu đúng perceptron và neuron nhân tạo đòi hỏi nhìn thấy cách chúng kết nối với bối cảnh rộng hơn của học máy và học sâu. Perceptron về bản chất là dạng đơn giản hóa của hồi quy logistic khi ta thay hàm bước bằng kích hoạt sigmoid. Trong hồi quy logistic, ta mô hình xác suất thuộc lớp dưới dạng $$P(y=1 \mid \mathbf{x}) = \sigma(\mathbf{w}^T \mathbf{x} + b)$$, đúng bằng một perceptron với kích hoạt sigmoid. Mối liên hệ còn sâu hơn: hồi quy logistic thường được huấn luyện bằng ước lượng hợp lý cực đại, với trường hợp nhị phân dẫn đến cực tiểu hóa mất mát entropy chéo nhị phân. Cùng hàm mất mát này được dùng để huấn luyện lớp đầu ra của mạng neuron cho phân loại nhị phân.
+Đặt perceptron và neuron nhân tạo trong bức tranh chung của học máy sẽ giúp thấy rõ mối liên hệ giữa các phương pháp. Nếu thay hàm bước trong perceptron bằng hàm kích hoạt sigmoid, ta thu được đúng mô hình hồi quy logistic (*logistic regression*), trong đó xác suất thuộc lớp dương được mô hình hóa là $$P(y=1 \mid \mathbf{x}) = \sigma(\mathbf{w}^T \mathbf{x} + b)$$. Hồi quy logistic thường được huấn luyện theo ước lượng hợp lý cực đại (*maximum likelihood estimation*), tương đương với việc cực tiểu hóa hàm mất mát entropy chéo nhị phân (*binary cross-entropy*). Đây cũng chính là hàm mất mát tiêu chuẩn cho lớp đầu ra của mạng neuron trong bài toán phân loại nhị phân.
 
-Mối quan hệ với Support Vector Machines (SVM) cũng mang tính soi sáng. Như perceptron, SVM tìm siêu phẳng tách cho dữ liệu tách tuyến tính. Tuy nhiên, SVM tối ưu siêu phẳng lề cực đại — siêu phẳng xa nhất có thể so với các điểm dữ liệu gần nhất của cả hai lớp. Cực đại hóa lề cung cấp đảm bảo khái quát hóa tốt hơn. Perceptron, ngược lại, thỏa mãn với bất kỳ siêu phẳng tách nào và không tối ưu lề. Dù có lợi thế lý thuyết này của SVM, mạng neuron sâu xây từ các đơn vị kiểu perceptron đã chứng tỏ thực tế hơn với các bài toán phức tạp, chiều cao, vì chúng có thể học đặc trưng phi tuyến qua nhiều lớp.
+So sánh với máy vector hỗ trợ (*Support Vector Machine* — SVM) cũng giúp làm sáng tỏ thêm bản chất của perceptron. Cả hai đều tìm siêu phẳng phân tách cho dữ liệu tách tuyến tính. Tuy nhiên, SVM tối ưu siêu phẳng có lề cực đại (*maximum-margin hyperplane*) — tức siêu phẳng nằm xa các điểm dữ liệu gần nhất của cả hai lớp nhất có thể, qua đó mang lại đảm bảo lý thuyết tốt hơn về khả năng khái quát hóa. Ngược lại, perceptron dừng lại ở bất kỳ siêu phẳng phân tách nào tìm được mà không tối ưu lề. Dù SVM có lợi thế về mặt lý thuyết ở trường hợp tuyến tính, mạng neuron sâu xây từ các đơn vị kiểu perceptron lại linh hoạt hơn với dữ liệu phức tạp, nhiều chiều vì có thể tự học các đặc trưng phi tuyến qua nhiều lớp.
 
-Sự tiến hóa từ perceptron sang Multi-Layer Perceptron (MLP) là một trong những phát triển quan trọng nhất trong học máy. MLP đơn giản là nhiều lớp neuron, trong đó đầu ra của mỗi lớp trở thành đầu vào của lớp tiếp theo. Việc xếp chồng này cho phép mạng học biểu diễn phân cấp. Lớp đầu có thể học phát hiện mẫu đơn giản (cạnh trong ảnh, hoặc tổ hợp từ phổ biến trong văn bản). Lớp thứ hai kết hợp các mẫu đơn giản thành đặc trưng mức trung (hình dạng từ cạnh, hoặc nghĩa cụm từ). Các lớp sâu hơn xây các khái niệm mức cao hơn nữa. Học phân cấp này có lẽ là khía cạnh mạnh mẽ nhất của mạng neuron sâu và chỉ có thể nhờ ta đã vượt qua perceptron một lớp.
+Bước tiến từ perceptron đơn lẻ sang mạng perceptron nhiều lớp (*Multi-Layer Perceptron* — MLP) là một cột mốc quan trọng của học máy. MLP xếp chồng nhiều lớp neuron nối tiếp nhau, đầu ra của lớp trước làm đầu vào cho lớp sau, giúp mạng học biểu diễn phân cấp (*hierarchical representation*). Chẳng hạn, lớp đầu phát hiện các mẫu đơn giản (như cạnh trong ảnh hoặc cụm từ ngắn trong văn bản), lớp giữa kết hợp chúng thành các đặc trưng mức trung bình (như hình dạng hoặc ngữ nghĩa cụm từ), còn các lớp sâu hơn tổng hợp thành khái niệm ở mức trừu tượng cao hơn. Khả năng học phân cấp này là đặc trưng cốt lõi giúp mạng neuron sâu vượt qua giới hạn của perceptron một lớp.
 
-Liên hệ với mạng neuron sinh học, dù hạn chế, cung cấp trực giác hữu ích về vì sao biểu diễn phân tán hoạt động. Trong não, ký ức và khái niệm không được lưu trong từng neuron đơn lẻ mà trong các mẫu hoạt động trên nhiều neuron. Tương tự, trong mạng neuron nhân tạo, biểu diễn được phân tán trên nhiều neuron. Sự phân tán này mang lại độ bền — nếu vài neuron hỏng hoặc bị loại (như trong dropout), mạng vẫn có thể hoạt động. Nó cũng cho phép mạng biểu diễn theo cấp số nhân nhiều khái niệm với số neuron tuyến tính, một tính chất gọi là hiệu quả biểu diễn phần nào giải thích thành công của học sâu.
+Sự tương đồng với hệ thần kinh sinh học cũng gợi ý vì sao biểu diễn phân tán (*distributed representation*) lại hiệu quả. Trong não, thông tin và khái niệm không được lưu ở một neuron đơn lẻ mà phân bố trên mẫu kích hoạt của nhiều neuron. Tương tự, trong mạng neuron nhân tạo, biểu diễn được trải đều trên nhiều đơn vị. Cơ chế này mang lại tính bền vững — nếu một vài neuron bị tắt (chẳng hạn khi dùng dropout), mạng vẫn duy trì được hoạt động. Đồng thời, nó cho phép biểu diễn số lượng khái niệm rất lớn chỉ với số lượng neuron tăng tuyến tính.
 
-Cuối cùng, hiểu vì sao ta cần hàm kích hoạt trơn kết nối với chủ đề rộng hơn về tối ưu. Gradient descent, thuật toán chính để huấn luyện mạng neuron, đòi hỏi gradient. Gradient của hàm bước bằng không hầu như mọi nơi (và không xác định tại ngưỡng), khiến tối ưu dựa trên gradient bất khả. Các hàm kích hoạt trơn như sigmoid, tanh, và đặc biệt ReLU cung cấp gradient có ý nghĩa dẫn dắt quá trình học. Lựa chọn hàm kích hoạt ảnh hưởng không chỉ việc ta có tính được gradient hay không mà còn độ lớn của chúng, quyết định tốc độ học của các lớp khác nhau — một cân nhắc then chốt trong mạng sâu khi gradient phải truyền qua nhiều lớp.
+Cuối cùng, nhu cầu sử dụng hàm kích hoạt trơn gắn chặt với bài toán tối ưu hóa. Thuật toán huấn luyện chủ đạo của mạng neuron là gradient descent, vốn đòi hỏi đạo hàm có nghĩa. Đạo hàm của hàm bước bằng 0 hầu như khắp nơi và không xác định tại ngưỡng, khiến tối ưu theo gradient không thể thực hiện. Các hàm kích hoạt trơn như sigmoid, tanh hay ReLU cung cấp tín hiệu đạo hàm dẫn đường cho quá trình cập nhật tham số. Lựa chọn hàm kích hoạt ảnh hưởng trực tiếp đến độ lớn gradient và tốc độ học giữa các lớp, đặc biệt quan trọng khi mạng có nhiều lớp sâu.
 
 ## 6. Các Bài báo Nền tảng
 
 **["The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain" (1958)](https://psycnet.apa.org/record/1959-09865-001)**  
 *Tác giả*: Frank Rosenblatt  
-Bài báo nền tảng này giới thiệu perceptron và chứng minh rằng một neuron nhân tạo đơn giản có thể học từ ví dụ. Rosenblatt cho thấy cả tính chất hội tụ lý thuyết lẫn triển khai thực tế, xây các máy vật lý có thể nhận dạng mẫu. Thành công của perceptron khơi dậy sự lạc quan to lớn về trí tuệ nhân tạo, dù sau đó bị điều tiết bởi phát hiện các hạn chế của nó. Bài báo có ý nghĩa lịch sử không chỉ vì thuật toán mà còn vì thiết lập mô hình học từ dữ liệu nằm dưới nền tảng của toàn bộ học máy hiện đại.
+Bài báo nền tảng này giới thiệu mô hình perceptron và chứng minh rằng một neuron nhân tạo đơn giản có thể tự học từ ví dụ. Rosenblatt vừa trình bày tính chất hội tụ về mặt lý thuyết, vừa xây dựng phần cứng thực tế có khả năng nhận dạng mẫu. Công trình này tạo nên làn sóng kỳ vọng lớn cho lĩnh vực trí tuệ nhân tạo, trước khi những hạn chế của nó được phân tích kỹ hơn về sau. Giá trị lịch sử của bài báo nằm không chỉ ở bản thân thuật toán mà còn ở việc đặt nền móng cho tư duy học từ dữ liệu trong học máy hiện đại.
 
 **["Perceptrons: An Introduction to Computational Geometry" (1969)](https://mitpress.mit.edu/books/perceptrons)**  
 *Tác giả*: Marvin Minsky và Seymour Papert  
-Dù không có trên arXiv, cuốn sách ảnh hưởng này phân tích chặt chẽ các hạn chế của perceptron, chứng minh rằng perceptron một lớp không giải được các bài toán như XOR. Phân tích kỹ lưỡng đến mức và kết luận ảm đạm đến mức đã góp phần vào mùa đông AI đầu tiên, với tài trợ nghiên cứu mạng neuron cạn kiệt hơn một thập niên. Trớ trêu thay, Minsky và Papert ghi nhận rằng mạng nhiều lớp có thể khắc phục các hạn chế này, nhưng thiếu thuật toán huấn luyện (lan truyền ngược chưa được tái phát hiện) khiến nhận xét này không ngăn được sự suy thoái của lĩnh vực. Cuốn sách vẫn quan trọng để hiểu cả nền tảng toán của bộ phân loại tuyến tính lẫn sự phát triển lịch sử của mạng neuron.
+Cuốn sách kinh điển này (không có trên arXiv) phân tích chặt chẽ các giới hạn toán học của perceptron, chứng minh rằng perceptron một lớp không thể giải các bài toán như XOR. Những phân tích nghiêm ngặt và kết luận thận trọng của tác phẩm đã góp phần làm giảm mạnh nguồn tài trợ nghiên cứu mạng neuron trong hơn một thập niên, mở đầu mùa đông AI lần thứ nhất. Thực tế, Minsky và Papert có đề cập rằng mạng nhiều lớp có thể vượt qua hạn chế này, nhưng khi đó thuật toán huấn luyện phù hợp (lan truyền ngược) chưa được phổ biến. Tác phẩm đến nay vẫn có giá trị trong việc tìm hiểu nền tảng toán học của bộ phân loại tuyến tính cũng như lịch sử phát triển của mạng neuron.
 
 **["Learning representations by back-propagating errors" (1986)](https://www.nature.com/articles/323533a0)**  
 *Tác giả*: David E. Rumelhart, Geoffrey E. Hinton, Ronald J. Williams  
-Bài báo này phục hưng nghiên cứu mạng neuron bằng cách chỉ ra cách huấn luyện mạng nhiều lớp các đơn vị kiểu perceptron bằng lan truyền ngược. Hiểu biết then chốt là bằng cách tính gradient từng lớp dùng quy tắc dây chuyền, ta có thể gán công (hoặc lỗi) cho mọi trọng số trong mạng, không chỉ lớp đầu ra. Điều này cho phép huấn luyện mạng đủ sâu để giải XOR và nhiều bài toán khác mà perceptron đơn không xử lý được. Bài báo đánh dấu sự trỗi dậy trở lại của chủ nghĩa liên kết và đặt nền cho học sâu hiện đại.
+Bài báo này khơi dậy trở lại nghiên cứu mạng neuron bằng cách trình bày cách huấn luyện mạng nhiều lớp thông qua thuật toán lan truyền ngược. Ý tưởng cốt lõi là áp dụng quy tắc dây chuyền để tính gradient theo từng lớp, nhờ đó phân bổ sai số cho mọi trọng số trong mạng chứ không chỉ ở lớp đầu ra. Nhờ vậy, mạng nhiều lớp có thể học được XOR và nhiều bài toán phi tuyến mà perceptron đơn lẻ không giải được, mở đường cho sự phát triển của học sâu hiện đại.
 
 **["Deep Sparse Rectifier Neural Networks" (2011)](http://proceedings.mlr.press/v15/glorot11a.html)**  
 *Tác giả*: Xavier Glorot, Antoine Bordes, Yoshua Bengio  
-Bài báo này giới thiệu Rectified Linear Unit (ReLU) như hàm kích hoạt vượt trội cho mạng sâu và chứng minh thực nghiệm các ưu điểm so với sigmoid và tanh. Các tác giả cho thấy ReLU cho phép huấn luyện mạng sâu hơn bằng cách tránh bài toán gradient biến mất từng làm khổ các hàm kích hoạt trước đó. Neuron ReLU cũng hiệu quả tính toán (chỉ một phép max) và tạo biểu diễn thưa (nhiều neuron cho ra đúng bằng không), vừa có lợi tính toán vừa có thể diễn giải. Việc chấp nhận ReLU là yếu tố then chốt của cuộc cách mạng học sâu, cho phép huấn luyện mạng với hàng chục thậm chí hàng trăm lớp.
+Bài báo giới thiệu Rectified Linear Unit (ReLU) như một hàm kích hoạt hiệu quả hơn cho mạng sâu và chứng minh bằng thực nghiệm ưu thế của nó so với sigmoid và tanh. Các tác giả chỉ ra rằng ReLU giúp giảm hiện tượng gradient biến mất, tính toán đơn giản (chỉ gồm phép lấy cực đại) và tạo ra biểu diễn thưa khi nhiều neuron có đầu ra bằng 0. Việc áp dụng rộng rãi ReLU là một trong những yếu tố then chốt giúp huấn luyện thành công các mạng có hàng chục đến hàng trăm lớp.
 
 **["Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification" (2015)](https://arxiv.org/abs/1502.01852)**  
 *Tác giả*: Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun  
-Bài báo này giới thiệu cả PReLU (Parametric ReLU, trong đó độ dốc với đầu vào âm được học) và khởi tạo He, một lược đồ khởi tạo trọng số được thiết kế riêng cho mạng ReLU. Bài báo chứng minh rằng với khởi tạo đúng, mạng cực sâu (22 lớp lúc đó, tưởng rất sâu) không chỉ huấn luyện thành công mà còn vượt hiệu năng con người trên phân loại ImageNet. Lược đồ khởi tạo He, dùng phương sai $$\sqrt{2/n_{in}}$$ thay vì $$\sqrt{1/n_{in}}$$ (Xavier), tính đến việc ReLU triệt tiêu trung bình một nửa số neuron, duy trì độ lớn kích hoạt và gradient phù hợp qua mạng sâu.
+Bài báo giới thiệu PReLU (Parametric ReLU, trong đó độ dốc ở miền âm là tham số học được) cùng phương pháp khởi tạo He thiết kế riêng cho mạng dùng ReLU. Nghiên cứu cho thấy với cách khởi tạo phù hợp, mạng rất sâu (22 lớp vào thời điểm công bố) không chỉ huấn luyện ổn định mà còn vượt qua mức hiệu năng của con người trên bài toán phân loại ImageNet. Khởi tạo He sử dụng độ lệch chuẩn $$\sqrt{2/n_{in}}$$ (tương ứng phương sai $$2/n_{in}$$) thay vì $$\sqrt{1/n_{in}}$$ của khởi tạo Xavier, nhằm bù trừ việc ReLU triệt tiêu trung bình một nửa số neuron và giữ cho thang đo kích hoạt cũng như gradient ổn định qua các lớp sâu.
 
 ## Cạm bẫy và Mẹo Thường gặp
 
-Một sai lầm phổ biến nhất khi triển khai neuron là khởi tạo mọi trọng số cùng một giá trị, đặc biệt bằng không. Điều này có vẻ hợp lý — bắt đầu từ vị trí "trung tính" và để dữ liệu dẫn dắt học — nhưng mang hệ quả tàn khốc gọi là bài toán đối xứng. Nếu mọi neuron trong một lớp khởi đầu với trọng số giống hệt, chúng nhận gradient giống hệt trong lan truyền ngược và do đó cập nhật giống hệt. Chúng vẫn giống hệt suốt huấn luyện, học đúng cùng đặc trưng. Một lớp 100 neuron với trọng số giống hệt không mạnh hơn một neuron đơn. Khởi tạo ngẫu nhiên phá đối xứng, đảm bảo mỗi neuron đi theo quỹ đạo học khác nhau và học phát hiện các mẫu khác nhau.
+Một sai lầm phổ biến khi cài đặt mạng neuron là khởi tạo tất cả trọng số bằng cùng một giá trị, đặc biệt là bằng 0. Ý tưởng bắt đầu từ trạng thái "trung tính" nghe có vẻ hợp lý nhưng lại gây ra hiện tượng đối xứng (*symmetry problem*): nếu mọi neuron trong cùng một lớp có trọng số giống hệt nhau, chúng sẽ nhận gradient như nhau khi lan truyền ngược và cập nhật giống hệt nhau trong suốt quá trình huấn luyện. Khi đó, một lớp gồm 100 neuron cũng chỉ học được đúng một đặc trưng như một neuron đơn lẻ. Khởi tạo ngẫu nhiên giúp phá vỡ tính đối xứng này để từng neuron phát triển theo hướng riêng.
 
-Thang đo khởi tạo cũng quan trọng sâu sắc, dù lý do tinh tế. Nếu trọng số quá lớn, kích hoạt có thể bão hòa (với sigmoid/tanh) hoặc bùng nổ (tăng theo cấp số nhân qua các lớp), trong khi gradient cũng có thể bùng nổ, gây bất ổn huấn luyện. Nếu trọng số quá nhỏ, kích hoạt co về không qua các lớp, và gradient biến mất, khiến học chậm không tưởng, đặc biệt trong mạng sâu. Giải pháp là scale trọng số ban đầu dựa trên chiều lớp. Khởi tạo Xavier ($$\mathcal{N}(0, 1/n_{in})$$) hoạt động tốt với sigmoid và tanh, duy trì phương sai kích hoạt qua các lớp. Khởi tạo He ($$\mathcal{N}(0, 2/n_{in})$$) được thiết kế riêng cho ReLU, tính đến tính chất triệt tiêu đầu vào âm.
+Thang đo khởi tạo trọng số cũng quan trọng không kém. Nếu trọng số khởi tạo quá lớn, kích hoạt dễ rơi vào vùng bão hòa (với sigmoid/tanh) hoặc tăng bùng nổ qua các lớp, kéo theo gradient bùng nổ và làm quá trình huấn luyện mất ổn định. Ngược lại, nếu trọng số quá nhỏ, kích hoạt và gradient sẽ co dần về 0 qua các lớp, khiến mạng sâu học rất chậm. Giải pháp là điều chỉnh phương sai khởi tạo theo số chiều đầu vào của lớp: khởi tạo Xavier ($$\mathcal{N}(0, 1/n_{in})$$) phù hợp với sigmoid và tanh, còn khởi tạo He ($$\mathcal{N}(0, 2/n_{in})$$) được thiết kế cho ReLU để bù lại việc triệt tiêu đầu vào âm.
 
-Bài toán ReLU chết xứng đáng chú ý đặc biệt vì là chế độ thất bại phổ biến trong thực tế. Khi đầu vào của neuron ReLU trở nên âm trong huấn luyện và vẫn âm, neuron cho ra không và có gradient bằng không, nên không bao giờ cập nhật. Điều này có thể do khởi tạo không may, learning rate quá cao gây cập nhật trọng số lớn đẩy neuron vào vùng âm, hoặc thiên lệch hệ thống trong dữ liệu. Một khi neuron chết, nó chết vĩnh viễn trong lần huấn luyện đó. Để chẩn đoán, theo dõi tỷ lệ neuron luôn cho ra không. Nếu hơn 20–30% chết, có lẽ có vấn đề. Giải pháp gồm dùng Leaky ReLU (có gradient nhỏ ngay cả với đầu vào âm), giảm learning rate, cải thiện khởi tạo, hoặc dùng batch normalization (sẽ trình bày sau) để giữ kích hoạt trong khoảng hợp lý.
+Hiện tượng ReLU chết là một lỗi thường gặp trong thực tế. Khi giá trị tiền kích hoạt của một neuron ReLU luôn âm, cả đầu ra lẫn gradient của nó đều bằng 0 nên trọng số không thể cập nhật thêm. Nguyên nhân có thể do khởi tạo chưa phù hợp, tốc độ học quá cao gây ra bước nhảy lớn đẩy neuron sang miền âm, hoặc do đặc điểm lệch trong dữ liệu. Một khi đã rơi vào trạng thái này, neuron thường không tự phục hồi trong lần huấn luyện đó. Để theo dõi, ta có thể kiểm tra tỷ lệ neuron luôn xuất ra 0; nếu tỷ lệ này vượt 20–30%, cần xem lại cấu hình huấn luyện. Các biện pháp khắc phục gồm chuyển sang Leaky ReLU, giảm tốc độ học, chọn cách khởi tạo phù hợp hoặc áp dụng batch normalization (sẽ học ở các chương sau) để ổn định phân phối kích hoạt.
 
-Một kỹ thuật mạnh thường bị bỏ qua là dùng độ lệch dương nhỏ cho neuron ReLU. Trong khi trọng số nên ngẫu nhiên, khởi tạo độ lệch bằng giá trị dương nhỏ như 0.01 đảm bảo hầu hết neuron ban đầu hoạt động (cho ra giá trị dương) thay vì bắt đầu trong vùng không. Điều này cho chúng cơ hội học trước khi có thể chết. Đây là mẹo đơn giản có thể cải thiện rõ rệt huấn luyện trong mạng rất sâu.
+Một kỹ thuật đơn giản nhưng hữu ích là khởi tạo độ lệch của neuron ReLU bằng một giá trị dương nhỏ (chẳng hạn 0.01) trong khi vẫn khởi tạo ngẫu nhiên các trọng số. Cách làm này giúp đa số neuron ở trạng thái hoạt động ngay từ đầu thay vì lập tức rơi vào vùng bằng 0, tạo điều kiện cho chúng bắt đầu học trước khi có nguy cơ bị chết.
 
-Hiểu diễn giải hình học của trọng số giúp gỡ lỗi và diễn giải mô hình. Vectơ trọng số định nghĩa một hướng trong không gian đầu vào mà neuron đang "nhìn" theo. Độ lớn của nó quyết định độ nhạy — trọng số lớn hơn nghĩa là neuron phản ứng mạnh hơn với thay đổi theo hướng đó. Trong xử lý ảnh, ta có thể trực quan hóa những gì neuron đã học bằng cách tìm mẫu đầu vào kích hoạt cực đại nó, thường hé lộ rằng neuron mức thấp học phát hiện cạnh có hướng, trong khi neuron sâu hơn học phát hiện các mẫu ngày càng phức tạp như texture, bộ phận đối tượng, hoặc cuối cùng đối tượng hoàn chỉnh.
+Cuối cùng, hiểu ý nghĩa hình học của trọng số sẽ hỗ trợ đáng kể cho việc gỡ lỗi và diễn giải mô hình. Vector trọng số xác định hướng trong không gian đầu vào mà neuron đặc biệt nhạy cảm; độ lớn của nó thể hiện mức độ phản ứng khi đầu vào thay đổi theo hướng đó. Trong thị giác máy tính, khi trực quan hóa mẫu đầu vào kích hoạt cực đại từng neuron, ta thường thấy các lớp đầu học phát hiện cạnh theo hướng nhất định, còn các lớp sâu hơn dần nhận diện kết cấu (*texture*), bộ phận và toàn bộ đối tượng.
 
 ## Điểm Then chốt
 
-Perceptron, dù đơn giản, giới thiệu các khái niệm nền tảng vẫn tồn tại xuyên suốt học sâu: ý tưởng rằng ta có thể học từ ví dụ bằng cách điều chỉnh trọng số dựa trên sai số, rằng tổ hợp có trọng số của đầu vào có thể thực hiện tính toán, và rằng mô hình tuyến tính có hạn chế cố hữu đòi hỏi phi tuyến tính và độ sâu. Neuron hiện đại mở rộng perceptron bằng cách dùng hàm kích hoạt trơn, khả vi, cho phép học dựa trên gradient qua mạng sâu tùy ý. Lựa chọn hàm kích hoạt ảnh hưởng sâu động lực huấn luyện, với ReLU nổi lên như lựa chọn thống trị cho lớp ẩn nhờ hiệu quả tính toán và kháng gradient biến mất. Khởi tạo đúng phá đối xứng đồng thời duy trì thang đo kích hoạt và gradient phù hợp, với khởi tạo He là chuẩn cho mạng ReLU. Hiểu sâu các khái niệm nền tảng này — không chỉ công thức là gì mà vì sao chúng hoạt động và khi nào thất bại — là thiết yếu cho bất kỳ ai muốn làm chủ học sâu thay vì chỉ áp dụng hời hợt.
+Dù có cấu trúc đơn giản, perceptron đã đặt ra những ý niệm nền tảng vẫn còn nguyên giá trị trong học sâu: học từ ví dụ bằng cách cập nhật trọng số theo sai số, biểu diễn phép tính qua tổng có trọng số, và nhận thức rằng mô hình tuyến tính một lớp có giới hạn nên cần đến tính phi tuyến và độ sâu. Neuron nhân tạo hiện đại mở rộng perceptron bằng các hàm kích hoạt trơn, khả vi, cho phép huấn luyện mạng sâu tùy ý bằng gradient descent. Trong đó, ReLU trở thành lựa chọn mặc định cho các lớp ẩn nhờ chi phí tính toán thấp và khả năng hạn chế gradient biến mất. Bên cạnh đó, khởi tạo trọng số đúng cách — điển hình là khởi tạo He cho mạng ReLU — giúp phá vỡ đối xứng và giữ thang đo kích hoạt lẫn gradient ổn định. Nắm chắc không chỉ công thức mà cả lý do chúng hoạt động và các tình huống dễ gặp lỗi là cơ sở quan trọng để làm chủ học sâu.
 
 <!-- video-references -->
 
 ## Nguồn video (tham chiếu)
 
-Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
+Một số hình minh họa trong bài được trích từ video của Machine Learning Thực Chiến:
 
 - [Trực giác mạng nơ-ron (Perceptron → Deep Learning)](https://www.facebook.com/reel/793200140509765)
 
 ## Video tham khảo
 
-- **xem trước** [The Perceptron Explained](https://www.youtube.com/watch?v=i1G7PXZMnSc) — Alice Heiman, tiếng Anh. Perceptron là tổng có trọng số cộng ngưỡng, đúng mô hình mở đầu của bài.
-- [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Cho thấy điều gì đổi khi nhiều perceptron được xếp chồng và ngưỡng trở thành hàm kích hoạt trơn.
-- [Tất tần tật về Neural Network trong 12 phút](https://www.youtube.com/watch?v=sWPNm_GhhCA) — Việt Nguyễn AI, tiếng Việt. Cùng câu chuyện từ neuron tới mạng, bằng tiếng Việt.
+- **Xem trước:** [The Perceptron Explained](https://www.youtube.com/watch?v=i1G7PXZMnSc) — Alice Heiman, tiếng Anh. Giải thích perceptron như tổng có trọng số cộng ngưỡng, khớp với mô hình mở đầu của bài.
+- [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Minh họa điều gì thay đổi khi xếp chồng nhiều perceptron và thay ngưỡng cứng bằng hàm kích hoạt trơn.
+- [Tất tần tật về Neural Network trong 12 phút](https://www.youtube.com/watch?v=sWPNm_GhhCA) — Việt Nguyễn AI, tiếng Việt. Giới thiệu mạch phát triển từ một neuron đến cả mạng bằng tiếng Việt.

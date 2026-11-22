@@ -110,7 +110,7 @@ theta_optimal, costs = mini_batch_gradient_descent(
 )
 ```
 
-### Với Lịch Learning Rate
+### Kết hợp Lịch Điều chỉnh Tốc độ Học
 
 ```python
 class LearningRateSchedule:
@@ -166,11 +166,11 @@ theta = gradient_descent_with_schedule(X, y, initial_lr=0.1, num_iterations=1000
 
 ## Tiêu chí Hội tụ
 
-Làm sao biết khi nào dừng huấn luyện?
+Trong thực tế, ta xác định thời điểm dừng huấn luyện bằng một hoặc nhiều tiêu chí sau:
 
-### 1. Số Vòng lặp Cực đại
+### 1. Giới hạn Số Vòng lặp
 
-Dừng sau số vòng lặp/epoch cố định.
+Dừng sau một số vòng lặp hoặc epoch định sẵn.
 
 ```python
 if iteration >= max_iterations:
@@ -179,7 +179,7 @@ if iteration >= max_iterations:
 
 ### 2. Ngưỡng Chi phí
 
-Dừng khi chi phí xuống dưới một ngưỡng.
+Dừng khi giá trị hàm chi phí giảm xuống dưới một ngưỡng đặt trước.
 
 ```python
 if cost < threshold:
@@ -188,25 +188,25 @@ if cost < threshold:
 
 ### 3. Độ lớn Gradient
 
-Dừng khi gradient rất nhỏ (gần điểm dừng).
+Dừng khi chuẩn của vector gradient đủ nhỏ (gần điểm dừng).
 
 ```python
 if np.linalg.norm(gradient) < epsilon:
     break
 ```
 
-### 4. Thay đổi Chi phí
+### 4. Mức thay đổi Chi phí
 
-Dừng khi chi phí không còn giảm đáng kể.
+Dừng khi hàm chi phí không còn giảm đáng kể giữa các bước liên tiếp.
 
 ```python
 if abs(cost - previous_cost) < epsilon:
     break
 ```
 
-### 5. Mất mát Kiểm định (Phổ biến nhất trong Học sâu)
+### 5. Mất mát trên Tập Kiểm định (Phổ biến nhất trong Học sâu)
 
-Dừng khi mất mát kiểm định không còn cải thiện (dừng sớm — *early stopping*).
+Dừng khi mất mát trên tập kiểm định (*validation loss*) ngừng cải thiện sau một số epoch liên tiếp (kỹ thuật dừng sớm — *early stopping*).
 
 ```python
 if validation_loss > best_validation_loss:
@@ -218,58 +218,58 @@ else:
     patience_counter = 0
 ```
 
-## Thách thức với Gradient Descent
+## Các Thách thức với Gradient Descent
 
-### 1. Cực tiểu Địa phương
+### 1. Cực tiểu Cục bộ
 
-Hàm không lồi (như mạng neuron) có nhiều cực tiểu địa phương.
+Các hàm mất mát không lồi (như ở mạng neuron sâu) thường có nhiều cực tiểu cục bộ.
 
-**Giải pháp:**
-- Khởi tạo ngẫu nhiên (thử các điểm xuất phát khác nhau)
-- Momentum (trình bày trong bộ tối ưu nâng cao)
-- Simulated annealing
+**Hướng xử lý:**
+- Khởi tạo ngẫu nhiên để thử nhiều điểm xuất phát khác nhau
+- Sử dụng momentum (sẽ học trong bài về các bộ tối ưu nâng cao)
+- Áp dụng *simulated annealing*
 
 ### 2. Điểm Yên ngựa
 
-Các điểm nơi gradient bằng không nhưng không phải cực tiểu.
+Là những điểm có gradient bằng 0 nhưng không phải cực tiểu mà dốc lên theo một số phương và dốc xuống theo các phương khác.
 
-**Giải pháp:**
-- Momentum và learning rate thích nghi giúp thoát
-- Phương pháp bậc hai (phương pháp Newton)
+**Hướng xử lý:**
+- Sử dụng momentum và các bộ tối ưu có tốc độ học thích nghi để thoát khỏi vùng yên ngựa
+- Áp dụng phương pháp tối ưu bậc hai (như phương pháp Newton)
 
-### 3. Plateau
+### 3. Vùng Bằng phẳng (*Plateau*)
 
-Vùng phẳng nơi gradient rất nhỏ.
+Những vùng có độ dốc rất nhỏ khiến tham số cập nhật cực chậm.
 
-**Giải pháp:**
-- Kiên nhẫn (chờ lâu hơn)
-- Lịch learning rate
-- Bộ tối ưu thích nghi (Adam, RMSprop)
+**Hướng xử lý:**
+- Huấn luyện thêm số bước đủ lớn
+- Kết hợp lịch trình điều chỉnh tốc độ học
+- Chuyển sang các bộ tối ưu thích nghi như Adam hoặc RMSprop
 
-### 4. Gradient Biến mất / Bùng nổ
+### 4. Gradient Biến mất và Bùng nổ
 
-Gradient trở nên quá nhỏ hoặc quá lớn trong mạng sâu.
+Trong mạng sâu, gradient có thể suy giảm nhanh về 0 hoặc tăng vọt mất kiểm soát.
 
-**Giải pháp:**
-- Khởi tạo đúng (Xavier, He)
-- Batch normalization
-- Kết nối dư (*residual connections*)
-- Gradient clipping (cho gradient bùng nổ)
+**Hướng xử lý:**
+- Khởi tạo trọng số hợp lý (Xavier, He)
+- Áp dụng batch normalization
+- Sử dụng kết nối tắt (*residual connections*)
+- Cắt ngưỡng gradient (*gradient clipping*) để xử lý tình trạng bùng nổ
 
 ## Tóm tắt
 
-- **Gradient descent** là thuật toán tối ưu nền tảng cho mạng neuron
-- **Quy tắc cập nhật**: $$\theta := \theta - \eta \nabla_{\theta} J(\theta)$$
-- **Mini-batch gradient descent** là biến thể được dùng phổ biến nhất
-- **Learning rate** $$\eta$$ then chốt: quá nhỏ → chậm, quá lớn → bất ổn
-- **Lịch learning rate** có thể cải thiện hội tụ
-- **Tiêu chí hội tụ** giúp xác định khi nào dừng huấn luyện
-- **Thách thức** gồm cực tiểu địa phương, điểm yên ngựa, và vấn đề gradient
+- **Gradient descent** là thuật toán tối ưu nền tảng cho huấn luyện mạng neuron.
+- **Quy tắc cập nhật:** $$\theta := \theta - \eta \nabla_{\theta} J(\theta)$$.
+- **Mini-batch gradient descent** là biến thể được sử dụng rộng rãi nhất nhờ cân bằng tốt giữa tốc độ và độ ổn định.
+- **Tốc độ học** $$\eta$$ cần chọn cẩn thận: quá nhỏ sẽ hội tụ chậm, quá lớn sẽ gây mất ổn định.
+- **Lịch trình tốc độ học** giúp cải thiện tốc độ hội tụ và chất lượng nghiệm cuối cùng.
+- **Tiêu chí hội tụ** (đặc biệt là dừng sớm theo tập kiểm định) giúp xác định thời điểm kết thúc huấn luyện hợp lý.
+- **Các thách thức phổ biến** gồm cực tiểu cục bộ, điểm yên ngựa, vùng bằng phẳng và vấn đề gradient biến mất/bùng nổ.
 
-Ở bài tiếp theo, ta sẽ xét **lan truyền ngược**, thuật toán tính gradient hiệu quả trong mạng neuron.
+Ở bài tiếp theo, ta sẽ tìm hiểu **lan truyền ngược** — thuật toán tính gradient hiệu quả cho mạng neuron.
 
 ## Video tham khảo
 
-- **xem trước** [Gradient Descent, Step-by-Step](https://www.youtube.com/watch?v=sDv4f4s2SB8) — StatQuest with Josh Starmer, tiếng Anh. Một tiêu chí hội tụ có thể lập trình: dừng khi bước đủ nhỏ.
-- [Stochastic Gradient Descent, Clearly Explained!!!](https://www.youtube.com/watch?v=vMh0zPT0tLI) — StatQuest with Josh Starmer, tiếng Anh. Nhiễu trong gradient ngẫu nhiên là thách thức chính phần cài đặt phải sống cùng.
-- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, tiếng Anh. Vòng lặp huấn luyện thực sự áp dụng phép cập nhật, đúng nửa mã của bài.
+- **Xem trước:** [Gradient Descent, Step-by-Step](https://www.youtube.com/watch?v=sDv4f4s2SB8) — StatQuest with Josh Starmer, tiếng Anh. Minh họa trực tiếp tiêu chí dừng khi bước cập nhật đủ nhỏ.
+- [Stochastic Gradient Descent, Clearly Explained!!!](https://www.youtube.com/watch?v=vMh0zPT0tLI) — StatQuest with Josh Starmer, tiếng Anh. Giải thích nhiễu trong SGD — thách thức thường gặp khi cài đặt thực tế.
+- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, tiếng Anh. Trình bày vòng lặp huấn luyện thực tế với mô hình, hàm mất mát và bộ tối ưu trong PyTorch.

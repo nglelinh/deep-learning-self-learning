@@ -9,65 +9,65 @@ categories:
 - chapter00
 ---
 
-### 6. Biến Ngẫu Nhiên
+### 6. Biến ngẫu nhiên
 
-**Biến ngẫu nhiên** X là một hàm gán một số thực cho mỗi kết quả trong không gian mẫu:
+**Biến ngẫu nhiên** $$X$$ là một hàm ánh xạ mỗi kết quả trong không gian mẫu sang một số thực:
 $$X: \Omega \rightarrow \mathbb{R}$$
 
-#### Các Loại Biến Ngẫu Nhiên:
+#### Phân loại biến ngẫu nhiên
 
-**Rời rạc**: Nhận các giá trị đếm được (ví dụ: số lần xuất hiện mặt sấp)
-- Hàm Khối Xác Suất (PMF): $$P(X = x)$$
+**Biến ngẫu nhiên rời rạc:** nhận tập giá trị hữu hạn hoặc đếm được (ví dụ: số lần xuất hiện mặt sấp).
+- Hàm khối xác suất (*PMF*): $$P(X = x)$$
 
-**Liên tục**: Nhận các giá trị không đếm được (ví dụ: chiều cao, cân nặng)
-- Hàm Mật Độ Xác Suất (PDF): $$f_X(x)$$
+**Biến ngẫu nhiên liên tục:** nhận giá trị trên một khoảng liên tục của trục số thực (ví dụ: chiều cao, cân nặng).
+- Hàm mật độ xác suất (*PDF*): $$f_X(x)$$
 - $$P(a \leq X \leq b) = \int_a^b f_X(x) dx$$
 
-### 7. Kết Nối với Tối Ưu Hóa
+### 7. Liên hệ với tối ưu hóa
 
-Lý thuyết xác suất kết nối với tối ưu hóa theo nhiều cách:
+Lý thuyết xác suất gắn liền với tối ưu hóa qua nhiều bài toán quen thuộc:
 
-#### Ước Lượng Hợp Lý Tối Đa
-Tìm tham số θ để tối đa hóa likelihood:
+#### Ước lượng hợp lý cực đại (MLE)
+Tìm tham số $$\theta$$ cực đại hóa hàm hợp lý (*likelihood*):
 $$\hat{\theta} = \arg\max_\theta P(\text{dữ liệu}|\theta)$$
 
-#### Tối Ưu Hóa Giá Trị Kỳ Vọng
-Tối thiểu hóa kỳ vọng loss:
+#### Tối ưu hóa giá trị kỳ vọng
+Cực tiểu hóa hàm mất mát kỳ vọng:
 $$\min_\theta \mathbb{E}[L(Y, f(X; \theta))]$$
 
-#### Tối Ưu Hóa Bayes
-Sử dụng phân phối xác suất để mô hình hóa sự bất định trong hàm mục tiêu và hướng dẫn tìm kiếm nghiệm tối ưu.
+#### Tối ưu hóa Bayes
+Sử dụng phân phối xác suất để mô hình hóa sự bất định của hàm mục tiêu và định hướng quá trình tìm kiếm nghiệm tối ưu.
 
 <div id="deep-learning-connection" style="border: 2px solid #ddd; padding: 20px; margin: 20px 0; border-radius: 10px; background-color: #f0f8ff;">
-    <h4 style="text-align: center; color: #333;">Ví Dụ Xác Suất trong Tối Ưu Hóa</h4>
+    <h4 style="text-align: center; color: #333;">Ví dụ ứng dụng xác suất trong tối ưu hóa</h4>
     
     <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;">
         <div style="flex: 1; min-width: 400px;">
             <canvas id="deep-learningCanvas" width="400" height="300" style="border: 1px solid #ccc; background: white;"></canvas>
             <p style="font-size: 12px; color: #666; margin-top: 5px;">
-                <strong>Ví Dụ MLE:</strong> Tìm tham số μ để tối đa hóa likelihood của dữ liệu quan sát từ Normal(μ, 1).
+                <strong>Ví dụ MLE:</strong> Tìm tham số μ cực đại hóa hàm hợp lý của dữ liệu quan sát từ phân phối chuẩn Normal(μ, 1).
             </p>
         </div>
         
         <div style="flex: 1; min-width: 250px;">
             <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                <h5 style="margin-top: 0; color: #444;">Demo MLE</h5>
+                <h5 style="margin-top: 0; color: #444;">Minh họa MLE</h5>
                 
                 <div style="margin-bottom: 15px;">
-                    <label for="true-mu-slider" style="display: block; margin-bottom: 5px; font-weight: bold;">μ Thực: <span id="true-mu-value">2.0</span></label>
+                    <label for="true-mu-slider" style="display: block; margin-bottom: 5px; font-weight: bold;">μ thực: <span id="true-mu-value">2.0</span></label>
                     <input type="range" id="true-mu-slider" min="-2" max="4" step="0.1" value="2.0" style="width: 100%;">
                 </div>
                 
                 <div style="margin-bottom: 15px;">
-                    <label for="sample-size-slider" style="display: block; margin-bottom: 5px; font-weight: bold;">Kích Thước Mẫu: <span id="sample-size-value">20</span></label>
+                    <label for="sample-size-slider" style="display: block; margin-bottom: 5px; font-weight: bold;">Kích thước mẫu: <span id="sample-size-value">20</span></label>
                     <input type="range" id="sample-size-slider" min="5" max="100" step="5" value="20" style="width: 100%;">
                 </div>
                 
-                <button id="generate-mle-data" style="width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px;">Tạo Dữ Liệu & Tìm MLE</button>
+                <button id="generate-mle-data" style="width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px;">Tạo dữ liệu &amp; Tìm MLE</button>
                 
                 <div id="mle-results" style="font-family: monospace; font-size: 12px; line-height: 1.4; background: #f8f9fa; padding: 10px; border-radius: 4px;">
-                    <div><strong>Kết Quả:</strong></div>
-                    <div>μ Thực: <span id="display-true-mu">2.000</span></div>
+                    <div><strong>Kết quả:</strong></div>
+                    <div>μ thực: <span id="display-true-mu">2.000</span></div>
                     <div>Trung bình mẫu: <span id="sample-mean">--</span></div>
                     <div>Ước lượng MLE: <span id="mle-estimate">--</span></div>
                     <div>Sai số: <span id="mle-error">--</span></div>
@@ -77,15 +77,15 @@ Sử dụng phân phối xác suất để mô hình hóa sự bất định tro
     </div>
 </div>
 
-### Những Điểm Chính
+### Điểm chính cần nhớ
 
-1. **Nền Tảng**: Tiên đề xác suất cung cấp nền tảng toán học để lý luận về sự bất định
-2. **Xác Suất Có Điều Kiện**: Thiết yếu để cập nhật niềm tin với thông tin mới
-3. **Tính Độc Lập**: Đơn giản hóa tính toán và giả thuyết mô hình hóa
-4. **Biến Ngẫu Nhiên**: Cầu nối giữa xác suất trừu tượng và ứng dụng cụ thể
-5. **Kết Nối Tối Ưu Hóa**: Nhiều bài toán tối ưu hóa phát sinh từ mô hình hóa xác suất
+1. **Nền tảng:** các tiên đề xác suất tạo khung toán học chặt chẽ để xử lý sự bất định.
+2. **Xác suất có điều kiện:** công cụ cốt lõi để cập nhật niềm tin khi có thông tin mới.
+3. **Tính độc lập:** giúp đơn giản hóa phép tính và các giả định mô hình.
+4. **Biến ngẫu nhiên:** cầu nối giữa không gian mẫu trừu tượng và các đại lượng số cụ thể.
+5. **Liên hệ với tối ưu hóa:** nhiều bài toán tối ưu hóa phát sinh trực tiếp từ mô hình xác suất.
 
-Hiểu những khái niệm cơ bản này chuẩn bị cho bạn các chủ đề nâng cao hơn như suy luận Bayes, ước lượng hợp lý tối đa và tối ưu hóa ngẫu nhiên - những yếu tố trung tâm của học máy và khoa học dữ liệu hiện đại.
+Nắm vững các khái niệm nền tảng này giúp bạn tiếp cận thuận lợi những chủ đề nâng cao hơn như suy luận Bayes, ước lượng hợp lý cực đại và tối ưu hóa ngẫu nhiên — các thành phần cốt lõi của học máy và khoa học dữ liệu hiện đại.
 
 <script>
 class MLEDemo {
@@ -304,6 +304,6 @@ canvas {
 
 ## Video tham khảo
 
-- **xem trước** [MaDL - Random Variables and Probability Distributions](https://www.youtube.com/watch?v=bvBukLjHZh8) — Tübingen Machine Learning, tiếng Anh. Biến ngẫu nhiên là hàm trên không gian mẫu, đúng cách bài nhìn dữ liệu và dự đoán.
-- [Random Variables and Probability Distributions](https://www.youtube.com/watch?v=lHCpYeFvTs0) — Dr Nic's Maths and Stats, tiếng Anh. Một lượt cụ thể ngắn về biến ngẫu nhiên rời rạc và liên tục trước bảng phân phối.
-- [MaDL - Expectation, Variance and Covariance](https://www.youtube.com/watch?v=kmRm3XIND8M) — Tübingen Machine Learning, tiếng Anh. Kỳ vọng và phương sai là các đại lượng tóm tắt mà bài dùng khi đầu ra mạng là ngẫu nhiên.
+- **Xem trước:** [MaDL - Random Variables and Probability Distributions](https://www.youtube.com/watch?v=bvBukLjHZh8) — Tübingen Machine Learning, tiếng Anh. Trình bày biến ngẫu nhiên dưới dạng hàm trên không gian mẫu, khớp với cách mô hình hóa dữ liệu và dự đoán trong bài.
+- [Random Variables and Probability Distributions](https://www.youtube.com/watch?v=lHCpYeFvTs0) — Dr Nic's Maths and Stats, tiếng Anh. Giới thiệu ngắn gọn về biến ngẫu nhiên rời rạc và liên tục trước khi đi vào các phân phối cụ thể.
+- [MaDL - Expectation, Variance and Covariance](https://www.youtube.com/watch?v=kmRm3XIND8M) — Tübingen Machine Learning, tiếng Anh. Giải thích kỳ vọng, phương sai và hiệp phương sai — các đại lượng đặc trưng dùng khi đầu ra mạng nơ-ron mang tính xác suất.

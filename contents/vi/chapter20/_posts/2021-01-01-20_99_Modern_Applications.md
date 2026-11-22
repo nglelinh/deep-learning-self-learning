@@ -10,52 +10,52 @@ categories:
 lesson_type: optional
 ---
 
-# Tùy chọn: nền tảng RL trong production — bandit, recsys, và MDP của RLHF
+# Tùy chọn: Nền tảng RL trong thực tế — Bandit, hệ thống gợi ý và MDP của RLHF
 
-> Bài này là **tùy chọn**. Nó **không** thay MDP, lợi tức, hay định nghĩa chính sách/giá trị. Nó cho thấy các đối tượng ấy xuất hiện ở đâu trong hệ *khoa học dữ liệu* 2022–2026 — đặc biệt huấn luyện ngôn ngữ theo preference.
+> Bài này là **tùy chọn**, **không** thay thế định nghĩa về MDP, tổng phần thưởng chiết khấu hay hàm chính sách/giá trị. Nội dung cho thấy các khái niệm đó xuất hiện ở đâu trong các hệ thống khoa học dữ liệu giai đoạn 2022–2026, đặc biệt là huấn luyện mô hình ngôn ngữ theo sở thích con người.
 
-MDP $$(S,A,P,R,\gamma)$$ vẫn là mô hình. Ứng dụng bất ngờ: **căn chỉnh chat** là MDP mà “môi trường” là con người (hoặc mô hình thưởng) chấm cả bản ghi.
+MDP $$(S,A,P,R,\gamma)$$ vẫn là khung mô hình nền tảng. Một ứng dụng đáng chú ý là **căn chỉnh mô hình hội thoại** (*chat alignment*), trong đó “môi trường” chính là con người (hoặc mô hình phần thưởng) đánh giá toàn bộ câu trả lời sinh ra.
 
-## 1. RLHF như MDP bạn đã biết
+## 1. RLHF dưới góc nhìn MDP
 
-[Ouyang et al., 2022](https://arxiv.org/abs/2203.02155) (InstructGPT) coi mỗi prompt là trạng thái đầu, token là hành động, và thưởng học được $$r_\phi$$ là $$R$$. PPO (Chương 21) rồi cực đại hóa
+[Ouyang et al., 2022](https://arxiv.org/abs/2203.02155) (InstructGPT) mô hình hóa mỗi prompt là trạng thái ban đầu, mỗi token sinh ra là một hành động, và điểm số từ mô hình phần thưởng đã học $$r_\phi$$ đóng vai trò hàm phần thưởng $$R$$. Sau đó, PPO (xem Chương 21) tối đa hóa mục tiêu:
 
 $$J(\theta) = \mathbb{E}_{\pi_\theta}[r_\phi] - \beta\, D_{\mathrm{KL}}(\pi_\theta \,\|\, \pi_{\mathrm{ref}}).$$
 
-Hạng KL là cùng ý “đừng rời chính sách hành vi” như RL bảo thủ. Chi tiết PPO/DPO chờ bài tùy chọn Chương 21; ở đây điểm là **từ vựng Chương 20 là thứ ngành đã dùng**.
+Số hạng phạt KL giữ cho chính sách mới không lệch quá xa chính sách tham chiếu ban đầu, tương tự nguyên lý bảo thủ trong RL. Chi tiết về PPO và DPO sẽ được trình bày ở bài tùy chọn Chương 21; điểm cốt lõi ở đây là hệ thuật ngữ của Chương 20 được sử dụng trực tiếp trong thực tế công nghiệp.
 
 ## 2. Ứng dụng cụ thể
 
-### Contextual bandit trong xếp hạng
+### Contextual Bandit trong bài toán xếp hạng
 
-Bảng tin và thông báo thường là **bandit**, không phải MDP đầy đủ: một hành động, thưởng tức thì (click). Thư viện: [Vowpal Wabbit](https://github.com/VowpalWabbit/vowpal_wabbit), [Ray RLlib](https://github.com/ray-project/ray). Phần khám phá–khai thác của chương này là lý thuyết.
+Các hệ thống bảng tin và gửi thông báo thường được mô hình hóa bằng **contextual bandit** thay vì MDP đầy đủ: chỉ có một bước hành động và phần thưởng phản hồi ngay lập tức (như lượt nhấp chuột). Các thư viện phổ biến gồm [Vowpal Wabbit](https://github.com/VowpalWabbit/vowpal_wabbit) và [Ray RLlib](https://github.com/ray-project/ray), dựa trực tiếp trên lý thuyết đánh đổi khám phá–khai thác của chương này.
 
-### RL offline / batch trên log
+### RL ngoại tuyến (Offline / Batch RL) trên dữ liệu log
 
-Khi không reset được nhà máy hay thị trường, bạn học từ $$(s,a,r,s')$$ đã ghi. [Levine et al., 2020](https://arxiv.org/abs/2005.01643) khảo sát RL offline; việc ứng dụng 2022–2025 dùng conservative Q-learning và fitted policy trên log gợi ý.
+Khi không thể thử nghiệm tự do hoặc đặt lại môi trường thực (như nhà máy hay thị trường tài chính), mô hình phải học từ tập dữ liệu tương tác $$(s,a,r,s')$$ đã ghi nhận sẵn. [Levine et al., 2020](https://arxiv.org/abs/2005.01643) tổng hợp nền tảng của RL ngoại tuyến; các ứng dụng giai đoạn 2022–2025 thường sử dụng *conservative Q-learning* và *fitted policy* trên dữ liệu log của hệ thống gợi ý.
 
-### Mô phỏng trước thưởng thật
+### Mô phỏng trước khi triển khai thực tế
 
-Robot và quảng cáo vẫn dựng simulator để MDP rẻ. Định nghĩa $$P$$ và $$R$$ trong chương này là checklist cho “simulator có đang nói dối?”
+Trong robot và hệ thống quảng cáo, môi trường mô phỏng (*simulator*) vẫn được dùng để giảm chi phí tương tác. Định nghĩa chặt chẽ về xác suất chuyển trạng thái $$P$$ và hàm phần thưởng $$R$$ trong chương này là cơ sở để kiểm tra xem bộ mô phỏng có phản ánh đúng thực tế hay không.
 
 ## 3. Phần mềm phổ biến
 
-- [Gymnasium](https://github.com/Farama-Foundation/Gymnasium) — fork 2023+ của Gym.
-- [huggingface/trl](https://github.com/huggingface/trl) — trainer RLHF (xem Chương 21).
-- [vw](https://github.com/VowpalWabbit/vowpal_wabbit) — bandit production.
+- [Gymnasium](https://github.com/Farama-Foundation/Gymnasium) — nhánh kế thừa từ năm 2023 trở đi của OpenAI Gym.
+- [huggingface/trl](https://github.com/huggingface/trl) — thư viện huấn luyện RLHF (xem thêm Chương 21).
+- [vw](https://github.com/VowpalWabbit/vowpal_wabbit) — công cụ triển khai bandit trong sản phẩm thực tế.
 
 ## 4. Trích dẫn (2022–2026)
 
 - [InstructGPT (Ouyang et al., 2022)](https://arxiv.org/abs/2203.02155).
-- [Gymnasium](https://gymnasium.farama.org/) — API MDP được duy trì, dùng trong khóa 2023–2026.
-- [Offline RL survey (Levine et al., 2020)](https://arxiv.org/abs/2005.01643) — vẫn là bản đồ cho việc DS dựa log.
+- [Gymnasium](https://gymnasium.farama.org/) — giao diện MDP chuẩn được duy trì và dùng phổ biến trong các khóa học giai đoạn 2023–2026.
+- [Offline RL survey (Levine et al., 2020)](https://arxiv.org/abs/2005.01643) — tài liệu tổng quan cho các bài toán học tăng cường từ dữ liệu log.
 
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
-Học trạng thái, lợi tức, và phương trình Bellman trước. Bài này chỉ đặt tên **các MDP đã giao hàng** (bandit, log offline, RLHF) — không phải định nghĩa mới của hàm giá trị.
+Trước hết cần nắm vững trạng thái, tổng phần thưởng chiết khấu và hệ phương trình Bellman. Bài này chỉ minh họa **các bài toán MDP đã được triển khai rộng rãi** (bandit, RL ngoại tuyến trên log và RLHF), không thay đổi định nghĩa của hàm giá trị.
 
 ## Video tham khảo
 
-- **xem trước** [Reinforcement Learning with Human Feedback (RLHF), Clearly Explained!!!](https://www.youtube.com/watch?v=qPN_XZcJf_s) — StatQuest with Josh Starmer, tiếng Anh. RLHF là một MDP có phần thưởng từ sở thích người, đúng khẳng định của ghi chú.
-- [Reinforcement Learning from Human Feedback (RLHF) Explained](https://www.youtube.com/watch?v=T_X4XFwKX8k) — IBM Technology, tiếng Anh. Một cắt ngắn kiểu bài giảng doanh nghiệp của cùng vòng lặp.
-- [RL Course by David Silver - Lecture 2: Markov Decision Process](https://www.youtube.com/watch?v=lfHX2hHRMVQ) — Google DeepMind, tiếng Anh. Từ vựng MDP mà ghi chú nói bạn đã có.
+- **Xem trước** [Reinforcement Learning with Human Feedback (RLHF), Clearly Explained!!!](https://www.youtube.com/watch?v=qPN_XZcJf_s) — StatQuest with Josh Starmer, tiếng Anh. Giải thích RLHF như một bài toán MDP với phần thưởng học từ phản hồi con người, bám sát nội dung bài.
+- [Reinforcement Learning from Human Feedback (RLHF) Explained](https://www.youtube.com/watch?v=T_X4XFwKX8k) — IBM Technology, tiếng Anh. Tóm tắt ngắn gọn vòng lặp RLHF theo góc nhìn ứng dụng doanh nghiệp.
+- [RL Course by David Silver - Lecture 2: Markov Decision Process](https://www.youtube.com/watch?v=lfHX2hHRMVQ) — Google DeepMind, tiếng Anh. Ôn lại hệ khái niệm MDP làm nền tảng cho các ứng dụng trên.

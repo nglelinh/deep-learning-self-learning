@@ -9,9 +9,9 @@ categories:
 - chapter10
 ---
 
-## 4. Đoạn Mã
+## 4. Đoạn mã
 
-Hãy cài đặt các bộ tối ưu từ đầu để hiểu cơ chế của chúng:
+Dưới đây là phần cài đặt các bộ tối ưu từ đầu bằng NumPy để minh họa trực tiếp cơ chế cập nhật của từng thuật toán:
 
 ```python
 import numpy as np
@@ -139,7 +139,7 @@ class Adam:
         Hiệu chỉnh độ lệch then chốt đầu huấn luyện khi m_t và v_t
         lệch về zero. Không hiệu chỉnh, cập nhật sớm quá nhỏ,
         làm chậm huấn luyện ban đầu. Hệ số hiệu chỉnh 1/(1-β^t)
-        tăng khi t tăng, rồi tiến về 1.
+        lớn ở các bước đầu và giảm dần về 1 khi t tăng.
         """
         self.t += 1  # Tăng bước thời gian
         
@@ -186,7 +186,7 @@ class AdamW:
         Cập nhật Adam với weight decay tách rời.
         
         Khác biệt then chốt so với Adam: weight decay được áp dụng trực tiếp
-        lên tham số (θ ← θ - λθ) thay vì được cộng vào gradient.
+        lên tham số (θ ← θ - ηλθ) thay vì được cộng vào gradient.
         Điều này đảm bảo cường độ chính quy hóa độc lập với scale
         learning rate thích nghi.
         """
@@ -205,9 +205,10 @@ class AdamW:
             # Weight decay xảy ra ngoài scale thích nghi
             param -= self.lr * (m_hat / (np.sqrt(v_hat) + self.epsilon) + 
                                self.weight_decay * param)
+```
 
 ## Video tham khảo
 
-- **xem trước** [Adam Optimization Algorithm (C2W2L08)](https://www.youtube.com/watch?v=JXQT_vxqwIs) — DeepLearningAI, tiếng Anh. Viết hai dòng moment trước mọi lớp bọc framework.
-- [Optimization for Deep Learning (Momentum, RMSprop, AdaGrad, Adam)](https://www.youtube.com/watch?v=NE88eqLngkg) — DeepBean, tiếng Anh. Dùng video này để kiểm momentum và RMSProp không phải cùng một bộ đệm.
-- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, tiếng Anh. Lời gọi step() sẽ thay phép cập nhật viết tay sau khi chúng khớp.
+- **Xem trước:** [Adam Optimization Algorithm (C2W2L08)](https://www.youtube.com/watch?v=JXQT_vxqwIs) — DeepLearningAI, tiếng Anh. Nắm rõ hai bước cập nhật moment trước khi dùng các lớp cài đặt sẵn trong framework.
+- [Optimization for Deep Learning (Momentum, RMSprop, AdaGrad, Adam)](https://www.youtube.com/watch?v=NE88eqLngkg) — DeepBean, tiếng Anh. Giúp phân biệt rõ hai bộ đệm riêng biệt của momentum và RMSprop khi tự cài đặt.
+- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, tiếng Anh. Cách gọi `step()` trong PyTorch thay cho đoạn cập nhật viết tay sau khi đã hiểu cơ chế bên trong.

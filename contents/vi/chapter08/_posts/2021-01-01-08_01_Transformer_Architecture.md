@@ -11,31 +11,31 @@ categories:
 
 # 08-01 Kiến trúc Transformer
 
-Phần này là trái tim của chương: cách các mảnh attention từ Chương 07 được lắp ghép thành một mô hình đầy đủ.
+Đây là phần trọng tâm của Chương 08, trình bày cách ghép nối các thành phần attention từ Chương 07 thành kiến trúc Transformer hoàn chỉnh.
 
-## Các bài học
+## Nội dung chính
 
 1. **Lý thuyết Transformer**  
-   Động lực so với RNN, self-attention QKV trong mô hình, đóng gói multi-head, mã hóa vị trí (*positional encoding*), tầng encoder, tầng decoder (masked self-attn + cross-attn + FFN), residual/LayerNorm, các họ chỉ-encoder / chỉ-decoder / encoder–decoder.
+   Động lực thay thế RNN, self-attention QKV trong mô hình hoàn chỉnh, multi-head attention, mã hóa vị trí (*positional encoding*), cấu trúc tầng encoder và decoder (masked self-attention, cross-attention, FFN), kết nối phần dư và LayerNorm, cùng ba dòng mô hình chỉ-encoder, chỉ-decoder và encoder–decoder.
 
 2. **Cài đặt Transformer**  
-   Các module viết từ đầu, kiểm tra khói (*smoke test*), demo huấn luyện nhỏ, bài báo, và các bẫy sản xuất (quy ước mask, sai sót PE, KV-cache, chi phí $$O(L^2)$$).
+   Xây dựng các module từ đầu bằng PyTorch, chạy kiểm thử nhanh (*smoke test*), huấn luyện ví dụ nhỏ, điểm qua các bài báo nền tảng và tổng hợp bẫy vận hành (quy ước mặt nạ, lỗi PE, KV-cache, chi phí $$O(L^2)$$).
 
 ## Lộ trình gợi ý
 
-| Bước | Bài học | Kết quả |
+| Bước | Bài học | Mục tiêu đạt được |
 |------|--------|---------|
-| 1 | **08-01-01 Lý thuyết** | Viết được phương trình tầng mà không cần ghi chú |
-| 2 | **08-01-02 Tổng quan cài đặt** | Bản đồ module + checklist |
-| 3 | **08-01-02-01 Mã cốt lõi** | Các khối PyTorch chạy được |
-| 4 | **08-01-02-02 Demo & bẫy** | Huấn luyện mô hình toy; gỡ lỗi tự tin |
+| 1 | **08-01-01 Lý thuyết** | Tự viết lại được phương trình của một tầng Transformer hoàn chỉnh |
+| 2 | **08-01-02 Tổng quan cài đặt** | Nắm rõ sơ đồ module và danh mục kiểm tra |
+| 3 | **08-01-02-01 Mã cốt lõi** | Cài đặt và kiểm chứng các khối PyTorch chạy được |
+| 4 | **08-01-02-02 Demo & bẫy** | Huấn luyện thành công bài toán nhỏ và nắm quy trình gỡ lỗi |
 
-Nếu lý thuyết còn trừu tượng, mở class tương ứng trong Mã cốt lõi, chạy forward trên token ngẫu nhiên, rồi quay lại các phương trình.
+Nếu phần phương trình ban đầu còn trừu tượng, bạn có thể mở lớp tương ứng trong bài **Mã cốt lõi**, chạy thử trên dữ liệu ngẫu nhiên rồi quay lại đối chiếu với lý thuyết.
 
-Tiếp tục với **Lý thuyết Transformer**.
+Hãy bắt đầu với bài **Lý thuyết Transformer**.
 
 ## Video tham khảo
 
-- **xem trước** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Luồng dữ liệu mà bài lý thuyết và bài mã cùng dùng.
-- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Đích của bài mã: một GPT dựng từ khối đó.
-- [Transformer Neural Networks, ChatGPT's foundation, Clearly Explained!!!](https://www.youtube.com/watch?v=zxQyTK8quyY) — StatQuest with Josh Starmer, tiếng Anh. Dùng video này nếu bạn muốn mọi tensor được gọi tên trước khi mở mã.
+- **Xem trước:** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown (tiếng Anh). Trình bày luồng dữ liệu xuyên suốt cả phần lý thuyết và phần cài đặt.
+- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy (tiếng Anh). Đích thực hành của phần cài đặt: xây dựng mô hình GPT từ các khối cơ bản.
+- [Transformer Neural Networks, ChatGPT's foundation, Clearly Explained!!!](https://www.youtube.com/watch?v=zxQyTK8quyY) — StatQuest with Josh Starmer (tiếng Anh). Giải thích chi tiết từng tensor trước khi đọc mã nguồn.

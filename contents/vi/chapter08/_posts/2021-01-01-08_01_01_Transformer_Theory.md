@@ -12,63 +12,64 @@ categories:
 # Lý thuyết Transformer
 
 ![Transformer Architecture](/deep-learning-self-learning/img/chapter_img/chapter08/transformer_architecture.png)
-*Transformer encoder–decoder (Vaswani et al., 2017). Nguồn: Wikimedia Commons*
+*Kiến trúc Transformer encoder–decoder (Vaswani et al., 2017). Nguồn: Wikimedia Commons*
 
 ## 1. Tổng quan khái niệm
-Transformer là kiến trúc cho dữ liệu chuỗi (và dữ liệu “giống chuỗi”) được xây dựng chủ yếu từ **attention đa đầu** (*multi-head attention*) và **mạng feed-forward theo vị trí** (*position-wise feed-forward network*), bọc trong kết nối dư (*residual connection*) và chuẩn hóa tầng (*layer normalization*). Được Vaswani et al. (2017) giới thiệu cho dịch máy, nó loại bỏ hồi quy (*recurrence*) và tích chập như các toán tử chuỗi chính.
 
-### Vấn đề của “chỉ cần RNN tốt hơn” là gì?
+Transformer là kiến trúc xử lý dữ liệu chuỗi (và các dạng dữ liệu biểu diễn được thành chuỗi) dựa chủ yếu trên **attention đa đầu** (*multi-head attention*) và **mạng feed-forward theo từng vị trí** (*position-wise feed-forward network*), kết hợp với kết nối phần dư (*residual connection*) và chuẩn hóa lớp (*layer normalization*). Được Vaswani và cộng sự (2017) đề xuất cho dịch máy, Transformer loại bỏ hoàn toàn các tầng hồi quy và tích chập khỏi luồng xử lý chuỗi chính.
 
-Ngay cả RNN xuất sắc (LSTM/GRU) vẫn có ràng buộc cấu trúc:
+### Vì sao cải tiến RNN là chưa đủ
 
-| Ràng buộc | Hiệu ứng |
+Ngay cả các kiến trúc hồi quy tiên tiến như LSTM hay GRU vẫn chịu ba giới hạn cấu trúc:
+
+| Giới hạn | Hệ quả |
 |------------|--------|
-| Cập nhật trạng thái trái-sang-phải | Khó song song hóa theo độ dài trong huấn luyện |
-| Đường phụ thuộc dài | Token sớm phải “sống sót” qua nhiều bước để ảnh hưởng dự đoán muộn |
-| Trạng thái ẩn kích thước cố định | Nghẽn mềm cho ngữ cảnh rất phong phú |
+| Cập nhật trạng thái tuần tự từ trái sang phải | Khó song song hóa theo độ dài chuỗi khi huấn luyện |
+| Đường truyền phụ thuộc dài | Tín hiệu từ token đầu chuỗi phải đi qua nhiều bước mới ảnh hưởng đến vị trí cuối |
+| Trạng thái ẩn kích thước cố định | Tạo nút thắt mềm khi cần lưu giữ ngữ cảnh rất phong phú |
 
-Attention đã cho thấy mô hình có thể *tra cứu* các trạng thái liên quan. Khẳng định của Transformer sắc hơn: **bạn không cần hồi quy chút nào** nếu mọi tầng cho phép mọi vị trí chú ý đến mọi vị trí khác (có mask khi cần) rồi áp dụng một MLP cục bộ mạnh.
+Cơ chế attention cho thấy mô hình có thể trực tiếp truy xuất các trạng thái liên quan. Transformer đi thêm một bước quyết định: loại bỏ hẳn phần hồi quy, để mọi tầng cho phép các vị trí chú ý trực tiếp tới nhau (kèm mặt nạ khi cần) rồi biến đổi phi tuyến độc lập trên từng vị trí bằng mạng MLP.
 
-### Ba họ sản phẩm từ một kiến trúc
+### Ba dòng kiến trúc chính
 
-| Họ | Cấu trúc | Ví dụ |
+| Dòng kiến trúc | Cấu trúc attention | Mô hình tiêu biểu |
 |--------|-----------|----------|
-| Chỉ-encoder | Self-attention hai chiều | BERT, RoBERTa |
-| Chỉ-decoder | Self-attention nhân quả (*causal*) | GPT-2/3/4, LLaMA |
-| Encoder–decoder | Encoder + decoder có cross-attn | Transformer gốc, T5, BART |
+| Chỉ-encoder (*Encoder-only*) | Self-attention hai chiều | BERT, RoBERTa |
+| Chỉ-decoder (*Decoder-only*) | Self-attention nhân quả (*causal*) | GPT-2/3/4, LLaMA |
+| Encoder–decoder | Encoder kết hợp decoder có cross-attention | Transformer gốc, T5, BART |
 
-Cùng các khối tầng nguyên thủy; khác mẫu attention và mục tiêu huấn luyện.
+Cả ba dòng đều dùng chung các khối nền tảng, chỉ khác nhau ở mẫu mặt nạ attention và mục tiêu huấn luyện.
 
-### Các khối xây dựng (xem trước)
+### Cấu trúc tổng thể
 
-1. Nhúng token + nhúng vị trí  
-2. Chồng tầng encoder: self-attn → FFN (mỗi cái có residual + chuẩn hóa)  
-3. Chồng tầng decoder: self-attn *có mask* → cross-attn → FFN  
-4. Chiếu đầu ra lên từ vựng (sinh) hoặc đầu tác vụ (phân loại)
+1. Nhúng token kết hợp mã hóa vị trí.
+2. Các tầng encoder xếp chồng: self-attention → FFN (mỗi tầng con kèm kết nối phần dư và chuẩn hóa lớp).
+3. Các tầng decoder xếp chồng: masked self-attention → cross-attention → FFN.
+4. Lớp chiếu tuyến tính đầu ra sang không gian từ vựng (cho tác vụ sinh) hoặc đầu phân loại (cho tác vụ hiểu).
 
 ![Toàn cảnh kiến trúc + Multi-Head / Scaled Dot-Product](/deep-learning-self-learning/img/chapter_img/chapter08/tf_full_arch_multihead_zoom.jpg)
-*Hình: Encoder–decoder với zoom multi-head attention và scaled dot-product. (Minh họa từ video Attention trong Transformer)*
+*Hình: Kiến trúc encoder–decoder cùng chi tiết multi-head attention và scaled dot-product. (Minh họa từ video Attention trong Transformer)*
 
-Chương 07 đã trình bày toán attention. Bài này đặt toán đó vào **hệ thống đầy đủ**, với trọng tâm đặc biệt vào **thứ tự** (mã hóa vị trí) và **thành phần tầng**.
+Chương 07 đã trình bày chi tiết toán học của attention; bài này ghép các phép toán đó thành **hệ thống hoàn chỉnh**, tập trung vào **mã hóa vị trí** và **cấu trúc từng tầng**.
 
 ---
 
 ## 2. Nền tảng toán học
 ### 2.1 Biểu diễn đầu vào
 
-Gọi các token là chỉ số $$t_1,\ldots,t_L$$. Ma trận nhúng $$E$$ ánh xạ chúng thành vectơ:
+Với chuỗi chỉ số token $$t_1,\ldots,t_L$$, ma trận nhúng $$E$$ ánh xạ từng token thành vectơ, sau đó cộng với vectơ mã hóa vị trí $$\mathbf{p}_i$$:
 
 $$\mathbf{x}_i^{(0)} = E_{t_i} + \mathbf{p}_i \in \mathbb{R}^{d_{\mathrm{model}}}$$
 
-trong đó $$\mathbf{p}_i$$ là **mã hóa vị trí** (*positional encoding*, cố định hoặc học được). Xếp các hàng:
+Xếp các hàng theo thứ tự ta thu được ma trận đầu vào:
 
 $$\mathbf{X}^{(0)} \in \mathbb{R}^{L \times d_{\mathrm{model}}}.$$
 
-(Chiều batch $$B$$ luôn có trong mã: $$(B,L,d)$$.)
+(Trong mã nguồn thực tế có thêm chiều batch $$B$$, tức kích thước $$(B, L, d)$$.)
 
-### 2.2 Self-attention đa đầu có scale (giao diện mô hình)
+### 2.2 Scaled multi-head self-attention
 
-Với các phép chiếu học được (chi tiết xem Chương 07):
+Với các ma trận chiếu học được (chi tiết xem Chương 07):
 
 $$
 \mathrm{MultiHead}(\mathbf{X})
@@ -81,43 +82,39 @@ $$
 \mathrm{Attention}(Q,K,V)=\mathrm{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V
 $$
 
-trong đó $$M$$ là mask cộng tùy chọn (đệm và/hoặc nhân quả).
-
-**Vai trò trong Transformer:** đây là bước *giao tiếp*—các vị trí trao đổi thông tin.
+trong đó $$M$$ là ma trận mặt nạ cộng (padding và/hoặc causal). Trong tầng Transformer, đây là bước **trao đổi thông tin** giữa các vị trí.
 
 ### 2.3 Mạng feed-forward theo vị trí (FFN)
 
-Áp dụng **độc lập** cho từng vị trí (cùng trọng số cho mọi vị trí):
+Mạng FFN áp dụng **độc lập** lên từng vị trí với cùng một bộ trọng số:
 
 $$
 \mathrm{FFN}(\mathbf{z}) = W_2\,\sigma(W_1\mathbf{z}+\mathbf{b}_1)+\mathbf{b}_2
 $$
 
-với bề rộng điển hình $$d_{\mathrm{model}} \to d_{\mathrm{ff}} \to d_{\mathrm{model}}$$ và $$d_{\mathrm{ff}} \approx 4\,d_{\mathrm{model}}$$. Hàm kích hoạt $$\sigma$$ là ReLU trong bài báo gốc; các mô hình hiện đại thường dùng GELU hoặc biến thể SwiGLU.
+Kích thước trung gian thường mở rộng theo tỷ lệ $$d_{\mathrm{model}} \to d_{\mathrm{ff}} \to d_{\mathrm{model}}$$ với $$d_{\mathrm{ff}} \approx 4\,d_{\mathrm{model}}$$. Hàm kích hoạt $$\sigma$$ là ReLU trong bài báo gốc, còn các mô hình mới hơn thường dùng GELU hoặc SwiGLU.
 
-**Vì sao cần FFN:** multi-head attention về bản chất là *trộn tuyến tính phụ thuộc dữ liệu* của các giá trị (cộng phép chiếu). Không có MLP phi tuyến trên mỗi vị trí, xếp chồng các tầng attention có sức tính toán trên từng token hạn chế. Attention trộn; FFN *tính toán*.
+**Vai trò của FFN:** Multi-head attention chủ yếu thực hiện phép trộn tuyến tính có trọng số động giữa các vectơ value. Nếu thiếu lớp MLP phi tuyến trên từng vị trí, năng lực biến đổi đặc trưng trên từng token sẽ bị hạn chế. Có thể tóm tắt ngắn gọn: attention đảm nhiệm *trộn thông tin*, còn FFN đảm nhiệm *tính toán phi tuyến*.
 
-### 2.4 Kết nối dư và chuẩn hóa tầng (*LayerNorm*)
+### 2.4 Kết nối phần dư và chuẩn hóa lớp (*LayerNorm*)
 
-Tầng con encoder gốc (“Post-LN”):
+Bài báo gốc bố trí chuẩn hóa sau phép cộng phần dư (**Post-LN**):
 
 $$
 \mathbf{Y} = \mathrm{LayerNorm}\big(\mathbf{X} + \mathrm{Sublayer}(\mathbf{X})\big)
 $$
 
-trong đó Sublayer là MultiHead hoặc FFN. Nhiều mô hình hiện đại dùng **Pre-LN**:
+trong đó Sublayer là MultiHead hoặc FFN. Nhiều kiến trúc hiện đại chuyển sang bố cục **Pre-LN**:
 
 $$
 \mathbf{Y} = \mathbf{X} + \mathrm{Sublayer}\big(\mathrm{LayerNorm}(\mathbf{X})\big)
 $$
 
-thường huấn luyện ổn định hơn ở độ sâu lớn.
-
-**Residual** giữ “đường cao tốc” gradient; **LayerNorm** ổn định thang kích hoạt qua token và tầng.
+vì giúp quá trình huấn luyện ổn định hơn khi mạng có nhiều tầng sâu. Kết nối phần dư tạo đường truyền trực tiếp cho gradient, còn LayerNorm giữ thang giá trị kích hoạt ổn định qua các tầng.
 
 ### 2.5 Tầng encoder đầy đủ
 
-Dạng Post-LN (như bài báo gốc):
+Ở dạng Post-LN (như bài báo gốc):
 
 $$
 \begin{aligned}
@@ -126,15 +123,15 @@ $$
 \end{aligned}
 $$
 
-Xếp $$N$$ tầng như vậy (thường $$N=6$$ ở mô hình base, nhiều hơn rất nhiều trong LLM).
+Toàn bộ encoder gồm $$N$$ tầng như vậy xếp nối tiếp (mô hình gốc dùng $$N=6$$, các LLM hiện đại có thể dùng hàng chục đến hơn một trăm tầng).
 
 ### 2.6 Tầng decoder đầy đủ
 
-Ba tầng con:
+Mỗi tầng decoder gồm ba tầng con:
 
-1. **Masked self-attention** trên các token đã sinh (mask nhân quả).  
-2. **Cross-attention** trong đó query đến từ luồng decoder và key/value đến từ đầu ra encoder.  
-3. **FFN** như trên.
+1. **Masked self-attention** trên các token đích đã sinh (áp dụng mặt nạ nhân quả).
+2. **Cross-attention** với query lấy từ decoder, còn key và value lấy từ đầu ra của encoder.
+3. **FFN** tương tự phía encoder.
 
 $$
 \begin{aligned}
@@ -144,11 +141,11 @@ $$
 \end{aligned}
 $$
 
-**Mask nhân quả:** với vị trí query $$i$$, cấm các key $$j > i$$ để mô hình không “nhìn tương lai” khi huấn luyện bằng *teacher forcing*.
+**Mặt nạ nhân quả (causal mask):** Với query ở vị trí $$i$$, các key ở vị trí $$j > i$$ bị chặn để mô hình không nhìn trước đáp án khi huấn luyện bằng *teacher forcing*.
 
-### 2.7 Mã hóa vị trí dạng sin-cos
+### 2.7 Mã hóa vị trí dạng sin–cos
 
-Attention đơn thuần là **đẳng biến hoán vị** theo nội dung: không có tín hiệu vị trí thì thứ tự vô hình. PE gốc:
+Vì attention thuần có tính đồng biến theo hoán vị (*permutation equivariant*), thứ tự token sẽ vô nghĩa nếu không có tín hiệu vị trí. Công thức mã hóa vị trí gốc:
 
 $$
 \begin{aligned}
@@ -158,95 +155,92 @@ PE_{(pos,2i+1)} &= \cos\!\big(pos / 10000^{2i/d_{\mathrm{model}}}\big)
 $$
 
 ![Công thức PE + ma trận token](/deep-learning-self-learning/img/chapter_img/chapter08/pe_formula_and_token_matrix.jpg)
-*Hình: Mỗi token có vector $$d_{\mathrm{model}}$$; PE dùng sin/cos theo $$pos$$ và chỉ số tần $$i$$. (Minh họa từ video Position Encoding)*
+*Hình: Mỗi token tương ứng một vectơ kích thước $$d_{\mathrm{model}}$$; PE dùng hàm sin/cos theo vị trí $$pos$$ và chỉ số tần số $$i$$. (Minh họa từ video Position Encoding)*
 
 ![pos = chỉ số từ trong câu](/deep-learning-self-learning/img/chapter_img/chapter08/pe_pos_index_sentence.jpg)
-*Hình: $$pos = 0,1,2,\ldots$$ theo thứ tự token. (Minh họa từ video Position Encoding)*
+*Hình: Chỉ số vị trí $$pos = 0,1,2,\ldots$$ đánh số theo thứ tự token trong câu. (Minh họa từ video Position Encoding)*
 
-**Cách đọc chỉ số chiều.** Với $$d_{\mathrm{model}}=512$$, chỉ số tần $$i$$ chạy $$0\ldots 255$$: mỗi $$i$$ sinh **hai** chiều — chẵn $$2i$$ dùng **sin**, lẻ $$2i+1$$ dùng **cos**.
+**Cách ánh xạ chỉ số chiều:** Với $$d_{\mathrm{model}}=512$$, chỉ số $$i$$ chạy từ $$0$$ đến $$255$$; mỗi giá trị $$i$$ tạo **hai** chiều — chiều chẵn $$2i$$ dùng **sin** và chiều lẻ $$2i+1$$ dùng **cos**.
 
 ![Bảng i → chiều sin/cos](/deep-learning-self-learning/img/chapter_img/chapter08/pe_i_range_sin_cos_dims.jpg)
-*Hình: $$i=0\to$$ chiều 0 (sin), 1 (cos); …; $$i=255\to$$ chiều 510, 511. (Minh họa từ video Position Encoding)*
+*Hình: $$i=0$$ tương ứng chiều 0 (sin) và 1 (cos); …; $$i=255$$ tương ứng chiều 510 và 511. (Minh họa từ video Position Encoding)*
 
 ![Chiều chẵn sin / lẻ cos](/deep-learning-self-learning/img/chapter_img/chapter08/pe_even_odd_dims.jpg)
-*Hình: Gán sin vào chiều chẵn, cos vào chiều lẻ của vector PE. (Minh họa từ video Position Encoding)*
+*Hình: Gán hàm sin vào các chiều chẵn và hàm cos vào các chiều lẻ của vectơ PE. (Minh họa từ video Position Encoding)*
 
 ![Sin và cos](/deep-learning-self-learning/img/chapter_img/chapter08/pe_sin_cos_formula_plot.jpg)
-*Hình: Cặp sin/cos cùng tần số — nền sóng cho PE. (Minh họa từ video Position Encoding)*
+*Hình: Cặp sóng sin/cos cùng tần số làm cơ sở cho mã hóa vị trí. (Minh họa từ video Position Encoding)*
 
 ![Nhiều tần số theo i](/deep-learning-self-learning/img/chapter_img/chapter08/pe_multiple_frequencies_i.jpg)
-*Hình: Mỗi $$i$$ một tần số khác; $$i$$ nhỏ = sóng “chậm”, $$i$$ lớn = sóng “nhanh”. (Minh họa từ video Position Encoding)*
+*Hình: Mỗi chỉ số $$i$$ ứng với một tần số khác nhau: $$i$$ nhỏ ứng với sóng dao động nhanh (tần số cao), $$i$$ lớn ứng với sóng dao động chậm (tần số thấp). (Minh họa từ video Position Encoding)*
 
-**Lấy mẫu vector PE tại một vị trí.** Cố định $$pos$$, với mỗi $$i$$ đọc một điểm trên sin và một điểm trên cos → xếp thành vector dài $$d_{\mathrm{model}}$$.
+**Tạo vectơ PE tại một vị trí:** Cố định $$pos$$, với mỗi chỉ số $$i$$ ta lấy giá trị sin và cos tương ứng rồi ghép thành vectơ dài $$d_{\mathrm{model}}$$.
 
 ![Lấy PE tại pos=0](/deep-learning-self-learning/img/chapter_img/chapter08/pe_sample_values_pos0.jpg)
-*Hình: Cột tại $$pos=0$$ — các thành phần PE cho token đầu. (Minh họa từ video Position Encoding)*
+*Hình: Cột giá trị tại $$pos=0$$ tạo thành vectơ PE cho token đầu tiên. (Minh họa từ video Position Encoding)*
 
 ![Lấy PE tại pos=3](/deep-learning-self-learning/img/chapter_img/chapter08/pe_sample_values_pos3.jpg)
-*Hình: Cùng cách lấy, $$pos=3$$ — vector khác vì sóng đã trôi pha. (Minh họa từ video Position Encoding)*
+*Hình: Tại $$pos=3$$, các sóng đã lệch pha nên tạo ra vectơ PE khác biệt. (Minh họa từ video Position Encoding)*
 
-**Cộng vào embedding.** Token embedding và PE cùng chiều; input thực tế thường là:
+**Cộng vào token embedding:** Vì có cùng số chiều, vectơ PE được cộng trực tiếp theo từng phần tử vào token embedding:
 
 $$
 \mathbf{x}_{pos} = \mathrm{TokenEmb}(w_{pos}) + \mathrm{PE}_{pos}
 $$
 
 ![Token emb vs PE (cùng 512-d)](/deep-learning-self-learning/img/chapter_img/chapter08/pe_input_emb_vs_positional.jpg)
-*Hình: Hai vector cùng $$d_{\mathrm{model}}$$ — cộng phần tử để “dán” thứ tự vào nội dung. (Minh họa từ video Position Encoding)*
+*Hình: Token embedding và PE có cùng chiều $$d_{\mathrm{model}}$$ và được cộng theo từng phần tử để gắn thông tin thứ tự vào biểu diễn nội dung. (Minh họa từ video Position Encoding)*
 
 ![Cột token emb (tím) + cột PE (xanh)](/deep-learning-self-learning/img/chapter_img/chapter08/pe_token_emb_plus_pe_columns.jpg)
-*Hình: Mỗi vị trí có một cột embedding và một cột PE tương ứng. (Minh họa từ video Position Encoding)*
+*Hình: Mỗi vị trí gồm một cột token embedding cộng với cột PE tương ứng. (Minh họa từ video Position Encoding)*
 
-Tính chất:
+Các đặc điểm chính của PE dạng sin–cos:
 
-- Xác định; không có tham số học.  
-- “Dấu vân tay” duy nhất cho mỗi vị trí qua sin-cos đa tần.  
-- Độ lệch tương đối là biến đổi tuyến tính của vectơ PE, hỗ trợ học mẫu khoảng cách tương đối.  
-- Về nguyên tắc có thể ngoại suy vượt độ dài huấn luyện tốt hơn nhúng tuyệt đối học được ngây thơ (dù ngoại suy thực tế vẫn cần cẩn trọng).
+- Xác định sẵn, không cần tham số học.
+- Tạo biểu diễn riêng biệt cho từng vị trí nhờ tổ hợp nhiều tần số.
+- Độ dịch vị trí tương đối $$PE_{pos+k}$$ có thể biểu diễn dưới dạng phép biến đổi tuyến tính của $$PE_{pos}$$, thuận lợi cho việc học quan hệ khoảng cách.
+- Về lý thuyết có khả năng ngoại suy sang độ dài lớn hơn lúc huấn luyện tốt hơn so với embedding vị trí tuyệt đối học trực tiếp (dù trong thực tế vẫn có giới hạn).
 
-**Thay thế:** nhúng tuyệt đối học được (BERT/GPT), bias tương đối (T5, Shaw), RoPE (LLM hiện đại). *Bài toán* luôn giống nhau: tiêm thứ tự vào bộ trộn dựa trên nội dung.
+**Các phương án thay thế:** embedding vị trí tuyệt đối học được (BERT, GPT-2), độ lệch vị trí tương đối (T5, Shaw et al.) và RoPE (phổ biến trong các LLM hiện đại). Tất cả đều giải quyết cùng một nhu cầu là đưa thông tin thứ tự vào cơ chế trộn theo nội dung.
 
-### 2.8 Độ phức tạp
+### 2.8 Độ phức tạp tính toán
 
-Self-attention dày đặc tốn $$O(L^2 d)$$ thời gian và $$O(L^2)$$ bộ nhớ cho điểm số. Đó là “thuế” trả cho giao tiếp toàn cục. Với tài liệu dài, các biến thể attention thưa/tuyến tính trở nên cần thiết; với độ dài câu/đoạn thông thường, attention dày đặc là mặc định.
+Self-attention đầy đủ tốn $$O(L^2 d)$$ phép tính và $$O(L^2)$$ bộ nhớ cho ma trận điểm số — đây là chi phí đổi lấy khả năng tương tác trực tiếp toàn cục. Với độ dài câu hoặc đoạn thông thường, chi phí này hoàn toàn khả thi; với văn bản rất dài, các biến thể attention thưa hoặc tuyến tính được sử dụng để giảm tải.
 
-### 2.9 Phác thảo mục tiêu huấn luyện (mô hình MT gốc)
+### 2.9 Mục tiêu huấn luyện
 
-Encoder đọc token nguồn; decoder dự đoán token đích kế tiếp bằng cross-entropy dưới *teacher forcing*. Mô hình chỉ-encoder hiện đại dùng masked LM; chỉ-decoder dùng next-token LM. Kiến trúc vẫn liên quan; **mục tiêu + mẫu mask** thay đổi hành vi sản phẩm.
-
----
-
-## 3. Ví dụ / Trực giác
-
-### 3.1 Hành trình của một token trong encoder
-
-Câu: `I love deep learning`. Tập trung vào vị trí **learning**.
-
-Ở self-attention tầng 1, query của nó có thể đặt trọng số lớn lên `deep` và chính nó, tạo ra hỗn hợp đã mang nghĩa “deep learning” thay vì “learning” trần. FFN sau đó định hình lại hỗn hợp một cách phi tuyến. Các tầng sâu hơn tinh chỉnh thêm vai trò (cú pháp, ngữ nghĩa) khi mẫu attention trở nên trừu tượng hơn.
-
-Cả bốn vị trí làm việc này **song song** qua nhân ma trận—khác RNN sẽ cần bốn bước tuần tự.
-
-### 3.2 Một bước decoder
-
-Sinh tiếng Pháp `profond` sau `J' aime l'apprentissage`:
-
-1. **Masked self-attn** chỉ chú ý đến các token Pháp trước đó (tính nhất quán của giả thuyết đến hiện tại).  
-2. **Cross-attn** nhìn các trạng thái encoder tiếng Anh; khối lượng xác suất nên tập trung vào `deep`.  
-3. **FFN + softmax trên từ vựng** đề xuất `profond`.
-
-Nếu mask nhân quả sai, mô hình “gian lận” khi huấn luyện và sụp đổ khi suy luận tự hồi quy thật.
-
-### 3.3 Chỉ-encoder so với chỉ-decoder
-
-- **BERT (chỉ-encoder):** self-attn hai chiều + masked LM → biểu diễn *hiểu* mạnh.  
-- **GPT (chỉ-decoder):** self-attn nhân quả + next-token LM → *sinh* mạnh.  
-
-Cùng khối MultiHead/FFN; khác mask và luồng dữ liệu.
+Trong bài toán dịch máy gốc, encoder đọc chuỗi nguồn còn decoder dự đoán từng token đích bằng hàm mất mát cross-entropy theo cơ chế *teacher forcing*. Các mô hình chỉ-encoder hiện đại dùng mục tiêu mô hình ngôn ngữ có che (Masked LM), còn mô hình chỉ-decoder dùng dự đoán token kế tiếp (Causal LM). Kiến trúc cốt lõi giữ nguyên; sự thay đổi nằm ở mẫu mặt nạ và mục tiêu huấn luyện.
 
 ---
 
-## 4. Mã minh họa (bám theo phương trình)
-Shape tối thiểu cho một tầng encoder Pre-LN:
+## 3. Ví dụ và Trực giác
+
+### 3.1 Đường đi của một token trong encoder
+
+Xét câu `I love deep learning` tại vị trí từ **learning**. Ở tầng self-attention đầu tiên, query của `learning` có thể gán trọng số lớn cho `deep` và chính nó, tạo ra biểu diễn mang nghĩa cụm *"deep learning"* thay vì nghĩa rời rạc của từ *"learning"*. Sau đó FFN biến đổi phi tuyến biểu diễn này. Quá trình trên diễn ra **song song** cho cả bốn từ chỉ trong một lượt nhân ma trận, thay vì bốn bước tuần tự như RNN.
+
+### 3.2 Một bước giải mã trong decoder
+
+Khi sinh từ tiếng Pháp `profond` sau chuỗi `J' aime l'apprentissage`:
+
+1. **Masked self-attention** chỉ chú ý tới các từ tiếng Pháp đã sinh trước đó để giữ mạch câu nhất quán.
+2. **Cross-attention** tra cứu các trạng thái encoder tiếng Anh và tập trung trọng số vào từ `deep`.
+3. **FFN cùng lớp softmax trên từ vựng** dự đoán từ tiếp theo là `profond`.
+
+Nếu mặt nạ nhân quả cài đặt sai, mô hình sẽ đọc được đáp án tương lai lúc huấn luyện nhưng hoạt động kém hẳn khi suy luận tự hồi quy thực tế.
+
+### 3.3 So sánh chỉ-encoder và chỉ-decoder
+
+- **BERT (chỉ-encoder):** dùng self-attention hai chiều cùng Masked LM, phù hợp các bài toán hiểu và trích xuất biểu diễn.
+- **GPT (chỉ-decoder):** dùng self-attention nhân quả cùng mục tiêu dự đoán token kế tiếp, phù hợp các bài toán sinh văn bản.
+
+Cả hai đều sử dụng cùng khối MultiHead Attention và FFN, chỉ khác mặt nạ và luồng dữ liệu.
+
+---
+
+## 4. Mã minh họa bám theo phương trình
+
+Cài đặt tối giản cho một tầng encoder theo bố cục Pre-LN:
 
 ```python
 import torch
@@ -279,59 +273,63 @@ y = layer(torch.randn(B, L, d))
 print(y.shape)  # (2, 10, 64)
 ```
 
-Các module viết từ đầu đầy đủ xuất hiện trong các bài cài đặt.
+Các module cài đặt đầy đủ từ đầu sẽ được trình bày ở các bài thực hành tiếp theo.
 
 ---
 
 ## 5. Khái niệm liên quan
-- **Seq2seq RNN** — cùng ý tưởng encode/decode; Transformer thay hồi quy bằng attention.  
-- **Tích chập** — kernel cục bộ cố định so với trộn toàn cục động.  
-- **Mạng residual** — độ sâu mà không “chết” gradient.  
-- **Các paradigm tiền huấn luyện** — MLM so với CLM so với span corruption (T5).  
-- **Vision Transformer** — patch ảnh như token; cùng toán encoder.
+
+- **Seq2seq dùng RNN**: cùng mô hình mã hóa–giải mã nhưng Transformer thay tầng hồi quy bằng attention.
+- **Tích chập (CNN)**: bộ lọc cục bộ có trọng số cố định, đối lập với phép trộn toàn cục có trọng số động của attention.
+- **Mạng phần dư (ResNet)**: giúp xếp chồng nhiều tầng sâu mà không làm suy giảm gradient.
+- **Các mục tiêu tiền huấn luyện**: Masked LM (BERT), Causal LM (GPT) và khôi phục đoạn bị che (T5).
+- **Vision Transformer (ViT)**: chia ảnh thành các mảng (patch) rồi xử lý như chuỗi token bằng chính kiến trúc encoder Transformer.
 
 ---
 
 ## 6. Các bài báo nền tảng
-1. [Vaswani et al., 2017 — Attention Is All You Need](https://arxiv.org/abs/1706.03762) — kiến trúc gốc.  
-2. [Devlin et al., 2019 — BERT](https://arxiv.org/abs/1810.04805) — tiền huấn luyện encoder hai chiều.  
-3. [Radford et al., 2019 — GPT-2](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) — LM nhân quả lớn + zero-shot.  
-4. [Dosovitskiy et al., 2021 — ViT](https://arxiv.org/abs/2010.11929) — Transformer cho ảnh.  
-5. [Phuong & Hutter, 2022 — Formal Algorithms for Transformers](https://arxiv.org/abs/2207.09238) — định nghĩa tham chiếu chính xác.
+
+1. [Vaswani et al., 2017 — Attention Is All You Need](https://arxiv.org/abs/1706.03762) — đề xuất kiến trúc Transformer gốc.
+2. [Devlin et al., 2019 — BERT](https://arxiv.org/abs/1810.04805) — tiền huấn luyện encoder hai chiều.
+3. [Radford et al., 2019 — GPT-2](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) — mô hình ngôn ngữ nhân quả quy mô lớn và khả năng zero-shot.
+4. [Dosovitskiy et al., 2021 — ViT](https://arxiv.org/abs/2010.11929) — ứng dụng Transformer cho thị giác máy tính.
+5. [Phuong & Hutter, 2022 — Formal Algorithms for Transformers](https://arxiv.org/abs/2207.09238) — đặc tả thuật toán chính thức, rõ ràng cho các biến thể Transformer.
 
 ---
 
 ## 7. Cạm bẫy thường gặp và mẹo thực hành
-- Quên thông tin **vị trí** → mô hình mù thứ tự.  
-- Mask nhân quả dùng **0** thay vì **−∞** trước softmax → rò rỉ tương lai.  
-- Thiếu mask **đệm** (*pad*) khi huấn luyện theo batch.  
-- Bỏ $$1/\sqrt{d_k}$$ ở bề rộng lớn.  
-- Nhầm **Post-LN so với Pre-LN** khi chuyển công thức (tốc độ học khác nhau).  
-- **Mẹo:** kiểm thử đơn vị causal attention với `triu(weights,1)≈0`.  
-- **Mẹo:** bắt đầu với mô hình nhỏ 2 tầng trước khi scale độ sâu/bề rộng.
+
+- **Thiếu mã hóa vị trí** khiến mô hình không phân biệt được thứ tự từ.
+- **Dùng giá trị `0` thay vì $$-\infty$$** cho causal mask trước softmax gây rò rỉ thông tin tương lai.
+- **Quên padding mask** khi huấn luyện theo batch gồm các chuỗi có độ dài khác nhau.
+- **Thiếu hệ số chia $$1/\sqrt{d_k}$$** khi chiều head lớn.
+- **Nhầm cấu hình Post-LN với Pre-LN** khi sao chép lịch tốc độ học và warmup từ tài liệu khác.
+- **Mẹo:** luôn viết unit-test kiểm tra `triu(weights, 1) ≈ 0` cho causal attention.
+- **Mẹo:** thử nghiệm trước với mô hình nhỏ 2 tầng rồi mới mở rộng độ sâu và bề rộng.
 
 ---
 
 ## 8. Tóm tắt các điểm chính
-1. Một tầng Transformer là **attend (giao tiếp) + FFN (tính toán)** với residual/chuẩn hóa.  
-2. **Mask** định nghĩa họ sản phẩm: hai chiều, nhân quả, hoặc chéo.  
-3. **Mã hóa vị trí** khắc phục tính mù thứ tự của attention thuần.  
-4. Chồng encoder/decoder ghép cùng loại tầng thành hệ dịch máy hoặc seq2seq khác.  
-5. BERT/GPT/ViT là các lựa chọn mask + mục tiêu + dữ liệu trên cùng khuôn mẫu này.
 
-Tiếp theo: cài đặt các khối này cẩn thận trong **08-01-02**.
+1. Mỗi tầng Transformer kết hợp **attention (trao đổi thông tin)** và **FFN (biến đổi cục bộ)** cùng kết nối phần dư và chuẩn hóa lớp.
+2. **Mẫu mặt nạ** quyết định dòng kiến trúc: hai chiều (encoder), nhân quả (decoder) hay chéo (cross-attention).
+3. **Mã hóa vị trí** bù đắp việc self-attention thuần không tự nhận biết thứ tự.
+4. Encoder và decoder ghép các tầng cùng loại để giải quyết dịch máy và nhiều bài toán chuỗi khác.
+5. BERT, GPT và ViT đều xây dựng trên cùng một khuôn mẫu kiến trúc, chỉ khác mặt nạ, mục tiêu huấn luyện và loại dữ liệu đầu vào.
+
+Tiếp theo, ta sẽ cài đặt chi tiết từng khối trong bài **08-01-02**.
 
 <!-- video-references -->
 
 ## Nguồn video (tham chiếu)
 
-Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
+Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến); các đường dẫn dưới đây được lưu lại để tra cứu và ghi nhận nguồn:
 
 - [Attention trong Transformer (Self, Masked, Cross, Multi-Head)](https://www.facebook.com/reel/1007473105556936)
 - [Position Encoding trong Transformer (từng bước)](https://www.facebook.com/reel/1306224801415127)
 
 ## Video tham khảo
 
-- **xem trước** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Nhúng, attention, MLP, softmax và nhiệt độ là các mảnh của bài lý thuyết.
-- [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, tiếng Anh. Bước attention bên trong khối đó, ở độ chi tiết phần toán cần.
-- [Tất cả những gì bạn cần biết về Transformer trong 35 phút](https://www.youtube.com/watch?v=Gc0HXCWT0IA) — Việt Nguyễn AI, tiếng Việt. Một tour tiếng Việt qua cùng khối.
+- **Xem trước:** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown (tiếng Anh). Trình bày trọn vẹn các thành phần embedding, attention, MLP, softmax và nhiệt độ tương ứng với bài lý thuyết.
+- [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown (tiếng Anh). Đi sâu vào phép tính attention bên trong khối Transformer.
+- [Tất cả những gì bạn cần biết về Transformer trong 35 phút](https://www.youtube.com/watch?v=Gc0HXCWT0IA) — Việt Nguyễn AI (tiếng Việt). Tổng quan đầy đủ về kiến trúc Transformer bằng tiếng Việt.

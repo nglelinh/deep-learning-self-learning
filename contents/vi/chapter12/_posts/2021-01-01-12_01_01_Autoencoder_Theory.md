@@ -9,91 +9,89 @@ categories:
 - chapter12
 ---
 
-# Autoencoder: Học Biểu diễn Hiệu quả
+# Autoencoder: Học biểu diễn hiệu quả
 
 ![Autoencoder Architecture](https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Autoencoder_structure.png/600px-Autoencoder_structure.png)
-*Hình ảnh: Kiến trúc Autoencoder với encoder và decoder. Nguồn: Wikimedia Commons*
+*Hình ảnh: Kiến trúc Autoencoder với bộ mã hóa (encoder) và bộ giải mã (decoder). Nguồn: Wikimedia Commons*
 
 ## 1. Tổng quan khái niệm
-Autoencoder đại diện cho một mô hình huấn luyện mạng neuron khác biệt căn bản so với học giám sát mà ta đã nghiên cứu. Thay vì học ánh xạ đầu vào sang đầu ra có nhãn, autoencoder học tái tạo đầu vào của chính chúng qua một nút thắt thông tin (information bottleneck). Tác vụ tưởng chừng vòng tròn này — dự đoán đầu vào từ chính nó — trở nên có nghĩa khi ta ràng buộc mạng phải truyền thông tin qua một tầng ẩn chiều thấp hơn gọi là không gian ẩn (latent space) hay mã (code). Bằng cách buộc mạng nén rồi giải nén đầu vào, ta buộc nó học biểu diễn hiệu quả nắm cấu trúc thiết yếu của dữ liệu trong khi loại bỏ nhiễu và chi tiết không liên quan.
 
-Sức mạnh của autoencoder không nằm ở chính tái tạo mà ở điều chúng học trong quá trình đó. Encoder học trích xuất các đặc trưng quan trọng nhất từ dữ liệu chiều cao và nén chúng thành biểu diễn gọn. Decoder học sinh dữ liệu thực tế từ các biểu diễn nén này. Không gian ẩn nổi lên có các tính chất đáng chú ý: các điểm lân cận trong không gian ẩn thường tương ứng đầu vào tương tự về ngữ nghĩa, và ta có thể nội suy mượt giữa các điểm để sinh ví dụ mới, thực tế. Các tính chất này khiến autoencoder có giá trị cho giảm chiều, khử nhiễu, phát hiện bất thường, học đặc trưng cho tác vụ downstream, và như khối xây dựng cho mô hình sinh tinh vi hơn.
+Autoencoder đại diện cho một cách huấn luyện mạng nơ-ron khác hẳn học có giám sát. Thay vì học ánh xạ từ đầu vào sang nhãn mục tiêu, autoencoder học cách tái tạo chính đầu vào của nó đi qua một nút thắt thông tin (*information bottleneck*). Nhiệm vụ tưởng như đơn giản này trở nên hữu ích khi mạng bị ràng buộc phải truyền dữ liệu qua một tầng ẩn có số chiều nhỏ hơn gọi là không gian ẩn (*latent space*) hay mã (*code*). Để nén rồi giải nén thành công, mạng buộc phải giữ lại cấu trúc cốt lõi của dữ liệu và loại bỏ nhiễu cũng như chi tiết dư thừa.
 
-Hiểu autoencoder đòi hỏi đánh giá sự tương tác giữa dung lượng và ràng buộc. Nếu chiều ẩn bằng hoặc vượt chiều đầu vào, mạng có thể đơn giản học hàm đồng nhất, sao chép đầu vào không đổi — vô dụng cho việc học cấu trúc có nghĩa. Nút thắt — làm chiều ẩn nhỏ hơn đầu vào — buộc mạng chọn lựa điều gì cần bảo toàn. Với ảnh đầu vào 784 chiều nén xuống 32 chiều ẩn, mạng không thể mã hóa mỗi pixel độc lập. Nó phải khám phá đặc trưng mức cao hơn như cạnh, hình dạng và texture biểu diễn gọn nội dung thiết yếu của ảnh. Việc nén này không tùy ý mà được học từ dữ liệu, thích ứng với cấu trúc cụ thể trong phân phối huấn luyện.
+Giá trị chính của autoencoder không nằm ở bản thân việc tái tạo lại ảnh gốc mà ở biểu diễn dữ liệu được học trong quá trình đó. Bộ mã hóa (*encoder*) học cách rút trích các đặc trưng quan trọng từ dữ liệu nhiều chiều thành mã gọn, còn bộ giải mã (*decoder*) học cách khôi phục dữ liệu từ mã đó. Trong một autoencoder huấn luyện tốt, các điểm gần nhau trong không gian ẩn thường tương ứng với các đầu vào tương đồng về mặt ngữ nghĩa, cho phép nội suy mượt giữa các mẫu. Nhờ vậy, autoencoder được ứng dụng trong giảm chiều, khử nhiễu, phát hiện bất thường, trích xuất đặc trưng cho tác vụ sau và làm nền tảng cho các mô hình sinh phức tạp hơn.
 
-Ý nghĩa lịch sử của autoencoder mở rộng vượt ngoài ứng dụng thực tiễn. Chúng nằm trong số các phương pháp học không giám sát thành công đầu tiên trong deep learning, chứng tỏ mạng neuron có thể học biểu diễn có nghĩa không cần dữ liệu gán nhãn. Điều này ảnh hưởng sự phát triển các chiến lược tiền huấn luyện cho phép huấn luyện mạng sâu hơn ở kỷ nguyên trước ReLU. Học tự giám sát và phương pháp đối sánh (contrastive) hiện đại có thể được coi là hậu duệ của ý tưởng autoencoder — học biểu diễn bằng cách dự đoán hoặc tái tạo các phần của đầu vào từ các phần khác. Khung autoencoder cũng giới thiệu mẫu kiến trúc encoder–decoder đã chứng tỏ ảnh hưởng to lớn, xuất hiện trong mô hình sequence-to-sequence, variational autoencoder, và mạng sinh đối kháng.
+Hoạt động của autoencoder phụ thuộc trực tiếp vào sự cân bằng giữa dung lượng mạng và ràng buộc nén. Nếu số chiều ẩn lớn hơn hoặc bằng số chiều đầu vào mà không có ràng buộc bổ sung, mạng có thể học hàm đồng nhất — sao chép nguyên xi đầu vào — và không rút trích được cấu trúc nào. Nút thắt chiều buộc mạng phải chọn lọc thông tin cần giữ: khi nén ảnh 784 chiều xuống 32 chiều ẩn, mạng không thể lưu từng điểm ảnh độc lập mà phải khám phá các đặc trưng bậc cao hơn như biên cạnh, hình dạng và kết cấu phù hợp với phân phối dữ liệu huấn luyện.
 
-Tuy nhiên, autoencoder có những hạn chế quan trọng thúc đẩy các mô hình sinh tinh vi hơn. Autoencoder chuẩn học nén và tái tạo dữ liệu huấn luyện nhưng không nhất thiết học một mô hình sinh tốt — không gian ẩn có thể có "lỗ hổng" nơi không có ví dụ huấn luyện nào ánh xạ tới, khiến lấy mẫu ngẫu nhiên tạo đầu ra phi thực tế. Chúng không mô hình hóa tường minh phân phối dữ liệu, hạn chế đảm bảo lý thuyết. Và mất mát tái tạo, dù trực quan, có thể không nắm tương tự cảm nhận (hai ảnh có thể khác theo pixel nhưng tương tự cảm nhận, hoặc tương tự theo pixel nhưng khác cảm nhận). Các hạn chế này dẫn đến variational autoencoder (mô hình hóa phân phối tường minh), mạng sinh đối kháng (dùng huấn luyện đối kháng thay vì mất mát tái tạo), và mất mát cảm nhận (đo tương tự trong không gian đặc trưng thay vì không gian pixel). Hiểu autoencoder vanilla cung cấp nền tảng để đánh giá các kỹ thuật nâng cao hơn này.
+Về mặt lịch sử, autoencoder là một trong những hướng học không giám sát thành công sớm nhất của học sâu, chứng minh mạng nơ-ron có thể học biểu diễn hữu ích mà không cần nhãn. Ý tưởng này từng đóng vai trò quan trọng trong tiền huấn luyện nhiều tầng trước thời kỳ ReLU, đồng thời ảnh hưởng trực tiếp tới các phương pháp học tự giám sát hiện đại — nơi mô hình dự đoán hoặc tái tạo một phần dữ liệu từ phần còn lại. Kiến trúc encoder–decoder cũng trở thành mẫu thiết kế phổ biến trong mô hình chuỗi-sang-chuỗi, VAE và nhiều họ mô hình sinh khác.
+
+Tuy vậy, autoencoder chuẩn có những giới hạn rõ rệt khi dùng làm mô hình sinh. Vì mục tiêu chỉ là tái tạo dữ liệu huấn luyện, không gian ẩn có thể tồn tại các "khoảng trống" không tương ứng với mẫu huấn luyện nào, khiến việc lấy mẫu ngẫu nhiên dễ tạo đầu ra bất hợp lý. Ngoài ra, autoencoder không mô hình hóa tường minh phân phối dữ liệu, và sai số tái tạo theo điểm ảnh (như MSE) không luôn phản ánh đúng cảm nhận thị giác của con người. Những hạn chế này dẫn tới sự ra đời của Variational Autoencoder (chính quy hóa phân phối không gian ẩn), GAN (dùng mục tiêu đối kháng) và hàm mất mát cảm nhận (*perceptual loss*).
 
 ## 2. Nền tảng toán học
-Khung toán học của autoencoder thanh lịch đơn giản nhưng giàu hệ quả. Một autoencoder gồm hai mạng neuron ghép nối tuần tự: encoder $$f_\phi$$ tham số hóa bởi $$\phi$$ và decoder $$g_\theta$$ tham số hóa bởi $$\theta$$. Cho đầu vào $$\mathbf{x} \in \mathbb{R}^{d}$$, encoder sinh biểu diễn ẩn:
+
+Cấu trúc toán học của autoencoder tương đối gọn gàng nhưng mang nhiều hệ quả quan trọng. Mô hình gồm hai mạng nơ-ron nối tiếp: bộ mã hóa $$f_\phi$$ với tham số $$\phi$$ và bộ giải mã $$g_\theta$$ với tham số $$\theta$$. Với đầu vào $$\mathbf{x} \in \mathbb{R}^{d}$$, bộ mã hóa tạo ra biểu diễn ẩn:
 
 $$\mathbf{z} = f_\phi(\mathbf{x}) \in \mathbb{R}^{k}$$
 
-trong đó $$k < d$$ buộc nút thắt (dù ta sẽ thảo luận các trường hợp không bắt buộc nghiêm ngặt). Decoder tái tạo từ biểu diễn ẩn:
+trong đó thường chọn $$k < d$$ để tạo nút thắt (trừ các biến thể dùng ràng buộc chính quy hóa thay cho nút thắt chiều). Bộ giải mã tái tạo đầu vào từ mã ẩn:
 
 $$\hat{\mathbf{x}} = g_\theta(\mathbf{z}) = g_\theta(f_\phi(\mathbf{x})) \in \mathbb{R}^{d}$$
 
-Mục tiêu huấn luyện tối thiểu hóa lỗi tái tạo:
+Mục tiêu huấn luyện là tối thiểu hóa sai số tái tạo:
 
 $$\mathcal{L}(\mathbf{x}, \hat{\mathbf{x}}) = \|\mathbf{x} - \hat{\mathbf{x}}\|^2$$
 
-cho dữ liệu liên tục (mean squared error), hoặc:
+cho dữ liệu liên tục (sai số bình phương trung bình — MSE), hoặc:
 
 $$\mathcal{L}(\mathbf{x}, \hat{\mathbf{x}}) = -\sum_{i=1}^{d} [x_i \log(\hat{x}_i) + (1-x_i)\log(1-\hat{x}_i)]$$
 
-cho dữ liệu nhị phân (binary cross-entropy, coi mỗi chiều như Bernoulli độc lập).
+cho dữ liệu nhị phân (binary cross-entropy, xem mỗi chiều là một biến Bernoulli độc lập).
 
-Lựa chọn hàm mất mát thể hiện giả định về dữ liệu và mô hình nhiễu. MSE giả định nhiễu Gaussian: ta đang mô hình hóa $$p(\mathbf{x}|\mathbf{z}) = \mathcal{N}(\mathbf{x}; g_\theta(\mathbf{z}), \sigma^2 I)$$, và tối thiểu hóa MSE tương đương hợp lý cực đại dưới giả định này. Binary cross-entropy giả định nhiễu Bernoulli: mỗi pixel độc lập nhị phân với xác suất $$\hat{x}_i$$. Với ảnh có giá trị liên tục trong [0,1], thực chất đang mô hình hóa mỗi pixel như xác suất, trông lạ nhưng hoạt động khá tốt trong thực tiễn. Các cách tiếp cận tinh vi hơn dùng mất mát cảm nhận dựa trên khoảng cách đặc trưng trong mạng tiền huấn luyện, nắm tốt hơn tương tự cảm nhận.
+Lựa chọn hàm mất mát phản ánh giả định về mô hình nhiễu của dữ liệu. Tối thiểu hóa MSE tương đương với ước lượng hợp lý cực đại dưới giả định nhiễu chuẩn $$p(\mathbf{x}|\mathbf{z}) = \mathcal{N}(\mathbf{x}; g_\theta(\mathbf{z}), \sigma^2 I)$$. Binary cross-entropy giả định mỗi điểm ảnh tuân theo phân phối Bernoulli với xác suất $$\hat{x}_i$$; trong thực tế, hàm này cũng thường hoạt động tốt với ảnh có giá trị chuẩn hóa về đoạn [0, 1]. Ở mức cao hơn, có thể dùng hàm mất mát cảm nhận đo khoảng cách trong không gian đặc trưng của mạng tiền huấn luyện.
 
-Chiều nút thắt $$k$$ là siêu tham số then chốt điều khiển đánh đổi nén–độ trung thực. $$k$$ rất nhỏ (như 2–3 chiều) tạo nén cực đoan, buộc mạng chỉ nắm các biến thiên thiết yếu nhất trong dữ liệu. Hữu ích cho trực quan hóa (ta có thể vẽ không gian ẩn 2D) nhưng có thể mất chi tiết quan trọng. $$k$$ vừa phải (32–128 chiều cho tập dữ liệu ảnh) cân bằng nén và chất lượng tái tạo. $$k$$ lớn (tiệm cận chiều đầu vào) giảm áp lực nén nhưng có thể không học cấu trúc thú vị.
+Số chiều nút thắt $$k$$ điều chỉnh sự đánh đổi giữa mức độ nén và độ trung thực tái tạo. Giá trị $$k$$ rất nhỏ (2–3 chiều) thuận tiện cho việc trực quan hóa không gian ẩn nhưng dễ làm mất chi tiết quan trọng; giá trị trung bình (32–128 chiều đối với ảnh cỡ nhỏ) cân bằng tốt giữa nén và chất lượng tái tạo; còn $$k$$ quá lớn làm giảm áp lực nén.
 
-Thú vị là, ngay cả với $$k \geq d$$ (không có nút thắt chiều), ta vẫn có thể buộc học có nghĩa qua các ràng buộc khác. Autoencoder thưa thêm phạt thưa lên các kích hoạt ẩn:
+Ngay cả khi $$k \geq d$$ (không tạo nút thắt chiều), ta vẫn có thể tránh hàm đồng nhất bằng các ràng buộc chính quy hóa khác. **Autoencoder thưa (*sparse autoencoder*)** bổ sung thành phần phạt độ thưa lên giá trị kích hoạt ẩn:
 
 $$\mathcal{L}_{\text{sparse}} = \|\mathbf{x} - \hat{\mathbf{x}}\|^2 + \lambda \sum_{j=1}^{k} KL(\rho \| \hat{\rho}_j)$$
 
-trong đó $$\rho$$ là mức thưa mục tiêu (ví dụ 0.05) và $$\hat{\rho}_j$$ là kích hoạt trung bình của đơn vị ẩn $$j$$ trên tập huấn luyện. Phạt phân kỳ KL khuyến khích hầu hết đơn vị ẩn không hoạt động (gần zero) hầu hết thời gian, buộc các đơn vị khác nhau chuyên môn hóa vào các mẫu hình khác nhau. Điều này tạo biểu diễn thưa, phân tán ngay cả không có nút thắt chiều.
+trong đó $$\rho$$ là mức độ kích hoạt mục tiêu nhỏ (chẳng hạn 0,05) và $$\hat{\rho}_j$$ là mức kích hoạt trung bình của nơ-ron ẩn thứ $$j$$ trên tập huấn luyện. Thành phần phân kỳ KL khuyến khích phần lớn đơn vị ẩn giữ giá trị gần 0 ở hầu hết thời điểm, buộc mỗi đơn vị chuyên biệt hóa vào một nhóm mẫu hình riêng.
 
-Autoencoder khử nhiễu làm hỏng đầu vào $$\mathbf{x}$$ bằng nhiễu để tạo $$\tilde{\mathbf{x}}$$ nhưng huấn luyện để tái tạo bản gốc:
+**Autoencoder khử nhiễu (*denoising autoencoder*)** chủ động làm nhiễu đầu vào $$\mathbf{x}$$ thành $$\tilde{\mathbf{x}}$$ (bằng nhiễu Gaussian, che ngẫu nhiên điểm ảnh hoặc nhiễu muối-tiêu) nhưng yêu cầu mạng tái tạo bản gốc sạch:
 
 $$\mathcal{L} = \|\mathbf{x} - g_\theta(f_\phi(\tilde{\mathbf{x}}))\|^2$$
 
-Quá trình làm hỏng có thể thêm nhiễu Gaussian, che pixel ngẫu nhiên, hoặc thêm nhiễu muối-tiêu. Điều này buộc encoder học đặc trưng robust bất biến với loại nhiễu, và decoder học "điền" vùng hỏng dựa trên ngữ cảnh chưa hỏng. Autoencoder khử nhiễu thường học đặc trưng tốt hơn autoencoder vanilla vì tác vụ khử nhiễu đòi hỏi hiểu cấu trúc dữ liệu, không chỉ ghi nhớ ví dụ huấn luyện.
+Cách huấn luyện này buộc bộ mã hóa học các đặc trưng bền vững trước nhiễu, còn bộ giải mã học cách khôi phục phần bị hỏng dựa trên ngữ cảnh còn lại. Do đó, autoencoder khử nhiễu thường học được biểu diễn hữu ích hơn autoencoder chuẩn vì không thể chỉ ghi nhớ điểm ảnh thô.
 
-Hình học không gian ẩn xứng đáng phân tích cẩn thận. Trong autoencoder huấn luyện tốt trên dữ liệu ảnh, các điểm lân cận trong không gian ẩn thường tương ứng ảnh tương tự về cảm nhận. Ta có thể nội suy tuyến tính giữa hai mã ẩn $$\mathbf{z}_1$$ và $$\mathbf{z}_2$$:
+Về hình học không gian ẩn, trong một autoencoder được huấn luyện tốt, ta có thể nội suy tuyến tính giữa hai mã ẩn $$\mathbf{z}_1$$ và $$\mathbf{z}_2$$:
 
 $$\mathbf{z}_t = (1-t)\mathbf{z}_1 + t\mathbf{z}_2, \quad t \in [0,1]$$
 
-và giải mã $$g_\theta(\mathbf{z}_t)$$ để sinh ảnh trung gian. Với autoencoder hành xử tốt, điều này tạo chuyển tiếp mượt (biến hình khuôn mặt này sang khuôn mặt khác, ví dụ). Tuy nhiên, autoencoder chuẩn không đảm bảo nội suy tốt — có thể có "lỗ hổng" trong không gian ẩn nơi không có ví dụ huấn luyện nào ánh xạ, và nội suy qua các lỗ hổng này tạo tái tạo phi thực tế. Variational autoencoder xử lý điều này bằng cách chính quy hóa tường minh không gian ẩn để liên tục và hành xử tốt.
+rồi giải mã $$g_\theta(\mathbf{z}_t)$$ để thu được các mẫu trung gian. Tuy nhiên, autoencoder chuẩn không có cơ chế đảm bảo không gian ẩn liên tục khắp mọi nơi; nếu đường nội suy đi qua vùng trống không có mẫu huấn luyện, ảnh giải mã có thể bị méo hoặc phi thực tế. Đây là lý do Variational Autoencoder bổ sung ràng buộc trực tiếp lên phân phối không gian ẩn.
 
-## 3. Ví dụ / Trực giác
+## 3. Ví dụ và Trực giác
 
-Để xây dựng trực giác cụ thể về cách autoencoder học biểu diễn, hãy đi qua huấn luyện trên chữ số MNIST. Giả sử ta nén ảnh 28×28=784 pixel xuống mã ẩn 32 chiều.
+Hãy theo dõi quá trình huấn luyện một autoencoder nén ảnh MNIST kích thước 28×28 = 784 điểm ảnh xuống mã ẩn 32 chiều.
 
-Ban đầu, với trọng số ngẫu nhiên, encoder sinh mã ẩn vô nghĩa và decoder tạo nhiễu ngẫu nhiên như tái tạo. Lỗi tái tạo khổng lồ — ta cố khớp 784 giá trị pixel nhưng nhận đầu ra về cơ bản ngẫu nhiên. Gradient qua backpropagation chỉ ra cách điều chỉnh trọng số encoder và decoder để giảm lỗi này.
+Ở những bước đầu với trọng số ngẫu nhiên, bộ mã hóa tạo ra các vector vô nghĩa và bộ giải mã xuất ra ảnh gần như nhiễu, dẫn đến sai số tái tạo rất lớn. Lan truyền ngược dần điều chỉnh trọng số để giảm sai số này.
 
-Khi huấn luyện tiến triển, encoder học trích xuất đặc trưng ngày càng có nghĩa. Sớm, nó có thể học rằng một số pixel có xu hướng tối (nền) so với sáng (nét chữ số), mã hóa điều này thành các chiều ẩn biểu diễn độ sáng trung bình ở các vùng khác nhau. Mã hóa nguyên thủy này đã cho phép tái tạo tốt hơn nhiễu ngẫu nhiên — decoder học sinh ảnh với mẫu hình độ sáng tổng thể phù hợp.
+Trong giai đoạn sớm, bộ mã hóa học các thông tin thô như vùng nền tối và vùng nét sáng ở từng khu vực ảnh. Khi tiếp tục huấn luyện, mạng nhận ra các thành phần hình học rõ hơn: một số chiều ẩn phản ứng mạnh với nét dọc (như chữ số 1, 4, 7), chiều khác gắn với đường cong (0, 6, 8, 9) hoặc nét ngang (2, 3, 5, 7). Đến khi hội tụ, 32 chiều ẩn tự tổ chức để mã hóa kiểu chữ số, độ dày nét, độ nghiêng, kích thước và vị trí — hoàn toàn phát sinh từ mục tiêu tái tạo mà không cần nhãn.
 
-Với thêm huấn luyện, encoder khám phá mẫu hình cạnh. Một số chiều ẩn trở nên hoạt động khi chữ số có nét dọc (1, 4, 7), chiều khác cho đường cong (0, 6, 8, 9), chiều khác cho đoạn ngang (2, 3, 5, 7). Decoder học tái tạo ảnh giống chữ số từ các chỉ báo cạnh này. Tái tạo nay nắm hình dạng tổng quát của chữ số, dù chi tiết có thể mờ.
+Khi chiếu các mẫu kiểm tra vào không gian ẩn 32 chiều, các biến thể của chữ số "3" (nét dày, mảnh, nghiêng) thường tập trung gần nhau do chia sẻ cấu trúc hình học tương tự, trong khi các chữ số "8" (gồm hai vòng kín) tụ thành một cụm khác.
 
-Cuối cùng, 32 chiều ẩn tự tổ chức thành không gian biểu diễn có nghĩa. Các chiều có thể mã hóa: danh tính chữ số (đại khái chữ số nào), độ dày nét, độ nghiêng, kích thước, vị trí trong ảnh. Biểu diễn đã học này nổi lên thuần từ mục tiêu tái tạo — ta không bao giờ bảo mạng học đặc trưng gì, chỉ nén và tái tạo chính xác.
-
-Xem xét điều gì xảy ra khi ta mã hóa một số "3" từ tập huấn luyện. Mã ẩn của chúng cụm lại trong không gian ẩn 32D vì chúng chia sẻ cấu trúc (cạnh, đường cong, topology tương tự). Các "3" khác nhau (dày, mỏng, nghiêng) ánh xạ tới các điểm ẩn hơi khác nhưng lân cận. Trong khi đó, các "8" cụm ở vùng khác của không gian ẩn — chúng chia sẻ cấu trúc topology (hai vòng) mà "3" thiếu. Không gian ẩn đã tự tổ chức để phản ánh các danh mục chữ số và biến thể trong danh mục, tất cả không cần nhãn.
-
-Bây giờ cho kiểm tra nội suy. Mã hóa một "3" để được $$\mathbf{z}_3$$ và mã hóa một "8" để được $$\mathbf{z}_8$$. Giải mã các điểm trung gian:
+Ta có thể kiểm tra cấu trúc không gian ẩn bằng phép nội suy giữa mã ẩn $$\mathbf{z}_3$$ của một chữ số "3" và $$\mathbf{z}_8$$ của một chữ số "8":
 
 $$\mathbf{z}_{0.0} = \mathbf{z}_3 \to$$ giải mã thành "3"  
-$$\mathbf{z}_{0.25} = 0.75\mathbf{z}_3 + 0.25\mathbf{z}_8 \to$$ giải mã thành "3 với gợi ý của 8"  
-$$\mathbf{z}_{0.5} = 0.5\mathbf{z}_3 + 0.5\mathbf{z}_8 \to$$ giải mã thành chữ số mơ hồ  
-$$\mathbf{z}_{0.75} = 0.25\mathbf{z}_3 + 0.75\mathbf{z}_8 \to$$ giải mã thành "8 với gợi ý của 3"  
+$$\mathbf{z}_{0.25} = 0.75\mathbf{z}_3 + 0.25\mathbf{z}_8 \to$$ giải mã thành "3" bắt đầu xuất hiện nét của "8"  
+$$\mathbf{z}_{0.5} = 0.5\mathbf{z}_3 + 0.5\mathbf{z}_8 \to$$ giải mã thành hình dạng trung gian giữa "3" và "8"  
+$$\mathbf{z}_{0.75} = 0.25\mathbf{z}_3 + 0.75\mathbf{z}_8 \to$$ giải mã thành "8" còn lưu nét của "3"  
 $$\mathbf{z}_{1.0} = \mathbf{z}_8 \to$$ giải mã thành "8"
 
-Nếu nội suy mượt, ta thấy biến hình dần. Nếu có gián đoạn, ta có thể nhận đầu ra phi thực tế tại các điểm trung gian. Chất lượng nội suy này là chỉ báo chẩn đoán liệu không gian ẩn có cấu trúc tốt hay không.
+Quá trình biến đổi mượt cho thấy không gian ẩn có cấu trúc liên tục tốt; ngược lại, các điểm nhảy đột ngột hoặc ảnh mờ nhiễu cho thấy tồn tại khoảng trống trong không gian ẩn.
 
-Autoencoder khử nhiễu thêm một bước ngoặt thú vị. Giả sử ta làm hỏng một "7" bằng cách ngẫu nhiên đặt zero 20% pixel. Ảnh hỏng mơ hồ — có thể là "7" hỏng hoặc có thể là "1". Autoencoder khử nhiễu phải dùng ngữ cảnh (pixel chưa hỏng) để suy ra chữ số gốc khả dĩ nhất. Điều này đòi hỏi hiểu cấu trúc chữ số, không chỉ ghi nhớ mẫu pixel. Encoder học trích xuất đặc trưng robust dù nhiễu, và decoder học sinh chữ số hoàn chỉnh từ bằng chứng một phần. Biểu diễn học được thường hữu ích hơn cho tác vụ downstream so với autoencoder vanilla vì chúng bị buộc nắm cấu trúc ngữ nghĩa thay vì thống kê pixel mức thấp.
+Với autoencoder khử nhiễu, giả sử ta xóa ngẫu nhiên 20% điểm ảnh của chữ số "7". Dựa trên phần nét còn lại, mạng phải suy luận bối cảnh tổng thể để phân biệt đó là "7" chứ không phải "1" và khôi phục trọn vẹn chữ số gốc. Chính yêu cầu suy luận từ thông tin thiếu hụt này giúp biểu diễn ẩn nắm bắt cấu trúc ngữ nghĩa tốt hơn so với chỉ sao chép điểm ảnh.
 
 ## Video tham khảo
 
-- **xem trước** [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, tiếng Anh. Dựng lại là tín hiệu huấn luyện, không cần nhãn.
-- [Lecture 13 | Generative Models](https://www.youtube.com/watch?v=5WoItGTWV54) — Stanford University School of Engineering, tiếng Anh. Phân biệt undercomplete và overcomplete mà phần lý thuyết cần.
-- [MIT 6.S191 (2024): Deep Generative Modeling](https://www.youtube.com/watch?v=Dmm4UG-6jxA) — Alexander Amini, tiếng Anh. Cách nhìn nút thắt thông tin của cùng mục tiêu.
+- **Xem trước:** [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, tiếng Anh. Minh họa cách tín hiệu tái tạo tự đóng vai trò mục tiêu huấn luyện không cần nhãn.
+- [Lecture 13 | Generative Models](https://www.youtube.com/watch?v=5WoItGTWV54) — Stanford University School of Engineering, tiếng Anh. Phân biệt kiến trúc *undercomplete* và *overcomplete* được đề cập trong phần lý thuyết.
+- [MIT 6.S191 (2024): Deep Generative Modeling](https://www.youtube.com/watch?v=Dmm4UG-6jxA) — Alexander Amini, tiếng Anh. Góc nhìn nút thắt thông tin đối với cùng mục tiêu tái tạo.

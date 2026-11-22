@@ -11,7 +11,7 @@ categories:
 
 ## 4. Đoạn Mã
 
-### Cài đặt PyTorch
+### Cài đặt bằng PyTorch
 
 ```python
 import torch
@@ -81,7 +81,7 @@ print("Kiểm tra (không dropout) - đầu ra giống hệt:")
 print(torch.stack(outputs_test).std(dim=0).mean().item())
 ```
 
-### Cài đặt Dropout Thủ công
+### Cài đặt Dropout thủ công bằng NumPy
 
 ```python
 class DropoutManual:
@@ -153,59 +153,52 @@ print(f"Toàn bộ kênh bị loại: {(out.sum(dim=(2,3)) == 0).sum().item()}")
 ```
 
 ## 5. Khái niệm liên quan
+
 ### Chuẩn hóa Batch (*Batch Normalization*)
-- Cũng cung cấp chính quy hóa
-- Thường giảm nhu cầu dùng dropout
-- Kiến trúc hiện đại: BN thay dropout trong nhiều trường hợp
-- Nếu dùng cả hai: dropout sau batch norm
+- Cũng mang lại hiệu ứng chính quy hóa nhẹ nhờ nhiễu thống kê mini-batch.
+- Trong nhiều kiến trúc CNN hiện đại, BatchNorm giúp giảm nhu cầu dùng dropout.
+- Nếu kết hợp cả hai, thường đặt dropout sau BatchNorm và hàm kích hoạt.
 
-### Tăng cường Dữ liệu (*Data Augmentation*)
-- Một dạng chính quy hóa khác
-- Thêm nhiễu/biến thiên vào dữ liệu huấn luyện
-- Bổ trợ cho dropout
+### Tăng cường dữ liệu (*Data Augmentation*)
+- Chính quy hóa từ phía dữ liệu bằng cách tạo thêm biến thể hợp lệ cho tập huấn luyện.
+- Bổ trợ tốt cho dropout.
 
-### Dừng Sớm (*Early Stopping*)
-- Dừng huấn luyện khi loss validation tăng
-- Ngăn overfitting
-- Dùng cùng với dropout
+### Dừng sớm (*Early Stopping*)
+- Dừng huấn luyện khi hàm mất mát trên tập kiểm định bắt đầu tăng liên tục, có thể kết hợp song song với dropout.
 
-### Phương pháp Ensemble
-- Huấn luyện nhiều mô hình độc lập
-- Trung bình các dự đoán
-- Dropout xấp xỉ điều này với một mô hình
+### Phương pháp tổ hợp (*Ensemble*)
+- Huấn luyện nhiều mô hình độc lập rồi lấy trung bình dự đoán; dropout xấp xỉ ý tưởng này trong một mạng duy nhất.
 
 ### DropConnect
-- Loại bỏ kết nối thay vì neuron
-- Hiệu ứng tương tự, cài đặt khác
-- Ít phổ biến hơn
+- Vô hiệu hóa ngẫu nhiên các kết nối (trọng số) thay vì toàn bộ neuron; ý tưởng tương đồng nhưng ít phổ biến hơn dropout.
 
-## 6. Bài báo Nền tảng
+## 6. Các bài báo nền tảng
 
 **["Dropout: A Simple Way to Prevent Neural Networks from Overfitting" (2014)](https://jmlr.org/papers/v15/srivastava14a.html)**  
 *Tác giả*: Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, Ruslan Salakhutdinov  
-**Bài báo nền tảng về dropout**. Giới thiệu dropout và phân tích lý thuyết cho thấy nó ngăn đồng thích nghi của neuron. Chứng minh cải thiện rõ rệt trên nhiều benchmark gồm MNIST, CIFAR và ImageNet. Trở thành kỹ thuật chính quy hóa chuẩn trong học sâu.
+Bài báo tiêu chuẩn về dropout, phân tích cơ chế ngăn đồng thích nghi giữa các neuron và chứng minh cải thiện rõ rệt trên nhiều tập chuẩn như MNIST, CIFAR và ImageNet.
 
 **["Improving neural networks by preventing co-adaptation of feature detectors" (2012)](https://arxiv.org/abs/1207.0580)**  
 *Tác giả*: Geoffrey E. Hinton, Nitish Srivastava, Alex Krizhevsky, và cộng sự  
-Bài dropout sớm giới thiệu khái niệm. Giải thích cách dropout tạo ensemble của số mũ các mạng mỏng chia sẻ tham số. Cho thấy cải thiện thực nghiệm và cung cấp trực giác vì sao vô hiệu hóa ngẫu nhiên giúp.
+Công trình sớm giới thiệu ý tưởng dropout và diễn giải kỹ thuật này như một tổ hợp gồm số lượng lớn theo hàm mũ các mạng con chia sẻ tham số.
 
 **["Regularization of Neural Networks using DropConnect" (2013)](http://proceedings.mlr.press/v28/wan13.html)**  
 *Tác giả*: Li Wan, Matthew Zeiler, Sixin Zhang, Yann LeCun, Rob Fergus  
-Giới thiệu DropConnect — loại bỏ kết nối thay vì neuron. Cho thấy biến thể này đôi khi vượt dropout. Tổng quát hóa khái niệm loại bỏ ngẫu nhiên ra ngoài đơn vị riêng lẻ.
+Đề xuất DropConnect — tổng quát hóa cơ chế loại bỏ ngẫu nhiên từ cấp độ neuron sang cấp độ từng kết nối trọng số.
 
-**["Spatial Dropout" (2015) - một phần của "Efficient Object Localization Using CNNs"](https://arxiv.org/abs/1411.4280)**  
+**["Spatial Dropout" (2015) — một phần của "Efficient Object Localization Using CNNs"](https://arxiv.org/abs/1411.4280)**  
 *Tác giả*: Jonathan Tompson, Ross Goroshin, Arjun Jain, Yann LeCun, Christoph Bregler  
-Giới thiệu spatial dropout cho tầng tích chập — loại bỏ toàn bộ bản đồ đặc trưng thay vì từng kích hoạt. Cho thấy hiệu quả hơn với CNN nơi các điểm ảnh gần nhau tương quan.
+Giới thiệu *spatial dropout* cho tầng tích chập bằng cách loại bỏ nguyên bản đồ đặc trưng thay vì từng điểm ảnh rời rạc, phù hợp với tính tương quan không gian của CNN.
 
 **["A Theoretically Grounded Application of Dropout in RNNs" (2016)](https://arxiv.org/abs/1512.05287)**  
 *Tác giả*: Yarin Gal, Zoubin Ghahramani  
-Phân tích dropout trong RNN và giới thiệu variational dropout — dùng cùng mặt nạ qua các bước thời gian. Cung cấp nền tảng lý thuyết nối dropout với suy luận Bayesian, cho thấy dropout xấp xỉ ước lượng bất định.
+Phân tích cách dùng dropout trong RNN (đề xuất *variational dropout* giữ cố định mặt nạ qua các bước thời gian) và thiết lập liên hệ lý thuyết giữa dropout với suy luận Bayes xấp xỉ để ước lượng độ bất định.
 
-## Cạm bẫy Thường gặp và Mẹo
+## Cạm bẫy thường gặp và mẹo thực hành
 
-### ⚠️ Cạm bẫy 1: Quên Tắt khi Kiểm tra
-**Vấn đề**: Dropout vẫn bật lúc test → dự đoán không nhất quán  
-**Giải pháp**: Luôn đặt `model.eval()`
+### ⚠️ Cạm bẫy 1: Quên tắt dropout khi kiểm tra
+**Vấn đề:** Dropout vẫn hoạt động lúc đánh giá khiến kết quả dự đoán biến động ngẫu nhiên.  
+**Giải pháp:** Luôn chuyển sang chế độ đánh giá bằng `model.eval()`.
 
 ```python
 # Sai
@@ -217,9 +210,9 @@ with torch.no_grad():
     output = model(test_data)
 ```
 
-### ⚠️ Cạm bẫy 2: Tỷ lệ Dropout Quá Cao
-**Vấn đề**: Mạng mất quá nhiều dung lượng  
-**Giải pháp**: Bắt đầu với 0,5, giảm nếu hiệu năng tụt
+### ⚠️ Cạm bẫy 2: Tỷ lệ dropout quá cao
+**Vấn đề:** Đặt tỷ lệ quá lớn làm mất quá nhiều dung lượng biểu diễn của mạng.  
+**Giải pháp:** Chọn tỷ lệ phù hợp với từng loại tầng (khoảng 0.5 cho tầng kết nối đầy đủ, thấp hơn cho tầng tích chập hoặc đầu vào).
 
 ```python
 # Quá mạnh - có thể hại hiệu năng
@@ -231,9 +224,9 @@ dropout_conv = nn.Dropout(0.2)    # Tích chập
 dropout_input = nn.Dropout(0.1)   # Tầng đầu vào
 ```
 
-### ⚠️ Cạm bẫy 3: Dùng cùng Batch Normalization
-**Vấn đề**: Cả hai đều chính quy hóa, có thể tương tác kém  
-**Giải pháp**: Thường chọn một trong hai
+### ⚠️ Cạm bẫy 3: Kết hợp không phù hợp với Batch Normalization
+**Vấn đề:** Dropout làm thay đổi phương sai kích hoạt giữa hai chế độ train và eval, dễ tương tác kém với thống kê chạy của BatchNorm.  
+**Giải pháp:** Thường ưu tiên dùng BatchNorm riêng lẻ; nếu cần kết hợp, đặt dropout sau lớp BatchNorm và hàm kích hoạt.
 
 ```python
 # Thực hành hiện đại: Dùng BN, bỏ dropout
@@ -249,7 +242,7 @@ x = relu(x)
 x = dropout(x)  # Sau kích hoạt
 ```
 
-### ✅ Mẹo 1: Tỷ lệ Khác nhau cho Tầng Khác nhau
+### ✅ Mẹo 1: Dùng tỷ lệ khác nhau cho từng tầng
 ```python
 class SmartDropout(nn.Module):
     def __init__(self):
@@ -259,7 +252,7 @@ class SmartDropout(nn.Module):
         self.dropout_deep = nn.Dropout(0.3)    # Thấp hơn cho tầng sâu
 ```
 
-### ✅ Mẹo 2: Monte Carlo Dropout (Ước lượng Bất định)
+### ✅ Mẹo 2: Monte Carlo Dropout (ước lượng độ bất định)
 ```python
 def mc_dropout_predict(model, x, num_samples=10):
     """
@@ -284,7 +277,7 @@ mean, std = mc_dropout_predict(model, x_test)
 print(f"Dự đoán: {mean}, Bất định: {std}")
 ```
 
-### ✅ Mẹo 3: Dropout Lịch trình
+### ✅ Mẹo 3: Dropout theo lịch trình (*Scheduled Dropout*)
 ```python
 class ScheduledDropout:
     """Tăng dần tỷ lệ dropout trong quá trình huấn luyện"""
@@ -298,22 +291,18 @@ class ScheduledDropout:
         return self.initial + (self.final - self.initial) * progress
 ```
 
-## Điểm then chốt
+## Điểm chính
 
-- **Dropout** vô hiệu hóa ngẫu nhiên neuron khi huấn luyện
-- **Tỷ lệ**: 0,5 cho tầng FC, 0,1–0,3 cho conv, 0,2 cho đầu vào
-- **Scale**: Nhân với $$\frac{1}{1-p}$$ khi huấn luyện
-- **Suy luận**: Dùng tất cả neuron, không dropout
-- **Hiệu ứng**: Học ensemble, ngăn đồng thích nghi
-- **Dùng hiện đại**: Ít phổ biến hơn khi có chuẩn hóa batch
-- **Then chốt**: Nhớ chế độ train so với eval!
+- **Dropout** vô hiệu hóa ngẫu nhiên một phần neuron trong lúc huấn luyện để ngăn đồng thích nghi và tạo hiệu ứng tổ hợp.
+- **Tỷ lệ tham khảo**: khoảng 0.5 cho tầng kết nối đầy đủ, 0.1–0.3 cho tầng tích chập và khoảng 0.1–0.2 cho tầng đầu vào.
+- **Chia tỉ lệ (inverted dropout)**: nhân các đơn vị giữ lại với $$\frac{1}{1-p}$$ khi huấn luyện để giữ nguyên kỳ vọng khi suy luận.
+- **Chế độ vận hành**: luôn nhớ chuyển `model.train()` khi huấn luyện và `model.eval()` khi đánh giá.
+- **Bối cảnh hiện đại**: ít dùng nặng ở các tầng tích chập đã có BatchNorm, nhưng vẫn là kỹ thuật nền tảng cần nắm vững.
 
-Dropout vẫn là một trong những kỹ thuật chính quy hóa đơn giản nhất nhưng hiệu quả nhất trong học sâu!
-
-**Tiếp theo**: Chuẩn hóa Batch — kỹ thuật mạnh khác đã cách mạng hóa huấn luyện!
+Tiếp theo là bài về **Chuẩn hóa Batch (Batch Normalization)** — kỹ thuật chuẩn hóa kích hoạt giúp ổn định và tăng tốc quá trình huấn luyện mạng sâu.
 
 ## Video tham khảo
 
-- **xem trước** [Dropout Regularization (C2W1L06)](https://www.youtube.com/watch?v=D8PJAL-MZv8) — DeepLearningAI, tiếng Anh. Trước khi viết mặt nạ, gồm hệ số inverted dropout.
-- [Lecture 6 | Training Neural Networks I](https://www.youtube.com/watch?v=wEoyxE0GP2M) — Stanford University School of Engineering, tiếng Anh. Vòng lặp huấn luyện áp mặt nạ đó chỉ ở chế độ train như thế nào.
-- [Regularization (C2W1L04)](https://www.youtube.com/watch?v=6g0t3Phly2M) — DeepLearningAI, tiếng Anh. Cạm bẫy để dropout vẫn bật lúc đánh giá, đúng điều bài cảnh báo.
+- **Xem trước:** [Dropout Regularization (C2W1L06)](https://www.youtube.com/watch?v=D8PJAL-MZv8) — DeepLearningAI (tiếng Anh). Giải thích cách tạo mặt nạ và hệ số inverted dropout trước khi cài đặt.
+- [Lecture 6 | Training Neural Networks I](https://www.youtube.com/watch?v=wEoyxE0GP2M) — Stanford University School of Engineering (tiếng Anh). Minh họa cách tích hợp dropout đúng chế độ train/eval trong vòng huấn luyện.
+- [Regularization (C2W1L04)](https://www.youtube.com/watch?v=6g0t3Phly2M) — DeepLearningAI (tiếng Anh). Nêu rõ lưu ý khi đánh giá mô hình có sử dụng dropout.

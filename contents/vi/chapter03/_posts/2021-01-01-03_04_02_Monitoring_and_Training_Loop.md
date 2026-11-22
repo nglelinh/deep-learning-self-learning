@@ -9,16 +9,16 @@ categories:
 - chapter03
 ---
 
-## Giám sát Huấn luyện
+## Giám sát Quá trình Huấn luyện
 
 ### Các Chỉ số Cần Theo dõi
 
-1. **Mất mát huấn luyện**: Nên giảm ổn định
-2. **Mất mát kiểm định**: Nên giảm; nếu tăng, đang quá khớp!
-3. **Độ chính xác huấn luyện**: Nên tăng
-4. **Độ chính xác kiểm định**: Nên tăng; khoảng cách với độ chính xác huấn luyện chỉ ra quá khớp
+1. **Mất mát huấn luyện (*training loss*):** Cần giảm ổn định qua các epoch.
+2. **Mất mát kiểm định (*validation loss*):** Cần giảm song hành; nếu quay đầu tăng trong khi mất mát huấn luyện vẫn giảm, mô hình đang bị quá khớp (*overfitting*).
+3. **Độ chính xác huấn luyện (*training accuracy*):** Cần tăng dần.
+4. **Độ chính xác kiểm định (*validation accuracy*):** Cần tăng theo; khoảng cách lớn giữa độ chính xác huấn luyện và kiểm định là dấu hiệu rõ rệt của quá khớp.
 
-### Trực quan hóa
+### Trực quan hóa Lịch sử Huấn luyện
 
 ```python
 import matplotlib.pyplot as plt
@@ -51,7 +51,7 @@ def plot_training_history(train_losses, val_losses, train_accs, val_accs):
 
 ## Dừng sớm (Early Stopping)
 
-Dừng huấn luyện khi mất mát kiểm định không còn cải thiện.
+Kỹ thuật này dừng huấn luyện khi mất mát trên tập kiểm định ngừng cải thiện sau một số epoch chờ (*patience*) và khôi phục lại bộ tham số tốt nhất đã lưu.
 
 ```python
 class EarlyStopping:
@@ -97,9 +97,9 @@ for epoch in range(num_epochs):
         break
 ```
 
-## Gradient Clipping
+## Cắt ngưỡng Gradient (Gradient Clipping)
 
-Ngăn gradient bùng nổ bằng cách cắt độ lớn gradient.
+Giúp hạn chế hiện tượng gradient bùng nổ bằng cách giới hạn biên độ hoặc chuẩn của vector gradient.
 
 ### Cắt theo Giá trị
 
@@ -112,7 +112,7 @@ def clip_gradients_by_value(gradients, max_value=5.0):
     return clipped_gradients
 ```
 
-### Cắt theo Chuẩn
+### Cắt theo Chuẩn Toàn cục
 
 ```python
 def clip_gradients_by_norm(gradients, max_norm=5.0):
@@ -134,7 +134,7 @@ def clip_gradients_by_norm(gradients, max_norm=5.0):
         return gradients
 ```
 
-## Vòng lặp Huấn luyện Đầy đủ
+## Vòng lặp Huấn luyện Hoàn chỉnh
 
 ```python
 def train_model(X_train, Y_train, X_val, Y_val, layer_dims, 
@@ -215,24 +215,24 @@ def train_model(X_train, Y_train, X_val, Y_val, layer_dims,
 
 ## Tinh chỉnh Siêu tham số
 
-### Các Siêu tham số Then chốt
+### Các Siêu tham số Quan trọng
 
-1. **Learning rate** (quan trọng nhất)
-2. **Kích thước batch**
-3. **Số lớp**
+1. **Tốc độ học (*learning rate*)** — thường có ảnh hưởng lớn nhất
+2. **Kích thước batch (*batch size*)**
+3. **Số lượng lớp**
 4. **Số neuron mỗi lớp**
 5. **Hàm kích hoạt**
-6. **Phương pháp khởi tạo**
+6. **Phương pháp khởi tạo trọng số**
 
-### Chiến lược Tinh chỉnh
+### Các Chiến lược Tìm kiếm
 
-#### 1. Tìm kiếm Thủ công
+#### 1. Thử nghiệm Thủ công
 
-Thử các giá trị khác nhau dựa trên trực giác và kinh nghiệm.
+Điều chỉnh dần các giá trị dựa trên kinh nghiệm và quan sát đường cong huấn luyện.
 
-#### 2. Grid Search
+#### 2. Tìm kiếm Lưới (*Grid Search*)
 
-Thử mọi tổ hợp của một tập giá trị định trước.
+Thử toàn bộ các tổ hợp có thể từ một tập giá trị định trước.
 
 ```python
 learning_rates = [0.001, 0.01, 0.1]
@@ -254,9 +254,9 @@ for lr in learning_rates:
 print(f"Best: LR={best_params[0]}, BS={best_params[1]}, Val Acc={best_val_acc:.4f}")
 ```
 
-#### 3. Random Search
+#### 3. Tìm kiếm Ngẫu nhiên (*Random Search*)
 
-Thường hiệu quả hơn grid search.
+Lấy mẫu ngẫu nhiên trong không gian siêu tham số — thường hiệu quả hơn grid search khi có nhiều siêu tham số với mức độ nhạy khác nhau.
 
 ```python
 import random
@@ -279,19 +279,19 @@ for trial in range(num_trials):
 
 ## Tóm tắt
 
-- **Khởi tạo đúng** (He cho ReLU) ngăn vấn đề huấn luyện
-- **Tiền xử lý dữ liệu** (standardization/normalization) cải thiện hội tụ
-- **Xử lý mini-batch** cân bằng tốc độ và ổn định
-- **Chia Train/Val/Test** cho phép đánh giá đúng
-- **Giám sát** các chỉ số train/val phát hiện quá khớp
-- **Dừng sớm** ngăn quá khớp và tiết kiệm thời gian
-- **Gradient clipping** ngăn gradient bùng nổ
-- **Tinh chỉnh siêu tham số** thiết yếu cho hiệu năng tối ưu
+- **Khởi tạo phù hợp** (như khởi tạo He cho ReLU) giúp tránh nhiều lỗi hội tụ ngay từ đầu.
+- **Tiền xử lý dữ liệu** (standardization hoặc min-max) cải thiện tốc độ và độ ổn định khi tối ưu.
+- **Mini-batch** cân bằng tốt giữa tốc độ cập nhật và độ mượt của gradient.
+- **Chia tập Train/Val/Test** đảm bảo đánh giá khách quan và hạn chế quá khớp.
+- **Giám sát đồng thời** chỉ số trên tập huấn luyện và tập kiểm định giúp phát hiện sớm dấu hiệu quá khớp.
+- **Dừng sớm** giúp tránh huấn luyện thừa và giữ lại phiên bản tham số tốt nhất.
+- **Cắt ngưỡng gradient** ngăn chặn hiện tượng gradient bùng nổ.
+- **Tinh chỉnh siêu tham số** đóng vai trò quan trọng để đạt hiệu năng tốt trên bài toán thực tế.
 
-Với các kỹ thuật này, ta đã có đủ công cụ để huấn luyện mạng neuron hiệu quả. Chương tiếp theo trình bày Mạng Neuron Tích chập cho các tác vụ thị giác máy tính!
+Chương tiếp theo sẽ giới thiệu **Mạng Neuron Tích chập (CNN)** chuyên dụng cho các bài toán thị giác máy tính.
 
 ## Video tham khảo
 
-- **xem trước** [Other Regularization Methods (C2W1L08)](https://www.youtube.com/watch?v=BOCLq2gpcGU) — DeepLearningAI, tiếng Anh. Dừng sớm là một phương pháp chính quy bài bảo bạn theo dõi.
-- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, tiếng Anh. Vòng lặp ghi loss và gọi bộ tối ưu, đúng phần mã.
-- [Lecture 7 | Training Neural Networks II](https://www.youtube.com/watch?v=_JB0AO7QxSA) — Stanford University School of Engineering, tiếng Anh. Siêu tham số và đường cong huấn luyện là thứ phần giám sát đang nhìn.
+- **Xem trước:** [Other Regularization Methods (C2W1L08)](https://www.youtube.com/watch?v=BOCLq2gpcGU) — DeepLearningAI, tiếng Anh. Trình bày dừng sớm (*early stopping*) cùng các phương pháp chính quy hóa liên quan.
+- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, tiếng Anh. Minh họa vòng lặp huấn luyện chuẩn ghi nhận loss và cập nhật tham số.
+- [Lecture 7 | Training Neural Networks II](https://www.youtube.com/watch?v=_JB0AO7QxSA) — Stanford University School of Engineering, tiếng Anh. Phân tích cách đọc đường cong huấn luyện và lựa chọn siêu tham số.

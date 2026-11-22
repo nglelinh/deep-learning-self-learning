@@ -10,33 +10,33 @@ categories:
 lesson_type: optional
 ---
 
-# Tùy chọn: phát hiện và phân đoạn sau YOLO / Mask R-CNN
+# Tùy chọn: Phát hiện và phân đoạn sau YOLO / Mask R-CNN
 
-> Bài này là **tùy chọn**. Nó **không** thay lý thuyết detector một/hai giai đoạn hay ghi chú YOLO / Faster R-CNN. Nó phủ các mô hình 2023–2025 trong sản phẩm: **SAM/SAM 2**, **RT-DETR**, **Grounding DINO**, và dòng YOLO hiện tại.
+> Bài này là **tùy chọn**, **không** thay thế phần lý thuyết về bộ phát hiện một/hai giai đoạn hay các ghi chú về YOLO và Faster R-CNN. Nội dung bổ sung các mô hình được sử dụng rộng rãi trong thực tế giai đoạn 2023–2025: **SAM/SAM 2**, **RT-DETR**, **Grounding DINO** và các phiên bản YOLO mới.
 
-Ý IoU / NMS / ghép cặp của chương vẫn quyết định hộp có đúng không:
+Các khái niệm cốt lõi của chương như IoU, NMS và cơ chế ghép cặp dự đoán vẫn là tiêu chuẩn quyết định một hộp bao có chính xác hay không:
 
 $$\mathrm{IoU}(A,B) = \frac{|A\cap B|}{|A\cup B|}.$$
 
-Kiến trúc quanh các chỉ số ấy đã đổi.
+Tuy nhiên, các kiến trúc xoay quanh những chỉ số này đã thay đổi đáng kể.
 
 ## 1. Phân đoạn theo prompt: SAM và SAM 2
 
-[Kirillov et al., 2023](https://arxiv.org/abs/2304.02643) (Segment Anything) coi phân đoạn là tác vụ nền tảng **theo prompt**: điểm, hộp, hoặc mask vào; mask instance ra. [Ravi et al., 2024](https://arxiv.org/abs/2408.00714) (SAM 2) thêm bộ nhớ luồng cho **video**. Dùng trong DS: gắn vài điểm, xuất mask, huấn luyện chuyên gia nhỏ — không thay U-Net khi đã có tập y tế gắn nhãn pixel.
+[Kirillov et al., 2023](https://arxiv.org/abs/2304.02643) (Segment Anything) mô hình hóa bài toán phân đoạn như một tác vụ nền tảng **theo prompt**: đầu vào là điểm, hộp bao hoặc mặt nạ sơ bộ, đầu ra là mặt nạ của từng thể hiện đối tượng. [Ravi et al., 2024](https://arxiv.org/abs/2408.00714) (SAM 2) bổ sung bộ nhớ theo luồng thời gian để xử lý **video**. Trong quy trình khoa học dữ liệu thực tế, các mô hình này thường dùng để hỗ trợ gán nhãn nhanh (chấm vài điểm, xuất mặt nạ rồi huấn luyện một mô hình chuyên biệt nhỏ hơn), chứ không thay thế U-Net khi đã có tập dữ liệu y tế được gán nhãn chi tiết ở mức pixel.
 
 ## 2. Ứng dụng cụ thể
 
-### Detector DETR thời gian thực
+### Bộ phát hiện DETR thời gian thực
 
-[Zhao et al., 2024](https://arxiv.org/abs/2304.08069) (RT-DETR) khiến detector Transformer đủ nhanh để thay một số triển khai YOLO. Vẫn đánh giá mAP như bài lý thuyết.
+[Zhao et al., 2024](https://arxiv.org/abs/2304.08069) (RT-DETR) cải thiện tốc độ cho dòng bộ phát hiện dựa trên Transformer đến mức có thể thay thế YOLO trong một số hệ thống thực tế, trong khi vẫn đánh giá bằng chỉ số mAP như phần lý thuyết đã trình bày.
 
-### Từ vựng mở: Grounding DINO + SAM
+### Phát hiện từ vựng mở: Grounding DINO + SAM
 
-[Liu et al., 2023](https://arxiv.org/abs/2303.05499) (Grounding DINO) nhận truy vấn **văn bản** (“mũ bảo hiểm đỏ”) và trả hộp. Ghép SAM (“Grounded SAM”) là mẫu gắn nhãn và tri giác robot 2024–2026. Đầu COCO tập đóng vẫn cho SKU nhà máy.
+[Liu et al., 2023](https://arxiv.org/abs/2303.05499) (Grounding DINO) nhận truy vấn **văn bản** (ví dụ “mũ bảo hiểm đỏ”) và trả về hộp bao tương ứng. Kết hợp Grounding DINO với SAM (“Grounded SAM”) là mẫu quy trình phổ biến trong gán nhãn dữ liệu và tri giác robot giai đoạn 2024–2026. Dù vậy, với các bài toán có tập nhãn cố định như kiểm đếm mã sản phẩm (SKU) trong nhà máy, bộ phát hiện tập đóng kiểu COCO vẫn là lựa chọn phù hợp.
 
-### YOLO trong production
+### YOLO trong triển khai thực tế
 
-Ultralytics **YOLOv8 / YOLO11** giữ công thức một giai đoạn tích chập. Dùng khi latency và xuất (ONNX, TensorRT, CoreML) quan trọng hơn từ vựng mở.
+Các phiên bản Ultralytics **YOLOv8 / YOLO11** vẫn giữ thiết kế tích chập một giai đoạn, phù hợp khi yêu cầu về độ trễ thấp và khả năng xuất sang các định dạng triển khai (ONNX, TensorRT, CoreML) quan trọng hơn khả năng nhận dạng từ vựng mở.
 
 ## 3. Phần mềm phổ biến
 
@@ -53,10 +53,10 @@ Ultralytics **YOLOv8 / YOLO11** giữ công thức một giai đoạn tích ch�
 
 ## 5. Bài này bổ sung gì cho ghi chú cốt lõi
 
-Cài ghép cặp detector và đường R-CNN/YOLO của chương trước. Bài này chỉ thêm đầu **theo prompt và từ vựng mở** dùng trong pipeline 2023–2026.
+Trước hết cần nắm vững cơ chế ghép cặp dự đoán và quy trình R-CNN/YOLO trong các bài cốt lõi. Bài này bổ sung các đầu phát hiện và phân đoạn **theo prompt hoặc từ vựng mở** được dùng phổ biến trong các hệ thống giai đoạn 2023–2026.
 
 ## Video tham khảo
 
-- **xem trước** [Explaining the Segment Anything Model - Network architecture, Dataset, Training](https://www.youtube.com/watch?v=OhxJkqD1vuE) — Neural Breakdown with AVB, tiếng Anh. Segment Anything là bộ phân đoạn theo prompt mà ghi chú mô tả.
-- [Lecture 11 | Detection and Segmentation](https://www.youtube.com/watch?v=nDPWywWRIRo) — Stanford University School of Engineering, tiếng Anh. Bài toán phát hiện và phân đoạn cổ điển mà SAM khái quát.
-- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, tiếng Anh. Backbone thị giác bên dưới đầu theo prompt đó.
+- **Xem trước** [Explaining the Segment Anything Model - Network architecture, Dataset, Training](https://www.youtube.com/watch?v=OhxJkqD1vuE) — Neural Breakdown with AVB, tiếng Anh. Giải thích kiến trúc, dữ liệu và cách huấn luyện của Segment Anything — mô hình phân đoạn theo prompt trong bài.
+- [Lecture 11 | Detection and Segmentation](https://www.youtube.com/watch?v=nDPWywWRIRo) — Stanford University School of Engineering, tiếng Anh. Ôn lại bài toán phát hiện và phân đoạn cổ điển mà SAM tổng quát hóa.
+- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, tiếng Anh. Nền tảng về mạng xương sống thị giác bên dưới các mô hình phân đoạn theo prompt.

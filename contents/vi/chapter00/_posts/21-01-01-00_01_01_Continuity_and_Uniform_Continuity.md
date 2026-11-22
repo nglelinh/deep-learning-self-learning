@@ -9,108 +9,106 @@ categories:
 - chapter00
 ---
 
-Bài học này giới thiệu các khái niệm cơ bản về tính liên tục và tính liên tục đều, những khái niệm quan trọng để hiểu hành vi của các hàm số trong tối ưu hóa.
+Bài học này giới thiệu các khái niệm cơ bản về tính liên tục, tính liên tục đều và tính liên tục Lipschitz — những công cụ quan trọng để phân tích hành vi của hàm số trong tối ưu hóa.
 
 ---
 
-## Tính liên tục và Tính liên tục đều
+## Tính liên tục và tính liên tục đều
 
-**Tính liên tục** và **Tính liên tục đều** là những khái niệm cơ bản mô tả hành vi của các hàm số, đặc biệt liên quan đến tính "mượt mà" hoặc "có thể dự đoán được" của chúng. Mặc dù có liên quan chặt chẽ, chúng thể hiện các tính chất khác biệt, với tính liên tục đều là điều kiện mạnh hơn so với tính liên tục thông thường.
+**Tính liên tục** và **tính liên tục đều** đều mô tả mức độ "mượt" hay "ổn định" trong sự biến thiên của hàm số. Dù liên quan chặt chẽ với nhau, hai khái niệm này mang bản chất khác biệt: tính liên tục đều là điều kiện mạnh hơn so với tính liên tục thông thường.
 
-### Định nghĩa Tính liên tục
+### Định nghĩa tính liên tục
 
-Một hàm số $$f: A \to \mathbb{R}$$ được gọi là **liên tục tại một điểm** $$c \in A$$ nếu, với mọi số thực dương $$\varepsilon > 0$$, tồn tại một số thực dương $$\delta > 0$$ sao cho với mọi $$x \in A$$, nếu 
+Một hàm số $$f: A \to \mathbb{R}$$ được gọi là **liên tục tại điểm** $$c \in A$$ nếu với mọi số thực dương $$\varepsilon > 0$$, tồn tại số thực dương $$\delta > 0$$ sao cho với mọi $$x \in A$$, hễ
 
 $$\lvert x - c \rvert < \delta$$
 
-thì 
+thì
 
-$$\lvert f(x) - f(c) \rvert < \varepsilon$$ 
+$$\lvert f(x) - f(c) \rvert < \varepsilon.$$
 
-Một cách trực quan, điều này có nghĩa là với bất kỳ mức độ chính xác mong muốn $$\varepsilon$$ nào trong đầu ra $$f(x)$$, chúng ta có thể tìm được một khoảng đủ nhỏ xung quanh $$c$$ (có độ rộng $$2\delta$$) sao cho tất cả các giá trị $$x$$ trong khoảng này ánh xạ tới các giá trị $$f(x)$$ nằm trong khoảng $$\varepsilon$$ xung quanh $$f(c)$$. Khía cạnh quan trọng ở đây là việc chọn $$\delta$$ thường phụ thuộc không chỉ vào $$\varepsilon$$ mà còn vào điểm cụ thể $$c$$.
+Về mặt trực quan, với bất kỳ sai số cho phép $$\varepsilon$$ nào ở đầu ra $$f(x)$$, ta luôn tìm được một lân cận đủ nhỏ quanh $$c$$ (bán kính $$\delta$$) sao cho mọi điểm $$x$$ trong lân cận đó đều có giá trị $$f(x)$$ sai khác $$f(c)$$ nhỏ hơn $$\varepsilon$$. Điểm mấu chốt ở đây là $$\delta$$ nhìn chung phụ thuộc vào cả $$\varepsilon$$ lẫn điểm cụ thể $$c$$.
 
-Một hàm số **liên tục trên một tập hợp** $$A$$ nếu nó liên tục tại mọi điểm $$c \in A$$.
+Một hàm số được gọi là **liên tục trên tập hợp** $$A$$ nếu nó liên tục tại mọi điểm $$c \in A$$.
 
-**Ví dụ về các hàm liên tục** bao gồm tất cả đa thức (ví dụ: $$f(x) = x^2 + 3x - 1$$), các hàm lượng giác như $$\sin(x)$$ và $$\cos(x)$$, và các hàm mũ $$e^x$$ trên miền xác định tương ứng của chúng. 
+**Một số ví dụ về hàm liên tục** gồm các đa thức (như $$f(x) = x^2 + 3x - 1$$), các hàm lượng giác $$\sin(x)$$, $$\cos(x)$$ và hàm mũ $$e^x$$ trên miền xác định tương ứng của chúng.
 
-### Định nghĩa Tính liên tục đều
+### Định nghĩa tính liên tục đều
 
-**Tính liên tục đều**, mặt khác, áp đặt một điều kiện nghiêm ngặt hơn. Một hàm số $$f: A \to \mathbb{R}$$ được gọi là **liên tục đều trên một tập hợp** $$A$$ nếu, với mọi số thực dương $$\varepsilon > 0$$, tồn tại một số thực dương $$\delta > 0$$ sao cho với mọi $$x, y \in A$$, nếu 
+Ngược lại, **tính liên tục đều** đặt ra yêu cầu chặt chẽ hơn. Một hàm số $$f: A \to \mathbb{R}$$ được gọi là **liên tục đều trên tập hợp** $$A$$ nếu với mọi số thực dương $$\varepsilon > 0$$, tồn tại số thực dương $$\delta > 0$$ sao cho với mọi $$x, y \in A$$, hễ
 
 $$\lvert x - y \rvert < \delta$$
 
-thì 
+thì
 
-$$\lvert f(x) - f(y) \rvert < \varepsilon$$
+$$\lvert f(x) - f(y) \rvert < \varepsilon.$$
 
-**Sự khác biệt chính** so với tính liên tục theo điểm nằm ở thứ tự của các lượng từ: đối với tính liên tục **đều**, $$\delta$$ chỉ phụ thuộc vào $$\varepsilon$$ và độc lập với các điểm cụ thể $$x$$ và $$y$$ trong miền xác định.
+**Điểm khác biệt cốt lõi** so với tính liên tục từng điểm nằm ở thứ tự các lượng từ: với tính liên tục **đều**, giá trị $$\delta$$ chỉ phụ thuộc vào $$\varepsilon$$ và áp dụng đồng thời cho mọi cặp điểm $$x, y$$ trên toàn miền xác định.
 
-### Định nghĩa Tính liên tục Lipschitz
+### Định nghĩa tính liên tục Lipschitz
 
-**Tính liên tục Lipschitz** cung cấp một khái niệm cụ thể và định lượng hơn về tính liên tục. Một hàm số $$f: A \to \mathbb{R}$$ được gọi là **liên tục Lipschitz** (hoặc **L-Lipschitz**) trên một tập hợp $$A$$ nếu tồn tại một hằng số $$L \geq 0$$ sao cho với mọi $$x, y \in A$$:
+**Tính liên tục Lipschitz** đưa ra một điều kiện định lượng cụ thể hơn nữa. Một hàm số $$f: A \to \mathbb{R}$$ được gọi là **liên tục Lipschitz** (hay **$$L$$-Lipschitz**) trên tập hợp $$A$$ nếu tồn tại hằng số $$L \geq 0$$ sao cho với mọi $$x, y \in A$$:
 
-$$\lvert f(x) - f(y) \rvert \leq L \lvert x - y \rvert$$
+$$\lvert f(x) - f(y) \rvert \leq L \lvert x - y \rvert.$$
 
-Hằng số nhỏ nhất $$L$$ như vậy được gọi là **hằng số Lipschitz** hoặc **mô-đun Lipschitz** của $$f$$.
+Hằng số $$L$$ nhỏ nhất thỏa mãn bất đẳng thức trên được gọi là **hằng số Lipschitz** (hay **mô-đun Lipschitz**) của $$f$$.
 
-**Các tính chất chính của Tính liên tục Lipschitz:**
+**Các tính chất chính của tính liên tục Lipschitz:**
 
-1. **Tốc độ thay đổi bị chặn**: Điều kiện Lipschitz đảm bảo rằng hàm số không thể thay đổi nhanh hơn một tốc độ tuyến tính được xác định bởi $$L$$.
-
-2. **Tính liên tục đều**: Mọi hàm liên tục Lipschitz đều là liên tục đều (chọn $$\delta = \varepsilon/L$$ với $$L > 0$$).
-
-3. **Khả vi hầu khắp nơi**: Các hàm liên tục Lipschitz khả vi hầu khắp nơi, và tại nơi đạo hàm tồn tại, $$\lvert f'(x) \rvert \leq L$$.
+1. **Tốc độ biến thiên bị chặn:** Điều kiện Lipschitz đảm bảo hàm số không thể biến thiên nhanh hơn một tốc độ tuyến tính xác định bởi $$L$$.
+2. **Suy ra tính liên tục đều:** Mọi hàm liên tục Lipschitz đều liên tục đều (chỉ cần chọn $$\delta = \varepsilon/L$$ khi $$L > 0$$).
+3. **Khả vi hầu khắp nơi:** Hàm liên tục Lipschitz khả vi hầu khắp nơi, và tại mọi điểm có đạo hàm thì $$\lvert f'(x) \rvert \leq L$$.
 
 **Ví dụ:**
-- $$f(x) = \lvert x \rvert$$ là 1-Lipschitz trên $$\mathbb{R}$$
-- $$f(x) = \sin(x)$$ là 1-Lipschitz trên $$\mathbb{R}$$ (vì $$\lvert \cos(x) \rvert \leq 1$$)
-- $$f(x) = x^2$$ không phải Lipschitz trên $$\mathbb{R}$$ nhưng là Lipschitz trên bất kỳ khoảng bị chặn nào
+- $$f(x) = \lvert x \rvert$$ là hàm 1-Lipschitz trên $$\mathbb{R}$$.
+- $$f(x) = \sin(x)$$ là hàm 1-Lipschitz trên $$\mathbb{R}$$ (vì $$\lvert \cos(x) \rvert \leq 1$$).
+- $$f(x) = x^2$$ không liên tục Lipschitz trên toàn $$\mathbb{R}$$, nhưng liên tục Lipschitz trên mọi khoảng bị chặn.
 
-### Sự khác biệt chính và Thứ bậc
+### So sánh và quan hệ bao hàm
 
-Ba loại tính liên tục tạo thành một thứ bậc của các điều kiện ngày càng mạnh:
+Ba lớp hàm trên tạo thành một quan hệ bao hàm theo chiều mạnh dần của điều kiện:
 
-**Tính liên tục ⊆ Tính liên tục đều ⊆ Tính liên tục Lipschitz**
+**Tính liên tục Lipschitz ⊆ Tính liên tục đều ⊆ Tính liên tục**
 
-1. **Theo điểm so với Toàn cục**: 
-   - **Tính liên tục**: Tính chất cục bộ (kiểm tra tại mỗi điểm)
-   - **Tính liên tục đều**: Tính chất toàn cục của toàn bộ hàm số
-   - **Tính liên tục Lipschitz**: Tính chất toàn cục với các ràng buộc định lượng
+1. **Tính chất cục bộ so với toàn cục:**
+   - **Tính liên tục:** tính chất cục bộ (xét riêng tại từng điểm).
+   - **Tính liên tục đều:** tính chất toàn cục trên cả miền xác định.
+   - **Tính liên tục Lipschitz:** tính chất toàn cục kèm chặn định lượng rõ ràng.
 
-2. **Lựa chọn $$\delta$$**: 
-   - **Tính liên tục**: $$\delta$$ có thể phụ thuộc vào cả $$\varepsilon$$ và điểm cụ thể $$c$$
-   - **Tính liên tục đều**: $$\delta$$ chỉ phụ thuộc vào $$\varepsilon$$, hoạt động cho tất cả các điểm đồng thời
-   - **Tính liên tục Lipschitz**: $$\delta = \varepsilon/L$$ cung cấp mối quan hệ rõ ràng
+2. **Sự phụ thuộc của $$\delta$$:**
+   - **Tính liên tục:** $$\delta$$ có thể phụ thuộc vào cả $$\varepsilon$$ và điểm $$c$$.
+   - **Tính liên tục đều:** $$\delta$$ chỉ phụ thuộc vào $$\varepsilon$$, dùng chung cho mọi điểm.
+   - **Tính liên tục Lipschitz:** có công thức tường minh $$\delta = \varepsilon/L$$.
 
-3. **Kiểm soát Tốc độ Thay đổi**:
-   - **Tính liên tục**: Không kiểm soát tốc độ thay đổi
-   - **Tính liên tục đều**: Đảm bảo biến thiên bị chặn trên các khoảng nhỏ
-   - **Tính liên tục Lipschitz**: Cung cấp ràng buộc tuyến tính rõ ràng cho tốc độ thay đổi
+3. **Kiểm soát tốc độ biến thiên:**
+   - **Tính liên tục:** không kiểm soát tốc độ biến thiên.
+   - **Tính liên tục đều:** đảm bảo mức biến thiên bị chặn trên các khoảng đủ nhỏ.
+   - **Tính liên tục Lipschitz:** áp đặt chặn trên tuyến tính rõ ràng lên tốc độ biến thiên.
 
-4. **Mối quan hệ Độ mạnh**: 
-   - Mọi hàm liên tục Lipschitz đều là liên tục đều
-   - Mọi hàm liên tục đều đều là liên tục
-   - Các mệnh đề ngược lại nói chung không đúng
+4. **Quan hệ suy diễn:**
+   - Mọi hàm liên tục Lipschitz đều liên tục đều.
+   - Mọi hàm liên tục đều đều liên tục.
+   - Các chiều ngược lại nhìn chung không đúng.
 
-### Ví dụ Chi tiết và So sánh
+### Ví dụ minh họa và so sánh
 
 **Ví dụ 1: $$f(x) = x^2$$**
-- **Trên $$\mathbb{R}$$**: Liên tục nhưng không liên tục đều (tốc độ thay đổi $$\lvert f'(x) \rvert = 2\lvert x \rvert$$ không bị chặn)
-- **Trên $$[0,1]$$**: Liên tục, liên tục đều, và Lipschitz với $$L = 2$$
+- **Trên $$\mathbb{R}$$:** liên tục nhưng không liên tục đều (vì tốc độ biến thiên $$\lvert f'(x) \rvert = 2\lvert x \rvert$$ không bị chặn).
+- **Trên $$[0,1]$$:** liên tục, liên tục đều và Lipschitz với $$L = 2$$.
 
 **Ví dụ 2: $$f(x) = \sin(x)$$**
-- **Trên $$\mathbb{R}$$**: Liên tục, liên tục đều, và 1-Lipschitz (vì $$\lvert \cos(x) \rvert \leq 1$$)
+- **Trên $$\mathbb{R}$$:** liên tục, liên tục đều và 1-Lipschitz (vì $$\lvert \cos(x) \rvert \leq 1$$).
 
 **Ví dụ 3: $$f(x) = \lvert x \rvert$$**
-- **Trên $$\mathbb{R}$$**: Liên tục, liên tục đều, và 1-Lipschitz
-- **Lưu ý**: Không khả vi tại $$x = 0$$, nhưng vẫn là Lipschitz
+- **Trên $$\mathbb{R}$$:** liên tục, liên tục đều và 1-Lipschitz.
+- **Lưu ý:** hàm không khả vi tại $$x = 0$$ nhưng vẫn thỏa mãn điều kiện Lipschitz.
 
 **Ví dụ 4: $$f(x) = \sqrt{x}$$**
-- **Trên $$[0,1]$$**: Liên tục và liên tục đều, nhưng không phải Lipschitz (đạo hàm không bị chặn gần $$x = 0$$)
-- **Trên $$[a,1]$$ với $$a > 0$$**: Lipschitz với $$L = 1/(2\sqrt{a})$$
+- **Trên $$[0,1]$$:** liên tục và liên tục đều, nhưng không liên tục Lipschitz (đạo hàm tiến ra vô cùng khi $$x \to 0^+$$).
+- **Trên $$[a,1]$$ với $$a > 0$$:** liên tục Lipschitz với $$L = 1/(2\sqrt{a})$$.
 
 ## Video tham khảo
 
-- **xem trước** [Continuity at a point | Limits and continuity | AP Calculus AB | Khan Academy](https://www.youtube.com/watch?v=3KMqU5j7irw) — Khan Academy, tiếng Anh. Liên tục tại một điểm là định nghĩa bài bắt đầu từ đó.
-- [Limits, L'Hôpital's rule, and epsilon delta definitions | Chapter 7, Essence of calculus](https://www.youtube.com/watch?v=kfF40MiS7zA) — 3Blue1Brown, tiếng Anh. Ngôn ngữ epsilon-delta ở nửa sau là ngôn ngữ dùng để nâng liên tục từng điểm lên liên tục đều.
-- [Real Analysis | Intro to uniform continuity.](https://www.youtube.com/watch?v=gioaYgOQ3AQ) — Michael Penn, tiếng Anh. Đây đúng phần liên tục đều: một delta dùng được trên cả một tập, là định nghĩa thứ hai của bài.
+- **Xem trước:** [Continuity at a point | Limits and continuity | AP Calculus AB | Khan Academy](https://www.youtube.com/watch?v=3KMqU5j7irw) — Khan Academy, tiếng Anh. Giải thích định nghĩa liên tục tại một điểm, là điểm khởi đầu của bài học này.
+- [Limits, L'Hôpital's rule, and epsilon delta definitions | Chapter 7, Essence of calculus](https://www.youtube.com/watch?v=kfF40MiS7zA) — 3Blue1Brown, tiếng Anh. Nửa sau video trình bày ngôn ngữ $$\varepsilon\text{-}\delta$$, công cụ dùng để mở rộng từ liên tục từng điểm lên liên tục đều.
+- [Real Analysis | Intro to uniform continuity.](https://www.youtube.com/watch?v=gioaYgOQ3AQ) — Michael Penn, tiếng Anh. Tập trung trực tiếp vào tính liên tục đều: một giá trị $$\delta$$ duy nhất dùng chung cho cả tập hợp.

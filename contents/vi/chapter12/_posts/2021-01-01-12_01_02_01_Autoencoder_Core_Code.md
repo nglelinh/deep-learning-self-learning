@@ -9,9 +9,9 @@ categories:
 - chapter12
 ---
 
-## 4. Đoạn Code
+## 4. Đoạn mã
 
-Hãy triển khai autoencoder từ đầu với pipeline huấn luyện đầy đủ:
+Phần mã dưới đây cài đặt autoencoder chuẩn và autoencoder khử nhiễu bằng PyTorch cùng quy trình huấn luyện đầy đủ trên tập dữ liệu MNIST:
 
 ```python
 import torch
@@ -257,6 +257,6 @@ with torch.no_grad():
 
 ## Video tham khảo
 
-- **xem trước** [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, tiếng Anh. Hình hai module mà mã cốt lõi nên có.
-- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, tiếng Anh. Bộ tối ưu, hàm mất mát và bước, sau khi encode và decode đã có.
-- [Lecture 13 | Generative Models](https://www.youtube.com/watch?v=5WoItGTWV54) — Stanford University School of Engineering, tiếng Anh. Một bản dựng lại lành mạnh trông như thế nào, để một lỗi nhìn thấy được.
+- **Xem trước:** [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, tiếng Anh. Hình dung cấu trúc hai mô-đun encoder và decoder cần xây dựng trong phần mã.
+- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, tiếng Anh. Cách ghép bộ tối ưu, hàm mất mát và bước huấn luyện quanh encoder và decoder.
+- [Lecture 13 | Generative Models](https://www.youtube.com/watch?v=5WoItGTWV54) — Stanford University School of Engineering, tiếng Anh. Cách đánh giá kết quả tái tạo hợp lý để phát hiện lỗi cài đặt.

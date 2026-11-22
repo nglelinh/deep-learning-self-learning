@@ -9,28 +9,28 @@ categories:
 - chapter00
 ---
 
-### 4. Xác Suất Có Điều Kiện
+### 4. Xác suất có điều kiện
 
-Xác suất của biến cố A khi biết rằng biến cố B đã xảy ra:
+Xác suất để biến cố $$A$$ xảy ra khi biết biến cố $$B$$ đã xảy ra được định nghĩa là:
 
 $$P(A|B) = \frac{P(A \cap B)}{P(B)}, \quad P(B) > 0$$
 
-**Diễn giải**: Xác suất có điều kiện cập nhật niềm tin của chúng ta về A khi có thông tin về B.
+**Ý nghĩa:** Xác suất có điều kiện cập nhật mức độ tin cậy của ta về biến cố $$A$$ sau khi có thêm thông tin rằng $$B$$ đã xảy ra.
 
 <div id="conditional-prob-demo" style="border: 2px solid #ddd; padding: 20px; margin: 20px 0; border-radius: 10px; background-color: #f9f9f9;">
-    <h4 style="text-align: center; color: #333;">Trực Quan Hóa Xác Suất Có Điều Kiện</h4>
+    <h4 style="text-align: center; color: #333;">Trực quan hóa xác suất có điều kiện</h4>
     
     <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;">
         <div style="flex: 1; min-width: 400px;">
             <canvas id="conditionalCanvas" width="400" height="300" style="border: 1px solid #ccc; background: white;"></canvas>
             <p style="font-size: 12px; color: #666; margin-top: 5px;">
-                <strong>Biểu Đồ Venn:</strong> Hình tròn xanh là biến cố A, hình tròn đỏ là biến cố B. Giao màu tím thể hiện A ∩ B.
+                <strong>Biểu đồ Venn:</strong> Hình tròn xanh biểu diễn biến cố A, hình tròn đỏ biểu diễn biến cố B, phần giao màu tím biểu diễn A ∩ B.
             </p>
         </div>
         
         <div style="flex: 1; min-width: 250px;">
             <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                <h5 style="margin-top: 0; color: #444;">Điều Chỉnh Xác Suất</h5>
+                <h5 style="margin-top: 0; color: #444;">Điều chỉnh xác suất</h5>
                 
                 <div style="margin-bottom: 15px;">
                     <label for="prob-a-slider" style="display: block; margin-bottom: 5px; font-weight: bold;">P(A): <span id="prob-a-value">0.4</span></label>
@@ -43,17 +43,17 @@ $$P(A|B) = \frac{P(A \cap B)}{P(B)}, \quad P(B) > 0$$
                 </div>
                 
                 <div style="margin-bottom: 15px;">
-                    <label for="overlap-slider" style="display: block; margin-bottom: 5px; font-weight: bold;">Giao: <span id="overlap-value">0.2</span></label>
+                    <label for="overlap-slider" style="display: block; margin-bottom: 5px; font-weight: bold;">Phần giao: <span id="overlap-value">0.2</span></label>
                     <input type="range" id="overlap-slider" min="0" max="0.4" step="0.05" value="0.2" style="width: 100%;">
                 </div>
                 
                 <div id="conditional-results" style="font-family: monospace; font-size: 12px; line-height: 1.4; background: #f8f9fa; padding: 10px; border-radius: 4px;">
-                    <div><strong>Xác Suất:</strong></div>
+                    <div><strong>Xác suất:</strong></div>
                     <div>P(A) = <span id="display-prob-a">0.400</span></div>
                     <div>P(B) = <span id="display-prob-b">0.500</span></div>
                     <div>P(A ∩ B) = <span id="display-prob-ab">0.200</span></div>
                     <div>P(A ∪ B) = <span id="display-prob-union">0.700</span></div>
-                    <div><strong>Có Điều Kiện:</strong></div>
+                    <div><strong>Có điều kiện:</strong></div>
                     <div>P(A|B) = <span id="display-prob-a-given-b">0.400</span></div>
                     <div>P(B|A) = <span id="display-prob-b-given-a">0.500</span></div>
                 </div>
@@ -62,15 +62,15 @@ $$P(A|B) = \frac{P(A \cap B)}{P(B)}, \quad P(B) > 0$$
     </div>
 </div>
 
-### 5. Tính Độc Lập
+### 5. Tính độc lập
 
-Hai biến cố A và B **độc lập** nếu:
+Hai biến cố $$A$$ và $$B$$ được gọi là **độc lập** nếu:
 $$P(A \cap B) = P(A) \cdot P(B)$$
 
-Tương đương:
+Tương đương (khi $$P(A) > 0, P(B) > 0$$):
 $$P(A|B) = P(A) \quad \text{và} \quad P(B|A) = P(B)$$
 
-**Diễn giải**: Kiến thức về một biến cố không thay đổi xác suất của biến cố kia.
+**Ý nghĩa:** Việc biết một biến cố đã xảy ra không làm thay đổi xác suất của biến cố còn lại.
 
 <script>
 class ConditionalProbDemo {
@@ -253,6 +253,6 @@ canvas {
 
 ## Video tham khảo
 
-- **xem trước** [Conditional Probabilities, Clearly Explained!!!](https://www.youtube.com/watch?v=_IgyaD7vOOA) — StatQuest with Josh Starmer, tiếng Anh. P(A|B) là định nghĩa đầu tiên của cả bài.
-- [Independence in Probability](https://www.youtube.com/watch?v=2nDYX8IKrwo) — Steve Brunton, tiếng Anh. Độc lập là khẳng định thứ hai: xác suất có điều kiện thu về xác suất biên.
-- [Xác suất có điều kiện (Conditional probability) | Công thức nhân xác suất](https://www.youtube.com/watch?v=EsIW9oLsqiI) — TOÁN HỌC MUÔN NƠI, tiếng Việt. Cùng định nghĩa xác suất có điều kiện, bằng tiếng Việt, kèm công thức nhân.
+- **Xem trước:** [Conditional Probabilities, Clearly Explained!!!](https://www.youtube.com/watch?v=_IgyaD7vOOA) — StatQuest with Josh Starmer, tiếng Anh. Trình bày rõ định nghĩa $$P(A|B)$$ — khái niệm mở đầu của bài.
+- [Independence in Probability](https://www.youtube.com/watch?v=2nDYX8IKrwo) — Steve Brunton, tiếng Anh. Giải thích tính độc lập giữa hai biến cố khi xác suất có điều kiện trùng với xác suất biên.
+- [Xác suất có điều kiện (Conditional probability) | Công thức nhân xác suất](https://www.youtube.com/watch?v=EsIW9oLsqiI) — TOÁN HỌC MUÔN NƠI, tiếng Việt. Bài giảng tiếng Việt trình bày xác suất có điều kiện cùng công thức nhân xác suất.

@@ -9,80 +9,80 @@ categories:
 - chapter00
 ---
 
-### 2. Phân Phối Liên Tục
+### 2. Phân phối liên tục
 
-#### Phân Phối Đều
+#### Phân phối đều (*Uniform*)
 
-Tất cả các giá trị trong một khoảng đều có khả năng xảy ra như nhau.
+Mọi giá trị trong một đoạn cho trước đều có mật độ xác suất như nhau.
 
-**Tham số**: $$a, b \in \mathbb{R}$$ với $$a < b$$
+**Tham số:** $$a, b \in \mathbb{R}$$ với $$a < b$$
 
-**PDF**: $$f(x) = \frac{1}{b-a}$$ với $$x \in [a,b]$$, 0 nếu ngược lại
+**PDF:** $$f(x) = \frac{1}{b-a}$$ với $$x \in [a,b]$$, và bằng $$0$$ ngoài đoạn đó.
 
-**Kỳ vọng**: $$\mathbb{E}[X] = \frac{a+b}{2}$$
+**Kỳ vọng:** $$\mathbb{E}[X] = \frac{a+b}{2}$$
 
-**Phương sai**: $$\text{Var}(X) = \frac{(b-a)^2}{12}$$
+**Phương sai:** $$\text{Var}(X) = \frac{(b-a)^2}{12}$$
 
-**Ứng dụng**: Lấy mẫu ngẫu nhiên, khởi tạo trong thuật toán
+**Ứng dụng:** lấy mẫu ngẫu nhiên, khởi tạo tham số trong thuật toán.
 
-#### Phân Phối Chuẩn (Gaussian)
+#### Phân phối chuẩn (*Normal / Gaussian*)
 
-Phân phối quan trọng nhất trong thống kê và tối ưu hóa.
+Đây là phân phối quan trọng và phổ biến nhất trong thống kê cũng như tối ưu hóa.
 
-**Tham số**: $$\mu \in \mathbb{R}$$ (kỳ vọng), $$\sigma^2 > 0$$ (phương sai)
+**Tham số:** $$\mu \in \mathbb{R}$$ (kỳ vọng), $$\sigma^2 > 0$$ (phương sai)
 
-**PDF**: $$f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
+**PDF:** $$f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
 
-**Kỳ vọng**: $$\mathbb{E}[X] = \mu$$
+**Kỳ vọng:** $$\mathbb{E}[X] = \mu$$
 
-**Phương sai**: $$\text{Var}(X) = \sigma^2$$
+**Phương sai:** $$\text{Var}(X) = \sigma^2$$
 
-**Tính chất**:
-- Đối xứng quanh $$\mu$$
-- Quy tắc 68-95-99.7
-- Định lý giới hạn trung tâm
-- Entropy tối đa với kỳ vọng và phương sai cho trước
+**Tính chất:**
+- Đối xứng quanh kỳ vọng $$\mu$$.
+- Tuân theo quy tắc 68–95–99,7.
+- Gắn trực tiếp với Định lý giới hạn trung tâm (*Central Limit Theorem*).
+- Có entropy cực đại trong số mọi phân phối có cùng kỳ vọng và phương sai cho trước.
 
-#### Phân Phối Mũ
+#### Phân phối mũ (*Exponential*)
 
-Mô hình thời gian chờ giữa các sự kiện trong quá trình Poisson.
+Mô hình hóa thời gian chờ giữa hai sự kiện liên tiếp trong một quá trình Poisson.
 
-**Tham số**: $$\lambda > 0$$ (tham số tốc độ)
+**Tham số:** $$\lambda > 0$$ (tốc độ xuất hiện)
 
-**PDF**: $$f(x) = \lambda e^{-\lambda x}$$ với $$x \geq 0$$
+**PDF:** $$f(x) = \lambda e^{-\lambda x}$$ với $$x \geq 0$$
 
-**Kỳ vọng**: $$\mathbb{E}[X] = \frac{1}{\lambda}$$
+**Kỳ vọng:** $$\mathbb{E}[X] = \frac{1}{\lambda}$$
 
-**Phương sai**: $$\text{Var}(X) = \frac{1}{\lambda^2}$$
+**Phương sai:** $$\text{Var}(X) = \frac{1}{\lambda^2}$$
 
-**Tính chất**: Tính chất không nhớ
+**Tính chất:** có tính không nhớ (*memoryless*).
 
-#### Phân Phối Beta
+#### Phân phối Beta
 
-Phân phối linh hoạt trên $$[0,1]$$, thường dùng để mô hình hóa xác suất.
+Phân phối liên tục linh hoạt trên đoạn $$[0,1]$$, thường dùng để mô hình hóa các đại lượng mang ý nghĩa xác suất hoặc tỉ lệ.
 
-**Tham số**: $$\alpha, \beta > 0$$ (tham số hình dạng)
+**Tham số:** $$\alpha, \beta > 0$$ (các tham số hình dạng)
 
-**PDF**: $$f(x) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha-1}(1-x)^{\beta-1}$$ với $$x \in [0,1]$$
+**PDF:** $$f(x) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha-1}(1-x)^{\beta-1}$$ với $$x \in [0,1]$$
 
-**Kỳ vọng**: $$\mathbb{E}[X] = \frac{\alpha}{\alpha+\beta}$$
+**Kỳ vọng:** $$\mathbb{E}[X] = \frac{\alpha}{\alpha+\beta}$$
 
-**Phương sai**: $$\text{Var}(X) = \frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$$
+**Phương sai:** $$\text{Var}(X) = \frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$$
 
 <div id="continuous-distributions-demo" style="border: 2px solid #ddd; padding: 20px; margin: 20px 0; border-radius: 10px; background-color: #f9f9f9;">
-    <h4 style="text-align: center; color: #333;">Phân Phối Liên Tục Tương Tác</h4>
+    <h4 style="text-align: center; color: #333;">Phân phối liên tục tương tác</h4>
     
     <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;">
         <div style="flex: 1; min-width: 400px;">
             <canvas id="continuousCanvas" width="400" height="300" style="border: 1px solid #ccc; background: white;"></canvas>
             <p style="font-size: 12px; color: #666; margin-top: 5px;">
-                <strong>Trực quan hóa:</strong> Hàm mật độ xác suất của các phân phối liên tục.
+                <strong>Trực quan hóa:</strong> Hàm mật độ xác suất (PDF) của các phân phối liên tục.
             </p>
         </div>
         
         <div style="flex: 1; min-width: 250px;">
             <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                <h5 style="margin-top: 0; color: #444;">Loại Phân Phối</h5>
+                <h5 style="margin-top: 0; color: #444;">Loại phân phối</h5>
                 
                 <div style="margin-bottom: 15px;">
                     <label style="display: block; margin-bottom: 10px;">
@@ -142,7 +142,7 @@ Phân phối linh hoạt trên $$[0,1]$$, thường dùng để mô hình hóa x
                 </div>
                 
                 <div id="continuous-stats" style="font-family: monospace; font-size: 12px; line-height: 1.4; background: #f8f9fa; padding: 10px; border-radius: 4px;">
-                    <div><strong>Thống Kê:</strong></div>
+                    <div><strong>Thống kê:</strong></div>
                     <div>Kỳ vọng: <span id="continuous-mean">0.500</span></div>
                     <div>Phương sai: <span id="continuous-variance">0.083</span></div>
                     <div>Miền xác định: <span id="continuous-support">[0, 1]</span></div>
@@ -397,6 +397,6 @@ canvas {
 
 ## Video tham khảo
 
-- **xem trước** [The Normal Distribution, Clearly Explained!!!](https://www.youtube.com/watch?v=rzFX5NWojp0) — StatQuest with Josh Starmer, tiếng Anh. Mật độ chuẩn là phân phối liên tục mà bài lấy làm trung tâm.
-- [The Main Ideas behind Probability Distributions](https://www.youtube.com/watch?v=oI3hZJqXJuc) — StatQuest with Josh Starmer, tiếng Anh. Mật độ so với khối xác suất là phân biệt cần có trước mọi công thức liên tục.
-- [MaDL - Common Probability Distributions](https://www.youtube.com/watch?v=NbzVwvE_syQ) — Tübingen Machine Learning, tiếng Anh. Đặt Gauss cạnh các họ liên tục khác (mũ và những họ còn lại) mà bài liệt kê.
+- **Xem trước:** [The Normal Distribution, Clearly Explained!!!](https://www.youtube.com/watch?v=rzFX5NWojp0) — StatQuest with Josh Starmer, tiếng Anh. Trình bày phân phối chuẩn — phân phối liên tục trọng tâm của bài.
+- [The Main Ideas behind Probability Distributions](https://www.youtube.com/watch?v=oI3hZJqXJuc) — StatQuest with Josh Starmer, tiếng Anh. Làm rõ sự khác biệt giữa hàm mật độ xác suất (PDF) và hàm khối xác suất (PMF) trước khi làm việc với các công thức liên tục.
+- [MaDL - Common Probability Distributions](https://www.youtube.com/watch?v=NbzVwvE_syQ) — Tübingen Machine Learning, tiếng Anh. Đặt phân phối Gauss cạnh các phân phối liên tục khác như phân phối mũ và Beta.

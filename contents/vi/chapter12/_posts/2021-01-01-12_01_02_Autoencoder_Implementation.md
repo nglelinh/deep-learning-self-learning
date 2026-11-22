@@ -9,13 +9,13 @@ categories:
 - chapter12
 ---
 
-Cài đặt autoencoder:
+Phần cài đặt autoencoder gồm hai bài:
 
-1. **Cài đặt Cốt lõi** — huấn luyện và tái tạo trên MNIST
-2. **Không gian Ẩn, Bài báo và Bẫy thường gặp** — nội suy, trực quan 2D, khái niệm liên quan, điểm then chốt
+1. **Cài đặt Cốt lõi** — xây dựng, huấn luyện và đánh giá tái tạo autoencoder chuẩn và khử nhiễu trên MNIST.
+2. **Không gian Ẩn, Bài báo và Bẫy thường gặp** — nội suy mã ẩn, trực quan hóa không gian ẩn 2D, autoencoder tích chập, khái niệm liên quan và điểm then chốt.
 
 ## Video tham khảo
 
-- **xem trước** [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, tiếng Anh. Mã có một kiến trúc để khớp.
-- [Lecture 13 | Generative Models](https://www.youtube.com/watch?v=5WoItGTWV54) — Stanford University School of Engineering, tiếng Anh. Hàm mất mát và các đồ thị không gian ẩn mà các bài cài đặt yêu cầu.
-- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, tiếng Anh. Bước huấn luyện bạn bọc quanh một bộ mã hóa và một bộ giải mã.
+- **Xem trước:** [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, tiếng Anh. Ôn lại kiến trúc encoder–decoder tương ứng với phần mã cài đặt.
+- [Lecture 13 | Generative Models](https://www.youtube.com/watch?v=5WoItGTWV54) — Stanford University School of Engineering, tiếng Anh. Giải thích hàm mất mát tái tạo và cách trực quan hóa không gian ẩn trong các bài thực hành.
+- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, tiếng Anh. Cấu trúc vòng lặp huấn luyện PyTorch áp dụng cho bộ mã hóa và bộ giải mã.

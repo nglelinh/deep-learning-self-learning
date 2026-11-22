@@ -11,52 +11,53 @@ categories:
 
 # Cài đặt Attention Cốt lõi
 
-Bài này biến các phương trình attention thành **code chạy được**. Ta cài đặt attention cộng tính (Bahdanau) cho mô hình encoder–decoder và scaled self-attention bằng cả NumPy lẫn PyTorch, với shape tường minh và chi tiết ổn định số.
+Bài này chuyển các phương trình attention thành mã nguồn chạy được. Ta sẽ cài đặt attention cộng tính (Bahdanau) cho mô hình encoder–decoder và scaled self-attention bằng cả NumPy lẫn PyTorch, chú trọng vào kích thước tensor và độ ổn định số học.
 
 ---
 
 ## 1. Tổng quan khái niệm
 
-Một cài đặt attention đúng phải làm bốn việc mỗi lần:
+Mọi cài đặt attention chuẩn đều thực hiện bốn bước cơ bản:
 
-1. Xây **điểm số** giữa queries và keys.  
-2. Áp **mask** tùy chọn trên logit.  
-3. **Softmax** trên keys.  
-4. Nhân trọng số với **values**.
+1. Tính **điểm số** giữa các queries và keys.
+2. Áp **mask** (nếu có) trực tiếp lên điểm số trước softmax.
+3. Tính **softmax** dọc theo trục keys.
+4. Nhân ma trận trọng số với **values**.
 
-Phần còn lại là thiết kế API: class so với hàm, NumPy so với `torch.nn`, batching, và đóng gói multi-head (bài kế).
+Các phần còn lại thuộc về thiết kế giao diện lập trình: tổ chức hàm hay lớp, dùng NumPy hay `torch.nn`, hỗ trợ theo batch và mở rộng sang multi-head (sẽ trình bày ở bài tiếp theo).
 
-Ta bắt đầu với **Bahdanau** vì vòng lặp trên trạng thái encoder làm thuật toán rõ ràng. Sau đó chuyển sang **scaled attention véc-tơ hóa**, thứ dùng trong Transformer.
+Ta bắt đầu từ **Bahdanau** để thấy rõ cơ chế tính điểm trên từng trạng thái encoder, sau đó chuyển sang **scaled dot-product attention dạng ma trận** dùng trong Transformer.
 
 ---
 
-## 2. Nhắc lại toán phục vụ cài đặt
-**Điểm số Bahdanau**
+## 2. Nhắc lại công thức phục vụ cài đặt
+
+**Điểm số Bahdanau:**
 
 $$e_{i} = \mathbf{v}^\top \tanh(\mathbf{W}_h\mathbf{h}_i + \mathbf{W}_s\mathbf{s}).$$
 
-**Scaled attention**
+**Scaled dot-product attention:**
 
 $$\mathbf{A}=\mathrm{softmax}\!\left(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{d_k}}+\mathbf{M}\right),\quad
 \mathbf{Y}=\mathbf{A}\mathbf{V}.$$
 
-**Softmax ổn định** cho vectơ $$\mathbf{z}$$:
+**Softmax ổn định số học** cho vectơ $$\mathbf{z}$$:
 
 $$\mathrm{softmax}(\mathbf{z})_i=\frac{\exp(z_i-\max_j z_j)}{\sum_j\exp(z_j-\max_j z_j)}.$$
 
-Luôn trừ max trên trục softmax trong code viết tay.
+Khi tự cài đặt softmax, luôn trừ đi giá trị lớn nhất trên trục tính toán để tránh tràn số ở hàm mũ.
 
 ---
 
-## 3. Ví dụ / Trực giác cho các demo
+## 3. Trực giác cho ví dụ minh họa
 
-Ta mô phỏng thiết lập kiểu dịch máy nhỏ:
+Ta mô phỏng một bài toán dịch máy thu gọn:
 
-- Từ nguồn: `I love deep learning` → bốn trạng thái encoder.  
-- Với mỗi từ đích đang sinh, một trạng thái decoder truy vấn bốn trạng thái đó.  
-- Trọng số attention in ra cho thấy token nguồn nào nhận khối lượng.
+- Câu nguồn `I love deep learning` tạo ra bốn trạng thái encoder.
+- Tại mỗi bước sinh từ đích, một trạng thái decoder truy vấn bốn trạng thái này.
+- Bảng trọng số attention in ra cho biết từ nguồn nào đang nhận mức chú ý cao nhất.
 
-Trọng số ngẫu nhiên lúc khởi tạo—điểm của demo là **đường ống**, không phải alignment đã huấn luyện. Sau khi huấn luyện mô hình thật, cùng một bảng in trở nên có ý nghĩa.
+Do trọng số được khởi tạo ngẫu nhiên và chưa qua huấn luyện, mục tiêu của đoạn minh họa là kiểm chứng **luồng dữ liệu và kích thước tensor**; khi huấn luyện trên dữ liệu thật, bảng căn chỉnh này sẽ phản ánh đúng mối liên hệ ngữ nghĩa giữa hai ngôn ngữ.
 
 ---
 
@@ -211,7 +212,7 @@ y, w = SimpleSelfAttention(d)(x, attn_mask=mask)
 print(y.shape, w.shape)  # (2,7,32), (2,7,7)
 ```
 
-### 4.6 Debug shape (dùng khi kẹt)
+### 4.6 Kiểm tra kích thước khi gỡ lỗi
 
 ```python
 def show_attn_shapes(Q, K, V):
@@ -227,46 +228,49 @@ show_attn_shapes(torch.randn(2, 5, 16), torch.randn(2, 9, 16), torch.randn(2, 9,
 
 ## 5. Khái niệm liên quan
 
-- **Teacher forcing** trong seq2seq: decoder nhận token vàng trước đó; attention vẫn chạy mỗi bước.  
-- **Input feeding** (Luong): đưa vectơ ngữ cảnh trước vào bước decoder tiếp theo—thường giúp NMT.  
-- **`torch.nn.MultiheadAttention` / SDPA**: kernel production; hiểu bài này trước khi coi chúng là phép thuật.  
-- **Batch packing**: padding mask bắt buộc khi batch size > 1 với độ dài biến thiên.
+- **Teacher forcing trong seq2seq**: trong huấn luyện, decoder nhận token nhãn đúng của bước trước làm đầu vào, còn cơ chế attention vẫn chạy ở từng bước.
+- **Input feeding (Luong)**: đưa vectơ ngữ cảnh của bước trước quay lại làm một phần đầu vào cho bước decoder tiếp theo, thường giúp cải thiện chất lượng dịch máy.
+- **`torch.nn.MultiheadAttention` và SDPA**: các cài đặt tối ưu dùng trong sản xuất; nên hiểu rõ cách cài đặt thủ công trong bài trước khi sử dụng chúng như thành phần đóng gói sẵn.
+- **Đệm theo batch (batch padding)**: bắt buộc dùng padding mask khi huấn luyện theo batch gồm các chuỗi có độ dài khác nhau.
 
 ---
 
-## 6. Các bài báo nền tảng (liên quan cài đặt)
-1. [Bahdanau et al., 2015](https://arxiv.org/abs/1409.0473) — thuật toán tham chiếu cho additive attention.  
-2. [Luong et al., 2015](https://arxiv.org/abs/1508.04025) — điểm số đơn giản dùng rộng trong RNNToolkit.  
-3. [Vaswani et al., 2017](https://arxiv.org/abs/1706.03762) — scaled attention véc-tơ hóa + đóng gói multi-head.  
-4. Tài liệu PyTorch: [`torch.nn.MultiheadAttention`](https://pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html) — batch_first, masks, average weights.
+## 6. Tài liệu tham khảo liên quan đến cài đặt
+
+1. [Bahdanau et al., 2015](https://arxiv.org/abs/1409.0473) — thuật toán chuẩn cho attention cộng tính.
+2. [Luong et al., 2015](https://arxiv.org/abs/1508.04025) — các hàm chấm điểm gọn nhẹ dùng phổ biến trong hệ thống dịch máy RNN.
+3. [Vaswani et al., 2017](https://arxiv.org/abs/1706.03762) — scaled dot-product attention dạng ma trận và multi-head.
+4. Tài liệu PyTorch: [`torch.nn.MultiheadAttention`](https://pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html) — hướng dẫn chi tiết về `batch_first`, quy ước mask và `average_attn_weights`.
 
 ---
 
 ## 7. Cạm bẫy thường gặp và mẹo thực hành
-| Lỗi | Triệu chứng | Sửa |
-|-----|-------------|-----|
-| Softmax sai chiều | Trọng số tổng trên queries hoặc batch | Softmax trên **keys** |
-| Mask `0` sau softmax | Token tương lai vẫn ảnh hưởng gradient | Cộng `-inf` **trước** softmax |
-| Nhầm `Wh @ h` với `h @ Wh` | Lỗi shape im lặng | Cố định quy ước và unit-test |
-| Trộn `(d,)` và `(d,1)` | Ác mộng broadcast | Chuẩn hóa bằng `reshape(-1)` |
-| Không trừ `max` | `NaN` khi điểm số lớn | Softmax ổn định |
 
-**Mẹo:** với causal self-attention, assert `triu(weights, 1) == 0` mỗi lần đổi code mask.
+| Lỗi | Triệu chứng | Cách khắc phục |
+|-----|-------------|----------------|
+| Softmax sai trục | Tổng trọng số bằng 1 theo chiều query hoặc batch thay vì chiều key | Áp softmax trên **trục keys** |
+| Gán `0` sau softmax | Token bị cấm vẫn ảnh hưởng đến gradient và phân phối | Cộng `-inf` **trước** softmax |
+| Nhầm `Wh @ h` với `h @ Wh` | Lỗi kích thước hoặc nhân nhầm chiều ẩn | Thống nhất quy ước chiều và viết unit-test |
+| Trộn `(d,)` với `(d, 1)` | Lỗi broadcast ngoài ý muốn | Chuẩn hóa kích thước bằng `reshape(-1)` |
+| Không trừ `max` | Xuất hiện `NaN` khi điểm số lớn | Luôn dùng softmax ổn định số học |
 
-**Mẹo:** in `alpha` trên chuỗi đồ chơi 3–4 token trước khi scale lên.
+**Mẹo:** với causal self-attention, hãy kiểm tra `triu(weights, 1) == 0` sau mỗi lần sửa mã nguồn mask.
+
+**Mẹo:** in ma trận trọng số `alpha` trên chuỗi ngắn 3–4 token để kiểm chứng trước khi mở rộng sang mô hình lớn.
 
 ---
 
 ## 8. Tóm tắt các điểm chính
-1. Code attention luôn là **điểm số → mask → softmax → values có trọng số**.  
-2. Dạng vòng lặp Bahdanau là cài đặt dạy tốt nhất; matmul có scale là dạng production.  
-3. **Ổn định** (trừ max, `sqrt(d_k)`, mask `-inf`) là một phần của tính đúng đắn.  
-4. Unit test trên shape nhỏ bắt được 90% lỗi attention.  
 
-Bài kế: **multi-head attention**, demo phong phú hơn, papers, và phác thảo seq2seq.
+1. Luồng cài đặt attention luôn theo thứ tự: **tính điểm số → áp mask → softmax → nhân với values**.
+2. Cài đặt Bahdanau giúp dễ hình dung cơ chế từng bước, còn phép nhân ma trận có chia tỉ lệ là dạng chuẩn trong thực tế.
+3. Các bước đảm bảo **ổn định số học** (trừ giá trị cực đại, chia `sqrt(d_k)`, dùng `-inf` cho mask) là phần thiết yếu của thuật toán.
+4. Viết kiểm thử đơn vị trên tensor nhỏ giúp phát hiện sớm phần lớn lỗi liên quan đến chiều và mask.
+
+Bài tiếp theo sẽ mở rộng sang **multi-head attention**, minh họa mô hình seq2seq có attention và tổng hợp quy trình gỡ lỗi.
 
 ## Video tham khảo
 
-- **xem trước** [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Có bản cài tích vô hướng có tỉ lệ từng dòng. Video dài; phần attention là phần khớp bài này.
-- [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, tiếng Anh. Kích thước của Q, K và V để kiểm với mã.
-- [A Dive Into Multihead Attention, Self-Attention and Cross-Attention](https://www.youtube.com/watch?v=mmzRYGCfTzc) — Machine Learning Studio, tiếng Anh. Cần thêm gì sau khi lõi một head đã chạy.
+- **Xem trước:** [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy (tiếng Anh). Cài đặt chi tiết từng dòng scaled dot-product attention (video dài; phần attention khớp trực tiếp với bài này).
+- [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown (tiếng Anh). Đối chiếu kích thước của Q, K, V khi viết mã.
+- [A Dive Into Multihead Attention, Self-Attention and Cross-Attention](https://www.youtube.com/watch?v=mmzRYGCfTzc) — Machine Learning Studio (tiếng Anh). Gợi ý các bước mở rộng sau khi đã hoàn thiện phiên bản một head.

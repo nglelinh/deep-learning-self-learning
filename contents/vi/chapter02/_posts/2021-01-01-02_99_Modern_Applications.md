@@ -10,55 +10,55 @@ categories:
 lesson_type: optional
 ---
 
-# Tùy chọn: khối MLP hiện đại
+# Tùy chọn: Khối MLP hiện đại
 
-> Bài này là **tùy chọn**. Nó **không** viết lại lý thuyết perceptron, kiến trúc, hàm kích hoạt hay lan truyền thuận. Nó cho thấy các khối ấy được đóng gói thế nào trong foundation model 2022–2026.
+> Bài này là **tùy chọn** và **không** trình bày lại lý thuyết về perceptron, kiến trúc, hàm kích hoạt hay lan truyền xuôi. Mục đích của bài là cho thấy các thành phần cơ bản đó được tổ chức ra sao trong các mô hình nền tảng (*foundation model*) giai đoạn 2022–2026.
 
-Neuron vẫn là $$z = \mathbf{w}^\top \mathbf{x} + b$$ rồi phi tuyến. Cái đổi là **khối**: đường residual, MLP có cổng, và chuẩn hóa RMS trở thành “layer” mặc định để chồng.
+Ở mức đơn vị cơ bản, neuron vẫn thực hiện phép tính $$z = \mathbf{w}^\top \mathbf{x} + b$$ theo sau bởi một hàm phi tuyến. Điểm thay đổi lớn nằm ở **cấu trúc khối**: đường nối tắt residual, khối MLP có cổng (*gated MLP*) và chuẩn hóa RMSNorm đã trở thành cấu phần mặc định khi xếp chồng các lớp.
 
-## 1. Từ một neuron tới MLP của Transformer
+## 1. Từ một neuron tới khối MLP của Transformer
 
-Hầu hết LLM dùng khối feed-forward có cổng (SwiGLU / GeGLU), không phải `Linear → ReLU → Linear`. Với đầu vào $$\mathbf{x} \in \mathbb{R}^{d}$$,
+Phần lớn các mô hình ngôn ngữ lớn (LLM) hiện nay dùng khối feed-forward có cổng (SwiGLU hoặc GeGLU) thay cho cấu trúc truyền thống `Linear → ReLU → Linear`. Với đầu vào $$\mathbf{x} \in \mathbb{R}^{d}$$:
 
 $$\mathrm{SwiGLU}(\mathbf{x}) = \big(\mathrm{SiLU}(\mathbf{x}W_1) \odot (\mathbf{x}W_2)\big) W_3,$$
 
-trong đó $$\mathrm{SiLU}(z) = z\,\sigma(z)$$. Cùng đại số lan truyền thuận của Chương 02, thêm một cổng (tích Hadamard). [Shazeer, 2020](https://arxiv.org/abs/2002.05202) giới thiệu biến thể GLU; chúng thành chuẩn trong PaLM, LLaMA và các mô hình mở sau này.
+trong đó $$\mathrm{SiLU}(z) = z\,\sigma(z)$$. Về bản chất, đây vẫn là đại số lan truyền xuôi của Chương 02 nhưng bổ sung thêm một nhánh cổng thông qua tích Hadamard (nhân theo từng phần tử). [Shazeer, 2020](https://arxiv.org/abs/2002.05202) giới thiệu các biến thể GLU này, và chúng đã trở thành lựa chọn chuẩn trong PaLM, LLaMA cũng như nhiều mô hình mã nguồn mở về sau.
 
-## 2. Ứng dụng cụ thể
+## 2. Các ứng dụng và biến thể tiêu biểu
 
-### Pre-norm + RMSNorm thay BatchNorm
+### Pre-norm kết hợp RMSNorm thay cho BatchNorm
 
-LLM hầu như không dùng BatchNorm. Chúng dùng **RMSNorm**
+Các mô hình LLM hầu như không sử dụng BatchNorm mà chuyển sang **RMSNorm**:
 
 $$\mathrm{RMSNorm}(\mathbf{x}) = \frac{\mathbf{x}}{\sqrt{\frac{1}{d}\sum_i x_i^2 + \varepsilon}} \odot \boldsymbol{\gamma}$$
 
-và đặt trước nhánh residual (pre-norm). Đó là câu chuyện tỷ lệ kích hoạt từ bài vanishing gradient, áp ở quy mô 7B–400B.
+và đặt lớp chuẩn hóa này trước nhánh residual (*pre-norm*). Đây là giải pháp thực tiễn giúp kiểm soát thang đo kích hoạt và hạn chế gradient biến mất ở quy mô từ 7B đến 400B tham số.
 
-### MLP-Mixer và thị giác “all-MLP”
+### MLP-Mixer và hướng tiếp cận "toàn MLP" trong thị giác
 
-[Tolstikhin et al., 2021](https://arxiv.org/abs/2105.01601) (Mixer) cho thấy MLP trộn token + trộn kênh có thể phân loại ImageNet không cần tích chập. Di sản 2022–2024: Mixer là baseline rẻ cạnh ConvNeXt và ViT, không thay CNN.
+[Tolstikhin et al., 2021](https://arxiv.org/abs/2105.01601) (MLP-Mixer) chứng minh rằng chỉ dùng các lớp MLP trộn theo token và trộn theo kênh vẫn có thể phân loại tốt trên ImageNet mà không cần phép tích chập. Giai đoạn 2022–2024, Mixer thường được dùng như một mô hình cơ sở gọn nhẹ bên cạnh ConvNeXt và ViT chứ không thay thế hoàn toàn CNN.
 
 ### Kolmogorov–Arnold Networks (KAN)
 
-[Liu et al., 2024](https://arxiv.org/abs/2404.19756) thay hàm kích hoạt cố định trên nút bằng hàm một biến học được trên **cạnh**. Hãy coi đây là thí nghiệm cho câu “neuron là gì?” — không phải mặc định production cho thị giác hay NLP.
+[Liu et al., 2024](https://arxiv.org/abs/2404.19756) đề xuất thay các hàm kích hoạt cố định đặt trên nút bằng các hàm một biến học được đặt trên **cạnh**. Nên xem đây là một hướng nghiên cứu thử nghiệm xoay quanh câu hỏi "cấu trúc neuron có thể khác đi thế nào?", chưa phải lựa chọn mặc định cho các hệ thống thị giác hay NLP thực tế.
 
-## 3. Phần mềm phổ biến
+## 3. Thư viện và phần mềm phổ biến
 
-- `torch.nn.SiLU`, `RMSNorm`, và SwiGLU trong [LLaMA](https://github.com/meta-llama/llama) / [Hugging Face transformers](https://github.com/huggingface/transformers).
-- [timm](https://github.com/huggingface/pytorch-image-models) — khối MLP và ConvNeXt hiện đại cho thị giác.
+- `torch.nn.SiLU`, `RMSNorm` và khối SwiGLU trong [LLaMA](https://github.com/meta-llama/llama) và [Hugging Face transformers](https://github.com/huggingface/transformers).
+- [timm](https://github.com/huggingface/pytorch-image-models) — thư viện cung cấp các khối MLP và ConvNeXt hiện đại cho thị giác máy tính.
 
 ## 4. Trích dẫn (2022–2026)
 
-- [GLU Variants Improve Transformer (Shazeer, 2020)](https://arxiv.org/abs/2002.05202) — MLP có cổng trong mã LM 2024–2026.
-- [RMSNorm (Zhang & Sennrich, 2019)](https://arxiv.org/abs/1910.07467) — mặc định họ LLaMA.
-- [KAN (Liu et al., 2024)](https://arxiv.org/abs/2404.19756) — kích hoạt học được trên cạnh; nghiên cứu bổ sung, không thay MLP.
+- [GLU Variants Improve Transformer (Shazeer, 2020)](https://arxiv.org/abs/2002.05202) — nền tảng cho khối MLP có cổng trong các mô hình ngôn ngữ giai đoạn 2024–2026.
+- [RMSNorm (Zhang & Sennrich, 2019)](https://arxiv.org/abs/1910.07467) — lớp chuẩn hóa mặc định trong họ mô hình LLaMA.
+- [KAN (Liu et al., 2024)](https://arxiv.org/abs/2404.19756) — kích hoạt học được trên cạnh; một hướng nghiên cứu bổ sung chứ không thay thế MLP.
 
-## 5. Bài này bổ sung gì cho ghi chú cốt lõi
+## 5. Mối liên hệ với các bài học cốt lõi
 
-Dùng bài perceptron và hàm kích hoạt để hiểu $$z$$ và $$\sigma$$. Bài này chỉ ghi **cách đóng gói** (SwiGLU, RMSNorm, residual) khi bạn mở checkpoint LLM 2025 hoặc model card `timm`. Chương **26-07** đặt đóng gói đó lên cả stack decoder (RoPE, GQA, sổ sách).
+Các bài về perceptron và hàm kích hoạt giúp bạn hiểu rõ $$z$$ và $$\sigma$$. Bài này chỉ bổ sung **cách đóng gói hiện đại** (SwiGLU, RMSNorm, residual) để bạn dễ đọc hiểu khi mở một checkpoint LLM hoặc tài liệu mô hình trên `timm`. Bài **26-07** sẽ đặt khối này vào toàn bộ kiến trúc decoder cùng RoPE, GQA và phần tính toán chi phí đi kèm.
 
 ## Video tham khảo
 
-- **xem trước** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Khối MLP trong transformer là lớp kết nối đầy đủ hiện đại mà ghi chú mô tả.
-- [The GELU, SiLU and SwiGLU activation functions, clearly explained!!!](https://www.youtube.com/watch?v=2FaI2Fen1mQ) — StatQuest with Josh Starmer, tiếng Anh. SwiGLU là hàm kích hoạt khối đó thực sự dùng.
-- [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Bức tranh neuron xếp chồng ban đầu, để so sánh 'từ một neuron tới MLP' của ghi chú có chỗ đứng.
+- **Xem trước:** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Minh họa khối MLP bên trong Transformer — dạng lớp liên kết đầy đủ hiện đại được đề cập trong bài.
+- [The GELU, SiLU and SwiGLU activation functions, clearly explained!!!](https://www.youtube.com/watch?v=2FaI2Fen1mQ) — StatQuest with Josh Starmer, tiếng Anh. Giải thích chi tiết SwiGLU — hàm kích hoạt được sử dụng phổ biến trong các khối MLP hiện đại.
+- [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Ôn lại cấu trúc mạng neuron xếp chồng cơ bản để thấy rõ sự phát triển từ một neuron tới MLP của Transformer.

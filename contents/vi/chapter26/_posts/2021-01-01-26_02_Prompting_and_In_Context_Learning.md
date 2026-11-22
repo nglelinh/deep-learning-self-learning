@@ -11,65 +11,65 @@ categories:
 
 # Prompting, học trong ngữ cảnh và tuân thủ chỉ dẫn
 
-Sau tiền huấn luyện, trọng số đã hiện thực một máy next-token. **Prompting** là cách rẻ nhất để lái máy đó: bạn đổi tiền tố $$x_{<t}$$, không đổi $$\theta$$. **Tinh chỉnh** (*fine-tuning*) đổi $$\theta$$. Hầu hết sản phẩm LLM dùng cả hai, theo thứ tự đó.
+Sau giai đoạn tiền huấn luyện, bộ trọng số $$\theta$$ hiện thực một mô hình dự đoán token kế tiếp. **Prompting** là cách ít tốn kém nhất để điều hướng mô hình: ta chỉ thay đổi chuỗi tiền tố $$x_{<t}$$ mà không thay đổi $$\theta$$. Ngược lại, **tinh chỉnh** (*fine-tuning*) cập nhật trực tiếp $$\theta$$. Trong thực tế, phần lớn hệ thống LLM kết hợp cả hai cách tiếp cận này.
 
-Bài này tách ba giao diện mà phỏng vấn và blog thường trộn: prompting zero-shot, học trong ngữ cảnh (few-shot), và tuân thủ chỉ dẫn sau thích nghi có giám sát.
+Bài này phân biệt rõ ba khái niệm thường bị trộn lẫn: *prompting zero-shot*, học trong ngữ cảnh (*in-context learning*, ICL / *few-shot*) và khả năng tuân thủ chỉ dẫn sau tinh chỉnh có giám sát.
 
-## 1. Prompt là một phần của chuỗi
+## 1. Prompt là một phần của chuỗi đầu vào
 
-Vì $$p_\theta(x_t \mid x_{<t})$$ điều kiện trên *mọi thứ* trong cửa sổ, system prompt, tài liệu truy hồi, kết quả công cụ, và câu hỏi của người dùng chỉ là thêm token. Kiến trúc không có cổng “nhập prompt” riêng. Quy ước định dạng (khuôn chat, thẻ giống XML, schema JSON) quan trọng vì chúng là **tiền tố ổn định** mà mô hình đã thấy, hoặc sau này được huấn luyện để chờ.
+Do $$p_\theta(x_t \mid x_{<t})$$ điều kiện hóa trên *toàn bộ* chuỗi trong cửa sổ ngữ cảnh, các thành phần như *system prompt*, tài liệu truy hồi, kết quả trả về từ công cụ và câu hỏi người dùng thực chất đều là các token nối tiếp nhau. Kiến trúc Transformer không có cổng nhập “chỉ dẫn” tách biệt. Các quy ước định dạng (khuôn mẫu hội thoại, thẻ dạng XML, cấu trúc JSON) có tác dụng vì chúng tạo thành những **tiền tố có cấu trúc ổn định** mà mô hình đã gặp khi huấn luyện.
 
-Thói quen hữu ích: khi mô hình “bỏ qua chỉ dẫn,” hãy kiểm tra trước xem chỉ dẫn còn trong cửa sổ ngữ cảnh không và khuôn chat có khớp checkpoint đã thích nghi không. Đó thường là lỗi dữ liệu/định dạng hơn là lỗi kiến trúc.
+Khi mô hình có vẻ “bỏ qua chỉ dẫn”, trước hết nên kiểm tra xem chỉ dẫn có bị đẩy ra khỏi cửa sổ ngữ cảnh hay khuôn mẫu hội thoại (*chat template*) có khớp với phiên bản mô hình hay không — đây thường là lỗi định dạng hoặc cắt chuỗi hơn là lỗi kiến trúc.
 
-## 2. Zero-shot so với học trong ngữ cảnh
+## 2. Zero-shot và học trong ngữ cảnh (In-Context Learning)
 
-**Zero-shot.** Bạn mô tả tác vụ bằng ngôn ngữ (“Dịch sang tiếng Việt:”) rồi giải mã. Mô hình khái quát từ các mẫu tiền huấn luyện trông giống lời yêu cầu đó.
+**Zero-shot:** Người dùng mô tả trực tiếp yêu cầu bằng ngôn ngữ tự nhiên (ví dụ “Dịch sang tiếng Việt:”) rồi để mô hình sinh tiếp. Mô hình tổng quát hóa từ các mẫu tương tự đã xuất hiện trong dữ liệu tiền huấn luyện.
 
-**Học trong ngữ cảnh (ICL) / few-shot.** Bạn đặt vài cặp input–output vào tiền tố, rồi input mới. [Brown et al., 2020](https://arxiv.org/abs/2005.14165) (GPT-3) cho thấy ở quy mô đủ lớn việc này có thể trông như học tác vụ *mà không có bước gradient*. Cơ chế vẫn là dự đoán token kế: các ví dụ làm phần tiếp nối mong muốn likelier.
+**Học trong ngữ cảnh (ICL / few-shot):** Người dùng đặt một vài cặp ví dụ đầu vào–đầu ra vào ngay trong tiền tố trước câu hỏi mới. [Brown et al., 2020](https://arxiv.org/abs/2005.14165) (GPT-3) cho thấy ở quy mô đủ lớn, mô hình có thể thích nghi với tác vụ mới *mà không cần cập nhật gradient*. Về bản chất, cơ chế vẫn là dự đoán token kế tiếp: các ví dụ mẫu làm tăng xác suất của kiểu câu trả lời mong muốn.
 
-ICL **không** giống tinh chỉnh:
+So sánh học trong ngữ cảnh với tinh chỉnh cổ điển:
 
-| | Học trong ngữ cảnh | Tinh chỉnh cổ điển |
+| Tiêu chí | Học trong ngữ cảnh (ICL) | Tinh chỉnh cổ điển (Fine-tuning) |
 | --- | --- | --- |
-| Thứ đổi | Token trong cửa sổ | Tham số $$\theta$$ (hoặc adapter) |
-| Bền vững | Mất khi prompt biến | Sống qua các request |
-| Chi phí | Prefill / cache thêm | Compute huấn luyện, rồi prompt rẻ hơn |
-| Dữ liệu | Vài ví dụ sửa được ngay | Một tập dữ liệu và bộ tối ưu |
+| Thành phần thay đổi | Chuỗi token trong cửa sổ ngữ cảnh | Tham số $$\theta$$ (hoặc *adapter*) |
+| Tính bền vững | Không lưu lại sau khi đổi prompt | Giữ cố định qua mọi truy vấn |
+| Chi phí chính | Tốn thêm token *prefill* và bộ nhớ cache mỗi lần gọi | Tốn tính toán huấn luyện ban đầu, nhưng prompt ngắn và rẻ hơn khi phục vụ |
+| Yêu cầu dữ liệu | Vài ví dụ minh họa, chỉnh sửa tức thì | Tập dữ liệu huấn luyện và quy trình tối ưu |
 
-Khi nên chọn ICL: tác vụ mới, nhãn ít, hoặc phải đổi hành vi theo từng request (khách khác, schema khác). Khi nên chọn tinh chỉnh: hành vi phải ổn định, prompt sẽ phình to, hoặc bạn cần chuyên gia nhỏ/nhanh hơn (thường sau chưng cất — **26-05**).
+Nên ưu tiên ICL khi tác vụ mới, dữ liệu có nhãn còn ít, hoặc cần thay đổi hành vi linh hoạt theo từng truy vấn (ví dụ từng khách hàng hoặc từng định dạng khác nhau). Ngược lại, nên chọn tinh chỉnh khi cần hành vi ổn định lâu dài, khi prompt ngày càng phình to hoặc khi cần chuyển sang một mô hình chuyên biệt nhỏ và nhanh hơn (thường kết hợp chưng cất ở bài **26-05**).
 
-**Chuỗi suy nghĩ** (*chain-of-thought*, [Wei et al., 2022](https://arxiv.org/abs/2201.11903)) là một mẫu prompting: yêu cầu mô hình viết các bước trung gian trước đáp án. Nó không thêm module mới; nó phân bổ token giải mã cho một phép tính dài hơn, dễ kiểm hơn. Các mô hình “lý luận” sau này *huấn luyện* thói quen đó (Chương 25-99). Đừng nhầm mẹo prompt với kiến trúc mới.
+**Chuỗi suy nghĩ** (*chain-of-thought*, [Wei et al., 2022](https://arxiv.org/abs/2201.11903)) là một kỹ thuật *prompting* yêu cầu mô hình trình bày các bước suy luận trung gian trước khi đưa ra đáp án cuối. Kỹ thuật này không bổ sung mô-đun kiến trúc mới mà dành thêm token giải mã để chia nhỏ phép tính phức tạp thành các bước dễ kiểm soát hơn. Về sau, các mô hình suy luận chuyên biệt *huấn luyện* trực tiếp thói quen này (xem Chương 25-99).
 
-## 3. Tuân thủ chỉ dẫn thường không phải tiền huấn luyện thô
+## 3. Khả năng tuân thủ chỉ dẫn đến từ SFT
 
-LM gốc hoàn thiện văn bản. Nếu tiền tố là một bài blog, nó viết tiếp bài blog. Người dùng muốn một **trợ lý hữu ích**: làm theo yêu cầu, từ chối khi thích hợp, giữ giọng nhất quán.
+Mô hình ngôn ngữ thô sau tiền huấn luyện có xu hướng viết tiếp theo ngữ cảnh: nếu đầu vào là một đoạn bài viết, nó sẽ viết tiếp bài viết đó thay vì trả lời câu hỏi. Tuy nhiên, người dùng cần một **trợ lý** biết thực hiện yêu cầu, từ chối khi phù hợp và giữ phong cách nhất quán.
 
-Bước thích nghi chuẩn đầu tiên là **tinh chỉnh có giám sát (SFT)** trên các cặp (chỉ dẫn, câu trả lời) — minh họa do người viết hoặc lọc, hoặc do mô hình mạnh hơn sinh rồi được biên tập. Loss vẫn là cross-entropy token kế, nhưng *phân bố dữ liệu* giờ là “trả lời yêu cầu này,” không phải “viết tiếp web.”
+Bước thích nghi đầu tiên thường là **tinh chỉnh có giám sát (SFT)** trên tập dữ liệu các cặp `(chỉ dẫn, câu trả lời)` do con người biên soạn, chọn lọc hoặc do một mô hình mạnh hơn sinh ra và được kiểm duyệt. Hàm mất mát vẫn là cross-entropy dự đoán token kế tiếp, nhưng *phân bố dữ liệu* đã chuyển từ “viết tiếp văn bản web” sang “trả lời đúng yêu cầu”.
 
-Sau SFT, prompting vẫn quan trọng (công cụ, RAG, phong cách), nhưng mô hình dễ coi văn bản người dùng là *tác vụ* hơn là tài liệu cần nối dài. Tối ưu sở thích (bài sau) rồi xếp hạng *câu trả lời hợp lệ nào* được ưa hơn.
+Sau SFT, *prompting* vẫn rất hữu ích (cho gọi công cụ, RAG và định dạng), nhưng mô hình đã nhận diện văn bản người dùng như một *tác vụ cần thực hiện*. Giai đoạn tối ưu theo sở thích ở bài sau tiếp tục xếp hạng những câu trả lời hợp lệ nào được ưa chuộng hơn.
 
-Học chuyển giao cổ điển (Chương 15) cập nhật backbone cho một đầu ra và tập nhãn cố định. SFT chỉ dẫn cập nhật cùng đầu sinh trên nhiều tác vụ viết bằng ngôn ngữ. Cùng họ tối ưu; khác giao diện.
+So với học chuyển giao cổ điển (Chương 15) vốn thay đầu phân loại cho một tập nhãn cố định, SFT theo chỉ dẫn vẫn dùng chung đầu sinh ngôn ngữ cho nhiều tác vụ khác nhau mô tả bằng văn bản — cùng cơ chế tối ưu nhưng khác giao diện tác vụ.
 
-## 4. Checklist prompting ngắn (tự học)
+## 4. Danh mục kiểm tra khi viết prompt
 
-Chép các mục này và thử trên bất kỳ mô hình instruct mở nào:
+Khi thử nghiệm trên các mô hình *instruct*:
 
-1. Nêu **vai trò** và **hợp đồng đầu ra** (văn bản thường, khóa JSON, ngôn ngữ).
-2. Đặt **ràng buộc không thương lượng** trước ngữ cảnh truy hồi dài (chúng có thể bị đẩy ra khỏi $$L$$ nếu bạn append cuối).
-3. Với ICL, giữ ví dụ **đồng khuôn** với câu hỏi bạn sẽ hỏi.
-4. Nếu cần nguồn, truy hồi trước (Chương 18-99); đừng bảo mô hình bịa trích dẫn.
-5. Nếu cần hành vi bền, hãy lên kế hoạch SFT / adapter — đừng để prompt 8k token phình mãi.
+1. Xác định rõ **vai trò** và **định dạng đầu ra** (văn bản thuần, các khóa JSON, ngôn ngữ).
+2. Đặt các **ràng buộc bắt buộc** trước phần ngữ cảnh truy hồi dài để tránh bị cắt khỏi cửa sổ $$L$$.
+3. Khi dùng *few-shot* (ICL), giữ các ví dụ minh họa **đồng nhất định dạng** với truy vấn thực tế.
+4. Nếu cần dữ liệu trích dẫn xác thực, hãy truy hồi trước bằng RAG (Chương 18-99) thay vì yêu cầu mô hình tự nhớ.
+5. Nếu cần duy trì hành vi cố định trên quy mô lớn, nên lên kế hoạch SFT hoặc dùng *adapter* thay vì để prompt phình dài tới hàng nghìn token.
 
 ## Điểm chính cần nhớ
 
-- Prompting sửa tiền tố điều kiện; tinh chỉnh sửa trọng số.
-- ICL là few-shot *trong cửa sổ*, không phải bộ tối ưu vòng trong ẩn bạn được miễn phí.
-- Tuân thủ chỉ dẫn chủ yếu là đổi **dữ liệu** (SFT) trên cùng loss next-token.
-- Sở thích căn chỉnh là một đổi tiếp — bài **26-03** — không thay cho một prompt rõ.
-- Lấy mẫu lúc giải mã (nhiệt độ, top-$$k$$ / top-$$p$$) là nút phục vụ, không phải kiểu prompt mới — **26-04**.
+- *Prompting* điều chỉnh tiền tố điều kiện; tinh chỉnh cập nhật trực tiếp trọng số mô hình.
+- Học trong ngữ cảnh (ICL) là cơ chế *few-shot* ngay trong cửa sổ ngữ cảnh, không cập nhật tham số.
+- Khả năng tuân thủ chỉ dẫn chủ yếu đến từ việc thay đổi phân bố **dữ liệu** qua SFT trên cùng hàm mất mát dự đoán token kế tiếp.
+- Căn chỉnh theo sở thích (**26-03**) là bước bổ sung tiếp theo, không thay thế cho việc viết prompt rõ ràng.
+- Các tham số lấy mẫu khi giải mã (nhiệt độ, *top-k*, *top-p*) thuộc lớp phục vụ (**26-04**), không phải dạng *prompting* mới.
 
 ## Video tham khảo
 
-- **xem trước** [What Is In-Context Learning in Deep Learning?](https://www.youtube.com/watch?v=As9a15poQHs) — Deep Learning with Yacine, tiếng Anh. Học trong ngữ cảnh là điều kiện hóa trên các ví dụ nằm trong prompt, đúng bài này.
-- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, tiếng Anh. Một prompt là thêm token trong cùng mô hình token kế; đúng phần đầu của bài.
-- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Bạn có thể thấy prompt không gì hơn tiền tố mà bộ lấy mẫu tiếp tục.
+- **Xem trước** [What Is In-Context Learning in Deep Learning?](https://www.youtube.com/watch?v=As9a15poQHs) — Deep Learning with Yacine, tiếng Anh. Giải thích cơ chế học trong ngữ cảnh thông qua các ví dụ đặt trực tiếp trong prompt.
+- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, tiếng Anh. Minh họa cách prompt chỉ là các token tiền tố đi vào cùng một mô hình dự đoán token kế tiếp.
+- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Cho thấy trực tiếp trong mã nguồn rằng prompt chính là chuỗi tiền tố để bộ lấy mẫu sinh tiếp.

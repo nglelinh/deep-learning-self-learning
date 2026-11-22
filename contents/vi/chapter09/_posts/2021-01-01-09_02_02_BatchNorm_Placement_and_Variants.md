@@ -9,27 +9,27 @@ categories:
 - chapter09
 ---
 
-## Đặt Batch Norm ở Đâu
+## Vị trí đặt BatchNorm
 
-### Trước hay Sau Kích hoạt?
+### Trước hay sau hàm kích hoạt?
 
-**Bài báo gốc (trước kích hoạt)**:
+**Cách bố trí trong bài báo gốc (trước hàm kích hoạt):**
 ```python
 x = conv(x)
 x = batch_norm(x)
 x = relu(x)
 ```
 
-**Thực hành hiện đại (sau kích hoạt)**:
+**Cách bố trí thay thế (sau hàm kích hoạt):**
 ```python
 x = conv(x)
 x = relu(x)
 x = batch_norm(x)
 ```
 
-Cả hai đều hoạt động, nhưng “sau” phổ biến hơn hiện nay.
+Cả hai cách đều hoạt động tốt tùy kiến trúc; trong các mạng tích chập chuẩn như ResNet hay MobileNet, thứ tự `Conv → BN → ReLU` vẫn rất phổ biến, trong khi một số thực nghiệm lại chọn đặt sau hàm kích hoạt.
 
-### Ví dụ Mạng Hoàn chỉnh
+### Ví dụ mạng CNN kết hợp BatchNorm
 
 ```python
 class ConvNetWithBatchNorm:
@@ -78,9 +78,9 @@ class ConvNetWithBatchNorm:
         return x
 ```
 
-## Chuẩn hóa Batch cho CNN
+## Chuẩn hóa Batch cho CNN (BatchNorm2D)
 
-Với tầng tích chập, chuẩn hóa trên các chiều không gian:
+Với tầng tích chập có đầu vào dạng `(batch, channels, height, width)`, thống kê trung bình và phương sai được tính trên chiều batch cùng hai chiều không gian, giữ riêng cho từng kênh:
 
 ```python
 class BatchNorm2D:
@@ -125,11 +125,11 @@ class BatchNorm2D:
             return self.gamma * x_norm + self.beta
 ```
 
-## Biến thể và Lựa chọn Thay thế
+## Các biến thể chuẩn hóa thay thế
 
-### 1. Chuẩn hóa Tầng (*Layer Normalization*)
+### 1. Chuẩn hóa lớp (*Layer Normalization*)
 
-Chuẩn hóa trên các đặc trưng thay vì batch:
+Chuẩn hóa dọc theo chiều đặc trưng của từng mẫu độc lập thay vì dọc theo batch:
 
 ```python
 def layer_norm(x, gamma, beta, eps=1e-5):
@@ -143,11 +143,11 @@ def layer_norm(x, gamma, beta, eps=1e-5):
     return gamma * x_norm + beta
 ```
 
-**Tác vụ dùng**: RNN, Transformer (nơi batch size thay đổi hoặc bằng 1)
+**Ứng dụng tiêu biểu:** RNN và Transformer (nơi độ dài chuỗi thay đổi hoặc batch size nhỏ).
 
-### 2. Chuẩn hóa Instance (*Instance Normalization*)
+### 2. Chuẩn hóa theo từng mẫu và kênh (*Instance Normalization*)
 
-Chuẩn hóa mỗi mẫu và mỗi kênh độc lập:
+Chuẩn hóa độc lập theo hai chiều không gian cho từng mẫu và từng kênh:
 
 ```python
 def instance_norm(x, gamma, beta, eps=1e-5):
@@ -161,11 +161,11 @@ def instance_norm(x, gamma, beta, eps=1e-5):
     return gamma * x_norm + beta
 ```
 
-**Tác vụ dùng**: Chuyển phong cách (*style transfer*), GAN
+**Ứng dụng tiêu biểu:** chuyển đổi phong cách ảnh (*style transfer*) và GAN.
 
-### 3. Chuẩn hóa Nhóm (*Group Normalization*)
+### 3. Chuẩn hóa theo nhóm (*Group Normalization*)
 
-Thỏa hiệp giữa Layer và Instance norm:
+Chia các kênh thành nhiều nhóm rồi chuẩn hóa trong từng nhóm, nằm giữa LayerNorm và InstanceNorm:
 
 ```python
 def group_norm(x, gamma, beta, num_groups=32, eps=1e-5):
@@ -185,24 +185,22 @@ def group_norm(x, gamma, beta, num_groups=32, eps=1e-5):
     return gamma * x_norm + beta
 ```
 
-**Tác vụ dùng**: Batch size nhỏ, phát hiện đối tượng
+**Ứng dụng tiêu biểu:** bài toán phát hiện đối tượng và các hệ thống bị giới hạn batch size nhỏ.
 
-## Vấn đề Thường gặp và Giải pháp
+## Các vấn đề thường gặp và hướng xử lý
 
-### Vấn đề 1: Batch Size Nhỏ
+### Vấn đề 1: Batch size quá nhỏ
 
-**Vấn đề**: Thống kê batch không tin cậy với batch nhỏ
+Khi kích thước mini-batch nhỏ, ước lượng trung bình và phương sai theo batch trở nên nhiễu và kém tin cậy.
 
-**Giải pháp**:
-- Dùng Group Normalization hoặc Layer Normalization
-- Tăng batch size nếu có thể
-- Dùng momentum lớn hơn cho thống kê chạy
+**Hướng khắc phục:**
+- Chuyển sang Group Normalization hoặc Layer Normalization.
+- Tăng batch size nếu bộ nhớ cho phép.
+- Giảm `momentum` (theo quy ước PyTorch `running = (1 - m) * running + m * batch`) để thống kê chạy cập nhật mượt hơn qua nhiều batch.
 
-### Vấn đề 2: Lệch Train–Test
+### Vấn đề 2: Quên chuyển chế độ huấn luyện và kiểm tra
 
-**Vấn đề**: Hành vi khác nhau giữa huấn luyện và kiểm tra
-
-**Giải pháp**: Luôn nhớ đặt đúng chế độ huấn luyện
+BatchNorm sử dụng thống kê của batch hiện tại khi huấn luyện nhưng dùng thống kê chạy khi suy luận, nên bắt buộc phải đặt đúng chế độ:
 
 ```python
 # Huấn luyện
@@ -214,55 +212,52 @@ model.eval()  # hoặc training=False
 accuracy = evaluate(test_data)
 ```
 
-### Vấn đề 3: Batch Norm + Dropout
+### Vấn đề 3: Kết hợp BatchNorm và Dropout
 
-**Vấn đề**: Có thể tương tác kém
+Do cả hai cùng tác động lên phân phối và phương sai kích hoạt, việc kết hợp tùy tiện có thể làm giảm hiệu năng. Thông thường chỉ cần dùng BatchNorm ở các tầng tích chập; nếu vẫn muốn thêm dropout, nên đặt dropout sau BatchNorm và hàm kích hoạt.
 
-**Giải pháp**:
-- Thường không cần dropout khi có batch norm
-- Nếu dùng cả hai: dropout sau batch norm
-- Hoặc chỉ dùng một trong hai
+## Mẹo thực hành
 
-## Mẹo Thực tiễn
+### 1. Độ nhạy với khởi tạo trọng số
 
-### 1. Khởi tạo với Batch Norm
-
-Có thể dùng trọng số ban đầu lớn hơn:
+BatchNorm giúp mạng ít nhạy cảm hơn với thang độ lớn của trọng số khởi tạo:
 
 ```python
 # Không BatchNorm: khởi tạo cẩn thận
 W = np.random.randn(n_in, n_out) * np.sqrt(2.0 / n_in)
 
-# Có BatchNorm: có thể mạnh tay hơn
-W = np.random.randn(n_in, n_out) * 0.05  # Phương sai lớn hơn được
+# Có BatchNorm: ít nhạy cảm hơn với thang khởi tạo
+W = np.random.randn(n_in, n_out) * 0.05
 ```
 
-### 2. Learning Rate
+### 2. Tốc độ học (*Learning Rate*)
 
-Có thể dùng learning rate cao hơn nhiều:
+Nhờ bề mặt tối ưu ổn định hơn, mạng có BatchNorm thường cho phép dùng tốc độ học lớn hơn:
 
 ```python
 # Không BatchNorm
 lr = 0.001
 
 # Có BatchNorm
-lr = 0.01  # Cao hơn 10×!
+lr = 0.01  # Có thể thử cao hơn đáng kể
 ```
 
-### 3. Momentum cho Thống kê Chạy
+### 3. Hệ số `momentum` cho thống kê chạy
+
+Với quy ước `running = (1 - momentum) * running + momentum * batch`:
 
 ```python
-# Thích nghi nhanh (tập dữ liệu nhỏ)
+# Thích nghi nhanh theo batch mới (mặc định PyTorch)
+momentum = 0.1
+
+# Mượt hơn, giảm nhiễu khi batch nhỏ
 momentum = 0.01
 
-# Thống kê ổn định (tập dữ liệu lớn)
-momentum = 0.1  # Mặc định
-
-# Rất ổn định (sản xuất)
+# Rất ổn định khi cập nhật trên luồng dữ liệu dài
 momentum = 0.001
 ```
 
-## Batch Norm trong Kiến trúc Hiện đại
+## BatchNorm trong các kiến trúc phổ biến
 
 ### ResNet
 
@@ -305,20 +300,15 @@ def depthwise_separable_block(x):
 
 ## Tóm tắt
 
-- **Chuẩn hóa Batch** chuẩn hóa đầu vào tầng về phân phối ổn định
-- **Giảm dịch chuyển hiệp biến nội**, cho phép huấn luyện nhanh hơn
-- **Cho phép learning rate cao hơn** (tăng tốc 10–100×)
-- **Hoạt động như chính quy hóa**, giảm nhu cầu dropout
-- **Biến thể**: Layer Norm (RNN), Instance Norm (chuyển phong cách), Group Norm (batch nhỏ)
-- **Thực hành hiện đại**: Thiết yếu trong hầu hết mạng sâu
-- **Then chốt**: Nhớ chế độ huấn luyện so với suy luận!
+- **Batch Normalization** chuẩn hóa kích hoạt theo mini-batch để ổn định phân phối giữa các tầng và hỗ trợ tốc độ học lớn hơn.
+- **Hiệu ứng chính quy hóa nhẹ** giúp giảm nhu cầu dùng dropout trong nhiều mạng CNN.
+- **Các biến thể thay thế** gồm LayerNorm (RNN, Transformer), InstanceNorm (chuyển phong cách, GAN) và GroupNorm (batch size nhỏ).
+- **Lưu ý quan trọng**: luôn chuyển đúng chế độ `model.train()` khi huấn luyện và `model.eval()` khi đánh giá.
 
-Chuẩn hóa Batch đã cách mạng hóa học sâu bằng cách làm mạng dễ huấn luyện hơn rất nhiều. Nó giờ là thành phần chuẩn trong hầu hết kiến trúc hiện đại.
-
-**Tiếp theo**: Ta sẽ khám phá chính quy hóa L1/L2, dừng sớm, và tăng cường dữ liệu để hoàn thiện bộ công cụ chính quy hóa!
+Các kỹ thuật chính quy hóa khác như L1/L2, dừng sớm và tăng cường dữ liệu kết hợp cùng dropout và chuẩn hóa tạo thành bộ công cụ hoàn chỉnh để cải thiện khả năng tổng quát hóa.
 
 ## Video tham khảo
 
-- **xem trước** [Why Does Batch Norm Work? (C2W3L06)](https://www.youtube.com/watch?v=nUUqwaxLnWs) — DeepLearningAI, tiếng Anh. Các tranh luận về vị trí (trước hay sau kích hoạt) có một cơ chế bên dưới.
-- [Building makemore Part 3: Activations & Gradients, BatchNorm](https://www.youtube.com/watch?v=P6sfmUTpUmc) — Andrej Karpathy, tiếng Anh. Chuẩn hóa thực sự nằm đâu trong một khối hiện đại, và cái gì vỡ nếu batch quá nhỏ.
-- [Lecture 7 | Training Neural Networks II](https://www.youtube.com/watch?v=_JB0AO7QxSA) — Stanford University School of Engineering, tiếng Anh. Các lựa chọn kiểu layer norm xuất hiện trong phần kiến trúc hiện đại của bài huấn luyện thứ hai.
+- **Xem trước:** [Why Does Batch Norm Work? (C2W3L06)](https://www.youtube.com/watch?v=nUUqwaxLnWs) — DeepLearningAI (tiếng Anh). Cơ chế nền tảng giúp đánh giá việc đặt BatchNorm trước hay sau hàm kích hoạt.
+- [Building makemore Part 3: Activations & Gradients, BatchNorm](https://www.youtube.com/watch?v=P6sfmUTpUmc) — Andrej Karpathy (tiếng Anh). Trình bày vị trí đặt chuẩn hóa trong khối mạng hiện đại và hiện tượng suy giảm khi batch quá nhỏ.
+- [Lecture 7 | Training Neural Networks II](https://www.youtube.com/watch?v=_JB0AO7QxSA) — Stanford University School of Engineering (tiếng Anh). Giới thiệu LayerNorm và các biến thể chuẩn hóa trong phần kiến trúc mạng hiện đại.

@@ -10,6 +10,9 @@ categories:
 ---
 
 ## 4. Mã minh họa
+
+Ví dụ cài đặt Grad-CAM và xấp xỉ SHAP đơn giản bằng PyTorch:
+
 ```python
 import torch
 import torch.nn as nn
@@ -207,7 +210,7 @@ print("Negative = feature decreased prediction")
 print("Magnitude = importance")
 ```
 
-Ví dụ đối kháng để thăm dò độ vững chắc:
+Ví dụ tạo mẫu đối kháng bằng FGSM để kiểm tra độ vững chắc của mô hình:
 
 ```python
 def fgsm_attack(model, image, label, epsilon=0.1):
@@ -243,7 +246,7 @@ class ToyClassifier(nn.Module):
     def __init__(self):
         super().__init__()
         self.conv = nn.Conv2d(3, 32, 3)
-        self.fc = nn.Linear(32 * 6 * 6, 10)
+        self.fc = nn.Linear(32 * 7 * 7, 10)
     
     def forward(self, x):
         x = F.relu(self.conv(x))
@@ -289,46 +292,47 @@ else:
 ```
 
 ## 5. Khái niệm liên quan
-Diễn giải gắn với nhân quả qua nỗ lực vượt tương quan sang hiểu cơ chế nhân quả. Phương pháp gán công trạng xác định tương quan giữa đầu vào và đầu ra, nhưng tương quan không hàm ý nhân quả. Diễn giải nhân quả tìm cách trả lời “thay đổi đặc trưng đầu vào này có thực sự gây thay đổi dự đoán không?”, đòi hỏi can thiệp và suy luận phản thực vượt gán công trạng chuẩn.
 
-Mối quan hệ với định lượng bất định cung cấp hiểu biết bổ sung. Diễn giải cho thấy vì sao dự đoán được đưa ra. Định lượng bất định cho thấy mô hình tin cậy đến mức nào. Cùng nhau, chúng cung cấp hiểu biết toàn diện: “mô hình dự đoán lớp A vì đặc trưng X, với độ tin cậy Y”. Học sâu Bayes, dropout cho bất định, và phương pháp ensemble bổ sung diễn giải bằng cách định lượng độ tin cậy dự đoán.
+Diễn giải mô hình liên hệ gần gũi với suy luận nhân quả (*causal inference*). Các phương pháp quy kết thông thường chỉ phản ánh mối tương quan giữa đầu vào và đầu ra, chưa chứng minh quan hệ nhân quả. Diễn giải nhân quả đặt câu hỏi sâu hơn: “nếu can thiệp thay đổi đặc trưng này thì dự đoán có thực sự thay đổi không?”, đòi hỏi can thiệp và phân tích phản thực.
 
-Diễn giải liên quan đến công bằng và phát hiện thiên kiến. Nếu mô hình tuyển dụng dùng đặc trưng giới hoặc chủng tộc (trực tiếp hoặc qua proxy), phương pháp diễn giải tiết lộ điều này, cho phép kiểm toán hành vi phân biệt. Hiểu đặc trưng nào lái dự đoán là điều kiện tiên quyết để đảm bảo công bằng, dù diễn giải một mình không đảm bảo công bằng — ta còn phải xác định liệu các đặc trưng đã xác định là chính đáng hay thiên kiến.
+Diễn giải và định lượng độ bất định (*uncertainty quantification*) bổ trợ trực tiếp cho nhau: diễn giải cho biết *vì sao* mô hình dự đoán như vậy, còn định lượng bất định cho biết mô hình *chắc chắn đến mức nào*. Kết hợp cả hai (qua học sâu Bayes, *MC dropout* hoặc *ensemble*) mang lại câu trả lời đầy đủ hơn cho người sử dụng.
 
-## 6. Các Bài báo Nền tảng
+Diễn giải cũng là công cụ hỗ trợ kiểm toán tính công bằng và phát hiện thiên kiến. Nếu một mô hình tuyển dụng phụ thuộc trực tiếp hoặc gián tiếp (qua biến đại diện) vào giới tính hay chủng tộc, các phương pháp quy kết sẽ giúp bộc lộ điều đó. Tuy nhiên, diễn giải chỉ là bước phát hiện; việc đánh giá đặc trưng nào hợp lệ hay gây thiên kiến vẫn cần tiêu chuẩn miền và quy định cụ thể.
+
+## 6. Các bài báo nền tảng
 
 **["Deep Inside Convolutional Networks: Visualising Image Classification Models and Saliency Maps" (2014)](https://arxiv.org/abs/1312.6034)**  
 *Tác giả*: Karen Simonyan, Andrea Vedaldi, Andrew Zisserman  
-Giới thiệu bản đồ saliency dựa trên gradient cho CNN, cho thấy đạo hàm tiết lộ pixel nào quan trọng cho dự đoán. Thiết lập trực quan hóa như công cụ diễn giải then chốt.
+Giới thiệu bản đồ *saliency* dựa trên gradient cho CNN, đặt nền móng cho nhóm kỹ thuật trực quan hóa tầm quan trọng của từng pixel.
 
 **["Visualizing and Understanding Convolutional Networks" (2014)](https://arxiv.org/abs/1311.2901)**  
 *Tác giả*: Matthew Zeiler, Rob Fergus  
-Mạng deconvolution trực quan hóa đặc trưng mà các tầng CNN học. Cho thấy tầng sớm phát hiện cạnh/màu, tầng giữa phát hiện kết cấu/mẫu, tầng sâu phát hiện bộ phận đối tượng. Nền tảng cho hiểu đặc trưng phân cấp của CNN.
+Sử dụng mạng *deconvolution* để trực quan hóa đặc trưng qua các tầng CNN, chỉ ra cấu trúc phân cấp từ cạnh/màu ở tầng đầu, kết cấu ở tầng giữa đến bộ phận đối tượng ở tầng sâu.
 
 **["Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization" (2017)](https://arxiv.org/abs/1610.02391)**  
 *Tác giả*: Ramprasaath Selvaraju, Michael Cogswell, Abhishek Das, Ramakrishna Vedantam, Devi Parikh, Dhruv Batra  
-Grad-CAM sinh giải thích trực quan bằng cách dùng gradient để cân trọng bản đồ đặc trưng, tạo định vị phân biệt lớp mà không sửa kiến trúc. Trở thành chuẩn cho diễn giải CNN.
+Grad-CAM dùng gradient để gán trọng số cho các bản đồ đặc trưng, tạo bản đồ định vị theo lớp mà không cần sửa đổi kiến trúc CNN, trở thành công cụ phổ biến cho diễn giải ảnh.
 
 **["A Unified Approach to Interpreting Model Predictions" (2017)](https://arxiv.org/abs/1705.07874)**  
 *Tác giả*: Scott Lundberg, Su-In Lee  
-SHAP thống nhất nhiều phương pháp gán công trạng dưới khung giá trị Shapley từ lý thuyết trò chơi, cung cấp giải thích có nền tảng lý thuyết với các tính chất mong muốn. Trở thành chuẩn cho dữ liệu dạng bảng và giải thích bất chấp mô hình.
+SHAP thống nhất nhiều phương pháp quy kết dưới khung giá trị Shapley của lý thuyết trò chơi, được dùng rộng rãi cho dữ liệu dạng bảng và các mô hình tổng quát.
 
 **["Axiomatic Attribution for Deep Networks" (2017)](https://arxiv.org/abs/1703.01365)**  
 *Tác giả*: Mukund Sundararajan, Ankur Taly, Qiqi Yan  
-Integrated Gradients thỏa các tiên đề gán công trạng (độ nhạy, bất biến cài đặt) mà phương pháp dựa trên gradient vi phạm. Cung cấp phương pháp gán công trạng có nguyên tắc với đảm bảo lý thuyết.
+Đề xuất Integrated Gradients đáp ứng hai tiên đề quan trọng là tính nhạy và bất biến cài đặt mà gradient thuần túy vi phạm.
 
-## Bẫy Thường gặp và Mẹo
+## Bẫy thường gặp và mẹo thực hành
 
-Bản đồ saliency có thể gây hiểu nhầm. Gradient cao không luôn nghĩa là tầm quan trọng cao — có thể là artifact của kiến trúc mạng (batch norm, ReLU) hoặc tối ưu. Luôn kiểm chứng diễn giải bằng ablation (thực sự loại bỏ đặc trưng và đo ảnh hưởng) hoặc kiểm tra liệu giải thích có khớp tri thức miền.
+Bản đồ *saliency* đôi khi gây hiểu nhầm: gradient lớn không phải lúc nào cũng phản ánh đặc trưng quan trọng về mặt ngữ nghĩa mà có thể do đặc thù kiến trúc (như ReLU hay chuẩn hóa batch). Cần kiểm chứng lại bằng thử nghiệm loại bỏ đặc trưng (*ablation*) và đối chiếu với kiến thức chuyên ngành.
 
-Ví dụ đối kháng không nhất thiết chỉ ra mô hình kém. Mọi mô hình đều có lỗ hổng đối kháng — đó là tính chất cơ bản của không gian chiều cao. Tập trung vào độ vững chắc với nhiễu tự nhiên (nhiễu, mờ) hơn là trường hợp xấu nhất được tạo đối kháng, trừ khi an ninh là then chốt.
+Sự tồn tại của ví dụ đối kháng không đồng nghĩa mô hình hoàn toàn kém; hầu hết mô hình học sâu trong không gian nhiều chiều đều nhạy cảm với nhiễu đối kháng thiết kế riêng. Trừ các bài toán bảo mật đặc thù, cần ưu tiên đánh giá độ vững chắc trước các dạng nhiễu tự nhiên (như mờ ảnh, nhiễu cảm biến).
 
-## Điểm Chính Cần Nhớ
+## Điểm chính cần nhớ
 
-Diễn giải mạng neuron cho phép hiểu vì sao mô hình đưa ra dự đoán qua phương pháp gán công trạng (đầu vào nào quan trọng), kỹ thuật trực quan hóa (đặc trưng nào được học), và khung giải thích (quyết định phân rã ra sao). Saliency dựa trên gradient làm nổi bật vùng đầu vào có độ nhạy cao với thay đổi dự đoán. Grad-CAM trực quan hóa tầm quan trọng không gian trong CNN qua bản đồ đặc trưng cân trọng gradient. SHAP cung cấp gán công trạng có nền tảng lý thuyết qua giá trị Shapley từ lý thuyết trò chơi. Ví dụ đối kháng tiết lộ độ vững chắc mô hình bằng cách tìm nhiễu tối thiểu thay đổi dự đoán. Các phương pháp diễn giải khác nhau cung cấp góc nhìn bổ sung — saliency cho tầm quan trọng đầu vào, trực quan hóa kích hoạt cho đặc trưng học được, SHAP cho gán công trạng trung thực — thường đòi hỏi nhiều kỹ thuật cho hiểu biết toàn diện. Diễn giải cho phép gỡ lỗi tương quan giả, xây dựng niềm tin trong ứng dụng rủi ro cao, đáp ứng yêu cầu quy định, và sinh hiểu biết khoa học từ mẫu học được, ngày càng quan trọng khi triển khai học sâu mở rộng sang các miền then chốt đòi hỏi khả năng giải thích vượt ngoài độ chính xác.
+Diễn giải mô hình giúp hiểu cơ chế ra quyết định thông qua quy kết đặc trưng (đầu vào nào quan trọng), trực quan hóa kích hoạt (đặc trưng nào được học) và phân tích độ vững chắc. *Gradient saliency* và Grad-CAM làm nổi bật vùng không gian quan trọng trong CNN, SHAP cung cấp phương pháp quy kết có nền tảng lý thuyết trò chơi, còn ví dụ đối kháng thăm dò độ bền của biên quyết định. Vì mỗi kỹ thuật chỉ phản ánh một khía cạnh, việc kết hợp nhiều phương pháp giúp gỡ lỗi tương quan giả, kiểm toán thiên kiến và tăng độ tin cậy khi triển khai học sâu trong các lĩnh vực rủi ro cao.
 
 ## Video tham khảo
 
-- **xem trước** [Explainable AI explained! | #3 LIME](https://www.youtube.com/watch?v=d6j6bofhj2M) — DeepFindr, tiếng Anh. Một phương pháp cài được như một mô hình cục bộ có trọng số.
-- [SHAP values for beginners | What they mean and their applications](https://www.youtube.com/watch?v=MQ6fFDwjuco) — A Data Odyssey, tiếng Anh. Thư viện SHAP đang tính gì nếu bạn gọi nó thay vì viết tổng.
-- [Lecture 12 | Visualizing and Understanding](https://www.youtube.com/watch?v=6wcs6szJWMY) — Stanford University School of Engineering, tiếng Anh. Các cạm bẫy hình dung (các diễn giải trông có nghĩa nhưng không phải).
+- **Xem trước** [Explainable AI explained! | #3 LIME](https://www.youtube.com/watch?v=d6j6bofhj2M) — DeepFindr, tiếng Anh. Minh họa cách cài đặt một phương pháp giải thích cục bộ bằng mô hình có trọng số.
+- [SHAP values for beginners | What they mean and their applications](https://www.youtube.com/watch?v=MQ6fFDwjuco) — A Data Odyssey, tiếng Anh. Giúp hiểu rõ đại lượng mà thư viện SHAP tính toán phía sau giao diện gọi hàm.
+- [Lecture 12 | Visualizing and Understanding](https://www.youtube.com/watch?v=6wcs6szJWMY) — Stanford University School of Engineering, tiếng Anh. Phân tích các bẫy phổ biến khi trực quan hóa (những hình ảnh trông hợp lý nhưng chưa chắc phản ánh đúng cơ chế của mô hình).

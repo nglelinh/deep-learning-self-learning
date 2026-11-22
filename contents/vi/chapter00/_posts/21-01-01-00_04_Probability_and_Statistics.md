@@ -9,46 +9,46 @@ categories:
 lang: vi
 ---
 
-## Xác Suất và Thống Kê cho Tối Ưu Hóa Lồi
+## Xác suất và thống kê cho tối ưu hóa lồi
 
-Xác suất và thống kê tạo nên nền tảng quan trọng để hiểu nhiều bài toán tối ưu hóa, đặc biệt trong học máy và khoa học dữ liệu. Phần này giới thiệu các khái niệm xác suất thiết yếu thường xuất hiện trong tối ưu hóa lồi, từ ước lượng hợp lý tối đa đến tối ưu hóa Bayes.
+Xác suất và thống kê là nền tảng quan trọng để hiểu nhiều bài toán tối ưu hóa, đặc biệt trong học máy và khoa học dữ liệu. Phần này giới thiệu các khái niệm xác suất thiết yếu thường xuất hiện trong tối ưu hóa lồi, từ ước lượng hợp lý cực đại đến tối ưu hóa Bayes.
 
-### Tại Sao Xác Suất Quan Trọng trong Tối Ưu Hóa
+### Vì sao xác suất quan trọng trong tối ưu hóa
 
-Nhiều bài toán tối ưu hóa phát sinh từ mô hình hóa thống kê:
+Nhiều bài toán tối ưu hóa bắt nguồn trực tiếp từ mô hình hóa thống kê:
 
-- **Ước Lượng Hợp Lý Tối Đa (MLE)**: Tìm tham số để tối đa hóa khả năng của dữ liệu quan sát
-- **Tối Ưu Hóa Bayes**: Sử dụng mô hình xác suất để hướng dẫn tìm kiếm giải pháp tối ưu
-- **Tối Ưu Hóa Ngẫu Nhiên**: Xử lý sự bất định và ngẫu nhiên trong hàm mục tiêu
-- **Regularization**: Thêm prior xác suất để ngăn overfitting
-- **Tối Thiểu Hóa Rủi Ro**: Tối ưu hóa kỳ vọng loss trên phân phối xác suất
+- **Ước lượng hợp lý cực đại (MLE):** tìm tham số cực đại hóa độ hợp lý của dữ liệu quan sát.
+- **Tối ưu hóa Bayes:** dùng mô hình xác suất để định hướng tìm kiếm nghiệm tối ưu.
+- **Tối ưu hóa ngẫu nhiên:** xử lý yếu tố bất định và nhiễu ngẫu nhiên trong hàm mục tiêu.
+- **Điều chuẩn (*Regularization*):** đưa phân phối tiên nghiệm (*prior*) vào mô hình nhằm hạn chế quá khớp (*overfitting*).
+- **Cực tiểu hóa rủi ro:** cực tiểu hóa giá trị kỳ vọng của hàm mất mát trên một phân phối xác suất.
 
-### Các Chủ Đề Chính
+### Các chủ đề chính
 
-1. **Lý Thuyết Xác Suất Cơ Bản**: Không gian mẫu, biến cố và tiên đề xác suất
-2. **Các Phân Phối Xác Suất Thông Dụng**: Phân phối chuẩn, mũ và các phân phối quan trọng khác
-3. **Kỳ Vọng và Phương Sai**: Tính toán và tối ưu hóa giá trị kỳ vọng
-4. **Định Lý Bayes**: Nền tảng cho tối ưu hóa và suy luận Bayes
-5. **Ước Lượng Thống Kê**: Kết nối lý thuyết xác suất với bài toán tối ưu hóa
+1. **Lý thuyết xác suất cơ bản:** không gian mẫu, biến cố và tiên đề xác suất.
+2. **Các phân phối xác suất thông dụng:** phân phối chuẩn, phân phối mũ và các phân phối quan trọng khác.
+3. **Kỳ vọng và phương sai:** cách tính và tối ưu hóa các đại lượng đặc trưng của biến ngẫu nhiên.
+4. **Định lý Bayes:** nền tảng cho suy luận và tối ưu hóa Bayes.
+5. **Ước lượng thống kê:** cầu nối giữa mô hình xác suất và bài toán tối ưu hóa.
 
-### Kết Nối với Tối Ưu Hóa Lồi
+### Liên hệ với tối ưu hóa lồi
 
-Hiểu xác suất giúp bạn:
+Nắm vững xác suất giúp bạn:
 
-- **Xây Dựng Bài Toán**: Chuyển đổi sự bất định thực tế thành bài toán tối ưu hóa toán học
-- **Chọn Hàm Mục Tiêu**: Lựa chọn hàm loss phù hợp dựa trên giả thuyết xác suất
-- **Diễn Giải Kết Quả**: Hiểu khoảng tin cậy và ý nghĩa thống kê của nghiệm
-- **Xử Lý Nhiễu**: Đối phó với lỗi đo lường và quá trình ngẫu nhiên
-- **Thiết Kế Thuật Toán**: Phát triển phương pháp tối ưu hóa bền vững hoạt động dưới sự bất định
+- **Mô hình hóa bài toán:** chuyển yếu tố bất định thực tế thành bài toán tối ưu hóa toán học.
+- **Chọn hàm mục tiêu:** lựa chọn hàm mất mát phù hợp dựa trên giả định xác suất của dữ liệu.
+- **Diễn giải kết quả:** hiểu khoảng tin cậy và ý nghĩa thống kê của nghiệm thu được.
+- **Xử lý nhiễu:** làm việc hiệu quả với sai số đo lường và quá trình ngẫu nhiên.
+- **Thiết kế thuật toán:** xây dựng phương pháp tối ưu ổn định trước yếu tố bất định.
 
-Nền tảng này sẽ rất quan trọng khi chúng ta khám phá cách các mô hình xác suất dẫn đến bài toán tối ưu hóa lồi trong học máy, thống kê và các ứng dụng kỹ thuật.
+Nền tảng này sẽ được sử dụng xuyên suốt khi ta khảo sát cách các mô hình xác suất dẫn đến bài toán tối ưu hóa lồi trong học máy, thống kê và các ứng dụng kỹ thuật.
 
 <div style="background: #e8f4fd; padding: 15px; border-left: 4px solid #2196F3; margin: 20px 0;">
-<strong>💡 Lộ Trình Học:</strong> Bắt đầu với các khái niệm xác suất cơ bản, sau đó khám phá cách chúng kết nối với tối ưu hóa thông qua ước lượng hợp lý tối đa và phương pháp Bayes. Mỗi bài học xây dựng hướng tới việc hiểu cách sự bất định và ngẫu nhiên tạo ra các bài toán tối ưu hóa.
+<strong>💡 Lộ trình học:</strong> Hãy bắt đầu từ các khái niệm xác suất cơ bản, sau đó tìm hiểu cách chúng gắn với tối ưu hóa qua ước lượng hợp lý cực đại và suy luận Bayes. Mỗi bài học đều hướng tới việc làm rõ cách yếu tố bất định hình thành nên bài toán tối ưu hóa.
 </div>
 
 ## Video tham khảo
 
-- **xem trước** [L01.4 Probability Axioms](https://www.youtube.com/watch?v=pA83XtLeVig) — MIT OpenCourseWare, tiếng Anh. Các tiên đề là nền của mọi phân phối trong khối này.
-- [MaDL - Random Variables and Probability Distributions](https://www.youtube.com/watch?v=bvBukLjHZh8) — Tübingen Machine Learning, tiếng Anh. Biến ngẫu nhiên và phân phối, theo ký hiệu dùng cho học sâu.
-- [MaDL - Common Probability Distributions](https://www.youtube.com/watch?v=NbzVwvE_syQ) — Tübingen Machine Learning, tiếng Anh. Các họ có tên (Bernoulli tới Gauss) mà các bài phân phối đi sâu.
+- **Xem trước:** [L01.4 Probability Axioms](https://www.youtube.com/watch?v=pA83XtLeVig) — MIT OpenCourseWare, tiếng Anh. Các tiên đề xác suất là nền tảng cho toàn bộ các phân phối trong phần này.
+- [MaDL - Random Variables and Probability Distributions](https://www.youtube.com/watch?v=bvBukLjHZh8) — Tübingen Machine Learning, tiếng Anh. Trình bày biến ngẫu nhiên và phân phối xác suất theo ký hiệu chuẩn dùng trong học sâu.
+- [MaDL - Common Probability Distributions](https://www.youtube.com/watch?v=NbzVwvE_syQ) — Tübingen Machine Learning, tiếng Anh. Giới thiệu các họ phân phối thông dụng (từ Bernoulli đến Gauss) sẽ được phân tích kỹ ở các bài tiếp theo.

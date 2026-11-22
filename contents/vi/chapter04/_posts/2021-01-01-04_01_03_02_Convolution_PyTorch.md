@@ -9,7 +9,7 @@ categories:
 - chapter04
 ---
 
-### Cài đặt PyTorch
+### Cài đặt bằng PyTorch
 
 ```python
 import torch
@@ -153,7 +153,7 @@ print(f"Shape bộ lọc đầu: {first_filter.shape}")
 print(f"Giá trị bộ lọc (kênh 0):\n{first_filter[0]}")
 ```
 
-### Khối CNN Hoàn chỉnh với Thực hành Tốt nhất
+### Khối CNN Hoàn chỉnh theo Cấu trúc Chuẩn
 
 ```python
 class ConvBlock(nn.Module):
@@ -314,6 +314,6 @@ print(f"  Bước huấn luyện - Loss: {loss:.4f}, Accuracy: {acc:.4f}")
 
 ## Video tham khảo
 
-- **xem trước** [PyTorch Tutorial 14 - Convolutional Neural Network (CNN)](https://www.youtube.com/watch?v=pDdP0TFzsoQ) — Patrick Loeber, tiếng Anh. Một module Conv2d, rồi một khối CNN nhỏ, đúng bài này.
-- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, tiếng Anh. Các khối đó được xếp trong một mạng tích chập thật như thế nào.
-- [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, tiếng Anh. Thứ tự đối số (N, C, H, W) mà module giả định.
+- **Xem trước:** [PyTorch Tutorial 14 - Convolutional Neural Network (CNN)](https://www.youtube.com/watch?v=pDdP0TFzsoQ) — Patrick Loeber, tiếng Anh. Hướng dẫn sử dụng `nn.Conv2d` và ghép thành một mạng CNN hoàn chỉnh bằng PyTorch.
+- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, tiếng Anh. Minh họa cách các khối tích chập được xếp chồng trong các kiến trúc CNN thực tế.
+- [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, tiếng Anh. Giải thích quy ước chiều tensor `(N, C, H, W)` mà `nn.Conv2d` sử dụng.

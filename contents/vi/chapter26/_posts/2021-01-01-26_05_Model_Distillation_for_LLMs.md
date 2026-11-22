@@ -11,94 +11,84 @@ categories:
 
 # Chưng cất mô hình cho LLM
 
-Chương 23 đã giới thiệu **chưng cất tri thức (KD)** như một công cụ nén: học sinh nhỏ khớp giáo viên lớn. Bức tranh đó vẫn đúng. Điều đổi với LLM là *không gian đầu ra* (từ vựng token khổng lồ, từng bước một) và *giao diện* bạn có tới giáo viên (đầy đủ trọng số so với chỉ văn bản).
+Chương 23 đã giới thiệu **chưng cất tri thức (KD)** như một phương pháp nén mô hình: huấn luyện một mạng học sinh nhỏ khớp theo dự đoán của mạng giáo viên lớn. Nguyên lý đó vẫn giữ nguyên đối với LLM, nhưng có hai điểm thay đổi quan trọng: *không gian đầu ra* là một từ vựng rất lớn dự đoán tuần tự từng bước, và *mức độ truy cập* tới giáo viên có thể chỉ là đầu ra văn bản thay vì toàn bộ trọng số.
 
-Bài này ôn KD cổ điển, giải thích vì sao công thức 2015 trở nên vụng với LM tự hồi quy, rồi trình bày ba họ hiện đại bằng ngôn ngữ giảng dạy gốc. Đây **không** phải bản in lại blog hay bài báo nào.
+Bài này ôn lại KD cổ điển, phân tích lý do công thức năm 2015 trở nên khó áp dụng trực tiếp cho mô hình ngôn ngữ tự hồi quy, sau đó phân loại ba nhóm phương pháp chưng cất hiện đại kèm mã minh họa.
 
-## 1. Ôn KD cổ điển (phần cốt lõi Chương 23)
+## 1. Ôn tập KD cổ điển (nền tảng Chương 23)
 
-[Hinton, Vinyals và Dean, 2015](https://arxiv.org/abs/1503.02531), *Distilling the Knowledge in a Neural Network*, huấn luyện học sinh trên phân bố lớp **mềm** của giáo viên, không chỉ trên nhãn one-hot.
+[Hinton, Vinyals và Dean, 2015](https://arxiv.org/abs/1503.02531) (*Distilling the Knowledge in a Neural Network*) huấn luyện mô hình học sinh trên phân bố xác suất **mềm** của mô hình giáo viên thay vì chỉ dùng nhãn cứng *one-hot*.
 
-**Vì sao mục tiêu mềm giúp.** Nhãn cứng nói “ảnh này là lớp 7.” Giáo viên đã huấn luyện có thể nói “7 với 0,80, 3 với 0,15, 8 với 0,04, …” Khối xác suất ngoài đường chéo mã hóa *sai lầm nào là hợp lý* — cấu trúc tương tự mà Hinton et al. gọi là **tri thức tối** (*dark knowledge*). Học sinh nhận gradient giàu hơn “đúng so với sai.”
+**Lợi ích của mục tiêu mềm:** Nhãn cứng chỉ cho biết “ảnh này thuộc lớp 7”. Một mô hình giáo viên đã huấn luyện có thể dự đoán “lớp 7: 0,80; lớp 3: 0,15; lớp 8: 0,04…”. Phần xác suất phân bổ trên các lớp còn lại thể hiện *mức độ tương đồng giữa các lớp* — điều mà Hinton et al. gọi là **tri thức ẩn** (*dark knowledge*), cung cấp tín hiệu gradient giàu thông tin hơn so với nhãn đúng/sai đơn thuần.
 
-**Nhiệt độ.** Ở $$T = 1$$ giáo viên tự tin gần như one-hot, nên tín hiệu thêm biến mất. Softmax với nhiệt độ
+**Vai trò của nhiệt độ $$T$$:** Ở $$T = 1$$, phân bố của giáo viên thường quá nhọn (gần như *one-hot*), làm mờ phần tri thức ẩn. Softmax có nhiệt độ:
 
 $$p_i^{(T)} = \frac{\exp(z_i / T)}{\sum_j \exp(z_j / T)}$$
 
-làm dẹt phân bố khi $$T > 1$$ tăng. Học sinh khớp $$p_{\mathrm{teacher}}^{(T)}$$ (thường bằng divergence KL) và thường vẫn khớp nhãn cứng. Một phối trộn phổ biến là
+làm phẳng phân bố khi tăng $$T > 1$$. Mô hình học sinh khớp theo $$p_{\mathrm{teacher}}^{(T)}$$ bằng phân kỳ KL kết hợp với hàm mất mát trên nhãn cứng:
 
 $$\mathcal{L} = \alpha\, T^{2}\, \mathrm{KL}\big(p_{\mathrm{teacher}}^{(T)} \,\|\, p_{\mathrm{student}}^{(T)}\big) + (1-\alpha)\,\mathrm{CE}(y, z_{\mathrm{student}}).$$
 
-Hệ số $$T^{2}$$ giữ thang gradient không sụp khi bạn tăng $$T$$ (xem ghi chú 2015 và đoạn mã Chương 23). $$\alpha$$ đánh đổi “bắt chước giáo viên” với “trúng nhãn tập dữ liệu.”
+Hệ số $$T^{2}$$ bù lại sự suy giảm biên độ gradient khi tăng $$T$$, còn $$\alpha$$ cân bằng giữa việc học theo giáo viên và khớp nhãn gốc. Đây là thiết lập chuẩn cho bài toán **phân loại với số lớp $$K$$ cố định** (như ImageNet; xem lại bài **23-01** nếu cần).
 
-Đó là mô hình đầu đúng cho **phân loại $$K$$ cố định** (ImageNet, senone tiếng nói, đầu 10 lớp). Đọc lại **23-01** nếu đoạn này còn mới.
+## 2. Vì sao KD logit cổ điển khó áp dụng trực tiếp cho LLM?
 
-## 2. Vì sao KD logit cổ điển vụng với LM từ vựng lớn
+Một LLM chỉ-decoder thực hiện phân loại *tại mọi vị trí trong chuỗi* với số lớp $$K = V$$ lên tới hàng chục hoặc hàng trăm nghìn. Điều này gây ra bốn trở ngại thực tế:
 
-LM decoder là bộ phân loại *tại mọi vị trí*, với $$K = V$$ hàng chục hoặc hàng trăm nghìn, và “một mẫu” là một *chuỗi* các quyết định đó.
+- **Chi phí lưu trữ và tính toán:** Lưu hoặc truyền toàn bộ phân bố giáo viên tại mỗi token đòi hỏi bộ nhớ và I/O cỡ $$O(V)$$, nhanh chóng vượt trội chi phí tính toán của chính mô hình học sinh trên chuỗi dài.
+- **Tính thưa của phân bố:** Dù có tăng nhẹ nhiệt độ $$T$$, phần lớn xác suất vẫn dồn vào một số ít token; khớp toàn bộ $$V$$ phần tử gây lãng phí trừ khi cắt theo *top-k* hoặc lấy mẫu.
+- **Giới hạn quyền truy cập:** KD theo logit đòi hỏi quyền truy cập **hộp trắng** (hoặc ít nhất truy cập đầy đủ logit) vào mô hình giáo viên, trong khi nhiều giao diện API chỉ trả về văn bản (hoặc một vài *logprob* đầu bảng).
+- **Tính tuần tự của chuỗi:** Sai số tích lũy dần qua từng bước sinh; khớp phân bố token của giáo viên *trên tiền tố của giáo viên* không hoàn toàn đồng nghĩa với khớp *toàn bộ câu trả lời* khi học sinh tự sinh.
 
-Ma sát thực tế:
+Vì vậy, KD theo logit vẫn được dùng trong nội bộ các tổ chức sở hữu cả giáo viên lẫn học sinh (thường kết hợp cắt *top-k*), nhưng hiếm khi được dùng trực tiếp như công thức mặc định cho mọi bài toán LLM.
 
-- **Chi phí.** Lưu hoặc phát toàn bộ phân bố giáo viên mỗi token tốn thêm bộ nhớ và I/O $$O(V)$$. Với chuỗi dài, phần đó lấn át cả logit của học sinh.
-- **Thưa.** Sau một $$T$$ nhỏ, hầu như toàn bộ khối lượng $$V$$ nằm trên một nắm token. Bạn trả tiền để khớp các gần-không trừ khi cắt top-$$k$$ hoặc lấy mẫu.
-- **Quyền truy cập.** Huấn luyện trên logit giáo viên thường cần giáo viên **hộp trắng** (hoặc ít nhất lộ logit). API chat công khai thường trả *văn bản*, đôi khi vài logprob, không phải vector $$V$$ mỗi bước.
-- **Chuỗi, không phải ảnh i.i.d.** Lỗi cộng dồn theo vòng sinh. Khớp phân bố token giáo viên *cho trước tiền tố của giáo viên* khác với khớp *câu trả lời đã hoàn thiện* của giáo viên.
+## 3. Ba nhóm phương pháp chưng cất hiện đại
 
-Vì thế các nhóm vẫn dùng KD logit **trong nhà** khi họ sở hữu cả hai mô hình (và thường giới hạn top-$$k$$ hoặc một số vị trí). Họ không coi công thức 2015 như thứ thả vào là “làm bản sao rẻ của mô hình API đóng.”
+Các phương pháp chưng cất LLM có thể phân nhóm theo **mục tiêu học sinh cần khớp** và **mức độ truy cập giáo viên yêu cầu**.
 
-## 3. Ba họ hiện đại (cách nhóm gốc)
+### 3.1 Chưng cất qua dữ liệu tổng hợp / phản hồi (hộp đen)
 
-Tên gọi thay đổi giữa các bài báo. Hãy nhóm theo **học sinh được yêu cầu khớp cái gì** và **bạn cần quyền truy cập nào**.
+Mô hình giáo viên sinh các câu trả lời mẫu — gồm đáp án, chuỗi suy luận từng bước, mã nguồn hoặc bản viết lại tài liệu. Ta lưu tập cặp `(prompt, teacher_text)` rồi huấn luyện mô hình học sinh bằng SFT dự đoán token kế tiếp thông thường (có thể trộn thêm dữ liệu do con người viết).
 
-### 3.1 Chưng cất dữ liệu tổng hợp / phản hồi (vào văn bản, ra văn bản)
+Đây là hướng tiếp cận **hộp đen** phổ biến nhất vì chỉ cần mẫu văn bản đầu ra từ giáo viên mà không cần logit hay trạng thái ẩn. Nhiều dự án tinh chỉnh mô hình nhỏ tuân thủ chỉ dẫn, cũng như các mô hình học sinh học theo chuỗi suy luận dài từ mô hình suy luận lớn, đều thuộc nhóm này.
 
-Giáo viên sinh phần hoàn thiện — đáp án, chuỗi lập luận từng bước, mã, tài liệu viết lại. Bạn lưu `(prompt, teacher_text)` và huấn luyện học sinh bằng SFT token kế thông thường trên văn bản đó (đôi khi trộn dữ liệu người).
-
-Đây là mẫu **hộp đen** chiếm ưu thế: bạn chỉ cần mẫu từ giáo viên, không cần $$z$$ hay hidden state. Các bản clone tuân thủ chỉ dẫn đầu những năm 2020 (các dự án nghiên cứu tinh chỉnh LM nhỏ trên đầu ra của mô hình chat mạnh hơn) thuộc họ này. Công trình sau này nhờ giáo viên viết *lập luận* và dạy học sinh sinh cả token suy luận lẫn đáp án, để học sinh nhận mục tiêu dài và có cấu trúc hơn một chuỗi cuối ngắn.
-
-**Thứ được chuyển.** Hành vi bề mặt và, nếu prompt phủ tác vụ, một phần *quyết định* của giáo viên. **Thứ không tự động chuyển.** Hiệu chỉnh của toàn bộ $$p(\cdot\mid x_{<t})$$, đặc trưng nội tại, hay năng lực mà tập prompt không bao giờ khêu ra.
-
-Vì học sinh chỉ thấy chuỗi đã lấy mẫu, hai mẫu giáo viên cho cùng prompt có thể mâu thuẫn. Thiết kế tập (nhiệt độ, lọc, trộn nhãn thật) quan trọng không kém loss.
+**Giới hạn cần lưu ý:** Học sinh học được hành vi bề mặt và phong cách xử lý trong phạm vi các prompt đã phủ, nhưng không tự động kế thừa độ hiệu chỉnh xác suất trên toàn từ vựng hay các năng lực không xuất hiện trong tập dữ liệu sinh. Vì giáo viên có thể sinh các mẫu khác nhau cho cùng một prompt, khâu thiết kế tập prompt, lọc chất lượng và trộn dữ liệu thật đóng vai trò quyết định không kém hàm mất mát.
 
 ### 3.2 Chưng cất đặc trưng / trạng thái ẩn (hộp trắng)
 
-Học sinh khớp kích hoạt trung gian: hidden state, bản đồ attention, hoặc một phép chiếu residual stream của giáo viên. Việc này cần **độ sâu khớp hoặc adapter học được** và quyền vào nội tại giáo viên. Đó là analogue LM của các loss gợi ý dùng trong KD thị giác.
-
-Dùng khi bạn kiểm soát checkpoint giáo viên và muốn học sinh chia sẻ *hình học biểu diễn*, không chỉ chuỗi cuối. Không hợp với API bạn không thể gắn đo.
+Mô hình học sinh được huấn luyện để khớp các biểu diễn trung gian của giáo viên như trạng thái ẩn, bản đồ *attention* hoặc phép chiếu luồng phần dư (*residual stream*). Cách này đòi hỏi **quyền truy cập hộp trắng** vào mô hình giáo viên cùng các lớp chiếu trung gian (*adapter*) khi số chiều hoặc độ sâu khác nhau, tương tự các phương pháp khớp đặc trưng trong thị giác máy tính.
 
 ### 3.3 Chưng cất logit / phân bố token (hộp trắng)
 
-Áp ý tưởng 2015 tại mỗi vị trí: khớp $$p_{\mathrm{teacher}}(\cdot \mid x_{<t})$$ và $$p_{\mathrm{student}}(\cdot \mid x_{<t})$$, thường với nhiệt độ và thường với biến thể reverse-KL hoặc top-$$k$$ để học sinh không phí dung lượng vào đuôi. [Sanh et al., 2019](https://arxiv.org/abs/1910.01108) (DistilBERT) là ví dụ *encoder* kinh điển; các bài LM sinh khảo sát loss liên quan dưới tên như MiniLLM ([Gu et al., 2024](https://arxiv.org/abs/2306.08543)).
+Áp dụng trực tiếp ý tưởng năm 2015 tại từng vị trí chuỗi: khớp $$p_{\mathrm{student}}(\cdot \mid x_{<t})$$ với $$p_{\mathrm{teacher}}(\cdot \mid x_{<t})$$, thường kết hợp nhiệt độ, cắt *top-k* hoặc biến thể *reverse-KL* để mô hình học sinh tập trung vào các chế độ xác suất chính. [Sanh et al., 2019](https://arxiv.org/abs/1910.01108) (DistilBERT) là ví dụ kinh điển cho kiến trúc encoder, còn với mô hình sinh tự hồi quy có các nghiên cứu như MiniLLM ([Gu et al., 2024](https://arxiv.org/abs/2306.08543)).
 
-Đây là bản sao *phân bố* trung thành nhất, và đòi hỏi nhất: tokenizer giống (hoặc ánh xạ được), logit giáo viên lưu sẵn hoặc tính tại chỗ, và thường cùng chính sách tiền tố.
+Đây là cách chuyển giao phân bố sát nhất nhưng đòi hỏi điều kiện chặt chẽ nhất: dùng chung tokenizer (hoặc có ánh xạ tương thích), đủ tài nguyên tính hoặc lưu logit giáo viên và thống nhất chính sách chọn tiền tố.
 
-| Họ | Mục tiêu học sinh | Quyền giáo viên | Dùng điển hình |
+| Nhóm phương pháp | Mục tiêu học sinh khớp | Quyền truy cập giáo viên | Ứng dụng phổ biến |
 | --- | --- | --- | --- |
-| Phản hồi / dữ liệu tổng hợp | *Văn bản* giáo viên (và lập luận tùy chọn) | Chỉ mẫu | Giáo viên mở, tập SFT sản phẩm, hầu hết công thức công khai |
-| Đặc trưng / trạng thái ẩn | Kích hoạt tầng | Hộp trắng | Trong nhà, kiến trúc họ hàng |
-| Logit / phân bố token | Softmax trên $$V$$ | Hộp trắng (hoặc đủ logprob) | Trong nhà, cùng tokenizer |
+| Phản hồi / dữ liệu tổng hợp | Văn bản đầu ra (và chuỗi suy luận nếu có) | Chỉ cần mẫu đầu ra | Giáo viên nguồn mở, tập SFT sản phẩm |
+| Đặc trưng / trạng thái ẩn | Giá trị kích hoạt ở các tầng trung gian | Hộp trắng | Nội bộ, kiến trúc cùng họ |
+| Logit / phân bố token | Phân bố softmax trên từ vựng $$V$$ | Hộp trắng (hoặc đủ *logprob*) | Nội bộ, dùng chung tokenizer |
 
-Nhiều pipeline sản xuất **trộn**: sinh tập SFT tổng hợp, rồi thêm số hạng logit rẻ trên một tập con token nếu cả hai mô hình chạy nội bộ.
+Trong thực tế, nhiều quy trình kết hợp hai hướng: tạo tập SFT tổng hợp rồi bổ sung thêm số hạng khớp logit trên một tập con token khi cả hai mô hình cùng chạy nội bộ.
 
-## 4. Dùng hợp lệ trong nhà so với gặt không được phép
+## 4. Sử dụng hợp lệ và giới hạn điều khoản
 
-Chưng cất là kỹ thuật thông thường khi bạn **có quyền huấn luyện trên đầu ra hoặc trọng số của giáo viên**:
+Chưng cất là kỹ thuật nén và tối ưu hóa tiêu chuẩn khi bạn **có quyền hợp lệ để huấn luyện từ trọng số hoặc đầu ra của mô hình giáo viên**, chẳng hạn:
 
-- thu nhỏ mô hình frontier của chính bạn thành tầng nhanh hơn (di động, batch, on-prem),
-- theo **giấy phép mở** liệt kê chưng cất hoặc dữ liệu tổng hợp là mục đích dự kiến (một số checkpoint mở lớn được phát hành với câu chuyện đó),
-- nghiên cứu trên mô hình công khai mà điều khoản cho phép.
+- Thu nhỏ chính mô hình lớn của tổ chức mình thành phiên bản nhẹ hơn cho thiết bị biên, xử lý lô hoặc triển khai nội bộ.
+- Sử dụng các mô hình **giấy phép mở** cho phép rõ ràng việc chưng cất hoặc sinh dữ liệu tổng hợp.
+- Nghiên cứu trên các mô hình công khai trong phạm vi điều khoản cho phép.
 
-Căng thẳng cấu trúc không phải bí ẩn về một công ty cụ thể. **Một mô hình đủ hữu ích qua API sẽ phát ra văn bản cũng là tín hiệu huấn luyện.** Nhà cung cấp vì thế đặt **điều khoản dịch vụ** và kiểm soát kỹ thuật (giới hạn tốc độ, phát hiện lạm dụng) quanh việc dùng đầu ra để dựng mô hình cạnh tranh. Đó là vấn đề hợp đồng và toàn vẹn sản phẩm: năng lực rò qua cùng kênh bạn mở cho khách.
+Vấn đề pháp lý và sản phẩm phát sinh từ đặc điểm cố hữu: **đầu ra văn bản của một API đủ hữu ích cũng đồng thời là tín hiệu huấn luyện**. Do đó, nhiều nhà cung cấp đặt ra **điều khoản dịch vụ** và biện pháp kỹ thuật (giới hạn tần suất, phát hiện lạm dụng) nhằm ngăn việc thu thập đầu ra API để huấn luyện mô hình cạnh tranh.
 
-Khóa này **không** tóm lại cáo buộc theo vòng tin, yêu sách kiện tụng, hay số liệu sự cố chưa kiểm chứng. Những thứ đó đổi rất nhanh và dễ sai. Nếu bạn cần cuộc tranh luận công nghiệp như đọc thêm, hãy dùng một bài hướng dẫn đặt *kỹ thuật* lên trước — ví dụ [A Gentle Introduction to Model Distillation](https://machinelearningmastery.com/a-gentle-introduction-to-model-distillation/) trên Machine Learning Mastery (Chugani, 2026) — và coi mọi mục tranh cãi là **tin cần tự kiểm**, không phải nguồn sơ cấp.
+Nguyên tắc thực hành rõ ràng: nếu bạn không sở hữu mô hình giáo viên và điều khoản dịch vụ cấm dùng đầu ra để huấn luyện mô hình khác, không nên xây dựng tập dữ liệu chưng cất từ API đó; hãy sử dụng mô hình giáo viên có giấy phép mở phù hợp, mô hình tự huấn luyện hoặc tập dữ liệu công khai. Nếu muốn đọc thêm góc nhìn tổng quan về chủ đề này, có thể tham khảo bài viết [A Gentle Introduction to Model Distillation](https://machinelearningmastery.com/a-gentle-introduction-to-model-distillation/) trên Machine Learning Mastery (Chugani, 2026).
 
-**Quy tắc tự học.** Nếu bạn không sở hữu giáo viên và điều khoản cấm huấn luyện trên đầu ra, đừng dựng tập chưng cất từ API đó. Dùng giáo viên giấy phép mở, mô hình của bạn, hoặc tập dữ liệu công khai.
+## 5. Mã minh họa
 
-## 5. Phác thảo mã ngắn
+### 5.1 Chưng cất có nhiệt độ cho bài toán phân loại cố định
 
-### 5.1 KD có nhiệt độ cho bộ phân loại *cố định*
-
-Đây là bối cảnh Chương 23, viết sao cho $$T^{2}$$ và chiều KL rõ. Đây **không** phải bộ huấn luyện LM đầy đủ.
+Đoạn mã minh họa thiết lập của Chương 23, làm rõ vai trò hệ số $$T^{2}$$ và chiều tính phân kỳ KL:
 
 ```python
 import torch
@@ -120,11 +110,11 @@ def classification_kd_loss(student_logits, teacher_logits, labels,
     return alpha * soft + (1.0 - alpha) * hard
 ```
 
-Để hình dung analogue LM, nghĩ `num_classes = vocab_size` và vòng theo thời gian, với `ignore_index` trên padding — rồi nhớ vì sao người ta chuyển sang top-$$k$$ hoặc SFT văn bản.
+Khi mở rộng sang LLM, `num_classes` trở thành `vocab_size` lặp qua từng bước thời gian kèm `ignore_index` cho phần đệm — từ đó thấy rõ vì sao thực tế thường chuyển sang cắt *top-k* hoặc SFT trên văn bản.
 
-### 5.2 Chưng cất phản hồi *chính là* một tập tinh chỉnh
+### 5.2 Chưng cất qua phản hồi dưới dạng tập dữ liệu SFT
 
-Không cần loss mới. Bạn dựng các hàng mà học sinh sẽ thấy như dữ liệu chỉ dẫn thông thường:
+Không cần định nghĩa hàm mất mát mới; dữ liệu do giáo viên sinh được tổ chức như một tập tinh chỉnh chỉ dẫn thông thường:
 
 ```python
 # Mỗi hàng là văn bản giáo viên sinh; học sinh phải gán likelihood cao.
@@ -142,25 +132,25 @@ sft_rows = [
 # Tùy chọn: giữ một phần do người viết để học sinh không chỉ chép tật của giáo viên.
 ```
 
-Nếu giáo viên cũng viết lập luận, lưu nó *trong* `completion` (hoặc trường thứ hai bạn nối). Học sinh vẫn đang làm SFT; điều mới là **ai viết mục tiêu**.
+Nếu giáo viên sinh kèm chuỗi lập luận, phần lập luận đó được lưu ngay trong `completion` (hoặc một trường riêng nối trước đáp án); thuật toán huấn luyện vẫn là SFT chuẩn, điểm khác biệt nằm ở nguồn tạo dữ liệu mục tiêu.
 
 ## 6. Đọc thêm
 
-- Hinton, G., Vinyals, O., và Dean, J. (2015). [Distilling the Knowledge in a Neural Network](https://arxiv.org/abs/1503.02531). Nguồn lịch sử cho mục tiêu mềm, nhiệt độ, và tri thức tối.
-- Machine Learning Mastery — [A Gentle Introduction to Model Distillation](https://machinelearningmastery.com/a-gentle-introduction-to-model-distillation/) (Chugani, 2026). Khung hướng dẫn thêm về họ cổ điển so với thời LLM; **trích như đọc thêm, không sao chép ở đây**.
-- Khóa này: **23-01 Nén mô hình** (cắt tỉa, lượng tử, KD cổ điển) và **23-99** (GPTQ / AWQ / speculative decoding — bổ sung, không thay học sinh). Nháp-và-xác-nhận lúc phục vụ cũng ở **26-04**; sổ sách FLOP / bộ nhớ trước khi chọn cỡ học sinh ở **26-07**.
-- Con trỏ kỹ thuật tùy chọn (không bắt buộc): DistilBERT ([Sanh et al., 2019](https://arxiv.org/abs/1910.01108)); chưng cất kiểu lập luận như Distilling Step-by-Step ([Hsieh et al., 2023](https://arxiv.org/abs/2305.02301)); MiniLLM ([Gu et al., 2024](https://arxiv.org/abs/2306.08543)).
+- Hinton, G., Vinyals, O. và Dean, J. (2015). [Distilling the Knowledge in a Neural Network](https://arxiv.org/abs/1503.02531) — bài báo gốc về mục tiêu mềm, nhiệt độ và tri thức ẩn.
+- Machine Learning Mastery — [A Gentle Introduction to Model Distillation](https://machinelearningmastery.com/a-gentle-introduction-to-model-distillation/) (Chugani, 2026) — tổng quan nhập môn so sánh chưng cất cổ điển và chưng cất thời LLM.
+- Các bài liên quan trong khóa học: **23-01 Nén mô hình** (cắt tỉa, lượng tử hóa, KD cổ điển), **23-99** (GPTQ, AWQ, *speculative decoding*), **26-04** (tối ưu phục vụ trước khi chưng cất) và **26-07** (ước lượng FLOPs và bộ nhớ khi chọn kích thước học sinh).
+- Tài liệu kỹ thuật mở rộng: DistilBERT ([Sanh et al., 2019](https://arxiv.org/abs/1910.01108)), Distilling Step-by-Step ([Hsieh et al., 2023](https://arxiv.org/abs/2305.02301)) và MiniLLM ([Gu et al., 2024](https://arxiv.org/abs/2306.08543)).
 
 ## Điểm chính cần nhớ
 
-- KD cổ điển = khớp *phân bố lớp mềm* của giáo viên; nhiệt độ làm lộ tri thức tối.
-- LM tự hồi quy khiến khớp đủ logit vừa đắt vừa thường không truy cập được.
-- Thực hành hiện đại tụ thành chưng cất **phản hồi (tổng hợp)**, **đặc trưng**, và **logit**.
-- Chưng cất trong nhà / có giấy phép là việc hiệu năng chuẩn; huấn luyện trên API bị cấm là vấn đề điều khoản và rò năng lực, không phải thuật toán mới.
-- KL có nhiệt độ là *hình dung* đúng; tệp SFT do giáo viên viết là thứ hầu hết học sinh LLM thực sự huấn luyện trên đó.
+- KD cổ điển huấn luyện học sinh khớp phân bố lớp mềm của giáo viên; tham số nhiệt độ giúp bộc lộ tri thức ẩn giữa các lớp.
+- Với LLM tự hồi quy, khớp đầy đủ logit trên toàn bộ từ vựng vừa tốn chi phí vừa thường không khả thi nếu thiếu quyền truy cập hộp trắng.
+- Các phương pháp chưng cất LLM hiện đại chia thành ba nhóm chính: **phản hồi (dữ liệu tổng hợp)**, **đặc trưng ẩn** và **logit**.
+- Chưng cất hợp lệ dựa trên mô hình tự sở hữu hoặc giấy phép mở cho phép; thu thập đầu ra API trái điều khoản là vấn đề pháp lý và hợp đồng.
+- Phân kỳ KL có nhiệt độ giúp hiểu bản chất lý thuyết, còn tập SFT sinh bởi giáo viên là định dạng huấn luyện phổ biến nhất cho các mô hình học sinh LLM.
 
 ## Video tham khảo
 
-- **xem trước** [Knowledge Distillation: How LLMs train each other](https://www.youtube.com/watch?v=jrJKRYAdh7I) — Julia Turc, tiếng Anh. Một mô hình ngôn ngữ lớn dạy một mô hình nhỏ hơn như thế nào, đúng nửa hiện đại của bài.
-- [2.3 Knowledge Distillation | Geoffery Hinton | Soft Labels | Softmax with Temperature](https://www.youtube.com/watch?v=g1r4Esohw-g) — AI_Snippets, tiếng Anh. Chưng cất nhãn mềm cổ điển và nhiệt độ, phần ôn Chương 23.
-- [How LLMs survive in low precision | Quantization Fundamentals](https://www.youtube.com/watch?v=qoQJq5UwV1c) — Julia Turc, tiếng Anh. Vì sao khớp cả phân phối từ vựng thì đắt, đúng phản đối của bài với KD logit ngây thơ.
+- **Xem trước** [Knowledge Distillation: How LLMs train each other](https://www.youtube.com/watch?v=jrJKRYAdh7I) — Julia Turc, tiếng Anh. Giải thích cách mô hình ngôn ngữ lớn huấn luyện mô hình nhỏ hơn, bám sát phần chưng cất hiện đại trong bài.
+- [2.3 Knowledge Distillation | Geoffery Hinton | Soft Labels | Softmax with Temperature](https://www.youtube.com/watch?v=g1r4Esohw-g) — AI_Snippets, tiếng Anh. Ôn lại chưng cất nhãn mềm và nhiệt độ của Hinton từ Chương 23.
+- [How LLMs survive in low precision | Quantization Fundamentals](https://www.youtube.com/watch?v=qoQJq5UwV1c) — Julia Turc, tiếng Anh. Giúp thấy bối cảnh chi phí bộ nhớ khi làm việc với từ vựng lớn, làm rõ hạn chế của KD logit thuần túy.

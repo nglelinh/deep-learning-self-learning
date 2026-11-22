@@ -10,7 +10,7 @@ categories:
 lesson_type: quiz
 ---
 
-Bài tập trắc nghiệm này kiểm tra hiểu biết của bạn về các khái niệm cơ bản trong giải tích và đại số tuyến tính, là nền tảng cho tối ưu hóa.
+Bài tập trắc nghiệm này giúp bạn kiểm tra mức độ nắm vững các khái niệm nền tảng của giải tích, đại số tuyến tính và xác suất — cơ sở trực tiếp cho tối ưu hóa và học sâu.
 
 ---
 
@@ -22,10 +22,10 @@ Trước khi làm bài tập, hãy ôn lại các khái niệm chính trong chư
 
 **Đạo hàm và đạo hàm riêng:**
 - Đạo hàm: $$f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$$
-- Đạo hàm riêng: $$\frac{\partial f}{\partial x_i}$$ - đạo hàm theo $$x_i$$ khi các biến khác cố định
+- Đạo hàm riêng: $$\frac{\partial f}{\partial x_i}$$ — đạo hàm theo $$x_i$$ khi giữ cố định các biến còn lại
 
 **Gradient và đạo hàm có hướng:**
-- Gradient: $$\nabla f = \begin{pmatrix} \frac{\partial f}{\partial x_1} \\ \vdots \\ \frac{\partial f}{\partial x_n} \end{pmatrix}$$ - vector chỉ hướng tăng dốc nhất
+- Gradient: $$\nabla f = \begin{pmatrix} \frac{\partial f}{\partial x_1} \\ \vdots \\ \frac{\partial f}{\partial x_n} \end{pmatrix}$$ — vector chỉ hướng tăng nhanh nhất của hàm số
 - Đạo hàm có hướng: $$D_{\mathbf{u}}f = \nabla f \cdot \mathbf{u} = \|\nabla f\| \cos \theta$$
 
 **Chuỗi Taylor:**
@@ -51,11 +51,11 @@ Trước khi làm bài tập, hãy ôn lại các khái niệm chính trong chư
 **Ma trận:**
 - Phép nhân ma trận: $$(AB)_{ij} = \sum_{k} A_{ik} B_{kj}$$
 - Ma trận nghịch đảo: $$AA^{-1} = I$$ (nếu tồn tại)
-- Định thức: $$\det(A)$$ - đo "thể tích" biến đổi tuyến tính
+- Định thức: $$\det(A)$$ — đo hệ số thay đổi thể tích của phép biến đổi tuyến tính
 
-**Eigenvalue và eigenvector:**
+**Giá trị riêng (*eigenvalue*) và vector riêng (*eigenvector*):**
 - $$A\mathbf{v} = \lambda \mathbf{v}$$ với $$\mathbf{v} \neq \mathbf{0}$$
-- $$\lambda$$: eigenvalue, $$\mathbf{v}$$: eigenvector tương ứng
+- $$\lambda$$: giá trị riêng, $$\mathbf{v}$$: vector riêng tương ứng
 
 ### 📊 **Lý thuyết tập hợp và giải tích thực**
 
@@ -72,7 +72,7 @@ Trước khi làm bài tập, hãy ôn lại các khái niệm chính trong chư
 
 **Khái niệm cơ bản:**
 - Xác suất: $$P(A) \in [0,1]$$, $$P(\Omega) = 1$$
-- Biến ngẫu nhiên: hàm từ không gian mẫu đến số thực
+- Biến ngẫu nhiên: ánh xạ từ không gian mẫu vào tập số thực
 - Kỳ vọng: $$E[X] = \int x f(x) dx$$ (liên tục) hoặc $$E[X] = \sum x P(X=x)$$ (rời rạc)
 
 **Phân phối thông dụng:**
@@ -82,7 +82,7 @@ Trước khi làm bài tập, hãy ôn lại các khái niệm chính trong chư
 
 ---
 
-💡 **Mẹo:** Các khái niệm này là nền tảng cho tối ưu hóa. Gradient chỉ hướng tăng nhanh nhất, ma trận Hessian mô tả độ cong, và chuỗi Taylor giúp xấp xỉ hàm cục bộ.
+💡 **Gợi ý ôn tập:** Những khái niệm trên là nền tảng trực tiếp của tối ưu hóa: gradient chỉ hướng tăng nhanh nhất, ma trận Hessian mô tả độ cong, còn khai triển Taylor giúp xấp xỉ hàm số trong vùng lân cận.
 
 ---
 
@@ -150,7 +150,7 @@ Trước khi làm bài tập, hãy ôn lại các khái niệm chính trong chư
             <h3>Câu 4: Cho gradient $$\nabla f = \begin{pmatrix} 3 \\ 4 \end{pmatrix}$$ và vector đơn vị $$\mathbf{u} = \begin{pmatrix} 0.6 \\ 0.8 \end{pmatrix}$$. Đạo hàm có hướng $$D_{\mathbf{u}}f$$ là:</h3>
             <div class="options">
                 <label><input type="radio" name="q4" value="a"> A) $$5$$</label>
-                <label><input type="radio" name="q4" value="b"> B) $$5.0$$</label>
+                <label><input type="radio" name="q4" value="b"> B) $$4.2$$</label>
                 <label><input type="radio" name="q4" value="c"> C) $$3.2$$</label>
                 <label><input type="radio" name="q4" value="d"> D) $$7$$</label>
             </div>
@@ -240,9 +240,9 @@ Trước khi làm bài tập, hãy ôn lại các khái niệm chính trong chư
             <h3>Câu 10: Tích của hai ma trận $$\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} \begin{pmatrix} 2 & 0 \\ 1 & 3 \end{pmatrix}$$ là:</h3>
             <div class="options">
                 <label><input type="radio" name="q10" value="a"> A) $$\begin{pmatrix} 4 & 6 \\ 10 & 12 \end{pmatrix}$$</label>
-                <label><input type="radio" name="q10" value="b"> B) $$\begin{pmatrix} 4 & 6 \\ 10 & 12 \end{pmatrix}$$</label>
+                <label><input type="radio" name="q10" value="b"> B) $$\begin{pmatrix} 4 & 3 \\ 10 & 12 \end{pmatrix}$$</label>
                 <label><input type="radio" name="q10" value="c"> C) $$\begin{pmatrix} 2 & 0 \\ 3 & 12 \end{pmatrix}$$</label>
-                <label><input type="radio" name="q10" value="d"> D) $$\begin{pmatrix} 4 & 6 \\ 10 & 12 \end{pmatrix}$$</label>
+                <label><input type="radio" name="q10" value="d"> D) $$\begin{pmatrix} 2 & 6 \\ 10 & 14 \end{pmatrix}$$</label>
             </div>
             <div class="explanation" style="display: none;">
                 <strong>Đáp án đúng: A) $$\begin{pmatrix} 4 & 6 \\ 10 & 12 \end{pmatrix}$$</strong><br>
@@ -443,7 +443,7 @@ Trước khi làm bài tập, hãy ôn lại các khái niệm chính trong chư
             <div class="options">
                 <label><input type="radio" name="q23" value="a"> A) $$5$$</label>
                 <label><input type="radio" name="q23" value="b"> B) $$7$$</label>
-                <label><input type="radio" name="q23" value="c"> C) $$\sqrt{25}$$</label>
+                <label><input type="radio" name="q23" value="c"> C) $$\sqrt{13}$$</label>
                 <label><input type="radio" name="q23" value="d"> D) $$3$$</label>
             </div>
             <div class="explanation" style="display: none;">
@@ -454,16 +454,16 @@ Trước khi làm bài tập, hãy ôn lại các khái niệm chính trong chư
 
         <!-- Câu hỏi 24: Ứng dụng eigenvalue -->
         <div class="question" id="q24" style="display: none;">
-            <h3>Câu 24: Ma trận $$A = \begin{pmatrix} 3 & 1 \\ 0 & 2 \end{pmatrix}$$ có eigenvalue là:</h3>
+            <h3>Câu 24: Các giá trị riêng (eigenvalue) của ma trận $$A = \begin{pmatrix} 3 & 1 \\ 0 & 2 \end{pmatrix}$$ là:</h3>
             <div class="options">
                 <label><input type="radio" name="q24" value="a"> A) $$\lambda_1 = 3, \lambda_2 = 2$$</label>
-                <label><input type="radio" name="q24" value="b"> B) $$\lambda_1 = 2, \lambda_2 = 3$$</label>
+                <label><input type="radio" name="q24" value="b"> B) $$\lambda_1 = 3, \lambda_2 = 1$$</label>
                 <label><input type="radio" name="q24" value="c"> C) $$\lambda_1 = 1, \lambda_2 = 5$$</label>
                 <label><input type="radio" name="q24" value="d"> D) $$\lambda_1 = 0, \lambda_2 = 5$$</label>
             </div>
             <div class="explanation" style="display: none;">
                 <strong>Đáp án đúng: A) $$\lambda_1 = 3, \lambda_2 = 2$$</strong><br>
-                Đối với ma trận tam giác trên, eigenvalue chính là các phần tử trên đường chéo chính.
+                Đối với ma trận tam giác trên, các giá trị riêng chính là các phần tử nằm trên đường chéo chính.
             </div>
         </div>
 
@@ -885,6 +885,6 @@ document.addEventListener('keydown', function(event) {
 
 ## Video tham khảo
 
-- **xem trước** [Continuity at a point | Limits and continuity | AP Calculus AB | Khan Academy](https://www.youtube.com/watch?v=3KMqU5j7irw) — Khan Academy, tiếng Anh. Nếu các câu trắc nghiệm về liên tục là phần còn chưa chắc.
-- [Vectors | Chapter 1, Essence of linear algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs) — 3Blue1Brown, tiếng Anh. Dùng video này cho các câu về vector: một mũi tên trong R^n thực sự là gì.
-- [L01.4 Probability Axioms](https://www.youtube.com/watch?v=pA83XtLeVig) — MIT OpenCourseWare, tiếng Anh. Dùng video này cho các câu về tiên đề trước khi làm lại phần xác suất.
+- **Xem trước:** [Continuity at a point | Limits and continuity | AP Calculus AB | Khan Academy](https://www.youtube.com/watch?v=3KMqU5j7irw) — Khan Academy, tiếng Anh. Phù hợp để ôn lại khái niệm giới hạn và tính liên tục tại một điểm.
+- [Vectors | Chapter 1, Essence of linear algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs) — 3Blue1Brown, tiếng Anh. Trực quan hóa bản chất của vector trong không gian $$\mathbb{R}^n$$ để hỗ trợ các câu hỏi đại số tuyến tính.
+- [L01.4 Probability Axioms](https://www.youtube.com/watch?v=pA83XtLeVig) — MIT OpenCourseWare, tiếng Anh. Ôn lại các tiên đề xác suất cơ bản trước khi làm các câu hỏi phần xác suất.

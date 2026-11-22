@@ -9,107 +9,101 @@ categories:
 - chapter15
 ---
 
-# Học Chuyển giao: Tận dụng Tri thức Tiền huấn luyện
+# Học Chuyển giao: Tận dụng tri thức tiền huấn luyện
 
 ## 1. Tổng quan khái niệm
-Học chuyển giao (transfer learning) đại diện cho một trong những mô hình thực tiễn quan trọng nhất trong deep learning hiện đại, cho phép ta xây dựng mô hình hiệu quả cao với dữ liệu chuyên tác vụ hạn chế bằng cách tận dụng tri thức học được từ các tác vụ liên quan. Nguyên tắc cốt lõi tưởng chừng đơn giản: thay vì huấn luyện mạng neuron từ đầu với trọng số khởi tạo ngẫu nhiên, ta bắt đầu với trọng số tiền huấn luyện trên tập dữ liệu lớn cho tác vụ liên quan, rồi thích ứng các trọng số này cho bài toán cụ thể của ta. Cách tiếp cận này đã dân chủ hóa deep learning, khiến nó dễ tiếp cận với thực hành viên thiếu tập dữ liệu khổng lồ và tài nguyên tính toán cần để huấn luyện mô hình lớn từ đầu. Một ứng dụng ảnh y tế có thể tận dụng mạng tiền huấn luyện trên ImageNet. Một mô hình phân tích cảm xúc có thể bắt đầu từ BERT tiền huấn luyện trên văn bản web. Một hệ thống nhận dạng giọng nói có thể tinh chỉnh Wav2Vec học trên âm thanh không gán nhãn.
 
-Hiểu vì sao học chuyển giao hoạt động đòi hỏi đánh giá điều mạng neuron học trong huấn luyện. Các tầng của mạng sâu xây dựng dần biểu diễn phân cấp. Tầng sớm học đặc trưng tổng quát, mức thấp — cạnh, texture, hình dạng đơn giản cho ảnh; phoneme cơ bản cho âm thanh; mẫu từ phổ biến cho văn bản. Các đặc trưng này nhất quán đáng chú ý qua các tác vụ và tập dữ liệu. Một mạng huấn luyện để phân loại xe hơi so với xe tải học bộ phát hiện cạnh gần như giống hệt mạng phân loại chó so với mèo, vì cạnh là nền tảng cho hiểu thị giác bất kể đối tượng cụ thể. Tầng giữa học đặc trưng mức trung — phần đối tượng, tổ hợp texture, cấu trúc hình dạng — phần nào chuyên tác vụ nhưng vẫn hữu ích rộng. Chỉ các tầng sâu nhất học đặc trưng chuyên tác vụ cao — "tổ hợp cụ thể này chỉ ra golden retriever" cho phân loại giống chó.
+Học chuyển giao (*transfer learning*) là một trong những phương pháp thực tiễn quan trọng nhất của học sâu hiện đại, cho phép xây dựng mô hình có hiệu năng cao với lượng dữ liệu nhãn hạn chế bằng cách kế thừa tri thức học được từ một bài toán liên quan. Nguyên lý cốt lõi khá trực tiếp: thay vì khởi tạo trọng số ngẫu nhiên và huấn luyện từ đầu, ta xuất phát từ bộ trọng số đã được tiền huấn luyện trên một tập dữ liệu lớn, sau đó điều chỉnh cho bài toán mục tiêu. Nhờ vậy, học sâu trở nên khả thi ngay cả khi không có tập dữ liệu lớn hay nguồn lực tính toán dồi dào: bài toán ảnh y khoa có thể khởi đầu từ mạng tiền huấn luyện trên ImageNet, bài toán phân tích cảm xúc có thể tinh chỉnh từ BERT tiền huấn luyện trên kho văn bản web, và hệ thống nhận dạng giọng nói có thể tinh chỉnh từ Wav2Vec học trên dữ liệu âm thanh không nhãn.
 
-Việc tái sử dụng đặc trưng qua các tác vụ này là điều khiến học chuyển giao khả thi. Các tầng sớm và giữa, đã học đặc trưng tổng quát trên tập dữ liệu nguồn lớn, cung cấp điểm khởi đầu mạnh cho tác vụ đích. Ngay cả nếu tác vụ đích khác (phân loại ảnh y tế thay vì ảnh tự nhiên), các đặc trưng thị giác nền tảng — cạnh, texture, hình dạng — vẫn liên quan. Ta không cần hàng triệu ảnh y tế để học các cơ bản này; ta có thể chuyển giao chúng từ ImageNet và tập trung dữ liệu y tế hạn chế vào học đặc trưng chuyên tác vụ ở các tầng sâu hơn. Điều này tương tự cách con người học: đã học khái niệm thị giác cơ bản từ trải nghiệm hàng ngày, ta có thể nhanh chóng học nhận diện bệnh hiếm từ vài ví dụ, chuyển giao hiểu biết thị giác tổng quát thay vì học thị giác từ đầu.
+Học chuyển giao phát huy hiệu quả nhờ cấu trúc biểu diễn phân cấp của mạng nơ-ron sâu. Các tầng sớm học đặc trưng mức thấp mang tính tổng quát — biên cạnh, kết cấu bề mặt và hình khối cơ bản đối với ảnh; âm vị cơ bản đối với âm thanh; các mẫu từ phổ biến đối với văn bản. Những đặc trưng này khá tương đồng giữa nhiều bài toán khác nhau: mạng phân loại xe hơi và xe tải học bộ lọc phát hiện cạnh tương tự mạng phân loại chó và mèo. Các tầng giữa học đặc trưng mức trung như bộ phận đối tượng hoặc tổ hợp kết cấu, vẫn có tính tái sử dụng cao. Chỉ những tầng sâu nhất mới chuyên biệt mạnh cho nhãn cụ thể của bài toán nguồn.
 
-Tác động thực tiễn không thể đánh giá quá cao. Trước khi học chuyển giao trở thành thực hành chuẩn, huấn luyện bộ phân loại ảnh tốt đòi hỏi hàng trăm nghìn ảnh gán nhãn. Với học chuyển giao từ mô hình tiền huấn luyện ImageNet, kết quả cạnh tranh khả thi với hàng nghìn hoặc thậm chí hàng trăm ảnh. Trong xử lý ngôn ngữ tự nhiên, tác động còn kịch tính hơn. Các mô hình ngôn ngữ tiền huấn luyện như BERT, huấn luyện trên hàng tỷ từ văn bản, có thể được tinh chỉnh cho tác vụ cụ thể (phân tích cảm xúc, nhận diện thực thể có tên, trả lời câu hỏi) với tập dữ liệu chỉ hàng nghìn ví dụ gán nhãn, đạt hiệu năng đòi hỏi hàng triệu nhãn nếu huấn luyện từ đầu. Điều này đã cho phép ứng dụng deep learning trong các miền nơi tập dữ liệu gán nhãn lớn không tồn tại: chẩn đoán y tế với dữ liệu bệnh nhân hạn chế, xử lý ngôn ngữ hiếm, hiểu tài liệu kỹ thuật chuyên biệt.
+Nhờ tính tái sử dụng này, các tầng sớm và tầng giữa đã được tiền huấn luyện tạo thành điểm khởi đầu vững chắc cho bài toán đích. Ngay cả khi miền đích khác miền nguồn (chẳng hạn ảnh y khoa so với ảnh tự nhiên trong ImageNet), các đặc trưng thị giác cơ bản như biên cạnh và kết cấu vẫn còn giá trị, giúp mô hình tập trung dữ liệu đích hạn chế vào việc học các đặc trưng chuyên biệt ở tầng sâu hơn.
 
-Tuy nhiên, học chuyển giao không phải phép màu, và hiểu khi nào nó hoạt động so với khi nào thất bại then chốt cho thực hành viên. Học chuyển giao giả định tác vụ nguồn và đích chia sẻ cấu trúc liên quan — cạnh học từ ImageNet giúp với ảnh y tế vì cả hai liên quan ảnh tự nhiên với cạnh, texture, và hình dạng. Nhưng đặc trưng ImageNet có thể không chuyển giao tốt sang ảnh radar (modal dữ liệu khác), ảnh vệ tinh (tỷ lệ và góc nhìn khác), hoặc nghệ thuật trừu tượng (tính chất thống kê khác). Phân phối nguồn và đích càng tương tự, đặc trưng chuyển giao càng hiệu quả. Nguyên tắc này hướng dẫn lựa chọn mô hình tiền huấn luyện: với ảnh y tế, mạng tiền huấn luyện trên X-quang ngực chuyển giao tốt hơn ImageNet, dù ImageNet vẫn hiệu quả đáng ngạc nhiên nhờ tính tổng quát của đặc trưng thị giác mức thấp và trung.
+Về mặt thực tế, học chuyển giao giúp giảm mạnh nhu cầu dữ liệu gán nhãn. Trong thị giác máy tính, nhiều bài toán phân loại ảnh chỉ cần vài trăm đến vài nghìn ảnh khi tận dụng mô hình tiền huấn luyện ImageNet thay vì hàng trăm nghìn ảnh nếu huấn luyện từ đầu. Trong xử lý ngôn ngữ tự nhiên, các mô hình như BERT tiền huấn luyện trên kho văn bản lớn có thể tinh chỉnh hiệu quả cho phân tích cảm xúc, nhận diện thực thể hay hỏi đáp chỉ với vài nghìn ví dụ gán nhãn, mở rộng phạm vi ứng dụng sang các lĩnh vực khó thu thập nhãn như chẩn đoán y khoa hay tài liệu kỹ thuật chuyên ngành.
+
+Tuy nhiên, học chuyển giao không phải lúc nào cũng hiệu quả. Phương pháp này dựa trên giả định miền nguồn và miền đích chia sẻ một phần cấu trúc dữ liệu. Đặc trưng học từ ImageNet thường chuyển giao kém hơn sang dữ liệu có tính chất cảm biến hoặc phân phối khác biệt mạnh như ảnh radar, ảnh vệ tinh đa phổ hoặc đồ họa trừu tượng. Hai miền càng gần nhau thì hiệu quả chuyển giao càng cao — vì thế, nếu có sẵn mô hình tiền huấn luyện trên miền gần hơn (như ảnh X-quang ngực cho bài toán y khoa), nó thường ưu thế hơn mô hình tổng quát từ ImageNet.
 
 ## 2. Nền tảng toán học
-Khung toán học cho học chuyển giao nối với thích ứng miền (domain adaptation), học đa tác vụ (multi-task learning), và meta-learning. Hãy hình thức hóa điều ta làm khi chuyển giao tri thức và hiểu các nền tảng lý thuyết giải thích vì sao nó hoạt động.
 
-Giả sử ta có miền nguồn với phân phối $$p_S(\mathbf{x}, y)$$ và dữ liệu gán nhãn dồi dào $$\mathcal{D}_S = \{(\mathbf{x}_i^S, y_i^S)\}_{i=1}^{N_S}$$, và miền đích với phân phối $$p_T(\mathbf{x}, y)$$ và dữ liệu gán nhãn hạn chế $$\mathcal{D}_T = \{(\mathbf{x}_j^T, y_j^T)\}_{j=1}^{N_T}$$ với $$N_T \ll N_S$$. Ta muốn học bộ dự đoán $$f_\theta(\mathbf{x})$$ hoạt động tốt trên miền đích.
+Cơ sở toán học của học chuyển giao liên hệ trực tiếp với thích ứng miền (*domain adaptation*), học đa tác vụ (*multi-task learning*) và học cách học (*meta-learning*).
 
-Trong học giám sát chuẩn, ta sẽ tối thiểu hóa rủi ro thực nghiệm trên dữ liệu đích:
+Giả sử ta có miền nguồn với phân phối $$p_S(\mathbf{x}, y)$$ và tập dữ liệu gán nhãn lớn $$\mathcal{D}_S = \{(\mathbf{x}_i^S, y_i^S)\}_{i=1}^{N_S}$$, cùng miền đích với phân phối $$p_T(\mathbf{x}, y)$$ và tập dữ liệu gán nhãn nhỏ $$\mathcal{D}_T = \{(\mathbf{x}_j^T, y_j^T)\}_{j=1}^{N_T}$$ sao cho $$N_T \ll N_S$$. Mục tiêu là học bộ dự đoán $$f_\theta(\mathbf{x})$$ đạt hiệu năng tốt trên miền đích.
+
+Nếu chỉ tối thiểu hóa rủi ro thực nghiệm trực tiếp trên dữ liệu đích:
 
 $$\theta^* = \arg\min_\theta \frac{1}{N_T}\sum_{j=1}^{N_T} \mathcal{L}(f_\theta(\mathbf{x}_j^T), y_j^T)$$
 
-Nhưng với $$N_T$$ nhỏ, điều này dẫn đến overfitting nghiêm trọng — mô hình ghi nhớ ví dụ huấn luyện mà không học mẫu hình tổng quát hóa được.
+khi $$N_T$$ nhỏ, mô hình rất dễ quá khớp và tổng quát hóa kém.
 
-Học chuyển giao thay vào đó thực hiện tối ưu hai giai đoạn:
+Học chuyển giao chia quá trình tối ưu thành hai giai đoạn:
 
-**Giai đoạn 1 (Tiền huấn luyện)**: Huấn luyện trên miền nguồn
+**Giai đoạn 1 (Tiền huấn luyện):** tối ưu trên miền nguồn
+
 $$\theta_S^* = \arg\min_\theta \frac{1}{N_S}\sum_{i=1}^{N_S} \mathcal{L}(f_\theta(\mathbf{x}_i^S), y_i^S)$$
 
-**Giai đoạn 2 (Tinh chỉnh)**: Khởi tạo với $$\theta_S^*$$, rồi huấn luyện trên miền đích
+**Giai đoạn 2 (Tinh chỉnh):** khởi tạo từ $$\theta_S^*$$ rồi tối ưu trên miền đích
+
 $$\theta_T^* = \arg\min_\theta \frac{1}{N_T}\sum_{j=1}^{N_T} \mathcal{L}(f_\theta(\mathbf{x}_j^T), y_j^T), \quad \text{bắt đầu từ } \theta_0 = \theta_S^*$$
 
-Khởi tạo $$\theta_0 = \theta_S^*$$ then chốt — nó cung cấp điểm khởi đầu đã gần nghiệm tốt cho tác vụ đích (giả định các miền liên quan), cho phép tinh chỉnh hội tụ nhanh với dữ liệu hạn chế.
+Điểm khởi tạo $$\theta_0 = \theta_S^*$$ đặt quá trình tối ưu gần vùng nghiệm tốt hơn so với khởi tạo ngẫu nhiên, giúp hội tụ nhanh và ít quá khớp hơn khi dữ liệu đích hạn chế.
 
-Ta có thể phân rã mô hình thành $$f_\theta = h_{\theta_h} \circ g_{\theta_g}$$ với $$g_{\theta_g}$$ là bộ trích xuất đặc trưng (tầng sớm/giữa) và $$h_{\theta_h}$$ là đầu chuyên tác vụ (tầng cuối). Các chiến lược học chuyển giao khác nhau về điều chúng chuyển giao và điều chúng thích ứng:
+Phân rã mô hình thành $$f_\theta = h_{\theta_h} \circ g_{\theta_g}$$, trong đó $$g_{\theta_g}$$ là phần trích xuất đặc trưng (các tầng sớm và giữa) và $$h_{\theta_h}$$ là tầng đầu ra chuyên biệt cho tác vụ. Ba chiến lược chuyển giao phổ biến là:
 
-**Trích xuất đặc trưng (feature extraction)**: Đóng băng $$\theta_g = \theta_g^S$$ (dùng đặc trưng tiền huấn luyện), chỉ huấn luyện $$\theta_h$$ trên dữ liệu đích
+**Trích xuất đặc trưng (*feature extraction*):** giữ cố định (đóng băng) $$\theta_g = \theta_g^S$$ và chỉ huấn luyện $$\theta_h$$ trên dữ liệu đích:
+
 $$\theta_h^* = \arg\min_{\theta_h} \frac{1}{N_T}\sum_{j=1}^{N_T} \mathcal{L}(h_{\theta_h}(g_{\theta_g^S}(\mathbf{x}_j^T)), y_j^T)$$
 
-**Tinh chỉnh mọi tầng**: Khởi tạo cả $$\theta_g$$ và $$\theta_h$$ từ nguồn, huấn luyện cả hai trên đích
+**Tinh chỉnh toàn bộ tầng (*full fine-tuning*):** khởi tạo $$(\theta_g^S, \theta_h^{\text{random}})$$ và cập nhật đồng thời cả hai phần trên dữ liệu đích:
+
 $$(\theta_g^*, \theta_h^*) = \arg\min_{\theta_g, \theta_h} \frac{1}{N_T}\sum_{j=1}^{N_T} \mathcal{L}(h_{\theta_h}(g_{\theta_g}(\mathbf{x}_j^T)), y_j^T)$$
-bắt đầu từ $$(\theta_g^S, \theta_h^{\text{random}})$$
 
-**Learning rate vi phân theo tầng**: Dùng learning rate khác nhau cho các tầng khác nhau
+**Learning rate phân biệt theo tầng (*discriminative learning rates*):** áp dụng mức learning rate khác nhau cho từng nhóm tầng:
+
 $$\theta_g \leftarrow \theta_g - \eta_g \nabla_{\theta_g} \mathcal{L}, \quad \theta_h \leftarrow \theta_h - \eta_h \nabla_{\theta_h} \mathcal{L}$$
-thường với $$\eta_g < \eta_h$$ (learning rate nhỏ hơn cho tầng tiền huấn luyện, lớn hơn cho đầu mới)
 
-Lựa chọn phụ thuộc kích thước tập dữ liệu và độ tương tự. Với dữ liệu đích rất nhỏ (hàng trăm ví dụ) và miền tương tự, trích xuất đặc trưng thường hoạt động tốt nhất — đặc trưng tiền huấn luyện đóng băng cung cấp biểu diễn robust, và ta chỉ cần học ánh xạ chuyên tác vụ. Với dữ liệu vừa phải (hàng nghìn) và độ tương tự vừa, tinh chỉnh với learning rate nhỏ thích ứng đặc trưng nhẹ trong khi tránh catastrophic forgetting. Với dữ liệu lớn (hàng chục nghìn+), tinh chỉnh đầy đủ hoặc thậm chí huấn luyện từ đầu có thể ưu tiên hơn.
+thường chọn $$\eta_g < \eta_h$$ để cập nhật nhẹ các tầng tiền huấn luyện và cập nhật nhanh hơn cho tầng đầu ra mới.
 
-### Lý thuyết Thích ứng Miền
+Lựa chọn chiến lược phụ thuộc vào cỡ mẫu đích và mức độ tương đồng giữa hai miền. Với dữ liệu đích rất nhỏ (vài trăm mẫu) và miền tương đồng, trích xuất đặc trưng giúp hạn chế quá khớp; với dữ liệu cỡ trung bình (vài nghìn mẫu), tinh chỉnh với learning rate nhỏ giúp đặc trưng thích nghi tốt hơn mà tránh hiện tượng quên thảm họa (*catastrophic forgetting*); còn khi dữ liệu đích rất lớn (hàng chục nghìn mẫu trở lên), tinh chỉnh toàn mạng hoặc thậm chí huấn luyện từ đầu đều là phương án khả thi.
 
-Phân tích lý thuyết về khi nào chuyển giao hoạt động viện đến lý thuyết thích ứng miền. Định nghĩa không gian giả thuyết $$\mathcal{H}$$ (mọi hàm biểu diễn được bởi kiến trúc của ta). Lỗi trên miền đích cho giả thuyết $$h \in \mathcal{H}$$ có thể được chặn:
+### Lý thuyết thích ứng miền
+
+Trong lý thuyết thích ứng miền, với không gian giả thuyết $$\mathcal{H}$$, sai số trên miền đích của một giả thuyết $$h \in \mathcal{H}$$ được chặn trên bởi:
 
 $$\epsilon_T(h) \leq \epsilon_S(h) + \frac{1}{2}d_{\mathcal{H}}(D_S, D_T) + \lambda$$
 
 trong đó:
-- $$\epsilon_S(h)$$: lỗi trên miền nguồn (có thể tối thiểu hóa với dữ liệu nguồn dồi dào)
-- $$d_{\mathcal{H}}(D_S, D_T)$$: khoảng cách giữa phân phối nguồn và đích (đo dịch miền)
-- $$\lambda$$: lỗi của giả thuyết chung lý tưởng (lỗi tối thiểu có thể trên cả hai miền)
+- $$\epsilon_S(h)$$ là sai số trên miền nguồn (có thể làm nhỏ nhờ tập nguồn lớn).
+- $$d_{\mathcal{H}}(D_S, D_T)$$ là khoảng cách phân phối giữa miền nguồn và miền đích (đo mức độ lệch miền).
+- $$\lambda$$ là sai số của giả thuyết chung tối ưu trên cả hai miền.
 
-Cận này tiết lộ điều cần cho chuyển giao thành công: (1) lỗi nguồn thấp (tiền huấn luyện tốt), (2) khoảng cách miền nhỏ (nguồn và đích tương tự), (3) $$\lambda$$ nhỏ (tồn tại giả thuyết tối ưu chung). Khi các miền rất khác nhau, $$d_{\mathcal{H}}$$ lớn, và cận trở nên lỏng — không đảm bảo chuyển giao giúp. Điều này hình thức hóa trực giác rằng chuyển giao hoạt động khi các miền chia sẻ cấu trúc.
+Cận trên này cho thấy ba điều kiện để chuyển giao hiệu quả: sai số trên miền nguồn thấp, độ lệch giữa hai miền nhỏ và tồn tại một giả thuyết hoạt động tốt trên cả hai miền. Khi $$d_{\mathcal{H}}$$ lớn do hai miền quá khác biệt, cận trên trở nên lỏng và học chuyển giao không còn đảm bảo mang lại lợi ích.
 
-## 3. Ví dụ / Trực giác
+## 3. Ví dụ và Trực giác
 
-Xem xét kịch bản cụ thể: xây dựng bộ phân loại loài chim với chỉ 500 ảnh gán nhãn trên 20 loài (25 ảnh mỗi loài). Huấn luyện ResNet-50 (25 triệu tham số) từ đầu trên dữ liệu này sẽ overfitting thảm họa — ta có nhiều tham số hơn nhiều so với ví dụ huấn luyện.
+Xét bài toán phân loại 20 loài chim với chỉ 500 ảnh gán nhãn (25 ảnh mỗi loài). Huấn luyện một mạng ResNet-50 (khoảng 25 triệu tham số) từ đầu trên 500 ảnh chắc chắn sẽ quá khớp nghiêm trọng.
 
-Cách tiếp cận học chuyển giao bắt đầu với ResNet-50 tiền huấn luyện trên ImageNet (1.2 triệu ảnh, 1000 lớp). Mạng này đã học:
-- **Tầng 1**: Bộ phát hiện cạnh (ngang, dọc, chéo, cong)
-- **Tầng 2**: Mẫu texture (lông, mỏ, nền)
-- **Tầng 3**: Phần đối tượng (cánh, đầu, chân)
-- **Tầng 4**: Cấu trúc đối tượng (toàn bộ chim, dù chuyên loài ImageNet)
+Thay vào đó, ta xuất phát từ ResNet-50 tiền huấn luyện trên ImageNet (1,2 triệu ảnh, 1000 lớp), vốn đã học sẵn hệ thống đặc trưng phân cấp:
+- **Tầng 1:** bộ lọc phát hiện cạnh (ngang, dọc, chéo, cong).
+- **Tầng 2:** kết cấu bề mặt (lông, mỏ, nền).
+- **Tầng 3:** bộ phận đối tượng (cánh, đầu, chân).
+- **Tầng 4:** cấu trúc đối tượng tổng thể (chim và các lớp ImageNet).
 
-Với tác vụ phân loại chim của ta, ta:
+Ta có hai phương án chính:
 
-**Tùy chọn 1: Trích xuất Đặc trưng**
-- Gỡ tầng phân loại cuối (1000 lớp)
-- Đóng băng mọi tầng conv (giữ đặc trưng tiền huấn luyện)
-- Thêm đầu phân loại mới (20 loài chim)
-- Chỉ huấn luyện đầu mới này trên 500 ảnh của ta
+**Phương án 1 — Trích xuất đặc trưng:** bỏ tầng phân loại 1000 lớp cuối, đóng băng toàn bộ các tầng tích chập, gắn tầng phân loại 20 lớp mới và chỉ huấn luyện tầng mới này trên 500 ảnh. Mỗi ảnh được biểu diễn bằng vector đặc trưng 2048 chiều đã học sẵn, giúp bài toán quy về học ánh xạ phân loại đơn giản cần ít dữ liệu hơn nhiều.
 
-Điều này hoạt động vì các tầng đóng băng cung cấp vectơ đặc trưng 2048 chiều phong phú cho mỗi ảnh, nắm cạnh, texture, và phần giống chim. Ta chỉ cần học tổ hợp nào của các đặc trưng này tương ứng loài nào trong 20 loài — bài toán đơn giản hơn nhiều đòi hỏi dữ liệu ít hơn xa.
+**Phương án 2 — Tinh chỉnh:** thay tầng cuối bằng đầu 20 lớp khởi tạo ngẫu nhiên và huấn luyện toàn bộ mạng với learning rate nhỏ (ví dụ 0,0001 thay vì 0,1 như khi huấn luyện từ đầu). Bước học nhỏ giúp các tầng sớm hầu như giữ nguyên đặc trưng cạnh tổng quát, trong khi các tầng giữa và tầng sâu điều chỉnh dần để bám sát đặc trưng của 20 loài chim.
 
-**Tùy chọn 2: Tinh chỉnh**
-- Bắt đầu với trọng số tiền huấn luyện mọi nơi
-- Thay tầng cuối bằng đầu 20 lớp (khởi tạo ngẫu nhiên)
-- Huấn luyện toàn bộ mạng với learning rate nhỏ (0.0001 so với điển hình 0.1)
+Minh họa một bước cập nhật trọng số cụ thể ở tầng 3:
 
-Learning rate nhỏ then chốt. Đặc trưng tiền huấn luyện đã tốt; ta muốn thích ứng chúng nhẹ, không phá hủy chúng. Tầng sớm có thể hầu như không đổi (cạnh là phổ quát). Tầng giữa thích ứng nhiều hơn (texture chuyên chim). Tầng sâu thay đổi nhiều nhất (đặc trưng loài cụ thể của ta).
+Trọng số tiền huấn luyện: $$w_{\text{pre}} = 0.523$$  
+Gradient trên dữ liệu chim: $$\nabla w = 0.015$$  
+Trọng số sau cập nhật: $$w_{\text{fine}} = 0.523 - 0.0001 \times 0.015 = 0.5229985$$
 
-**Ví dụ số cụ thể**: Giả sử một bộ lọc conv tiền huấn luyện ở tầng 3 có trọng số phát hiện "cấu trúc cong" (hữu ích cho bất kỳ đối tượng nào có đường cong). Với loài chim, ta có thể muốn phát hiện "đường cong lông" cụ thể. Tinh chỉnh điều chỉnh nhẹ trọng số bộ lọc này:
-
-Trọng số gốc: $$w_{\text{pre}} = 0.523$$  
-Gradient trên dữ liệu chim: $$\nabla w = 0.015$$ (chỉ ra điều chỉnh nhỏ cần)  
-Trọng số cập nhật: $$w_{\text{fine}} = 0.523 - 0.0001 \times 0.015 = 0.5229985$$
-
-Thay đổi nhỏ (learning rate 0.0001) thích ứng đặc trưng nhẹ mà không phá hủy cấu trúc hữu ích học từ ImageNet. Trên hàng nghìn trọng số, các thích ứng nhỏ này tích lũy để chuyên hóa mạng cho chim trong khi bảo toàn hiểu biết thị giác tổng quát.
-
-Kết quả: Với trích xuất đặc trưng, ta có thể đạt 85% độ chính xác phân loại chim. Với tinh chỉnh, 92% độ chính xác. Huấn luyện từ đầu với 500 ảnh của ta: có lẽ 60% độ chính xác (overfitting nghiêm trọng). Lợi thế học chuyển giao kịch tính và thực tiễn.
+Những điều chỉnh rất nhỏ nhưng đồng loạt trên hàng nghìn trọng số giúp mạng chuyên biệt hóa dần cho bài toán mới mà không phá vỡ cấu trúc đặc trưng đã học từ ImageNet. Trong kịch bản minh họa 500 ảnh này, trích xuất đặc trưng có thể đạt quanh 85% độ chính xác và tinh chỉnh đạt quanh 92%, vượt xa mức khoảng 60% khi huấn luyện từ đầu.
 
 ## Video tham khảo
 
-- **xem trước** [Fine-tuning a Neural Network explained](https://www.youtube.com/watch?v=5T-iXNNiwIs) — deeplizard, tiếng Anh. Đóng băng lớp nào là câu hỏi lý thuyết.
-- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, tiếng Anh. Vì sao các lớp tích chập sớm chuyển được còn lớp muộn thì không, trong một bài 2024.
-- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Một phân cấp đặc trưng cụ thể để chỉ vào khi bạn chọn chỗ cắt.
+- **Xem trước:** [Fine-tuning a Neural Network explained](https://www.youtube.com/watch?v=5T-iXNNiwIs) — deeplizard, tiếng Anh. Giải thích trực tiếp câu hỏi trọng tâm của bài: nên đóng băng những tầng nào và tinh chỉnh những tầng nào.
+- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, tiếng Anh. Làm rõ vì sao đặc trưng ở các tầng tích chập sớm dễ chuyển giao hơn các tầng sâu.
+- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Minh họa trực quan phân cấp đặc trưng trong CNN để xác định điểm cắt khi chuyển giao.

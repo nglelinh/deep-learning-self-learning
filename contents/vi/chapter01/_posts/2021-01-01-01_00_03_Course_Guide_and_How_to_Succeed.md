@@ -25,8 +25,8 @@ categories:
 - Dịch máy
 - Phân tích cảm xúc
 - Hỏi–đáp
-- Sinh văn bản (mô hình GPT)
-- Hiểu ngôn ngữ (BERT)
+- Sinh văn bản (như họ mô hình GPT)
+- Hiểu ngôn ngữ (như BERT)
 
 ### Tiếng nói và âm thanh
 - Nhận dạng tiếng nói
@@ -35,175 +35,175 @@ categories:
 - Nhân bản giọng nói
 
 ### Học tăng cường
-- Chơi game (Cờ vua, Go, Atari)
+- Chơi trò chơi (cờ vua, cờ vây, Atari)
 - Điều khiển robot
 - Lái xe tự hành
-- Tối ưu phân bổ tài nguyên
+- Tối ưu hóa phân bổ tài nguyên
 
 ### Y tế
-- Chẩn đoán bệnh từ ảnh
+- Hỗ trợ chẩn đoán bệnh từ ảnh y khoa
 - Khám phá thuốc
-- Gập protein (AlphaFold)
+- Dự đoán cấu trúc gập protein (AlphaFold)
 - Y học cá nhân hóa
 
-### Các miền khác
+### Các lĩnh vực khác
 - Dự báo tài chính
 - Hệ thống gợi ý
-- Mô hình khí hậu
+- Mô hình hóa khí hậu
 - Khám phá khoa học
 
 ## Thách thức và hạn chế
 
 ### Thách thức hiện tại
 
-1. **Yêu cầu dữ liệu**: Cần tập dữ liệu có nhãn lớn
-2. **Chi phí tính toán**: Huấn luyện mô hình lớn tốn kém
-3. **Khả năng diễn giải**: Bản chất "hộp đen"
-4. **Khái quát hóa**: Overfitting, domain shift
-5. **Độ bền vững**: Mẫu đối kháng (*adversarial examples*)
-6. **Đạo đức**: Thiên lệch, công bằng, quyền riêng tư
+1. **Yêu cầu dữ liệu:** Thường cần tập dữ liệu có nhãn quy mô lớn.
+2. **Chi phí tính toán:** Huấn luyện các mô hình lớn đòi hỏi hạ tầng và chi phí cao.
+3. **Khả năng diễn giải:** Mô hình thường mang tính "hộp đen", khó giải thích quyết định bên trong.
+4. **Khả năng khái quát hóa:** Dễ gặp quá khớp (*overfitting*) hoặc suy giảm hiệu năng khi phân phối dữ liệu thay đổi (*domain shift*).
+5. **Độ bền vững:** Nhạy cảm với các mẫu đối kháng (*adversarial examples*).
+6. **Vấn đề đạo đức:** Thiên lệch dữ liệu, tính công bằng và quyền riêng tư.
 
-### Hướng nghiên cứu đang hoạt động
+### Các hướng nghiên cứu đang được quan tâm
 
-- **Học sâu hiệu quả**: nén mô hình, lượng tử hóa
-- **Học few-shot**: học từ dữ liệu hạn chế
-- **Chuyển giao học**: tận dụng mô hình tiền huấn luyện
-- **AI giải thích được**: hiểu quyết định của mô hình
-- **Học liên tục**: học mà không quên
-- **Học đa phương thức**: kết hợp thị giác, ngôn ngữ, v.v.
+- **Học sâu hiệu quả:** nén mô hình, lượng tử hóa.
+- **Học ít mẫu (*few-shot learning*):** học từ lượng dữ liệu hạn chế.
+- **Học chuyển giao:** tận dụng các mô hình tiền huấn luyện.
+- **AI có thể giải thích:** làm rõ cơ sở ra quyết định của mô hình.
+- **Học liên tục:** cập nhật kiến thức mới mà không quên kiến thức cũ.
+- **Học đa phương thức:** kết hợp đồng thời thị giác, ngôn ngữ và các dạng dữ liệu khác.
 
-## Nội dung sẽ học trong khóa này
+## Nội dung khóa học
 
 ### Phần I: Nền tảng (Chương 00–03)
-- Điều kiện toán học tiên quyết
-- Cơ bản mạng nơ-ron
-- Kỹ thuật huấn luyện (lan truyền ngược, tối ưu)
+- Kiến thức toán học tiên quyết
+- Cơ sở về mạng nơ-ron
+- Kỹ thuật huấn luyện (lan truyền ngược, tối ưu hóa)
 
 ### Phần II: Kiến trúc cốt lõi (Chương 04–08)
 - CNN cho thị giác máy tính
-- RNN cho chuỗi
-- Attention và Transformer
+- RNN cho dữ liệu chuỗi
+- Cơ chế chú ý (*Attention*) và Transformer
 
 ### Phần III: Chủ đề nâng cao (Chương 09–16)
-- Chính quy hóa và tối ưu
+- Chính quy hóa và tối ưu hóa
 - Mô hình sinh (VAE, GAN)
-- Chuyển giao học và học tự giám sát
+- Học chuyển giao và học tự giám sát
 
 ### Phần IV: Ứng dụng (Chương 17–25)
 - Ứng dụng thị giác máy tính
 - Xử lý ngôn ngữ tự nhiên
 - Học tăng cường
-- Chủ đề chuyên biệt (GNN, hiệu năng, diễn giải)
+- Các chủ đề chuyên biệt (GNN, hiệu năng, khả năng diễn giải)
 
 ## Điều kiện tiên quyết
 
 ### Bắt buộc
-- **Lập trình**: Python cơ bản
-- **Toán học**:
-  - Đại số tuyến tính (vector, ma trận)
-  - Giải tích (đạo hàm, quy tắc chuỗi)
-  - Xác suất (phân phối, kỳ vọng)
-- **Học máy**: hiểu biết cơ bản sẽ hữu ích
+- **Lập trình:** Python cơ bản.
+- **Toán học:**
+  - Đại số tuyến tính (vector, ma trận).
+  - Giải tích (đạo hàm, quy tắc dây chuyền).
+  - Xác suất (phân phối, kỳ vọng).
+- **Học máy:** có hiểu biết nền tảng sẽ rất thuận lợi.
 
 ### Nên có
-- Kinh nghiệm với NumPy, thuật toán ML cơ bản
-- Làm quen thư viện ML trong Python
-- Hiểu các khái niệm tối ưu
+- Kinh nghiệm sử dụng NumPy và các thuật toán học máy cơ bản.
+- Quen thuộc với các thư viện học máy trong Python.
+- Nắm được các khái niệm tối ưu hóa cơ bản.
 
 ## Cách học học sâu hiệu quả
 
 ### Gợi ý thực hành
 
-1. **Tự cài đặt từ đầu**: nắm vững nền tảng
-2. **Làm việc với framework**: thành thạo PyTorch hoặc TensorFlow
-3. **Đọc bài báo**: theo sát nghiên cứu
-4. **Làm dự án**: áp dụng kiến thức vào bài toán thực
-5. **Tham gia cộng đồng**: thảo luận, thi đấu
-6. **Lặp và thử nghiệm**: học bằng thực hành
+1. **Tự cài đặt từ đầu:** giúp nắm chắc cơ chế bên dưới.
+2. **Thực hành với framework:** làm chủ PyTorch hoặc TensorFlow.
+3. **Đọc bài báo khoa học:** cập nhật trực tiếp các ý tưởng nghiên cứu.
+4. **Thực hiện dự án thực tế:** áp dụng kiến thức vào bài toán cụ thể.
+5. **Tham gia cộng đồng:** trao đổi, đặt câu hỏi và tham gia thi đấu.
+6. **Thử nghiệm và lặp lại:** học thông qua việc tự chạy thí nghiệm và phân tích kết quả.
 
 ### Tài nguyên ngoài khóa học
 
-- **Bài báo**: ArXiv.org, Papers with Code
-- **Khóa học**: Fast.ai, Stanford CS231n/CS224n
-- **Sách**: Deep Learning (Goodfellow), Dive into Deep Learning, Deep Learning Interviews (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) — lộ trình luyện tùy chọn ở **01-98**
-- **Cuộc thi**: Kaggle, AIcrowd
-- **Cộng đồng**: Reddit r/MachineLearning, Discord
+- **Bài báo:** ArXiv.org, Papers with Code.
+- **Khóa học:** Fast.ai, Stanford CS231n/CS224n.
+- **Sách:** *Deep Learning* (Goodfellow), *Dive into Deep Learning*, *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) — lộ trình luyện tập tùy chọn nằm ở **01-98**.
+- **Cuộc thi:** Kaggle, AIcrowd.
+- **Cộng đồng:** Reddit r/MachineLearning, Discord.
 
-## Tư duy học sâu
+## Tư duy khi làm việc với học sâu
 
 ### Nguyên tắc then chốt
 
-1. **Bắt đầu đơn giản**: từ mô hình cơ bản, rồi tăng độ phức tạp
-2. **Trực quan hóa**: vẽ đường cong mất mát, attention map, đặc trưng
-3. **Gỡ lỗi có hệ thống**: kiểm tra dữ liệu, kiến trúc, huấn luyện
-4. **Dùng baseline**: so sánh với mô hình đơn giản
-5. **Theo dõi metric**: theo dõi hiệu năng huấn luyện và validation
-6. **Kiên nhẫn**: huấn luyện cần thời gian và vòng lặp
+1. **Bắt đầu đơn giản:** dựng mô hình cơ bản trước rồi mới tăng dần độ phức tạp.
+2. **Trực quan hóa:** vẽ đường cong mất mát, bản đồ chú ý (*attention map*) và đặc trưng trung gian.
+3. **Gỡ lỗi có hệ thống:** kiểm tra lần lượt dữ liệu, kiến trúc và vòng lặp huấn luyện.
+4. **Dùng mô hình cơ sở (*baseline*):** luôn so sánh với một phương pháp đơn giản để đo mức cải thiện thực sự.
+5. **Theo dõi chỉ số đánh giá (*metric*):** giám sát song song hiệu năng trên tập huấn luyện và tập kiểm định (*validation*).
+6. **Kiên nhẫn:** quá trình huấn luyện và tinh chỉnh đòi hỏi thời gian và nhiều vòng lặp.
 
-### Cạm bẫy thường gặp cần tránh
+### Lỗi thường gặp cần tránh
 
-- Tiền xử lý dữ liệu không đủ
-- Khởi tạo kém
-- Learning rate sai
-- Bỏ qua tập validation
-- Overfitting trên dữ liệu huấn luyện
-- Không dùng metric đánh giá phù hợp
+- Tiền xử lý dữ liệu chưa kỹ.
+- Khởi tạo trọng số không phù hợp.
+- Chọn tốc độ học (*learning rate*) sai.
+- Bỏ qua tập kiểm định (*validation*).
+- Để mô hình quá khớp trên dữ liệu huấn luyện.
+- Dùng chỉ số đánh giá không phản ánh đúng mục tiêu bài toán.
 
 ## Lộ trình phía trước
 
-Học sâu là lĩnh vực phát triển nhanh. Khóa học cung cấp:
-- **Nền tảng vững** về mạng nơ-ron
-- **Kỹ năng thực hành** triển khai mô hình
-- **Hiểu biết** về kiến trúc hiện đại
-- **Chuẩn bị** cho nghiên cứu và ứng dụng nâng cao
+Học sâu là lĩnh vực thay đổi nhanh chóng. Khóa học hướng tới việc trang bị:
+- **Nền tảng vững chắc** về mạng nơ-ron.
+- **Kỹ năng thực hành** xây dựng và huấn luyện mô hình.
+- **Hiểu biết hệ thống** về các kiến trúc hiện đại.
+- **Sự chuẩn bị cần thiết** cho nghiên cứu và ứng dụng nâng cao.
 
-Sau khóa học, người học sẽ có khả năng:
-- Xây dựng và huấn luyện mạng nơ-ron từ đầu
-- Áp dụng học sâu cho bài toán thực tế
-- Đọc và triển khai bài báo nghiên cứu
-- Đóng góp vào sự phát triển của lĩnh vực
+Sau khi hoàn thành khóa học, bạn sẽ có khả năng:
+- Xây dựng và huấn luyện mạng nơ-ron từ đầu.
+- Áp dụng học sâu vào các bài toán thực tế.
+- Đọc hiểu và cài đặt lại các bài báo nghiên cứu.
+- Tham gia đóng góp vào các dự án hoặc nghiên cứu trong lĩnh vực.
 
 ## Tóm tắt
 
-- **Học sâu**: mạng nơ-ron nhiều tầng cho học phân cấp
-- **Cách mạng**: chuyển đổi AI với các ứng dụng đột phá
-- **Ý tưởng cốt lõi**: học đặc trưng tự động từ dữ liệu thô
-- **Kiến trúc then chốt**: MLP, CNN, RNN, Transformer
-- **Ứng dụng**: thị giác, NLP, tiếng nói, game, y tế và nhiều lĩnh vực khác
-- **Mục tiêu khóa học**: nắm vững lý thuyết và thực hành học sâu
+- **Học sâu:** sử dụng mạng nơ-ron nhiều tầng để học biểu diễn phân cấp.
+- **Tác động thực tiễn:** mở rộng đáng kể phạm vi ứng dụng của AI trong nhiều lĩnh vực.
+- **Ý tưởng cốt lõi:** tự động học đặc trưng trực tiếp từ dữ liệu thô.
+- **Kiến trúc tiêu biểu:** MLP, CNN, RNN, Transformer.
+- **Ứng dụng:** thị giác máy tính, NLP, tiếng nói, trò chơi, y tế và nhiều lĩnh vực khác.
+- **Mục tiêu khóa học:** nắm vững cả nền tảng lý thuyết lẫn kỹ năng thực hành học sâu.
 
 ## Điểm cần ghi nhớ
 
-Bài mở đầu này thiết lập hiểu biết nền tảng cần thiết cho hành trình học sâu phía trước:
+Bài mở đầu này đặt nền tảng khái niệm cho toàn bộ hành trình học sâu phía trước:
 
-**1. Khái niệm cốt lõi**: Học sâu dùng mạng nơ-ron nhiều tầng để tự động học biểu diễn phân cấp từ dữ liệu, loại bỏ nhu cầu thiết kế đặc trưng thủ công.
+**1. Khái niệm cốt lõi:** Học sâu dùng mạng nơ-ron nhiều tầng để tự động học biểu diễn phân cấp từ dữ liệu, giảm sự phụ thuộc vào việc thiết kế đặc trưng thủ công.
 
-**2. Nền tảng toán học**: Mạng nơ-ron là bộ xấp xỉ hàm phổ quát, học qua gradient descent và lan truyền ngược; độ sâu mang lại hiệu quả theo hàm mũ với các hàm hợp thành.
+**2. Nền tảng toán học:** Mạng nơ-ron là bộ xấp xỉ hàm phổ quát, được huấn luyện bằng *gradient descent* và lan truyền ngược; độ sâu mang lại lợi thế biểu diễn theo cấp số mũ đối với các hàm có cấu trúc hợp thành.
 
-**3. Sức mạnh thực tiễn**: Từ nhận dạng chữ số MNIST đạt 97%+ độ chính xác trong vài phút đến các hệ thống hiện đại vượt con người trên tác vụ phức tạp, học sâu đã biến AI từ tò mò nghiên cứu thành công cụ thực tế.
+**3. Hiệu quả thực tiễn:** Từ bài toán nhận dạng chữ số MNIST đạt trên 97% độ chính xác chỉ sau vài phút huấn luyện đến các hệ thống hiện đại xử lý nhiều tác vụ phức tạp, học sâu đã đưa AI từ phòng thí nghiệm vào ứng dụng thực tế.
 
-**4. Bối cảnh lịch sử**: Lĩnh vực tiến hóa qua các mùa đông AI và giai đoạn phục hưng, với các đổi mới then chốt (lan truyền ngược, CNN, Transformer) xây dựng chồng lên nhau tạo nên hệ thống mạnh mẽ ngày nay.
+**4. Bối cảnh lịch sử:** Lĩnh vực phát triển qua nhiều giai đoạn thăng trầm, trong đó các đóng góp then chốt như lan truyền ngược, CNN và Transformer kế thừa lẫn nhau để tạo nên các hệ thống ngày nay.
 
-**5. Mối liên hệ rộng hơn**: Học sâu kết nối với ML cổ điển, chuyển giao học, và sự tương tác giữa kiến trúc–dữ liệu–tính toán thúc đẩy tiến bộ hiện đại.
+**5. Mối liên hệ rộng hơn:** Học sâu gắn kết chặt chẽ với học máy cổ điển, học chuyển giao và sự phối hợp giữa ba yếu tố kiến trúc, dữ liệu và tính toán.
 
-**6. Bài báo nền tảng**: Hiểu sự phát triển lịch sử qua các bài báo kinh điển (nơ-ron McCulloch–Pitts, lan truyền ngược, LeNet, AlexNet, Transformer, ResNet) cung cấp bối cảnh cho thực hành hiện tại.
+**6. Các bài báo nền tảng:** Nắm bối cảnh của những công trình kinh điển (nơ-ron McCulloch–Pitts, lan truyền ngược, LeNet, AlexNet, Transformer, ResNet) giúp hiểu rõ lý do hình thành của các thực hành hiện đại.
 
 ## Tiếp theo là gì?
 
-Ở chương tiếp theo, ta sẽ đi sâu vào **Nền tảng mạng nơ-ron** và hiểu cách các nơ-ron nhân tạo phối hợp để học từ dữ liệu. Nội dung gồm:
+Ở chương tiếp theo, ta sẽ đi sâu vào **Nền tảng mạng nơ-ron** để hiểu cách các nơ-ron nhân tạo phối hợp học từ dữ liệu. Các nội dung chính gồm:
 
-- Mô hình toán học của nơ-ron nhân tạo (perceptron)
-- Cách các nơ-ron kết hợp thành mạng qua các tầng
-- Hàm kích hoạt và vai trò của chúng trong học phi tuyến
-- Lan truyền xuôi: cách mạng đưa ra dự đoán
-- Các lựa chọn kiến trúc định nghĩa các kiểu mạng khác nhau
+- Mô hình toán học của nơ-ron nhân tạo (*perceptron*).
+- Cách kết nối các nơ-ron thành mạng theo từng tầng.
+- Hàm kích hoạt và vai trò của chúng trong việc học quan hệ phi tuyến.
+- Lan truyền xuôi: cách mạng tính toán đầu ra dự đoán.
+- Các lựa chọn kiến trúc định hình từng loại mạng khác nhau.
 
-Với hiểu biết khái niệm từ phần giới thiệu này và cơ chế chi tiết ở chương sau, ta sẽ sẵn sàng hiểu thuật toán huấn luyện, tự triển khai mạng, và đánh giá đúng các kiến trúc tinh vi đang vận hành các hệ thống AI hiện đại.
+Khi kết hợp nền tảng khái niệm từ phần giới thiệu này với cơ chế chi tiết ở chương sau, bạn sẽ sẵn sàng tiếp cận thuật toán huấn luyện, tự cài đặt mô hình và phân tích các kiến trúc hiện đại.
 
-**Ghi nhớ**: Học sâu, về bản chất, là để dữ liệu bộc lộ cấu trúc của chính nó thay vì áp đặt giả định của con người. Sự chuyển paradigm này — từ đặc trưng thủ công sang biểu diễn được học — là điều khiến học sâu vừa mạnh mẽ vừa khác về triết lý so với các cách tiếp cận truyền thống. Khi tiến qua khóa học, nguyên lý này sẽ hiện diện dưới nhiều hình thức khác nhau qua các miền và kiến trúc.
+**Ghi nhớ:** Về bản chất, học sâu để dữ liệu tự bộc lộ cấu trúc thay vì áp đặt các giả định thủ công của con người. Sự chuyển dịch từ đặc trưng thiết kế tay sang biểu diễn được học là điểm khác biệt cốt lõi giữa học sâu và các cách tiếp cận truyền thống. Nguyên lý này sẽ lặp lại dưới nhiều hình thức khác nhau xuyên suốt các chương của khóa học.
 
 ## Video tham khảo
 
-- **xem trước** [MIT Introduction to Deep Learning (2024) | 6.S191](https://www.youtube.com/watch?v=ErnWZxJovaM) — Alexander Amini, tiếng Anh. Thấy một khóa nhập môn nghiêm túc xếp tiên quyết, hàm mất mát và huấn luyện, khớp lộ trình của hướng dẫn này.
-- [AI, Machine Learning, Deep Learning and Generative AI Explained](https://www.youtube.com/watch?v=qYNweeDHiyU) — IBM Technology, tiếng Anh. Dùng video này để đặt phần ứng dụng (thị giác, ngôn ngữ, mô hình sinh) trước khi chọn đường đi qua các chương.
-- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, tiếng Anh. Các chương sau chỉ tới mô hình ngôn ngữ lớn; bài nói này là bản đồ của đích đó.
+- **Xem trước:** [MIT Introduction to Deep Learning (2024) | 6.S191](https://www.youtube.com/watch?v=ErnWZxJovaM) — Alexander Amini, tiếng Anh. Minh họa cách một khóa nhập môn bài bản sắp xếp kiến thức tiên quyết, hàm mất mát và quy trình huấn luyện, tương đồng với lộ trình trong hướng dẫn này.
+- [AI, Machine Learning, Deep Learning and Generative AI Explained](https://www.youtube.com/watch?v=qYNweeDHiyU) — IBM Technology, tiếng Anh. Giúp định vị rõ các nhóm ứng dụng (thị giác, ngôn ngữ, mô hình sinh) trước khi chọn hướng đi qua các chương.
+- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, tiếng Anh. Cung cấp bức tranh tổng quan về mô hình ngôn ngữ lớn — một trong những chủ đề trọng tâm ở các chương sau.

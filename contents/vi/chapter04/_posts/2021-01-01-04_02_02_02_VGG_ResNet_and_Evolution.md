@@ -9,13 +9,13 @@ categories:
 - chapter04
 ---
 
-### VGGNet (2014) — Sự Đơn giản và Độ sâu
+### VGGNet (2014) — Đơn giản và Chiều sâu
 
-VGG của Simonyan và Zisserman cho thấy **độ sâu quan trọng** và **đơn giản thì tốt hơn**.
+VGG của Simonyan và Zisserman cho thấy việc **tăng chiều sâu** với một cấu trúc **đồng nhất, đơn giản** mang lại cải thiện rõ rệt về độ chính xác.
 
-**Hiểu biết then chốt**: Chỉ dùng tích chập 3×3 xếp chồng sâu.
+**Ý tưởng chính:** Chỉ sử dụng các tầng tích chập 3×3 xếp chồng liên tiếp.
 
-**Kiến trúc VGG-16**:
+**Kiến trúc VGG-16:**
 ```
 Input (224×224×3)
 
@@ -28,13 +28,13 @@ Block 5: Conv3-512, Conv3-512, Conv3-512, MaxPool → 7×7×512
 Flatten → FC 4096 → FC 4096 → FC 1000
 ```
 
-**Vì sao 3×3 tối ưu**:
-- Hai conv 3×3 = một trường tiếp nhận 5×5, nhưng:
-  - Ít tham số hơn: 2×(3×3) = 18 so với 5×5 = 25
-  - Nhiều phi tuyến hơn: 2 ReLU so với 1
-- Ba conv 3×3 = một trường tiếp nhận 7×7
+**Vì sao chọn nhân 3×3:**
+- Hai tầng 3×3 nối tiếp cho cùng trường tiếp nhận 5×5 như một tầng 5×5, nhưng:
+  - Ít tham số hơn: $$2 \times (3 \times 3) = 18$$ so với $$5 \times 5 = 25$$ (trên mỗi cặp kênh)
+  - Nhiều lớp phi tuyến hơn: 2 lớp ReLU so với 1
+- Ba tầng 3×3 nối tiếp cho trường tiếp nhận tương đương 7×7
 
-**~138 triệu tham số** (chủ yếu ở các tầng FC)
+Tổng số tham số vào khoảng **138 triệu** (phần lớn tập trung ở các tầng liên kết đầy đủ cuối mạng).
 
 ```python
 class VGG16(nn.Module):
@@ -89,24 +89,22 @@ class VGG16(nn.Module):
         return x
 ```
 
-### ResNet (2015) — Cách mạng Kết nối Bỏ qua
+### ResNet (2015) — Bước tiến từ Kết nối Tắt
 
-ResNet của He và cộng sự giải quyết **bài toán suy giảm** (*degradation problem*): mạng sâu hơn có lỗi huấn luyện *cao hơn* mạng nông. Điều này phản trực giác — nhiều dung lượng hơn lẽ ra phải giúp, không phải làm hại.
+ResNet của Kaiming He và cộng sự giải quyết **bài toán suy giảm** (*degradation problem*): khi tăng chiều sâu vượt một ngưỡng nhất định, mạng sâu hơn lại có sai số *huấn luyện* cao hơn mạng nông, dù về lý thuyết có dung lượng lớn hơn.
 
-**Vấn đề**: Trong mạng rất sâu, gradient hoặc biến mất hoặc bùng nổ, khiến tối ưu khó khăn. Ngay cả với khởi tạo cẩn thận và chuẩn hóa batch, mạng sâu hơn ~20 tầng vẫn huấn luyện kém.
+**Nguyên nhân:** Trong các mạng quá sâu (trên khoảng 20 tầng), dù đã khởi tạo cẩn thận và dùng chuẩn hóa batch, việc tối ưu trực tiếp một chuỗi dài các biến đổi phi tuyến vẫn gặp khó khăn do gradient suy giảm hoặc khó học ánh xạ đồng nhất.
 
-**Giải pháp**: **Kết nối dư** (*residual connections* / *skip connections*)
-
-Thay vì học $$H(x)$$ trực tiếp, học phần dư $$F(x) = H(x) - x$$, rồi:
+**Giải pháp:** **Kết nối dư** (*residual connections* hay *skip connections*). Thay vì học trực tiếp ánh xạ mong muốn $$H(\mathbf{x})$$, khối mạng học phần dư $$F(\mathbf{x}) = H(\mathbf{x}) - \mathbf{x}$$ rồi cộng đầu vào:
 
 $$\mathbf{y} = F(\mathbf{x}) + \mathbf{x}$$
 
-**Vì sao nó hoạt động**:
-1. **Ánh xạ đồng nhất dễ**: Nếu đồng nhất là tối ưu, chỉ cần đặt $$F(x) = 0$$
-2. **Đường cao tốc gradient**: Gradient chảy trực tiếp qua kết nối bỏ qua
-3. **Hiệu ứng ensemble**: ResNet hành xử như ensemble của các mạng nông hơn
+**Vì sao cơ chế này hiệu quả:**
+1. **Dễ học ánh xạ đồng nhất:** Nếu một tầng chưa cần biến đổi đầu vào, mạng chỉ cần đẩy trọng số của $$F(\mathbf{x})$$ về gần 0.
+2. **Đường truyền trực tiếp cho gradient:** Nhánh cộng đồng nhất giúp gradient truyền ngược ổn định qua hàng chục đến hàng trăm tầng.
+3. **Hiệu ứng tổ hợp (*ensemble*):** Mạng có kết nối tắt hoạt động tương tự sự kết hợp của nhiều đường dẫn có độ sâu khác nhau.
 
-**Khối Dư Cơ bản**:
+**Khối Dư Cơ bản:**
 ```
          ┌────────────────────────────────────┐
          │               Identity             │
@@ -119,7 +117,7 @@ $$\mathbf{y} = F(\mathbf{x}) + \mathbf{x}$$
               (add)
 ```
 
-**Khối Nút thắt** (*Bottleneck*, cho mạng sâu hơn như ResNet-50+):
+**Khối Cổ chai** (*Bottleneck*, dùng cho mạng sâu như ResNet-50 trở lên):
 ```
          ┌──────────────────────────────────┐
          │             Identity             │
@@ -303,71 +301,65 @@ for name, model in models.items():
 
 ### Tóm tắt Tiến hóa Kiến trúc
 
-| Mô hình | Năm | Độ sâu | Tham số | Lỗi Top-5 | Đổi mới then chốt |
+| Mô hình | Năm | Độ sâu | Tham số | Lỗi Top-5 | Đổi mới chính |
 |-------|------|-------|--------|-------------|----------------|
-| LeNet-5 | 1998 | 5 | 60K | - | CNN thành công đầu tiên |
-| AlexNet | 2012 | 8 | 60M | 15,3% | ReLU, Dropout, GPU |
-| VGG-16 | 2014 | 16 | 138M | 7,3% | Chỉ 3×3, độ sâu |
+| LeNet-5 | 1998 | 5 | 60K | - | CNN ứng dụng thành công sớm nhất |
+| AlexNet | 2012 | 8 | 60M | 15,3% | ReLU, Dropout, huấn luyện GPU |
+| VGG-16 | 2014 | 16 | 138M | 7,3% | Chỉ dùng nhân 3×3, tăng chiều sâu |
 | GoogLeNet | 2014 | 22 | 6,8M | 6,7% | Mô-đun Inception |
-| ResNet-50 | 2015 | 50 | 25M | 3,6% | Kết nối bỏ qua |
-| ResNet-152 | 2015 | 152 | 60M | 3,0% | Rất sâu |
-| DenseNet | 2017 | 121 | 8M | 4,2% | Kết nối dày đặc |
-| EfficientNet | 2019 | - | 5,3M | 2,9% | Tìm kiếm kiến trúc neuron |
+| ResNet-50 | 2015 | 50 | 25M | 3,6% | Kết nối tắt (*skip connections*) |
+| ResNet-152 | 2015 | 152 | 60M | 3,0% | Mạng rất sâu |
+| DenseNet | 2017 | 121 | 8M | 4,2% | Kết nối dày đặc giữa các tầng |
+| EfficientNet | 2019 | - | 5,3M | 2,9% | Tìm kiếm kiến trúc và compound scaling |
 
 ---
 
-## 5. Bài báo Nền tảng
+## 5. Các Bài báo Nền tảng
 
 **["Gradient-Based Learning Applied to Document Recognition" (1998)](http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf)**  
 *Tác giả*: Yann LeCun, Léon Bottou, Yoshua Bengio, Patrick Haffner  
-Giới thiệu LeNet-5, thiết lập mẫu conv-pool-conv-pool trở thành bản thiết kế cho CNN. Chứng minh học dựa trên gradient đầu-cuối trên điểm ảnh thô, chứng tỏ đặc trưng thủ công không cần thiết cho nhận diện ảnh.
+Giới thiệu LeNet-5 và thiết lập khuôn mẫu `conv → pool → conv → pool` cho CNN, chứng minh khả năng học đầu–cuối bằng gradient trực tiếp từ điểm ảnh thô thay cho các đặc trưng thủ công.
 
 **["Network In Network" (2014)](https://arxiv.org/abs/1312.4400)**  
 *Tác giả*: Min Lin, Qiang Chen, Shuicheng Yan  
-Giới thiệu tích chập 1×1 cho gộp xuyên kênh và Global Average Pooling (GAP) để thay thế tầng kết nối đầy đủ. Các đổi mới này giảm mạnh tham số và trở thành chuẩn trong mọi kiến trúc sau.
+Đề xuất tích chập 1×1 để kết hợp thông tin xuyên kênh và Global Average Pooling (GAP) thay thế các tầng liên kết đầy đủ cỡ lớn, giúp giảm mạnh số tham số và trở thành chuẩn trong các kiến trúc về sau.
 
 **["Very Deep Convolutional Networks for Large-Scale Image Recognition" (2015)](https://arxiv.org/abs/1409.1556)**  
 *Tác giả*: Karen Simonyan, Andrew Zisserman  
-VGGNet chứng minh độ sâu với bộ lọc 3×3 nhỏ vượt trội mạng nông với bộ lọc lớn. Kiến trúc đơn giản, lặp lại trở thành thiết kế tham chiếu và vẫn được dùng rộng rãi cho transfer learning.
+Chứng minh rằng mạng sâu sử dụng bộ lọc 3×3 nhỏ vượt trội mạng nông dùng bộ lọc lớn. Kiến trúc đơn giản, đồng nhất của VGGNet trở thành một mốc tham chiếu quen thuộc cho học chuyển giao (*transfer learning*).
 
 **["Deep Residual Learning for Image Recognition" (2016)](https://arxiv.org/abs/1512.03385)**  
 *Tác giả*: Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun  
-Kết nối bỏ qua của ResNet giải quyết bài toán suy giảm, cho phép huấn luyện mạng 100+ tầng. Thắng ImageNet 2015 với lỗi top-5 3,57% (vượt hiệu năng con người). Khung học dư giờ được dùng trong transformer, mô hình khuếch tán, và hầu hết kiến trúc sâu.
+Đề xuất kết nối tắt giúp khắc phục hiện tượng suy giảm ở mạng sâu và huấn luyện thành công mạng hơn 100 tầng, đạt lỗi top-5 là 3,57% trên ImageNet 2015. Nguyên lý học phần dư sau đó được áp dụng rộng rãi trong Transformer, mô hình khuếch tán và hầu hết các kiến trúc sâu khác.
 
 **["Densely Connected Convolutional Networks" (2017)](https://arxiv.org/abs/1608.06993)**  
 *Tác giả*: Gao Huang, Zhuang Liu, Laurens van der Maaten, Kilian Q. Weinberger  
-DenseNet nối mỗi tầng với mọi tầng khác, cho phép tái sử dụng đặc trưng và dòng gradient mạnh. Đạt độ chính xác tiên tiến với ít tham số hơn bằng cách tối đa hóa dòng thông tin qua mạng.
+DenseNet nối đầu ra của mỗi tầng tới tất cả các tầng sau trong cùng khối, khuyến khích tái sử dụng đặc trưng và tăng cường luồng gradient với số lượng tham số gọn nhẹ.
 
 **["EfficientNet: Rethinking Model Scaling" (2019)](https://arxiv.org/abs/1905.11946)**  
 *Tác giả*: Mingxing Tan, Quoc V. Le  
-Dùng tìm kiếm kiến trúc neuron để tìm kiến trúc baseline hiệu quả, rồi đề xuất compound scaling (độ sâu × độ rộng × độ phân giải) để mở rộng có hệ thống. Đạt độ chính xác tiên tiến với ít tham số và FLOPs hơn rất nhiều.
+Sử dụng tìm kiếm kiến trúc neuron để xây dựng mạng cơ sở hiệu quả, sau đó đề xuất mở rộng đồng thời cả độ sâu, độ rộng và độ phân giải (*compound scaling*) để đạt độ chính xác cao với ít tham số và FLOPs hơn.
 
 ---
 
-## 6. Điểm then chốt
+## 6. Điểm Then chốt
 
-1. **Gộp giảm kích thước** trong khi giữ đặc trưng quan trọng. Max pooling tốt nhất cho phân loại; average pooling cho các tác vụ khác.
+1. **Tầng gộp** giảm kích thước không gian trong khi giữ lại thông tin đặc trưng chính; max pooling thường ưu tiên cho phân loại, còn average pooling phù hợp hơn cho các tác vụ cần bảo toàn thông tin nền hoặc ở dạng global pooling.
+2. **Global Average Pooling** thay thế các tầng liên kết đầy đủ nặng tham số, giảm khoảng 40 lần tham số ở phần đầu ra và hỗ trợ khái quát hóa tốt hơn.
+3. **Lộ trình tiến hóa kiến trúc:** LeNet (đơn giản) → AlexNet (quy mô và GPU) → VGG (độ sâu đồng nhất) → ResNet (kết nối tắt) → EfficientNet (tối ưu hiệu quả).
+4. **Xếp chồng tích chập 3×3** thường hiệu quả hơn dùng nhân kích thước lớn về cả số tham số lẫn số lớp phi tuyến.
+5. **Kết nối tắt** là thành phần nền tảng để huấn luyện mạng sâu, xuất hiện trong ResNet, DenseNet, U-Net, Transformer và mô hình khuếch tán.
+6. **Các mẫu thiết kế phổ biến:**
+   - Khối `Conv → BatchNorm → ReLU`
+   - Kết nối tắt sau mỗi 2–3 tầng
+   - Global Average Pooling thay cho `Flatten + FC`
+   - Tích chập có stride để giảm mẫu học được
+7. **Mô hình tiền huấn luyện** (*transfer learning*) là điểm khởi đầu thực tế cho hầu hết bài toán thị giác, vì đặc trưng học từ ImageNet chuyển giao tốt sang nhiều miền dữ liệu khác.
 
-2. **Global Average Pooling** thay thế các tầng FC nặng, giảm tham số ~40× đồng thời cải thiện tổng quát hóa.
-
-3. **Tiến hóa kiến trúc**: LeNet (đơn giản) → AlexNet (quy mô) → VGG (độ sâu) → ResNet (kết nối bỏ qua) → EfficientNet (hiệu quả)
-
-4. **Tích chập 3×3 là tối ưu**: Xếp chồng nhiều bộ lọc nhỏ thay vì dùng bộ lọc lớn.
-
-5. **Kết nối bỏ qua là thiết yếu** để huấn luyện mạng sâu. Chúng xuất hiện trong ResNet, DenseNet, U-Net, Transformer và mô hình khuếch tán.
-
-6. **Thực hành tốt nhất hiện đại**:
-   - Conv → BatchNorm → ReLU
-   - Kết nối bỏ qua mỗi 2–3 tầng
-   - Global Average Pooling thay vì Flatten + FC
-   - Tích chập stride cho giảm mẫu học được
-
-7. **Mô hình tiền huấn luyện** (transfer learning) là điểm xuất phát chuẩn cho hầu hết tác vụ thị giác. Tiền huấn luyện ImageNet chuyển giao rất tốt sang các miền khác.
-
-**Chương tiếp theo**: Mạng Neuron Hồi quy cho dữ liệu tuần tự!
+**Chương tiếp theo:** Mạng Neuron Hồi quy (RNN) cho dữ liệu tuần tự.
 
 ## Video tham khảo
 
-- **xem trước** [Residual Networks (ResNet) \[Physics Informed Machine Learning\]](https://www.youtube.com/watch?v=w1UsKanMatM) — Steve Brunton, tiếng Anh. Một khối thặng dư là chồng kiểu VGG cộng một đường tắt, đúng bước ngoặt của bài.
-- [C4W2L04 Why ResNets Work](https://www.youtube.com/watch?v=RYth6EbBUqM) — DeepLearningAI, tiếng Anh. Vì sao đường tắt đó cho phép tăng độ sâu mà không sụp huấn luyện như bài mô tả.
-- [Lecture 9 | CNN Architectures](https://www.youtube.com/watch?v=DAOcjicFr1Y) — Stanford University School of Engineering, tiếng Anh. Hàng từ VGG tới ResNet để phần tiến hóa có một dòng thời gian.
+- **Xem trước:** [Residual Networks (ResNet) \[Physics Informed Machine Learning\]](https://www.youtube.com/watch?v=w1UsKanMatM) — Steve Brunton, tiếng Anh. Diễn giải trực quan khối dư như sự kết hợp giữa các tầng tích chập kiểu VGG và đường nối tắt.
+- [C4W2L04 Why ResNets Work](https://www.youtube.com/watch?v=RYth6EbBUqM) — DeepLearningAI, tiếng Anh. Giải thích rõ vì sao đường nối tắt giúp tăng độ sâu mà không làm suy giảm quá trình huấn luyện.
+- [Lecture 9 | CNN Architectures](https://www.youtube.com/watch?v=DAOcjicFr1Y) — Stanford University School of Engineering, tiếng Anh. Tổng hợp mạch tiến hóa từ VGG đến ResNet theo dòng thời gian.

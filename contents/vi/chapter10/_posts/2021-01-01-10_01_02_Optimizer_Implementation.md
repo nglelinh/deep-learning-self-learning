@@ -9,13 +9,13 @@ categories:
 - chapter10
 ---
 
-Cài đặt bộ tối ưu:
+Nội dung phần cài đặt bộ tối ưu gồm hai phần:
 
-1. **Cài đặt Cốt lõi** — từ Momentum đến AdamW từ đầu
-2. **So sánh, Bài báo và Cạm bẫy** — quỹ đạo 2D, so sánh phân loại, điểm then chốt
+1. **Cài đặt Cốt lõi** — cài đặt từ đầu các bộ tối ưu từ Momentum đến AdamW.
+2. **So sánh, Bài báo và Cạm bẫy** — minh họa quỹ đạo 2D, so sánh trên bài toán phân loại, tổng hợp bài báo nền tảng và các lưu ý thực hành.
 
 ## Video tham khảo
 
-- **xem trước** [Adam Optimization Algorithm (C2W2L08)](https://www.youtube.com/watch?v=JXQT_vxqwIs) — DeepLearningAI, tiếng Anh. Phép cập nhật Adam mà bài mã cài.
-- [Optimization for Deep Learning (Momentum, RMSprop, AdaGrad, Adam)](https://www.youtube.com/watch?v=NE88eqLngkg) — DeepBean, tiếng Anh. Các phép cập nhật lân cận (RMSProp, AdaGrad) để một lỗi trong một bộ đệm dễ thấy hơn.
-- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, tiếng Anh. Gọi bộ tối ưu từ một bước huấn luyện, sau khi bản thân phép cập nhật đã rõ.
+- **Xem trước:** [Adam Optimization Algorithm (C2W2L08)](https://www.youtube.com/watch?v=JXQT_vxqwIs) — DeepLearningAI, tiếng Anh. Trình bày quy tắc cập nhật Adam sẽ được cài đặt trong bài mã.
+- [Optimization for Deep Learning (Momentum, RMSprop, AdaGrad, Adam)](https://www.youtube.com/watch?v=NE88eqLngkg) — DeepBean, tiếng Anh. Đối chiếu với RMSprop và AdaGrad giúp dễ phát hiện sai sót khi cài đặt từng bộ đệm.
+- [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, tiếng Anh. Cách gọi bộ tối ưu trong vòng lặp huấn luyện PyTorch sau khi đã hiểu rõ phép cập nhật.

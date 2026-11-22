@@ -9,33 +9,33 @@ categories:
 - chapter03
 ---
 
-Bài này trình bày các kỹ thuật thực tế và thực hành tốt nhất để huấn luyện mạng neuron hiệu quả.
+Bài này tổng hợp các kỹ thuật nền tảng trong giai đoạn chuẩn bị huấn luyện mạng neuron: khởi tạo trọng số, tiền xử lý dữ liệu, chia mini-batch và phân tách tập dữ liệu.
 
 ---
 
 ## Khởi tạo Trọng số
 
-Khởi tạo đúng là then chốt cho huấn luyện thành công. Khởi tạo kém có thể dẫn đến gradient biến mất/bùng nổ hoặc hội tụ chậm.
+Khởi tạo trọng số hợp lý ảnh hưởng trực tiếp tới khả năng hội tụ của mạng. Khởi tạo sai có thể dẫn đến hiện tượng gradient biến mất, bùng nổ hoặc khiến quá trình học diễn ra rất chậm.
 
-### Phương pháp Khởi tạo Xấu
+### Các Cách Khởi tạo Nên Tránh
 
-#### 1. Toàn không
+#### 1. Khởi tạo toàn 0
 
 ```python
 W = np.zeros((n_l, n_l_prev))
 ```
 
-**Vấn đề**: Mọi neuron tính cùng đầu ra và nhận cùng gradient → Không học!
+**Hạn chế:** Tất cả neuron trong cùng một lớp tính ra cùng giá trị và nhận gradient giống hệt nhau, nên mạng không thể học được các đặc trưng khác nhau.
 
-#### 2. Toàn cùng giá trị
+#### 2. Khởi tạo cùng một hằng số
 
 ```python
 W = np.ones((n_l, n_l_prev)) * 0.5
 ```
 
-**Vấn đề**: Giống toàn không — phá vỡ đối xứng thất bại.
+**Hạn chế:** Tương tự khởi tạo toàn 0 — không phá vỡ được tính đối xứng giữa các neuron.
 
-### Phương pháp Khởi tạo Tốt
+### Các Phương pháp Khởi tạo Tốt
 
 #### 1. Giá trị Ngẫu nhiên Nhỏ
 
@@ -43,12 +43,12 @@ W = np.ones((n_l, n_l_prev)) * 0.5
 W = np.random.randn(n_l, n_l_prev) * 0.01
 ```
 
-**Ưu**: Phá đối xứng  
-**Nhược**: Có thể quá nhỏ với mạng sâu
+**Ưu điểm:** Phá vỡ đối xứng.  
+**Nhược điểm:** Có thể làm tín hiệu và gradient co quá nhỏ trong các mạng nhiều lớp.
 
 #### 2. Khởi tạo Xavier/Glorot
 
-Cho kích hoạt **sigmoid** hoặc **tanh**:
+Phù hợp với các hàm kích hoạt **sigmoid** hoặc **tanh**:
 
 $$\mathbf{W}^{[l]} \sim \mathcal{N}\left(0, \frac{1}{n^{[l-1]}}\right)$$
 
@@ -56,7 +56,7 @@ $$\mathbf{W}^{[l]} \sim \mathcal{N}\left(0, \frac{1}{n^{[l-1]}}\right)$$
 W = np.random.randn(n_l, n_l_prev) * np.sqrt(1 / n_l_prev)
 ```
 
-hoặc
+hoặc phiên bản cân bằng cả chiều vào và chiều ra:
 
 $$\mathbf{W}^{[l]} \sim \mathcal{N}\left(0, \frac{2}{n^{[l-1]} + n^{[l]}}\right)$$
 
@@ -64,11 +64,11 @@ $$\mathbf{W}^{[l]} \sim \mathcal{N}\left(0, \frac{2}{n^{[l-1]} + n^{[l]}}\right)
 W = np.random.randn(n_l, n_l_prev) * np.sqrt(2 / (n_l_prev + n_l))
 ```
 
-**Lý do**: Duy trì phương sai kích hoạt qua các lớp.
+**Mục đích:** Giữ cho phương sai của các giá trị kích hoạt ổn định khi đi qua nhiều lớp.
 
 #### 3. Khởi tạo He
 
-Cho kích hoạt **ReLU** (phổ biến nhất):
+Phù hợp với hàm kích hoạt **ReLU** (được sử dụng rộng rãi nhất):
 
 $$\mathbf{W}^{[l]} \sim \mathcal{N}\left(0, \frac{2}{n^{[l-1]}}\right)$$
 
@@ -76,11 +76,11 @@ $$\mathbf{W}^{[l]} \sim \mathcal{N}\left(0, \frac{2}{n^{[l-1]}}\right)$$
 W = np.random.randn(n_l, n_l_prev) * np.sqrt(2 / n_l_prev)
 ```
 
-**Vì sao hệ số 2?** ReLU triệt tiêu trung bình một nửa số neuron.
+**Vì sao có hệ số 2?** Vì ReLU đưa trung bình một nửa số đầu vào âm về 0, nên phương sai cần tăng gấp đôi để duy trì thang đo kích hoạt.
 
 ### Khởi tạo Độ lệch
 
-Độ lệch thường có thể khởi tạo bằng không:
+Khác với trọng số, độ lệch thường có thể khởi tạo bằng 0:
 
 ```python
 b = np.zeros((n_l, 1))
@@ -120,11 +120,11 @@ def initialize_parameters(layer_dims, initialization_method='he'):
 
 ## Tiền xử lý Dữ liệu
 
-### 1. Scale Đặc trưng
+### 1. Chuẩn hóa Thang đo Đặc trưng
 
-Chuẩn hóa các đặc trưng đầu vào về các khoảng tương tự.
+Đưa các đặc trưng đầu vào về cùng thang đo giúp bề mặt hàm mất mát cân đối hơn và gradient descent hội tụ nhanh hơn.
 
-#### Chuẩn hóa Standardization (Z-score)
+#### Chuẩn hóa Z-score (*Standardization*)
 
 $$x_{\text{norm}} = \frac{x - \mu}{\sigma}$$
 
@@ -150,13 +150,13 @@ def min_max_normalize(X):
     return X_norm, x_min, x_max
 ```
 
-**Khi nào dùng gì:**
-- **Standardization**: Khi đặc trưng phân phối chuẩn hoặc có ngoại lai
-- **Min-Max**: Khi cần đặc trưng trong khoảng cụ thể (ví dụ: [0, 1])
+**Cách chọn phương pháp:**
+- **Standardization:** Thích hợp khi đặc trưng có phân phối gần chuẩn hoặc xuất hiện điểm ngoại lai.
+- **Min-Max:** Thích hợp khi cần ép toàn bộ giá trị vào một khoảng cố định (ví dụ $$[0, 1]$$).
 
 ### 2. Xáo trộn Dữ liệu
 
-Xáo trộn dữ liệu huấn luyện trước mỗi epoch để tránh học các mẫu phụ thuộc thứ tự.
+Cần xáo trộn tập dữ liệu huấn luyện trước mỗi epoch để tránh việc mô hình học theo thứ tự sắp xếp của mẫu dữ liệu.
 
 ```python
 def shuffle_data(X, Y):
@@ -170,7 +170,7 @@ def shuffle_data(X, Y):
 
 ## Xử lý theo Batch
 
-### Tạo Mini-Batch
+### Tạo Các Mini-Batch
 
 ```python
 def create_mini_batches(X, Y, batch_size):
@@ -206,26 +206,26 @@ def create_mini_batches(X, Y, batch_size):
     return mini_batches
 ```
 
-## Chia Train/Validation/Test
+## Chia Tập Train / Validation / Test
 
-### Vì sao Ba Tập?
+### Vai trò của Ba Tập dữ liệu
 
-- **Tập huấn luyện**: Học tham số
-- **Tập kiểm định**: Tinh chỉnh siêu tham số, giám sát quá khớp
-- **Tập kiểm tra**: Đánh giá cuối cùng (chỉ dùng một lần!)
+- **Tập huấn luyện (*train*):** Dùng để học tham số mô hình.
+- **Tập kiểm định (*validation*):** Dùng để chọn siêu tham số và theo dõi dấu hiệu quá khớp.
+- **Tập kiểm tra (*test*):** Dùng để đánh giá khách quan chất lượng cuối cùng (chỉ nên dùng sau khi đã chốt mô hình).
 
-### Tỷ lệ Chia Điển hình
+### Tỷ lệ Chia Thường dùng
 
-**Tập dữ liệu nhỏ (< 10.000 mẫu):**
-- Train: 60%, Val: 20%, Test: 20%
+**Tập dữ liệu nhỏ (dưới 10.000 mẫu):**
+- Train: 60%, Validation: 20%, Test: 20%
 
-**Tập dữ liệu vừa (10.000 – 1.000.000):**
-- Train: 80%, Val: 10%, Test: 10%
+**Tập dữ liệu trung bình (10.000 – 1.000.000 mẫu):**
+- Train: 80%, Validation: 10%, Test: 10%
 
-**Tập dữ liệu lớn (> 1.000.000):**
-- Train: 98%, Val: 1%, Test: 1%
+**Tập dữ liệu lớn (trên 1.000.000 mẫu):**
+- Train: 98%, Validation: 1%, Test: 1%
 
-### Triển khai
+### Cài đặt
 
 ```python
 def train_val_test_split(X, Y, train_ratio=0.8, val_ratio=0.1):
@@ -256,6 +256,6 @@ def train_val_test_split(X, Y, train_ratio=0.8, val_ratio=0.1):
 
 ## Video tham khảo
 
-- **xem trước** [L11.6 Xavier Glorot and Kaiming He Initialization](https://www.youtube.com/watch?v=ScWTYHQra5E) — Sebastian Raschka, tiếng Anh. Khởi tạo Xavier và He là quy tắc tỉ lệ trọng số bài phát biểu.
-- [Lecture 6 | Training Neural Networks I](https://www.youtube.com/watch?v=wEoyxE0GP2M) — Stanford University School of Engineering, tiếng Anh. Ngữ cảnh bài giảng cho các quy tắc đó, cộng tiền xử lý và batch.
-- [Train, Test, & Validation Sets explained](https://www.youtube.com/watch?v=Zi-0rlM4RDs) — deeplizard, tiếng Anh. Vì sao bài chia dữ liệu thành train, validation và test trước khi chạy epoch.
+- **Xem trước:** [L11.6 Xavier Glorot and Kaiming He Initialization](https://www.youtube.com/watch?v=ScWTYHQra5E) — Sebastian Raschka, tiếng Anh. Giải thích cơ sở toán học của quy tắc khởi tạo Xavier và He được trình bày trong bài.
+- [Lecture 6 | Training Neural Networks I](https://www.youtube.com/watch?v=wEoyxE0GP2M) — Stanford University School of Engineering, tiếng Anh. Bối cảnh tổng thể về khởi tạo trọng số, tiền xử lý dữ liệu và xử lý theo batch.
+- [Train, Test, & Validation Sets explained](https://www.youtube.com/watch?v=Zi-0rlM4RDs) — deeplizard, tiếng Anh. Giải thích rõ mục đích của việc chia dữ liệu thành ba tập trước khi huấn luyện.

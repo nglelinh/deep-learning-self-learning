@@ -10,53 +10,53 @@ categories:
 lesson_type: optional
 ---
 
-# Tùy chọn: autoencoder như latent, codec, và bộ tái tạo bị che
+# Tùy chọn: Autoencoder trong vai trò không gian ẩn, bộ nén và tái tạo bị che
 
-> Bài này là **tùy chọn**. Nó **không** thay lý thuyết autoencoder gốc / khử nhiễu / thưa. Nó cho thấy cùng ý encoder–decoder được dùng sau 2022: **nén latent cho khuếch tán**, **codec âm thanh neuron**, và **mô hình ảnh bị che**.
+> Bài này mang tính **tùy chọn** và **không** thay thế phần lý thuyết về autoencoder chuẩn, khử nhiễu hay thưa. Nội dung tổng hợp cách cùng kiến trúc encoder–decoder được triển khai sau năm 2022 trong **nén không gian ẩn cho mô hình khuếch tán**, **bộ nén âm thanh nơ-ron** và **mô hình ảnh bị che (MAE)**.
 
-Mục tiêu tái tạo
+Mục tiêu tái tạo cơ bản:
 
 $$\mathcal{L} = \mathbb{E}_{\mathbf{x}}\big\|\mathbf{x} - d_\phi(e_\theta(\mathbf{x}))\big\|^2$$
 
-vẫn là điểm xuất phát. Sản phẩm giờ quan tâm latent *có cấu trúc*: lượng tử, tri giác, hoặc bị che một phần.
+vẫn là điểm xuất phát. Điểm khác biệt trong các hệ thống hiện đại là không gian ẩn được thiết kế *có cấu trúc hơn*: lượng tử hóa rời rạc, tối ưu theo cảm nhận thị giác hoặc huấn luyện trên đầu vào bị che một phần.
 
-## 1. Latent cho khuếch tán
+## 1. Không gian ẩn cho mô hình khuếch tán
 
-Tầng đầu Stable Diffusion là autoencoder (KL hoặc VQ) ánh xạ ảnh $$512\times512$$ xuống lưới latent nhỏ. Khuếch tán (bài tùy chọn Chương 11, Chương 13) chạy trên lưới đó. AE được huấn luyện với tái tạo + đối kháng + loss tri giác ([Rombach et al., 2022](https://arxiv.org/abs/2112.10752)). Đó là kiến trúc của chương này, tối ưu như **codec cho mô hình sinh thứ hai**.
+Giai đoạn đầu của Stable Diffusion là một autoencoder (dùng chính quy hóa KL hoặc VQ) ánh xạ ảnh kích thước $$512\times512$$ xuống một lưới đặc trưng ẩn nhỏ hơn nhiều. Quá trình khuếch tán (xem bài tùy chọn Chương 11 và Chương 13) vận hành trực tiếp trên lưới ẩn này. Autoencoder được huấn luyện kết hợp sai số tái tạo, mất mát đối kháng và mất mát cảm nhận ([Rombach et al., 2022](https://arxiv.org/abs/2112.10752)) — thực chất đóng vai trò **bộ nén (codec) phục vụ cho mô hình sinh thứ hai**.
 
-## 2. Ứng dụng cụ thể
+## 2. Một số ứng dụng tiêu biểu
 
-### Codec âm thanh neuron
+### Bộ nén âm thanh nơ-ron (*neural audio codec*)
 
-[Défossez et al., 2022](https://arxiv.org/abs/2210.13438) (EnCodec) và [Kumar et al., 2023](https://arxiv.org/abs/2306.06546) (DAC) là autoencoder lượng tử vector dư cho dạng sóng. Chúng nằm dưới AudioLM / MusicGen / nhiều stack TTS: AE biến audio thành token rời rạc để Transformer mô hình.
+[Défossez et al., 2022](https://arxiv.org/abs/2210.13438) (EnCodec) và [Kumar et al., 2023](https://arxiv.org/abs/2306.06546) (DAC) là các autoencoder sử dụng lượng tử hóa vector phần dư (*residual vector quantization*) trên dạng sóng âm thanh. Chúng là tầng nền cho các hệ thống như AudioLM, MusicGen và nhiều kiến trúc tổng hợp tiếng nói (TTS), chuyển tín hiệu âm thanh liên tục thành chuỗi token rời rạc để Transformer xử lý.
 
-### Masked autoencoder (MAE)
+### Masked Autoencoder (MAE)
 
-[He et al., 2022](https://arxiv.org/abs/2111.06377) che patch ngẫu nhiên và tái tạo pixel bằng encoder–decoder ViT. Đây là *pretext* AE (tự giám sát; Chương 16) hơn là prior sinh. Nhắc ở đây vì cài đặt đúng là autoencoder trên patch.
+[He et al., 2022](https://arxiv.org/abs/2111.06377) che ngẫu nhiên phần lớn các mảnh ảnh (*patch*) rồi dùng kiến trúc encoder–decoder dựa trên ViT để tái tạo lại điểm ảnh. Về bản chất, MAE là bài toán tiền huấn luyện tự giám sát (Chương 16) hơn là mô hình sinh, nhưng kiến trúc cài đặt vẫn là một autoencoder hoạt động trên các mảnh ảnh.
 
-### AE lượng tử vector
+### Autoencoder lượng tử hóa vector
 
-VQ-VAE / VQGAN vẫn là nút thắt rời rạc cho tokenizer ảnh và video (Make-A-Video, MAGVIT-v2). Loss cam kết từ ghi chú lý thuyết không đổi; việc 2022–2025 là **codebook tốt hơn và lượng tử không tra cứu**.
+VQ-VAE và VQGAN tiếp tục giữ vai trò nút thắt rời rạc trong các bộ tách token (*tokenizer*) cho ảnh và video (như Make-A-Video, MAGVIT-v2). Hàm mất mát cam kết (*commitment loss*) cơ bản vẫn giữ nguyên; các cải tiến giai đoạn 2022–2025 tập trung vào **thiết kế bảng mã (codebook) hiệu quả hơn và lượng tử hóa không cần bảng tra cứu (*lookup-free quantization*)**.
 
-## 3. Phần mềm phổ biến
+## 3. Thư viện và mã nguồn phổ biến
 
-- [diffusers](https://github.com/huggingface/diffusers) `AutoencoderKL` — latent kiểu SD.
+- [diffusers](https://github.com/huggingface/diffusers) với lớp `AutoencoderKL` — bộ mã hóa không gian ẩn theo kiểu Stable Diffusion.
 - [facebookresearch/encodec](https://github.com/facebookresearch/encodec) và [descriptinc/descript-audio-codec](https://github.com/descriptinc/descript-audio-codec).
 - [facebookresearch/mae](https://github.com/facebookresearch/mae).
 
-## 4. Trích dẫn (2022–2026)
+## 4. Tài liệu tham khảo (2022–2026)
 
-- [Latent Diffusion Models (Rombach et al., 2022)](https://arxiv.org/abs/2112.10752) — AE như latent khuếch tán.
+- [Latent Diffusion Models (Rombach et al., 2022)](https://arxiv.org/abs/2112.10752) — ứng dụng autoencoder làm không gian ẩn cho khuếch tán.
 - [MAE (He et al., 2022)](https://arxiv.org/abs/2111.06377).
 - [EnCodec (Défossez et al., 2022)](https://arxiv.org/abs/2210.13438).
 - [DAC (Kumar et al., 2023)](https://arxiv.org/abs/2306.06546).
 
-## 5. Bài này bổ sung gì cho ghi chú cốt lõi
+## 5. Phần bổ sung so với nội dung cốt lõi
 
-Cài autoencoder NumPy/PyTorch và bài pitfalls không gian ẩn trước. Bài này chỉ cho thấy **latent ấy đi đâu** trong hệ 2022–2026 (khuếch tán, codec, MAE) — không phải suy diễn tái tạo mới.
+Bạn nên hoàn thành phần cài đặt autoencoder bằng PyTorch và bài về các cạm bẫy không gian ẩn trước. Bài này chỉ minh họa **cách không gian ẩn đó được ứng dụng** trong các hệ thống giai đoạn 2022–2026 (khuếch tán, bộ nén âm thanh, MAE), không đưa thêm công thức tái tạo nền tảng mới.
 
 ## Video tham khảo
 
-- **xem trước** [How does Stable Diffusion work? – Latent Diffusion Models EXPLAINED](https://www.youtube.com/watch?v=J87hffSMB60) — AI Coffee Break with Letitia, tiếng Anh. Latent của Stable Diffusion là autoencoder mà ghi chú nói khuếch tán đang sống trong đó.
-- [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, tiếng Anh. Autoencoder thuần mà latent đó được khái quát từ.
-- [But how do AI images and videos actually work? | Guest video by Welch Labs](https://www.youtube.com/watch?v=iv-5mZ_9CPY) — 3Blue1Brown, tiếng Anh. Quá trình khuếch tán chạy trong không gian ẩn đó.
+- **Xem trước:** [How does Stable Diffusion work? – Latent Diffusion Models EXPLAINED](https://www.youtube.com/watch?v=J87hffSMB60) — AI Coffee Break with Letitia, tiếng Anh. Giải thích vai trò của autoencoder tạo không gian ẩn cho Stable Diffusion.
+- [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, tiếng Anh. Ôn lại mô hình autoencoder thuần — điểm xuất phát của các bộ nén hiện đại.
+- [But how do AI images and videos actually work? | Guest video by Welch Labs](https://www.youtube.com/watch?v=iv-5mZ_9CPY) — 3Blue1Brown, tiếng Anh. Minh họa quá trình khuếch tán hoạt động trên không gian ẩn đó.

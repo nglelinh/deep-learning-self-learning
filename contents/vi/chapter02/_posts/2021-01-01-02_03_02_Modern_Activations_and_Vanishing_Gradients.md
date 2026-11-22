@@ -13,38 +13,38 @@ categories:
 
 ### Cho Lớp Ẩn
 
-**Khuyến nghị mặc định: ReLU**
-- Bắt đầu với ReLU cho hầu hết ứng dụng
-- Hiệu quả tính toán
-- Hoạt động tốt trong thực tế
+**Lựa chọn mặc định: ReLU**
+- Nên bắt đầu với ReLU cho hầu hết các bài toán
+- Tính toán nhanh và đơn giản
+- Hoạt động ổn định trong thực tế
 
-**Nếu gặp vấn đề ReLU chết:**
-- Thử Leaky ReLU hoặc ELU
-- Kiểm tra learning rate và khởi tạo
+**Khi gặp hiện tượng ReLU chết:**
+- Thử chuyển sang Leaky ReLU hoặc ELU
+- Kiểm tra lại tốc độ học (*learning rate*) và cách khởi tạo trọng số
 
-**Cho mô hình hiện đại / quy mô lớn:**
-- GELU cho transformer và NLP
-- Swish cho mô hình ảnh khi hiệu năng then chốt
+**Cho các mô hình hiện đại hoặc quy mô lớn:**
+- GELU thường dùng cho kiến trúc Transformer và NLP
+- Swish thường dùng cho các mô hình thị giác khi ưu tiên độ chính xác
 
 **Cho mạng rất sâu:**
-- Cân nhắc ELU hoặc SELU
-- Có thể cần kỹ thuật chuẩn hóa (trình bày sau)
+- Có thể cân nhắc ELU hoặc SELU
+- Thường kết hợp thêm các kỹ thuật chuẩn hóa (sẽ học ở các chương sau)
 
 ### Cho Lớp Đầu ra
 
 **Phân loại nhị phân:**
-- **Sigmoid**: Cho ra xác suất của lớp dương
+- **Sigmoid:** Xuất ra xác suất thuộc lớp dương
 
 **Phân loại đa lớp:**
-- **Softmax**: Cho ra phân phối xác suất trên các lớp
+- **Softmax:** Xuất ra phân phối xác suất trên tất cả các lớp
 
 **Hồi quy:**
-- **Tuyến tính (đồng nhất)**: Cho đầu ra không bị chặn
-- **ReLU**: Cho đầu ra không âm (ví dụ: giá, số đếm)
-- **Sigmoid/tanh**: Cho đầu ra bị chặn
+- **Tuyến tính (hàm đồng nhất):** Khi đầu ra không bị giới hạn miền giá trị
+- **ReLU:** Khi đầu ra phải không âm (ví dụ: giá cả, số đếm)
+- **Sigmoid/tanh:** Khi đầu ra nằm trong một khoảng bị chặn
 
 **Phân loại đa nhãn:**
-- **Sigmoid**: Xác suất độc lập cho mỗi nhãn
+- **Sigmoid:** Xuất xác suất độc lập cho từng nhãn
 
 ## Triển khai Thực tế
 
@@ -120,53 +120,53 @@ print("Tanh:", Activations.tanh(z))
 
 ### Vì sao Điều này Quan trọng
 
-Trong lan truyền ngược, gradient được nhân qua các lớp:
+Trong quá trình lan truyền ngược, gradient được tính bằng cách nhân liên tiếp các đạo hàm qua từng lớp:
 
 $$\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[1]}} = \frac{\partial \mathcal{L}}{\partial \mathbf{a}^{[L]}} \cdot \frac{\partial \mathbf{a}^{[L]}}{\partial \mathbf{z}^{[L]}} \cdot \ldots \cdot \frac{\partial \mathbf{z}^{[2]}}{\partial \mathbf{a}^{[1]}} \cdot \frac{\partial \mathbf{a}^{[1]}}{\partial \mathbf{z}^{[1]}} \cdot \frac{\partial \mathbf{z}^{[1]}}{\partial \mathbf{W}^{[1]}}$$
 
-### Vấn đề với Sigmoid/Tanh
+### Hạn chế của Sigmoid và Tanh
 
-- Đạo hàm cực đại: $$\sigma'(z) = 0.25$$ (sigmoid), $$\tanh'(z) = 1$$ (tanh tại $$z=0$$)
-- Đạo hàm điển hình: Nhỏ hơn nhiều ($$< 0.25$$ với sigmoid)
-- Sau nhiều lớp: $$0.25^{10} \approx 9.5 \times 10^{-7}$$ (cực kỳ nhỏ!)
+- Giá trị đạo hàm cực đại: $$\sigma'(z) = 0.25$$ (với sigmoid tại $$z=0$$), $$\tanh'(z) = 1$$ (với tanh tại $$z=0$$)
+- Đạo hàm thực tế thường nhỏ hơn nhiều ($$< 0.25$$ với sigmoid khi $$z \neq 0$$)
+- Khi nhân qua nhiều lớp: $$0.25^{10} \approx 9.5 \times 10^{-7}$$ (rất nhỏ)
 
-**Kết quả**: Gradient biến mất, các lớp đầu học rất chậm hoặc không học.
+**Hệ quả:** Gradient suy giảm nhanh về 0, khiến các lớp đầu gần như không cập nhật được trọng số.
 
-### ReLU Cứu Cánh
+### Vai trò của ReLU
 
-- Đạo hàm bằng 1 với đầu vào dương (không biến mất)
-- Gradient chảy không đổi qua các đơn vị ReLU đang hoạt động
-- Cho phép huấn luyện mạng sâu hơn nhiều
+- Đạo hàm bằng 1 ở miền dương nên không bị suy giảm qua phép nhân
+- Gradient truyền ổn định qua các neuron ReLU đang hoạt động
+- Cho phép huấn luyện các mạng sâu hơn đáng kể
 
-### Bài toán ReLU Chết
+### Hiện tượng ReLU Chết
 
-- Nếu $$z < 0$$ luôn, gradient bằng 0, không có học
-- Có thể xảy ra với:
-  - Khởi tạo kém
-  - Learning rate cao
-  - Cập nhật không may
+- Nếu giá trị $$z < 0$$ trên mọi mẫu, đạo hàm luôn bằng 0 và neuron ngừng học
+- Nguyên nhân thường gặp:
+  - Khởi tạo trọng số chưa hợp lý
+  - Tốc độ học quá cao
+  - Bước cập nhật lớn đẩy trọng số sang miền âm
 
-**Giải pháp:**
-- Dùng Leaky ReLU, ELU, hoặc các biến thể khác
-- Khởi tạo đúng (He initialization cho ReLU)
-- Learning rate hợp lý
-- Batch normalization (trình bày sau)
+**Hướng khắc phục:**
+- Dùng Leaky ReLU, ELU hoặc các biến thể tương tự
+- Áp dụng khởi tạo phù hợp (khởi tạo He cho ReLU)
+- Chọn tốc độ học hợp lý
+- Sử dụng batch normalization (trình bày ở chương sau)
 
 ## Tóm tắt
 
-- **Hàm kích hoạt** đưa vào phi tuyến tính, cho phép mạng học các mẫu phức tạp
-- **ReLU** là lựa chọn mặc định cho lớp ẩn trong học sâu hiện đại
-- **Sigmoid** dùng cho đầu ra phân loại nhị phân
-- **Softmax** dùng cho đầu ra phân loại đa lớp
-- **Hàm kích hoạt nâng cao** (ELU, Swish, GELU) có thể cải thiện hiệu năng
-- **Gradient biến mất** là vấn đề lớn với sigmoid/tanh trong mạng sâu
-- **ReLU** giảm gradient biến mất nhưng đưa vào bài toán ReLU chết
-- Lựa chọn hàm kích hoạt ảnh hưởng đáng kể đến huấn luyện và hiệu năng
+- **Hàm kích hoạt** bổ sung tính phi tuyến, giúp mạng học các mẫu dữ liệu phức tạp.
+- **ReLU** là lựa chọn mặc định cho các lớp ẩn trong hầu hết kiến trúc học sâu.
+- **Sigmoid** phù hợp cho lớp đầu ra của bài toán phân loại nhị phân.
+- **Softmax** phù hợp cho lớp đầu ra của bài toán phân loại đa lớp.
+- **Các hàm kích hoạt hiện đại** (ELU, Swish, GELU) có thể cải thiện hiệu năng trên nhiều kiến trúc.
+- **Gradient biến mất** là rào cản lớn khi dùng sigmoid hoặc tanh trong mạng sâu.
+- **ReLU** giảm mạnh hiện tượng gradient biến mất nhưng có thể gặp tình trạng ReLU chết.
+- Lựa chọn hàm kích hoạt ảnh hưởng trực tiếp tới tốc độ hội tụ và chất lượng mô hình.
 
-Ở bài tiếp theo, ta sẽ xét lan truyền xuôi chi tiết với các ví dụ cụ thể.
+Ở bài tiếp theo, ta sẽ tìm hiểu chi tiết quá trình lan truyền xuôi kèm các ví dụ tính toán cụ thể.
 
 ## Video tham khảo
 
-- **xem trước** [The GELU, SiLU and SwiGLU activation functions, clearly explained!!!](https://www.youtube.com/watch?v=2FaI2Fen1mQ) — StatQuest with Josh Starmer, tiếng Anh. GELU, SiLU và SwiGLU là các hàm hiện đại bài thêm sau ReLU.
-- [Vanishing/Exploding Gradients (C2W1L10)](https://www.youtube.com/watch?v=qhXZsFVxGKo) — DeepLearningAI, tiếng Anh. Gradient biến mất và bùng nổ là kiểu hỏng mà bài dùng để biện minh các lựa chọn đó.
-- [Neural Networks Pt. 3: ReLU In Action!!!](https://www.youtube.com/watch?v=68BZ5f7P94E) — StatQuest with Josh Starmer, tiếng Anh. ReLU là mốc để các hàm mới hơn được so.
+- **Xem trước:** [The GELU, SiLU and SwiGLU activation functions, clearly explained!!!](https://www.youtube.com/watch?v=2FaI2Fen1mQ) — StatQuest with Josh Starmer, tiếng Anh. Giải thích rõ các hàm kích hoạt hiện đại (GELU, SiLU, SwiGLU) được dùng phổ biến sau ReLU.
+- [Vanishing/Exploding Gradients (C2W1L10)](https://www.youtube.com/watch?v=qhXZsFVxGKo) — DeepLearningAI, tiếng Anh. Phân tích hiện tượng gradient biến mất và bùng nổ — lý do chính thúc đẩy việc cải tiến hàm kích hoạt.
+- [Neural Networks Pt. 3: ReLU In Action!!!](https://www.youtube.com/watch?v=68BZ5f7P94E) — StatQuest with Josh Starmer, tiếng Anh. Ôn lại cách hoạt động của ReLU làm cơ sở so sánh với các hàm kích hoạt mới hơn.

@@ -11,25 +11,25 @@ categories:
 
 # Phục vụ và hiệu năng cho LLM
 
-Một decoder đã tiền huấn luyện, đã dạy chỉ dẫn, đã căn chỉnh vẫn đắt **theo từng token sinh ra**. Huấn luyện là hóa đơn một lần (hoặc hiếm); phục vụ là hóa đơn tăng theo người dùng. Bài này liệt kê các nút bạn nên gọi tên trước khi với tới chưng cất.
+Một mô hình decoder đã qua tiền huấn luyện, SFT và căn chỉnh vẫn có chi phí vận hành cao **trên từng token sinh ra**. Trong khi huấn luyện là khoản chi một lần (hoặc theo chu kỳ dài), chi phí phục vụ suy luận tăng liên tục theo số lượng người dùng. Bài này trình bày các kỹ thuật tối ưu phục vụ nên cân nhắc trước khi quyết định huấn luyện một mô hình học sinh qua chưng cất.
 
-Toán nén — lưới lượng tử, điểm cắt tỉa, KD cổ điển — ở lại **Chương 23**. Các công thức riêng cho LLM (GPTQ, AWQ, GGUF, speculative decoding) ở **23-99**. Ở đây ta chỉ trả lời: *thứ gì đắt lúc giải mã, và khi nào học sinh nhỏ hơn là bước đúng tiếp theo?*
+Phần toán học nền tảng về nén mô hình nằm ở **Chương 23**, còn các phương pháp lượng tử hóa riêng cho LLM (GPTQ, AWQ, GGUF) nằm ở **23-99**. Ở đây, trọng tâm là phân tích *yếu tố nào gây tốn kém khi giải mã và khi nào chưng cất là bước tiếp theo hợp lý*.
 
-## 1. Prefill so với decode
+## 1. Hai pha suy luận: Prefill và Decode
 
-Sinh tự hồi quy có hai pha:
+Quá trình sinh tự hồi quy gồm hai pha có đặc tính tính toán khác nhau:
 
-**Prefill.** Toàn bộ prompt (hệ thống + lịch sử + người dùng + văn bản truy hồi) được tiêu thụ song song. Bạn trả attention trên độ dài prompt một lần và ghi **KV-cache**: với mỗi tầng và mỗi token prompt, lưu vector key và value.
+**Pha Prefill:** Toàn bộ prompt đầu vào (gồm *system prompt*, lịch sử hội thoại, câu hỏi người dùng và văn bản truy hồi) được xử lý song song. Mô hình tính *attention* trên toàn bộ prompt một lần và lưu kết quả vào **KV-cache**: với mỗi tầng và mỗi token đầu vào, các vectơ *key* và *value* được giữ lại trong bộ nhớ.
 
-**Decode.** Bạn phát từng token mới một. Không cache, bạn sẽ tính lại attention từ đầu trên tiền tố đang dài (xấp xỉ $$O(t^2)$$ tại bước $$t$$). Có cache, bạn append một $$k,v$$ mới và attention trên tiền tố đã lưu — khoảng $$O(t)$$ công attention mỗi token mới, cộng MLP.
+**Pha Decode:** Mô hình sinh từng token mới một cách tuần tự. Nếu không có *cache*, mỗi bước $$t$$ sẽ phải tính lại *attention* từ đầu cho toàn bộ tiền tố (độ phức tạp khoảng $$O(t^2)$$). Nhờ KV-cache, mỗi bước chỉ cần nối thêm một cặp $$k, v$$ mới và tính *attention* với tiền tố đã lưu (chi phí *attention* khoảng $$O(t)$$ mỗi token mới, cộng thêm tầng MLP).
 
-Đó chính là KV-cache đã được nêu ở **08-99**. Hệ phục vụ (vLLM, SGLang, llama.cpp) chủ yếu là: *quản nhiều cache, gom nhân ma trận, và chồng I/O*.
+Các hệ thống phục vụ như vLLM, SGLang hay llama.cpp tập trung tối ưu đúng ba việc: quản lý đồng thời nhiều KV-cache, gom phép nhân ma trận hiệu quả và che giấu độ trễ truy xuất bộ nhớ (I/O).
 
-Bộ nhớ, không chỉ FLOP, thường chiếm ưu thế. Cache cho một hội thoại dài là
+Trong pha *decode*, **dung lượng và băng thông bộ nhớ** thường là nút thắt lớn hơn cả FLOPs. Dung lượng KV-cache cho một chuỗi có độ dài $$L$$ xấp xỉ:
 
 $$\mathrm{bytes} \approx 2 \cdot L \cdot n_{\mathrm{layers}} \cdot n_{\mathrm{kv\_heads}} \cdot d_{\mathrm{head}} \cdot b$$
 
-(hệ số 2 là key và value; $$b$$ là số byte mỗi phần tử; grouped-query attention thu nhỏ $$n_{\mathrm{kv\_heads}}$$). Đó là lý do ngữ cảnh dài là quyết định **sản phẩm**, không chỉ quyết định chất lượng.
+trong đó hệ số 2 ứng với *key* và *value*, còn $$b$$ là số byte cho mỗi phần tử (kỹ thuật *grouped-query attention* giúp giảm $$n_{\mathrm{kv\_heads}}$$). Vì vậy, độ dài cửa sổ ngữ cảnh không chỉ là bài toán chất lượng mà còn là bài toán chi phí hạ tầng trực tiếp.
 
 ```mermaid
 flowchart LR
@@ -40,27 +40,27 @@ flowchart LR
   d2 --> lin["Do dai cache tang O cua n"]
 ```
 
-GQA / MQA (**26-07**, **07-99**) thu $$n_{\mathrm{kv\_heads}}$$. FlashAttention **không** thu cache; nó thu IO khi tính attention trên cache đó (lát + softmax trực tuyến, **26-01** / **26-07**). FLOPs huấn luyện theo thứ tự độ lớn và đồng nhất bộ nhớ “trọng số + KV” nằm ở **26-07**.
+Lưu ý phân biệt vai trò của hai tối ưu phổ biến: GQA / MQA (**26-07**, **07-99**) trực tiếp giảm kích thước KV-cache qua việc giảm $$n_{\mathrm{kv\_heads}}$$, trong khi FlashAttention **không** làm nhỏ KV-cache mà giảm lượng truyền tải bộ nhớ khi tính *attention* trên cache đó (chia khối kết hợp *online softmax*, xem **26-01** và **26-07**). Phần ước lượng FLOPs và bộ nhớ chi tiết nằm ở bài **26-07**.
 
-## 2. Gom batch và đóng gói
+## 2. Gom batch liên tục và đóng gói chuỗi
 
-Một bước decode là matmul gầy: batch 1, chuỗi 1, trọng số khổng lồ. GPU muốn matmul béo. **Continuous batching** (lịch theo vòng lặp; hình vLLM) giữ thiết bị bận bằng cách nhận request mới khi request khác vừa xong chuỗi, thay vì chờ một batch tĩnh kết thúc. **Đóng gói chuỗi** là anh em lúc huấn luyện: nối các tài liệu ngắn trong một cửa sổ và mask để token không attention sang tài liệu khác. Cùng ý — đừng trả tiền cho padding bạn sẽ bỏ qua.
+Mỗi bước *decode* đơn lẻ thực chất là một phép nhân ma trận dạng mảnh (batch = 1, độ dài chuỗi = 1, nhưng ma trận trọng số rất lớn), nên không tận dụng hết năng lực tính toán song song của GPU. **Continuous batching** (gom batch liên tục theo từng bước giải mã, đặc trưng của vLLM) cho phép nạp ngay yêu cầu mới vào vị trí của yêu cầu vừa kết thúc thay vì chờ cả lô tĩnh hoàn thành. Tương tự ở pha huấn luyện, **đóng gói chuỗi** (*sequence packing*) ghép nhiều văn bản ngắn vào cùng một cửa sổ kèm mặt nạ chặn *attention* chéo giữa các văn bản để không lãng phí tính toán vào *padding*.
 
-Prefill của system prompt dùng chung có thể tính một lần và **cache tiền tố**. Đó là gom batch theo thời gian chứ không theo người dùng.
+Ngoài ra, phần *prefill* của *system prompt* dùng chung giữa nhiều người dùng có thể tính một lần rồi tái sử dụng qua **prefix caching** (lưu đệm tiền tố).
 
-## 3. Lấy mẫu: nhiệt độ, top-$$k$$, top-$$p$$
+## 3. Chiến lược lấy mẫu: Nhiệt độ, top-$$k$$ và top-$$p$$
 
-Giải mã không phải lúc nào cũng $$\arg\max$$. Cho logit $$z$$,
+Quá trình giải mã không nhất thiết luôn chọn token có xác suất cao nhất ($$\arg\max$$). Từ vectơ logit $$z$$, phân bố điều chỉnh theo nhiệt độ $$T$$ là:
 
 $$p_i^{(T)} = \frac{\exp(z_i / T)}{\sum_j \exp(z_j / T)}.$$
 
-$$T \to 0$$ là tham lam; $$T = 1$$ là phân bố đã huấn luyện; $$T > 1$$ làm phẳng (nhiều bất ngờ hơn, nhiều vỡ hơn). **Top-$$k$$** đưa mọi logit ngoài $$k$$ lớn nhất về không, rồi chuẩn hóa lại. **Nucleus / top-$$p$$** ([Holtzman et al., 2020](https://arxiv.org/abs/1904.09751)) giữ *tập nhỏ nhất* các token có xác suất tích lũy ít nhất $$p$$, rồi chuẩn hóa lại. Nhiệt độ đổi *hình dạng*; top-$$k$$ / top-$$p$$ đổi *phần đỡ*. Chúng kết hợp: chia cho $$T$$, cắt, rồi lấy mẫu.
+Khi $$T \to 0$$, phân bố tiến về giải mã tham lam; $$T = 1$$ giữ nguyên phân bố đã học; $$T > 1$$ làm phẳng phân bố (tăng tính đa dạng nhưng cũng dễ sinh nội dung lạc đề hơn). **Top-$$k$$** chỉ giữ lại $$k$$ token có logit cao nhất rồi chuẩn hóa lại xác suất. **Nucleus / top-$$p$$** ([Holtzman et al., 2020](https://arxiv.org/abs/1904.09751)) giữ lại *tập nhỏ nhất* các token có tổng xác suất tích lũy đạt ít nhất $$p$$ rồi chuẩn hóa lại. Nói ngắn gọn, nhiệt độ điều chỉnh *hình dạng* phân bố, còn *top-k* / *top-p* giới hạn *tập ứng viên hợp lệ*; thực tế thường kết hợp theo thứ tự: chia logit cho $$T$$, lọc theo *top-k*/*top-p*, rồi lấy mẫu.
 
-Đừng nhầm $$T$$ này với nhiệt độ chưng cất ở **26-05**. Cùng đại số; việc khác (độ đa dạng lúc giải mã vs giáo viên mềm).
+Cần phân biệt nhiệt độ $$T$$ lúc giải mã với nhiệt độ $$T$$ trong chưng cất tri thức (**26-05**): cùng công thức toán học nhưng mục đích khác nhau (điều chỉnh độ đa dạng đầu ra so với làm mềm phân bố mục tiêu của mô hình giáo viên).
 
-## 4. Speculative decoding (nháp + xác nhận)
+## 4. Speculative Decoding (mô hình nháp và xác nhận)
 
-[Leviathan et al., 2023](https://arxiv.org/abs/2211.17192) (và các bài song song) dùng một mô hình **nháp** rẻ để đề xuất vài token; mô hình **đích** lớn xác nhận tiền tố đó trong một lượt forward song song. Token mà đích sẽ lấy mẫu thì được nhận; tại chỗ bất đồng đầu tiên bạn lấy mẫu lại từ phân bố đích *đã chỉnh* và bỏ phần nháp còn lại. Cài đúng thì luật đầu ra là của đích, không của nháp. Bạn tốn thêm FLOP nháp để mua ít lượt forward đích hơn.
+[Leviathan et al., 2023](https://arxiv.org/abs/2211.17192) (cùng các nghiên cứu song song) dùng một mô hình **nháp** (*draft model*) nhỏ, chạy nhanh để đề xuất trước $$k$$ token liên tiếp, sau đó mô hình **đích** (*target model*) lớn kiểm tra toàn bộ tiền tố đó trong một lượt lan truyền xuôi song song. Các token phù hợp với phân bố của mô hình đích được chấp nhận ngay; tại vị trí bất đồng đầu tiên, hệ thống lấy mẫu lại từ phân bố hiệu chỉnh của mô hình đích và bỏ phần nháp phía sau. Khi cài đặt đúng, phân bố đầu ra vẫn **giữ nguyên chính xác** như mô hình đích, đồng thời giảm số lượt gọi tuần tự của mô hình lớn.
 
 ```mermaid
 sequenceDiagram
@@ -72,60 +72,57 @@ sequenceDiagram
   Target->>Draft: Nhan mot tien to plus mot lan lay mau lai
 ```
 
-Đây là mẹo *phục vụ*, không phải học sinh mới được huấn luyện. Nếu bạn cần kiến trúc nhỏ hơn, đó là chưng cất (**26-05**).
+*Speculative decoding* là kỹ thuật tối ưu ở tầng *phục vụ*, không tạo ra một mô hình học sinh mới. Nếu bài toán thực sự cần một kiến trúc gọn nhẹ hơn, cần chuyển sang chưng cất (**26-05**).
 
-## 5. Lượng tử hóa là thắng lợi rẻ đầu tiên
+## 5. Lượng tử hóa: Bước tối ưu chi phí thấp đầu tiên
 
-Lưu trọng số 16-bit thay vì 32-bit, rồi 8-bit hoặc 4-bit, cắt bộ nhớ và có thể cắt thời gian decode bị giới hạn băng thông. Chương 23 cho hình dung làm tròn; **23-99** gọi tên GPTQ / AWQ / GGUF như các công thức người ta thực sự chạy trên decoder 7B–70B.
+Giảm độ chính xác trọng số từ 32-bit xuống 16-bit, rồi 8-bit hoặc 4-bit giúp giảm mạnh dung lượng bộ nhớ và cải thiện tốc độ pha *decode* (vốn bị giới hạn bởi băng thông bộ nhớ). Các phương pháp thực dụng cho mô hình 7B–70B như GPTQ, AWQ và GGUF đã được giới thiệu ở **23-99**.
 
-Lượng tử hóa **không** huấn luyện mô hình mới. Nó xấp xỉ cùng $$\theta$$ bằng ít bit hơn. Dùng khi:
+Lượng tử hóa **không** huấn luyện lại mô hình mới mà chỉ biểu diễn xấp xỉ cùng bộ trọng số $$\theta$$ bằng ít bit hơn. Nên ưu tiên lượng tử hóa khi:
 
-- bạn sở hữu hoặc được phép phân phối checkpoint đó,
-- sụt chất lượng chấp nhận được sau một vòng đánh giá nhanh,
-- bạn cần *cùng* hành vi với RAM thấp hơn (laptop, một GPU, biên).
+- Bạn sở hữu hoặc có quyền sử dụng hợp lệ bản trọng số gốc.
+- Mức suy giảm chất lượng sau kiểm thử nằm trong ngưỡng chấp nhận được.
+- Mục tiêu là giữ hành vi tương tự với mức tiêu thụ RAM/VRAM thấp hơn (trên máy cá nhân, một GPU hoặc thiết bị biên).
 
-Nếu 4-bit vẫn trượt mục tiêu độ trễ hoặc chi phí, bạn cần ít tầng/độ rộng hơn hoặc ít tham số kích hoạt hơn (định tuyến MoE — cũng ở 23-99) — hoặc một **học sinh**.
+Nếu lượng tử hóa 4-bit vẫn chưa đáp ứng yêu cầu độ trễ hay chi phí, giải pháp tiếp theo là giảm kích thước kiến trúc, dùng mô hình thưa kiểu MoE (**23-99**) hoặc huấn luyện một **mô hình học sinh**.
 
-## 6. Các đòn bẩy phục vụ khác (để không quá thiên về chưng cất)
+## 6. Các đòn bẩy tối ưu khác trước khi chưng cất
 
-- **Cache prompt / chia sẻ tiền tố.** Nhiều request chung system prompt; tái sử dụng prefill đó (mục 2).
-- **Truy hồi vs ngữ cảnh dài.** Nhét cả cuốn sách vào $$L$$ thường chậm hơn và kém hơn truy hồi (18-99).
-- **Adapter (LoRA / QLoRA).** Chuyên biệt hóa mà không phục vụ thêm một bản sao đầy đủ cho mọi chuyên gia (Chương 15 tùy chọn).
-- **Sổ sách.** Nếu cần $$N$$, cỡ activation, hoặc $$C \approx 6NT$$, mở **26-07** chứ đừng đoán.
+- **Cache tiền tố (*prefix caching*):** Tái sử dụng kết quả *prefill* cho các *system prompt* dùng chung.
+- **Truy hồi thay cho ngữ cảnh quá dài:** Đưa toàn bộ tài liệu lớn vào cửa sổ $$L$$ thường chậm và kém hiệu quả hơn kết hợp truy hồi (RAG, **18-99**).
+- **Adapter (LoRA / QLoRA):** Phục vụ nhiều tác vụ chuyên biệt trên cùng một mô hình nền thay vì nhân bản toàn bộ trọng số (xem bài tùy chọn Chương 15).
+- **Ước lượng định lượng:** Khi cần tính số tham số $$N$$, kích thước giá trị kích hoạt hay ngân sách $$C \approx 6NT$$, dùng các công thức ở bài **26-07** thay vì ước đoán cảm tính.
 
-Không mục nào *chuyển tri thức vào một kiến trúc nhỏ hơn*. Chúng làm giáo viên rẻ hơn khi chạy.
+Tất cả các kỹ thuật trên giúp chạy mô hình giáo viên rẻ hơn mà chưa thay đổi kiến trúc mô hình.
 
-## 7. Khi nào nên chưng cất
+## 7. Khi nào nên chuyển sang chưng cất?
 
-Với tới chưng cất (**26-05**) khi ít nhất một điều sau đúng:
+Nên cân nhắc chưng cất (**26-05**) khi đáp ứng ít nhất một trong các điều kiện sau:
 
-1. **Kiến trúc phải thu nhỏ.** Lượng tử hóa không xóa được tầng. Giáo viên 70B phải thành học sinh 7–8B (hoặc mobile) cần một $$\theta$$ mới.
-2. **Bạn muốn tầng sản phẩm rẻ hơn** với *hành vi* tương tự, không phải bản sao bit-exact — trong nhà, trên giáo viên bạn được phép huấn luyện từ đó.
-3. **Bạn sẽ tinh chỉnh nhiều chuyên gia.** Chưng cất một học sinh tổng quát một lần, rồi LoRA từng chuyên gia.
-4. **Nội tại hộp trắng sẵn có** và bạn muốn khớp hidden state hoặc phân bố token, không chỉ văn bản.
+1. **Cần thu nhỏ kiến trúc thực sự:** Lượng tử hóa không thể giảm số tầng hay độ rộng; muốn chuyển từ mô hình 70B xuống 7–8B (hoặc cỡ di động) cần huấn luyện một bộ tham số $$\theta$$ mới.
+2. **Cần phiên bản sản phẩm chi phí thấp hơn** có hành vi tương đương trên miền tác vụ mục tiêu, sử dụng mô hình giáo viên mà bạn có quyền huấn luyện từ đó.
+3. **Cần tinh chỉnh nhiều mô hình chuyên biệt:** Chưng cất một mô hình học sinh tổng quát một lần rồi gắn các *adapter* LoRA riêng cho từng tác vụ.
+4. **Có quyền truy cập hộp trắng** vào mô hình giáo viên và muốn khớp trạng thái ẩn hoặc phân bố token, không chỉ văn bản đầu ra.
 
-**Đừng** chưng cất trước nếu chưa thử trọng số 4-bit, giới hạn ngữ cảnh hợp lý, và gom batch. Chưng cất là dự án huấn luyện; lượng tử hóa thường chỉ là một cờ chuyển đổi.
-
-Cũng đừng chưng cất giáo viên mà bạn không được cấp phép hoặc không có hợp đồng để huấn luyện từ đó. Bài sau tách chưng cất trong nhà / giấy phép mở thông thường khỏi việc gặt một API bạn không kiểm soát.
+**Lưu ý thực hành:** Không nên vội triển khai chưng cất trước khi đã thử lượng tử hóa 4-bit, kiểm soát độ dài ngữ cảnh hợp lý và áp dụng *continuous batching*, bởi chưng cất là một dự án huấn luyện đầy đủ trong khi các kỹ thuật phục vụ thường chỉ cần cấu hình triển khai. Đồng thời, chỉ thực hiện chưng cất từ mô hình giáo viên có giấy phép hoặc quyền sử dụng hợp lệ (phân tích chi tiết ở bài **26-05**).
 
 ## Đọc thêm
 
 - Leviathan et al., 2023. [Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192).
 - Holtzman et al., 2020. [The Curious Case of Neural Text Degeneration](https://arxiv.org/abs/1904.09751) (nucleus sampling).
 - Kwon et al., 2023. [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180).
-- Cảm hứng bản đồ chủ đề (không trích): [Alisa’s Book of LLMs](https://alisawuffles.notion.site/alisa-s-book-of-llms).
+- Tài liệu tham khảo mở rộng: [Alisa’s Book of LLMs](https://alisawuffles.notion.site/alisa-s-book-of-llms).
 
 ## Điểm chính cần nhớ
 
-- Chi phí decode = MLP + attention trên **KV-cache** đang lớn dần (bộ nhớ $$O(n)$$ theo độ dài đã cache).
-- Continuous batching / đóng gói lấp GPU; speculative decoding là nháp + xác nhận song song.
-- Nhiệt độ đổi hình $$p$$; top-$$k$$ / top-$$p$$ cắt phần đỡ. Cùng đại số $$T$$ với KD, việc khác.
-- Lượng tử hóa và gom batch là công cụ hiệu năng mặc định (Chương 23 / 23-99).
-- Chưng cất là công cụ cho một mạng *mới, nhỏ hơn* *bắt chước* giáo viên.
-- Quyết định “cache / lượng tử / truy hồi” trước “huấn luyện học sinh.”
+- Chi phí pha *decode* gồm MLP và *attention* trên **KV-cache** tăng tuyến tính $$O(n)$$ theo độ dài chuỗi.
+- *Continuous batching* và đóng gói chuỗi tối ưu mức sử dụng GPU; *speculative decoding* tăng tốc bằng cơ chế đề xuất–xác nhận song song mà vẫn giữ nguyên phân bố đích.
+- Nhiệt độ điều chỉnh hình dạng phân bố $$p$$; *top-k* và *top-p* giới hạn tập token ứng viên.
+- Lượng tử hóa, quản lý ngữ cảnh và gom batch là nhóm tối ưu nên áp dụng trước (**Chương 23 / 23-99**).
+- Chưng cất dành cho trường hợp cần một mạng *nhỏ hơn, có bộ tham số mới* học lại hành vi của mô hình giáo viên.
 
 ## Video tham khảo
 
-- **xem trước** [Faster LLMs: Accelerate Inference with Speculative Decoding](https://www.youtube.com/watch?v=VkWlLSTdHs8) — IBM Technology, tiếng Anh. Speculative decoding là cách tăng tốc nháp-rồi-xác nhận mà bài giải thích.
-- [How LLMs survive in low precision | Quantization Fundamentals](https://www.youtube.com/watch?v=qoQJq5UwV1c) — Julia Turc, tiếng Anh. Lượng tử hóa, thắng lợi phục vụ rẻ đầu tiên của bài.
-- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Lấy mẫu theo nhiệt độ được cài trong bản dựng này; bài đem nó so với top-k và top-p. Video dài; phần lấy mẫu là phần liên quan.
+- **Xem trước** [Faster LLMs: Accelerate Inference with Speculative Decoding](https://www.youtube.com/watch?v=VkWlLSTdHs8) — IBM Technology, tiếng Anh. Giải thích trực quan cơ chế đề xuất–xác nhận của *speculative decoding*.
+- [How LLMs survive in low precision | Quantization Fundamentals](https://www.youtube.com/watch?v=qoQJq5UwV1c) — Julia Turc, tiếng Anh. Trình bày nền tảng lượng tử hóa — bước tối ưu phục vụ chi phí thấp đầu tiên.
+- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Có phần cài đặt lấy mẫu theo nhiệt độ để đối chiếu trực tiếp với *top-k* và *top-p* trong bài.

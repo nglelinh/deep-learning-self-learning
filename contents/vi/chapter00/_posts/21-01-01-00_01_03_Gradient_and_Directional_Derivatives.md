@@ -9,17 +9,17 @@ categories:
 - chapter00
 ---
 
-Bài học này trình bày vector gradient (*gradient*) và đạo hàm theo hướng (*directional derivative*) — hai khái niệm trung tâm trong tối ưu hóa, giúp ta hiểu hàm số biến thiên theo các hướng khác nhau như thế nào.
+Bài học này trình bày vector gradient (*gradient*) và đạo hàm theo hướng (*directional derivative*) — hai khái niệm trung tâm trong tối ưu hóa, giúp ta xác định tốc độ biến thiên của hàm số theo từng hướng khác nhau.
 
 ---
 
 ## Vector gradient
 
-Gradient $$\nabla f$$ là một vector gồm các đạo hàm riêng của hàm $$f$$ theo từng biến. Tại một điểm cho trước, gradient chỉ theo hướng tăng dốc nhất của hàm số.
+Gradient $$\nabla f$$ là vector gồm tất cả các đạo hàm riêng của hàm $$f$$ theo từng biến. Tại một điểm cho trước, gradient chỉ theo hướng tăng dốc nhất của hàm số.
 
 ### Định nghĩa và cách tính
 
-Với hàm hai biến $$f(x, y)$$, gradient được cho bởi:
+Với hàm hai biến $$f(x, y)$$, gradient được xác định bởi:
 
 $$ \nabla f = \begin{pmatrix} \frac{\partial f}{\partial x} \\ \frac{\partial f}{\partial y} \end{pmatrix} $$
 
@@ -29,7 +29,7 @@ $$ \nabla f = \begin{pmatrix} \frac{\partial f}{\partial x_1} \\ \frac{\partial 
 
 ### Ví dụ: Tính gradient
 
-Xét $$f(x, y) = x^2 + 3xy + y^2$$:
+Xét hàm số $$f(x, y) = x^2 + 3xy + y^2$$:
 
 $$\frac{\partial f}{\partial x} = 2x + 3y$$
 $$\frac{\partial f}{\partial y} = 3x + 2y$$
@@ -42,7 +42,7 @@ Tại điểm $$(1, 2)$$: $$\nabla f(1, 2) = \begin{pmatrix} 2(1) + 3(2) \\ 3(1)
 
 ## Đạo hàm theo hướng
 
-**Đạo hàm theo hướng** đo tốc độ biến thiên của $$f$$ khi ta di chuyển theo một hướng bất kỳ $$\mathbf{u}$$. Ở đây $$\mathbf{u}$$ phải là vector đơn vị (độ dài bằng 1).
+**Đạo hàm theo hướng** đo tốc độ biến thiên của $$f$$ khi di chuyển theo một hướng bất kỳ $$\mathbf{u}$$, trong đó $$\mathbf{u}$$ là vector đơn vị (có độ dài bằng 1).
 
 ### Định nghĩa
 
@@ -52,7 +52,7 @@ $$D_{\mathbf{u}}f(\mathbf{x}) = \nabla f(\mathbf{x}) \cdot \mathbf{u} = \sum_{i=
 
 ### Diễn giải hình học
 
-Đạo hàm theo hướng có thể viết dưới dạng:
+Đạo hàm theo hướng có thể biểu diễn dưới dạng:
 
 $$D_{\mathbf{u}}f = \lvert \nabla f \rvert \cos \theta$$
 
@@ -60,15 +60,15 @@ trong đó $$\theta$$ là góc giữa $$\nabla f$$ và $$\mathbf{u}$$, còn $$\l
 
 ### Ví dụ: Tính đạo hàm theo hướng
 
-Dùng ví dụ trước $$f(x, y) = x^2 + 3xy + y^2$$ tại điểm $$(1, 2)$$ với $$\nabla f(1, 2) = \begin{pmatrix} 8 \\ 7 \end{pmatrix}$$:
+Tiếp tục xét $$f(x, y) = x^2 + 3xy + y^2$$ tại điểm $$(1, 2)$$ với $$\nabla f(1, 2) = \begin{pmatrix} 8 \\ 7 \end{pmatrix}$$:
 
-**Hướng 1:** $$\mathbf{u}_1 = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$$ (hướng trục $$x$$ dương)
+**Hướng 1:** $$\mathbf{u}_1 = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$$ (chiều dương trục $$x$$)
 $$D_{\mathbf{u}_1}f(1, 2) = 8 \cdot 1 + 7 \cdot 0 = 8$$
 
-**Hướng 2:** $$\mathbf{u}_2 = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$$ (hướng trục $$y$$ dương)
+**Hướng 2:** $$\mathbf{u}_2 = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$$ (chiều dương trục $$y$$)
 $$D_{\mathbf{u}_2}f(1, 2) = 8 \cdot 0 + 7 \cdot 1 = 7$$
 
-**Hướng 3:** $$\mathbf{u}_3 = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix}$$ (đường chéo $$45^\circ$$)
+**Hướng 3:** $$\mathbf{u}_3 = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix}$$ (hướng đường chéo $$45^\circ$$)
 $$D_{\mathbf{u}_3}f(1, 2) = 8 \cdot \frac{1}{\sqrt{2}} + 7 \cdot \frac{1}{\sqrt{2}} = \frac{15}{\sqrt{2}} \approx 10{,}61$$
 
 ---
@@ -79,54 +79,52 @@ $$D_{\mathbf{u}_3}f(1, 2) = 8 \cdot \frac{1}{\sqrt{2}} + 7 \cdot \frac{1}{\sqrt{
 
 Từ công thức $$D_{\mathbf{u}}f = \lvert \nabla f \rvert \cos \theta$$, ta suy ra:
 
-1. **Tốc độ biến thiên cực đại**: xảy ra khi $$\cos \theta = 1$$ (tức $$\theta = 0^\circ$$)
-   - Hướng: $$\mathbf{u} = \frac{\nabla f}{\lvert \nabla f \rvert}$$ (cùng hướng với gradient)
-   - Tốc độ cực đại: $$D_{\max}f = \lvert \nabla f \rvert$$
+1. **Tốc độ biến thiên cực đại:** đạt được khi $$\cos \theta = 1$$ (tức $$\theta = 0^\circ$$).
+   - Hướng: $$\mathbf{u} = \frac{\nabla f}{\lvert \nabla f \rvert}$$ (cùng hướng với gradient).
+   - Giá trị cực đại: $$D_{\max}f = \lvert \nabla f \rvert$$.
 
-2. **Tốc độ biến thiên cực tiểu**: xảy ra khi $$\cos \theta = -1$$ (tức $$\theta = 180^\circ$$)
-   - Hướng: $$\mathbf{u} = -\frac{\nabla f}{\lvert \nabla f \rvert}$$ (ngược hướng gradient)
-   - Tốc độ cực tiểu: $$D_{\min}f = -\lvert \nabla f \rvert$$
+2. **Tốc độ biến thiên cực tiểu:** đạt được khi $$\cos \theta = -1$$ (tức $$\theta = 180^\circ$$).
+   - Hướng: $$\mathbf{u} = -\frac{\nabla f}{\lvert \nabla f \rvert}$$ (ngược hướng gradient).
+   - Giá trị cực tiểu: $$D_{\min}f = -\lvert \nabla f \rvert$$.
 
-3. **Tốc độ biến thiên bằng không**: xảy ra khi $$\cos \theta = 0$$ (tức $$\theta = 90^\circ$$)
-   - Hướng: mọi vector vuông góc với $$\nabla f$$
+3. **Tốc độ biến thiên bằng không:** xảy ra khi $$\cos \theta = 0$$ (tức $$\theta = 90^\circ$$).
+   - Hướng: mọi vector vuông góc với $$\nabla f$$.
 
 ### Tóm tắt các tính chất của gradient
 
-- Gradient $$\nabla f$$ chỉ theo hướng **tăng dốc nhất**
-- Hướng $$-\nabla f$$ chỉ theo hướng **giảm dốc nhất**
-- Độ lớn $$\lvert \nabla f \rvert$$ cho **tốc độ biến thiên cực đại**
-- Khi $$\nabla f = \mathbf{0}$$, điểm đó là **điểm tới hạn** (*critical point*) — ứng viên cho cực trị
+- Gradient $$\nabla f$$ chỉ theo hướng **tăng dốc nhất**.
+- Hướng $$-\nabla f$$ chỉ theo hướng **giảm dốc nhất**.
+- Độ lớn $$\lvert \nabla f \rvert$$ là **tốc độ biến thiên cực đại**.
+- Điểm thỏa mãn $$\nabla f = \mathbf{0}$$ được gọi là **điểm tới hạn** (*critical point*) — vị trí tiềm năng của cực trị.
 
 ---
 
 ## Quan hệ với đường mức
 
-Tại mọi điểm trên đường mức $$f(x, y) = c$$, vector gradient $$\nabla f$$ **trực giao (vuông góc)** với tiếp tuyến của đường mức tại điểm đó.
+Tại mọi điểm trên đường mức $$f(x, y) = c$$, vector gradient $$\nabla f$$ luôn **trực giao (vuông góc)** với tiếp tuyến của đường mức tại điểm đó.
 
-### Vì sao tính chất này quan trọng
+### Ý nghĩa của tính trực giao
 
-Tính trực giao này mang tính cơ bản vì:
+Tính chất này đặc biệt quan trọng vì:
 
-1. **Đường mức biểu diễn giá trị hàm không đổi**: di chuyển dọc theo đường mức không làm thay đổi giá trị hàm, nên đạo hàm theo hướng bằng không.
-
-2. **Gradient chỉ hướng tăng dốc nhất**: hướng làm tăng giá trị hàm nhanh nhất phải vuông góc với hướng không làm thay đổi giá trị hàm.
-
-3. **Ý nghĩa trong tối ưu hóa**: để tìm cực trị, ta tìm các điểm có gradient bằng không (điểm tới hạn), hoặc các điểm mà gradient vuông góc với biên ràng buộc.
+1. **Đường mức biểu diễn giá trị hàm không đổi:** di chuyển dọc theo đường mức không làm thay đổi giá trị hàm, nên đạo hàm theo hướng tiếp tuyến bằng không.
+2. **Gradient chỉ hướng tăng dốc nhất:** hướng làm giá trị hàm tăng nhanh nhất phải vuông góc với hướng mà hàm không đổi.
+3. **Ứng dụng trong tối ưu hóa:** để tìm cực trị, ta tìm các điểm có gradient bằng không (điểm tới hạn), hoặc các điểm mà gradient vuông góc với biên của miền ràng buộc.
 
 ### Ứng dụng trong tối ưu hóa
 
-Hiểu gradient và đạo hàm theo hướng là then chốt cho:
+Hiểu rõ gradient và đạo hàm theo hướng giúp ta làm việc hiệu quả với:
 
-1. **Gradient descent**: di chuyển theo hướng $$-\nabla f$$ để cực tiểu hóa $$f$$
-2. **Gradient ascent**: di chuyển theo hướng $$+\nabla f$$ để cực đại hóa $$f$$
-3. **Tối ưu có ràng buộc**: tận dụng quan hệ giữa gradient và đường mức
-4. **Phân tích hội tụ**: hiểu khi nào thuật toán hội tụ về nghiệm tối ưu
-5. **Chọn độ dài bước**: xác định khoảng di chuyển dọc theo hướng gradient
+1. **Gradient descent:** di chuyển theo hướng $$-\nabla f$$ để cực tiểu hóa $$f$$.
+2. **Gradient ascent:** di chuyển theo hướng $$+\nabla f$$ để cực đại hóa $$f$$.
+3. **Tối ưu có ràng buộc:** khai thác quan hệ hình học giữa gradient và đường mức.
+4. **Phân tích hội tụ:** xác định điều kiện để thuật toán hội tụ về nghiệm tối ưu.
+5. **Chọn độ dài bước:** quyết định khoảng di chuyển phù hợp dọc theo hướng gradient.
 
-Gradient cung cấp đồng thời hướng cần di chuyển và thông tin về tốc độ biến thiên của hàm, do đó là nền tảng của hầu hết các thuật toán tối ưu hóa.
+Vì cung cấp đồng thời cả hướng di chuyển lẫn tốc độ biến thiên của hàm số, gradient là nền tảng của hầu hết các thuật toán tối ưu hóa.
 
 ## Video tham khảo
 
-- **xem trước** [Directional Derivatives | What's the slope in any direction?](https://www.youtube.com/watch?v=GJODOGq7cAY) — Dr. Trefor Bazett, tiếng Anh. Đạo hàm theo hướng là độ dốc theo một hướng đã chọn, và gradient là hướng tăng nhanh nhất.
-- [MaDL - Vector Calculus](https://www.youtube.com/watch?v=rh885pI4lPA) — Tübingen Machine Learning, tiếng Anh. Đặt gradient, đạo hàm theo hướng và Jacobian vào ký hiệu khóa dùng cho ánh xạ nhận giá trị vector.
-- [Continuity vs Partial Derivatives vs Differentiability | My Favorite Multivariable Function](https://www.youtube.com/watch?v=6Wi1kT9kR1M) — Dr. Trefor Bazett, tiếng Anh. Cho thấy vì sao gradient có thể tồn tại theo nghĩa yếu hơn khả vi đầy đủ, đúng phân biệt mà phần đường mức dựa vào.
+- **Xem trước:** [Directional Derivatives | What's the slope in any direction?](https://www.youtube.com/watch?v=GJODOGq7cAY) — Dr. Trefor Bazett, tiếng Anh. Trực quan hóa đạo hàm theo hướng như độ dốc theo một hướng bất kỳ và vai trò của gradient là hướng tăng nhanh nhất.
+- [MaDL - Vector Calculus](https://www.youtube.com/watch?v=rh885pI4lPA) — Tübingen Machine Learning, tiếng Anh. Trình bày gradient, đạo hàm theo hướng và ma trận Jacobian theo hệ thống ký hiệu dùng cho ánh xạ nhận giá trị vector trong khóa học.
+- [Continuity vs Partial Derivatives vs Differentiability | My Favorite Multivariable Function](https://www.youtube.com/watch?v=6Wi1kT9kR1M) — Dr. Trefor Bazett, tiếng Anh. Minh họa vì sao sự tồn tại của đạo hàm riêng là điều kiện yếu hơn khả vi toàn phần — điểm phân biệt quan trọng cho phần đường mức.

@@ -9,9 +9,9 @@ categories:
 - chapter13
 ---
 
-## 4. Đoạn Code
+## 4. Đoạn mã
 
-Hãy triển khai VAE đầy đủ với mọi thành phần toán học tường minh:
+Phần mã dưới đây cài đặt đầy đủ Variational Autoencoder bằng PyTorch trên tập MNIST, bao gồm bước tái tham số hóa, hàm mất mát ELBO, sinh mẫu và nội suy không gian ẩn:
 
 ```python
 import torch
@@ -286,7 +286,7 @@ print("="*70)
 with torch.no_grad():
     # Lấy hai ảnh kiểm tra
     img1 = test_data_flat[0:1]
-    img2 = test_data_flat[7:1]
+    img2 = test_data_flat[7:8]
     
     # Encode sang mean ẩn
     mu1, _ = vae.encode(img1)
@@ -318,72 +318,68 @@ print("\nβ-VAE với β=4-10 thường học chiều ẩn diễn giải đượ
 print("nơi mỗi chiều nắm một nhân tố ngữ nghĩa (kích thước, xoay, v.v.)")
 ```
 
-## 5. Các Khái niệm Liên quan
+## 5. Các khái niệm liên quan
 
-Mối quan hệ giữa VAE và autoencoder chuẩn làm sáng tỏ điều khung xác suất thêm vào. Cả hai dùng kiến trúc encoder–decoder và mất mát tái tạo, nhưng VAE thêm: (1) mã hóa xác suất (phân phối thay vì điểm), (2) hạng tử chính quy hóa phân kỳ KL, (3) khả năng lấy mẫu để sinh. Các khác biệt này xuất phát từ việc VAE là mô hình xác suất có nguyên tắc tối ưu cận dưới của hợp lý, trong khi autoencoder chỉ là giảm chiều với nút thắt. Góc nhìn xác suất cung cấp đảm bảo lý thuyết: VAE xấp xỉ tối đa hóa hợp lý dữ liệu, đảm bảo mẫu sinh nên thực tế nếu huấn luyện thành công. Autoencoder không có đảm bảo như vậy — chúng tối thiểu hóa lỗi tái tạo, không trực tiếp chuyển thành sinh mẫu tốt.
+So sánh giữa VAE và autoencoder chuẩn làm rõ giá trị của khung xác suất. Cả hai đều dùng kiến trúc encoder–decoder và hàm mất mát tái tạo, nhưng VAE bổ sung ba điểm cốt lõi: (1) mã hóa thành phân phối xác suất thay vì điểm tất định, (2) thành phần chính quy hóa phân kỳ KL kéo không gian ẩn về gần phân phối tiên nghiệm, và (3) cơ chế lấy mẫu tường minh để sinh dữ liệu mới. Nhờ tối ưu cận dưới log-hợp lý, VAE mang lại nền tảng xác suất rõ ràng hơn so với autoencoder chỉ tối ưu sai số tái tạo.
 
-VAE nối sâu với suy diễn biến phân, một kỹ thuật tổng quát trong thống kê Bayesian để xấp xỉ phân phối hậu nghiệm không tractable. Ý tưởng luôn giống nhau: ta có mô hình $$p(\mathbf{x}, \mathbf{z})$$ nhưng không thể tính $$p(\mathbf{z}|\mathbf{x})$$ chính xác, nên ta xấp xỉ bằng phân phối đơn giản hơn $$q(\mathbf{z}|\mathbf{x})$$ từ họ tractable (ở đây, Gaussian phân tích thừa). Ta tối ưu xấp xỉ bằng cách tối đa hóa ELBO, cận dưới đại lượng ta thực sự quan tâm (log-hợp lý). VAE khiến suy diễn biến phân mở rộng được cho bài toán chiều cao qua: (1) dùng mạng neuron cho $$q$$ và $$p$$, cung cấp linh hoạt khổng lồ, (2) reparameterization trick cho phép tối ưu dựa trên gradient, (3) tối ưu ngẫu nhiên cho phép huấn luyện mini-batch. Hiểu VAE qua lăng kính suy diễn biến phân nối chúng với truyền thống thống kê phong phú và thúc đẩy các mở rộng như importance-weighted VAE hoặc hierarchical VAE.
+VAE gắn chặt với suy diễn biến phân trong thống kê Bayes. Khi có mô hình $$p(\mathbf{x}, \mathbf{z})$$ nhưng không tính trực tiếp được hậu nghiệm $$p(\mathbf{z}|\mathbf{x})$$, ta xấp xỉ nó bằng phân phối $$q(\mathbf{z}|\mathbf{x})$$ thuộc họ dễ tính toán (như phân phối chuẩn độc lập theo từng chiều) và tối đa hóa ELBO. VAE mở rộng phương pháp này lên dữ liệu nhiều chiều nhờ ba yếu tố: dùng mạng nơ-ron biểu diễn $$q$$ và $$p$$, áp dụng thủ thuật tái tham số hóa để tối ưu bằng gradient và huấn luyện ngẫu nhiên theo mini-batch.
 
-Kết nối với lý thuyết thông tin cung cấp góc nhìn khác. ELBO có thể viết:
+Từ góc độ lý thuyết thông tin, ELBO có thể viết dưới dạng:
 
 $$\text{ELBO} = \mathbb{E}_{q_\phi(\mathbf{z}|\mathbf{x})}[\log p_\theta(\mathbf{x}|\mathbf{z})] - KL(q_\phi(\mathbf{z}|\mathbf{x}) \| p(\mathbf{z}))$$
 
 $$= -H_{q_\phi}(p_\theta(\mathbf{x}|\mathbf{z})) - KL(q_\phi(\mathbf{z}|\mathbf{x}) \| p(\mathbf{z}))$$
 
-Hạng tử thứ nhất là âm entropy có điều kiện — ưu tiên decoder tái tạo tự tin cho mã ẩn (bất định thấp). Hạng tử KL đo chi phí thông tin của việc dùng $$q_\phi$$ thay vì prior $$p$$. Góc nhìn lý thuyết thông tin này gợi ý VAE đánh đổi giữa độ trung thực tái tạo và nén (mã ẩn thông tin thấp), góc nhìn được hình thức hóa trong khung β-VAE nơi ta điều khiển tường minh đánh đổi này bằng $$\beta$$.
+Số hạng đầu tiên thúc đẩy bộ giải mã tái tạo chính xác (độ bất định có điều kiện thấp), còn số hạng KL đo lượng thông tin cần mã hóa để chuyển từ phân phối tiên nghiệm $$p$$ sang hậu nghiệm $$q_\phi$$. Sự đánh đổi giữa độ trung thực tái tạo và mức độ nén này được điều khiển tường minh trong $$\beta$$-VAE thông qua hệ số $$\beta$$.
 
-VAE liên quan đến normalizing flow qua cách xử lý biến ẩn. Cả hai dùng biến ẩn $$\mathbf{z}$$ và học ánh xạ sang dữ liệu $$\mathbf{x}$$. Tuy nhiên, flow dùng ánh xạ khả nghịch, tất định với Jacobian tractable, cho phép hợp lý chính xác. VAE dùng mạng neuron linh hoạt cho encoder/decoder nhưng xấp xỉ hợp lý qua ELBO. Flow cung cấp suy diễn chính xác nhưng đòi hỏi kiến trúc bị ràng buộc. VAE cho phép kiến trúc linh hoạt nhưng cung cấp suy diễn xấp xỉ. Đánh đổi này định hình các miền ứng dụng tương ứng: flow cho mô hình hóa mật độ chính xác, VAE cho sinh linh hoạt với huấn luyện ổn định.
+Đặt cạnh *normalizing flows*, cả hai họ đều dùng biến ẩn $$\mathbf{z}$$ nhưng đánh đổi khác nhau: normalizing flows sử dụng phép biến đổi song ánh khả nghịch có định thức Jacobian tính được nên cho log-hợp lý chính xác nhưng bị ràng buộc về kiến trúc; ngược lại, VAE cho phép thiết kế mạng encoder và decoder tự do nhưng chỉ tối ưu cận dưới xấp xỉ ELBO.
 
-Cuối cùng, VAE nối với học biểu diễn và disentanglement. Biểu diễn disentangled có các chiều ẩn riêng lẻ tương ứng các nhân tố biến thiên độc lập (với khuôn mặt: một chiều cho tư thế, chiều khác cho ánh sáng, chiều khác cho danh tính). Hậu nghiệm Gaussian phân tích thừa của VAE khuyến khích độc lập giữa các chiều ẩn, và β-VAE với $$\beta > 1$$ khuyến khích disentanglement thêm bằng cách phạt phân kỳ KL mạnh hơn. Học biểu diễn disentangled có giá trị vượt ngoài sinh: tác vụ downstream hưởng lợi từ đặc trưng diễn giải được, phân tích thừa nơi ta có thể thao tác thuộc tính cụ thể độc lập. Hiểu cách huấn luyện VAE khuyến khích disentanglement nối với các câu hỏi rộng hơn về điều gì tạo nên biểu diễn tốt và cách khám phá chúng qua học không giám sát.
+Cuối cùng, VAE liên hệ mật thiết với học biểu diễn tách nhân tố (*disentangled representation learning*), nơi mỗi chiều ẩn tương ứng với một thuộc tính độc lập (như tư thế, ánh sáng, hình dạng). Hậu nghiệm chuẩn độc lập theo từng chiều và việc tăng trọng số $$\beta > 1$$ trong $$\beta$$-VAE khuyến khích sự độc lập giữa các chiều ẩn, giúp biểu diễn dễ diễn giải và thuận tiện hơn cho các tác vụ về sau.
 
-## 6. Các Bài báo Nền tảng
+## 6. Các bài báo nền tảng
 
 **["Auto-Encoding Variational Bayes" (2014)](https://arxiv.org/abs/1312.6114)**  
 *Tác giả*: Diederik P. Kingma, Max Welling  
-Bài báo nền tảng này giới thiệu VAE và khiến suy diễn biến phân thực tiễn cho deep learning qua reparameterization trick. Kingma và Welling chỉ ra bằng cách biểu diễn lấy mẫu thành $$\mathbf{z} = \boldsymbol{\mu} + \boldsymbol{\sigma} \odot \boldsymbol{\epsilon}$$ với $$\boldsymbol{\epsilon} \sim \mathcal{N}(0,I)$$, ta có thể backpropagate qua tính toán ngẫu nhiên, cho phép tối ưu dựa trên gradient của ELBO. Bài báo cung cấp suy dẫn toán học rõ ràng, đề xuất chi tiết cài đặt thực tiễn (dùng encoder/decoder Gaussian, KL dạng đóng), và chứng minh kết quả trên ảnh. VAE mang lại nhiều lợi thế so với cách tiếp cận hiện có: khung xác suất có nguyên tắc (không như autoencoder), huấn luyện ổn định (không như GAN ban đầu), và cận dưới tractable của hợp lý (không như mô hình ẩn). Công trình ảnh hưởng hàng nghìn bài báo theo dõi khám phá biến thể VAE, ứng dụng, và tính chất lý thuyết. Đọc bài báo này, người ta đánh giá cả sự tinh vi toán học (nối mạng neuron với suy diễn biến phân) và hiểu biết thực tiễn (reparameterization trick) khiến phương pháp hoạt động.
+Bài báo đề xuất VAE và đưa suy diễn biến phân vào thực hành học sâu nhờ thủ thuật tái tham số hóa $$\mathbf{z} = \boldsymbol{\mu} + \boldsymbol{\sigma} \odot \boldsymbol{\epsilon}$$ với $$\boldsymbol{\epsilon} \sim \mathcal{N}(0,I)$$. Nhóm tác giả trình bày đầy đủ phép suy ELBO, công thức KL dạng đóng cho phân phối chuẩn và kết quả thực nghiệm trên ảnh, mở ra một hướng mô hình sinh ổn định và có cơ sở xác suất rõ ràng.
 
 **["Tutorial on Variational Autoencoders" (2016)](https://arxiv.org/abs/1606.05908)**  
 *Tác giả*: Carl Doersch  
-Bài tutorial này cung cấp giới thiệu dễ tiếp cận về VAE cho độc giả không có nền tảng mạnh về suy diễn biến phân. Doersch giải thích cẩn thận trực giác đằng sau ELBO (vì sao cận dưới đủ, các hạng tử nghĩa là gì), reparameterization trick (với sơ đồ trực quan cho thấy luồng gradient), và các cân nhắc huấn luyện thực tiễn. Tutorial xử lý các nhầm lẫn phổ biến (vì sao hậu nghiệm Gaussian, cấu trúc không gian ẩn nghĩa là gì, cách chọn siêu tham số) và nối VAE với các khái niệm liên quan (autoencoder, GAN, suy diễn Bayesian). Dù không giới thiệu phương pháp mới, tutorial này giúp đáng kể việc áp dụng VAE bằng cách khiến khung dễ tiếp cận với thực hành. Nó minh họa cách trình bày rõ ràng — giải thích không chỉ phương trình là gì mà vì sao chúng có nghĩa — có thể có tác động lớn đến lĩnh vực bằng cách hạ rào cản hiểu kỹ thuật tinh vi.
+Bài hướng dẫn trình bày trực quan ý nghĩa của ELBO, thủ thuật tái tham số hóa cùng các lưu ý thực hành khi huấn luyện VAE cho người đọc chưa có nền tảng sâu về suy diễn biến phân. Tài liệu giải đáp nhiều câu hỏi phổ biến về hậu nghiệm chuẩn, cấu trúc không gian ẩn và mối liên hệ giữa VAE với autoencoder và GAN.
 
 **["β-VAE: Learning Basic Visual Concepts with a Constrained Variational Framework" (2017)](https://openreview.net/forum?id=Sy2fzU9gl)**  
 *Tác giả*: Irina Higgins, Loic Matthey, Arka Pal, Christopher Burgess, Xavier Glorot, Matthew Botvinick, Shakir Mohamed, Alexander Lerchner  
-Bài báo này giới thiệu β-VAE, một sửa đổi đơn giản nơi hạng tử KL trong loss được gán trọng số bằng $$\beta > 1$$ thay vì 1. Thay đổi tưởng chừng nhỏ này có hiệu ứng sâu lên biểu diễn ẩn đã học. β cao hơn phạt phân kỳ KL mạnh hơn, khuyến khích các chiều ẩn độc lập (phân tích thừa), thường dẫn đến biểu diễn disentangled nơi mỗi chiều nắm một nhân tố biến thiên diễn giải được. Bài báo chứng minh β-VAE học tách các nhân tố như hình dạng, kích thước, xoay, và màu sắc thành các chiều ẩn khác nhau, cho phép sinh có kiểm soát bằng cách thao tác chiều cụ thể. Công trình nối VAE với nguyên lý nút thắt thông tin và chỉ ra rằng mức nén đúng (qua β) có thể cải thiện chất lượng biểu diễn cho tác vụ downstream. β-VAE đã trở thành công cụ chuẩn để học biểu diễn disentangled và minh họa cách siêu tham số (β) có thể điều khiển tính chất định tính của biểu diễn đã học, không chỉ chỉ số định lượng như lỗi tái tạo.
+Bài báo giới thiệu $$\beta$$-VAE bằng cách nhân số hạng KL với trọng số $$\beta > 1$$. Phạt KL mạnh hơn khuyến khích các chiều ẩn độc lập với nhau, giúp tách riêng các nhân tố biến thiên như hình dạng, kích thước, góc xoay hay màu sắc vào từng chiều riêng biệt và cho phép điều chỉnh từng thuộc tính khi sinh mẫu.
 
 **["Importance Weighted Autoencoders" (2016)](https://arxiv.org/abs/1509.00519)**  
 *Tác giả*: Yuri Burda, Roger Grosse, Ruslan Salakhutdinov  
-Bài báo này cải thiện ELBO của VAE qua importance sampling, tạo cận dưới chặt hơn của log-hợp lý. VAE chuẩn dùng một mẫu duy nhất từ $$q_\phi(\mathbf{z}|\mathbf{x})$$ để ước lượng ELBO. IWAE dùng nhiều mẫu và importance weighting, cho:
+Bài báo cải thiện cận dưới ELBO bằng kỹ thuật lấy mẫu trọng số quan trọng (*importance sampling*) trên $$K$$ mẫu từ $$q_\phi(\mathbf{z}|\mathbf{x})$$:
 
 $$\mathcal{L}_{\text{IWAE}} = \mathbb{E}\left[\log \frac{1}{K}\sum_{k=1}^K \frac{p_\theta(\mathbf{x}, \mathbf{z}^{(k)})}{q_\phi(\mathbf{z}^{(k)}|\mathbf{x})}\right]$$
 
-Đây là cận dưới chặt hơn (tiệm cận log-hợp lý thật khi $$K \to \infty$$) và thường sinh mẫu tốt hơn. Bài báo chỉ ra cải thiện chất lượng đến từ huấn luyện tốt hơn mô hình sinh $$p_\theta(\mathbf{x}|\mathbf{z})$$, dù mạng suy diễn $$q_\phi$$ có thể trở nên kém chính xác hơn. IWAE chứng minh rằng ngay cả với nền tảng lý thuyết vững của VAE, vẫn còn chỗ cải thiện qua xấp xỉ biến phân tốt hơn. Ý tưởng importance weighting đã ảnh hưởng công trình sau về cải thiện cận biến phân và cho thấy kỹ thuật thống kê cổ điển (importance sampling) có thể tăng cường cách tiếp cận neuron.
+Cận dưới này chặt hơn ELBO chuẩn và tiến tới log-hợp lý thật khi $$K \to \infty$$, thường giúp cải thiện chất lượng mô hình sinh $$p_\theta(\mathbf{x}|\mathbf{z})$$.
 
 **["Generating Diverse High-Fidelity Images with VQ-VAE-2" (2019)](https://arxiv.org/abs/1906.00446)**  
 *Tác giả*: Ali Razavi, Aaron van den Oord, Oriol Vinyals  
-Bài báo này giới thiệu VQ-VAE-2, đạt chất lượng mẫu tiên tiến cho mô hình dựa trên VAE bằng cách dùng biểu diễn ẩn rời rạc và prior phân cấp. Thay vì latent Gaussian liên tục, VQ-VAE dùng vector quantization — encoder xuất chỉ số vào codebook đã học, và decoder nhận các vectơ codebook tương ứng. Tính rời rạc này cho phép dùng prior tự hồi quy mạnh trên mã ẩn, cải thiện đáng kể chất lượng mẫu. Cấu trúc phân cấp (mã ẩn riêng cho cấu trúc toàn cục và cục bộ) cho phép sinh ảnh độ phân giải cao. Dù phức tạp hơn VAE chuẩn, VQ-VAE-2 chứng minh mô hình dựa trên VAE có thể cạnh tranh với GAN về chất lượng mẫu trong khi duy trì lợi thế của VAE về huấn luyện ổn định và cấu trúc không gian ẩn. Công trình cho thấy khung VAE linh hoạt đủ để chứa latent rời rạc, cấu trúc phân cấp, và prior tinh vi, đẩy hiệu năng VAE lên mức mới.
+Bài báo giới thiệu VQ-VAE-2 sử dụng mã ẩn rời rạc thông qua lượng tử hóa vector (*vector quantization*) kết hợp kiến trúc phân cấp cho cấu trúc toàn cục và cục bộ. Biểu diễn rời rạc cho phép huấn luyện phân phối tiên nghiệm tự hồi quy mạnh trên không gian mã ẩn, giúp nâng chất lượng ảnh độ phân giải cao ngang tầm GAN trong khi vẫn duy trì quá trình huấn luyện ổn định.
 
 ## Bẫy thường gặp và Mẹo
 
-Chế độ thất bại phổ biến nhất trong huấn luyện VAE là sụp đổ hậu nghiệm (posterior collapse), nơi encoder học bỏ qua đầu vào và xuất phân phối prior cho mọi đầu vào: $$q_\phi(\mathbf{z}|\mathbf{x}) \approx p(\mathbf{z}) = \mathcal{N}(0,I)$$ bất kể $$\mathbf{x}$$. Hạng tử KL trở thành zero (tốt cho hạng tử đó!) nhưng hạng tử tái tạo không thể cải thiện vì mã ẩn không chứa thông tin về đầu vào. Decoder học sinh ảnh trung bình (mean của phân phối huấn luyện) bất kể mã ẩn. Triệu chứng gồm phân kỳ KL rất thấp (tiệm cận 0) và tái tạo kém. Điều này xảy ra khi decoder quá mạnh — nó có thể tái tạo khá tốt không cần dùng thông tin ẩn, nên encoder chọn đường dễ là xuất prior để tối thiểu hóa KL.
+Hiện tượng thất bại phổ biến nhất khi huấn luyện VAE là **sụp đổ hậu nghiệm (*posterior collapse*)**, khi bộ mã hóa bỏ qua đầu vào và luôn xuất ra gần đúng phân phối tiên nghiệm $$q_\phi(\mathbf{z}|\mathbf{x}) \approx p(\mathbf{z}) = \mathcal{N}(0,I)$$ cho mọi $$\mathbf{x}$$. Khi đó phân kỳ KL tiến về 0, còn bộ giải mã chỉ học tái tạo ảnh trung bình của toàn bộ tập dữ liệu vì mã ẩn không chứa thông tin về đầu vào. Hiện tượng này thường xảy ra khi bộ giải mã quá mạnh và tự tái tạo được khá tốt mà không cần đến $$\mathbf{z}$$.
 
-Giải pháp gồm: (1) làm yếu decoder (ít tầng/tham số hơn), buộc nó dựa vào mã ẩn; (2) KL annealing — bắt đầu huấn luyện với β=0 (không phạt KL) và tăng dần lên β=1, cho phép encoder khám phá biểu diễn hữu ích trước khi áp dụng chính quy hóa; (3) free bits — chỉ phạt KL nếu trên ngưỡng, đảm bảo các chiều ẩn duy trì nội dung thông tin tối thiểu; (4) tối ưu tốt hơn — dùng learning rate cao hơn cho encoder so với decoder, cho nó lợi thế trong cạnh tranh dung lượng. Hiểu sụp đổ hậu nghiệm như bệnh lý tối ưu hóa chứ không phải hạn chế căn bản của VAE giúp cài đặt các giải pháp này phù hợp.
+Các biện pháp khắc phục gồm: (1) giảm dung lượng bộ giải mã để buộc nó phụ thuộc vào mã ẩn; (2) áp dụng *KL annealing* — bắt đầu với $$\beta = 0$$ rồi tăng dần lên $$\beta = 1$$ để bộ mã hóa kịp học biểu diễn hữu ích trước khi siết chính quy hóa; (3) dùng kỹ thuật *free bits* — chỉ phạt KL khi vượt qua một ngưỡng tối thiểu trên mỗi chiều ẩn; và (4) dùng learning rate lớn hơn cho bộ mã hóa so với bộ giải mã.
 
-Chọn chiều ẩn liên quan đến đánh đổi giữa khả năng biểu đạt và disentanglement. Chiều ẩn lớn hơn có thể nắm nhiều biến thiên hơn (tốt cho tái tạo) nhưng có xu hướng ít disentangled hơn (các chiều trở nên tương quan, khó diễn giải). Chiều ẩn nhỏ hơn buộc nén nhiều hơn và thường học biểu diễn disentangled hơn nhưng có thể không nắm mọi biến thiên dữ liệu (tái tạo kém). Với MNIST, 10–20 chiều thường đủ. Với khuôn mặt CelebA, 64–256 chiều phổ biến. Luôn kiểm chứng cả chất lượng tái tạo (định lượng) và diễn giải không gian ẩn (định tính).
+Việc chọn số chiều ẩn cần cân bằng giữa độ chi tiết tái tạo và khả năng diễn giải. Chiều ẩn lớn giúp tái tạo tốt hơn nhưng các chiều dễ tương quan với nhau; chiều ẩn nhỏ tăng áp lực nén và dễ tách nhân tố hơn nhưng có thể bỏ sót chi tiết. Thông thường, 10–20 chiều phù hợp cho MNIST và 64–256 chiều cho tập ảnh khuôn mặt như CelebA.
 
-Lựa chọn β trong β-VAE ảnh hưởng đáng kể kết quả. β=1 là VAE chuẩn, cân bằng tái tạo và chính quy hóa. β>1 (thường 2–10) ưu tiên disentanglement, hữu ích khi diễn giải quan trọng hơn tái tạo hoàn hảo. β<1 (thường 0.1–0.5) ưu tiên tái tạo, hữu ích khi chất lượng sinh quan trọng hơn cấu trúc không gian ẩn. Với học biểu diễn (dùng đặc trưng VAE cho tác vụ downstream), β=1–2 thường hoạt động tốt. Với sinh có kiểm soát (thao tác thuộc tính cụ thể), β=4–10 cung cấp latent disentangled hơn. Hiểu núm điều khiển này cho phép tùy chỉnh VAE theo yêu cầu ứng dụng cụ thể.
+Trong $$\beta$$-VAE, hệ số $$\beta$$ điều chỉnh trực tiếp sự cân bằng: $$\beta = 1$$ là VAE chuẩn; $$\beta > 1$$ (khoảng 2–10) ưu tiên tách nhân tố phục vụ diễn giải và điều khiển thuộc tính; còn $$\beta < 1$$ (khoảng 0,1–0,5) ưu tiên độ sắc nét tái tạo.
 
-Một kỹ thuật mạnh để cải thiện chất lượng mẫu là dùng phân phối decoder tinh vi hơn Gaussian hoặc Bernoulli. Hỗn hợp logistic rời rạc hóa (mô hình hóa giá trị pixel như hỗn hợp phân phối đã bin) nắm đa mode tốt hơn Gaussian đơn. Decoder tự hồi quy (mỗi pixel dự đoán có điều kiện trên pixel trước) nắm các phụ thuộc mà giả định phân tích thừa của autoencoder bỏ lỡ. Các decoder biểu đạt hơn này thường sinh mẫu sắc nét hơn trong khi duy trì huấn luyện ổn định của VAE. Đánh đổi là chi phí tính toán — giải mã tự hồi quy chậm. Hiểu rằng lựa chọn decoder ảnh hưởng cả chất lượng mẫu lẫn tốc độ huấn luyện/sinh hướng dẫn quyết định kiến trúc phù hợp.
-
-Khi dùng mã ẩn VAE cho tác vụ downstream (phân loại, clustering), quyết định là dùng mean $$\boldsymbol{\mu}$$ hay lấy mẫu từ $$\mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\sigma}^2)$$. Với tác vụ tất định (phân loại), dùng mean cung cấp đặc trưng ổn định. Với tác vụ đòi hỏi bất định (active learning, suy diễn Bayesian), lấy mẫu phản ánh bất định của encoder. Với hầu hết ứng dụng, mean hoạt động tốt và là thực hành chuẩn, nhưng hiểu rằng phân phối đầy đủ sẵn có cho phép sử dụng tinh vi hơn khi phù hợp.
+Để giảm độ mờ của ảnh sinh ra, có thể thay phân phối đầu ra Gaussian/Bernoulli đơn giản bằng hỗn hợp logistic rời rạc hóa hoặc bộ giải mã tự hồi quy (dù tốc độ giải mã sẽ chậm hơn). Cuối cùng, khi lấy đặc trưng ẩn của VAE cho các tác vụ sau như phân loại hay phân cụm, dùng trực tiếp vector trung bình $$\boldsymbol{\mu}$$ thường ổn định hơn, trong khi lấy mẫu từ $$\mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\sigma}^2)$$ phù hợp hơn khi cần phản ánh độ bất định.
 
 ## Điểm then chốt
 
-Variational Autoencoder kết hợp mạng neuron với suy diễn biến phân để tạo khung xác suất có nguyên tắc cho mô hình hóa sinh với biến ẩn, tối ưu Evidence Lower BOund của log-hợp lý như surrogate tractable cho hợp lý thật không tractable. Encoder học ánh xạ đầu vào sang phân phối trên mã ẩn (tham số hóa như Gaussian với mean và variance đã học), trong khi decoder học tái tạo đầu vào từ mẫu ẩn, cả hai được huấn luyện chung qua mục tiêu ELBO kết hợp độ chính xác tái tạo và chính quy hóa phân phối ẩn. Reparameterization trick — biểu diễn lấy mẫu ngẫu nhiên như hàm tất định của tham số và ngẫu nhiên ngoài — cho phép backpropagation qua lấy mẫu, khiến huấn luyện end-to-end khả thi với gradient descent chuẩn. Phân kỳ KL giữa hậu nghiệm xấp xỉ và prior chính quy hóa không gian ẩn để liên tục, đầy đủ, và quanh prior, đảm bảo mẫu từ prior giải mã ra đầu ra thực tế và cho phép nội suy mượt giữa các ví dụ. β-VAE mở rộng khung bằng cách gán trọng số hạng tử KL, đánh đổi chất lượng tái tạo lấy disentanglement ẩn và cho phép biểu diễn đã học nơi các chiều riêng lẻ nắm các nhân tố biến thiên diễn giải được. VAE cung cấp huấn luyện ổn định so với GAN, cấu trúc không gian ẩn tường minh cho phép nội suy và thao tác, và khung xác suất có nguyên tắc hỗ trợ phân tích lý thuyết, dù thường tạo mẫu hơi mờ hơn mô hình huấn luyện đối kháng. Hiểu VAE đòi hỏi đánh giá sự tương tác giữa deep learning (encoder/decoder neuron), lý thuyết xác suất (mô hình biến ẩn), và tối ưu hóa (cận biến phân), khiến chúng vừa giàu lý thuyết vừa có giá trị thực tiễn cho sinh, học biểu diễn, và học bán giám sát.
-
-Variational autoencoder minh họa cách kết hợp ý tưởng từ các lĩnh vực khác nhau — mạng neuron, suy diễn biến phân, lý thuyết thông tin — có thể tạo phương pháp mạnh hơn tổng các phần.
+Variational Autoencoder kết hợp mạng nơ-ron với suy diễn biến phân để xây dựng mô hình sinh xác suất tối ưu cận dưới ELBO của log-hợp lý. Bộ mã hóa ánh xạ đầu vào sang tham số của phân phối chuẩn trong không gian ẩn, thủ thuật tái tham số hóa cho phép lan truyền ngược qua bước lấy mẫu, và bộ giải mã khôi phục dữ liệu từ mã ẩn. Thành phần phân kỳ KL giữ cho không gian ẩn liên tục, đầy đủ và bám sát phân phối tiên nghiệm để hỗ trợ lấy mẫu và nội suy mượt. So với GAN, VAE huấn luyện ổn định hơn và có khung xác suất rõ ràng, dù ảnh sinh ra thường kém sắc nét hơn nếu dùng hàm mất mát tái tạo đơn giản.
 
 ## Video tham khảo
 
-- **xem trước** [Variational Autoencoders](https://www.youtube.com/watch?v=9zKuYvjFFS8) — Arxiv Insights, tiếng Anh. Đường lấy mẫu mã phải đi: tái tham số hóa, rồi giải mã.
-- [MIT 6.S191 (2024): Deep Generative Modeling](https://www.youtube.com/watch?v=Dmm4UG-6jxA) — Alexander Amini, tiếng Anh. Các cạm bẫy cài đặt (sụp hậu nghiệm, mẫu mờ) mà bài liệt kê.
-- [MaDL - Kullback-Leibler Divergence](https://www.youtube.com/watch?v=vPvnpC0PNVQ) — Tübingen Machine Learning, tiếng Anh. Mảnh KL cần kiểm nếu hàm mất mát chỉ còn phần dựng lại.
+- **Xem trước:** [Variational Autoencoders](https://www.youtube.com/watch?v=9zKuYvjFFS8) — Arxiv Insights, tiếng Anh. Minh họa luồng tính toán mà mã nguồn cài đặt: mã hóa, tái tham số hóa rồi giải mã.
+- [MIT 6.S191 (2024): Deep Generative Modeling](https://www.youtube.com/watch?v=Dmm4UG-6jxA) — Alexander Amini, tiếng Anh. Phân tích các vấn đề thực tế khi huấn luyện như sụp đổ hậu nghiệm và ảnh mờ.
+- [MaDL - Kullback-Leibler Divergence](https://www.youtube.com/watch?v=vPvnpC0PNVQ) — Tübingen Machine Learning, tiếng Anh. Hỗ trợ kiểm tra lại công thức KL khi hàm mất mát có dấu hiệu bất thường.

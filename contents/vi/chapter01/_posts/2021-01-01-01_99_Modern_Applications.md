@@ -10,54 +10,54 @@ categories:
 lesson_type: optional
 ---
 
-# Tùy chọn: “làm deep learning” sau thời foundation model
+# Tùy chọn: Thực hành học sâu trong kỷ nguyên mô hình nền tảng
 
-> Bài này là **tùy chọn**. Nó **không** thay phần giới thiệu deep learning, MNIST hay hướng dẫn khóa học. Nó cập nhật *cách làm* của ngành sau khi foundation model trở thành điểm xuất phát mặc định.
+> Bài này là phần **tùy chọn**, **không** thay thế các bài cốt lõi về giới thiệu học sâu, MNIST hay hướng dẫn khóa học. Mục đích của bài là cập nhật *quy trình thực hành* trong ngành kể từ khi mô hình nền tảng (*foundation model*) trở thành điểm xuất phát mặc định.
 
-Ý tưởng chương 01: mô hình sâu học đặc trưng phân cấp từ dữ liệu. Từ 2022, hầu hết việc ứng dụng bắt đầu từ mô hình **đã pretrained** và một stack phục vụ, không phải mạng MNIST trống — nhưng cùng câu hỏi (khi nào DL có ích, cần dữ liệu gì, sai ở đâu) vẫn quyết định thành công.
+Ý tưởng trọng tâm của Chương 01 là mô hình sâu học các đặc trưng phân cấp từ dữ liệu. Từ năm 2022 trở đi, phần lớn dự án thực tế không còn bắt đầu từ một mạng MNIST khởi tạo ngẫu nhiên mà xuất phát từ mô hình **đã được tiền huấn luyện** (*pretrained*) cùng một hạ tầng phục vụ (*serving stack*). Tuy vậy, những câu hỏi cốt lõi — khi nào học sâu thực sự hữu ích, cần loại dữ liệu nào và mô hình dễ sai ở đâu — vẫn quyết định hiệu quả của hệ thống.
 
 ## 1. Quy trình mặc định mới
 
-Một dự án điển hình 2024–2026:
+Một dự án ứng dụng điển hình giai đoạn 2024–2026 thường đi qua ba bước:
 
-1. Chọn foundation model (thị giác, ngôn ngữ, tiếng nói, hoặc đa phương thức).
-2. Thích nghi bằng prompting, retrieval, hoặc fine-tune tiết kiệm tham số (Chương 15).
-3. Đánh giá trên tập giữ lại *và* trên ràng buộc an toàn / chi phí.
+1. Chọn mô hình nền tảng phù hợp (thị giác, ngôn ngữ, tiếng nói hoặc đa phương thức).
+2. Thích nghi mô hình cho bài toán đích bằng kỹ thuật *prompting*, truy xuất thông tin (*retrieval*) hoặc tinh chỉnh tiết kiệm tham số (Chương 15).
+3. Đánh giá trên tập kiểm thử giữ lại, *đồng thời* kiểm tra các ràng buộc về an toàn và chi phí vận hành.
 
-Vẫn là học có giám sát hoặc tự giám sát. Cái đổi là **khởi tạo** và **giao diện** (API, tokenizer, chat template), không phải định nghĩa mạng neuron.
+Bản chất vẫn dựa trên học có giám sát hoặc học tự giám sát; điểm thay đổi nằm ở **trạng thái khởi tạo** và **giao diện tương tác** (API, *tokenizer*, mẫu hội thoại *chat template*), chứ không phải định nghĩa của mạng nơ-ron.
 
-## 2. Ứng dụng cụ thể
+## 2. Một số ứng dụng cụ thể
 
-### Copilot cho khoa học dữ liệu
+### Trợ lý cho khoa học dữ liệu
 
-Các pipeline bảng và SQL bọc LLM quanh pandas, scikit-learn, truy vấn kho. Mô hình không thay loss hay cách chia tập; nó viết mã và lời giải thích. [transformers](https://github.com/huggingface/transformers) và [datasets](https://github.com/huggingface/datasets) của Hugging Face là keo nghiên cứu phổ biến.
+Các quy trình xử lý dữ liệu dạng bảng và SQL hiện thường tích hợp LLM quanh `pandas`, `scikit-learn` và truy vấn kho dữ liệu. Mô hình không thay thế hàm mất mát hay quy tắc chia tập dữ liệu, mà hỗ trợ viết mã nguồn và giải thích kết quả. Hai thư viện [transformers](https://github.com/huggingface/transformers) và [datasets](https://github.com/huggingface/datasets) của Hugging Face đóng vai trò kết nối phổ biến trong nghiên cứu và phát triển.
 
-### Huấn luyện tối ưu theo compute
+### Huấn luyện tối ưu theo ngân sách tính toán
 
-[Hoffmann et al., 2022](https://arxiv.org/abs/2203.15556) chỉ ra nhiều mô hình quy mô GPT-3 bị **undertrain**: với ngân sách FLOP $$C$$ cố định, số tham số tối ưu $$N$$ và số token $$D$$ tăng cùng nhau. Đội ứng dụng giờ hỏi “bao nhiêu token mỗi tham số?” trước khi mua GPU.
+Nghiên cứu [Hoffmann et al., 2022](https://arxiv.org/abs/2203.15556) chỉ ra rằng nhiều mô hình cỡ GPT-3 trước đây bị **huấn luyện thiếu dữ liệu** (*undertrained*): với ngân sách tính toán FLOP $$C$$ cố định, số tham số tối ưu $$N$$ và số token huấn luyện $$D$$ cần tăng đồng thời. Nhờ đó, các nhóm kỹ thuật hiện thường đặt câu hỏi "tỷ lệ bao nhiêu token trên mỗi tham số?" trước khi đầu tư cụm GPU.
 
-### Hệ sinh thái mô hình mở
+### Hệ sinh thái mô hình trọng số mở
 
-[LLaMA](https://arxiv.org/abs/2302.13971) / [Llama 2](https://arxiv.org/abs/2307.09288) / Llama 3 của Meta và các họ mở sau đó (Mistral, Qwen, Gemma) khiến việc chạy LM khá trên một máy trạm với [llama.cpp](https://github.com/ggerganov/llama.cpp) hoặc [vLLM](https://github.com/vllm-project/vllm) trở thành bình thường. Bài MNIST vẫn dạy vòng lặp; các stack này là nơi vòng lặp được triển khai.
+Các thế hệ [LLaMA](https://arxiv.org/abs/2302.13971), [Llama 2](https://arxiv.org/abs/2307.09288) và Llama 3 của Meta, cùng nhiều họ mô hình mở khác (Mistral, Qwen, Gemma), đã giúp việc chạy mô hình ngôn ngữ chất lượng tốt ngay trên một máy trạm với [llama.cpp](https://github.com/ggerganov/llama.cpp) hoặc [vLLM](https://github.com/vllm-project/vllm) trở nên phổ biến. Bài toán MNIST vẫn dạy đúng vòng lặp huấn luyện nền tảng, còn các công cụ trên là môi trường triển khai thực tế của vòng lặp đó.
 
-## 3. Phần mềm phổ biến
+## 3. Công cụ phần mềm phổ biến
 
-- [PyTorch](https://pytorch.org/) 2.x với `torch.compile` là đường tăng tốc mặc định.
-- [Hugging Face Hub](https://huggingface.co/) — model card, tokenizer, harness đánh giá.
-- [JAX](https://github.com/google/jax) / Flax — huấn luyện nghiên cứu quy mô lớn.
+- [PyTorch](https://pytorch.org/) 2.x với `torch.compile` là lựa chọn tăng tốc mặc định.
+- [Hugging Face Hub](https://huggingface.co/) — nơi lưu trữ *model card*, *tokenizer* và bộ công cụ đánh giá chuẩn hóa.
+- [JAX](https://github.com/google/jax) / Flax — được dùng rộng rãi trong huấn luyện nghiên cứu quy mô lớn.
 
-## 4. Trích dẫn (2022–2026)
+## 4. Tài liệu tham khảo (2022–2026)
 
-- [Hoffmann et al., 2022](https://arxiv.org/abs/2203.15556) — Chinchilla: scale dữ liệu cùng kích thước mô hình.
-- [LLaMA (Touvron et al., 2023)](https://arxiv.org/abs/2302.13971) — LM nền tảng mô tả công khai, làm reset hệ sinh thái.
-- [Llama 2 (Touvron et al., 2023)](https://arxiv.org/abs/2307.09288) — trọng số mở tinh chỉnh hội thoại / RLHF.
+- [Hoffmann et al., 2022](https://arxiv.org/abs/2203.15556) — quy luật Chinchilla về việc mở rộng đồng thời lượng dữ liệu và kích thước mô hình.
+- [LLaMA (Touvron et al., 2023)](https://arxiv.org/abs/2302.13971) — mô hình ngôn ngữ nền tảng công bố chi tiết kỹ thuật, tạo bước chuyển lớn cho hệ sinh thái mô hình mở.
+- [Llama 2 (Touvron et al., 2023)](https://arxiv.org/abs/2307.09288) — mô hình trọng số mở được tinh chỉnh hội thoại và căn chỉnh bằng RLHF.
 
-## 5. Bài này bổ sung gì cho ghi chú cốt lõi
+## 5. Vai trò của bài này đối với phần cốt lõi
 
-Các bài “Học sâu là gì” và MNIST vẫn định nghĩa lĩnh vực. Bài này chỉ cập nhật *chỗ* người mới bắt đầu năm 2026: trọng số pretrained, hub, và ngân sách theo scaling law — không phải định nghĩa mới của mạng neuron.
+Các bài *Học sâu là gì* và *Bước đầu với MNIST* vẫn là nền tảng định nghĩa lĩnh vực. Bài tùy chọn này chỉ cập nhật *điểm khởi đầu thực tế* vào năm 2026 — gồm trọng số tiền huấn luyện, kho mô hình và cách phân bổ ngân sách theo quy luật mở rộng — chứ không thay đổi khái niệm cốt lõi của mạng nơ-ron.
 
 ## Video tham khảo
 
-- **xem trước** [Large Language Models explained briefly](https://www.youtube.com/watch?v=LPZh9BOjkQs) — 3Blue1Brown, tiếng Anh. Một kể ngắn về tiền huấn luyện, transformer và RLHF, đúng mặc định 2022–2026 mà ghi chú mô tả.
-- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, tiếng Anh. Bản đồ dài hơn của cùng quy trình: dữ liệu, huấn luyện, và mô hình đã triển khai là gì.
-- [MIT 6.S191 (2024): Language Models and New Frontiers](https://www.youtube.com/watch?v=N1fbskTpwZ0) — Alexander Amini, tiếng Anh. Bài giảng biên 2024 của MIT là phần đi kèm 'cái gì vừa được dùng thật' cho các trích dẫn trong ghi chú.
+- **Xem trước:** [Large Language Models explained briefly](https://www.youtube.com/watch?v=LPZh9BOjkQs) — 3Blue1Brown, tiếng Anh. Giới thiệu ngắn gọn về tiền huấn luyện, Transformer và RLHF, khớp với quy trình mặc định giai đoạn 2022–2026 trong bài.
+- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, tiếng Anh. Trình bày chi tiết hơn về toàn bộ quy trình từ dữ liệu, huấn luyện đến triển khai mô hình ngôn ngữ lớn.
+- [MIT 6.S191 (2024): Language Models and New Frontiers](https://www.youtube.com/watch?v=N1fbskTpwZ0) — Alexander Amini, tiếng Anh. Bài giảng năm 2024 của MIT về mô hình ngôn ngữ và các hướng phát triển mới, bổ sung góc nhìn thực tiễn cho các công trình được trích dẫn trong bài.

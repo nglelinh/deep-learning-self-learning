@@ -9,68 +9,72 @@ categories:
 - chapter23
 ---
 
-# Học sâu Hiệu quả: Nén và Tăng tốc
+# Học sâu Hiệu quả: Nén và Tăng tốc Mô hình
 
 ## 1. Tổng quan khái niệm
-Khi mô hình học sâu phát triển đến hàng tỷ tham số, triển khai chúng trên thiết bị hạn chế tài nguyên (điện thoại di động, hệ thống nhúng, thiết bị biên) hoặc phục vụ ở quy mô lớn (hàng triệu truy vấn) trở nên thách thức. Các kỹ thuật nén mô hình (*model compression*) giảm kích thước mô hình, dấu chân bộ nhớ và yêu cầu tính toán trong khi duy trì độ chính xác, cho phép triển khai trong các kịch bản nơi mô hình đầy đủ không thực tế. Các kỹ thuật này — cắt tỉa (*pruning*), lượng tử hóa (*quantization*), chưng cất tri thức (*knowledge distillation*) và kiến trúc hiệu quả — đại diện cho các đổi mới kỹ thuật then chốt giúp học sâu tiếp cận được ngoài máy chủ đám mây với GPU mạnh.
 
-Cắt tỉa loại bỏ tham số hoặc kết nối không cần thiết, khai thác quan sát rằng nhiều trọng số mạng neuron đóng góp tối thiểu vào đầu ra. Nghiên cứu cho thấy mạng vẫn hiệu quả sau khi loại bỏ 50–90% trọng số, gợi ý sự dư thừa đáng kể. Cắt tỉa có cấu trúc (*structured pruning*) loại bỏ toàn bộ bộ lọc hoặc tầng, mang lại tăng tốc thân thiện phần cứng. Cắt tỉa không cấu trúc (*unstructured pruning*) loại bỏ từng trọng số riêng lẻ, đạt nén cao hơn nhưng cần phần cứng chuyên biệt để tăng tốc.
+Khi các mô hình học sâu mở rộng đến hàng tỷ tham số, việc triển khai chúng trên thiết bị hạn chế tài nguyên (điện thoại di động, hệ thống nhúng, thiết bị biên) hoặc phục vụ hàng triệu truy vấn cùng lúc trở nên khó khăn về chi phí và độ trễ. Các kỹ thuật nén mô hình (*model compression*) giúp giảm kích thước lưu trữ, mức tiêu thụ bộ nhớ và khối lượng tính toán mà vẫn giữ độ chính xác ở mức chấp nhận được. Bốn nhóm kỹ thuật chính gồm: cắt tỉa (*pruning*), lượng tử hóa (*quantization*), chưng cất tri thức (*knowledge distillation*) và thiết kế kiến trúc hiệu quả.
 
-Lượng tử hóa giảm độ chính xác số, biểu diễn trọng số và kích hoạt bằng ít bit hơn (số nguyên 8-bit thay vì float 32-bit), giảm bộ nhớ 4× và cho phép số học nguyên nhanh hơn trên nhiều bộ xử lý. Lượng tử hóa sau huấn luyện (*post-training quantization*) áp dụng cho mô hình đã huấn luyện mà không cần huấn luyện lại. Huấn luyện nhận biết lượng tử hóa (*quantization-aware training*) đưa lượng tử hóa vào vòng lặp huấn luyện, cho phép mạng thích ứng với độ chính xác giảm.
+Cắt tỉa loại bỏ các tham số hoặc kết nối ít đóng góp, dựa trên nhận xét rằng mạng nơ-ron thường có mức độ dư thừa lớn và vẫn hoạt động tốt sau khi lược bỏ 50–90% trọng số. Cắt tỉa có cấu trúc (*structured pruning*) loại bỏ nguyên cả bộ lọc hoặc tầng, dễ mang lại tốc độ thực thi nhanh hơn trên phần cứng thông thường. Cắt tỉa không cấu trúc (*unstructured pruning*) xóa từng trọng số riêng lẻ, đạt tỷ lệ nén cao hơn nhưng thường cần thư viện hoặc phần cứng hỗ trợ ma trận thưa để tăng tốc thực tế.
 
-Chưng cất tri thức chuyển tri thức từ mạng “giáo viên” lớn sang mạng “học sinh” nhỏ bằng cách huấn luyện học sinh khớp dự đoán của giáo viên (mục tiêu mềm) chứ không chỉ nhãn cứng. Học sinh học từ sự bất định của giáo viên và độ tương tự giữa các lớp, thường đạt hiệu năng tốt hơn huấn luyện chỉ trên nhãn dù nhỏ hơn nhiều. **Với chưng cất thời LLM** — vì sao khớp logit đủ từ vựng trở nên vụng, chưng cất dữ liệu tổng hợp / phản hồi, và dùng hợp lệ so với không được phép — xem **Chương 26**, bài **26-05**. Bài này giữ bức tranh cổ điển với không gian đầu ra cố định.
+Lượng tử hóa giảm độ chính xác biểu diễn số học của trọng số và giá trị kích hoạt (chẳng hạn từ số thực 32-bit sang số nguyên 8-bit), giúp giảm 4 lần dung lượng bộ nhớ và tận dụng phép tính số nguyên nhanh hơn trên nhiều bộ xử lý. Lượng tử hóa sau huấn luyện (*post-training quantization*, PTQ) áp dụng trực tiếp lên mô hình đã huấn luyện mà không cần huấn luyện lại. Huấn luyện nhận biết lượng tử hóa (*quantization-aware training*, QAT) mô phỏng quá trình lượng tử hóa ngay trong vòng lặp huấn luyện để mô hình thích nghi với sai số làm tròn.
 
-Các kiến trúc hiệu quả như MobileNet và EfficientNet được thiết kế vì hiệu quả ngay từ đầu qua tích chập tách theo chiều sâu (*depthwise separable convolution*), tìm kiếm kiến trúc neuron, và mở rộng quy mô cẩn thận. Chúng đạt độ chính xác cạnh tranh với một phần tính toán/tham số so với kiến trúc chuẩn.
+Chưng cất tri thức chuyển giao năng lực từ một mạng “giáo viên” lớn sang một mạng “học sinh” nhỏ hơn bằng cách huấn luyện học sinh khớp với phân bố dự đoán mềm (*soft targets*) của giáo viên bên cạnh nhãn gốc. Nhờ học thêm thông tin về độ bất định và sự tương đồng giữa các lớp từ giáo viên, mạng học sinh thường đạt kết quả tốt hơn so với khi chỉ huấn luyện trực tiếp trên nhãn cứng. Với **chưng cất trong kỷ nguyên LLM** (hạn chế khi khớp logit toàn từ vựng, chưng cất qua dữ liệu tổng hợp và phạm vi sử dụng hợp lệ), xem **Chương 26**, bài **26-05**; bài này tập trung vào thiết lập cổ điển với không gian đầu ra cố định.
+
+Song song với việc nén mô hình có sẵn, các kiến trúc hiệu quả như MobileNet và EfficientNet được thiết kế tối ưu ngay từ đầu nhờ tích chập tách theo chiều sâu (*depthwise separable convolution*), tìm kiếm kiến trúc nơ-ron (NAS) và quy tắc mở rộng kích thước cân bằng, đạt độ chính xác cạnh tranh với chi phí tính toán thấp hơn nhiều so với mạng chuẩn.
 
 ## 2. Nền tảng toán học
+
 ### Cắt tỉa (Pruning)
 
-Định nghĩa điểm quan trọng cho tham số $$w$$:
+Mức độ quan trọng của tham số $$w$$ thường được ước lượng theo một trong hai cách:
 
-$$I(w) = |\frac{\partial \mathcal{L}}{\partial w}|$$ (cắt tỉa theo độ lớn)
+$$I(w) = |w|$$ (cắt tỉa theo độ lớn trọng số)
 
 hoặc
 
-$$I(w) = |w \cdot \frac{\partial \mathcal{L}}{\partial w}|$$ (xấp xỉ khai triển Taylor)
+$$I(w) = \left|w \cdot \frac{\partial \mathcal{L}}{\partial w}\right|$$ (xấp xỉ khai triển Taylor bậc nhất)
 
-Loại bỏ trọng số có $$I(w) < \tau$$ (ngưỡng). Sau cắt tỉa, tinh chỉnh các trọng số còn lại.
+Các trọng số có $$I(w) < \tau$$ (với $$\tau$$ là ngưỡng chọn trước) bị loại bỏ, sau đó mô hình được tinh chỉnh lại trên các trọng số còn giữ.
 
 ### Lượng tử hóa (Quantization)
 
-Ánh xạ giá trị liên tục sang mức rời rạc. Với lượng tử hóa 8-bit:
+Lượng tử hóa ánh xạ giá trị liên tục sang tập mức rời rạc. Với lượng tử hóa tuyến tính 8-bit không dấu:
 
 $$w_{\text{quant}} = \text{round}\left(\frac{w - w_{\min}}{w_{\max} - w_{\min}} \cdot 255\right)$$
 
-Giải lượng tử hóa để tính toán:
+Khi cần khôi phục giá trị xấp xỉ (giải lượng tử hóa) để tính toán:
 
 $$w \approx w_{\min} + w_{\text{quant}} \cdot \frac{w_{\max} - w_{\min}}{255}$$
 
-### Chưng cất Tri thức (Knowledge Distillation)
+### Chưng cất tri thức (Knowledge Distillation)
 
-Mạng học sinh được huấn luyện trên mục tiêu mềm từ giáo viên:
+Mạng học sinh tối ưu tổng có trọng số giữa hàm mất mát trên nhãn cứng và hàm mất mát trên phân bố mềm từ giáo viên:
 
 $$\mathcal{L} = \alpha \mathcal{L}_{\text{hard}}(y, \hat{y}_{\text{student}}) + (1-\alpha) \mathcal{L}_{\text{soft}}(\hat{y}_{\text{teacher}}, \hat{y}_{\text{student}})$$
 
-Mục tiêu mềm dùng nhiệt độ $$T$$:
+Phân bố mềm sử dụng tham số nhiệt độ $$T$$:
 
 $$p_i = \frac{\exp(z_i/T)}{\sum_j \exp(z_j/T)}$$
 
-$$T$$ cao hơn tạo phân bố mềm hơn, tiết lộ sự bất định của giáo viên.
+Giá trị $$T$$ lớn hơn làm phẳng phân bố xác suất, giúp bộc lộ rõ hơn quan hệ tương đồng giữa các lớp mà giáo viên học được.
 
-## 3. Ví dụ / Trực giác
+## 3. Ví dụ và trực giác
 
-Hãy tưởng tượng nén ResNet-50 (25M tham số, 4GB bộ nhớ). Cắt tỉa có thể phát hiện 60% trọng số có độ lớn < 0.001 và đóng góp không đáng kể. Loại bỏ chúng cho 10M tham số, 1.6GB — giảm 60% với mất độ chính xác tối thiểu.
+Xét ví dụ nén mô hình ResNet-50 (khoảng 25 triệu tham số, tương đương khoảng 100 MB ở định dạng FP32 — 4 byte mỗi tham số). Giả sử bước cắt tỉa loại bỏ 60% trọng số có độ lớn nhỏ hơn 0.001 do đóng góp không đáng kể, đưa mô hình xuống còn 10 triệu tham số (40 MB ở FP32) với mức suy giảm độ chính xác rất nhỏ.
 
-Lượng tử hóa sang INT8 (số nguyên 8-bit) từ FP32 (float 32-bit) giảm bộ nhớ 4×: 10M tham số giờ chỉ 10MB so với 40MB. Kết hợp với cắt tỉa: 2.5GB → 1GB → 250MB — nén tổng 10×.
+Tiếp theo, lượng tử hóa từ FP32 sang INT8 (1 byte mỗi tham số) giảm bộ nhớ thêm 4 lần: 10 triệu tham số chỉ còn khoảng 10 MB thay vì 40 MB. Kết hợp cắt tỉa và lượng tử hóa giúp giảm dung lượng lưu trữ trọng số từ 100 MB xuống 10 MB — tỷ lệ nén tổng cộng 10 lần.
 
-Chưng cất tri thức chuyển tri thức mô hình nén này sang MobileNet (4M tham số). MobileNet học từ dự đoán mềm của ResNet, đạt 75% độ chính xác so với 70% khi huấn luyện chỉ trên nhãn — 5% thêm đến từ học những gì ResNet nghĩ về các mẫu khó.
+Cuối cùng, chưng cất tri thức sang một kiến trúc gọn hơn như MobileNet (4 triệu tham số) giúp mạng học sinh học từ dự đoán mềm của ResNet, đạt 75% độ chính xác thay vì 70% khi chỉ huấn luyện trên nhãn cứng — phần chênh lệch 5% đến từ thông tin phân bố của giáo viên trên các mẫu khó.
 
-Kết quả: mô hình 4M tham số, 40MB INT8 đạt 75% độ chính xác so với 25M tham số, 4GB FP32 gốc đạt 78%. Nhỏ hơn 100×, suy luận nhanh hơn 10×, chỉ mất 3% độ chính xác — cho phép triển khai di động!
+Tổng kết lại, mô hình học sinh 4 triệu tham số ở định dạng INT8 chỉ chiếm khoảng 4 MB (nhỏ hơn 25 lần so với 100 MB FP32 ban đầu), suy luận nhanh hơn nhiều lần và chỉ giảm 3% độ chính xác so với mức 78% của ResNet-50 gốc, đủ gọn để triển khai trực tiếp trên thiết bị di động.
 
 ## 4. Mã minh họa
+
 ```python
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 # Pruning example
 def magnitude_prune(model, sparsity=0.5):
@@ -108,30 +112,31 @@ def distillation_loss(student_logits, teacher_logits, labels, T=3.0, alpha=0.5):
 ```
 
 ## 5. Khái niệm liên quan
-Nén mô hình gắn với tìm kiếm kiến trúc neuron (*neural architecture search*, NAS), tự động khám phá kiến trúc hiệu quả. NAS khám phá không gian kiến trúc, đánh giá ứng viên theo đánh đổi độ chính xác–hiệu quả.
 
-Nén liên quan đến giả thuyết vé số (*lottery ticket hypothesis*): mạng ngẫu nhiên chứa mạng con mà khi được huấn luyện khớp hiệu năng mạng đầy đủ. Tìm các “vé thắng” này cung cấp lựa chọn thay thế cho cắt tỉa sau huấn luyện.
+Nén mô hình gắn liền với tìm kiếm kiến trúc nơ-ron (*neural architecture search*, NAS), phương pháp tự động tìm kiếm kiến trúc cân bằng tốt giữa độ chính xác và chi phí tính toán.
 
-## 6. Các Bài báo Nền tảng
+Ngoài ra, cắt tỉa còn liên hệ với *giả thuyết vé số* (*lottery ticket hypothesis*): một mạng khởi tạo ngẫu nhiên thường chứa sẵn những mạng con mà nếu được huấn luyện lại từ đúng trọng số khởi tạo ban đầu sẽ đạt hiệu năng tương đương mạng đầy đủ.
+
+## 6. Các bài báo nền tảng
 
 **["Learning both Weights and Connections for Efficient Neural Networks" (2015)](https://arxiv.org/abs/1506.02626)**  
 *Tác giả*: Song Han, Jeff Pool, John Tran, William Dally  
-Giới thiệu cắt tỉa theo độ lớn đạt nén 9–13× trên AlexNet và VGGNet với mất độ chính xác tối thiểu.
+Chứng minh cắt tỉa theo độ lớn trọng số có thể nén AlexNet và VGGNet từ 9 đến 13 lần mà hầu như không giảm độ chính xác.
 
 **["Distilling the Knowledge in a Neural Network" (2015)](https://arxiv.org/abs/1503.02531)**  
 *Tác giả*: Geoffrey Hinton, Oriol Vinyals, Jeff Dean  
-Bài báo chưng cất tri thức cho thấy mạng học sinh học tốt hơn từ dự đoán giáo viên so với chỉ từ nhãn.
+Đặt nền tảng cho chưng cất tri thức, cho thấy mạng học sinh học hiệu quả hơn khi dùng phân bố mềm của giáo viên thay vì chỉ dùng nhãn cứng.
 
 **["MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications" (2017)](https://arxiv.org/abs/1704.04861)**  
 *Tác giả*: Andrew Howard et al.  
-MobileNets dùng tích chập tách theo chiều sâu, giảm tính toán 8–9× so với tích chập chuẩn trong khi duy trì độ chính xác.
+Sử dụng tích chập tách theo chiều sâu để giảm khối lượng tính toán 8–9 lần so với tích chập tiêu chuẩn trong khi vẫn duy trì độ chính xác tốt cho các ứng dụng thị giác trên thiết bị di động.
 
-## Điểm Chính Cần Nhớ
+## Điểm chính cần nhớ
 
-Nén mô hình làm cho học sâu thực tiễn trên thiết bị hạn chế tài nguyên qua cắt tỉa (loại bỏ tham số không cần thiết), lượng tử hóa (giảm độ chính xác số), chưng cất tri thức (chuyển tri thức mô hình lớn sang mô hình nhỏ), và kiến trúc hiệu quả (thiết kế vì hiệu quả ngay từ đầu). Các kỹ thuật này cho phép nén 10–100× với mất độ chính xác tối thiểu, dân chủ hóa triển khai học sâu ngoài máy chủ đám mây sang thiết bị biên, cho phép suy luận thời gian thực, và giảm tác động môi trường qua yêu cầu tính toán thấp hơn.
+Nén mô hình giúp triển khai học sâu hiệu quả trên thiết bị hạn chế tài nguyên thông qua bốn hướng chính: cắt tỉa (loại bỏ trọng số dư thừa), lượng tử hóa (giảm số bit biểu diễn), chưng cất tri thức (chuyển giao năng lực từ mô hình lớn sang mô hình nhỏ) và thiết kế kiến trúc gọn nhẹ ngay từ đầu. Kết hợp hợp lý các kỹ thuật này có thể giảm mạnh dung lượng bộ nhớ và chi phí suy luận với mức suy giảm độ chính xác nhỏ, hỗ trợ suy luận thời gian thực trên thiết bị biên và tiết kiệm năng lượng tính toán.
 
 ## Video tham khảo
 
-- **xem trước** [Lecture 15 | Efficient Methods and Hardware for Deep Learning](https://www.youtube.com/watch?v=eZdOkDtYMoo) — Stanford University School of Engineering, tiếng Anh. Tỉa, lượng tử hóa và các ràng buộc phần cứng cùng lúc.
-- [How LLMs survive in low precision | Quantization Fundamentals](https://www.youtube.com/watch?v=qoQJq5UwV1c) — Julia Turc, tiếng Anh. Trọng số độ chính xác thấp, chủ đề của phần lượng tử hóa.
-- [2.3 Knowledge Distillation | Geoffery Hinton | Soft Labels | Softmax with Temperature](https://www.youtube.com/watch?v=g1r4Esohw-g) — AI_Snippets, tiếng Anh. Nhãn mềm và nhiệt độ của Hinton, phần chưng cất cổ điển bài dừng lại trước Chương 26.
+- **Xem trước** [Lecture 15 | Efficient Methods and Hardware for Deep Learning](https://www.youtube.com/watch?v=eZdOkDtYMoo) — Stanford University School of Engineering, tiếng Anh. Trình bày tổng hợp cắt tỉa, lượng tử hóa và các ràng buộc phần cứng.
+- [How LLMs survive in low precision | Quantization Fundamentals](https://www.youtube.com/watch?v=qoQJq5UwV1c) — Julia Turc, tiếng Anh. Giải thích cơ chế biểu diễn trọng số ở độ chính xác thấp, bổ sung trực quan cho phần lượng tử hóa.
+- [2.3 Knowledge Distillation | Geoffery Hinton | Soft Labels | Softmax with Temperature](https://www.youtube.com/watch?v=g1r4Esohw-g) — AI_Snippets, tiếng Anh. Minh họa nhãn mềm và tham số nhiệt độ của Hinton — nội dung chưng cất cổ điển trước khi chuyển sang Chương 26.
