@@ -32,10 +32,12 @@ categories:
 
 ### Định lý Xấp xỉ Phổ quát
 
+<div class="textbook-theorem" markdown="1">
 **Định lý**: Một mạng neuron feedforward với:
 - Một lớp ẩn đơn
 - Số neuron hữu hạn
 - Hàm kích hoạt thích hợp (ví dụ: sigmoid, ReLU)
+</div>
 
 có thể xấp xỉ bất kỳ hàm liên tục nào trên một tập compact của $$\mathbb{R}^n$$ với độ chính xác tùy ý.
 

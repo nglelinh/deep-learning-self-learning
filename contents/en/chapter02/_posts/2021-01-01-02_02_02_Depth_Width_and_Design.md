@@ -32,10 +32,12 @@ The **depth** of a network refers to the number of layers.
 
 ### The Universal Approximation Theorem
 
+<div class="textbook-theorem" markdown="1">
 **Theorem**: A feedforward neural network with:
 - A single hidden layer
 - Finite number of neurons
 - Appropriate activation function (e.g., sigmoid, ReLU)
+</div>
 
 can approximate any continuous function on a compact subset of $$\mathbb{R}^n$$ to arbitrary accuracy.
 

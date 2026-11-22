@@ -151,9 +151,11 @@ This parameter count grows quadratically with layer width but only linearly with
 
 ### The Universal Approximation Theorem
 
+<div class="textbook-theorem" markdown="1">
 **Theorem** (Cybenko 1989, Hornik et al. 1989): Let $$\sigma$$ be a non-constant, bounded, monotonically-increasing continuous function (e.g., sigmoid). Then for any continuous function $$g$$ on a compact subset $$K \subset \mathbb{R}^n$$, any $$\epsilon > 0$$, and any probability measure $$\mu$$ on $$K$$, there exists a one-hidden-layer neural network $$f$$ such that:
 
 $$\int_K |f(\mathbf{x}) - g(\mathbf{x})| d\mu(\mathbf{x}) < \epsilon$$
+</div>
 
 **What This Means**: Neural networks can approximate any continuous function arbitrarily well. This is remarkable—it means neural networks are universal function approximators, capable of representing any relationship we might want to learn.
 

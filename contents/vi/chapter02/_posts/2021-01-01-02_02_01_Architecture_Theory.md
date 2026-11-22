@@ -149,9 +149,11 @@ Số tham số tăng theo bậc hai với độ rộng lớp nhưng chỉ tuyế
 
 ### Định lý Xấp xỉ Phổ quát
 
+<div class="textbook-theorem" markdown="1">
 **Định lý** (Cybenko 1989, Hornik et al. 1989): Cho $$\sigma$$ là hàm liên tục đơn điệu tăng, bị chặn, không hằng (ví dụ: sigmoid). Khi đó với mọi hàm liên tục $$g$$ trên tập compact $$K \subset \mathbb{R}^n$$, mọi $$\epsilon > 0$$, và mọi độ đo xác suất $$\mu$$ trên $$K$$, tồn tại mạng neuron một lớp ẩn $$f$$ sao cho:
 
 $$\int_K |f(\mathbf{x}) - g(\mathbf{x})| d\mu(\mathbf{x}) < \epsilon$$
+</div>
 
 **Ý nghĩa**: Mạng neuron có thể xấp xỉ bất kỳ hàm liên tục nào với độ chính xác tùy ý. Điều này đáng chú ý — nghĩa là mạng neuron là bộ xấp xỉ hàm phổ quát, có khả năng biểu diễn bất kỳ quan hệ nào ta muốn học.
 
