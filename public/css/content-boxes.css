@@ -97,3 +97,72 @@
     padding: 12px;
   }
 }
+
+/* ── Khối Định nghĩa / Định lý / Chứng minh (cùng kiểu với Discrete Math IUH) ──
+   Dùng: <div class="textbook-definition|textbook-theorem|textbook-lemma|textbook-proof" markdown="1">
+   Dòng đầu là nhãn in đậm, ví dụ **Định nghĩa 1.2 (Tên)**. Theorem/Corollary/Proposition dùng textbook-theorem.
+   textbook-proof tự thêm ∎; thêm class textbook-proof-marked khi nội dung đã có sẵn ký hiệu kết thúc. */
+.textbook-definition,
+.textbook-theorem,
+.textbook-lemma,
+.textbook-proof {
+  --blk: #2c5282;
+  --blk-bg: #eef4fb;
+  margin: 1.4rem 0;
+  padding: 0.85rem 1.15rem;
+  text-align: left;
+  background: var(--blk-bg);
+  border: 1px solid rgba(44, 82, 130, 0.22);
+  border-left: 4px solid var(--blk);
+  border-radius: 0 6px 6px 0;
+}
+
+.textbook-theorem,
+.textbook-lemma {
+  --blk: #9c4221;
+  --blk-bg: #fdf3ec;
+  border-color: rgba(156, 66, 33, 0.22);
+  border-left-color: #9c4221;
+}
+
+.textbook-proof {
+  --blk: #718096;
+  --blk-bg: #f7f7f5;
+  border-color: rgba(113, 128, 150, 0.22);
+  border-left-color: #718096;
+  border-left-width: 3px;
+  font-size: 0.98rem;
+}
+
+.textbook-proof::after {
+  content: "\220E";
+  display: block;
+  text-align: right;
+  color: var(--blk);
+}
+
+.textbook-proof.textbook-proof-marked::after { content: none; }
+
+.textbook-definition > :first-child,
+.textbook-theorem > :first-child,
+.textbook-lemma > :first-child,
+.textbook-proof > :first-child { margin-top: 0; }
+
+.textbook-definition > :last-child,
+.textbook-theorem > :last-child,
+.textbook-lemma > :last-child,
+.textbook-proof > :last-child { margin-bottom: 0; }
+
+.textbook-definition > p:first-child > strong:first-child,
+.textbook-theorem > p:first-child > strong:first-child,
+.textbook-lemma > p:first-child > strong:first-child,
+.textbook-proof > p:first-child > strong:first-child {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--blk);
+}
+
+.textbook-definition pre,
+.textbook-theorem pre,
+.textbook-lemma pre,
+.textbook-proof pre { background: #fff; }

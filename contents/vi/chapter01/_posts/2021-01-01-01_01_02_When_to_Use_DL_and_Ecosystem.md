@@ -133,9 +133,11 @@ $$\text{Error} \propto \frac{1}{(\text{Data size})^\alpha}$$
 
 trong đó $$\alpha \approx 0.5$$ với nhiều tác vụ.
 
+<div class="textbook-theorem" markdown="1">
 **Hệ quả**:
 - Dữ liệu ×4 → giảm lỗi khoảng ×2
 - Dữ liệu ×100 → giảm lỗi khoảng ×10
+</div>
 
 ## Yêu cầu tính toán
 
