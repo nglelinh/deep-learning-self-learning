@@ -33,4 +33,6 @@ Toàn bộ nội dung chính có **bản tiếng Anh** và **bản tiếng Việ
 
 Luyện phỏng vấn tùy chọn: sau bài lý thuyết khớp, dùng **01-98 Lộ trình luyện Deep Learning Interviews** (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) và các bài companion `*-98` theo chương.
 
+Luyện phỏng vấn tùy chọn: sau bài lý thuyết khớp, dùng **01-98 Lộ trình luyện Deep Learning Interviews** (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) và các bài companion `*-98` theo chương.
+
 Chúc bạn học tập hiệu quả.

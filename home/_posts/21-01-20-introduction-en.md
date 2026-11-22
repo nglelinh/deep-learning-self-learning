@@ -33,4 +33,6 @@ The main curriculum is available in **English and Vietnamese**. Editions are ali
 
 Optional interview drill: after the matching theory lesson, use **01-98 Deep Learning Interviews practice track** (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) and the chapter `*-98` companions.
 
+Optional interview drill: after the matching theory lesson, use **01-98 Deep Learning Interviews practice track** (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) and the chapter `*-98` companions.
+
 Happy learning.
