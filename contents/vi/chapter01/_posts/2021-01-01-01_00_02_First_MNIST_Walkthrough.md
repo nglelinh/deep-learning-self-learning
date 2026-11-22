@@ -11,7 +11,7 @@ categories:
 
 ## 4. Đoạn mã minh họa
 
-Ta triển khai một ví dụ học sâu đơn giản để làm rõ các khái niệm. Mục tiêu là xây dựng mạng nơ-ron phân loại chữ số MNIST bằng PyTorch.
+Ta triển khai một ví dụ học sâu cơ bản để làm rõ các khái niệm đã nêu. Mục tiêu là xây dựng một mạng nơ-ron phân loại chữ số viết tay MNIST bằng PyTorch.
 
 ```python
 import torch
@@ -132,100 +132,98 @@ print("3. Backpropagation (computing gradients)")
 print("4. Weight updates (learning from mistakes)")
 ```
 
-### Hiểu đoạn mã
+### Phân tích đoạn mã
 
-Ví dụ đơn giản này thể hiện các nguyên lý cốt lõi của học sâu:
+Ví dụ đơn giản này minh họa đầy đủ các nguyên lý cốt lõi của học sâu:
 
-**1. Thiết kế kiến trúc**: Ba tầng biến đổi đầu vào 784 chiều thành đầu ra 10 chiều thông qua các biểu diễn được học.
+**1. Thiết kế kiến trúc:** Ba tầng liên tiếp biến đổi đầu vào 784 chiều thành đầu ra 10 chiều thông qua các tầng biểu diễn trung gian.
 
-**2. Học đặc trưng tự động**: Ta không chỉ cho mạng cần tìm đặc trưng nào — nó tự khám phá các biểu diễn hữu ích.
+**2. Học đặc trưng tự động:** Ta không cần chỉ định trước mạng phải tìm đặc trưng nào — mô hình tự học các biểu diễn hữu ích từ dữ liệu điểm ảnh.
 
-**3. Vòng lặp huấn luyện**: Mẫu chuẩn lan truyền xuôi → tính mất mát → lan truyền ngược → cập nhật trọng số, nằm dưới mọi quy trình học sâu.
+**3. Vòng lặp huấn luyện chuẩn:** Chu trình lan truyền xuôi → tính mất mát → lan truyền ngược → cập nhật trọng số là khung vận hành chung của hầu hết quy trình học sâu.
 
-**4. Phi tuyến là then chốt**: Các hàm kích hoạt ReLU giữa các tầng cho phép học hàm phức tạp, phi tuyến. Nếu không có chúng, nhiều tầng tuyến tính sẽ sụp về một phép biến đổi tuyến tính duy nhất.
+**4. Vai trò của hàm kích hoạt phi tuyến:** Các hàm ReLU đặt giữa các tầng tuyến tính giúp mạng học được những ánh xạ phi tuyến phức tạp. Nếu bỏ qua chúng, nhiều tầng tuyến tính xếp chồng lên nhau sẽ chỉ tương đương một phép biến đổi tuyến tính duy nhất.
 
-**5. Khả năng mở rộng**: Cùng cấu trúc mã này, với các điều chỉnh phù hợp, hoạt động cho tập dữ liệu lớn hơn và tác vụ phức tạp hơn — thị giác máy tính, xử lý ngôn ngữ tự nhiên, v.v.
+**5. Khả năng mở rộng:** Cùng cấu trúc mã nguồn này, khi điều chỉnh kiến trúc và dữ liệu phù hợp, có thể mở rộng sang các tập dữ liệu lớn hơn và những bài toán phức tạp hơn trong thị giác máy tính, xử lý ngôn ngữ tự nhiên và nhiều lĩnh vực khác.
 
-Chỉ sau 5 epoch (5 lượt qua 60.000 ảnh huấn luyện), mạng đơn giản này thường đạt khoảng 97% độ chính xác — minh họa sức mạnh của học sâu trong việc học từ dữ liệu.
+Chỉ sau 5 epoch (5 lượt duyệt qua 60.000 ảnh huấn luyện), mạng đơn giản này thường đạt độ chính xác khoảng 97%, cho thấy khả năng học trực tiếp từ dữ liệu của mạng nơ-ron.
 
 ## 5. Các khái niệm liên quan
 
-Hiểu học sâu đòi hỏi nhìn mối liên hệ của nó với các khái niệm rộng hơn trong học máy và AI:
+Để hiểu rõ học sâu, cần đặt nó trong mối liên hệ với các nhánh và khái niệm rộng hơn của học máy và trí tuệ nhân tạo.
 
-### Học có giám sát, không giám sát và tăng cường
+### Học có giám sát, học không giám sát và học tăng cường
 
-**Học có giám sát** (*supervised learning*) (chủ đề chính ta đã thảo luận) học từ các ví dụ có nhãn: các cặp đầu vào–đầu ra như (ảnh, nhãn) hoặc (câu, bản dịch). Mạng học ánh xạ từ đầu vào sang đầu ra đúng.
+**Học có giám sát (*supervised learning*)** — trọng tâm chính ở giai đoạn đầu — học từ các ví dụ có nhãn, tức các cặp đầu vào–đầu ra như (ảnh, nhãn lớp) hoặc (câu nguồn, bản dịch). Mạng học ánh xạ từ đầu vào sang đầu ra tương ứng.
 
-**Học không giám sát** (*unsupervised learning*) khám phá cấu trúc trong dữ liệu không có nhãn. Autoencoder học biểu diễn nén. Clustering nhóm các ví dụ tương tự. Mô hình sinh học phân bố dữ liệu để tạo mẫu mới. Các kỹ thuật này quan trọng khi nhãn đắt đỏ hoặc không có sẵn.
+**Học không giám sát (*unsupervised learning*)** tìm kiếm cấu trúc ẩn trong dữ liệu chưa gán nhãn. Ví dụ, *autoencoder* học biểu diễn nén, phân cụm (*clustering*) nhóm các mẫu tương đồng, còn mô hình sinh học phân phối dữ liệu để tạo mẫu mới. Hướng tiếp cận này đặc biệt hữu ích khi việc gán nhãn tốn kém hoặc không khả thi.
 
-**Học tăng cường** (*reinforcement learning*) học từ tương tác: một agent thực hiện hành động trong môi trường, nhận phần thưởng và học chính sách tối đa hóa phần thưởng tích lũy. Cách này cho phép học hành vi (chơi game, robot) khi ta không thể cung cấp hành động đúng tường minh cho mọi tình huống, mà chỉ phản hồi theo kết quả.
+**Học tăng cường (*reinforcement learning*)** học thông qua tương tác với môi trường: một tác tử (*agent*) thực hiện hành động, nhận tín hiệu phần thưởng và học chính sách nhằm tối đa hóa phần thưởng tích lũy. Cách này phù hợp với các bài toán điều khiển hành vi (như chơi trò chơi hoặc điều khiển robot), nơi không thể chỉ định sẵn hành động đúng cho mọi trạng thái mà chỉ đánh giá qua kết quả dài hạn.
 
-Học sâu đã chuyển đổi cả ba paradigm, nhưng các nguyên lý khác nhau đáng kể. Khóa học này tập trung chủ yếu vào học có giám sát ở giai đoạn đầu, các chương sau sẽ đề cập học không giám sát và học tăng cường.
+Học sâu đã tạo ra bước tiến lớn ở cả ba hướng tiếp cận này, dù nguyên lý toán học của từng nhánh có nhiều điểm khác biệt. Khóa học này tập trung trước hết vào học có giám sát, sau đó mở rộng sang học không giám sát và học tăng cường ở các chương sau.
 
 ### Học máy cổ điển so với học sâu
 
-Học máy truyền thống (SVM, cây quyết định, hồi quy logistic) thường yêu cầu:
-- Đặc trưng được thiết kế thủ công
-- Giả định mô hình tường minh (tuyến tính, độc lập)
-- Hoạt động tốt với dữ liệu vừa phải (hàng trăm đến hàng nghìn mẫu)
-- Dễ diễn giải hơn (tầm quan trọng đặc trưng, ranh giới quyết định)
+Học máy truyền thống (như SVM, cây quyết định, hồi quy logistic) thường có các đặc điểm sau:
+- Đòi hỏi thiết kế đặc trưng thủ công.
+- Dựa trên các giả định mô hình tường minh (như tính tuyến tính hoặc độc lập).
+- Hoạt động hiệu quả với tập dữ liệu cỡ nhỏ đến vừa (vài trăm đến vài nghìn mẫu).
+- Dễ diễn giải hơn thông qua mức độ quan trọng của đặc trưng hoặc ranh giới quyết định.
 
-Học sâu:
-- Học đặc trưng tự động theo kiểu đầu-cuối
-- Ít giả định hơn về cấu trúc dữ liệu
-- Cần tập dữ liệu lớn (hàng nghìn đến hàng triệu mẫu)
-- Khó diễn giải hơn nhưng mạnh hơn với mẫu phức tạp
+Trong khi đó, học sâu:
+- Tự động học đặc trưng theo hướng từ đầu đến cuối (*end-to-end*).
+- Ít đặt giả định cứng nhắc hơn về cấu trúc dữ liệu.
+- Thường cần tập dữ liệu lớn (từ hàng nghìn đến hàng triệu mẫu).
+- Khó diễn giải trực tiếp hơn nhưng xử lý hiệu quả các mẫu phức tạp.
 
-Không có cách tiếp cận nào vượt trội tuyệt đối — học máy cổ điển có thể tốt hơn với tập nhỏ, dữ liệu dạng bảng, hoặc khi khả năng diễn giải là then chốt. Học sâu xuất sắc với dữ liệu lớn, đầu vào chiều cao (ảnh, văn bản) và mẫu phức tạp.
+Không có phương pháp nào vượt trội trong mọi hoàn cảnh: học máy cổ điển thường phù hợp hơn với tập dữ liệu nhỏ, dữ liệu dạng bảng hoặc khi yêu cầu cao về khả năng giải thích; còn học sâu phát huy thế mạnh trên dữ liệu lớn, đầu vào nhiều chiều (ảnh, văn bản, âm thanh) và cấu trúc mẫu phức tạp.
 
-### Chuyển giao học và tiền huấn luyện
+### Học chuyển giao và tiền huấn luyện
 
-Một kỹ thuật mạnh nhất của học sâu là **chuyển giao học** (*transfer learning*): huấn luyện mạng trên một tác vụ (ví dụ phân loại ImageNet) rồi thích nghi cho các tác vụ liên quan (phân tích ảnh y khoa, phát hiện động vật hoang dã). Các biểu diễn đã học — bộ phát hiện cạnh, mẫu texture, nhận dạng hình dạng — chuyển giao giữa các miền.
+Một kỹ thuật quan trọng của học sâu là **học chuyển giao (*transfer learning*)**: huấn luyện mạng trên một tác vụ nguồn (chẳng hạn phân loại ImageNet) rồi điều chỉnh lại cho tác vụ liên quan (như phân tích ảnh y khoa hoặc nhận diện động vật hoang dã). Các biểu diễn đã học — bộ phát hiện cạnh, kết cấu, hình dạng — có thể tái sử dụng giữa nhiều miền dữ liệu.
 
-**Tiền huấn luyện** (*pre-training*) trên tập dữ liệu tổng quát lớn, rồi **tinh chỉnh** (*fine-tuning*) cho tác vụ cụ thể, đã trở thành thực hành chuẩn. GPT, BERT và các mô hình ngôn ngữ lớn khác được tiền huấn luyện trên kho văn bản khổng lồ, rồi chuyên biệt hóa cho ứng dụng cụ thể qua fine-tuning với ít dữ liệu đặc thù hơn nhiều. Cách này giảm mạnh yêu cầu dữ liệu cho tác vụ mới.
+Quy trình **tiền huấn luyện (*pre-training*)** trên tập dữ liệu tổng quát quy mô lớn rồi **tinh chỉnh (*fine-tuning*)** cho tác vụ cụ thể đã trở thành chuẩn mực phổ biến. Các mô hình ngôn ngữ lớn như GPT hay BERT được tiền huấn luyện trên kho văn bản khổng lồ, sau đó tinh chỉnh cho từng ứng dụng với lượng dữ liệu chuyên biệt ít hơn nhiều, giúp giảm đáng kể chi phí thu thập và gán nhãn dữ liệu mới.
 
 ### Vai trò của kiến trúc, dữ liệu và tính toán
 
-Thành công của học sâu xuất phát từ ba yếu tố phối hợp:
+Hiệu quả của học sâu hiện đại bắt nguồn từ sự kết hợp của ba yếu tố chính:
 
-**Đổi mới kiến trúc** (CNN, Transformer, ResNet) cho phép học một số mẫu hiệu quả. Kiến trúc phù hợp cung cấp inductive bias thích hợp với cấu trúc bài toán.
+- **Đổi mới kiến trúc:** Các kiến trúc như CNN, ResNet hay Transformer đưa vào thiên kiến quy nạp (*inductive bias*) phù hợp với cấu trúc bài toán, giúp mô hình học hiệu quả hơn.
+- **Quy mô dữ liệu:** Tập dữ liệu lớn, đa dạng và có chất lượng cao cung cấp thông tin cần thiết để mạng học được biểu diễn bền vững và khái quát tốt.
+- **Năng lực tính toán:** Phần cứng như GPU và TPU song song hóa các phép toán ma trận cốt lõi của mạng nơ-ron, rút ngắn thời gian huấn luyện từ nhiều tháng xuống còn vài giờ.
 
-**Quy mô dữ liệu** cung cấp nguyên liệu thô cho việc học. Dữ liệu đa dạng, chất lượng cao giúp mạng học biểu diễn bền vững và khái quát hơn.
-
-**Quy mô tính toán** khiến việc huấn luyện mạng lớn trên dữ liệu lớn trở nên thực tế. GPU song song hóa các phép toán ma trận mà mạng nơ-ron phụ thuộc, rút ngắn thời gian huấn luyện từ tháng xuống giờ.
-
-Tiến bộ học sâu hiện đại đến từ cả ba hướng: kiến trúc tốt hơn (Transformer), dữ liệu lớn hơn (văn bản và ảnh quy mô web), và tính toán mạnh hơn (cụm GPU, TPU). Không có yếu tố đơn lẻ nào giải thích đủ thành công của lĩnh vực.
+Những tiến bộ của học sâu trong thực tế là kết quả đồng thời của cả ba yếu tố: kiến trúc tốt hơn (như Transformer), dữ liệu lớn hơn (văn bản và ảnh quy mô web) và năng lực tính toán mạnh hơn (cụm GPU, TPU). Không một yếu tố đơn lẻ nào có thể giải thích trọn vẹn sự phát triển của lĩnh vực.
 
 ## 6. Các bài báo nền tảng
 
-Hiểu sự phát triển lịch sử của học sâu qua các bài báo then chốt cung cấp bối cảnh cho thực hành hiện tại và định hướng tương lai.
+Điểm lại một số công trình tiêu biểu giúp hình dung bối cảnh lịch sử hình thành nên thực hành học sâu hiện nay.
 
 **["A Logical Calculus of Ideas Immanent in Nervous Activity" (1943)](https://link.springer.com/article/10.1007/BF02478259)**  
-*Tác giả*: Warren McCulloch và Walter Pitts  
-Bài báo nền tảng này giới thiệu mô hình toán học của nơ-ron nhân tạo, chỉ ra rằng mạng các đơn vị ngưỡng đơn giản có thể tính bất kỳ hàm logic nào. Dù đơn giản hóa rất nhiều so với nơ-ron sinh học, công trình này đặt nền tảng lý thuyết cho tính toán nơ-ron và truyền cảm hứng cho nghiên cứu sau đó trong cả khoa học thần kinh và trí tuệ nhân tạo.
+*Tác giả:* Warren McCulloch và Walter Pitts  
+Bài báo đề xuất mô hình toán học đầu tiên của nơ-ron nhân tạo, chứng minh rằng mạng gồm các đơn vị ngưỡng đơn giản có thể biểu diễn mọi hàm logic. Dù đơn giản hóa rất nhiều so với nơ-ron sinh học, công trình này đã đặt nền móng lý thuyết cho tính toán nơ-ron và ảnh hưởng lâu dài tới cả khoa học thần kinh lẫn trí tuệ nhân tạo.
 
 **["Learning representations by back-propagating errors" (1986)](https://www.nature.com/articles/323533a0)**  
-*Tác giả*: David Rumelhart, Geoffrey Hinton, Ronald Williams  
-Lan truyền ngược không được phát minh lần đầu tại đây (nó được khám phá độc lập nhiều lần), nhưng bài báo này đưa kỹ thuật đến sự chú ý rộng rãi và chứng minh sức mạnh của nó trong huấn luyện mạng nhiều tầng. Bằng cách chỉ ra cách tính gradient hiệu quả qua hợp thành hàm nhờ quy tắc chuỗi, lan truyền ngược khiến học sâu trở nên thực tế. Bài báo kết thúc mùa đông AI đầu tiên bằng việc chứng minh mạng nơ-ron có thể học hàm phức tạp.
+*Tác giả:* David Rumelhart, Geoffrey Hinton, Ronald Williams  
+Dù lan truyền ngược đã được phát hiện độc lập trước đó, bài báo này đưa kỹ thuật vào dòng chính và chứng minh hiệu quả của nó trong huấn luyện mạng nhiều tầng. Bằng cách áp dụng quy tắc dây chuyền để tính gradient qua hợp thành hàm, lan truyền ngược giúp việc huấn luyện mạng nhiều tầng trở nên khả thi trên thực tế.
 
 **["Gradient-Based Learning Applied to Document Recognition" (1998)](http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf)**  
-*Tác giả*: Yann LeCun, Léon Bottou, Yoshua Bengio, Patrick Haffner  
-LeNet-5, được giới thiệu trong bài báo này, chứng minh rằng mạng nơ-ron tích chập có thể đạt hiệu năng xuất sắc trên tác vụ thực tế (đọc séc, nhận dạng chữ số). Quan trọng hơn, nó thiết lập các nguyên lý thiết kế — kết nối cục bộ, chia sẻ trọng số, pooling — vẫn trung tâm trong thị giác máy tính hiện đại. Bài báo cho thấy học sâu có thể chuyển từ bài toán đồ chơi sang ứng dụng thực tiễn.
+*Tác giả:* Yann LeCun, Léon Bottou, Yoshua Bengio, Patrick Haffner  
+Bài báo giới thiệu kiến trúc LeNet-5, cho thấy mạng nơ-ron tích chập có thể giải quyết hiệu quả các bài toán thực tế như đọc séc và nhận dạng chữ số. Công trình này xác lập các nguyên lý cốt lõi — kết nối cục bộ, chia sẻ trọng số và gộp (*pooling*) — vẫn giữ vai trò trung tâm trong thị giác máy tính hiện đại.
 
 **["ImageNet Classification with Deep Convolutional Neural Networks" (2012)](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks)**  
-*Tác giả*: Alex Krizhevsky, Ilya Sutskever, Geoffrey Hinton  
-Chiến thắng áp đảo của AlexNet tại cuộc thi ImageNet 2012 (lỗi 15,3% so với 26,2% của hạng nhì) khơi mào cuộc cách mạng học sâu hiện đại. Bằng cách kết hợp kiến trúc sâu hơn, kích hoạt ReLU, chính quy hóa dropout và huấn luyện GPU, công trình chứng minh mạng nơ-ron có thể mở rộng tới tập dữ liệu lớn, phức tạp. Thành công này thuyết phục cộng đồng thị giác máy tính rộng lớn áp dụng học sâu.
+*Tác giả:* Alex Krizhevsky, Ilya Sutskever, Geoffrey Hinton  
+Kết quả vượt trội của AlexNet tại cuộc thi ImageNet 2012 (tỷ lệ lỗi 15,3% so với 26,2% của đội đứng thứ hai) đã mở ra giai đoạn phát triển mạnh mẽ của học sâu hiện đại. Bằng cách kết hợp kiến trúc sâu hơn, hàm kích hoạt ReLU, chính quy hóa *dropout* và huấn luyện trên GPU, bài báo chứng minh mạng nơ-ron có thể mở rộng hiệu quả sang các tập dữ liệu ảnh lớn và phức tạp.
 
 **["Attention Is All You Need" (2017)](https://arxiv.org/abs/1706.03762)**  
-*Tác giả*: Ashish Vaswani và cộng sự (Google)  
-Kiến trúc Transformer được giới thiệu ở đây đã trở thành nền tảng của NLP hiện đại và ngày càng mở rộng sang các miền khác. Bằng cách thay recurrence bằng cơ chế attention, Transformer cho phép song song hóa hoàn toàn trong huấn luyện và nắm bắt tốt hơn các phụ thuộc tầm xa. Ảnh hưởng của bài báo vượt xa ứng dụng dịch máy ban đầu — BERT, GPT và hầu hết các mô hình ngôn ngữ lớn gần đây đều xây dựng trên kiến trúc này.
+*Tác giả:* Ashish Vaswani và cộng sự (Google)  
+Bài báo giới thiệu kiến trúc Transformer — nền tảng của xử lý ngôn ngữ tự nhiên hiện đại và ngày càng mở rộng sang nhiều lĩnh vực khác. Bằng cách thay thế cơ chế hồi quy bằng cơ chế chú ý (*attention*), Transformer cho phép song song hóa cao trong huấn luyện và nắm bắt tốt các phụ thuộc tầm xa, trở thành kiến trúc cốt lõi của BERT, GPT và phần lớn mô hình ngôn ngữ lớn ngày nay.
 
 **["Deep Residual Learning for Image Recognition" (2016)](https://arxiv.org/abs/1512.03385)**  
-*Tác giả*: Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun  
-ResNet giới thiệu skip connection, cho phép huấn luyện mạng sâu hàng trăm tầng bằng cách cung cấp đường đi gradient trực tiếp. Ngoài chiến thắng ImageNet 2015, công trình này thay đổi căn bản cách ta nghĩ về kiến trúc sâu — độ sâu là then chốt, nhưng mạng cần đổi mới kiến trúc (skip connection, chuẩn hóa cẩn thận) để huấn luyện hiệu quả. Các nguyên lý của ResNet xuất hiện trong hầu hết kiến trúc sâu hiện đại.
+*Tác giả:* Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun  
+ResNet đưa ra kết nối tắt (*skip connection*), tạo đường truyền trực tiếp cho gradient và nhờ đó cho phép huấn luyện mạng sâu hàng trăm tầng. Bên cạnh chiến thắng tại ImageNet 2015, công trình này làm rõ rằng để tăng độ sâu hiệu quả cần các đổi mới về kiến trúc và chuẩn hóa. Nguyên lý kết nối phần dư hiện có mặt trong hầu hết các kiến trúc sâu hiện đại.
 
 ## Video tham khảo
 
-- **xem trước** [PyTorch Course (2022), Part 4: Image Classification (MNIST)](https://www.youtube.com/watch?v=gBw0u_5u0qU) — Mr. P Solver, tiếng Anh. Nếu bạn sắp chạy vòng lặp huấn luyện MNIST mà bài phác thảo.
-- [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Mạng chữ số viết tay là mô hình khái niệm đứng sau vòng lặp đó.
-- [Lecture 4 | Introduction to Neural Networks](https://www.youtube.com/watch?v=d14TUNcbn1k) — Stanford University School of Engineering, tiếng Anh. Bài giảng mạng neuron của Stanford đặt bộ phân loại đó vào ngôn ngữ của các bài toán sau.
+- **Xem trước:** [PyTorch Course (2022), Part 4: Image Classification (MNIST)](https://www.youtube.com/watch?v=gBw0u_5u0qU) — Mr. P Solver, tiếng Anh. Hướng dẫn trực tiếp cách chạy vòng lặp huấn luyện phân loại MNIST bằng PyTorch tương ứng với đoạn mã trong bài.
+- [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Trình bày mô hình trực giác của mạng nhận dạng chữ số đứng sau vòng lặp huấn luyện trên.
+- [Lecture 4 | Introduction to Neural Networks](https://www.youtube.com/watch?v=d14TUNcbn1k) — Stanford University School of Engineering, tiếng Anh. Bài giảng về mạng nơ-ron của Stanford, đặt bộ phân loại cơ bản vào khung lý thuyết của các bài học tiếp theo.

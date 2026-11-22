@@ -15,88 +15,91 @@ categories:
 *Hình ảnh: Sơ đồ học tăng cường với tác tử, môi trường, hành động và phần thưởng. Nguồn: Wikimedia Commons*
 
 ## 1. Tổng quan khái niệm
-Học tăng cường (*reinforcement learning*, RL) đại diện cho mô hình học khác biệt cơ bản so với học có giám sát và không giám sát mà ta đã nghiên cứu. Thay vì học từ ví dụ có nhãn hay khám phá mẫu trong dữ liệu không nhãn, các tác tử RL học bằng cách tương tác với môi trường, thực hiện hành động, quan sát kết quả và nhận phần thưởng. Mục tiêu của tác tử là khám phá một chính sách (*policy*) — chiến lược chọn hành động — tối đa hóa phần thưởng tích lũy theo thời gian. Việc học thử–sai với phần thưởng trễ phản ánh cách con người và động vật học nhiều kỹ năng: ta thử hành động, trải nghiệm hậu quả, và dần cải thiện hành vi để đạt kết quả mong muốn.
 
-Hiểu RL đòi hỏi đánh giá những gì làm nó thách thức hơn học có giám sát. Trong học có giám sát, ta có câu trả lời đúng cho mọi đầu vào — mô hình học từ ví dụ hành vi tối ưu. Trong RL, ta chỉ có phần thưởng cho biết kết quả tốt đến mức nào, chứ không biết hành động cụ thể nào là tối ưu. Tác tử phải khám phá các hành động khác nhau để tìm hành động dẫn đến phần thưởng cao, tạo ra đánh đổi khám phá–khai thác (*exploration–exploitation*): nên khai thác các hành động tốt đã biết hay khám phá các phương án có thể tốt hơn? Hơn nữa, phần thưởng thường bị trễ — hậu quả của một hành động có thể chưa rõ cho đến nhiều bước sau (trong cờ vua, nước đi đầu ván ảnh hưởng thắng/thua rất muộn). Bài toán gán công trạng (*credit assignment*) trở nên khó: trong nhiều hành động đã thực hiện, hành động nào đóng góp vào phần thưởng cuối?
+Học tăng cường (*reinforcement learning*, RL) khác biệt căn bản so với học có giám sát và học không giám sát. Thay vì học từ dữ liệu đã gán nhãn hay tìm cấu trúc trong dữ liệu không nhãn, tác tử RL học bằng cách tương tác trực tiếp với môi trường: thực hiện hành động, quan sát trạng thái mới và nhận phần thưởng. Mục tiêu của tác tử là tìm ra một chính sách (*policy*) — chiến lược chọn hành động — sao cho tối đa hóa phần thưởng tích lũy theo thời gian. Quá trình học thử–sai với phần thưởng trễ này gần với cách con người và động vật rèn luyện kỹ năng: thử nghiệm, quan sát kết quả và điều chỉnh hành vi dần dần.
 
-Khung toán học của quá trình quyết định Markov (*Markov Decision Process*, MDP) hình thức hóa thanh lịch việc ra quyết định tuần tự dưới bất định. Trạng thái (*state*) biểu diễn cấu hình môi trường; hành động (*action*) là lựa chọn của tác tử; chuyển trạng thái (*transition*) mô tả cách hành động thay đổi trạng thái (có thể ngẫu nhiên); phần thưởng (*reward*) cung cấp tín hiệu học. Tính chất Markov — tương lai chỉ phụ thuộc trạng thái hiện tại, không phụ thuộc toàn bộ lịch sử — đơn giản hóa phân tích và xấp xỉ đúng cho nhiều bài toán thực tế khi trạng thái được chọn phù hợp. Hàm giá trị (*value function*) định lượng phần thưởng tương lai kỳ vọng từ trạng thái hoặc cặp trạng thái–hành động, cung cấp mục tiêu học. Chính sách ánh xạ trạng thái sang hành động; chính sách tối ưu chọn hành động tối đa hóa phần thưởng tích lũy kỳ vọng.
+Học tăng cường có những thách thức đặc thù so với học có giám sát. Trong học có giám sát, mô hình được cung cấp đáp án đúng cho từng đầu vào. Trong RL, tác tử chỉ nhận được tín hiệu phần thưởng cho biết kết quả tốt hay xấu, chứ không biết hành động nào là tối ưu. Do đó, tác tử phải đối mặt với sự đánh đổi giữa khám phá và khai thác (*exploration–exploitation*): nên tiếp tục dùng các hành động tốt đã biết hay thử các hành động mới có thể mang lại phần thưởng cao hơn? Bên cạnh đó, phần thưởng thường bị trễ — hệ quả của một hành động có thể chỉ bộc lộ sau nhiều bước (chẳng hạn một nước đi sớm trong cờ vua ảnh hưởng đến kết quả cuối ván). Điều này tạo ra bài toán gán công trạng (*credit assignment*): xác định hành động nào trong chuỗi đã góp phần tạo nên phần thưởng cuối cùng.
 
-Mối liên hệ với học sâu qua học tăng cường sâu (*deep reinforcement learning*) cho phép RL mở rộng sang không gian trạng thái chiều cao như ảnh và không gian hành động lớn. Mạng neuron xấp xỉ hàm giá trị hoặc chính sách, học từ trải nghiệm qua gradient descent. Sự kết hợp này đã đạt thành công đáng kể: AlphaGo làm chủ cờ vây qua tự chơi, chơi game Atari từ pixel, học thao tác robot qua thử–sai, và căn chỉnh mô hình ngôn ngữ tinh vi qua học tăng cường từ phản hồi con người (RLHF). Hiểu cơ sở RL đặt nền cho các phương pháp deep RL được trình bày ở chương tiếp theo.
+Khung toán học của quá trình quyết định Markov (*Markov Decision Process*, MDP) mô tả chặt chẽ bài toán ra quyết định tuần tự dưới sự bất định. Trạng thái (*state*) biểu diễn tình trạng của môi trường; hành động (*action*) là lựa chọn của tác tử; hàm chuyển trạng thái (*transition*) mô tả cách trạng thái thay đổi (có thể mang tính ngẫu nhiên); và phần thưởng (*reward*) đóng vai trò tín hiệu phản hồi. Tính chất Markov — trạng thái kế tiếp chỉ phụ thuộc vào trạng thái và hành động hiện tại, không phụ thuộc toàn bộ lịch sử trước đó — giúp đơn giản hóa việc phân tích và phù hợp với nhiều bài toán thực tế khi trạng thái được thiết kế đầy đủ. Hàm giá trị (*value function*) ước lượng tổng phần thưởng tương lai kỳ vọng từ một trạng thái hoặc cặp trạng thái–hành động, còn chính sách tối ưu chọn hành động để tối đa hóa kỳ vọng đó.
+
+Khi kết hợp với học sâu thành học tăng cường sâu (*deep reinforcement learning*), RL có thể xử lý không gian trạng thái chiều cao (như hình ảnh) và không gian hành động lớn nhờ mạng nơ-ron xấp xỉ hàm giá trị hoặc chính sách. Hướng tiếp cận này đã đạt nhiều kết quả nổi bật như AlphaGo học chơi cờ vây qua tự đấu, chơi trò chơi Atari trực tiếp từ pixel, điều khiển thao tác robot và căn chỉnh mô hình ngôn ngữ thông qua học tăng cường từ phản hồi con người (RLHF). Các kiến thức nền tảng trong chương này chuẩn bị trực tiếp cho phần học tăng cường sâu ở chương tiếp theo.
 
 ## 2. Nền tảng toán học
-Một MDP được định nghĩa bởi bộ $$(\mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma)$$:
 
-- $$\mathcal{S}$$: Không gian trạng thái (mọi cấu hình môi trường khả dĩ)
-- $$\mathcal{A}$$: Không gian hành động (lựa chọn của tác tử)
-- $$\mathcal{P}$$: Hàm chuyển $$P(s_{t+1}|s_t, a_t)$$ (động lực học)
-- $$\mathcal{R}$$: Hàm phần thưởng $$R(s_t, a_t, s_{t+1})$$ (phản hồi)
-- $$\gamma \in [0,1)$$: Hệ số chiết khấu (cân bằng phần thưởng tức thời so với tương lai)
+Một MDP được định nghĩa bởi bộ năm thành phần $$(\mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma)$$:
 
-Tác tử theo chính sách $$\pi(a|s)$$ — xác suất hành động $$a$$ ở trạng thái $$s$$. Mục tiêu là tìm chính sách tối ưu $$\pi^*$$ tối đa hóa lợi nhuận kỳ vọng:
+- $$\mathcal{S}$$: Không gian trạng thái (tập hợp mọi cấu hình khả dĩ của môi trường).
+- $$\mathcal{A}$$: Không gian hành động (tập các lựa chọn của tác tử).
+- $$\mathcal{P}$$: Hàm xác suất chuyển trạng thái $$P(s_{t+1}|s_t, a_t)$$ (động lực học môi trường).
+- $$\mathcal{R}$$: Hàm phần thưởng $$R(s_t, a_t, s_{t+1})$$ (tín hiệu phản hồi).
+- $$\gamma \in [0,1)$$: Hệ số chiết khấu (cân bằng giữa phần thưởng tức thời và phần thưởng tương lai).
+
+Tác tử hành động theo chính sách $$\pi(a|s)$$ — xác suất chọn hành động $$a$$ tại trạng thái $$s$$. Mục tiêu là tìm chính sách tối ưu $$\pi^*$$ tối đa hóa tổng phần thưởng chiết khấu kỳ vọng (*expected return*):
 
 $$J(\pi) = \mathbb{E}_{\tau \sim \pi}\left[\sum_{t=0}^\infty \gamma^t r_t\right]$$
 
 trong đó $$\tau = (s_0, a_0, r_0, s_1, a_1, r_1, \ldots)$$ là một quỹ đạo (*trajectory*).
 
-### Hàm Giá trị
+### Hàm giá trị
 
-Hàm giá trị trạng thái định lượng lợi nhuận kỳ vọng bắt đầu từ trạng thái $$s$$:
+Hàm giá trị trạng thái đo tổng phần thưởng chiết khấu kỳ vọng khi bắt đầu từ trạng thái $$s$$ và tuân theo chính sách $$\pi$$:
 
 $$V^\pi(s) = \mathbb{E}_{\pi}\left[\sum_{t=0}^\infty \gamma^t r_t \mid s_0 = s\right]$$
 
-Hàm giá trị hành động (hàm Q) bao gồm hành động đầu tiên:
+Hàm giá trị hành động (hàm $$Q$$) đo kỳ vọng đó khi thực hiện hành động $$a$$ tại trạng thái $$s$$ rồi tiếp tục theo chính sách $$\pi$$:
 
 $$Q^\pi(s,a) = \mathbb{E}_{\pi}\left[\sum_{t=0}^\infty \gamma^t r_t \mid s_0 = s, a_0 = a\right]$$
 
-Các hàm này thỏa phương trình Bellman thể hiện quan hệ đệ quy:
+Hai hàm này thỏa mãn các phương trình Bellman thể hiện mối quan hệ đệ quy giữa trạng thái hiện tại và trạng thái kế tiếp:
 
 $$V^\pi(s) = \sum_a \pi(a|s) \sum_{s'} P(s'|s,a)[R(s,a,s') + \gamma V^\pi(s')]$$
 
 $$Q^\pi(s,a) = \sum_{s'} P(s'|s,a)[R(s,a,s') + \gamma \sum_{a'} \pi(a'|s') Q^\pi(s', a')]$$
 
-Hàm giá trị tối ưu thỏa phương trình tối ưu Bellman:
+Các hàm giá trị tối ưu thỏa mãn phương trình tối ưu Bellman:
 
 $$V^*(s) = \max_a \sum_{s'} P(s'|s,a)[R(s,a,s') + \gamma V^*(s')]$$
 
 $$Q^*(s,a) = \sum_{s'} P(s'|s,a)[R(s,a,s') + \gamma \max_{a'} Q^*(s', a')]$$
 
-Chính sách tối ưu tham lam theo $$Q^*$$: $$\pi^*(s) = \arg\max_a Q^*(s,a)$$.
+Khi biết $$Q^*$$, chính sách tối ưu được xác định bằng cách chọn tham lam: $$\pi^*(s) = \arg\max_a Q^*(s,a)$$.
 
 ### Q-Learning
 
-Q-learning học $$Q^*$$ mà không cần biết xác suất chuyển trạng thái, thông qua học chênh lệch thời gian (*temporal difference learning*):
+Q-learning học trực tiếp $$Q^*$$ mà không cần biết trước xác suất chuyển trạng thái, dựa trên học chênh lệch thời gian (*temporal difference learning*):
 
 $$Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha[r_t + \gamma \max_{a'} Q(s_{t+1}, a') - Q(s_t, a_t)]$$
 
-Cập nhật dùng phần thưởng quan sát $$r_t$$ và ước lượng giá trị tương lai $$\max_{a'} Q(s_{t+1}, a')$$ để cải thiện ước lượng hiện tại $$Q(s_t, a_t)$$. Việc bootstrap — dùng một ước lượng để cải thiện ước lượng khác — cho phép học từ trải nghiệm mà không cần mô hình môi trường.
+Quy tắc cập nhật sử dụng phần thưởng quan sát được $$r_t$$ cùng ước lượng giá trị tương lai $$\max_{a'} Q(s_{t+1}, a')$$ để hiệu chỉnh ước lượng hiện tại $$Q(s_t, a_t)$$. Cơ chế *bootstrap* — dùng một ước lượng để cập nhật ước lượng khác — cho phép tác tử học trực tiếp từ trải nghiệm mà không cần mô hình môi trường.
 
-## 3. Ví dụ / Trực giác
+## 3. Ví dụ và trực giác
 
-Hãy xét huấn luyện tác tử chơi game đơn giản: điều hướng lưới 5×5 để đến đích. Trạng thái là vị trí (25 trạng thái), hành động là {lên, xuống, trái, phải}, phần thưởng +10 tại đích, −1 ở nơi khác (khuyến khích đến đích nhanh).
+Xét bài toán huấn luyện tác tử di chuyển trên lưới 5×5 để tìm đường tới đích. Trạng thái là tọa độ ô (25 trạng thái), hành động gồm `{lên, xuống, trái, phải}`, phần thưởng là `+10` khi đến đích và `-1` ở mỗi bước khác (nhằm khuyến khích đi đường ngắn nhất).
 
-Ban đầu, giá trị Q ngẫu nhiên. Tác tử bắt đầu tại (0,0), thực hiện hành động ngẫu nhiên. Sau khi lang thang, nó tình cờ đến đích (4,4), nhận +10. Q-learning cập nhật:
+Ban đầu, các giá trị $$Q$$ đều bằng 0 hoặc ngẫu nhiên. Tác tử xuất phát từ `(0, 0)` và di chuyển ngẫu nhiên cho đến khi tình cờ chạm đích `(4, 4)` và nhận `+10`. Q-learning cập nhật:
 
 $$Q((4,3), \text{right}) \leftarrow Q((4,3), \text{right}) + \alpha[10 + 0 - Q((4,3), \text{right})]$$
 
-Giá trị Q cho “đi phải từ vị trí cạnh đích” tăng. Lần sau khi tác tử đến (4,3), nó có xu hướng đi phải hơn (nếu dùng chính sách ε-greedy dựa trên Q).
+Nhờ đó, giá trị $$Q$$ của hành động đi sang phải từ ô `(4, 3)` tăng lên. Ở các lượt sau, khi quay lại `(4, 3)`, tác tử sẽ ưu tiên đi sang phải nếu dùng chính sách $$\varepsilon$$-greedy.
 
-Sau nhiều episode, giá trị lan truyền ngược. Q((4,2), right) tăng vì dẫn đến (4,3) vốn đã có Q cao. Cuối cùng, các giá trị Q tối ưu tạo gradient hướng về đích từ mọi trạng thái, và tác tử học điều hướng thẳng đến đích từ bất kỳ vị trí xuất phát nào.
+Qua nhiều lượt chơi (*episode*), thông tin phần thưởng lan truyền ngược dần về các ô trước đó: $$Q((4, 2), \text{right})$$ tăng vì dẫn tới `(4, 3)` đã có giá trị cao. Cuối cùng, bảng giá trị $$Q$$ tạo thành một trường giá trị dẫn hướng về đích từ mọi vị trí xuất phát trên lưới.
 
-### Ứng dụng: ε-greedy trong feed gợi ý
+### Ứng dụng: $$\varepsilon$$-greedy trong luồng gợi ý
 
-Feed video/sản phẩm cũng đối mặt **khám phá–khai thác**: luôn chỉ hiện nội dung “chắc chắn được thích” sẽ khóa người dùng trong bong bóng sở thích (*filter bubble*); thỉnh thoảng cần **khám phá** chủ đề mới.
+Các hệ thống gợi ý video hoặc sản phẩm cũng đối mặt với bài toán **khám phá–khai thác**: nếu chỉ hiển thị những nội dung chắc chắn người dùng thích, hệ thống dễ nhốt người dùng trong “bong bóng sở thích” (*filter bubble*); do đó cần xen kẽ **khám phá** các chủ đề mới.
 
-Chính sách **ε-greedy** rất phổ biến: với xác suất $$1-\varepsilon$$ chọn hành động/item tối ưu theo mô hình (khai thác), với xác suất $$\varepsilon$$ chọn ngẫu nhiên (khám phá). Ví dụ $$\varepsilon=0.1$$ → ~90% tối ưu, ~10% ngẫu nhiên.
+Chính sách **$$\varepsilon$$-greedy** được dùng phổ biến: với xác suất $$1-\varepsilon$$ hệ thống chọn mục tối ưu theo mô hình (khai thác), và với xác suất $$\varepsilon$$ chọn ngẫu nhiên (khám phá). Chẳng hạn với $$\varepsilon=0.1$$, khoảng 90% lựa chọn là tối ưu và 10% là thử nghiệm ngẫu nhiên.
 
 ![ε-greedy 90% / 10%](/deep-learning-self-learning/img/chapter_img/chapter20/recsys_epsilon_greedy.jpg)
-*Hình: ε-greedy — phần lớn thời gian theo lựa chọn tối ưu, một phần nhỏ thử ngẫu nhiên. (Minh họa từ video giải thích recommendation system)*
+*Hình: Chính sách ε-greedy — phần lớn thời gian chọn phương án tối ưu, phần nhỏ còn lại thử nghiệm ngẫu nhiên. (Minh họa từ video giải thích recommendation system)*
 
 ![Chi tiết ε-greedy trong ranking](/deep-learning-self-learning/img/chapter_img/chapter20/recsys_epsilon_greedy_detail.jpg)
-*Hình: Khám phá có chủ đích giúp phát hiện chủ đề mới (ví dụ “công nghệ”) dù mô hình đang tin chắc chủ đề cũ. (Minh họa từ video giải thích recommendation system)*
+*Hình: Khám phá có chủ đích giúp phát hiện chủ đề mới (ví dụ “công nghệ”) ngay cả khi mô hình đang ưu tiên chủ đề cũ. (Minh họa từ video giải thích recommendation system)*
 
-Trong recsys, “phần thưởng” có thể là watch-time, like, hoặc tổ hợp đa mục tiêu — vẫn là MDP/bandit với đánh đổi exploration–exploitation quen thuộc.
+Trong hệ thống gợi ý, “phần thưởng” có thể là thời gian xem (*watch-time*), lượt thích hoặc tổ hợp nhiều mục tiêu — vẫn nằm trong khung bài toán MDP/bandit với sự đánh đổi khám phá–khai thác quen thuộc.
 
 ## 4. Mã minh họa
+
 ```python
 import numpy as np
 
@@ -167,38 +170,39 @@ print("Learned optimal policy!")
 ```
 
 ## 5. Khái niệm liên quan
-RL gắn với lý thuyết điều khiển, nghiên cứu vận hành và kinh tế qua ra quyết định tối ưu dưới bất định. Quy hoạch động (*dynamic programming*) cung cấp thuật toán tính chính sách tối ưu khi động lực học môi trường đã biết. RL mở rộng sang động lực học chưa biết, học qua tương tác.
 
-RL liên quan đến học có giám sát qua học bắt chước (*imitation learning*) và RL nghịch (*inverse RL*). Thay vì học từ phần thưởng, tác tử có thể học từ minh họa (có giám sát), hoặc suy ra hàm phần thưởng từ hành vi chuyên gia (inverse RL).
+Học tăng cường liên hệ chặt chẽ với lý thuyết điều khiển, vận trù học và kinh tế học thông qua bài toán ra quyết định tối ưu dưới bất định. Quy hoạch động (*dynamic programming*) giải bài toán chính sách tối ưu khi đã biết rõ mô hình động lực học môi trường, còn RL mở rộng sang trường hợp không biết trước mô hình và phải học thông qua tương tác.
 
-## 6. Các Bài báo Nền tảng
+RL cũng liên quan đến học có giám sát qua học bắt chước (*imitation learning*) và học tăng cường nghịch (*inverse RL*). Thay vì học từ tín hiệu phần thưởng tường minh, tác tử có thể học trực tiếp từ dữ liệu minh họa của chuyên gia (học bắt chước) hoặc suy luận ngược lại hàm phần thưởng từ hành vi chuyên gia (*inverse RL*).
+
+## 6. Các bài báo và tài liệu nền tảng
 
 **["Reinforcement Learning: An Introduction" (2018)](http://incompleteideas.net/book/the-book-2nd.html)**  
 *Tác giả*: Richard Sutton, Andrew Barto  
-Giáo trình RL chuẩn mực, thiết lập nền tảng toán học và các thuật toán cốt lõi. Tài liệu thiết yếu cho bất kỳ ai học RL.
+Giáo trình chuẩn mực về học tăng cường, trình bày hệ thống nền tảng toán học và các thuật toán cốt lõi.
 
 **["Playing Atari with Deep Reinforcement Learning" (2013)](https://arxiv.org/abs/1312.5602)**  
 *Tác giả*: Volodymyr Mnih et al.  
-DQN cho thấy học sâu + RL có thể học chơi game Atari từ pixel, khởi đầu cuộc cách mạng deep RL. Kết hợp Q-learning với mạng neuron sâu, experience replay và target network.
+DQN kết hợp Q-learning với mạng nơ-ron sâu, bộ đệm phát lại trải nghiệm (*experience replay*) và mạng đích (*target network*) để chơi trò chơi Atari trực tiếp từ pixel, mở đầu cho lĩnh vực học tăng cường sâu.
 
-## Bẫy Thường gặp và Mẹo
+## Bẫy thường gặp và mẹo thực hành
 
-Đánh đổi khám phá–khai thác là then chốt. Khai thác thuần (luôn chọn hành động tốt đã biết) không bao giờ khám phá phương án tốt hơn. Khám phá thuần (hành động ngẫu nhiên) không dùng tri thức đã học. ε-greedy, chính sách softmax hoặc phương pháp dựa trên UCB cân bằng cả hai.
+Cân bằng giữa khám phá và khai thác là yếu tố quyết định hiệu quả huấn luyện. Khai thác thuần túy (chỉ chọn hành động tốt nhất đã biết) dễ mắc kẹt ở nghiệm cục bộ, còn khám phá thuần túy (chọn ngẫu nhiên liên tục) không tận dụng được kiến thức đã học. Các chiến lược như $$\varepsilon$$-greedy, chọn hành động theo softmax hoặc UCB giúp điều tiết hợp lý hai yếu tố này.
 
-## Điểm Chính Cần Nhớ
+## Điểm chính cần nhớ
 
-Học tăng cường huấn luyện tác tử qua tương tác với môi trường, học chính sách tối đa hóa phần thưởng tích lũy qua thử–sai. MDP hình thức hóa ra quyết định tuần tự với trạng thái, hành động, chuyển trạng thái và phần thưởng. Hàm giá trị ước lượng lợi nhuận tương lai kỳ vọng, cung cấp mục tiêu học. Q-learning học giá trị hành động tối ưu qua cập nhật chênh lệch thời gian, cho phép học không cần mô hình môi trường. Đánh đổi khám phá–khai thác đòi hỏi cân bằng giữa khám phá chiến lược mới và dùng chiến lược tốt đã biết. Phần thưởng trễ và gán công trạng khiến RL khó hơn học có giám sát nhưng mở ra ứng dụng nơi giám sát không có sẵn hoặc quá đắt.
+Học tăng cường huấn luyện tác tử thông qua tương tác với môi trường để tìm chính sách tối đa hóa phần thưởng tích lũy. MDP mô hình hóa bài toán ra quyết định tuần tự bằng trạng thái, hành động, xác suất chuyển trạng thái và phần thưởng. Hàm giá trị ước lượng tổng phần thưởng tương lai kỳ vọng, đóng vai trò mục tiêu học. Q-learning học hàm giá trị hành động tối ưu qua cập nhật chênh lệch thời gian mà không cần biết trước mô hình môi trường. Dù phần thưởng trễ, bài toán gán công trạng và sự đánh đổi khám phá–khai thác khiến RL khó hơn học có giám sát, phương pháp này đặc biệt hữu ích khi không có sẵn nhãn giám sát tối ưu.
 
 <!-- video-references -->
 
 ## Nguồn video (tham chiếu)
 
-Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
+Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến):
 
 - [Thuật toán gợi ý (TikTok-style recommendation)](https://www.facebook.com/reel/1444915507374636)
 
 ## Video tham khảo
 
-- **xem trước** [RL Course by David Silver - Lecture 1: Introduction to Reinforcement Learning](https://www.youtube.com/watch?v=2pWv7GOvuf0) — Google DeepMind, tiếng Anh. Phần thưởng, chính sách và giá trị.
-- [RL Course by David Silver - Lecture 2: Markov Decision Process](https://www.youtube.com/watch?v=lfHX2hHRMVQ) — Google DeepMind, tiếng Anh. Trạng thái, hành động và phương trình Bellman là toán của bài.
-- [Reinforcement Learning with Neural Networks: Essential Concepts](https://www.youtube.com/watch?v=9hbQieQh7-o) — StatQuest with Josh Starmer, tiếng Anh. Cùng các đối tượng đó khi một mạng neuron được phép biểu diễn chúng, đúng phần bài xem trước.
+- **Xem trước** [RL Course by David Silver - Lecture 1: Introduction to Reinforcement Learning](https://www.youtube.com/watch?v=2pWv7GOvuf0) — Google DeepMind, tiếng Anh. Giới thiệu phần thưởng, chính sách và hàm giá trị.
+- [RL Course by David Silver - Lecture 2: Markov Decision Process](https://www.youtube.com/watch?v=lfHX2hHRMVQ) — Google DeepMind, tiếng Anh. Trình bày trạng thái, hành động và hệ phương trình Bellman tương ứng với phần toán học trong bài.
+- [Reinforcement Learning with Neural Networks: Essential Concepts](https://www.youtube.com/watch?v=9hbQieQh7-o) — StatQuest with Josh Starmer, tiếng Anh. Minh họa cách dùng mạng nơ-ron xấp xỉ các đối tượng RL, bước đệm cho chương tiếp theo.

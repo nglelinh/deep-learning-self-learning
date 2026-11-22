@@ -9,13 +9,13 @@ categories:
 - chapter13
 ---
 
-Variational autoencoder:
+Nội dung về Variational Autoencoder gồm hai phần:
 
-1. **Lý thuyết** — ELBO, reparameterization, trực giác
-2. **Cài đặt** — huấn luyện, lấy mẫu, bài báo, bẫy thường gặp
+1. **Lý thuyết** — mục tiêu ELBO, thủ thuật tái tham số hóa và trực giác không gian ẩn.
+2. **Cài đặt** — mã huấn luyện PyTorch, lấy mẫu, nội suy, bài báo nền tảng và các cạm bẫy thường gặp.
 
 ## Video tham khảo
 
-- **xem trước** [Variational Autoencoders](https://www.youtube.com/watch?v=9zKuYvjFFS8) — Arxiv Insights, tiếng Anh. Trước khi tách lý thuyết và mã.
-- [MIT 6.S191 (2024): Deep Generative Modeling](https://www.youtube.com/watch?v=Dmm4UG-6jxA) — Alexander Amini, tiếng Anh. Bản bài giảng của cùng mô hình đồ thị.
-- [MaDL - Kullback-Leibler Divergence](https://www.youtube.com/watch?v=vPvnpC0PNVQ) — Tübingen Machine Learning, tiếng Anh. Số hạng KL mà các bài sẽ không cho phép bỏ.
+- **Xem trước:** [Variational Autoencoders](https://www.youtube.com/watch?v=9zKuYvjFFS8) — Arxiv Insights, tiếng Anh. Tổng quan ngắn gọn trước khi đi vào phần lý thuyết và cài đặt chi tiết.
+- [MIT 6.S191 (2024): Deep Generative Modeling](https://www.youtube.com/watch?v=Dmm4UG-6jxA) — Alexander Amini, tiếng Anh. Trình bày cùng mô hình xác suất trong bối cảnh khóa học của MIT.
+- [MaDL - Kullback-Leibler Divergence](https://www.youtube.com/watch?v=vPvnpC0PNVQ) — Tübingen Machine Learning, tiếng Anh. Giải thích số hạng phân kỳ KL giữ vai trò then chốt trong cả hai bài học.

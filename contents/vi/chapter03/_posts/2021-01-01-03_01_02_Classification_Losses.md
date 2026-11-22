@@ -18,7 +18,7 @@ categories:
 $$\mathcal{L}_{\text{BCE}}(\hat{y}, y) = -[y \log(\hat{y}) + (1-y) \log(1-\hat{y})]$$
 
 trong đó:
-- $$y \in \{0, 1\}$$ là nhãn thật
+- $$y \in \{0, 1\}$$ là nhãn thực tế
 - $$\hat{y} \in (0, 1)$$ là xác suất dự đoán
 
 **Hàm chi phí:**
@@ -26,35 +26,35 @@ trong đó:
 $$J_{\text{BCE}} = -\frac{1}{m} \sum_{i=1}^{m} [y^{(i)} \log(\hat{y}^{(i)}) + (1-y^{(i)}) \log(1-\hat{y}^{(i)})]$$
 
 **Trực giác:**
-- Nếu $$y = 1$$: Mất mát là $$-\log(\hat{y})$$, cực tiểu khi $$\hat{y} \to 1$$
-- Nếu $$y = 0$$: Mất mát là $$-\log(1-\hat{y})$$, cực tiểu khi $$\hat{y} \to 0$$
+- Khi $$y = 1$$: Mất mát bằng $$-\log(\hat{y})$$, đạt cực tiểu khi $$\hat{y} \to 1$$
+- Khi $$y = 0$$: Mất mát bằng $$-\log(1-\hat{y})$$, đạt cực tiểu khi $$\hat{y} \to 0$$
 
 **Tính chất:**
-- Dựa trên ước lượng hợp lý cực đại
+- Xuất phát từ nguyên lý ước lượng hợp lý cực đại (*maximum likelihood estimation*)
 - Trơn và khả vi
-- Phù hợp tốt với tối ưu dựa trên gradient
-- Phạt nặng các dự đoán sai nhưng tự tin
+- Tương thích tốt với tối ưu dựa trên gradient
+- Phạt rất nặng các dự đoán sai nhưng có độ tự tin cao
 
 **Đạo hàm (với đầu ra sigmoid):**
 
-Với lớp đầu ra dùng sigmoid: $$\hat{y} = \sigma(z)$$
+Khi lớp đầu ra sử dụng sigmoid $$\hat{y} = \sigma(z)$$:
 
 $$\frac{\partial \mathcal{L}_{\text{BCE}}}{\partial z} = \hat{y} - y$$
 
-Đạo hàm đơn giản đáng kể này làm huấn luyện hiệu quả!
+Dạng đạo hàm gọn gàng này giúp việc tính gradient và huấn luyện diễn ra thuận lợi.
 
-**Trường hợp dùng:**
-- **Phân loại nhị phân**: Ảnh này là mèo hay chó?
-- Lớp đầu ra với kích hoạt sigmoid
+**Trường hợp sử dụng:**
+- **Phân loại nhị phân:** Ví dụ phân biệt ảnh chó và mèo
+- Kết hợp với lớp đầu ra dùng hàm kích hoạt sigmoid
 
 **Ưu điểm:**
-- Diễn giải xác suất đúng đắn
-- Gradient mạnh với dự đoán sai
-- Phù hợp tốt với đầu ra sigmoid
+- Có diễn giải xác suất chặt chẽ
+- Tạo gradient đủ mạnh khi mô hình dự đoán sai
+- Kết hợp tự nhiên với đầu ra sigmoid
 
 **Nhược điểm:**
-- Có thể sinh mất mát rất lớn với dự đoán sai tự tin
-- Yêu cầu xác suất dự đoán (không phải logits trực tiếp)
+- Mất mát có thể tăng rất lớn nếu mô hình dự đoán sai với xác suất gần 0 hoặc 1
+- Cần đầu ra dạng xác suất (hoặc dùng phiên bản nhận trực tiếp logits để ổn định số)
 
 ### 2. Mất mát Hinge (Mất mát SVM)
 
@@ -65,111 +65,109 @@ $$\mathcal{L}_{\text{Hinge}}(\hat{y}, y) = \max(0, 1 - y \cdot \hat{y})$$
 trong đó $$y \in \{-1, +1\}$$ và $$\hat{y}$$ là điểm số thô (không phải xác suất).
 
 **Tính chất:**
-- Dùng trong Support Vector Machines
-- Khuyến khích cực đại hóa lề
+- Dùng trong máy vector hỗ trợ (*Support Vector Machines*)
+- Khuyến khích mở rộng khoảng lề phân tách (*margin*)
 - Không khả vi tại $$y \cdot \hat{y} = 1$$
 
-**Trường hợp dùng:**
-- Phân loại nhị phân với mục tiêu kiểu SVM
-- Khi muốn bộ phân loại lề cực đại
+**Trường hợp sử dụng:**
+- Bài toán phân loại nhị phân theo mục tiêu kiểu SVM
+- Khi cần tối ưu hóa biên lề cực đại
 
 ## Hàm Mất mát cho Phân loại Đa lớp
 
-### 1. Entropy Chéo Categorical
+### 1. Entropy Chéo Đa lớp (Categorical Cross-Entropy)
 
 **Công thức:**
 
 $$\mathcal{L}_{\text{CCE}}(\hat{\mathbf{y}}, \mathbf{y}) = -\sum_{c=1}^{C} y_c \log(\hat{y}_c)$$
 
 trong đó:
-- $$\mathbf{y}$$ là nhãn thật ở dạng **mã hóa one-hot**: $$y_c \in \{0, 1\}$$, $$\sum_c y_c = 1$$
+- $$\mathbf{y}$$ là nhãn thực tế ở dạng **mã hóa one-hot**: $$y_c \in \{0, 1\}$$, $$\sum_c y_c = 1$$
 - $$\hat{\mathbf{y}}$$ là phân phối xác suất dự đoán: $$\hat{y}_c \in (0, 1)$$, $$\sum_c \hat{y}_c = 1$$
-- $$C$$ là số lớp
+- $$C$$ là tổng số lớp
 
 **Hàm chi phí:**
 
 $$J_{\text{CCE}} = -\frac{1}{m} \sum_{i=1}^{m} \sum_{c=1}^{C} y_c^{(i)} \log(\hat{y}_c^{(i)})$$
 
-**Dạng đơn giản** (vì chỉ một $$y_c = 1$$):
+**Dạng rút gọn** (vì chỉ có đúng một thành phần $$y_{c^*} = 1$$):
 
 $$\mathcal{L}_{\text{CCE}} = -\log(\hat{y}_{c^*})$$
 
-trong đó $$c^*$$ là lớp thật.
+trong đó $$c^*$$ là chỉ số của lớp đúng.
 
 **Đạo hàm (với đầu ra softmax):**
 
-Với đầu ra softmax: $$\hat{\mathbf{y}} = \text{softmax}(\mathbf{z})$$
+Khi lớp đầu ra sử dụng softmax $$\hat{\mathbf{y}} = \text{softmax}(\mathbf{z})$$:
 
 $$\frac{\partial \mathcal{L}_{\text{CCE}}}{\partial z_j} = \hat{y}_j - y_j$$
 
-Một lần nữa, đơn giản đáng kể!
+Tương tự trường hợp nhị phân, biểu thức đạo hàm có dạng rất đơn giản.
 
-**Trường hợp dùng:**
-- **Phân loại đa lớp**: Nhận dạng chữ số (MNIST), phân loại ảnh (ImageNet)
-- Lớp đầu ra với kích hoạt softmax
+**Trường hợp sử dụng:**
+- **Phân loại đa lớp:** Ví dụ nhận dạng chữ số (MNIST), phân loại ảnh (ImageNet)
+- Kết hợp với lớp đầu ra dùng softmax
 
 **Ưu điểm:**
-- Khung xác suất đúng đắn
-- Chuẩn cho bài toán đa lớp
-- Gradient đơn giản với softmax
+- Nền tảng xác suất rõ ràng
+- Lựa chọn tiêu chuẩn cho bài toán đa lớp
+- Biểu thức gradient gọn khi ghép với softmax
 
 **Nhược điểm:**
-- Yêu cầu nhãn mã hóa one-hot
-- Có thể bất ổn số (dùng mẹo log-softmax)
+- Đòi hỏi nhãn ở dạng mã hóa one-hot
+- Dễ gặp vấn đề ổn định số nếu tính rời rạc (nên dùng kết hợp log-softmax)
 
-### 2. Entropy Chéo Categorical Thưa
+### 2. Entropy Chéo Đa lớp Thưa (Sparse Categorical Cross-Entropy)
 
-**Công thức:**
-
-Giống entropy chéo categorical, nhưng nhận nhãn số nguyên thay vì mã hóa one-hot.
+Về bản chất toán học, hàm này giống hệt Categorical Cross-Entropy nhưng nhận trực tiếp nhãn số nguyên thay vì vector one-hot.
 
 **Định dạng đầu vào:**
-- $$y \in \{0, 1, \ldots, C-1\}$$ (chỉ số lớp nguyên)
-- $$\hat{\mathbf{y}} \in \mathbb{R}^C$$ (phân phối xác suất)
+- $$y \in \{0, 1, \ldots, C-1\}$$ (chỉ số nguyên của lớp đúng)
+- $$\hat{\mathbf{y}} \in \mathbb{R}^C$$ (phân phối xác suất dự đoán)
 
 **Công thức:**
 
 $$\mathcal{L}_{\text{SCCE}}(\hat{\mathbf{y}}, y) = -\log(\hat{y}_y)$$
 
-**Trường hợp dùng:**
-- Phân loại đa lớp với nhãn nguyên
-- Tiết kiệm bộ nhớ (không cần tạo vectơ one-hot)
+**Trường hợp sử dụng:**
+- Phân loại đa lớp khi nhãn lưu dưới dạng số nguyên
+- Tiết kiệm bộ nhớ vì không cần tạo ma trận one-hot (đặc biệt hữu ích khi $$C$$ lớn)
 
-### 3. Phân kỳ Kullback-Leibler (KL)
+### 3. Phân kỳ Kullback-Leibler (KL Divergence)
 
 **Công thức:**
 
 $$\mathcal{L}_{\text{KL}}(\mathbf{p}, \mathbf{q}) = \sum_{c=1}^{C} p_c \log\left(\frac{p_c}{q_c}\right) = \sum_{c=1}^{C} [p_c \log(p_c) - p_c \log(q_c)]$$
 
-trong đó $$\mathbf{p}$$ là phân phối thật và $$\mathbf{q}$$ là phân phối dự đoán.
+trong đó $$\mathbf{p}$$ là phân phối mục tiêu và $$\mathbf{q}$$ là phân phối dự đoán.
 
 **Tính chất:**
-- Đo "khoảng cách" giữa hai phân phối xác suất
-- Luôn không âm
+- Đo độ sai khác giữa hai phân phối xác suất
+- Luôn không âm (bằng 0 khi và chỉ khi $$\mathbf{p} = \mathbf{q}$$)
 - Không đối xứng: $$\text{KL}(p \| q) \neq \text{KL}(q \| p)$$
 
 **Quan hệ với Entropy Chéo:**
 
 $$\text{KL}(p \| q) = H(p, q) - H(p)$$
 
-trong đó $$H(p, q)$$ là entropy chéo và $$H(p)$$ là entropy của $$p$$.
+trong đó $$H(p, q)$$ là entropy chéo và $$H(p)$$ là entropy của phân phối $$p$$.
 
-Vì $$H(p)$$ là hằng (phân phối thật không đổi), cực tiểu hóa phân kỳ KL tương đương cực tiểu hóa entropy chéo.
+Do $$H(p)$$ là hằng số đối với tham số mô hình, việc cực tiểu hóa phân kỳ KL tương đương với cực tiểu hóa entropy chéo.
 
-**Trường hợp dùng:**
+**Trường hợp sử dụng:**
 - Autoencoder biến phân (VAE)
-- Khớp phân phối
+- Các bài toán khớp phân phối xác suất
 - Chưng cất tri thức (*knowledge distillation*)
 
-## Các Cân nhắc Thực tế
+## Các Lưu ý Thực tế
 
-### Ổn định Số
+### Ổn định Số học
 
-#### Vấn đề: Log của Số Nhỏ
+#### Vấn đề: Logarit của Số Rất Nhỏ
 
-Tính $$\log(\hat{y})$$ khi $$\hat{y}$$ rất gần 0 có thể gây vấn đề số học.
+Tính $$\log(\hat{y})$$ khi $$\hat{y}$$ tiến sát 0 có thể sinh ra giá trị $$-\infty$$ hoặc `NaN`.
 
-#### Giải pháp: Cắt giá trị
+#### Cách xử lý cơ bản: Giới hạn miền giá trị (*clipping*)
 
 ```python
 epsilon = 1e-7
@@ -177,9 +175,9 @@ y_pred_clipped = np.clip(y_pred, epsilon, 1 - epsilon)
 loss = -np.mean(y_true * np.log(y_pred_clipped))
 ```
 
-#### Giải pháp Tốt hơn: Mẹo LogSumExp
+#### Cách xử lý tốt hơn: Kỹ thuật LogSumExp
 
-Với entropy chéo kèm softmax, tính mất mát trực tiếp từ logits:
+Khi kết hợp softmax và entropy chéo, nên tính trực tiếp từ logits thay vì qua bước xác suất trung gian:
 
 ```python
 def softmax_cross_entropy(logits, labels):
@@ -274,7 +272,7 @@ Loại tác vụ?
    └─ Nhãn nguyên? → Sparse Categorical Cross-Entropy
 ```
 
-### Tham chiếu Nhanh
+### Bảng Tra cứu Nhanh
 
 | Tác vụ | Hàm mất mát | Kích hoạt đầu ra |
 |------|--------------|-------------------|
@@ -285,18 +283,18 @@ Loại tác vụ?
 
 ## Tóm tắt
 
-- **Hàm mất mát** định lượng sự khác biệt giữa dự đoán và giá trị thật
-- **Mất mát hồi quy**: MSE (nhạy ngoại lai), MAE (bền vững), Huber (cân bằng)
-- **Mất mát phân loại**: Entropy chéo (xác suất, lựa chọn chuẩn)
-- **Phân loại nhị phân**: Entropy chéo nhị phân với sigmoid
-- **Phân loại đa lớp**: Entropy chéo categorical với softmax
-- **Ổn định số** then chốt khi triển khai hàm mất mát
-- **Lựa chọn mất mát** nên khớp với tác vụ và đặc điểm dữ liệu
+- **Hàm mất mát** định lượng mức độ sai lệch giữa dự đoán của mô hình và giá trị thực tế.
+- **Nhóm bài toán hồi quy:** MSE (nhạy ngoại lai), MAE (bền vững trước ngoại lai), Huber (cân bằng giữa hai đặc tính).
+- **Nhóm bài toán phân loại:** Entropy chéo là lựa chọn tiêu chuẩn nhờ nền tảng xác suất và gradient ổn định.
+- **Phân loại nhị phân:** Ghép Binary Cross-Entropy với sigmoid.
+- **Phân loại đa lớp:** Ghép Categorical Cross-Entropy với softmax.
+- **Ổn định số học** là yếu tố quan trọng khi cài đặt hàm mất mát, đặc biệt với các phép tính hàm mũ và logarit.
+- **Lựa chọn hàm mất mát** cần phù hợp với loại bài toán và phân phối dữ liệu.
 
-Ở bài tiếp theo, ta sẽ học về gradient descent, thuật toán dùng các hàm mất mát này để cập nhật tham số mạng.
+Ở bài tiếp theo, ta sẽ tìm hiểu gradient descent — thuật toán sử dụng hàm mất mát để cập nhật tham số mạng.
 
 ## Video tham khảo
 
-- **xem trước** [StatQuest: Logistic Regression](https://www.youtube.com/watch?v=yIYKR4sgzI8) — StatQuest with Josh Starmer, tiếng Anh. Mất mát logistic cho nhãn có/không là phần nhị phân.
-- [But what is cross-entropy? | Compression is Intelligence Part 2](https://www.youtube.com/watch?v=GlYgs6v2YfU) — 3Blue1Brown, tiếng Anh. Cross-entropy là mất mát đa lớp, suy từ độ dài mã hóa chứ không phải công thức để học thuộc.
-- [Softmax Regression (C2W3L08)](https://www.youtube.com/watch?v=LLux1SW--oM) — DeepLearningAI, tiếng Anh. Hồi quy softmax là đầu đa lớp mà bài yêu cầu chọn khi nhãn thuộc một trong K lớp.
+- **Xem trước:** [StatQuest: Logistic Regression](https://www.youtube.com/watch?v=yIYKR4sgzI8) — StatQuest with Josh Starmer, tiếng Anh. Giới thiệu hàm mất mát logistic cho bài toán phân loại nhị phân.
+- [But what is cross-entropy? | Compression is Intelligence Part 2](https://www.youtube.com/watch?v=GlYgs6v2YfU) — 3Blue1Brown, tiếng Anh. Giải thích bản chất của cross-entropy từ góc độ độ dài mã hóa thay vì chỉ đưa công thức.
+- [Softmax Regression (C2W3L08)](https://www.youtube.com/watch?v=LLux1SW--oM) — DeepLearningAI, tiếng Anh. Trình bày hồi quy softmax cho bài toán phân loại nhiều lớp.

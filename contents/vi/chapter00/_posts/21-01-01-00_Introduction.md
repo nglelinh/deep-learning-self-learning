@@ -9,15 +9,14 @@ categories:
 - chapter00
 ---
 
-Tối ưu hóa là trái tim của khoa học dữ liệu. Dù bạn đang huấn luyện một mạng nơ-ron, tối thiểu hóa lỗi trong các mô hình hồi quy, hay phân bổ tài nguyên hiệu quả trong hệ thống gợi ý, về bản chất bạn đang giải quyết các bài toán tìm kiếm giải pháp "tốt nhất" từ một tập hợp khổng lồ các khả năng. Nhưng để làm điều này một cách hiệu quả, bạn cần nói được ngôn ngữ của toán học. Chúng ta sẽ ôn lại các ý tưởng chính từ đại số tuyến tính, lý thuyết tập hợp và giải tích, đảm bảo bạn được trang bị để xử lý các gradient, ma trận, ràng buộc và sự bất định phát sinh trong các tác vụ tối ưu hóa.
+Tối ưu hóa giữ vai trò trung tâm trong khoa học dữ liệu. Dù bạn đang huấn luyện mạng nơ-ron, cực tiểu hóa sai số trong mô hình hồi quy hay phân bổ tài nguyên trong hệ thống gợi ý, về bản chất bạn đều đang giải bài toán tìm nghiệm tốt nhất trong một không gian khả năng rất lớn. Để làm việc hiệu quả với các bài toán này, bạn cần nắm vững ngôn ngữ toán học nền tảng. Chương này ôn tập các khái niệm cốt lõi từ đại số tuyến tính, lý thuyết tập hợp, giải tích và xác suất, giúp bạn xử lý tốt gradient, ma trận, ràng buộc và yếu tố bất định trong các tác vụ tối ưu hóa.
 
+**Đọc thêm (tùy chọn, 2022–2026):** Sau khi học xong phần toán nền tảng, bạn có thể xem bài **00-99 Ứng dụng và cập nhật hiện đại** để tìm hiểu về trình biên dịch vi phân tự động (JAX, `torch.compile`) cũng như cách gradient, ma trận và hàm hợp lý xuất hiện trong học máy khoa học (*scientific ML*) và huấn luyện theo quy luật mở rộng (*scaling law*).
 
-**Tùy chọn (2022–2026):** Sau các ghi chú toán cốt lõi, xem **00-99 Ứng dụng và cập nhật hiện đại** về compiler autodiff (JAX, `torch.compile`) và cách gradient, ma trận, hợp lý xuất hiện trong scientific ML cùng huấn luyện theo scaling law.
-
-**Tùy chọn (luyện phỏng vấn):** Sau ghi chú xác suất và giải tích, xem **00-98 Luyện phỏng vấn** cho câu gốc về entropy / KL và autodiff; ngân hàng đã giải đầy đủ là PDF miễn phí *Deep Learning Interviews* ([arXiv:2201.00650](https://arxiv.org/abs/2201.00650)).
+**Luyện phỏng vấn (tùy chọn):** Sau các bài về xác suất và giải tích, bạn có thể xem **00-98 Luyện phỏng vấn** với các câu hỏi gốc về entropy, phân kỳ KL và vi phân tự động; bộ ngân hàng câu hỏi có lời giải đầy đủ được cung cấp miễn phí dưới dạng PDF trong *Deep Learning Interviews* ([arXiv:2201.00650](https://arxiv.org/abs/2201.00650)).
 
 ## Video tham khảo
 
-- **xem trước** [MaDL - Introduction](https://www.youtube.com/watch?v=gq0m_2Glz0g) — Tübingen Machine Learning, tiếng Anh. Đây là tour ngắn về đại số tuyến tính, giải tích và xác suất mà chương này giả định trước khi vào mạng.
-- [Vectors | Chapter 1, Essence of linear algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs) — 3Blue1Brown, tiếng Anh. Cách nhìn vector ở đây là cách các bài sau dùng cho trọng số, kích hoạt và điểm dữ liệu.
-- [L01.4 Probability Axioms](https://www.youtube.com/watch?v=pA83XtLeVig) — MIT OpenCourseWare, tiếng Anh. Ba tiên đề xác suất là quy tắc mà nửa xác suất của chương không rời khỏi.
+- **Xem trước:** [MaDL - Introduction](https://www.youtube.com/watch?v=gq0m_2Glz0g) — Tübingen Machine Learning, tiếng Anh. Video giới thiệu ngắn gọn các kiến thức đại số tuyến tính, giải tích và xác suất mà chương này giả định trước khi đi vào mạng nơ-ron.
+- [Vectors | Chapter 1, Essence of linear algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs) — 3Blue1Brown, tiếng Anh. Cách tiếp cận vector trong video này cũng là cách các bài sau biểu diễn trọng số, giá trị kích hoạt và điểm dữ liệu.
+- [L01.4 Probability Axioms](https://www.youtube.com/watch?v=pA83XtLeVig) — MIT OpenCourseWare, tiếng Anh. Ba tiên đề xác suất trong bài giảng này là nền tảng xuyên suốt nửa sau của chương.

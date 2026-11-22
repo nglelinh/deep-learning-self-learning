@@ -9,48 +9,48 @@ categories:
 - chapter00
 ---
 
-Bài học này bao gồm các khái niệm cơ bản từ lý thuyết tập hợp cung cấp nền tảng toán học để hiểu các bài toán tối ưu hóa, ràng buộc và vùng khả thi.
+Bài học này trình bày các khái niệm cơ bản của lý thuyết tập hợp, làm nền tảng toán học để phát biểu bài toán tối ưu hóa, ràng buộc và miền khả thi.
 
 ---
 
-## Giới thiệu về Lý thuyết tập hợp
+## Giới thiệu về lý thuyết tập hợp
 
-Lý thuyết tập hợp cung cấp nền tảng cho toán học hiện đại và rất cần thiết để hiểu các khái niệm tối ưu hóa. Một **tập hợp** đơn giản là một bộ sưu tập các đối tượng riêng biệt, được gọi là các phần tử hoặc thành viên.
+Lý thuyết tập hợp là nền móng của toán học hiện đại và đóng vai trò thiết yếu khi mô tả các bài toán tối ưu hóa. Một **tập hợp** là một bộ sưu tập các đối tượng phân biệt, gọi là các phần tử.
 
 ### Ký hiệu cơ bản
 
-- **Ký hiệu tập hợp:** $$A = \{1, 2, 3, 4\}$$
-- **Quan hệ thành viên:** $$x \in A$$ (x thuộc A) hoặc $$x \notin A$$ (x không thuộc A)
-- **Tập rỗng:** $$\emptyset = \{\}$$ (tập hợp không có phần tử nào)
-- **Ký hiệu xây dựng tập hợp:** $$A = \{x : P(x)\}$$ (tập hợp tất cả x sao cho tính chất P(x) đúng)
+- **Ký hiệu liệt kê:** $$A = \{1, 2, 3, 4\}$$
+- **Quan hệ thuộc:** $$x \in A$$ ($$x$$ thuộc $$A$$) hoặc $$x \notin A$$ ($$x$$ không thuộc $$A$$)
+- **Tập rỗng:** $$\emptyset = \{\}$$ (tập hợp không chứa phần tử nào)
+- **Ký hiệu theo tính chất đặc trưng:** $$A = \{x : P(x)\}$$ (tập hợp mọi phần tử $$x$$ thỏa mãn tính chất $$P(x)$$)
 
 ### Ví dụ
 
 - $$A = \{1, 2, 3, 4\}$$ (liệt kê tường minh)
-- $$B = \{x \in \mathbb{R} : x^2 < 4\} = (-2, 2)$$ (ký hiệu xây dựng tập hợp)
-- $$C = \{x \in \mathbb{Z} : x \text{ là số chẵn}\}$$ (tất cả số nguyên chẵn)
+- $$B = \{x \in \mathbb{R} : x^2 < 4\} = (-2, 2)$$ (chỉ ra tính chất đặc trưng)
+- $$C = \{x \in \mathbb{Z} : x \text{ là số chẵn}\}$$ (tập hợp các số nguyên chẵn)
 
 ---
 
 ## Các phép toán tập hợp cơ bản
 
-### Tập hợp và Tập con
+### Tập hợp và tập con
 
-- **Tập con:** $$A \subseteq B$$ có nghĩa là mọi phần tử của $$A$$ cũng thuộc $$B$$
-- **Tập con thực sự:** $$A \subset B$$ có nghĩa là $$A \subseteq B$$ và $$A \neq B$$
-- **Bằng nhau giữa các tập hợp:** $$A = B$$ khi và chỉ khi $$A \subseteq B$$ và $$B \subseteq A$$
+- **Tập con:** $$A \subseteq B$$ nghĩa là mọi phần tử của $$A$$ đều thuộc $$B$$.
+- **Tập con thực sự:** $$A \subset B$$ nghĩa là $$A \subseteq B$$ và $$A \neq B$$.
+- **Hai tập hợp bằng nhau:** $$A = B$$ khi và chỉ khi $$A \subseteq B$$ và $$B \subseteq A$$.
 
 **Ví dụ:**
 - $$\{1, 2\} \subseteq \{1, 2, 3, 4\}$$
 - $$\{1, 2\} \subset \{1, 2, 3, 4\}$$
 - $$\emptyset \subseteq A$$ với mọi tập hợp $$A$$
 
-### Hợp và Giao
+### Phép hợp và phép giao
 
-**Hợp ($$A \cup B$$):** Tất cả các phần tử thuộc $$A$$ hoặc $$B$$ (hoặc cả hai)
+**Hợp ($$A \cup B$$):** tập hợp tất cả các phần tử thuộc $$A$$ hoặc thuộc $$B$$ (hoặc cả hai):
 $$A \cup B = \{x : x \in A \text{ hoặc } x \in B\}$$
 
-**Giao ($$A \cap B$$):** Tất cả các phần tử thuộc cả $$A$$ và $$B$$
+**Giao ($$A \cap B$$):** tập hợp tất cả các phần tử thuộc đồng thời cả $$A$$ và $$B$$:
 $$A \cap B = \{x : x \in A \text{ và } x \in B\}$$
 
 **Ví dụ:**
@@ -58,19 +58,19 @@ $$A \cap B = \{x : x \in A \text{ và } x \in B\}$$
   - $$A \cup B = \{1, 2, 3, 4, 5\}$$
   - $$A \cap B = \{3\}$$
 
-**Tập hợp rời nhau:** $$A$$ và $$B$$ rời nhau nếu $$A \cap B = \emptyset$$
+**Hai tập hợp rời nhau:** $$A$$ và $$B$$ rời nhau nếu $$A \cap B = \emptyset$$.
 
-### Phần bù và Hiệu
+### Phần bù và hiệu tập hợp
 
-**Phần bù ($$A^c$$):** Tất cả các phần tử không thuộc $$A$$ (trong một tập hợp toàn thể $$U$$ nào đó)
+**Phần bù ($$A^c$$):** tập hợp tất cả các phần tử không thuộc $$A$$ (trong một tập vũ trụ $$U$$ cho trước):
 $$A^c = \{x \in U : x \notin A\}$$
 
-**Hiệu tập hợp ($$A \setminus B$$):** Các phần tử thuộc $$A$$ nhưng không thuộc $$B$$
+**Hiệu tập hợp ($$A \setminus B$$):** tập hợp các phần tử thuộc $$A$$ nhưng không thuộc $$B$$:
 $$A \setminus B = \{x : x \in A \text{ và } x \notin B\}$$
 
 **Hiệu đối xứng:** $$(A \setminus B) \cup (B \setminus A) = (A \cup B) \setminus (A \cap B)$$
 
-### Các luật tập hợp
+### Các luật đại số tập hợp
 
 **Luật giao hoán:**
 - $$A \cup B = B \cup A$$
@@ -90,13 +90,13 @@ $$A \setminus B = \{x : x \in A \text{ và } x \notin B\}$$
 
 ---
 
-## Các tập số quan trọng
+## Các tập hợp số quan trọng
 
-Hiểu biết về hệ thống phân cấp các tập số là rất quan trọng cho tối ưu hóa:
+Nắm rõ hệ thống phân cấp các tập số giúp xác định chính xác miền biến thiên của bài toán tối ưu:
 
 ### Số tự nhiên
 $$\mathbb{N} = \{1, 2, 3, 4, \ldots\}$$
-(Thỉnh thoảng bao gồm 0: $$\mathbb{N}_0 = \{0, 1, 2, 3, \ldots\}$$)
+(Đôi khi quy ước gồm cả số 0: $$\mathbb{N}_0 = \{0, 1, 2, 3, \ldots\}$$)
 
 ### Số nguyên
 $$\mathbb{Z} = \{\ldots, -2, -1, 0, 1, 2, \ldots\}$$
@@ -104,118 +104,114 @@ $$\mathbb{Z} = \{\ldots, -2, -1, 0, 1, 2, \ldots\}$$
 ### Số hữu tỉ
 $$\mathbb{Q} = \left\{\frac{p}{q} : p, q \in \mathbb{Z}, q \neq 0\right\}$$
 
-Tất cả các số có thể biểu diễn dưới dạng phân số.
+Gồm tất cả các số biểu diễn được dưới dạng phân số của hai số nguyên.
 
 ### Số thực
-$$\mathbb{R}$$ bao gồm tất cả các số hữu tỉ và vô tỉ (như $$\pi$$, $$e$$, $$\sqrt{2}$$).
+$$\mathbb{R}$$ bao gồm tất cả các số hữu tỉ và số vô tỉ (như $$\pi$$, $$e$$, $$\sqrt{2}$$).
 
 ### Số phức
 $$\mathbb{C} = \{a + bi : a, b \in \mathbb{R}, i^2 = -1\}$$
 
-**Phân cấp:** $$\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R} \subset \mathbb{C}$$
+**Quan hệ bao hàm:** $$\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R} \subset \mathbb{C}$$
 
 ---
 
-## Hàm số: Miền xác định và Miền giá trị
+## Hàm số: Miền xác định và miền giá trị
 
-Một **hàm số** $$f: A \to B$$ là một quy tắc gán cho mỗi phần tử trong tập hợp $$A$$ đúng một phần tử trong tập hợp $$B$$.
+Một **hàm số** $$f: A \to B$$ là quy tắc gán cho mỗi phần tử thuộc tập $$A$$ đúng một phần tử thuộc tập $$B$$.
 
 ### Các khái niệm chính
 
-- **Miền xác định:** Tập hợp $$A$$ của tất cả các giá trị đầu vào có thể
-- **Miền đồng biến:** Tập hợp $$B$$ nơi các giá trị đầu ra được lấy từ
-- **Miền giá trị (Ảnh):** Tập hợp tất cả các giá trị đầu ra thực tế: $$\text{Range}(f) = \{f(x) : x \in A\} \subseteq B$$
+- **Miền xác định (*domain*):** tập hợp $$A$$ gồm tất cả các giá trị đầu vào hợp lệ.
+- **Tập đích (*codomain*):** tập hợp $$B$$ chứa các giá trị đầu ra có thể có.
+- **Miền giá trị / Ảnh (*range/image*):** tập hợp tất cả các giá trị đầu ra thực sự nhận được: $$\text{Range}(f) = \{f(x) : x \in A\} \subseteq B$$.
 
-**Ví dụ:** Với $$f(x) = x^2$$ và $$f: \mathbb{R} \to \mathbb{R}$$:
+**Ví dụ:** Với $$f(x) = x^2$$ xét như ánh xạ $$f: \mathbb{R} \to \mathbb{R}$$:
 - Miền xác định: $$\mathbb{R}$$
-- Miền đồng biến: $$\mathbb{R}$$
+- Tập đích: $$\mathbb{R}$$
 - Miền giá trị: $$[0, \infty)$$
 
-### Các loại hàm số
+### Phân loại ánh xạ
 
-**Đơn ánh (Một-đến-Một):** Mỗi phần tử trong miền giá trị tương ứng với đúng một phần tử trong miền xác định
+**Đơn ánh (*injective*):** hai đầu vào khác nhau luôn cho hai đầu ra khác nhau:
 $$f(x_1) = f(x_2) \implies x_1 = x_2$$
 
-**Toàn ánh (Lên):** Mọi phần tử trong miền đồng biến đều nằm trong miền giá trị
-Với mọi $$y \in B$$, tồn tại $$x \in A$$ sao cho $$f(x) = y$$
+**Toàn ánh (*surjective*):** mọi phần tử của tập đích đều có ít nhất một tạo ảnh trong miền xác định:
+Với mọi $$y \in B$$, tồn tại $$x \in A$$ sao cho $$f(x) = y$$.
 
-**Song ánh:** Vừa là đơn ánh vừa là toàn ánh
-Có một tương ứng hoàn hảo một-đến-một giữa miền xác định và miền đồng biến.
+**Song ánh (*bijective*):** ánh xạ vừa đơn ánh vừa toàn ánh, thiết lập tương ứng một-một giữa miền xác định và tập đích.
 
 **Ví dụ:**
-- $$f(x) = 2x$$ trên $$\mathbb{R}$$ là song ánh
-- $$f(x) = x^2$$ trên $$\mathbb{R}$$ không là đơn ánh cũng không là toàn ánh
-- $$f(x) = x^2$$ trên $$[0, \infty) \to [0, \infty)$$ là song ánh
+- $$f(x) = 2x$$ từ $$\mathbb{R}$$ vào $$\mathbb{R}$$ là song ánh.
+- $$f(x) = x^2$$ từ $$\mathbb{R}$$ vào $$\mathbb{R}$$ không đơn ánh và cũng không toàn ánh.
+- $$f(x) = x^2$$ từ $$[0, \infty)$$ vào $$[0, \infty)$$ là song ánh.
 
 ---
 
 ## Bất đẳng thức
 
-Hiểu biết về bất đẳng thức là rất quan trọng cho tối ưu hóa, vì các ràng buộc thường được biểu diễn dưới dạng bất đẳng thức.
+Bất đẳng thức xuất hiện rất phổ biến trong tối ưu hóa vì phần lớn ràng buộc thực tế được biểu diễn dưới dạng bất đẳng thức.
 
-### Các ký hiệu bất đẳng thức cơ bản
+### Các ký hiệu cơ bản
 
-- $$a < b$$: $$a$$ nhỏ hơn $$b$$ một cách nghiêm ngặt
+- $$a < b$$: $$a$$ nhỏ hơn ngặt $$b$$
 - $$a \leq b$$: $$a$$ nhỏ hơn hoặc bằng $$b$$
-- $$a > b$$: $$a$$ lớn hơn $$b$$ một cách nghiêm ngặt
+- $$a > b$$: $$a$$ lớn hơn ngặt $$b$$
 - $$a \geq b$$: $$a$$ lớn hơn hoặc bằng $$b$$
 
 ### Tính chất của bất đẳng thức
 
-1. **Tính bắc cầu:** Nếu $$a \leq b$$ và $$b \leq c$$, thì $$a \leq c$$
+1. **Tính bắc cầu:** nếu $$a \leq b$$ và $$b \leq c$$, thì $$a \leq c$$.
+2. **Phép cộng:** nếu $$a \leq b$$, thì $$a + c \leq b + c$$ với mọi $$c \in \mathbb{R}$$.
+3. **Nhân với số dương:** nếu $$a \leq b$$ và $$c > 0$$, thì $$ac \leq bc$$.
+4. **Nhân với số âm:** nếu $$a \leq b$$ và $$c < 0$$, thì $$ac \geq bc$$ (bất đẳng thức đổi chiều).
 
-2. **Phép cộng:** Nếu $$a \leq b$$, thì $$a + c \leq b + c$$ với mọi $$c$$
-
-3. **Nhân với số dương:** Nếu $$a \leq b$$ và $$c > 0$$, thì $$ac \leq bc$$
-
-4. **Nhân với số âm:** Nếu $$a \leq b$$ và $$c < 0$$, thì $$ac \geq bc$$ (bất đẳng thức đảo chiều!)
-
-### Ký hiệu khoảng
+### Ký hiệu khoảng và đoạn
 
 - **Khoảng mở:** $$(a, b) = \{x \in \mathbb{R} : a < x < b\}$$
-- **Khoảng đóng:** $$[a, b] = \{x \in \mathbb{R} : a \leq x \leq b\}$$
-- **Khoảng nửa mở:** $$[a, b)$$, $$(a, b]$$
+- **Đoạn đóng:** $$[a, b] = \{x \in \mathbb{R} : a \leq x \leq b\}$$
+- **Nửa khoảng:** $$[a, b)$$, $$(a, b]$$
 - **Khoảng không bị chặn:** $$(-\infty, a)$$, $$[a, \infty)$$, $$(-\infty, \infty) = \mathbb{R}$$
 
 ---
 
-## Ứng dụng trong Tối ưu hóa
+## Ứng dụng trong tối ưu hóa
 
-Các khái niệm lý thuyết tập hợp là cơ bản cho tối ưu hóa:
+Các khái niệm của lý thuyết tập hợp được dùng trực tiếp trong việc mô hình hóa bài toán tối ưu:
 
-### 1. Vùng khả thi
+### 1. Miền khả thi
 
-**Vùng khả thi** là tập hợp tất cả các điểm thỏa mãn các ràng buộc:
+**Miền khả thi** (*feasible region*) là tập hợp tất cả các điểm thỏa mãn toàn bộ ràng buộc của bài toán:
 $$S = \{x \in \mathbb{R}^n : g_i(x) \leq 0, i = 1, \ldots, m; h_j(x) = 0, j = 1, \ldots, p\}$$
 
 ### 2. Tập mức
 
-Với một hàm số $$f: \mathbb{R}^n \to \mathbb{R}$$, **tập mức** tại mức $$c$$ là:
+Với hàm số $$f: \mathbb{R}^n \to \mathbb{R}$$, **tập mức** tại mức $$c$$ là:
 $$L_c = \{x \in \mathbb{R}^n : f(x) = c\}$$
 
-### 3. Điều kiện ràng buộc
+### 3. Tính chất của tập ràng buộc
 
-Hiểu biết khi nào các tập ràng buộc có các tính chất "tốt" (như đóng hoặc có phần trong không rỗng) ảnh hưởng đến sự tồn tại và đặc trưng của các nghiệm tối ưu.
+Việc tập ràng buộc có các tính chất tôpô thuận lợi (như tính đóng hay có phần trong khác rỗng) ảnh hưởng trực tiếp đến sự tồn tại và đặc trưng của nghiệm tối ưu.
 
 ### 4. Phân tích hội tụ
 
-Dãy số và giới hạn là thiết yếu để phân tích liệu các thuật toán tối ưu hóa có hội tụ về nghiệm tối ưu hay không.
+Khái niệm dãy và giới hạn trên tập hợp là công cụ cần thiết để kiểm tra xem thuật toán tối ưu có hội tụ về nghiệm mong muốn hay không.
 
-### 5. Các phép toán tập hợp trong thuật toán
+### 5. Phép toán tập hợp trong biểu diễn bài toán
 
-- **Giao:** Tìm các điểm thỏa mãn nhiều ràng buộc
-- **Hợp:** Kết hợp các vùng khả thi từ các kịch bản khác nhau
-- **Phần bù:** Hiểu biết về các vùng không khả thi
+- **Giao:** xác định tập các điểm thỏa mãn đồng thời nhiều ràng buộc.
+- **Hợp:** gộp các miền khả thi từ nhiều kịch bản khác nhau.
+- **Phần bù:** xác định miền không khả thi.
 
-**Ví dụ:** Trong quy hoạch tuyến tính, vùng khả thi là:
+**Ví dụ:** Trong quy hoạch tuyến tính, miền khả thi có dạng:
 $$S = \{x \in \mathbb{R}^n : Ax \leq b, x \geq 0\} = \bigcap_{i=1}^{m} \{x : a_i^T x \leq b_i\} \cap \{x : x \geq 0\}$$
 
-Đây là giao của các nửa không gian, minh họa cách các phép toán tập hợp xuất hiện tự nhiên trong việc xây dựng bài toán tối ưu hóa.
+Đây là giao của các nửa không gian, minh họa cách các phép toán tập hợp xuất hiện tự nhiên khi phát biểu bài toán tối ưu.
 
-Hiểu biết về lý thuyết tập hợp cung cấp nền tảng toán học chặt chẽ cần thiết để xây dựng các bài toán tối ưu hóa một cách chính xác và phân tích các tính chất của chúng một cách hệ thống.
+Nắm vững lý thuyết tập hợp giúp đặt bài toán tối ưu hóa một cách chặt chẽ và phân tích tính chất của bài toán một cách có hệ thống.
 
 ## Video tham khảo
 
-- **xem trước** [Intro to Sets | Examples, Notation & Properties](https://www.youtube.com/watch?v=B1v2-nGXNzs) — Dr. Trefor Bazett, tiếng Anh. Ký hiệu tập, phép toán, và miền xác định cùng miền giá trị của hàm.
-- [INTRODUCTION to SET THEORY - DISCRETE MATHEMATICS](https://www.youtube.com/watch?v=tyDKR4FG3Yw) — TrevTutor, tiếng Anh. Một lượt đầy đủ hơn về hợp, giao và các tập số mà bài liệt kê.
-- [MaDL - Sets, Scalars, Vectors, Matrices and Tensors](https://www.youtube.com/watch?v=JzIjCkouIGg) — Tübingen Machine Learning, tiếng Anh. Nối các tập đó với vô hướng, vector và tensor mà phần còn lại của khóa thực sự tính trên đó.
+- **Xem trước:** [Intro to Sets | Examples, Notation & Properties](https://www.youtube.com/watch?v=B1v2-nGXNzs) — Dr. Trefor Bazett, tiếng Anh. Giới thiệu ký hiệu tập hợp, các phép toán cơ bản cùng miền xác định và miền giá trị của hàm số.
+- [INTRODUCTION to SET THEORY - DISCRETE MATHEMATICS](https://www.youtube.com/watch?v=tyDKR4FG3Yw) — TrevTutor, tiếng Anh. Trình bày đầy đủ hơn về phép hợp, phép giao và các tập số xuất hiện trong bài.
+- [MaDL - Sets, Scalars, Vectors, Matrices and Tensors](https://www.youtube.com/watch?v=JzIjCkouIGg) — Tübingen Machine Learning, tiếng Anh. Kết nối ngôn ngữ tập hợp với vô hướng, vector, ma trận và tensor dùng xuyên suốt khóa học.

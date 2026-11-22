@@ -10,65 +10,65 @@ categories:
 lesson_type: optional
 ---
 
-# Tùy chọn: stack Transformer trở thành LLM
+# Tùy chọn: Từ khối Transformer gốc đến hệ thống LLM hiện đại
 
-> Bài này là **tùy chọn**. Nó **không** viết lại lý thuyết encoder/decoder hay mã hóa vị trí. Nó ánh xạ khối 2017 sang stack LLM 2022–2026: RoPE, KV-cache, trọng số mở, và serving.
+> Bài này mang tính **tùy chọn** và **không** thay thế phần lý thuyết encoder/decoder hay mã hóa vị trí. Nội dung đối chiếu khối Transformer năm 2017 với cấu trúc LLM giai đoạn 2022–2026 gồm RoPE, KV-cache, mô hình trọng số mở và hạ tầng phục vụ.
 
-Một lớp Transformer vẫn là “giao tiếp (attention) rồi tính (MLP).” Sau ChatGPT (cuối 2022), khối đó là **máy tính mặc định** cho ngôn ngữ, mã, và nhiều hệ đa phương thức.
+Mỗi tầng Transformer vẫn giữ cấu trúc cốt lõi: trao đổi thông tin qua attention rồi biến đổi cục bộ qua MLP. Từ cuối năm 2022 sau sự xuất hiện của ChatGPT, khối kiến trúc này trở thành nền tảng phổ biến cho xử lý ngôn ngữ, sinh mã nguồn và nhiều hệ thống đa phương thức.
 
-## 1. Khối thực sự đổi gì
+## 1. Những thay đổi chính trong khối kiến trúc
 
-Hầu hết LM chỉ decoder (dòng GPT-2 → Llama / Mistral / Qwen / Gemma) dùng:
+Phần lớn mô hình ngôn ngữ chỉ-decoder hiện nay (từ GPT-2 đến Llama, Mistral, Qwen, Gemma) cập nhật một số chi tiết quan trọng:
 
-- **RoPE** ([Su et al., 2021/2023](https://arxiv.org/abs/2104.09864)) thay sin–cos tuyệt đối cộng vào embedding,
-- **pre-norm + RMSNorm + SwiGLU** (bài tùy chọn Chương 02),
-- **GQA** và FlashAttention (bài tùy chọn Chương 07),
-- **KV-cache** lúc decode: key/value của token $$1..t-1$$ được tái sử dụng nên mỗi token mới tốn $$O(t)$$, không phải nhân $$O(t^2)$$ từ đầu.
+- **RoPE** ([Su et al., 2021/2023](https://arxiv.org/abs/2104.09864)) thay thế mã hóa vị trí sin–cos tuyệt đối cộng ở đầu vào.
+- **Pre-norm kết hợp RMSNorm và SwiGLU** (xem bài tùy chọn Chương 02).
+- **GQA và FlashAttention** (xem bài tùy chọn Chương 07).
+- **KV-cache khi giải mã**: lưu lại key/value của các token $$1..t-1$$ để mỗi token mới chỉ tốn $$O(t)$$ thay vì tính lại $$O(t^2)$$ từ đầu.
 
-RoPE xoay từng cặp chiều một góc $$\theta_i t$$:
+RoPE xoay từng cặp chiều của query và key một góc $$\theta_i t$$ theo vị trí $$t$$:
 
 $$\begin{pmatrix} q_{2i} \\ q_{2i+1} \end{pmatrix}
 \leftarrow
 \begin{pmatrix} \cos(t\theta_i) & -\sin(t\theta_i) \\ \sin(t\theta_i) & \cos(t\theta_i) \end{pmatrix}
 \begin{pmatrix} q_{2i} \\ q_{2i+1} \end{pmatrix}.$$
 
-PE sin–cos trong bài lý thuyết vẫn là mô hình đầu đúng; RoPE là thứ bạn thấy trong checkpoint 2025.
+Mã hóa vị trí sin–cos trong bài lý thuyết vẫn là nền tảng đúng về mặt nguyên lý; RoPE là biến thể chuẩn trong các mô hình LLM giai đoạn 2024–2026.
 
-## 2. Ứng dụng cụ thể
+## 2. Các ứng dụng và hệ sinh thái tiêu biểu
 
-### LM nền tảng mở
+### Mô hình ngôn ngữ nền tảng trọng số mở
 
-[LLaMA](https://arxiv.org/abs/2302.13971), [Llama 2](https://arxiv.org/abs/2307.09288), Llama 3, [Mistral 7B](https://arxiv.org/abs/2310.06825), Qwen2, Gemma 2 là stack decoder tham chiếu. Biến thể tinh chỉnh theo chỉ dẫn là thứ sản phẩm gọi.
+[LLaMA](https://arxiv.org/abs/2302.13971), [Llama 2](https://arxiv.org/abs/2307.09288), Llama 3, [Mistral 7B](https://arxiv.org/abs/2310.06825), Qwen2 và Gemma 2 là các kiến trúc chỉ-decoder tham chiếu phổ biến; các phiên bản tinh chỉnh theo chỉ dẫn (*instruction-tuned*) thường được dùng trực tiếp trong ứng dụng thực tế.
 
-### Serving và suy luận cục bộ
+### Hệ thống phục vụ và suy luận cục bộ
 
-- [vLLM](https://github.com/vllm-project/vllm) — batch liên tục + PagedAttention.
-- [llama.cpp](https://github.com/ggerganov/llama.cpp) — suy luận lượng tử GGUF trên CPU và Apple Silicon.
-- Speculative decoding ([Leviathan et al., 2023](https://arxiv.org/abs/2211.17192)) — mô hình nhỏ đề xuất token; mô hình lớn kiểm song song.
+- [vLLM](https://github.com/vllm-project/vllm) — ghép batch liên tục (*continuous batching*) kết hợp PagedAttention.
+- [llama.cpp](https://github.com/ggerganov/llama.cpp) — suy luận mô hình lượng tử hóa định dạng GGUF trên CPU và Apple Silicon.
+- Giải mã suy đoán (*Speculative decoding*, [Leviathan et al., 2023](https://arxiv.org/abs/2211.17192)) — mô hình nhỏ dự đoán trước nhiều token để mô hình lớn kiểm chứng song song.
 
 ### Transformer đa phương thức
 
-ViT cộng decoder ngôn ngữ (LLaVA, 2023; các hệ lớp GPT-4V sau đó) tái sử dụng cùng khối trên patch ảnh. Bài tập kiến trúc ở lại chương này; sản phẩm vision-language là ứng dụng.
+Các hệ thống kết hợp Vision Transformer (ViT) với decoder ngôn ngữ (như LLaVA năm 2023 và các mô hình dòng GPT-4V) áp dụng cùng cấu trúc khối Transformer lên chuỗi mảng ảnh (*image patches*).
 
-## 3. Phần mềm phổ biến
+## 3. Thư viện và phần mềm phổ biến
 
-- [Hugging Face transformers](https://github.com/huggingface/transformers) — định nghĩa mô hình và `generate()`.
-- [vLLM](https://github.com/vllm-project/vllm) và [SGLang](https://github.com/sgl-project/sglang) — serving thông lượng cao.
-- [llama.cpp](https://github.com/ggerganov/llama.cpp) — GGUF cục bộ.
+- [Hugging Face transformers](https://github.com/huggingface/transformers) — định nghĩa kiến trúc mô hình và giao diện `generate()`.
+- [vLLM](https://github.com/vllm-project/vllm) và [SGLang](https://github.com/sgl-project/sglang) — hệ thống phục vụ suy luận thông lượng cao.
+- [llama.cpp](https://github.com/ggerganov/llama.cpp) — chạy mô hình GGUF cục bộ.
 
 ## 4. Trích dẫn (2022–2026)
 
 - [LLaMA (Touvron et al., 2023)](https://arxiv.org/abs/2302.13971) và [Llama 2 (2023)](https://arxiv.org/abs/2307.09288).
-- [Mistral 7B (Jiang et al., 2023)](https://arxiv.org/abs/2310.06825) — cửa sổ trượt + GQA.
+- [Mistral 7B (Jiang et al., 2023)](https://arxiv.org/abs/2310.06825) — kết hợp sliding-window attention và GQA.
 - [RoFormer / RoPE (Su et al.)](https://arxiv.org/abs/2104.09864).
 - [Speculative Decoding (Leviathan et al., 2023)](https://arxiv.org/abs/2211.17192).
 
-## 5. Bài này bổ sung gì cho ghi chú cốt lõi
+## 5. Vai trò bổ trợ cho nội dung cốt lõi
 
-Hoàn thành suy diễn encoder–decoder và Transformer PyTorch đồ chơi trước. Bài này chỉ đặt tên **stack sản phẩm LLM** xây trên suy diễn đó. Công thức và Mermaid cho RMSNorm → attention + RoPE → SwiGLU, cùng sổ sách tham số / FLOP, nằm ở **26-07**.
+Bạn nên hoàn thành phần suy diễn encoder–decoder và cài đặt Transformer nhỏ bằng PyTorch trước. Bài đọc thêm này kết nối các khái niệm đó với **hệ thống LLM thực tế**. Chi tiết công thức, sơ đồ khối RMSNorm → attention + RoPE → SwiGLU cùng ước lượng tham số và FLOP được trình bày trong bài **26-07**.
 
 ## Video tham khảo
 
-- **xem trước** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Khối mốc mà ghi chú nói đã đổi chi tiết nhưng không đổi dàn ý.
-- [How might LLMs store facts | Deep Learning Chapter 7](https://www.youtube.com/watch?v=9-Jl0dxWQs8) — 3Blue1Brown, tiếng Anh. Cách nhìn MLP-như-bộ-nhớ về thứ một khối decoder hiện đại vẫn tính.
-- [How FlashAttention Accelerates Generative AI Revolution](https://www.youtube.com/watch?v=gBMO1JZav44) — Jia-Bin Huang, tiếng Anh. Thay đổi cách cài attention (FlashAttention) mà ghi chú coi là nâng cấp hệ thống, không phải công thức mới.
+- **Xem trước:** [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown (tiếng Anh). Ôn lại khung khối Transformer chuẩn mà các mô hình hiện đại vẫn kế thừa.
+- [How might LLMs store facts | Deep Learning Chapter 7](https://www.youtube.com/watch?v=9-Jl0dxWQs8) — 3Blue1Brown (tiếng Anh). Góc nhìn về vai trò lưu trữ tri thức của khối MLP trong các mô hình decoder hiện đại.
+- [How FlashAttention Accelerates Generative AI Revolution](https://www.youtube.com/watch?v=gBMO1JZav44) — Jia-Bin Huang (tiếng Anh). Giải thích FlashAttention dưới góc độ tối ưu hóa hệ thống mà không thay đổi công thức attention.

@@ -11,25 +11,24 @@ categories:
 
 ## Chuẩn hóa Batch là gì?
 
-**Chuẩn hóa Batch** (*Batch Normalization* — BatchNorm hay BN), được giới thiệu bởi Ioffe và Szegedy (2015), chuẩn hóa đầu vào của mỗi tầng về trung bình zero và phương sai đơn vị. Nó đã trở thành một trong những kỹ thuật quan trọng nhất trong học sâu hiện đại.
+**Chuẩn hóa Batch** (*Batch Normalization* — BatchNorm hay BN), do Ioffe và Szegedy giới thiệu năm 2015, chuẩn hóa đầu vào của từng tầng theo mỗi mini-batch về trung bình 0 và phương sai 1, sau đó áp dụng phép biến đổi tỉ lệ và tịnh tiến có tham số học được. Đây là một trong những kỹ thuật ổn định huấn luyện được sử dụng rộng rãi nhất trong học sâu.
 
-### Vấn đề: Dịch chuyển Hiệp biến Nội
+### Vấn đề đặt ra: Dịch chuyển hiệp biến nội (*Internal Covariate Shift*)
 
-Khi mạng huấn luyện:
-- Phân phối đầu vào tầng thay đổi
-- Mỗi tầng phải thích nghi với phân phối đầu vào mới
-- Làm chậm huấn luyện đáng kể
-- Làm mạng nhạy với khởi tạo
+Trong quá trình huấn luyện mạng sâu, khi trọng số ở các tầng trước liên tục cập nhật:
+- Phân phối đầu vào của các tầng phía sau thay đổi theo từng bước.
+- Mỗi tầng phải liên tục thích nghi với phân phối mới.
+- Quá trình hội tụ chậm hơn và mạng nhạy cảm với cách khởi tạo trọng số.
 
-**Giải pháp Batch Norm**: Chuẩn hóa đầu vào tầng về phân phối ổn định.
+**Cách tiếp cận của BatchNorm:** chuẩn hóa trực tiếp đầu vào tầng để giữ thang đo và phân phối ổn định hơn xuyên suốt quá trình huấn luyện.
 
-## Chuẩn hóa Batch Hoạt động như thế nào
+## Cách BatchNorm hoạt động
 
-### Lượt Xuôi (Huấn luyện)
+### Lượt truyền xuôi khi huấn luyện
 
-Với mini-batch kích hoạt $$\mathbf{x} = \{x_1, x_2, \ldots, x_m\}$$:
+Với một mini-batch kích hoạt $$\mathbf{x} = \{x_1, x_2, \ldots, x_m\}$$:
 
-**Bước 1: Tính thống kê batch**
+**Bước 1: Tính trung bình và phương sai của mini-batch**
 
 $$\mu_{\mathcal{B}} = \frac{1}{m} \sum_{i=1}^{m} x_i$$
 
@@ -39,25 +38,23 @@ $$\sigma^2_{\mathcal{B}} = \frac{1}{m} \sum_{i=1}^{m} (x_i - \mu_{\mathcal{B}})^
 
 $$\hat{x}_i = \frac{x_i - \mu_{\mathcal{B}}}{\sqrt{\sigma^2_{\mathcal{B}} + \epsilon}}$$
 
-trong đó $$\epsilon$$ (ví dụ $$10^{-5}$$) ngăn chia cho zero.
+trong đó $$\epsilon$$ (ví dụ $$10^{-5}$$) là hằng số nhỏ tránh chia cho 0.
 
-**Bước 3: Scale và dịch (tham số học được)**
+**Bước 3: Co giãn và tịnh tiến (tham số học được)**
 
 $$y_i = \gamma \hat{x}_i + \beta$$
 
-trong đó:
-- $$\gamma$$: tham số scale (học được)
-- $$\beta$$: tham số dịch (học được)
+trong đó $$\gamma$$ (hệ số co giãn) và $$\beta$$ (độ dịch) được học qua lan truyền ngược để mạng vẫn giữ khả năng biểu diễn ban đầu khi cần.
 
-### Suy luận (Kiểm tra)
+### Khi suy luận (kiểm tra)
 
-Dùng thống kê quần thể (trung bình trượt từ huấn luyện):
+Thay vì tính trên batch kiểm tra, mô hình dùng thống kê tích lũy (trung bình trượt theo hàm mũ thu được trong lúc huấn luyện):
 
 $$\hat{x} = \frac{x - \mu_{\text{pop}}}{\sqrt{\sigma^2_{\text{pop}} + \epsilon}}$$
 
 $$y = \gamma \hat{x} + \beta$$
 
-## Cài đặt
+## Cài đặt bằng NumPy
 
 ```python
 import numpy as np
@@ -161,30 +158,22 @@ out_test = batch_norm.forward(x_test, training=False)
 print(f"Test dùng thống kê chạy")
 ```
 
-## Vì sao Chuẩn hóa Batch Hoạt động
+## Vì sao Chuẩn hóa Batch hiệu quả
 
-### 1. Giảm Dịch chuyển Hiệp biến Nội
-- Ổn định phân phối đầu vào tầng
-- Mỗi tầng thấy đầu vào nhất quán hơn
-- Dễ học hơn
+### 1. Ổn định phân phối kích hoạt giữa các tầng
+Giữ cho thang đo đầu vào của từng tầng nhất quán hơn qua các bước cập nhật, giảm bớt tác động của sự thay đổi phân phối ở các tầng trước.
 
-### 2. Cho phép Learning Rate Cao hơn
-- Dòng gradient ổn định hơn
-- Có thể huấn luyện nhanh hơn 10–100×
-- Ít nhạy với khởi tạo
+### 2. Cho phép dùng tốc độ học lớn hơn
+Luồng gradient ổn định hơn giúp tăng tốc độ học và rút ngắn thời gian hội tụ đáng kể, đồng thời giảm độ nhạy cảm với cách khởi tạo trọng số.
 
-### 3. Hoạt động như Chính quy hóa
-- Thêm nhiễu vào kích hoạt (từ thống kê batch)
-- Hiệu ứng tương tự dropout
-- Có thể giảm nhu cầu dùng dropout
+### 3. Tạo hiệu ứng chính quy hóa nhẹ
+Thống kê trung bình và phương sai ước lượng trên từng mini-batch mang một lượng nhiễu nhỏ, góp phần hạn chế quá khớp và giảm nhu cầu dùng dropout ở một số kiến trúc.
 
-### 4. Làm Mượt Bề mặt Tối ưu
-- Làm mặt loss mượt hơn
-- Gradient dễ dự đoán hơn
-- Tối ưu dễ dàng hơn
+### 4. Làm trơn bề mặt hàm mất mát
+Các phân tích lý thuyết và thực nghiệm cho thấy BatchNorm làm bề mặt tối ưu mượt hơn, giúp hướng gradient ổn định và dễ dự đoán hơn trong quá trình tối ưu hóa.
 
 ## Video tham khảo
 
-- **xem trước** [Why Does Batch Norm Work? (C2W3L06)](https://www.youtube.com/watch?v=nUUqwaxLnWs) — DeepLearningAI, tiếng Anh. Công thức chuẩn hóa trung bình-phương sai rồi co giãn lại.
-- [Building makemore Part 3: Activations & Gradients, BatchNorm](https://www.youtube.com/watch?v=P6sfmUTpUmc) — Andrej Karpathy, tiếng Anh. Các thống kê đó được tính trong mã, để phép rút theo kênh nhìn thấy được.
-- [Lecture 6 | Training Neural Networks I](https://www.youtube.com/watch?v=wEoyxE0GP2M) — Stanford University School of Engineering, tiếng Anh. Khẳng định ổn định huấn luyện ban đầu mà phần cơ chế đang biện minh.
+- **Xem trước:** [Why Does Batch Norm Work? (C2W3L06)](https://www.youtube.com/watch?v=nUUqwaxLnWs) — DeepLearningAI (tiếng Anh). Trình bày công thức chuẩn hóa theo trung bình–phương sai và cơ chế co giãn lại bằng $$\gamma, \beta$$.
+- [Building makemore Part 3: Activations & Gradients, BatchNorm](https://www.youtube.com/watch?v=P6sfmUTpUmc) — Andrej Karpathy (tiếng Anh). Minh họa trực tiếp cách tính thống kê batch theo từng kênh trong mã nguồn.
+- [Lecture 6 | Training Neural Networks I](https://www.youtube.com/watch?v=wEoyxE0GP2M) — Stanford University School of Engineering (tiếng Anh). Phân tích vai trò ổn định huấn luyện của BatchNorm trong bài giảng mạng sâu.

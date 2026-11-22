@@ -9,93 +9,94 @@ categories:
 - chapter04
 ---
 
-## 5. Khái niệm liên quan
-### CNN so với Mạng Neuron Thường
+## 5. Khái niệm Liên quan
+
+### CNN so với Mạng Neuron Liên kết Đầy đủ
 
 ![CNN vs Regular Neural Network](/deep-learning-self-learning/img/chapter_img/chapter04/conv7.jpg)
-*Vì sao không chỉ dùng mạng neuron thường cho ảnh? CNN thắng vì giữ cấu trúc không gian, dùng bộ lọc chia sẻ (ít tham số hơn nhiều), nhận diện đối tượng bất kể vị trí, và được thiết kế riêng cho xử lý dữ liệu thị giác. Nguồn: Analytics Vidhya*
+*So sánh CNN và mạng neuron thông thường trên dữ liệu ảnh: CNN bảo toàn cấu trúc không gian, chia sẻ trọng số bộ lọc để giảm mạnh số tham số và nhận diện đặc trưng không phụ thuộc vị trí. Nguồn: Analytics Vidhya*
 
-| Khía cạnh | Kết nối đầy đủ | Tích chập |
+| Khía cạnh | Liên kết đầy đủ | Tích chập |
 |--------|-----------------|---------------|
-| Kết nối | Tất cả-với-tất cả | Cục bộ (kích thước nhân) |
-| Chia sẻ tham số | Không | Cùng bộ lọc mọi nơi |
+| Kết nối | Mọi đầu vào với mọi đầu ra | Cục bộ (theo kích thước nhân) |
+| Chia sẻ tham số | Không | Dùng chung bộ lọc ở mọi vị trí |
 | Tham số (32×32×3 → 64) | 196,672 | 1,792 |
 | Bất biến tịnh tiến | Không | Có |
-| Giữ cấu trúc không gian | Không | Có |
+| Bảo toàn cấu trúc không gian | Không | Có |
 
-### Tầng Kết nối Đầy đủ
-- Nối mọi neuron đầu vào với mọi neuron đầu ra
-- Không giả định về cấu trúc không gian
-- Dùng sau các tầng conv cho phân loại cuối
-- Tham số tăng bậc hai theo kích thước đầu vào
+### Tầng Liên kết Đầy đủ
+- Nối mọi neuron đầu vào với mọi neuron đầu ra.
+- Không có giả định về cấu trúc không gian.
+- Thường đặt sau các tầng tích chập để thực hiện bước phân loại cuối cùng.
+- Số tham số tăng nhanh theo kích thước đầu vào.
 
 ### Tầng Gộp (*Pooling*)
-- Giảm mẫu bản đồ đặc trưng (giảm kích thước không gian)
-- Tăng bất biến tịnh tiến
-- Giảm tính toán và bộ nhớ
-- Không có tham số học được
-- Các loại phổ biến: Max pooling, Average pooling
+- Giảm kích thước không gian của bản đồ đặc trưng (*downsampling*).
+- Tăng độ ổn định trước các dịch chuyển nhỏ.
+- Giảm chi phí tính toán và bộ nhớ cho các tầng phía sau.
+- Không chứa tham số học được.
+- Các dạng phổ biến: Max pooling, Average pooling.
 
 ### Chuẩn hóa Batch (*Batch Normalization*)
-- Chuẩn hóa kích hoạt về trung bình zero và phương sai đơn vị
-- Ổn định huấn luyện bằng cách giảm dịch chuyển hiệp biến nội (*internal covariate shift*)
-- Thường đặt sau tích chập, trước kích hoạt
-- Cho phép learning rate cao hơn và hội tụ nhanh hơn
+- Chuẩn hóa giá trị kích hoạt về trung bình 0 và phương sai 1 theo từng mini-batch.
+- Giúp quá trình huấn luyện ổn định hơn.
+- Thường đặt sau tầng tích chập và trước hàm kích hoạt.
+- Cho phép sử dụng tốc độ học cao hơn và hội tụ nhanh hơn.
 
 ### Kết nối Dư (*Residual / Skip Connections*)
-- Cho phép gradient chảy trực tiếp qua mạng
-- Cho phép huấn luyện mạng rất sâu (100+ tầng)
-- Đầu ra: $$\mathbf{y} = F(\mathbf{x}) + \mathbf{x}$$
-- Đổi mới then chốt của ResNet (2015)
+- Tạo đường dẫn trực tiếp cho tín hiệu và gradient đi qua nhiều tầng.
+- Cho phép huấn luyện hiệu quả các mạng rất sâu (trên 100 tầng).
+- Biểu thức đầu ra: $$\mathbf{y} = F(\mathbf{x}) + \mathbf{x}$$.
+- Đóng góp cốt lõi của kiến trúc ResNet (2015).
 
 ### Tích chập Tách theo Chiều sâu (*Depthwise Separable Convolutions*)
-- Phân rã tích chập chuẩn thành depthwise + pointwise
-- Ít tham số và phép tính hơn rất nhiều
-- Depthwise: Một bộ lọc cho mỗi kênh đầu vào
-- Pointwise: Conv 1×1 để kết hợp kênh
-- Dùng trong MobileNet, EfficientNet cho triển khai di động
+- Tách phép tích chập chuẩn thành hai bước: *depthwise* và *pointwise*.
+- Giảm đáng kể số tham số và số phép tính.
+- *Depthwise*: áp dụng một bộ lọc riêng cho từng kênh đầu vào.
+- *Pointwise*: dùng tích chập 1×1 để kết hợp thông tin giữa các kênh.
+- Được sử dụng rộng rãi trong MobileNet và EfficientNet cho thiết bị di động.
 
 ### Tích chập Giãn (*Dilated / Atrous Convolutions*)
-- Chèn khoảng trống giữa các phần tử nhân
-- Tăng trường tiếp nhận mà không thêm tham số
-- Dùng trong phân đoạn ngữ nghĩa (DeepLab)
-- Tỷ lệ giãn $$d$$: các phần tử nhân cách nhau $$d$$ điểm ảnh
+- Chèn khoảng trống giữa các phần tử của nhân tích chập.
+- Mở rộng trường tiếp nhận mà không tăng số lượng tham số.
+- Thường dùng trong bài toán phân đoạn ngữ nghĩa (như DeepLab).
+- Với tỷ lệ giãn $$d$$, các phần tử của nhân cách nhau $$d$$ điểm ảnh.
 
 ---
 
-## 6. Bài báo Nền tảng
+## 6. Các Bài báo Nền tảng
 
 **["Gradient-Based Learning Applied to Document Recognition" (1998)](http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf)**  
 *Tác giả*: Yann LeCun, Léon Bottou, Yoshua Bengio, Patrick Haffner  
-Giới thiệu LeNet-5, CNN thành công đầu tiên cho nhận diện chữ số. Chứng minh rằng các tầng tích chập với trọng số chia sẻ có thể học đặc trưng phân cấp từ điểm ảnh thô. Thiết lập mẫu conv-pool-conv-pool-FC thống trị gần hai thập kỷ. Bài báo này đặt nền móng cho mọi CNN hiện đại.
+Giới thiệu LeNet-5 — mạng CNN đầu tiên thành công trong bài toán nhận diện chữ số viết tay. Bài báo chứng minh các tầng tích chập dùng chung trọng số có thể tự học đặc trưng phân cấp từ điểm ảnh thô và định hình khuôn mẫu `conv → pool → conv → pool → FC` được sử dụng suốt gần hai thập kỷ.
 
 **["ImageNet Classification with Deep Convolutional Neural Networks" (2012)](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks)**  
 *Tác giả*: Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton  
-AlexNet thắng ImageNet 2012 với khoảng cách lớn (lỗi top-5: 15,3% so với 26,2% của hạng nhì), chứng minh CNN sâu có thể mở rộng cho tác vụ thị giác thực tế. Giới thiệu kích hoạt ReLU, chính quy hóa dropout, và huấn luyện GPU vào học sâu. Bài báo này khơi mào cuộc cách mạng học sâu đã biến đổi AI.
+AlexNet giành chiến thắng tại ImageNet 2012 với cách biệt lớn (lỗi top-5 đạt 15,3% so với 26,2% của đội xếp thứ hai), khẳng định khả năng mở rộng của CNN sâu trên bài toán thị giác quy mô lớn. Công trình cũng đưa ReLU, dropout và huấn luyện trên GPU vào dòng chính của học sâu.
 
 **["Very Deep Convolutional Networks for Large-Scale Image Recognition" (2015)](https://arxiv.org/abs/1409.1556)**  
 *Tác giả*: Karen Simonyan, Andrew Zisserman  
-VGGNet chứng minh độ sâu mạng là then chốt cho hiệu năng. Chỉ dùng bộ lọc 3×3 nhỏ xếp chồng để đạt trường tiếp nhận lớn, cho thấy hai conv 3×3 có cùng trường tiếp nhận như một 5×5 nhưng ít tham số hơn và nhiều phi tuyến hơn. Kiến trúc đơn giản, lặp lại trở thành khuôn mẫu cho các thiết kế sau.
+VGGNet nhấn mạnh vai trò của độ sâu kiến trúc và chỉ sử dụng các bộ lọc nhỏ 3×3 xếp chồng liên tiếp để đạt trường tiếp nhận lớn. Thiết kế đồng nhất, dễ lặp lại này trở thành nền tảng tham chiếu cho nhiều kiến trúc về sau.
 
 **["Deep Residual Learning for Image Recognition" (2016)](https://arxiv.org/abs/1512.03385)**  
 *Tác giả*: Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun  
-Giới thiệu kết nối bỏ qua cho phép huấn luyện mạng 152+ tầng. Giải quyết bài toán suy giảm trong đó mạng sâu hơn có lỗi huấn luyện cao hơn mạng nông. ResNet thắng ImageNet 2015 và thay đổi căn bản cách ta thiết kế mạng sâu. Khung học dư giờ được dùng trong transformer, mô hình khuếch tán, và hầu như mọi kiến trúc sâu.
+Đề xuất kết nối tắt (*skip connections*) giải quyết hiện tượng suy giảm hiệu năng khi mạng quá sâu, cho phép huấn luyện thành công mạng hơn 150 tầng. ResNet giành vị trí dẫn đầu tại ImageNet 2015 và nguyên lý học phần dư của nó hiện được dùng rộng rãi trong cả Transformer lẫn mô hình khuếch tán.
 
 **["MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications" (2017)](https://arxiv.org/abs/1704.04861)**  
 *Tác giả*: Andrew G. Howard và cộng sự  
-Giới thiệu tích chập tách theo chiều sâu giảm tính toán 8–9× trong khi giữ độ chính xác. Cho phép chạy CNN trên điện thoại và thiết bị nhúng. Mở đường cho mô hình hiệu quả dẫn đến EfficientNet và triển khai AI ưu tiên di động.
+Giới thiệu tích chập tách theo chiều sâu giúp giảm 8–9 lần khối lượng tính toán mà vẫn giữ độ chính xác tốt, mở đường cho việc triển khai CNN trên điện thoại và thiết bị nhúng.
 
 **["Rethinking the Inception Architecture for Computer Vision" (2016)](https://arxiv.org/abs/1512.00567)**  
 *Tác giả*: Christian Szegedy và cộng sự  
-Inception-v3 giới thiệu tích chập phân rã (dùng 1×n và n×1 thay vì n×n) và bộ phân loại phụ. Chứng minh thiết kế kiến trúc cẩn thận có thể cải thiện cả độ chính xác lẫn hiệu quả. Nhiều nguyên tắc thiết kế từ bài này ảnh hưởng kiến trúc hiện đại.
+Inception-v3 đề xuất phân rã nhân tích chập (dùng cặp $$1 \times n$$ và $$n \times 1$$ thay cho $$n \times n$$) cùng các nhánh phân loại phụ, cho thấy thiết kế kiến trúc cẩn thận có thể cải thiện đồng thời độ chính xác và chi phí tính toán.
 
 ---
 
-## 7. Cạm bẫy Thường gặp và Mẹo
+## 7. Cạm bẫy Thường gặp và Mẹo Thực hành
 
 ### Cạm bẫy 1: Không Dùng Padding
 
-**Vấn đề**: Đầu ra co lại mỗi tầng, mất thông tin biên
+**Vấn đề:** Kích thước bản đồ đặc trưng thu nhỏ dần sau mỗi tầng và thông tin ở vùng biên bị mất nhanh chóng.
 
 ```python
 # Không padding: 32×32 → 30×30 → 28×28 → ... (co nhanh!)
@@ -107,11 +108,11 @@ conv1 = nn.Conv2d(3, 64, kernel_size=3, padding=1)  # Đệm "same"
 conv2 = nn.Conv2d(64, 128, kernel_size=3, padding=1)
 ```
 
-**Giải pháp**: Dùng `padding = (kernel_size - 1) // 2` với kích thước nhân lẻ để giữ kích thước không gian.
+**Cách khắc phục:** Với nhân kích thước lẻ và `stride=1`, đặt `padding = (kernel_size - 1) // 2` để giữ nguyên kích thước không gian.
 
-### Cạm bẫy 2: Quên Thứ tự Chiều Kênh
+### Cạm bẫy 2: Nhầm Thứ tự Chiều Kênh
 
-**Vấn đề**: Các framework dùng quy ước khác nhau
+**Vấn đề:** Các framework sử dụng quy ước thứ tự chiều tensor khác nhau.
 
 ```python
 # PyTorch: (N, C, H, W) - Kênh trước
@@ -124,9 +125,9 @@ x_tensorflow = tf.random.normal([batch, height, width, channels])
 x_tf_to_pytorch = x_tensorflow.permute(0, 3, 1, 2)  # Nếu dùng torch
 ```
 
-### Cạm bẫy 3: Kernel Ban đầu Quá Lớn
+### Cạm bẫy 3: Dùng Nhân Quá Lớn ở Các Tầng Đầu
 
-**Vấn đề**: Kernel lớn có nhiều tham số nhưng lợi ích trường tiếp nhận hạn chế
+**Vấn đề:** Nhân kích thước lớn tốn nhiều tham số trong khi chỉ có một lớp phi tuyến.
 
 ```python
 # Kém hiệu quả hơn (hiểu biết của VGG)
@@ -139,7 +140,7 @@ conv3 = nn.Conv2d(64, 64, kernel_size=3, padding=1)
 # Ba 3×3 = 27 params/kênh, cùng trường tiếp nhận 7×7, gấp 3 phi tuyến
 ```
 
-### Mẹo 1: Tích chập 1×1 để Kiểm soát Số chiều
+### Mẹo 1: Dùng Tích chập 1×1 để Điều chỉnh Số Kênh
 
 ```python
 # Giảm kênh (nút thắt / bottleneck)
@@ -151,7 +152,7 @@ expand = nn.Conv2d(64, 512, kernel_size=1)
 # Trộn thông tin kênh mà không thao tác không gian
 ```
 
-### Mẹo 2: Tích chập Stride thay cho Pooling
+### Mẹo 2: Dùng Tích chập có Stride thay cho Pooling
 
 ```python
 # Truyền thống: Conv → Pool
@@ -163,7 +164,7 @@ strided_conv = nn.Conv2d(64, 128, kernel_size=3, stride=2, padding=1)
 # Cùng kích thước đầu ra, nhưng giảm mẫu được học!
 ```
 
-### Mẹo 3: Khởi tạo Trọng số Đúng
+### Mẹo 3: Khởi tạo Trọng số Phù hợp
 
 ```python
 # Khởi tạo Kaiming cho mạng ReLU
@@ -199,36 +200,30 @@ def receptive_field_1d(layers):
 
 # Ví dụ: 3 tầng conv (k=3, s=1) rồi pool (k=2, s=2)
 layers = [(3, 1), (3, 1), (3, 1), (2, 2)]
-print(f"Trường tiếp nhận: {receptive_field_1d(layers)}")  # 14
+print(f"Trường tiếp nhận: {receptive_field_1d(layers)}")  # 8
 ```
 
 ---
 
-## 8. Tóm tắt các điểm chính
-1. **Tích chập so với Tương quan chéo**: Học sâu dùng tương quan chéo nhưng gọi là tích chập. Sự khác biệt (lật nhân) không quan trọng vì trọng số được học.
+## 8. Tóm tắt các Điểm chính
 
-2. **Kết nối Cục bộ + Chia sẻ Trọng số**: Hai tính chất này làm CNN hiệu quả tham số hơn rất nhiều so với mạng kết nối đầy đủ.
+1. **Tích chập và Tương quan chéo:** Học sâu thường cài đặt tương quan chéo nhưng gọi chung là tích chập; việc có lật nhân hay không không làm thay đổi khả năng học vì trọng số được tối ưu từ dữ liệu.
+2. **Kết nối Cục bộ và Chia sẻ Trọng số:** Hai cơ chế này giúp CNN tiết kiệm tham số hơn rất nhiều so với mạng liên kết đầy đủ.
+3. **Học Đặc trưng Phân cấp:** CNN tự động xây dựng biểu diễn từ cạnh, kết cấu đến bộ phận và đối tượng hoàn chỉnh.
+4. **Công thức Kích thước Đầu ra:** $$n_{out} = \lfloor(n_{in} + 2p - k)/s\rfloor + 1$$.
+5. **Xếp chồng Bộ lọc Nhỏ:** Dùng nhiều tầng 3×3 liên tiếp thường hiệu quả hơn một tầng nhân lớn (ít tham số hơn và nhiều lớp phi tuyến hơn).
+6. **Trường Tiếp nhận:** Mở rộng dần theo độ sâu, là đại lượng quan trọng cần theo dõi khi thiết kế kiến trúc.
+7. **Mẫu thiết kế phổ biến:**
+   - Chuỗi `Conv → BatchNorm → ReLU`
+   - Kết nối dư cho các mạng sâu
+   - Global average pooling thay cho `flatten + FC` nhiều tham số
 
-3. **Học Đặc trưng Phân cấp**: CNN tự động học cạnh → kết cấu → bộ phận → đối tượng, phản ánh thị giác sinh học.
+Tầng tích chập là thành phần trung tâm của thị giác máy tính trong học sâu, phục vụ từ phân loại ảnh, phát hiện đối tượng cho đến các mô hình sinh ảnh.
 
-4. **Kích thước Đầu ra**: $$n_{out} = \lfloor(n_{in} + 2p - k)/s\rfloor + 1$$ — hãy nhớ công thức này!
-
-5. **Bộ lọc Nhỏ Thắng**: Xếp chồng tích chập 3×3 thay vì dùng kernel lớn (nhiều phi tuyến hơn, ít tham số hơn).
-
-6. **Trường Tiếp nhận**: Tăng theo độ sâu. Hiểu trường tiếp nhận là then chốt khi thiết kế kiến trúc.
-
-7. **Thực hành Tốt nhất Hiện đại**:
-   - Conv → BatchNorm → ReLU
-   - Kết nối dư cho mạng sâu
-   - Global average pooling thay vì flatten + FC
-
-Tầng tích chập là nền tảng của thị giác máy tính trong học sâu. Nắm vững chúng là thiết yếu cho mọi ứng dụng thị giác — từ phân loại ảnh đến phát hiện đối tượng đến sinh ảnh.
-
-
-**Tiếp theo**: Tầng gộp và các kiến trúc CNN hoàn chỉnh (LeNet, AlexNet, VGG, ResNet)!
+**Tiếp theo:** Tầng gộp và các kiến trúc CNN kinh điển (LeNet, AlexNet, VGG, ResNet).
 
 ## Video tham khảo
 
-- **xem trước** [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, tiếng Anh. Các cạm bẫy xuất hiện ngay khi kênh và stride tương tác.
-- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, tiếng Anh. Một phát biểu năm 2024 về cạm bẫy nào trong số đó vẫn còn đáng kể.
-- [C4W2L04 Why ResNets Work](https://www.youtube.com/watch?v=RYth6EbBUqM) — DeepLearningAI, tiếng Anh. Vì sao một chồng tích chập thuần bị xuống cấp, đúng cạm bẫy mức bài báo mà phần ResNet nói tới.
+- **Xem trước:** [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, tiếng Anh. Phân tích rõ các lỗi kích thước dễ gặp khi kết hợp số kênh, padding và stride.
+- [MIT 6.S191 (2024): Convolutional Neural Networks](https://www.youtube.com/watch?v=2xqkSUhmmXU) — Alexander Amini, tiếng Anh. Cập nhật góc nhìn hiện đại về các lựa chọn thiết kế và cạm bẫy trong CNN.
+- [C4W2L04 Why ResNets Work](https://www.youtube.com/watch?v=RYth6EbBUqM) — DeepLearningAI, tiếng Anh. Giải thích nguyên nhân mạng tích chập thuần bị suy giảm hiệu năng khi tăng độ sâu và cách ResNet khắc phục.

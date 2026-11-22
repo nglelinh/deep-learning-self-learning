@@ -12,120 +12,122 @@ categories:
 # Phát hiện Đối tượng: Định vị và Nhận dạng
 
 ![Object Detection Example](https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Detected-with-YOLO--Schreibtisch-mit-Objekten.jpg/800px-Detected-with-YOLO--Schreibtisch-mit-Objekten.jpg)
-*Hình ảnh: Phát hiện đối tượng với YOLO — phát hiện và định vị nhiều vật thể. Nguồn: Wikimedia Commons*
+*Hình ảnh: Phát hiện đối tượng với YOLO — nhận dạng và định vị đồng thời nhiều vật thể. Nguồn: Wikimedia Commons*
 
 ## 1. Tổng quan khái niệm
-Phát hiện đối tượng (*object detection*) mở rộng phân loại ảnh từ câu hỏi “trong ảnh có những đối tượng nào?” sang “có những đối tượng nào và chúng nằm ở đâu?”. Sự mở rộng tưởng chừng nhỏ này thực chất đòi hỏi giải đồng thời nhiều bài toán liên kết: đề xuất vùng có thể chứa đối tượng (*region proposal*), phân loại nội dung từng vùng (*recognition*), tinh chỉnh biên của các phát hiện (*localization*), và xử lý nhiều đối tượng thuộc nhiều lớp ở nhiều tỷ lệ khác nhau (*multi-scale, multi-class detection*). Việc phối hợp các thành phần này trong khi vẫn duy trì hiệu năng thời gian thực đã khiến phát hiện đối tượng trở thành một trong những lĩnh vực thách thức và được nghiên cứu sôi động nhất của thị giác máy tính.
 
-Sự tiến hóa của các phương pháp phát hiện đối tượng cho thấy lộ trình thú vị từ thị giác máy tính cổ điển đến học sâu hiện đại. Các phương pháp cổ điển dùng đặc trưng thủ công (SIFT, HOG) với cửa sổ trượt (*sliding window*) quét mọi vị trí và tỷ lệ khả dĩ, rồi áp dụng bộ phân loại như SVM. Cách này tốn tính toán (đánh giá hàng triệu cửa sổ mỗi ảnh) và bị giới hạn bởi chất lượng đặc trưng. Cuộc cách mạng học sâu đã biến đổi phát hiện đối tượng thông qua đặc trưng học được và các hệ thống huấn luyện đầu–cuối, mang lại cải thiện lớn về cả độ chính xác lẫn tốc độ.
+Phát hiện đối tượng (*object detection*) mở rộng bài toán phân loại ảnh từ câu hỏi “trong ảnh có đối tượng gì?” sang “có những đối tượng nào và chúng nằm ở đâu?”. Sự mở rộng tưởng như nhỏ này thực chất đòi hỏi giải đồng thời nhiều bài toán con liên kết với nhau: đề xuất các vùng có khả năng chứa đối tượng (*region proposal*), phân loại nội dung trong từng vùng (*recognition*), tinh chỉnh biên giới hạn (*localization*), và xử lý nhiều đối tượng thuộc nhiều lớp ở các tỷ lệ kích thước khác nhau (*multi-scale, multi-class detection*). Việc phối hợp các thành phần này trong khi vẫn đảm bảo tốc độ thời gian thực khiến phát hiện đối tượng trở thành một bài toán nhiều thách thức trong thị giác máy tính.
 
-Phát hiện đối tượng hiện đại chia thành hai mô hình chính. Bộ phát hiện hai giai đoạn (*two-stage detector*) như R-CNN, Fast R-CNN và Faster R-CNN trước hết đề xuất các vùng có khả năng chứa đối tượng, rồi phân loại và tinh chỉnh các đề xuất đó. Việc tách rõ đề xuất vùng và nhận dạng cho phép đạt độ chính xác cao nhờ tập trung tính toán vào các vùng tiềm năng. Bộ phát hiện một giai đoạn (*single-stage detector*) như YOLO và SSD dự đoán trực tiếp hộp bao và xác suất lớp từ các vị trí lưới đều, đạt hiệu năng thời gian thực bằng cách bỏ qua giai đoạn đề xuất, với đánh đổi là độ chính xác hơi thấp hơn trên đối tượng nhỏ.
+Quá trình phát triển của các phương pháp phát hiện đối tượng phản ánh bước chuyển từ thị giác máy tính cổ điển sang học sâu. Các phương pháp cổ điển dùng đặc trưng thiết kế thủ công (SIFT, HOG) kết hợp cửa sổ trượt (*sliding window*) quét qua mọi vị trí và tỷ lệ có thể, rồi phân loại từng cửa sổ bằng bộ phân loại như SVM. Cách này tiêu tốn nhiều tài nguyên tính toán (phải đánh giá hàng triệu cửa sổ trên mỗi ảnh) và bị giới hạn bởi chất lượng đặc trưng thủ công. Học sâu khắc phục hạn chế đó bằng đặc trưng học trực tiếp từ dữ liệu và các kiến trúc huấn luyện đầu–cuối, cải thiện đáng kể cả độ chính xác lẫn tốc độ.
 
-Để hiểu sâu phát hiện đối tượng, cần nắm các đổi mới kỹ thuật then chốt. Mạng đề xuất vùng (*Region Proposal Network*, RPN) học cách sinh đề xuất thay vì dùng quy tắc thủ công, khiến toàn bộ đường ống khả vi. Hộp neo (*anchor box*) xử lý đối tượng có tỷ lệ khung hình và kích thước khác nhau thông qua các mẫu hộp định sẵn. Ức chế không cực đại (*non-maximum suppression*, NMS) loại bỏ các phát hiện trùng lặp — vì bộ phát hiện tốt thường sinh nhiều hộp chồng lấn cho cùng một đối tượng. Mạng kim tự tháp đặc trưng (*feature pyramid network*, FPN) cho phép phát hiện đa tỷ lệ bằng cách xây kim tự tháp đặc trưng giàu ngữ nghĩa ở mọi mức. Các thành phần này, mỗi phần giải một bài toán con, kết hợp thành hệ thống có thể phát hiện và định vị hàng chục đối tượng thuộc nhiều lớp trong mili giây, phục vụ từ xe tự lái đến phân tích ảnh y khoa và thực tế tăng cường.
+Phát hiện đối tượng hiện đại gồm hai hướng kiến trúc chính. Bộ phát hiện hai giai đoạn (*two-stage detector*) như R-CNN, Fast R-CNN và Faster R-CNN trước tiên đề xuất các vùng có khả năng chứa đối tượng, sau đó mới phân loại và tinh chỉnh hộp bao cho các vùng đó. Việc tách riêng bước đề xuất vùng và bước nhận dạng giúp tập trung năng lực tính toán vào các vùng tiềm năng và đạt độ chính xác cao. Bộ phát hiện một giai đoạn (*single-stage detector*) như YOLO và SSD dự đoán trực tiếp hộp bao cùng xác suất lớp tại các vị trí trên lưới đều, bỏ qua giai đoạn đề xuất để đạt tốc độ thời gian thực, đánh đổi bằng độ chính xác thấp hơn một chút đối với các đối tượng nhỏ.
+
+Để hiểu rõ cơ chế hoạt động của các hệ thống phát hiện đối tượng, cần nắm bốn thành phần kỹ thuật cốt lõi. Mạng đề xuất vùng (*Region Proposal Network*, RPN) học cách sinh đề xuất thay cho thuật toán thủ công, giúp toàn bộ quy trình khả vi. Hộp neo (*anchor box*) xử lý các đối tượng có kích thước và tỷ lệ khung hình khác nhau thông qua các hộp tham chiếu định sẵn. Ức chế không cực đại (*non-maximum suppression*, NMS) loại bỏ các phát hiện trùng lặp khi mô hình sinh ra nhiều hộp chồng lấn cho cùng một đối tượng. Mạng kim tự tháp đặc trưng (*Feature Pyramid Network*, FPN) hỗ trợ phát hiện đa tỷ lệ bằng cách xây dựng kim tự tháp đặc trưng giàu thông tin ngữ nghĩa ở mọi độ phân giải. Khi kết hợp lại, các thành phần này cho phép phát hiện và định vị hàng chục đối tượng thuộc nhiều lớp chỉ trong vài mili giây, ứng dụng trong xe tự lái, phân tích ảnh y khoa và thực tế tăng cường.
 
 ## 2. Nền tảng toán học
-Phát hiện đối tượng đòi hỏi hình thức hóa cái ta dự đoán và cách đo thành công. Một phát hiện đối tượng là bộ $$(\text{class}, x, y, w, h)$$ chỉ định lớp đối tượng và hộp bao (tọa độ tâm $$x,y$$ và kích thước $$w,h$$). Với ảnh có $$N$$ đối tượng, nhãn gốc là tập các bộ như vậy: $$\{(\text{class}_i, x_i, y_i, w_i, h_i)\}_{i=1}^N$$. Bộ phát hiện phải dự đoán tập này — thách thức vì $$N$$ thay đổi giữa các ảnh.
+
+Phát hiện đối tượng cần mô tả chặt chẽ đầu ra cần dự đoán và thước đo đánh giá. Mỗi đối tượng được biểu diễn bằng bộ $$(\text{class}, x, y, w, h)$$, gồm nhãn lớp và hộp bao (tọa độ tâm $$x, y$$ cùng chiều rộng $$w$$ và chiều cao $$h$$). Với ảnh có $$N$$ đối tượng, nhãn thực tế (*ground truth*) là tập hợp $$\{(\text{class}_i, x_i, y_i, w_i, h_i)\}_{i=1}^N$$. Bộ phát hiện phải dự đoán tập hợp này trong điều kiện số lượng $$N$$ thay đổi tùy theo từng ảnh.
 
 ### Giao trên Hợp (Intersection over Union, IoU)
 
-Để đo chất lượng định vị, ta dùng Giao trên Hợp giữa hộp dự đoán và hộp gốc:
+Chất lượng định vị được đo bằng chỉ số Giao trên Hợp (IoU) giữa hộp dự đoán và hộp nhãn thực tế:
 
 $$\text{IoU}(\text{box}_{\text{pred}}, \text{box}_{\text{gt}}) = \frac{\text{Area}(\text{box}_{\text{pred}} \cap \text{box}_{\text{gt}})}{\text{Area}(\text{box}_{\text{pred}} \cup \text{box}_{\text{gt}})}$$
 
-IoU nằm trong khoảng từ 0 (không chồng lấn) đến 1 (chồng lấn hoàn hảo). Thông thường, một phát hiện được coi là đúng nếu IoU $$\geq 0.5$$ và lớp dự đoán khớp nhãn gốc. Ngưỡng này cân bằng giữa yêu cầu định vị chính xác và cho phép biến thiên hợp lý của hộp bao.
+IoU nhận giá trị từ 0 (không chồng lấn) đến 1 (trùng khít hoàn toàn). Thông thường, một phát hiện được xem là đúng nếu $$\text{IoU} \geq 0.5$$ và nhãn lớp dự đoán khớp với nhãn thực tế. Ngưỡng này cân bằng giữa yêu cầu định vị chính xác và độ dung sai hợp lý cho vị trí hộp bao.
 
-### Hồi quy Hộp bao (Bounding Box Regression)
+### Hồi quy hộp bao (Bounding Box Regression)
 
-Thay vì dự đoán trực tiếp tọa độ hộp, các bộ phát hiện hiện đại dự đoán độ lệch so với hộp neo (hộp tham chiếu định sẵn). Cho hộp neo $$(\hat{x}, \hat{y}, \hat{w}, \hat{h})$$ và nhãn gốc $$(\bar{x}, \bar{y}, \bar{w}, \bar{h})$$, ta tham số hóa mục tiêu:
+Thay vì dự đoán trực tiếp tọa độ tuyệt đối, các bộ phát hiện hiện đại dự đoán độ lệch so với hộp neo (hộp tham chiếu định sẵn). Cho hộp neo $$(\hat{x}, \hat{y}, \hat{w}, \hat{h})$$ và hộp nhãn thực tế $$(\bar{x}, \bar{y}, \bar{w}, \bar{h})$$, mục tiêu hồi quy được tham số hóa như sau:
 
 $$t_x = \frac{\bar{x} - \hat{x}}{\hat{w}}, \quad t_y = \frac{\bar{y} - \hat{y}}{\hat{h}}$$
 
 $$t_w = \log\frac{\bar{w}}{\hat{w}}, \quad t_h = \log\frac{\bar{h}}{\hat{h}}$$
 
-Mạng dự đoán $$(t_x, t_y, t_w, t_h)$$, rồi giải mã ra tọa độ tuyệt đối:
+Mạng dự đoán bộ giá trị $$(t_x, t_y, t_w, t_h)$$, sau đó giải mã ngược về tọa độ tuyệt đối:
 
 $$x = \hat{x} + \hat{w} \cdot t_x, \quad y = \hat{y} + \hat{h} \cdot t_y$$
 
 $$w = \hat{w} \cdot \exp(t_w), \quad h = \hat{h} \cdot \exp(t_h)$$
 
-Tham số hóa này dễ học hơn dự đoán tọa độ trực tiếp vì các độ lệch thường là số nhỏ có cùng thang đo, trong khi tọa độ tuyệt đối trải trên toàn ảnh với thang đo rất khác giữa đối tượng nhỏ và lớn.
+Cách tham số hóa này dễ học hơn dự đoán tọa độ trực tiếp vì các độ lệch thường có giá trị nhỏ và cùng thang đo, trong khi tọa độ tuyệt đối biến thiên trên toàn ảnh với thang đo rất khác nhau giữa đối tượng nhỏ và lớn.
 
-### Hàm mất Đa tác vụ (Multi-Task Loss)
+### Hàm mất mát đa tác vụ (Multi-Task Loss)
 
-Bộ phát hiện tối ưu tổ hợp mất mát phân loại và định vị:
+Bộ phát hiện tối ưu đồng thời hàm mất mát phân loại và hàm mất mát định vị:
 
 $$\mathcal{L} = \mathcal{L}_{\text{cls}} + \lambda \mathcal{L}_{\text{box}}$$
 
-trong đó $$\mathcal{L}_{\text{cls}}$$ là mất mát phân loại (cross-entropy) và $$\mathcal{L}_{\text{box}}$$ là mất mát hồi quy hộp (smooth L1 hoặc mất IoU). Trọng số $$\lambda$$ cân bằng hai mục tiêu — quá cao thì bộ phát hiện tập trung định vị chính xác nhưng kém phân loại; quá thấp thì phân loại tốt nhưng hộp định vị kém.
+trong đó $$\mathcal{L}_{\text{cls}}$$ là hàm mất mát phân loại (cross-entropy) và $$\mathcal{L}_{\text{box}}$$ là hàm mất mát hồi quy hộp bao (smooth L1 hoặc hàm mất mát dựa trên IoU). Hệ số $$\lambda$$ cân bằng hai mục tiêu: nếu $$\lambda$$ quá lớn, mô hình ưu tiên định vị mà giảm chất lượng phân loại; nếu quá nhỏ, mô hình phân loại tốt nhưng hộp bao kém chính xác.
 
-Với Faster R-CNN, mất phân loại dùng cross-entropy trên các lớp cộng nền:
+Trong Faster R-CNN, hàm mất mát phân loại dùng cross-entropy trên tất cả các lớp đối tượng cộng thêm lớp nền:
 
 $$\mathcal{L}_{\text{cls}} = -\log p_{\text{class}}$$
 
-trong đó $$\text{class}$$ là lớp gốc (hoặc nền nếu IoU < 0.5 với mọi hộp gốc).
+trong đó $$\text{class}$$ là nhãn lớp thực tế (hoặc lớp nền nếu IoU < 0.5 với mọi hộp nhãn thực tế).
 
-Mất hộp là smooth L1:
+Hàm mất mát hồi quy hộp bao là smooth L1:
 
 $$\mathcal{L}_{\text{box}} = \sum_{i \in \{x,y,w,h\}} \text{smooth}_{L1}(t_i - \hat{t}_i)$$
 
 $$\text{smooth}_{L1}(x) = \begin{cases} 0.5x^2 & \text{if } |x| < 1 \\ |x| - 0.5 & \text{otherwise} \end{cases}$$
 
-Smooth L1 ít nhạy với ngoại lai hơn L2 (phần bậc hai trở thành tuyến tính khi sai số lớn) đồng thời khả vi mọi nơi (khác L1 thuần).
+Smooth L1 ít nhạy với các điểm ngoại lai hơn L2 (chuyển từ bậc hai sang tuyến tính khi sai số lớn) đồng thời khả vi tại mọi điểm (khác với L1 thuần túy).
 
-### Mạng Đề xuất Vùng (Region Proposal Network, RPN)
+### Mạng đề xuất vùng (Region Proposal Network, RPN)
 
-Faster R-CNN giới thiệu RPN — mạng tích chập đầy đủ dự đoán các đề xuất đối tượng. Tại mỗi vị trí trên bản đồ đặc trưng, RPN dự đoán:
-- Điểm objectness: $$k$$ neo × 2 giá trị (đối tượng vs nền)
-- Tinh chỉnh hộp: $$k$$ neo × 4 tọa độ
+Faster R-CNN đưa ra RPN — một mạng tích chập hoàn toàn dùng để dự đoán các vùng đề xuất chứa đối tượng. Tại mỗi vị trí trên bản đồ đặc trưng, RPN dự đoán:
+- Điểm *objectness*: $$k$$ hộp neo × 2 giá trị (có đối tượng hay là nền).
+- Độ tinh chỉnh hộp bao: $$k$$ hộp neo × 4 tọa độ.
 
-Với bản đồ đặc trưng $$H \times W$$ và $$k=9$$ neo mỗi vị trí, RPN xuất ra:
-- Objectness: $$H \times W \times 9 \times 2$$ điểm
-- Delta hộp: $$H \times W \times 9 \times 4$$ giá trị
+Với bản đồ đặc trưng kích thước $$H \times W$$ và $$k=9$$ hộp neo tại mỗi vị trí, đầu ra của RPN gồm:
+- Điểm *objectness*: $$H \times W \times 9 \times 2$$ giá trị.
+- Độ lệch hộp bao: $$H \times W \times 9 \times 4$$ giá trị.
 
-Tổng: $$HW \times 9$$ đề xuất. NMS lọc còn top $$\sim$$2000 theo điểm objectness, rồi đưa vào đầu phát hiện.
+Tổng cộng có $$HW \times 9$$ đề xuất. Thuật toán NMS lọc lại còn khoảng 2000 đề xuất có điểm *objectness* cao nhất để đưa vào đầu phát hiện.
 
-Mất RPN kết hợp phân loại (objectness) và hồi quy:
+Hàm mất mát của RPN kết hợp cả phân loại (*objectness*) và hồi quy hộp bao:
 
 $$\mathcal{L}_{\text{RPN}} = \frac{1}{N_{\text{cls}}}\sum_i \mathcal{L}_{\text{cls}}(p_i, p_i^*) + \frac{\lambda}{N_{\text{box}}}\sum_i p_i^* \mathcal{L}_{\text{box}}(t_i, t_i^*)$$
 
-trong đó $$p_i^* = 1$$ nếu neo $$i$$ chồng lấn nhãn gốc với IoU > 0.7 (dương), $$p_i^* = 0$$ nếu IoU < 0.3 (âm), và bỏ qua nếu nằm giữa (xử lý trường hợp mơ hồ).
+trong đó $$p_i^* = 1$$ nếu hộp neo $$i$$ chồng lấn với hộp nhãn thực tế với IoU > 0.7 (mẫu dương), $$p_i^* = 0$$ nếu IoU < 0.3 (mẫu âm), và các trường hợp nằm giữa hai ngưỡng này bị bỏ qua để tránh gây nhiễu cho quá trình huấn luyện.
 
-## 3. Ví dụ / Trực giác
+## 3. Ví dụ và trực giác
 
-Hãy tưởng tượng bạn cần tìm và nhận diện mọi người trong một bức ảnh đông đúc. Chiến lược có thể là:
+Giả sử bạn cần tìm và nhận diện tất cả mọi người trong một bức ảnh đông đúc. Cách làm tự nhiên thường gồm ba bước:
 
-1. **Quét nhanh** các vùng có khả năng chứa người (dáng đầu, đường viền thân)
-2. **Xem xét kỹ** các vùng tiềm năng (đây có thực sự là người hay là bức tượng? là ai?)
-3. **Tinh chỉnh** biên (hộp bao của người này bắt đầu/kết thúc chính xác ở đâu?)
+1. **Quét nhanh** các vùng có khả năng chứa người (dựa trên hình dáng đầu, thân).
+2. **Xem xét kỹ** từng vùng tiềm năng (đây thực sự là người hay là tượng? là ai?).
+3. **Tinh chỉnh** biên giới hạn (hộp bao của từng người bắt đầu và kết thúc chính xác ở đâu?).
 
-Quy trình ba giai đoạn này phản ánh phát hiện đối tượng hai giai đoạn. RPN thực hiện quét nhanh, đề xuất ~2000 vùng có thể chứa đối tượng (người, xe, chó, bất kỳ thứ gì). Đầu phát hiện xem xét từng đề xuất, phân loại nội dung và tinh chỉnh hộp bao. NMS loại bỏ trùng lặp (nhiều hộp chồng lấn cho cùng một người).
+Quy trình này phản ánh trực tiếp cơ chế của bộ phát hiện hai giai đoạn. RPN thực hiện bước quét nhanh, đề xuất khoảng 2000 vùng có khả năng chứa đối tượng (người, xe, chó, v.v.). Đầu phát hiện kiểm tra kỹ từng đề xuất để phân loại nội dung và tinh chỉnh hộp bao, sau đó NMS loại bỏ các hộp trùng lặp cho cùng một đối tượng.
 
-Xét phát hiện xe trên đường phố. Ảnh có thể chứa:
-- 3 xe ở các khoảng cách khác nhau (kích thước khác nhau)
-- 2 người đi bộ
-- 1 biển báo giao thông
-- Nền phức tạp (nhà, cây)
+Xét ví dụ phát hiện xe trên đường phố. Một khung hình có thể chứa:
+- 3 chiếc xe ở các khoảng cách khác nhau (tương ứng với kích thước khác nhau).
+- 2 người đi bộ.
+- 1 biển báo giao thông.
+- Nền phức tạp (nhà cửa, cây cối).
 
-Bộ phát hiện một giai đoạn như YOLO chia ảnh thành lưới (ví dụ 13×13). Mỗi ô lưới dự đoán:
-- Nhiều hộp bao (ví dụ 3, với tỷ lệ khung hình khác: cao, rộng, vuông)
-- Xác suất lớp cho mỗi hộp
-- Điểm tin cậy (có đối tượng tại đây không?)
+Bộ phát hiện một giai đoạn như YOLO chia ảnh thành một lưới (chẳng hạn 13×13). Mỗi ô lưới dự đoán:
+- Nhiều hộp bao (ví dụ 3 hộp với các tỷ lệ khung hình khác nhau: cao, rộng, vuông).
+- Xác suất lớp cho từng hộp.
+- Điểm tin cậy (*confidence*) phản ánh khả năng có đối tượng tại ô đó.
 
-Với ô lưới tại vị trí (5, 8) gần một chiếc xe, nó có thể dự đoán:
-- Hộp 1: class=car, confidence=0.95, tọa độ lệch so với tâm ô
-- Hộp 2: class=background, confidence=0.05
-- Hộp 3: class=background, confidence=0.02
+Tại ô lưới (5, 8) nằm gần một chiếc xe, mô hình có thể dự đoán:
+- Hộp 1: `class=car`, `confidence=0.95`, tọa độ lệch so với tâm ô.
+- Hộp 2: `class=background`, `confidence=0.05`.
+- Hộp 3: `class=background`, `confidence=0.02`.
 
-Sau khi xử lý tất cả 13×13 ô, ta có 13×13×3 = 507 dự đoán. Hầu hết là nền (tin cậy gần 0). NMS chỉ giữ các hộp tin cậy cao, không chồng lấn:
-- Xe 1: confidence=0.95, box=[120, 200, 60, 40]
-- Xe 2: confidence=0.89, box=[300, 180, 80, 50]
-- Xe 3: confidence=0.76, box=[450, 220, 40, 25] (xe xa, nhỏ hơn)
-- Người 1: confidence=0.92, box=[200, 150, 30, 80]
+Sau khi xử lý toàn bộ 13×13 ô, ta thu được 13×13×3 = 507 dự đoán, phần lớn là nền với điểm tin cậy gần 0. NMS chỉ giữ lại các hộp có độ tin cậy cao và không chồng lấn:
+- Xe 1: `confidence=0.95`, `box=[120, 200, 60, 40]`
+- Xe 2: `confidence=0.89`, `box=[300, 180, 80, 50]`
+- Xe 3: `confidence=0.76`, `box=[450, 220, 40, 25]` (xe ở xa nên kích thước nhỏ hơn)
+- Người 1: `confidence=0.92`, `box=[200, 150, 30, 80]`
 
-Bộ phát hiện đã nhận diện mọi đối tượng, phân loại chúng và định vị bằng hộp bao — đúng những gì phát hiện đối tượng yêu cầu.
+Như vậy, bộ phát hiện đã đồng thời nhận dạng lớp và định vị vị trí từng đối tượng bằng hộp bao.
 
 ## Video tham khảo
 
-- **xem trước** [How YOLO Object Detection Works](https://www.youtube.com/watch?v=svn9-xV7wjk) — DeepBean, tiếng Anh. Một lượt xuôi dự đoán các hộp, đúng thiết kế chính của lý thuyết.
-- [Lecture 11 | Detection and Segmentation](https://www.youtube.com/watch?v=nDPWywWRIRo) — Stanford University School of Engineering, tiếng Anh. IoU và việc gán dự đoán với ground truth, phần toán video ngắn bỏ qua.
-- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Các đặc trưng tích chập cả hai video đều giả định.
+- **Xem trước** [How YOLO Object Detection Works](https://www.youtube.com/watch?v=svn9-xV7wjk) — DeepBean, tiếng Anh. Minh họa cách một lượt lan truyền xuôi dự đoán trực tiếp các hộp bao, bám sát thiết kế lý thuyết trong bài.
+- [Lecture 11 | Detection and Segmentation](https://www.youtube.com/watch?v=nDPWywWRIRo) — Stanford University School of Engineering, tiếng Anh. Trình bày IoU và cách gán hộp dự đoán với nhãn thực tế — phần toán học chi tiết mà video ngắn chưa đi sâu.
+- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Ôn lại các đặc trưng tích chập làm nền tảng cho cả hai video trên.

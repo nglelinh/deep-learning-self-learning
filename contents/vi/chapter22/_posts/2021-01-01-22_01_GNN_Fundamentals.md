@@ -9,60 +9,59 @@ categories:
 - chapter22
 ---
 
-# Mạng Neuron Đồ thị: Học sâu trên Đồ thị
+# Mạng Nơ-ron Đồ thị: Học sâu trên Dữ liệu Đồ thị
 
 ![Graph Neural Network](https://distill.pub/2021/gnn-intro/graph_neural_network.png)
-*Hình ảnh: Kiến trúc mạng neuron đồ thị với truyền thông điệp. Nguồn: Distill.pub*
+*Hình ảnh: Kiến trúc mạng nơ-ron đồ thị với cơ chế truyền thông điệp. Nguồn: Distill.pub*
 
 ## 1. Tổng quan khái niệm
-Mạng neuron đồ thị (*graph neural network*, GNN) mở rộng học sâu sang dữ liệu có cấu trúc đồ thị, cho phép mạng neuron xử lý mạng lưới các thực thể và quan hệ tràn ngập dữ liệu thực tế: mạng xã hội kết nối con người, đồ thị phân tử kết nối nguyên tử, đồ thị tri thức liên kết khái niệm, mạng trích dẫn liên hệ bài báo, và hệ thống gợi ý kết nối người dùng với mặt hàng. Khác ảnh (lưới 2D đều) hay chuỗi (xích 1D), đồ thị có cấu trúc tùy ý — số láng giềng biến thiên, không có thứ tự không gian, mẫu kết nối phức tạp — đòi hỏi kiến trúc neuron chuyên biệt có thể tận dụng cấu trúc này trong khi vẫn khả vi và huấn luyện được qua backpropagation.
 
-Thách thức cơ bản mà đồ thị đặt ra là bất biến hoán vị (*permutation invariance*): biểu diễn của đồ thị không được phụ thuộc cách ta đánh số nút. Nếu nút được đánh số 1,2,3 hay 3,2,1, đồ thị vẫn giống nhau nên biểu diễn cũng phải giống. Điều này loại trừ cách tiếp cận ngây thơ như đưa ma trận kề vào mạng neuron chuẩn (xử lý các thứ tự khác nhau như đầu vào khác nhau). GNN giải quyết qua truyền thông điệp (*message passing*): các nút lặp lại gộp thông tin từ láng giềng qua các phép biến đổi học được, với hàm gộp (tổng, trung bình, max) bất biến hoán vị. Sau vài vòng lặp, biểu diễn mỗi nút tích hợp thông tin từ lân cận, với lân cận lớn hơn tiếp cận được qua nhiều vòng hơn.
+Mạng nơ-ron đồ thị (*graph neural network*, GNN) mở rộng học sâu sang dữ liệu có cấu trúc đồ thị, giúp mô hình hóa các hệ thống thực thể và quan hệ phổ biến trong thực tế: mạng xã hội kết nối người dùng, đồ thị phân tử kết nối các nguyên tử, đồ thị tri thức liên kết khái niệm, mạng trích dẫn giữa các bài báo, hay hệ thống gợi ý kết nối người dùng với sản phẩm. Khác với ảnh (lưới 2D đều đặn) hoặc chuỗi (dãy 1D có thứ tự), đồ thị có cấu trúc tùy ý — số lượng láng giềng thay đổi theo từng nút, không có thứ tự không gian cố định và sơ đồ kết nối phức tạp — đòi hỏi các kiến trúc chuyên biệt vừa tận dụng được cấu trúc đồ thị vừa khả vi để huấn luyện bằng lan truyền ngược.
 
-Hiểu GNN đòi hỏi nắm rằng các tác vụ học trên đồ thị khác nhau yêu cầu đầu ra khác nhau. Phân loại nút (*node classification*) dự đoán nhãn cho nút (phân loại người dùng trong mạng xã hội). Dự đoán cạnh (*link prediction*) dự đoán cạnh thiếu hoặc tương lai (gợi ý bạn bè hoặc sản phẩm). Phân loại đồ thị (*graph classification*) dự đoán nhãn cho toàn đồ thị (phân loại phân tử hoạt/không hoạt cho thuốc). Mỗi tác vụ dùng cùng khung truyền thông điệp nhưng khác cách gộp biểu diễn nút và dự đoán gì.
+Yêu cầu cơ bản nhất đối với mô hình học trên đồ thị là tính bất biến hoán vị (*permutation invariance*): biểu diễn của đồ thị không được thay đổi khi ta đổi thứ tự đánh số các nút. Dù đánh số nút là 1, 2, 3 hay 3, 2, 1, đồ thị vẫn không đổi nên kết quả biểu diễn phải nhất quán. Điều này khiến việc đưa thẳng ma trận kề vào một mạng nơ-ron truyền thống trở nên không phù hợp, vì mạng sẽ xem các hoán vị khác nhau là các đầu vào khác nhau. GNN giải quyết vấn đề này bằng cơ chế truyền thông điệp (*message passing*): qua từng tầng, mỗi nút tổng hợp thông tin từ các láng giềng bằng những phép toán bất biến hoán vị (như tổng, trung bình hoặc cực đại) kết hợp biến đổi học được. Sau $$k$$ vòng lặp, biểu diễn của mỗi nút sẽ tích hợp thông tin từ vùng lân cận trong phạm vi $$k$$ bước (*k-hop neighborhood*).
 
-Ứng dụng của GNN trải rộng nhiều miền. Trong hóa học, đồ thị phân tử (nguyên tử là nút, liên kết là cạnh) được GNN xử lý để dự đoán tính chất như độ tan hoặc độc tính. Trong mạng xã hội, GNN phát hiện cộng đồng, dự đoán tình bạn, hoặc xác định người dùng ảnh hưởng. Trong hệ thống gợi ý, đồ thị hai phần (người dùng và mặt hàng) được xử lý để dự đoán ưa thích. Trong dự đoán cấu trúc protein, GNN mô hình tương tác amino acid. Trong dự báo giao thông, mạng đường ảnh hưởng dự báo. Tính linh hoạt này chứng tỏ cấu trúc đồ thị hiện diện khắp nơi, và GNN cung cấp khung tổng quát để học từ nó.
+Các bài toán học trên đồ thị thường chia thành ba nhóm chính theo mức độ đầu ra: phân loại nút (*node classification*) dự đoán nhãn cho từng nút (như phân loại người dùng trên mạng xã hội); dự đoán cạnh (*link prediction*) ước lượng khả năng tồn tại của các liên kết còn thiếu hoặc phát sinh trong tương lai (như gợi ý kết bạn hay sản phẩm); và phân loại đồ thị (*graph classification*) gán nhãn cho cả đồ thị (như dự đoán hoạt tính sinh học của một phân tử thuốc). Cả ba tác vụ đều dùng chung khung truyền thông điệp nhưng khác nhau ở bước tổng hợp và đầu ra dự đoán.
+
+GNN được ứng dụng trong nhiều lĩnh vực: trong hóa học để dự đoán độ tan hoặc độc tính của phân tử; trong mạng xã hội để phát hiện cộng đồng và tìm người dùng có ảnh hưởng; trong hệ thống gợi ý trên đồ thị hai phía (người dùng – sản phẩm); trong sinh học cấu trúc để mô hình hóa tương tác giữa các axit amin; và trong giao thông để dự báo lưu lượng dựa trên mạng lưới đường bộ.
 
 ## 2. Nền tảng toán học
-Một đồ thị $$\mathcal{G} = (\mathcal{V}, \mathcal{E})$$ gồm các nút $$\mathcal{V} = \{v_1, \ldots, v_n\}$$ và các cạnh $$\mathcal{E} \subseteq \mathcal{V} \times \mathcal{V}$$. Nút có đặc trưng $$\mathbf{x}_i \in \mathbb{R}^d$$, và cạnh có thể có đặc trưng $$\mathbf{e}_{ij}$$. Ma trận kề $$\mathbf{A} \in \{0,1\}^{n \times n}$$ mã hóa cấu trúc: $$A_{ij} = 1$$ nếu cạnh $$(v_i, v_j) \in \mathcal{E}$$, ngược lại 0.
 
-### Khung Truyền thông điệp (Message Passing)
+Một đồ thị $$\mathcal{G} = (\mathcal{V}, \mathcal{E})$$ gồm tập nút $$\mathcal{V} = \{v_1, \ldots, v_n\}$$ và tập cạnh $$\mathcal{E} \subseteq \mathcal{V} \times \mathcal{V}$$. Mỗi nút có vectơ đặc trưng $$\mathbf{x}_i \in \mathbb{R}^d$$, và mỗi cạnh có thể kèm đặc trưng $$\mathbf{e}_{ij}$$. Ma trận kề $$\mathbf{A} \in \{0,1\}^{n \times n}$$ mã hóa cấu trúc kết nối: $$A_{ij} = 1$$ nếu $$(v_i, v_j) \in \mathcal{E}$$ và bằng 0 trong trường hợp ngược lại.
 
-GNN cập nhật biểu diễn nút qua truyền thông điệp lặp. Ở tầng $$k$$, biểu diễn của nút $$i$$ $$\mathbf{h}_i^{(k)}$$ được cập nhật dựa trên láng giềng:
+### Khung truyền thông điệp (Message Passing)
+
+GNN cập nhật biểu diễn của các nút qua nhiều tầng truyền thông điệp. Tại tầng $$k$$, biểu diễn $$\mathbf{h}_i^{(k)}$$ của nút $$i$$ được cập nhật từ trạng thái trước đó của chính nó và của các láng giềng:
 
 $$\mathbf{h}_i^{(k)} = \text{UPDATE}^{(k)}\left(\mathbf{h}_i^{(k-1)}, \text{AGGREGATE}^{(k)}\left(\{\mathbf{h}_j^{(k-1)} : j \in \mathcal{N}(i)\}\right)\right)$$
 
-trong đó $$\mathcal{N}(i)$$ là láng giềng của $$i$$. AGGREGATE kết hợp đặc trưng láng giềng (phải bất biến hoán vị); UPDATE kết hợp đặc trưng riêng của nút với thông tin láng giềng đã gộp.
+trong đó $$\mathcal{N}(i)$$ là tập các nút láng giềng của $$i$$. Hàm `AGGREGATE` gom thông tin từ láng giềng (phải bất biến hoán vị), còn hàm `UPDATE` kết hợp đặc trưng hiện tại của nút $$i$$ với thông tin đã gom được.
 
 ### Graph Convolutional Networks (GCN)
 
-GCN dùng lý thuyết đồ thị phổ, định nghĩa tích chập qua Laplacian đồ thị. Dạng thực tiễn:
+GCN xuất phát từ lý thuyết đồ thị phổ, định nghĩa phép tích chập thông qua ma trận Laplacian của đồ thị. Dạng cập nhật thực hành theo từng tầng là:
 
 $$\mathbf{H}^{(k+1)} = \sigma(\tilde{\mathbf{D}}^{-1/2}\tilde{\mathbf{A}}\tilde{\mathbf{D}}^{-1/2}\mathbf{H}^{(k)}\mathbf{W}^{(k)})$$
 
-trong đó $$\tilde{\mathbf{A}} = \mathbf{A} + \mathbf{I}$$ (kề cộng vòng lặp tự thân), $$\tilde{\mathbf{D}}$$ là ma trận bậc, $$\mathbf{H}^{(k)}$$ là biểu diễn nút ở tầng $$k$$, $$\mathbf{W}^{(k)}$$ là trọng số học được.
-
-Phép này thực hiện gộp có trọng số các láng giềng rồi biến đổi tuyến tính và phi tuyến, với trọng số tỉ lệ nghịch với bậc nút (nút bậc cao đóng góp ít hơn trên mỗi láng giềng).
+trong đó $$\tilde{\mathbf{A}} = \mathbf{A} + \mathbf{I}$$ là ma trận kề có bổ sung vòng tự nối (*self-loop*), $$\tilde{\mathbf{D}}$$ là ma trận bậc tương ứng, $$\mathbf{H}^{(k)}$$ là ma trận biểu diễn nút ở tầng $$k$$, và $$\mathbf{W}^{(k)}$$ là ma trận trọng số cần học. Phép toán này tính trung bình có trọng số các láng giềng (nút có bậc càng cao thì đóng góp trên mỗi cạnh càng giảm nhờ hệ số chuẩn hóa) rồi áp dụng phép biến đổi tuyến tính và hàm kích hoạt phi tuyến.
 
 ### GraphSAGE
 
-GraphSAGE lấy mẫu lân cận kích thước cố định và dùng gộp học được:
+GraphSAGE lấy mẫu một tập láng giềng có kích thước cố định và áp dụng hàm tổng hợp học được:
 
 $$\mathbf{h}_{\mathcal{N}(i)}^{(k)} = \text{AGGREGATE}(\{\mathbf{h}_j^{(k-1)} : j \in \mathcal{N}(i)\})$$
 
 $$\mathbf{h}_i^{(k)} = \sigma(\mathbf{W}^{(k)} \cdot [\mathbf{h}_i^{(k-1)}, \mathbf{h}_{\mathcal{N}(i)}^{(k)}])$$
 
-AGGREGATE có thể là mean, max, hoặc LSTM trên lân cận. Điều này cho phép huấn luyện mini-batch và xử lý lân cận kích thước biến thiên.
+Hàm `AGGREGATE` có thể là trung bình (*mean*), cực đại (*max*) hoặc LSTM trên tập láng giềng. Cách lấy mẫu này cho phép huấn luyện theo *mini-batch* và xử lý hiệu quả các đồ thị lớn có số láng giềng biến thiên mạnh.
 
-## 3. Ví dụ / Trực giác
+## 3. Ví dụ và trực giác
 
-Xét mạng xã hội: nút là người, cạnh là tình bạn, đặc trưng nút gồm tuổi, vị trí, sở thích. Ta muốn dự đoán người dùng nào sẽ thích sản phẩm mới (phân loại nút).
+Xét bài toán phân loại nút trên một mạng xã hội: mỗi nút là một người dùng (có đặc trưng tuổi, vị trí, sở thích), mỗi cạnh là quan hệ bạn bè, và mục tiêu là dự đoán ai sẽ quan tâm đến một sản phẩm mới.
 
-GNN 2 tầng hoạt động như sau. Ban đầu, biểu diễn mỗi người dùng $$\mathbf{h}_i^{(0)}$$ là đặc trưng thô. Sau tầng 1, $$\mathbf{h}_i^{(1)}$$ tích hợp thông tin từ bạn bè trực tiếp (láng giềng 1-hop). Biểu diễn của người dùng A giờ gồm “bạn tôi tuổi 25–30, hầu hết ở đô thị, quan tâm công nghệ” — thông tin láng giềng đã gộp. Sau tầng 2, $$\mathbf{h}_i^{(2)}$$ tích hợp bạn-của-bạn (lân cận 2-hop). Biểu diễn của A nắm bắt ngữ cảnh xã hội rộng hơn.
-
-Cho dự đoán, mạng học rằng người dùng có lân cận với mẫu nhất định (nhiều bạn quan tâm công nghệ, tụm đô thị) có khả năng thích sản phẩm công nghệ. GNN cung cấp đặc trưng nắm bắt cả thuộc tính cá nhân lẫn ngữ cảnh xã hội cho phân loại.
+Với một GNN 2 tầng, ban đầu $$\mathbf{h}_i^{(0)}$$ chỉ chứa đặc trưng cá nhân của người dùng $$i$$. Sau tầng thứ nhất, $$\mathbf{h}_i^{(1)}$$ tích hợp thêm thông tin từ bạn bè trực tiếp (láng giềng 1 bước) — chẳng hạn phản ánh rằng nhóm bạn của người dùng A phần lớn ở độ tuổi 25–30, sống tại đô thị và quan tâm công nghệ. Sau tầng thứ hai, $$\mathbf{h}_i^{(2)}$$ tiếp tục tổng hợp thông tin từ bạn của bạn (vùng lân cận 2 bước), nắm bắt ngữ cảnh cộng đồng rộng hơn. Nhờ kết hợp cả thuộc tính cá nhân lẫn cấu trúc lân cận, mô hình dự đoán chính xác hơn so với việc chỉ dựa vào hồ sơ riêng lẻ của từng người dùng.
 
 ## 4. Mã minh họa
+
 ```python
 import torch
 import torch.nn as nn
@@ -129,32 +128,33 @@ print("Each node gets class predictions using graph structure!")
 ```
 
 ## 5. Khái niệm liên quan
-GNN gắn với lý thuyết đồ thị phổ qua nền tảng toán học. Laplacian đồ thị và phân rã trị riêng cung cấp cơ sở lý thuyết để định nghĩa tích chập trên đồ thị, tổng quát hóa tích chập của CNN từ lưới đều sang đồ thị tùy ý.
 
-## 6. Các Bài báo Nền tảng
+GNN liên hệ mật thiết với lý thuyết đồ thị phổ (*spectral graph theory*). Ma trận Laplacian và phép phân rã trị riêng cung cấp cơ sở toán học để mở rộng phép tích chập từ lưới đều trong CNN sang cấu trúc đồ thị tùy ý.
+
+## 6. Các bài báo nền tảng
 
 **["Semi-Supervised Classification with Graph Convolutional Networks" (2017)](https://arxiv.org/abs/1609.02907)**  
 *Tác giả*: Thomas Kipf, Max Welling  
-Giới thiệu GCN, thiết lập truyền thông điệp trên đồ thị như cách tiếp cận học sâu hiệu quả. Chứng minh phân loại nút bán giám sát dùng cấu trúc đồ thị cộng nhãn hạn chế.
+Giới thiệu GCN cho bài toán phân loại nút bán giám sát, kết hợp cấu trúc đồ thị với số lượng nhãn hạn chế.
 
 **["Inductive Representation Learning on Large Graphs" (2017)](https://arxiv.org/abs/1706.02216)**  
 *Tác giả*: William Hamilton, Rex Ying, Jure Leskovec  
-GraphSAGE cho phép học trên đồ thị lớn qua lấy mẫu lân cận, cho phép huấn luyện mini-batch. Mở rộng GNN từ chuyển dẫn (*transductive* — đồ thị cố định) sang quy nạp (*inductive* — tổng quát hóa sang nút/đồ thị mới).
+GraphSAGE dùng kỹ thuật lấy mẫu lân cận để huấn luyện *mini-batch* trên đồ thị lớn, mở rộng GNN từ thiết lập chuyển dẫn (*transductive* — đồ thị cố định) sang quy nạp (*inductive* — tổng quát hóa sang nút và đồ thị chưa từng gặp).
 
 **["Graph Attention Networks" (2018)](https://arxiv.org/abs/1710.10903)**  
 *Tác giả*: Petar Veličković, Guillem Cucurull, Arantxa Casanova, Adriana Romero, Pietro Liò, Yoshua Bengio  
-GAT dùng cơ chế attention để cân trọng đóng góp láng giềng, học tầm quan trọng của các láng giềng khác nhau. Linh hoạt hơn gộp cố định.
+GAT áp dụng cơ chế *attention* để học trọng số đóng góp khác nhau cho từng láng giềng thay vì dùng trọng số cố định theo bậc nút.
 
-## Bẫy Thường gặp và Mẹo
+## Bẫy thường gặp và mẹo thực hành
 
-Làm mịn quá mức (*oversmoothing*) xảy ra với nhiều tầng GNN — biểu diễn nút trở nên không phân biệt được khi chúng gộp từ lân cận ngày càng lớn. Dùng kết nối bỏ qua (*skip connection*), chuẩn hóa batch, hoặc chọn độ sâu cẩn thận (2–3 tầng thường đủ).
+Hiện tượng làm mịn quá mức (*oversmoothing*) dễ xảy ra khi xếp quá nhiều tầng GNN: biểu diễn của các nút dần trở nên giống nhau và mất khả năng phân biệt do tổng hợp thông tin từ vùng lân cận quá rộng. Có thể giảm thiểu bằng cách thêm kết nối tắt (*skip connection*), chuẩn hóa và giữ độ sâu vừa phải (thường 2–3 tầng là đủ cho nhiều bài toán).
 
-## Điểm Chính Cần Nhớ
+## Điểm chính cần nhớ
 
-Mạng neuron đồ thị xử lý dữ liệu cấu trúc đồ thị qua truyền thông điệp, cập nhật lặp biểu diễn nút bằng cách gộp thông tin từ láng giềng qua các hàm học được, bất biến hoán vị. GCN dùng ma trận kề chuẩn hóa cho tích chập đồ thị phổ. GraphSAGE lấy mẫu lân cận để mở rộng quy mô. Mạng attention đồ thị học tầm quan trọng láng giềng qua attention. Ứng dụng trải mạng xã hội, phân tử, đồ thị tri thức và hệ thống gợi ý. GNN cho phép học sâu trên dữ liệu quan hệ, không đều nơi CNN và RNN không áp dụng được, mở các miền cấu trúc đồ thị cho AI hiện đại.
+Mạng nơ-ron đồ thị xử lý dữ liệu dạng đồ thị bằng cơ chế truyền thông điệp, cập nhật biểu diễn từng nút qua các phép tổng hợp láng giềng bất biến hoán vị. GCN sử dụng ma trận kề chuẩn hóa cho tích chập đồ thị, GraphSAGE lấy mẫu lân cận để mở rộng quy mô, còn GAT học trọng số láng giềng bằng *attention*. GNN giúp áp dụng học sâu lên dữ liệu quan hệ không đều đặn — nơi CNN và RNN truyền thống không phù hợp — phục vụ các bài toán trên mạng xã hội, phân tử, đồ thị tri thức và hệ thống gợi ý.
 
 ## Video tham khảo
 
-- **xem trước** [Graph Neural Networks Explained: A Clear Guide to GNN Basics & Models](https://www.youtube.com/watch?v=eGoszzMkGfU) — IBM Technology, tiếng Anh. Nút, cạnh và một phép cập nhật bất biến hoán vị.
-- [Message Passing: How Graph Neural Networks Actually Work](https://www.youtube.com/watch?v=1DmNdMUbDkg) — The Synthetic Mind, tiếng Anh. Bước tổng trên hàng xóm mà công thức bài viết.
-- [Linear transformations and matrices | Chapter 3, Essence of linear algebra](https://www.youtube.com/watch?v=kYB8IZa5AuE) — 3Blue1Brown, tiếng Anh. Ánh xạ tuyến tính áp sau tổng đó là một ma trận thường, điều dễ quên.
+- **Xem trước** [Graph Neural Networks Explained: A Clear Guide to GNN Basics & Models](https://www.youtube.com/watch?v=eGoszzMkGfU) — IBM Technology, tiếng Anh. Minh họa nút, cạnh và phép cập nhật bất biến hoán vị trong GNN.
+- [Message Passing: How Graph Neural Networks Actually Work](https://www.youtube.com/watch?v=1DmNdMUbDkg) — The Synthetic Mind, tiếng Anh. Giải thích chi tiết bước tổng hợp thông tin từ láng giềng tương ứng với công thức trong bài.
+- [Linear transformations and matrices | Chapter 3, Essence of linear algebra](https://www.youtube.com/watch?v=kYB8IZa5AuE) — 3Blue1Brown, tiếng Anh. Ôn lại ý nghĩa hình học của phép nhân ma trận tuyến tính áp dụng ngay sau bước tổng hợp láng giềng.

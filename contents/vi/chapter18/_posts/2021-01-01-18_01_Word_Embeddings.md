@@ -15,116 +15,118 @@ categories:
 *Hình ảnh: Minh họa nhúng Word2Vec trong không gian vectơ. Nguồn: Wikimedia Commons*
 
 ## 1. Tổng quan khái niệm
-Nhúng từ (*word embedding*) là một trong những đổi mới nền tảng nhất của xử lý ngôn ngữ tự nhiên, thay đổi cách ta biểu diễn và xử lý văn bản trong hệ thống học máy. Ý tưởng cốt lõi thanh lịch nhưng có tác động sâu: biểu diễn mỗi từ bằng một vectơ dày đặc các số thực (thường 100–300 chiều) sao cho các từ gần nghĩa có vectơ tương tự. Biểu diễn vectơ liên tục này thay thế các biểu diễn thưa cũ như mã hóa one-hot (vectơ hàng nghìn chiều, toàn số 0 trừ một vị trí) bằng các nhúng gọn, mang nghĩa, nắm bắt quan hệ ngữ nghĩa qua thuộc tính hình học trong không gian vectơ.
 
-Để hiểu vì sao nhúng làm thay đổi NLP, cần thấy hạn chế của biểu diễn từ rời rạc. Các cách tiếp cận truyền thống coi từ là ký hiệu nguyên tử — “king”, “queen” và “car” cách đều nhau, không chia sẻ cấu trúc. One-hot biểu diễn từ vựng 50.000 từ bằng vectơ 50.000 chiều trực giao, không có khái niệm tương tự. Điều này làm việc học khó vì mô hình không thể tổng quát hóa từ “king lives in palace” sang “queen lives in palace” — nó phải học sự kiện về “queen” độc lập dù gần nghĩa với “king”.
+Nhúng từ (*word embedding*) là một trong những kỹ thuật nền tảng của xử lý ngôn ngữ tự nhiên, thay đổi cách biểu diễn và xử lý văn bản trong các hệ thống học máy. Ý tưởng cốt lõi khá đơn giản: biểu diễn mỗi từ bằng một vectơ dày đặc các số thực (thường có 100–300 chiều) sao cho các từ gần nghĩa có vectơ gần nhau. Biểu diễn liên tục này thay thế các biểu diễn thưa trước đây như mã hóa *one-hot* (vectơ hàng nghìn chiều, toàn số 0 trừ một vị trí) bằng các vectơ gọn hơn, phản ánh quan hệ ngữ nghĩa thông qua cấu trúc hình học trong không gian vectơ.
+
+Để thấy rõ vai trò của nhúng từ, cần xét hạn chế của biểu diễn rời rạc. Các phương pháp truyền thống coi từ là các ký hiệu độc lập — “king”, “queen” và “car” cách đều nhau và không chia sẻ cấu trúc nào. Với từ vựng 50.000 từ, mã hóa *one-hot* tạo ra các vectơ 50.000 chiều trực giao đôi một, không mang thông tin về độ tương tự. Điều này cản trở khả năng tổng quát hóa: nếu mô hình học được mẫu câu “king lives in palace”, nó vẫn phải học lại độc lập với “queen lives in palace” dù hai từ gần nghĩa.
 
 ### Từ văn bản → token → one-hot / bag-of-words
 
-Bước đầu luôn là **tokenization** (tách từ/token), rồi gán biểu diễn số.
+Bước đầu tiên luôn là **tokenization** (tách văn bản thành các từ hoặc token), sau đó chuyển sang biểu diễn số.
 
 ![Tokenization](/deep-learning-self-learning/img/chapter_img/chapter18/emb_tokenization.jpg)
 *Hình: Câu được tách thành các token trước khi mã hóa. (Minh họa từ video Word Embedding / Transformer)*
 
 ![Bảng one-hot](/deep-learning-self-learning/img/chapter_img/chapter18/emb_one_hot_table.jpg)
-*Hình: Mỗi từ một vector one-hot — trực giao, thưa, không mang nghĩa. (Minh họa từ video Word Embedding / Transformer)*
+*Hình: Mỗi từ tương ứng một vector one-hot — trực giao, thưa và không mang thông tin ngữ nghĩa. (Minh họa từ video Word Embedding / Transformer)*
 
 ![Bag-of-words](/deep-learning-self-learning/img/chapter_img/chapter18/emb_bag_of_words.jpg)
-*Hình: Bag-of-words gộp one-hot theo câu — mất thứ tự từ. (Minh họa từ video Word Embedding / Transformer)*
+*Hình: Bag-of-words gộp các vector one-hot theo câu nên làm mất thứ tự từ. (Minh họa từ video Word Embedding / Transformer)*
 
 ![Hạn chế one-hot / BoW](/deep-learning-self-learning/img/chapter_img/chapter18/emb_onehot_limitations.jpg)
-*Hình: Ba hạn chế chính — không thứ tự, thưa + nổ chiều, không quan hệ ngữ nghĩa. (Minh họa từ video Word Embedding / Transformer)*
+*Hình: Ba hạn chế chính — mất thứ tự từ, biểu diễn thưa với số chiều lớn và thiếu quan hệ ngữ nghĩa. (Minh họa từ video Word Embedding / Transformer)*
 
-Nhúng từ giải quyết điều này bằng cách học biểu diễn liên tục nơi các từ tương tự tụ cụm. Khoảng cách giữa vectơ “king” và “queen” nhỏ (cùng hoàng tộc), trong khi “king” và “car” xa nhau (không liên quan ngữ nghĩa). Đáng chú ý hơn, không gian nhúng thể hiện quan hệ loại suy qua phép toán vectơ: vectơ từ “man” đến “woman” tương tự vectơ từ “king” đến “queen”, nắm bắt quan hệ giới. Ta có thể giải loại suy bằng số học vectơ đơn giản: king − man + woman ≈ queen. Cấu trúc nổi này không được lập trình tường minh mà nảy sinh từ huấn luyện trên văn bản, cho thấy nhúng nắm bắt các quy luật ngữ nghĩa sâu.
+Nhúng từ khắc phục vấn đề này bằng cách học biểu diễn liên tục, trong đó các từ tương tự nằm gần nhau. Khoảng cách giữa vectơ “king” và “queen” nhỏ (cùng thuộc nhóm hoàng gia), còn “king” và “car” nằm xa nhau. Hơn nữa, không gian nhúng còn thể hiện các quan hệ loại suy qua phép toán vectơ: hướng từ “man” đến “woman” tương tự hướng từ “king” đến “queen”, phản ánh quan hệ giới tính. Nhờ đó, ta có thể tính loại suy bằng số học vectơ: `king − man + woman ≈ queen`. Cấu trúc này không được lập trình sẵn mà tự hình thành trong quá trình huấn luyện trên văn bản.
 
 ![Không gian nhúng 2D](/deep-learning-self-learning/img/chapter_img/chapter18/emb_semantic_space_2d.jpg)
-*Hình: Từ gần nghĩa tụ cụm (vua/nữ hoàng/nam/nữ…); khoảng cách phản ánh quan hệ. (Minh họa từ video Word Embedding / Transformer)*
+*Hình: Các từ gần nghĩa gom cụm với nhau (vua/nữ hoàng/nam/nữ…); khoảng cách phản ánh quan hệ giữa chúng. (Minh họa từ video Word Embedding / Transformer)*
 
 ![Lợi ích vector hóa](/deep-learning-self-learning/img/chapter_img/chapter18/emb_vector_arithmetic_benefits.jpg)
-*Hình: Embedding cho phép quan hệ ngữ nghĩa, suy luận từ vựng, và học đặc trưng tự động. (Minh họa từ video Word Embedding / Transformer)*
+*Hình: Embedding hỗ trợ biểu diễn quan hệ ngữ nghĩa, suy luận từ vựng và học đặc trưng tự động. (Minh họa từ video Word Embedding / Transformer)*
 
-Mục tiêu huấn luyện để học nhúng được xây dựng thanh lịch qua *giả thuyết phân bố* (*distributional hypothesis*) trong ngôn ngữ học: các từ xuất hiện trong ngữ cảnh tương tự có nghĩa tương tự. Nguyên lý đơn giản này cho phép học không giám sát từ kho ngữ liệu văn bản khổng lồ.
+Mục tiêu huấn luyện nhúng từ dựa trên *giả thuyết phân bố* (*distributional hypothesis*) trong ngôn ngữ học: những từ xuất hiện trong các ngữ cảnh tương tự thường có nghĩa tương tự. Nguyên lý này cho phép học biểu diễn không giám sát trực tiếp từ kho ngữ liệu văn bản lớn.
 
 ![Ngữ cảnh phân bố quanh “vua”](/deep-learning-self-learning/img/chapter_img/chapter18/emb_distributional_context.jpg)
-*Hình: Từ “vua” thường đi với ngữ cảnh chiến đấu, nam giới, mạnh mẽ… — đồng xuất hiện → embedding gần. (Minh họa từ video Word Embedding / Transformer)*
+*Hình: Từ “vua” thường đi cùng ngữ cảnh chiến đấu, nam giới, mạnh mẽ… — các từ đồng xuất hiện trong ngữ cảnh tương tự sẽ có embedding gần nhau. (Minh họa từ video Word Embedding / Transformer)*
 
-Các mô hình như Word2Vec và GloVe học nhúng bằng cách dự đoán từ ngữ cảnh từ từ đích (hoặc ngược lại), hoặc bằng cách phân rã thống kê đồng xuất hiện. Các vectơ thu được mã hóa ngữ nghĩa từ vựng, mẫu cú pháp, thậm chí một phần tri thức thế giới — tất cả khám phá thuần từ mẫu đồng xuất hiện trong văn bản mà không cần dữ liệu có nhãn.
+Các mô hình như Word2Vec và GloVe học nhúng từ bằng cách dự đoán từ ngữ cảnh từ từ đích (hoặc ngược lại), hoặc phân rã ma trận thống kê đồng xuất hiện. Các vectơ học được lưu giữ thông tin về ngữ nghĩa từ vựng, quy luật cú pháp và một phần tri thức thế giới chỉ từ thống kê đồng xuất hiện mà không cần nhãn thủ công.
 
-Tác động của nhúng từ đối với NLP không thể phóng đại. Chúng đặt nền cho cuộc cách mạng học sâu trong xử lý ngôn ngữ, cho phép mạng neuron tận dụng văn bản không nhãn khổng lồ để học biểu diễn rồi chuyển giao sang tác vụ hạ nguồn. Nhúng tiền huấn luyện như Word2Vec và GloVe trở thành thành phần chuẩn trong hầu hết hệ thống NLP giai đoạn 2013–2018. Dù nhúng ngữ cảnh hiện đại từ BERT và GPT đã phần lớn thay thế nhúng từ tĩnh cho nhiều tác vụ, hiểu nhúng tĩnh vẫn then chốt để nắm lộ trình tiến hóa của học biểu diễn trong NLP và cho các ứng dụng nơi tính đơn giản và hiệu quả của chúng vẫn là lợi thế.
+Nhúng từ đặt nền móng cho học sâu trong xử lý ngôn ngữ tự nhiên, cho phép mạng nơ-ron tận dụng kho văn bản chưa gán nhãn quy mô lớn để học biểu diễn và chuyển giao sang các tác vụ hạ nguồn. Trong giai đoạn 2013–2018, các bộ nhúng tiền huấn luyện như Word2Vec và GloVe là thành phần tiêu chuẩn trong hầu hết hệ thống NLP. Dù ngày nay nhúng theo ngữ cảnh từ BERT và GPT đã thay thế nhúng tĩnh ở nhiều tác vụ, việc nắm vững nhúng tĩnh vẫn cần thiết để hiểu sự phát triển của học biểu diễn trong NLP, cũng như phục vụ những ứng dụng ưu tiên tính đơn giản và hiệu quả tính toán.
 
 ## 2. Nền tảng toán học
-Nhúng từ ánh xạ ký hiệu rời rạc (từ) sang vectơ liên tục theo cách nắm bắt độ tương tự ngữ nghĩa. Hình thức hóa: ta có từ vựng $$V$$ kích thước $$|V|$$ và học ma trận nhúng $$\mathbf{E} \in \mathbb{R}^{d \times |V|}$$ trong đó cột $$\mathbf{e}_w \in \mathbb{R}^d$$ là nhúng của từ $$w$$. Chiều nhúng điển hình $$d = 100\text{-}300$$, nhỏ hơn nhiều so với kích thước từ vựng (10.000–100.000).
+
+Nhúng từ ánh xạ các ký hiệu rời rạc (từ) sang vectơ liên tục sao cho bảo toàn độ tương tự ngữ nghĩa. Cụ thể, với tập từ vựng $$V$$ có kích thước $$|V|$$, ta học ma trận nhúng $$\mathbf{E} \in \mathbb{R}^{d \times |V|}$$, trong đó mỗi cột $$\mathbf{e}_w \in \mathbb{R}^d$$ là vectơ nhúng của từ $$w$$. Số chiều nhúng thường là $$d = 100\text{–}300$$, nhỏ hơn rất nhiều so với kích thước từ vựng (10.000–100.000).
 
 ### Word2Vec: Mô hình Skip-gram
 
-Mô hình skip-gram dự đoán từ ngữ cảnh cho trước từ đích, dựa trên giả thuyết phân bố. Với kho ngữ liệu các từ $$w_1, w_2, \ldots, w_T$$, mục tiêu là:
+Mô hình *skip-gram* dự đoán các từ ngữ cảnh khi biết từ đích, dựa trên giả thuyết phân bố. Với chuỗi từ $$w_1, w_2, \ldots, w_T$$ trong kho ngữ liệu, mục tiêu tối ưu là:
 
 $$\max_\theta \frac{1}{T}\sum_{t=1}^T \sum_{-c \leq j \leq c, j \neq 0} \log p(w_{t+j} | w_t; \theta)$$
 
-trong đó $$c$$ là kích thước cửa sổ ngữ cảnh (thường 5), và $$\theta$$ gồm ma trận nhúng cùng trọng số đầu ra.
+trong đó $$c$$ là kích thước cửa sổ ngữ cảnh (thường bằng 5), và $$\theta$$ bao gồm ma trận nhúng đầu vào và trọng số đầu ra.
 
 ![Cửa sổ ngữ cảnh](/deep-learning-self-learning/img/chapter_img/chapter18/emb_context_window.jpg)
-*Hình: Window size = 1 — từ tâm học từ láng giềng (và ngược lại trong skip-gram/CBOW). (Minh họa từ video Word Embedding / Transformer)*
+*Hình: Cửa sổ ngữ cảnh kích thước 1 — từ trung tâm học từ các từ lân cận (và ngược lại trong skip-gram/CBOW). (Minh họa từ video Word Embedding / Transformer)*
 
 ![CBOW-style: dự đoán từ giữa](/deep-learning-self-learning/img/chapter_img/chapter18/emb_cbow_predict_word.jpg)
-*Hình: Hai từ ngữ cảnh (one-hot) → lớp ẩn nhỏ → dự đoán từ đích. (Minh họa từ video Word Embedding / Transformer)*
+*Hình: Hai từ ngữ cảnh (one-hot) đi qua lớp ẩn nhỏ để dự đoán từ đích ở giữa. (Minh họa từ video Word Embedding / Transformer)*
 
 ![One-hot → projection ẩn](/deep-learning-self-learning/img/chapter_img/chapter18/emb_onehot_to_hidden.jpg)
-*Hình: Chiều vocab (ví dụ 5) nén xuống embedding dim (ví dụ 3). (Minh họa từ video Word Embedding / Transformer)*
+*Hình: Biểu diễn chiều từ vựng (ví dụ 5) được nén xuống chiều nhúng (ví dụ 3). (Minh họa từ video Word Embedding / Transformer)*
 
 ![Ma trận W1, W2 khi huấn luyện](/deep-learning-self-learning/img/chapter_img/chapter18/emb_w1_w2_training.jpg)
-*Hình: Pipeline đầy đủ: one-hot × W1 → ẩn → × W2 → logit từ; so với nhãn thật để cập nhật. (Minh họa từ video Word Embedding / Transformer)*
+*Hình: Quy trình đầy đủ: one-hot × W1 → lớp ẩn → × W2 → logit các từ; so sánh với nhãn thật để cập nhật trọng số. (Minh họa từ video Word Embedding / Transformer)*
 
 ![Embedding matrix](/deep-learning-self-learning/img/chapter_img/chapter18/emb_embedding_matrix.jpg)
-*Hình: Ma trận nhúng $$|V|\times d$$ (ví dụ $$5\times 3$$) — mỗi hàng/cột là vector một từ. (Minh họa từ video Word Embedding / Transformer)*
+*Hình: Ma trận nhúng $$|V|\times d$$ (ví dụ $$5\times 3$$) — mỗi hàng hoặc cột là vector đại diện cho một từ. (Minh họa từ video Word Embedding / Transformer)*
 
-Xác suất có điều kiện dùng softmax:
+Xác suất có điều kiện được tính qua hàm softmax:
 
 $$p(w_O | w_I) = \frac{\exp(\mathbf{v}_{w_O}^T \mathbf{v}_{w_I})}{\sum_{w=1}^{|V|} \exp(\mathbf{v}_w^T \mathbf{v}_{w_I})}$$
 
-trong đó $$\mathbf{v}_{w_I}$$ là nhúng đầu vào của từ $$w_I$$ và $$\mathbf{v}_{w_O}$$ là nhúng đầu ra của $$w_O$$. Tính softmax này đòi hỏi tổng trên toàn từ vựng (đắt!), thúc đẩy các xấp xỉ.
+trong đó $$\mathbf{v}_{w_I}$$ là vectơ nhúng đầu vào của từ $$w_I$$ và $$\mathbf{v}_{w_O}$$ là vectơ nhúng đầu ra của từ $$w_O$$. Vì mẫu số phải tính tổng trên toàn bộ từ vựng nên chi phí tính toán rất cao, đòi hỏi các phương pháp xấp xỉ.
 
-**Lấy mẫu âm** (*negative sampling*) xấp xỉ softmax bằng cách lấy mẫu vài ví dụ âm thay vì tổng trên mọi từ:
+**Lấy mẫu âm** (*negative sampling*) xấp xỉ hàm softmax bằng cách chỉ lấy một vài từ âm thay vì tính tổng trên cả từ vựng:
 
 $$\log \sigma(\mathbf{v}_{w_O}^T \mathbf{v}_{w_I}) + \sum_{i=1}^k \mathbb{E}_{w_i \sim P_n(w)}[\log \sigma(-\mathbf{v}_{w_i}^T \mathbf{v}_{w_I})]$$
 
-trong đó $$\sigma$$ là sigmoid, $$k$$ là số mẫu âm (thường 5–20), và $$P_n(w)$$ là phân bố nhiễu (thường unigram lũy thừa 3/4 để lấy mẫu quá các từ hiếm). Điều này chuyển bài toán đa lớp thành $$k+1$$ phân loại nhị phân, khả thi ngay cả với từ vựng lớn.
+trong đó $$\sigma$$ là hàm sigmoid, $$k$$ là số mẫu âm (thường từ 5 đến 20), và $$P_n(w)$$ là phân bố nhiễu (thường lấy phân bố unigram lũy thừa 3/4 để tăng xác suất chọn các từ hiếm). Cách này chuyển bài toán phân loại đa lớp trên toàn bộ từ vựng thành $$k+1$$ bài toán phân loại nhị phân, giúp huấn luyện khả thi với từ vựng lớn.
 
-Tính chất đáng chú ý của nhúng Word2Vec là quan hệ ngữ nghĩa được mã hóa như phép tịnh tiến tuyến tính trong không gian vectơ:
+Một tính chất đáng chú ý của Word2Vec là các quan hệ ngữ nghĩa thường tương ứng với phép tịnh tiến tuyến tính trong không gian vectơ:
 
 $$\mathbf{e}_{\text{queen}} \approx \mathbf{e}_{\text{king}} - \mathbf{e}_{\text{man}} + \mathbf{e}_{\text{woman}}$$
 
 $$\mathbf{e}_{\text{Paris}} \approx \mathbf{e}_{\text{France}} - \mathbf{e}_{\text{Germany}} + \mathbf{e}_{\text{Berlin}}$$
 
-Các loại suy này không được huấn luyện tường minh mà nảy sinh từ giả thuyết phân bố: “king” và “queen” xuất hiện trong ngữ cảnh tương tự (hoàng gia, ngai vàng, cung điện), cũng như “king” và “man” (ngữ cảnh giới), tạo hình học vectơ phản ánh các mẫu ngữ nghĩa này.
+Các quan hệ loại suy này không được giám sát trực tiếp mà xuất hiện tự nhiên từ giả thuyết phân bố: “king” và “queen” chia sẻ nhiều ngữ cảnh về hoàng gia (ngai vàng, cung điện), còn “king” và “man” chia sẻ ngữ cảnh giới tính, tạo nên cấu trúc hình học nhất quán.
 
 ### GloVe: Global Vectors
 
-GloVe tiếp cận khác, phân rã trực tiếp thống kê đồng xuất hiện từ. Gọi $$X_{ij}$$ là số lần từ $$j$$ xuất hiện trong ngữ cảnh của từ $$i$$. GloVe tối thiểu hóa:
+GloVe đi theo hướng khác bằng cách phân rã trực tiếp ma trận thống kê đồng xuất hiện toàn cục. Gọi $$X_{ij}$$ là số lần từ $$j$$ xuất hiện trong ngữ cảnh của từ $$i$$. GloVe tối thiểu hóa hàm mục tiêu:
 
 $$J = \sum_{i,j=1}^{|V|} f(X_{ij})(\mathbf{w}_i^T \tilde{\mathbf{w}}_j + b_i + \tilde{b}_j - \log X_{ij})^2$$
 
-trong đó $$\mathbf{w}_i$$ và $$\tilde{\mathbf{w}}_j$$ là nhúng từ và ngữ cảnh, $$b_i, \tilde{b}_j$$ là độ lệch, và $$f(X_{ij})$$ là hàm trọng số:
+trong đó $$\mathbf{w}_i$$ và $$\tilde{\mathbf{w}}_j$$ lần lượt là vectơ nhúng của từ và từ ngữ cảnh, $$b_i, \tilde{b}_j$$ là các hệ số điều chỉnh (*bias*), còn $$f(X_{ij})$$ là hàm trọng số:
 
 $$f(x) = \begin{cases} (x/x_{\max})^\alpha & \text{if } x < x_{\max} \\ 1 & \text{otherwise} \end{cases}$$
 
-Hàm này giảm trọng số các đồng xuất hiện thường xuyên (đã được biểu diễn tốt) và giới hạn ảnh hưởng của các cặp rất thường. GloVe kết hợp lợi ích của phương pháp phân rã ma trận toàn cục (tận dụng thống kê toàn kho ngữ liệu) với phương pháp cửa sổ ngữ cảnh cục bộ (Word2Vec), thường sinh nhúng cạnh tranh hoặc vượt Word2Vec.
+Hàm trọng số này giới hạn ảnh hưởng của các cặp từ đồng xuất hiện quá thường xuyên (như từ dừng) và gán trọng số nhỏ hơn cho các cặp hiếm. Nhờ kết hợp thống kê đồng xuất hiện toàn kho ngữ liệu với ngữ cảnh cục bộ, GloVe tạo ra nhúng từ có chất lượng ngang bằng hoặc cao hơn Word2Vec trong nhiều tác vụ.
 
-## 3. Ví dụ / Trực giác
+## 3. Ví dụ và trực giác
 
-Hãy tưởng tượng học nhúng cho từ vựng nhỏ: {cat, dog, car, truck, animal, vehicle}. Ban đầu, vectơ ngẫu nhiên. Khi xử lý văn bản:
+Xét bài toán học nhúng cho một tập từ vựng nhỏ: `{cat, dog, car, truck, animal, vehicle}`. Ban đầu, các vectơ được khởi tạo ngẫu nhiên. Khi duyệt qua kho văn bản:
 
-"The cat is an animal" → "cat" và "animal" đồng xuất hiện  
-"The dog is an animal" → "dog" và "animal" đồng xuất hiện  
-"The car is a vehicle" → "car" và "vehicle" đồng xuất hiện  
-"The truck is a vehicle" → "truck" và "vehicle" đồng xuất hiện
+- `"The cat is an animal"` → `"cat"` và `"animal"` đồng xuất hiện.
+- `"The dog is an animal"` → `"dog"` và `"animal"` đồng xuất hiện.
+- `"The car is a vehicle"` → `"car"` và `"vehicle"` đồng xuất hiện.
+- `"The truck is a vehicle"` → `"truck"` và `"vehicle"` đồng xuất hiện.
 
-Mô hình điều chỉnh vectơ sao cho:
-- "cat" và "dog" trở nên gần nhau (cùng xuất hiện với "animal")
-- "car" và "truck" trở nên gần nhau (cùng xuất hiện với "vehicle")
-- "cat" và "car" giữ khoảng cách (xuất hiện trong ngữ cảnh khác)
+Mô hình dần điều chỉnh các vectơ sao cho:
+- `"cat"` và `"dog"` nằm gần nhau (cùng xuất hiện với `"animal"`).
+- `"car"` và `"truck"` nằm gần nhau (cùng xuất hiện với `"vehicle"`).
+- `"cat"` và `"car"` nằm xa nhau (xuất hiện trong các ngữ cảnh khác biệt).
 
-Sau khi thấy đủ văn bản, không gian nhúng 2D có thể tổ chức như:
+Sau khi huấn luyện trên đủ dữ liệu, không gian nhúng 2D có thể sắp xếp tương tự sơ đồ sau:
 
 ```
      animal
@@ -138,15 +140,16 @@ Sau khi thấy đủ văn bản, không gian nhúng 2D có thể tổ chức nh�
      vehicle
 ```
 
-Các phạm trù ngữ nghĩa (động vật vs phương tiện) tụ cụm, và trong mỗi phạm trù các mục tương tự nằm gần nhau. Ta có thể tính:
+Các nhóm ngữ nghĩa (động vật và phương tiện) tách cụm rõ rệt, và trong từng nhóm các từ gần nghĩa nằm cạnh nhau. Nhờ đó ta có các quan hệ hình học như:
 
-"cat" − "animal" ≈ "dog" − "animal" (cùng chỉ từ phạm trù đến thể hiện)  
-"car" + "vehicle" ≈ "truck" (phạm trù + tương tự cho mục tương tự)
+- `"cat" − "animal" ≈ "dog" − "animal"` (cùng biểu diễn quan hệ từ phạm trù chung đến thực thể cụ thể).
+- `"car" + "vehicle" ≈ "truck"` (nằm trong cùng cụm phương tiện).
 
-Cấu trúc hình học này cho phép tổng quát hóa: nếu mô hình học sự kiện về "cat", nó có thể chuyển giao sang "dog" qua độ tương tự vectơ.
+Cấu trúc hình học này giúp mô hình tổng quát hóa: thông tin học được về `"cat"` có thể chuyển giao sang `"dog"` thông qua độ tương tự giữa hai vectơ.
 
 ## 4. Mã minh họa
-Cài đặt Word2Vec đầy đủ:
+
+Ví dụ cài đặt Word2Vec Skip-gram với lấy mẫu âm:
 
 ```python
 import torch
@@ -194,7 +197,7 @@ class Word2VecSkipGram(nn.Module):
         pos_loss = -torch.log(torch.sigmoid(pos_scores)).mean()
         
         # Negative scores (target-negative dissimilarity)
-        neg_scores = torch.bmm(neg_embeds, target_embeds.unsqueeze(2)).squeeze()  # (batch, k)
+        neg_scores = torch.bmm(neg_embeds, target_embeds.unsqueeze(2)).squeeze(2)  # (batch, k)
         neg_loss = -torch.log(torch.sigmoid(-neg_scores)).sum(dim=1).mean()
         
         return pos_loss + neg_loss
@@ -313,70 +316,71 @@ print("\nEmbeddings learned semantic relationships from co-occurrence patterns!"
 print("Similar words (cat/dog, car/truck) have similar embeddings.")
 ```
 
-## 5. Mở rộng: nhúng trong hệ thống gợi ý (two-tower)
+## 5. Mở rộng: Nhúng trong hệ thống gợi ý (Two-Tower)
 
-Cùng ý tưởng “vector gần nhau = tương tự” không chỉ áp dụng cho từ. Trong **hệ thống gợi ý** (feed video, e-commerce), ta học:
+Nguyên lý “vector gần nhau biểu thị mức độ tương tự” không chỉ áp dụng cho văn bản. Trong **hệ thống gợi ý** (luồng video, thương mại điện tử), ta học hai tập biểu diễn:
 
-- **User embedding** $$\mathbf{u} \in \mathbb{R}^d$$ — “ảnh chụp” sở thích người dùng  
-- **Item embedding** $$\mathbf{v} \in \mathbb{R}^d$$ — “ảnh chụp” nội dung/sản phẩm  
+- **User embedding** $$\mathbf{u} \in \mathbb{R}^d$$ — biểu diễn sở thích của người dùng.
+- **Item embedding** $$\mathbf{v} \in \mathbb{R}^d$$ — biểu diễn đặc trưng của nội dung hoặc sản phẩm.
 
-Điểm khớp thường là tích vô hướng hoặc cosine: $$s(u,i) = \mathbf{u}^\top \mathbf{v}$$.
+Mức độ phù hợp thường được tính bằng tích vô hướng hoặc độ tương tự cosine: $$s(u,i) = \mathbf{u}^\top \mathbf{v}$$.
 
 ![Mạng sâu sinh embedding](/deep-learning-self-learning/img/chapter_img/chapter18/recsys_deep_ranking_nn.jpg)
-*Hình: Mạng feedforward dùng để học biểu diễn / xếp hạng ứng viên. (Minh họa từ video giải thích recommendation system)*
+*Hình: Mạng feedforward dùng để học biểu diễn và xếp hạng ứng viên. (Minh họa từ video giải thích recommendation system)*
 
 ![Embedding chiều 128](/deep-learning-self-learning/img/chapter_img/chapter18/recsys_embedding_128d.jpg)
-*Hình: Đầu ra mạng nén thành vector dày đặc (ví dụ $$1\times 128$$) — “ảnh chụp” sở thích hoặc item. (Minh họa từ video giải thích recommendation system)*
+*Hình: Đầu ra mạng được nén thành vector dày đặc (ví dụ $$1\times 128$$) đại diện cho sở thích người dùng hoặc đặc trưng item. (Minh họa từ video giải thích recommendation system)*
 
-**Mô hình hai tháp (*two-tower*)**: một tháp encode user, một tháp encode item; huấn luyện để cặp (user, item đã tương tác) gần nhau trong không gian nhúng, cặp âm xa nhau. Lợi thế quy mô: precompute toàn bộ item embedding, lúc serving chỉ cần encode user rồi **nearest-neighbor** (ANN) trên hàng tỷ item.
+Trong **mô hình hai tháp (*two-tower*)**, một tháp mã hóa người dùng và một tháp mã hóa nội dung/sản phẩm. Mô hình được huấn luyện sao cho các cặp `(user, item)` đã tương tác nằm gần nhau trong không gian nhúng, còn các cặp âm nằm xa nhau. Ưu điểm lớn khi triển khai quy mô lớn là có thể tính sẵn toàn bộ *item embedding*; khi phục vụ trực tuyến (*serving*), hệ thống chỉ cần mã hóa người dùng rồi tìm láng giềng gần nhất xấp xỉ (ANN) trên hàng tỷ mục.
 
 ![Two-tower: khớp hai vector 128-d](/deep-learning-self-learning/img/chapter_img/chapter18/recsys_two_tower_matching.jpg)
-*Hình: So khớp hai embedding cùng chiều (user vs item) — trực giác của two-tower retrieval. (Minh họa từ video giải thích recommendation system)*
+*Hình: So khớp hai vector nhúng cùng số chiều (user và item) — cơ chế cốt lõi của truy xuất two-tower. (Minh họa từ video giải thích recommendation system)*
 
-So với Word2Vec: thay vì ngữ cảnh từ, tín hiệu huấn luyện là **hành vi** (click, xem hết, mua). Giả thuyết phân bố trở thành: “user/item xuất hiện trong ‘ngữ cảnh’ tương tác tương tự thì embedding gần nhau”.
+So với Word2Vec, thay vì ngữ cảnh từ xung quanh, tín hiệu huấn luyện ở đây là **hành vi tương tác** (nhấp chuột, xem hết video, mua hàng). Giả thuyết phân bố trở thành: người dùng hoặc sản phẩm xuất hiện trong các ngữ cảnh tương tác tương tự sẽ có vectơ nhúng gần nhau.
 
 ## 6. Khái niệm liên quan
-Nhúng từ gắn với ngữ nghĩa phân bố (*distributional semantics*) — lý thuyết ngôn ngữ học cho rằng nghĩa từ được xác định bởi ngữ cảnh. Việc cài đặt tính toán — học vectơ sao cho từ trong ngữ cảnh tương tự có biểu diễn tương tự — chính là hiện thực hóa lý thuyết này. Hiểu mối liên hệ giúp đánh giá vì sao nhúng hoạt động: chúng không phải kỹ thuật đặc trưng tùy tiện mà là cài đặt các nguyên lý ngôn ngữ học cơ bản.
 
-Nhúng liên quan đến các kỹ thuật giảm chiều như PCA hoặc autoencoder. Ta nén vectơ one-hot chiều cao (kích thước từ vựng) thành vectơ dày đặc chiều thấp (kích thước nhúng) trong khi bảo toàn thông tin ngữ nghĩa. Phép nén học được khám phá rằng quan hệ ngữ nghĩa có thể nắm bắt bằng ít chiều hơn nhiều so với danh tính ký hiệu tường minh, cho thấy chiều nội tại của ngữ nghĩa từ thấp hơn nhiều so với kích thước từ vựng.
+Nhúng từ bắt nguồn từ ngữ nghĩa học phân bố (*distributional semantics*) — quan điểm cho rằng nghĩa của một từ được xác định bởi ngữ cảnh sử dụng nó. Việc học vectơ sao cho các từ có ngữ cảnh tương tự nằm gần nhau chính là cách hiện thực hóa tính toán cho lý thuyết ngôn ngữ học này.
 
-Sự tiến hóa từ nhúng tĩnh (Word2Vec, GloVe) đến nhúng ngữ cảnh (ELMo, BERT) phản ánh sự tinh vi ngày càng tăng. Nhúng tĩnh gán một vectơ cho mỗi loại từ, nên “bank” (tài chính) và “bank” (bờ sông) có cùng biểu diễn dù nghĩa khác. Nhúng ngữ cảnh sinh vectơ khác nhau theo ngữ cảnh, giải quyết đa nghĩa.
+Xét về mặt biểu diễn dữ liệu, nhúng từ cũng gần với các kỹ thuật giảm chiều như PCA hoặc autoencoder: vectơ *one-hot* có số chiều bằng kích thước từ vựng được nén xuống vectơ dày đặc chiều thấp nhưng vẫn giữ được cấu trúc ngữ nghĩa. Điều này cho thấy số chiều nội tại cần thiết để biểu diễn nghĩa của từ nhỏ hơn rất nhiều so với tổng số từ.
+
+Quá trình phát triển từ nhúng tĩnh (Word2Vec, GloVe) sang nhúng theo ngữ cảnh (ELMo, BERT) khắc phục hạn chế của từ đa nghĩa. Nhúng tĩnh chỉ gán một vectơ duy nhất cho mỗi từ, nên “bank” (ngân hàng) và “bank” (bờ sông) có cùng biểu diễn. Ngược lại, nhúng theo ngữ cảnh sinh ra vectơ khác nhau tùy theo câu chứa nó.
 
 ![Không gian vector: trái cây vs công ty](/deep-learning-self-learning/img/chapter_img/chapter18/sa_vector_space_fruit_vs_companies.jpg)
-*Hình: Cụm “táo / chuối / cam…” tách khỏi “Google / Microsoft / DeepSeek…”. (Minh họa từ video Transformer / Self-Attention nhập môn)*
+*Hình: Cụm “táo / chuối / cam…” tách khỏi cụm “Google / Microsoft / DeepSeek…”. (Minh họa từ video Transformer / Self-Attention nhập môn)*
 
 ![Sau self-attention: “Apple” theo nghĩa công ty](/deep-learning-self-learning/img/chapter_img/chapter18/sa_contextual_apple_company_vector.jpg)
-*Hình: Khi câu nói về điện thoại/màu cam, vector “Apple” trôi về phía nghĩa hãng (logo). (Minh họa từ video Transformer / Self-Attention nhập môn)*
+*Hình: Khi câu nhắc đến điện thoại và màu sắc, vector “Apple” dịch chuyển về phía cụm các hãng công nghệ. (Minh họa từ video Transformer / Self-Attention nhập môn)*
 
-Lộ trình này cho thấy lĩnh vực tiến từ học biểu diễn cấp từ sang mô hình hóa bản chất phụ thuộc ngữ cảnh của ngôn ngữ.
+Sự chuyển dịch này đánh dấu bước tiến từ biểu diễn cố định ở cấp độ từ sang mô hình hóa ý nghĩa phụ thuộc ngữ cảnh của ngôn ngữ.
 
-## 7. Các Bài báo Nền tảng
+## 7. Các bài báo nền tảng
 
 **["Efficient Estimation of Word Representations in Vector Space" (2013)](https://arxiv.org/abs/1301.3781)**  
 *Tác giả*: Tomas Mikolov, Kai Chen, Greg Corrado, Jeffrey Dean  
-Word2Vec giới thiệu các phương pháp hiệu quả (skip-gram và CBOW) để học nhúng từ ở quy mô lớn. Thủ tục huấn luyện lấy mẫu âm cho phép xử lý hàng tỷ từ, khiến nhúng thực tiễn với từ vựng lớn. Bài báo chứng minh các tính chất ngữ nghĩa đáng chú ý — loại suy giải bằng số học vectơ — cho thấy nhúng nắm bắt mẫu ngôn ngữ tinh vi. Tính đơn giản, hiệu quả và chất lượng của Word2Vec khiến nó được áp dụng rộng rãi, thiết lập nhúng như nền tảng của NLP.
+Word2Vec giới thiệu hai kiến trúc hiệu quả (skip-gram và CBOW) cùng kỹ thuật lấy mẫu âm để học nhúng từ trên kho dữ liệu hàng tỷ từ. Bài báo cũng chỉ ra khả năng giải các phép loại suy ngữ nghĩa bằng số học vectơ, đưa nhúng từ trở thành thành phần phổ biến trong NLP.
 
 **["GloVe: Global Vectors for Word Representation" (2014)](https://aclanthology.org/D14-1162/)**  
 *Tác giả*: Jeffrey Pennington, Richard Socher, Christopher Manning  
-GloVe kết hợp phân rã ma trận toàn cục với ngữ cảnh cục bộ, phân rã ma trận đồng xuất hiện từ để học nhúng. Phương pháp đạt hiệu năng cạnh tranh hoặc vượt Word2Vec đồng thời cung cấp diễn giải trực quan qua thống kê đồng xuất hiện. GloVe cho thấy các mục tiêu huấn luyện khác nhau có thể sinh nhúng chất lượng cao tương tự, gợi ý bản thân biểu diễn quan trọng hơn thủ tục huấn luyện cụ thể.
+GloVe kết hợp ưu điểm của phân rã ma trận toàn cục và cửa sổ ngữ cảnh cục bộ bằng cách phân rã ma trận đồng xuất hiện của từ. Phương pháp đạt chất lượng ngang bằng hoặc tốt hơn Word2Vec, đồng thời gắn trực tiếp các phép toán vectơ với tỷ số xác suất đồng xuất hiện.
 
 **["Deep contextualized word representations" (2018)](https://arxiv.org/abs/1802.05365)**  
 *Tác giả*: Matthew Peters, Mark Neumann, Mohit Iyyer, Matt Gardner, Christopher Clark, Kenton Lee, Luke Zettlemoyer  
-ELMo giới thiệu nhúng ngữ cảnh từ LSTM hai chiều sâu, biểu diễn mỗi từ khác nhau theo ngữ cảnh câu. Điều này giải quyết hạn chế của nhúng tĩnh với đa nghĩa và nghĩa phụ thuộc ngữ cảnh. ELMo cho thấy mô hình ngôn ngữ sâu học các loại thông tin khác nhau ở các tầng khác nhau (cú pháp ở tầng thấp, ngữ nghĩa ở tầng cao), và kết hợp các tầng cải thiện tác vụ hạ nguồn. ELMo đại diện cho bước chuyển từ biểu diễn tĩnh sang ngữ cảnh, mở đường cho BERT và Transformer.
+ELMo giới thiệu biểu diễn từ theo ngữ cảnh dựa trên mạng LSTM hai chiều sâu, khắc phục hạn chế của nhúng tĩnh đối với từ đa nghĩa. Bài báo cũng chỉ ra rằng các tầng khác nhau học các loại thông tin khác nhau (tầng thấp thiên về cú pháp, tầng cao thiên về ngữ nghĩa), mở đường cho BERT và các mô hình Transformer sau này.
 
-## Bẫy Thường gặp và Mẹo
+## Bẫy thường gặp và mẹo thực hành
 
-Dùng nhúng tiền huấn luyện mà không căn chỉnh từ vựng đúng cách gây vấn đề ngoài từ vựng (*out-of-vocabulary*). Nếu từ vựng tác vụ chứa từ không có trong nhúng tiền huấn luyện, cần chiến lược: dùng nhúng dưới từ (BPE, WordPiece), khởi tạo từ thiếu từ các từ tương tự (nếu thiếu “coronavirus”, lấy trung bình “virus” và “corona”), hoặc tinh chỉnh nhúng trên văn bản miền chuyên biệt.
+Sử dụng nhúng từ tiền huấn luyện mà không xử lý sự lệch từ vựng sẽ dẫn đến vấn đề từ ngoài từ vựng (*out-of-vocabulary*, OOV). Khi dữ liệu tác vụ chứa các từ không có trong bộ nhúng tiền huấn luyện, có thể khắc phục bằng cách: dùng biểu diễn dưới từ (*subword* như BPE, WordPiece), khởi tạo từ mới dựa trên trung bình các từ liên quan (chẳng hạn xấp xỉ “coronavirus” từ “virus” và “corona”), hoặc tinh chỉnh lại bộ nhúng trên dữ liệu thuộc miền chuyên biệt.
 
-## Điểm Chính Cần Nhớ
+## Điểm chính cần nhớ
 
-Nhúng từ biểu diễn từ bằng vectơ liên tục dày đặc, trong đó độ tương tự ngữ nghĩa tương ứng với gần gũi hình học, cho phép mạng neuron tổng quát hóa qua các từ gần nghĩa nhờ biểu diễn vectơ dùng chung. Skip-gram Word2Vec dự đoán ngữ cảnh từ đích dùng lấy mẫu âm để hiệu quả, trong khi GloVe phân rã ma trận đồng xuất hiện — cả hai học từ văn bản không nhãn qua giả thuyết phân bố. Nhúng thu được thể hiện các tính chất đáng chú ý gồm suy luận loại suy qua số học vectơ (king − man + woman ≈ queen) và tụ cụm ngữ nghĩa (từ đồng nghĩa có vectơ tương tự), tất cả nảy sinh từ mẫu đồng xuất hiện mà không cần giám sát tường minh. Cùng hình học vector xuất hiện trong **gợi ý**: user/item embedding và mô hình two-tower khớp sở thích với nội dung ở quy mô lớn. Nhúng tiền huấn luyện như Word2Vec và GloVe chuyển giao sang tác vụ hạ nguồn, cung cấp biểu diễn ngữ nghĩa cải thiện hiệu năng trên các ứng dụng NLP từ phân tích cảm xúc đến dịch máy. Nhúng ngữ cảnh hiện đại từ BERT cung cấp biểu diễn phụ thuộc ngữ cảnh giải quyết đa nghĩa, dù nhúng tĩnh vẫn hữu ích về hiệu quả và khả năng diễn giải. Hiểu nhúng từ đặt nền cho mọi học biểu diễn trong NLP (và ngoài NLP), chứng minh cách mạng neuron có thể khám phá cấu trúc thuần từ mẫu dữ liệu.
+Nhúng từ biểu diễn từ bằng các vectơ thực dày đặc, trong đó độ tương tự ngữ nghĩa tương ứng với sự gần gũi về mặt hình học, giúp mạng nơ-ron tổng quát hóa giữa các từ gần nghĩa. Word2Vec (skip-gram với lấy mẫu âm) và GloVe (phân rã ma trận đồng xuất hiện) đều học từ văn bản chưa gán nhãn dựa trên giả thuyết phân bố. Không gian nhúng học được thể hiện các tính chất như gom cụm ngữ nghĩa và phép toán loại suy (`king − man + woman ≈ queen`) mà không cần giám sát tường minh. Cùng cấu trúc hình học đó cũng được ứng dụng rộng rãi trong **hệ thống gợi ý** qua *user/item embedding* và mô hình *two-tower*. Trong khi các mô hình nhúng theo ngữ cảnh như BERT giải quyết tốt hiện tượng đa nghĩa, nhúng tĩnh vẫn hữu ích nhờ tốc độ và tính dễ diễn giải, đồng thời là nền tảng để hiểu học biểu diễn trong NLP và nhiều lĩnh vực khác.
 
 <!-- video-references -->
 
 ## Nguồn video (tham chiếu)
 
-Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
+Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến):
 
 - [Transformer là gì? Self-Attention siêu dễ hiểu (Phần 1)](https://www.facebook.com/reel/930207546288223)
 - [Word Embedding và Transformer hiểu ngôn ngữ](https://www.facebook.com/reel/1501843101324752)
@@ -384,6 +388,6 @@ Một số hình minh họa trong bài được trích từ các video sau (Mach
 
 ## Video tham khảo
 
-- **xem trước** [Word Embedding and Word2Vec, Clearly Explained!!!](https://www.youtube.com/watch?v=viZrOnJclY0) — StatQuest with Josh Starmer, tiếng Anh. Skip-gram và giả thuyết phân bố là lõi của bài.
-- [The Illustrated Word2vec - A Gentle Intro to Word Embeddings in Machine Learning](https://www.youtube.com/watch?v=ISPId9Lhc1g) — Jay Alammar, tiếng Anh. Một lượt trực quan qua cùng các vector, hữu ích cho các ví dụ loại suy.
-- [Lecture 2 | Word Vector Representations: word2vec](https://www.youtube.com/watch?v=ERibwqs9p38) — Stanford University School of Engineering, tiếng Anh. Mục tiêu softmax và lối tắt negative sampling mà phần toán viết.
+- **Xem trước** [Word Embedding and Word2Vec, Clearly Explained!!!](https://www.youtube.com/watch?v=viZrOnJclY0) — StatQuest with Josh Starmer, tiếng Anh. Giải thích rõ ràng skip-gram và giả thuyết phân bố — trọng tâm của bài.
+- [The Illustrated Word2vec - A Gentle Intro to Word Embeddings in Machine Learning](https://www.youtube.com/watch?v=ISPId9Lhc1g) — Jay Alammar, tiếng Anh. Trình bày trực quan không gian vectơ từ và các ví dụ loại suy.
+- [Lecture 2 | Word Vector Representations: word2vec](https://www.youtube.com/watch?v=ERibwqs9p38) — Stanford University School of Engineering, tiếng Anh. Đi sâu vào hàm mục tiêu softmax và kỹ thuật lấy mẫu âm như phần nền tảng toán học trong bài.

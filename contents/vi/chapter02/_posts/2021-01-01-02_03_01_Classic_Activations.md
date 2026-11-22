@@ -9,31 +9,31 @@ categories:
 - chapter02
 ---
 
-Bài này trình bày sâu về hàm kích hoạt (*activation functions*), các tính chất của chúng, và cách chọn hàm phù hợp cho mạng neuron.
+Bài này phân tích chi tiết các hàm kích hoạt (*activation functions*), đặc tính toán học của chúng và cách lựa chọn hàm phù hợp cho mạng neuron.
 
 ---
 
 ## Vì sao Hàm Kích hoạt Quan trọng
 
-**Không có hàm kích hoạt**, mạng neuron chỉ học được các biến đổi tuyến tính. Dù xếp bao nhiêu lớp, hợp thành của các hàm tuyến tính vẫn là tuyến tính:
+**Nếu không có hàm kích hoạt**, mạng neuron chỉ có thể biểu diễn các phép biến đổi tuyến tính. Dù xếp chồng bao nhiêu lớp, hợp thành của nhiều hàm tuyến tính vẫn chỉ là một hàm tuyến tính duy nhất:
 
 $$f(g(h(\mathbf{x}))) = \mathbf{A}_1(\mathbf{A}_2(\mathbf{A}_3 \mathbf{x})) = (\mathbf{A}_1 \mathbf{A}_2 \mathbf{A}_3)\mathbf{x} = \mathbf{A}\mathbf{x}$$
 
-**Hàm kích hoạt đưa vào phi tuyến tính**, cho phép mạng học các mẫu phức tạp và xấp xỉ các hàm tùy ý.
+**Hàm kích hoạt bổ sung tính phi tuyến**, giúp mạng học được các mẫu phức tạp và xấp xỉ nhiều lớp hàm khác nhau.
 
 ## Các Tính chất Mong muốn của Hàm Kích hoạt
 
-Một hàm kích hoạt lý tưởng nên có:
+Một hàm kích hoạt tốt thường hướng tới các tính chất sau:
 
-1. **Phi tuyến tính**: Cho phép học các mẫu phức tạp
-2. **Khả vi**: Cho phép học dựa trên gradient
-3. **Đơn điệu**: Bảo toàn thứ tự (hữu ích cho tối ưu)
-4. **Hiệu quả tính toán**: Nhanh khi tính xuôi và ngược
-5. **Bị chặn hoặc không bị chặn phù hợp**: Tùy theo tác vụ
-6. **Tâm tại không**: Hỗ trợ luồng gradient (cho lớp ẩn)
-7. **Tránh bão hòa**: Ngăn gradient biến mất
+1. **Phi tuyến:** Cho phép mạng học các mối quan hệ phức tạp
+2. **Khả vi:** Hỗ trợ tối ưu hóa dựa trên gradient
+3. **Đơn điệu:** Bảo toàn thứ tự đầu vào (thuận lợi cho quá trình tối ưu)
+4. **Tính toán hiệu quả:** Thực thi nhanh ở cả lượt xuôi và lượt ngược
+5. **Miền giá trị phù hợp:** Bị chặn hoặc không bị chặn tùy theo yêu cầu bài toán
+6. **Đối xứng quanh 0 (*zero-centered*):** Giúp luồng gradient ổn định hơn ở các lớp ẩn
+7. **Hạn chế bão hòa:** Tránh hiện tượng gradient biến mất
 
-Không có hàm kích hoạt nào thỏa mãn hoàn hảo mọi tính chất, nên lựa chọn phụ thuộc trường hợp sử dụng cụ thể.
+Không có hàm kích hoạt nào thỏa mãn đồng thời mọi tiêu chí ở mức tối ưu, nên việc lựa chọn cần căn cứ vào từng bài toán và kiến trúc cụ thể.
 
 ## Các Hàm Kích hoạt Phổ biến
 
@@ -47,23 +47,23 @@ $$\sigma'(z) = \sigma(z)(1 - \sigma(z))$$
 
 **Tính chất:**
 - Miền giá trị: $$(0, 1)$$
-- Trơn, khả vi mọi nơi
+- Trơn và khả vi tại mọi điểm
 - Đơn điệu tăng
-- Bão hòa ở cả hai đầu
+- Bão hòa ở cả hai phía
 
 **Ưu điểm:**
-- Diễn giải xác suất rõ ràng
-- Gradient trơn
-- Từng phổ biến lịch sử
+- Dễ diễn giải dưới dạng xác suất
+- Gradient biến thiên mượt
+- Được sử dụng rộng rãi trong giai đoạn đầu của mạng neuron
 
 **Nhược điểm:**
-- **Bài toán gradient biến mất**: Gradient gần 0 khi $$|z| > 4$$
-- **Không tâm tại không**: Đầu ra luôn dương
-- **Tốn tính toán**: Cần tính hàm mũ
+- **Gradient biến mất:** Đạo hàm rất gần 0 khi $$|z| > 4$$
+- **Không đối xứng quanh 0:** Đầu ra luôn dương
+- **Chi phí tính toán cao:** Cần tính hàm mũ
 
-**Trường hợp dùng:**
-- Lớp đầu ra cho phân loại nhị phân
-- Kích hoạt cổng trong LSTM
+**Trường hợp sử dụng:**
+- Lớp đầu ra cho bài toán phân loại nhị phân
+- Các cổng điều khiển trong LSTM
 - Thường tránh dùng ở lớp ẩn của mạng sâu
 
 ### 2. Tang Hyperbolic (tanh)
@@ -76,221 +76,221 @@ $$\tanh'(z) = 1 - \tanh^2(z)$$
 
 **Tính chất:**
 - Miền giá trị: $$(-1, 1)$$
-- Tâm tại không (cải thiện so với sigmoid)
-- Bão hòa ở cả hai đầu
+- Đối xứng quanh 0 (cải thiện so với sigmoid)
+- Bão hòa ở cả hai phía
 
 **Ưu điểm:**
-- Tâm tại không (luồng gradient tốt hơn)
-- Gradient mạnh hơn sigmoid (miền đạo hàm: $$(0, 1]$$)
+- Đối xứng quanh 0, hỗ trợ luồng gradient tốt hơn
+- Đạo hàm lớn hơn sigmoid (nhận giá trị trong $$(0, 1]$$)
 
 **Nhược điểm:**
-- Vẫn chịu gradient biến mất
-- Tốn tính toán
+- Vẫn gặp hiện tượng gradient biến mất ở hai đầu bão hòa
+- Tốn chi phí tính toán hàm mũ
 
-**Trường hợp dùng:**
-- Lớp ẩn (tốt hơn sigmoid nhưng kém hơn ReLU)
-- Ô RNN/LSTM
-- Khi đầu ra tâm tại không mang lại lợi ích
+**Trường hợp sử dụng:**
+- Lớp ẩn (tốt hơn sigmoid nhưng thường kém hiệu quả hơn ReLU)
+- Các ô nhớ trong RNN/LSTM
+- Những bài toán cần đầu ra đối xứng quanh 0
 
 ### 3. Rectified Linear Unit (ReLU)
 
 $$\text{ReLU}(z) = \max(0, z) = \begin{cases} z & \text{if } z > 0 \\ 0 & \text{if } z \leq 0 \end{cases}$$
 
 ![Đồ thị hàm ReLU](/deep-learning-self-learning/img/chapter_img/chapter02/relu_function.jpg)
-*Hình: $$\mathrm{ReLU}(x)=\max(0,x)=(x)^+$$ — đoạn $$y=0$$ với $$x<0$$ và $$y=x$$ với $$x\geq 0$$. (Minh họa từ video nhập môn neural network)*
+*Hình: $$\mathrm{ReLU}(x)=\max(0,x)=(x)^+$$ — bằng $$0$$ với $$x<0$$ và bằng $$x$$ với $$x\geq 0$$. (Minh họa từ video nhập môn mạng neuron)*
 
 **Đạo hàm:**
 
-$$\text{ReLU}'(z) = \begin{cases} 1 & \text{if } z > 0 \\ 0 & \text{if } z \leq 0 \\ \text{undefined} & \text{if } z = 0 \end{cases}$$
+$$\text{ReLU}'(z) = \begin{cases} 1 & \text{if } z > 0 \\ 0 & \text{if } z < 0 \\ \text{undefined} & \text{if } z = 0 \end{cases}$$
 
-(Trong thực tế, ta định nghĩa $$\text{ReLU}'(0) = 0$$ hoặc $$0.5$$)
+(Trong thực tế cài đặt, ta thường quy ước $$\text{ReLU}'(0) = 0$$ hoặc $$0.5$$.)
 
 **Tính chất:**
 - Miền giá trị: $$[0, \infty)$$
-- Không bão hòa với giá trị dương
-- Kích hoạt thưa (nhiều neuron cho ra 0)
+- Không bị bão hòa với đầu vào dương
+- Tạo kích hoạt thưa (nhiều neuron xuất giá trị 0)
 
 **Ưu điểm:**
-- **Hiệu quả tính toán**: Chỉ cần ngưỡng hóa tại không
-- **Giảm gradient biến mất**: Gradient bằng 1 với đầu vào dương
-- **Biểu diễn thưa**: Độ thưa tự nhiên
-- **Thành công thực nghiệm**: Hoạt động rất tốt trong thực tế
+- **Tính toán rất nhanh:** Chỉ cần so sánh ngưỡng tại 0
+- **Giảm gradient biến mất:** Đạo hàm bằng 1 trên toàn miền dương
+- **Biểu diễn thưa:** Tự nhiên đưa nhiều kích hoạt về 0
+- **Hiệu quả thực nghiệm cao:** Hoạt động ổn định trong phần lớn mô hình
 
 **Nhược điểm:**
-- **Không tâm tại không**: Mọi đầu ra đều không âm
-- **Bài toán ReLU chết** (*dying ReLU*): Neuron có thể trở nên không hoạt động vĩnh viễn
-  - Nếu $$z < 0$$ luôn, gradient luôn bằng 0, không có học
-  - Có thể xảy ra với learning rate cao hoặc khởi tạo kém
+- **Không đối xứng quanh 0:** Đầu ra luôn không âm
+- **Hiện tượng ReLU chết** (*dying ReLU*): Neuron có thể ngừng hoạt động vĩnh viễn
+  - Nếu $$z < 0$$ trên mọi mẫu, đạo hàm luôn bằng 0 nên trọng số không cập nhật
+  - Thường xảy ra khi tốc độ học quá lớn hoặc khởi tạo chưa phù hợp
 
-**Trường hợp dùng:**
+**Trường hợp sử dụng:**
 - **Lựa chọn mặc định** cho lớp ẩn trong mạng sâu
-- CNN, ResNet, hầu hết kiến trúc hiện đại
+- CNN, ResNet và phần lớn các kiến trúc tiêu chuẩn
 
 ### 4. Leaky ReLU
 
 $$\text{LeakyReLU}(z) = \begin{cases} z & \text{if } z > 0 \\ \alpha z & \text{if } z \leq 0 \end{cases}$$
 
-trong đó $$\alpha$$ là hằng số nhỏ (thường 0.01)
+trong đó $$\alpha$$ là một hằng số dương nhỏ (thường chọn 0.01).
 
 **Đạo hàm:**
 
 $$\text{LeakyReLU}'(z) = \begin{cases} 1 & \text{if } z > 0 \\ \alpha & \text{if } z \leq 0 \end{cases}$$
 
 **Ưu điểm:**
-- **Ngăn ReLU chết**: Vẫn có gradient nhỏ với đầu vào âm
-- Hiệu quả tính toán
-- Giữ mọi lợi ích của ReLU
+- **Khắc phục ReLU chết:** Vẫn duy trì đạo hàm nhỏ ở miền âm
+- Tính toán đơn giản và nhanh
+- Giữ được các ưu điểm chính của ReLU
 
 **Nhược điểm:**
-- Thêm siêu tham số $$\alpha$$
-- Không phải lúc nào cũng tốt hơn ReLU trong thực tế
+- Xuất hiện thêm siêu tham số $$\alpha$$
+- Không phải lúc nào cũng cải thiện rõ rệt so với ReLU trong thực tế
 
-**Biến thể:**
-- **Parametric ReLU (PReLU)**: $$\alpha$$ được học trong huấn luyện
-- **Randomized Leaky ReLU (RReLU)**: $$\alpha$$ được lấy mẫu ngẫu nhiên khi huấn luyện
+**Các biến thể:**
+- **Parametric ReLU (PReLU):** Hệ số $$\alpha$$ được học trực tiếp trong quá trình huấn luyện
+- **Randomized Leaky ReLU (RReLU):** Hệ số $$\alpha$$ được lấy mẫu ngẫu nhiên trong khi huấn luyện
 
 ### 5. Exponential Linear Unit (ELU)
 
 $$\text{ELU}(z) = \begin{cases} z & \text{if } z > 0 \\ \alpha(e^z - 1) & \text{if } z \leq 0 \end{cases}$$
 
-trong đó $$\alpha > 0$$ (thường $$\alpha = 1$$)
+trong đó $$\alpha > 0$$ (thường chọn $$\alpha = 1$$).
 
 **Đạo hàm:**
 
 $$\text{ELU}'(z) = \begin{cases} 1 & \text{if } z > 0 \\ \alpha e^z = \text{ELU}(z) + \alpha & \text{if } z \leq 0 \end{cases}$$
 
 **Tính chất:**
-- Trơn mọi nơi
-- Giá trị âm đẩy trung bình kích hoạt gần không hơn
+- Trơn tại mọi điểm (khi $$\alpha = 1$$)
+- Cho phép giá trị âm giúp kéo trung bình kích hoạt về gần 0 hơn
 
 **Ưu điểm:**
-- **Gần tâm tại không hơn**: Cho phép đầu ra âm
-- **Không có ReLU chết**: Gradient tồn tại với mọi đầu vào
-- **Trơn**: Phong cảnh tối ưu tốt hơn
-- Thường dẫn đến học nhanh hơn và hiệu năng tốt hơn
+- **Gần đối xứng quanh 0 hơn:** Có đầu ra âm ở miền $$z < 0$$
+- **Tránh ReLU chết:** Gradient khác 0 với mọi đầu vào
+- **Trơn:** Giúp bề mặt tối ưu mượt hơn
+- Thường giúp hội tụ nhanh và ổn định hơn
 
 **Nhược điểm:**
-- Tốn tính toán hơn (hàm mũ)
+- Chi phí tính toán cao hơn ReLU do có hàm mũ
 - Thêm siêu tham số $$\alpha$$
 
-**Trường hợp dùng:**
-- Thay thế ReLU khi chấp nhận thêm chi phí tính toán
-- Tác vụ mà kích hoạt tâm tại không mang lại lợi ích
+**Trường hợp sử dụng:**
+- Thay thế ReLU khi chấp nhận chi phí tính toán cao hơn một chút
+- Các bài toán hưởng lợi từ kích hoạt có trung bình gần 0
 
 ### 6. Scaled Exponential Linear Unit (SELU)
 
 $$\text{SELU}(z) = \lambda \begin{cases} z & \text{if } z > 0 \\ \alpha(e^z - 1) & \text{if } z \leq 0 \end{cases}$$
 
-trong đó $$\lambda \approx 1.0507$$ và $$\alpha \approx 1.6733$$
+trong đó $$\lambda \approx 1.0507$$ và $$\alpha \approx 1.6733$$.
 
 **Tính chất:**
-- **Tự chuẩn hóa** (*self-normalizing*): Dưới một số điều kiện, kích hoạt tự hội tụ về trung bình không và phương sai đơn vị
-- Yêu cầu khởi tạo cụ thể (LeCun normal)
-- Yêu cầu kiến trúc cụ thể (lớp liên kết đầy đủ)
+- **Tự chuẩn hóa** (*self-normalizing*): Dưới các điều kiện nhất định, kích hoạt tự hội tụ về trung bình 0 và phương sai 1
+- Đòi hỏi phương pháp khởi tạo tương thích (LeCun normal)
+- Thiết kế cho kiến trúc nhất định (chủ yếu các lớp liên kết đầy đủ)
 
 **Ưu điểm:**
-- Có thể cho phép mạng rất sâu không cần batch normalization
-- Có đảm bảo lý thuyết về hội tụ
+- Có thể huấn luyện mạng rất sâu mà không cần batch normalization
+- Có cơ sở lý thuyết rõ ràng về tính hội tụ phân phối
 
 **Nhược điểm:**
-- Yêu cầu nghiêm ngặt về kiến trúc mạng
-- Chưa được áp dụng rộng rãi
-- Không hoạt động tốt với dropout hoặc lớp tích chập
+- Điều kiện áp dụng khá chặt chẽ về kiến trúc mạng
+- Ít được sử dụng rộng rãi bằng ReLU hay GELU
+- Không tương thích tốt với dropout tiêu chuẩn hoặc lớp tích chập
 
-### 7. Swish (SiLU - Sigmoid Linear Unit)
+### 7. Swish (SiLU — Sigmoid Linear Unit)
 
 $$\text{Swish}(z) = z \cdot \sigma(z) = \frac{z}{1 + e^{-z}}$$
 
 **Tính chất:**
 - Trơn, không đơn điệu
-- Không bị chặn phía trên, bị chặn phía dưới
-- Tự cổng (*self-gated*): đầu vào được điều chế bởi sigmoid của chính nó
+- Không bị chặn trên, bị chặn dưới
+- Tự đóng cổng (*self-gated*): đầu vào được điều chỉnh trọng số bởi chính giá trị sigmoid của nó
 
 **Ưu điểm:**
-- **Hiệu năng tốt hơn**: Thực nghiệm cho thấy vượt ReLU trên một số tác vụ
+- **Hiệu năng tốt:** Thực nghiệm cho thấy thường vượt ReLU trên nhiều bài toán sâu
 - Gradient trơn
-- Tính không đơn điệu có thể có lợi
+- Tính không đơn điệu đôi khi giúp tối ưu tốt hơn
 
 **Nhược điểm:**
 - Tốn tính toán hơn ReLU
-- Cần tinh chỉnh cẩn thận
+- Cần điều chỉnh siêu tham số cẩn thận
 
-**Trường hợp dùng:**
-- Kiến trúc hiện đại (EfficientNet dùng Swish)
-- Khi chi phí tính toán không phải ràng buộc then chốt
+**Trường hợp sử dụng:**
+- Các kiến trúc hiện đại (ví dụ EfficientNet sử dụng Swish)
+- Khi độ chính xác quan trọng hơn chi phí tính toán tăng thêm
 
 ### 8. GELU (Gaussian Error Linear Unit)
 
 $$\text{GELU}(z) = z \cdot \Phi(z)$$
 
-trong đó $$\Phi(z)$$ là hàm phân phối tích lũy của phân phối chuẩn chuẩn.
+trong đó $$\Phi(z)$$ là hàm phân phối tích lũy của phân phối chuẩn tắc.
 
-**Xấp xỉ:**
+**Công thức xấp xỉ:**
 
 $$\text{GELU}(z) \approx 0.5z\left(1 + \tanh\left(\sqrt{\frac{2}{\pi}}(z + 0.044715z^3)\right)\right)$$
 
 **Tính chất:**
 - Trơn, không đơn điệu
-- Diễn giải như bộ chính quy hóa ngẫu nhiên
+- Có thể diễn giải như một cơ chế chính quy hóa ngẫu nhiên theo độ lớn đầu vào
 
 **Ưu điểm:**
-- **Hiệu năng state-of-the-art**: Dùng trong BERT, GPT
-- Trơn mọi nơi
-- Nắm bắt một số khía cạnh của dropout và zoneout
+- **Hiệu năng cao trong thực tế:** Được sử dụng phổ biến trong BERT, GPT
+- Trơn tại mọi điểm
+- Mang ý tưởng gần với dropout và zoneout ở dạng tất định
 
 **Nhược điểm:**
-- Tốn tính toán
-- Khó diễn giải hơn
+- Chi phí tính toán cao
+- Kém trực quan hơn ReLU
 
-**Trường hợp dùng:**
-- **Mô hình Transformer**: BERT, GPT-2, GPT-3
-- Tác vụ NLP
-- Mô hình quy mô lớn hiện đại
+**Trường hợp sử dụng:**
+- **Các mô hình Transformer:** BERT, GPT-2, GPT-3
+- Các tác vụ xử lý ngôn ngữ tự nhiên (NLP)
+- Các mô hình quy mô lớn hiện đại
 
 ### 9. Softmax (Lớp Đầu ra)
 
 $$\text{softmax}(\mathbf{z})_i = \frac{e^{z_i}}{\sum_{j=1}^K e^{z_j}}$$
 
 **Tính chất:**
-- Chuyển logits thành phân phối xác suất
+- Chuyển vector logits thành một phân phối xác suất
 - Miền đầu ra: $$(0, 1)$$ với $$\sum_i p_i = 1$$
 
-**Đạo hàm (của lớp $$i$$ theo $$z_j$$):**
+**Đạo hàm (của đầu ra lớp $$i$$ theo $$z_j$$):**
 
 $$\frac{\partial \text{softmax}(\mathbf{z})_i}{\partial z_j} = \begin{cases} \text{softmax}(\mathbf{z})_i(1 - \text{softmax}(\mathbf{z})_i) & \text{if } i = j \\ -\text{softmax}(\mathbf{z})_i \cdot \text{softmax}(\mathbf{z})_j & \text{if } i \neq j \end{cases}$$
 
-**Trường hợp dùng:**
-- Lớp đầu ra **phân loại đa lớp**
+**Trường hợp sử dụng:**
+- Lớp đầu ra cho **phân loại đa lớp**
 - Cơ chế attention
-- Mọi tình huống cần phân phối xác suất trên các lớp
+- Mọi tình huống cần tạo phân phối xác suất trên các lớp
 
 ### 10. Softplus
 
 $$\text{softplus}(z) = \ln(1 + e^z)$$
 
 **Tính chất:**
-- Xấp xỉ trơn của ReLU
-- Luôn dương
+- Là bản xấp xỉ trơn của ReLU
+- Đầu ra luôn dương
 - Tiệm cận ReLU khi $$z$$ lớn
 
 **Đạo hàm:**
 
 $$\text{softplus}'(z) = \frac{e^z}{1 + e^z} = \sigma(z)$$
 
-**Trường hợp dùng:**
+**Trường hợp sử dụng:**
 - Đôi khi dùng ở lớp ẩn
-- Mô hình sinh (đảm bảo đầu ra dương)
+- Các mô hình sinh khi cần đảm bảo đầu ra luôn dương
 
 ## Bảng So sánh Tóm tắt
 
-| Kích hoạt | Miền | Tâm không | Gradient biến mất | Đơn vị chết | Chi phí tính toán | Dùng phổ biến |
+| Kích hoạt | Miền | Đối xứng quanh 0 | Gradient biến mất | Đơn vị chết | Chi phí tính toán | Cách dùng phổ biến |
 |------------|-------|---------------|-------------------|-------------|-------------------|------------|
 | Sigmoid | (0,1) | Không | Có | Không | Cao | Đầu ra (nhị phân) |
 | tanh | (-1,1) | Có | Có | Không | Cao | Ẩn (cũ), RNN |
 | ReLU | [0,∞) | Không | Không (với z>0) | Có | **Thấp** | **Ẩn (mặc định)** |
 | Leaky ReLU | (-∞,∞) | Không | Không | Không | **Thấp** | Ẩn |
-| ELU | (-α,∞) | ~Có | Không | Không | Trung bình | Ẩn |
-| SELU | (-λα,∞) | Có (tự chuẩn hóa) | Không | Không | Trung bình | Ẩn (cụ thể) |
+| ELU | (-α,∞) | Gần có | Không | Không | Trung bình | Ẩn |
+| SELU | (-λα,∞) | Có (tự chuẩn hóa) | Không | Không | Trung bình | Ẩn (kiến trúc cụ thể) |
 | Swish | (-∞,∞) | Không | Không | Không | Trung bình | Ẩn (hiện đại) |
 | GELU | (-∞,∞) | Không | Không | Không | Cao | **Transformer** |
 | Softmax | (0,1) | N/A | Có | Không | Cao | **Đầu ra (đa lớp)** |
@@ -299,12 +299,12 @@ $$\text{softplus}'(z) = \frac{e^z}{1 + e^z} = \sigma(z)$$
 
 ## Nguồn video (tham chiếu)
 
-Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
+Một số hình minh họa trong bài được trích từ video của Machine Learning Thực Chiến:
 
 - [Trực giác mạng nơ-ron (Perceptron → Deep Learning)](https://www.facebook.com/reel/793200140509765)
 
 ## Video tham khảo
 
-- **xem trước** [Why Non-linear Activation Functions (C1W3L07)](https://www.youtube.com/watch?v=NkOv_k7r6no) — DeepLearningAI, tiếng Anh. Các tính chất một hàm kích hoạt hữu ích phải có.
-- [Neural Networks Pt. 3: ReLU In Action!!!](https://www.youtube.com/watch?v=68BZ5f7P94E) — StatQuest with Josh Starmer, tiếng Anh. ReLU trong một lượt lan truyền xuôi bằng số, đúng ví dụ tính cho danh sách cổ điển (bậc thang, sigmoid, tanh, ReLU).
-- [Neural Networks Part 5: ArgMax and SoftMax](https://www.youtube.com/watch?v=KpKog-L9veg) — StatQuest with Josh Starmer, tiếng Anh. Softmax là kích hoạt đầu ra mà bảng so sánh cần cho đầu phân loại.
+- **Xem trước:** [Why Non-linear Activation Functions (C1W3L07)](https://www.youtube.com/watch?v=NkOv_k7r6no) — DeepLearningAI, tiếng Anh. Giải thích các tính chất cần có của một hàm kích hoạt phi tuyến.
+- [Neural Networks Pt. 3: ReLU In Action!!!](https://www.youtube.com/watch?v=68BZ5f7P94E) — StatQuest with Josh Starmer, tiếng Anh. Minh họa ReLU qua một lượt lan truyền xuôi bằng số cụ thể.
+- [Neural Networks Part 5: ArgMax and SoftMax](https://www.youtube.com/watch?v=KpKog-L9veg) — StatQuest with Josh Starmer, tiếng Anh. Giải thích Softmax — hàm kích hoạt đầu ra dùng cho bài toán phân loại đa lớp.

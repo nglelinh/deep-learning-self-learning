@@ -16,173 +16,170 @@ categories:
 ![Deep Learning Hierarchy](https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/AI-ML-DL.svg/800px-AI-ML-DL.svg.png)
 *Hình: Mối quan hệ giữa AI, Học máy và Học sâu. Nguồn: Wikimedia Commons*
 
-Học sâu (*deep learning*) là một trong những tiến bộ công nghệ mang tính chuyển đổi nhất của thế kỷ XXI. Về bản chất, **học sâu** là một nhánh của học máy (*machine learning*) sử dụng mạng nơ-ron nhân tạo (*artificial neural networks*) với nhiều tầng — do đó gọi là "sâu" — để tự động học các biểu diễn phân cấp của dữ liệu. Điều làm nên tính cách mạng của học sâu không chỉ là hiệu năng thực tế, mà còn ở chỗ nó thay đổi căn bản cách tiếp cận khi xây dựng hệ thống thông minh.
+Về bản chất, **học sâu** (*deep learning*) là một nhánh của học máy (*machine learning*) sử dụng mạng nơ-ron nhân tạo (*artificial neural networks*) gồm nhiều tầng — do đó gọi là "sâu" — để tự động học các biểu diễn phân cấp của dữ liệu. Điểm tạo nên bước ngoặt của học sâu không chỉ nằm ở hiệu năng thực tế, mà còn ở việc nó thay đổi căn bản cách xây dựng các hệ thống thông minh.
 
-Để đánh giá đúng ý nghĩa của học sâu, cần nhìn lại giai đoạn trước đó. Học máy truyền thống đòi hỏi chuyên gia thiết kế thủ công các đặc trưng (*features*) — những mẫu hoặc thuộc tính mà thuật toán dùng để ra quyết định. Với nhận dạng ảnh, điều này nghĩa là phải thiết kế tay các bộ phát hiện cạnh, bộ phân tích texture và bộ mô tả hình dạng. Với nhận dạng tiếng nói, phải xây dựng biểu diễn phoneme và mô hình âm học dựa trên lý thuyết ngôn ngữ học. Việc thiết kế đặc trưng vừa là nghệ thuật vừa là khoa học, đòi hỏi tri thức miền sâu và thường cần nhiều năm tinh chỉnh lặp lại.
+Để đánh giá đúng ý nghĩa của học sâu, cần nhìn lại giai đoạn trước đó. Học máy truyền thống đòi hỏi chuyên gia thiết kế thủ công các đặc trưng (*features*) — những mẫu hoặc thuộc tính mà thuật toán dùng để ra quyết định. Với nhận dạng ảnh, điều này nghĩa là phải xây dựng thủ công các bộ phát hiện cạnh, bộ phân tích kết cấu (*texture*) và bộ mô tả hình dạng. Với nhận dạng tiếng nói, người thiết kế phải xây dựng biểu diễn âm vị (*phoneme*) và mô hình âm học dựa trên lý thuyết ngôn ngữ học. Việc thiết kế đặc trưng đòi hỏi kiến thức chuyên sâu về từng miền bài toán và thường cần nhiều năm tinh chỉnh lặp đi lặp lại.
 
-Học sâu loại bỏ nút thắt này thông qua **học biểu diễn** (*representation learning*) — khả năng tự động khám phá các biểu diễn cần thiết cho phát hiện hoặc phân loại trực tiếp từ dữ liệu thô. Một mạng nơ-ron sâu học đặc trưng ở nhiều mức trừu tượng: trong thị giác máy tính, tầng thứ nhất có thể học phát hiện cạnh; tầng thứ hai kết hợp các cạnh thành hình dạng đơn giản; tầng thứ ba ghép các hình dạng thành bộ phận đối tượng; các tầng sâu hơn nhận diện đối tượng hoàn chỉnh. Quan trọng hơn, mạng tự khám phá các đặc trưng phân cấp này mà không cần hướng dẫn thủ công ngoài dữ liệu huấn luyện và mục tiêu học.
+Học sâu khắc phục nút thắt này thông qua **học biểu diễn** (*representation learning*) — khả năng tự động khám phá các biểu diễn cần thiết cho việc phát hiện hoặc phân loại trực tiếp từ dữ liệu thô. Một mạng nơ-ron sâu học đặc trưng ở nhiều mức trừu tượng khác nhau: trong thị giác máy tính, tầng thứ nhất có thể học phát hiện cạnh; tầng thứ hai kết hợp các cạnh thành hình dạng đơn giản; tầng thứ ba ghép các hình dạng thành bộ phận của đối tượng; và các tầng sâu hơn nhận diện đối tượng hoàn chỉnh. Mạng tự hình thành hệ thống đặc trưng phân cấp này mà không cần hướng dẫn thủ công ngoài dữ liệu huấn luyện và mục tiêu tối ưu.
 
-Việc học đặc trưng tự động có hệ quả sâu rộng. Học sâu có thể xử lý các bài toán mà ta chưa biết cách thiết kế đặc trưng tốt bằng tay. Cùng một kiến trúc cơ bản — với các biến thể phù hợp — có thể xuất sắc ở nhiều nhiệm vụ khác nhau: nhận diện khuôn mặt, dịch ngôn ngữ, sinh ảnh, chơi game hay gập protein. Khi thu thập thêm dữ liệu và tăng khả năng tính toán, hiệu năng tiếp tục được cải thiện, thay vì bão hòa như thường thấy ở các hệ thống cổ điển được tinh chỉnh thủ công.
+Việc tự động hóa quá trình học đặc trưng mang lại nhiều hệ quả quan trọng. Học sâu có thể xử lý những bài toán mà con người khó thiết kế đặc trưng thủ công hiệu quả. Cùng một nhóm kiến trúc cơ bản — với các điều chỉnh phù hợp — có thể áp dụng cho nhiều tác vụ khác nhau như nhận diện khuôn mặt, dịch máy, sinh ảnh, chơi trò chơi hay dự đoán cấu trúc protein. Khi bổ sung thêm dữ liệu và năng lực tính toán, hiệu năng của mô hình tiếp tục cải thiện thay vì sớm bão hòa như nhiều hệ thống cổ điển phụ thuộc vào đặc trưng thủ công.
 
 ### Các đặc trưng then chốt của học sâu
 
-**1. Học đặc trưng phân cấp**: Mạng sâu học đặc trưng ở nhiều mức trừu tượng. Các tầng thấp nắm bắt mẫu đơn giản (cạnh, màu sắc, phoneme cơ bản), trong khi các tầng cao kết hợp chúng thành khái niệm phức tạp (đối tượng, khuôn mặt, nghĩa ngữ nghĩa). Cấu trúc phân cấp này phản ánh cách ta hiểu về thị giác và nhận thức sinh học — xây dựng hiểu biết từng lớp từ đơn giản đến phức tạp.
+**1. Học đặc trưng phân cấp:** Mạng sâu học đặc trưng theo nhiều tầng trừu tượng. Các tầng thấp nắm bắt những mẫu đơn giản (cạnh, màu sắc, âm vị cơ bản), còn các tầng cao kết hợp chúng thành khái niệm phức tạp hơn (đối tượng, khuôn mặt, ngữ nghĩa). Cấu trúc phân cấp này tương đồng với cách thị giác và nhận thức sinh học xử lý thông tin — xây dựng hiểu biết từng lớp từ đơn giản đến phức tạp.
 
-**2. Học đầu-cuối** (*end-to-end learning*): Thay vì xây dựng pipeline mô-đun trong đó mỗi thành phần được tối ưu riêng, học sâu cho phép tối ưu toàn hệ thống một cách đồng thời. Với dịch máy, thay vì các mô-đun riêng cho phân tích cú pháp, căn chỉnh và sinh câu, một mạng nơ-ron duy nhất học ánh xạ trực tiếp từ ngôn ngữ nguồn sang ngôn ngữ đích, với mọi thành phần được tối ưu cùng hướng tới chất lượng dịch cuối cùng.
+**2. Học từ đầu đến cuối (*end-to-end learning*):** Thay vì xây dựng một chuỗi mô-đun rời rạc trong đó từng thành phần được tối ưu riêng lẻ, học sâu cho phép tối ưu đồng thời toàn bộ hệ thống. Trong dịch máy, thay vì tách riêng các bước phân tích cú pháp, căn chỉnh và sinh câu, một mạng nơ-ron duy nhất có thể học ánh xạ trực tiếp từ ngôn ngữ nguồn sang ngôn ngữ đích, trong đó mọi thành phần đều được điều chỉnh cùng hướng tới chất lượng bản dịch cuối cùng.
 
-**3. Khả năng mở rộng theo dữ liệu và tính toán**: Học máy truyền thống thường thể hiện lợi ích giảm dần — thêm dữ liệu sau một ngưỡng nhất định mang lại ít cải thiện. Hiệu năng học sâu tiếp tục tăng khi có thêm dữ liệu và tính toán; tính chất scaling này đã thúc đẩy cuộc cách mạng ở các mô hình ngôn ngữ lớn và hệ thống thị giác máy tính. Khả năng mở rộng vừa là điểm mạnh (cho phép hiệu năng vượt con người trên nhiều tác vụ) vừa là thách thức (đòi hỏi tập dữ liệu khổng lồ và tài nguyên tính toán lớn).
+**3. Khả năng mở rộng theo dữ liệu và tính toán:** Học máy truyền thống thường gặp hiện tượng lợi ích giảm dần — sau một ngưỡng nhất định, việc thêm dữ liệu không còn cải thiện đáng kể hiệu năng. Ngược lại, hiệu năng của học sâu tiếp tục tăng khi mở rộng dữ liệu và năng lực tính toán; đặc tính mở rộng (*scaling*) này là nền tảng cho sự phát triển của các mô hình ngôn ngữ lớn và hệ thống thị giác máy tính hiện đại. Đây vừa là ưu thế (giúp mô hình đạt hiệu năng rất cao trên nhiều tác vụ) vừa là thách thức (đòi hỏi tập dữ liệu lớn và chi phí tính toán cao).
 
-**4. Biểu diễn phân tán** (*distributed representations*): Mạng sâu biểu diễn khái niệm dưới dạng mẫu kích hoạt trải trên nhiều nơ-ron, thay vì dành một nơ-ron riêng cho từng khái niệm. Cách này hỗ trợ khái quát hóa: tri thức về "chó" có thể hỗ trợ hiểu "sói" vì chúng chia sẻ nhiều đặc trưng biểu diễn. Đồng thời, biểu diễn phân tán mang lại độ bền vững: nếu một số nơ-ron hỏng hoặc bị loại trong huấn luyện (dropout), biểu diễn vẫn hoạt động.
+**4. Biểu diễn phân tán (*distributed representations*):** Mạng sâu biểu diễn mỗi khái niệm bằng một mẫu kích hoạt trải rộng trên nhiều nơ-ron, thay vì gán riêng một nơ-ron cho từng khái niệm. Cơ chế này hỗ trợ khả năng khái quát hóa: thông tin học được về "chó" có thể giúp mô hình nhận diện "sói" vì chúng chia sẻ nhiều đặc trưng biểu diễn. Đồng thời, biểu diễn phân tán tăng độ bền vững: nếu một số nơ-ron bị loại bỏ trong quá trình huấn luyện (chẳng hạn khi dùng *dropout*), phần còn lại vẫn duy trì được thông tin biểu diễn.
 
 ### Vì sao học sâu quan trọng
 
-Tác động của học sâu vượt xa sự tò mò học thuật. Nó đã thay đổi căn bản nhiều ngành công nghiệp và nhiều khía cạnh đời sống:
+Tác động của học sâu đã vượt xa phạm vi nghiên cứu học thuật, tạo ra thay đổi sâu rộng trong nhiều ngành công nghiệp và lĩnh vực đời sống:
 
-- **Thị giác máy tính** (*computer vision*): Từ nhận dạng chữ số còn hạn chế những năm 1990 đến các hệ thống vượt hiệu năng con người trên nhiều tác vụ thị giác, nhận diện hàng nghìn loại đối tượng, sinh ảnh chân thực và hỗ trợ xe tự hành.
+- **Thị giác máy tính (*computer vision*):** Phát triển từ các hệ thống nhận dạng chữ số còn hạn chế trong thập niên 1990 đến các mô hình vượt hiệu năng con người trên nhiều tác vụ thị giác, nhận diện hàng nghìn lớp đối tượng, sinh ảnh chân thực và hỗ trợ xe tự hành.
+- **Xử lý ngôn ngữ tự nhiên (*natural language processing*):** Chuyển từ các hệ thống dựa trên luật cứng nhắc sang các mô hình ngôn ngữ nơ-ron có khả năng soạn thảo văn bản, trả lời câu hỏi, dịch thuật đa ngôn ngữ với chất lượng gần với con người và duy trì hội thoại mạch lạc.
+- **Y tế:** Hỗ trợ phát hiện bệnh từ ảnh y khoa với độ chính xác tiệm cận chuyên gia, dự báo diễn tiến bệnh nhân, rút ngắn quá trình khám phá thuốc và cá nhân hóa phác đồ điều trị.
+- **Khám phá khoa học:** Hỗ trợ tìm kiếm vật liệu mới, dự đoán cấu trúc protein (như AlphaFold giải quyết bài toán gập protein tồn tại nửa thế kỷ), đề xuất giả thuyết từ tài liệu khoa học và hỗ trợ thiết kế thí nghiệm.
 
-- **Xử lý ngôn ngữ tự nhiên** (*natural language processing*): Từ hệ thống dựa trên luật cứng nhắc đến các mô hình ngôn ngữ nơ-ron có thể viết bài luận, trả lời câu hỏi, dịch giữa các ngôn ngữ với chất lượng gần con người và đối thoại mạch lạc.
-
-- **Y tế**: Từ chẩn đoán thủ công chậm và dễ sai đến các hệ thống AI phát hiện bệnh từ ảnh y khoa với độ chính xác ngang chuyên gia, dự báo kết cục bệnh nhân, tăng tốc khám phá thuốc và cá nhân hóa phác đồ điều trị.
-
-- **Khám phá khoa học**: Từ nghiên cứu thuần túy dựa trên giả thuyết đến các hệ thống AI khám phá vật liệu mới, dự đoán cấu trúc protein (AlphaFold giải quyết thách thức kéo dài nửa thế kỷ), sinh giả thuyết từ tài liệu và thiết kế thí nghiệm.
-
-Quan trọng không kém, học sâu đã dân chủ hóa AI. Các framework mã nguồn mở như PyTorch và TensorFlow, các mô hình tiền huấn luyện miễn phí và tài nguyên học tập phong phú khiến AI mạnh mẽ trở nên tiếp cận được với bất kỳ ai có máy tính xách tay và sự tò mò. Sự dân chủ hóa này thúc đẩy đổi mới khi hàng triệu nhà nghiên cứu và kỹ sư trên thế giới cùng đóng góp cho lĩnh vực.
+Bên cạnh đó, học sâu cũng giúp mở rộng khả năng tiếp cận công nghệ AI. Các thư viện mã nguồn mở như PyTorch và TensorFlow, cùng kho mô hình tiền huấn luyện công khai và tài liệu học tập phong phú, cho phép bất kỳ ai có máy tính cá nhân đều có thể thử nghiệm và nghiên cứu. Điều này thúc đẩy sự tham gia của đông đảo nhà nghiên cứu và kỹ sư trên toàn thế giới.
 
 ## 2. Nền tảng toán học
 
-Về mặt toán học, học sâu là bài toán **xấp xỉ hàm**. Cho tập huấn luyện $$\{(\mathbf{x}_1, y_1), (\mathbf{x}_2, y_2), \ldots, (\mathbf{x}_n, y_n)\}$$ trong đó $$\mathbf{x}_i$$ là đầu vào (ảnh, văn bản, tín hiệu cảm biến) và $$y_i$$ là đầu ra mong muốn (nhãn, bản dịch, hành động), ta tìm hàm $$f_\theta$$ tham số hóa bởi $$\theta$$ ánh xạ chính xác từ đầu vào sang đầu ra.
+Về mặt toán học, học sâu là bài toán **xấp xỉ hàm**. Cho tập huấn luyện $$\{(\mathbf{x}_1, y_1), (\mathbf{x}_2, y_2), \ldots, (\mathbf{x}_n, y_n)\}$$, trong đó $$\mathbf{x}_i$$ là đầu vào (ảnh, văn bản, tín hiệu cảm biến) và $$y_i$$ là đầu ra mong muốn (nhãn, bản dịch, hành động), ta cần tìm hàm $$f_\theta$$ tham số hóa bởi $$\theta$$ sao cho ánh xạ từ đầu vào sang đầu ra đạt độ chính xác cao.
 
 ![Mạng nơ-ron = bộ xấp xỉ hàm](/deep-learning-self-learning/img/chapter_img/chapter01/nn_function_approx_title.jpg)
-*Hình: “Hộp đen” mạng nơ-ron thực chất đang khớp một đường cong $$y = f(x)$$ từ dữ liệu. (Minh họa từ video về bản chất mạng nơ-ron)*
+*Hình: "Hộp đen" mạng nơ-ron thực chất đang khớp một đường cong $$y = f(x)$$ từ dữ liệu. (Minh họa từ video về bản chất mạng nơ-ron)*
 
 ![Tổng quan: mạng vs đường cong mục tiêu](/deep-learning-self-learning/img/chapter_img/chapter01/nn_overview_network_vs_curve.jpg)
-*Hình: Cùng một mạng, khi cho $$x$$ khác nhau, sinh ra các điểm trên đường cong phức tạp. (Minh họa từ video về bản chất mạng nơ-ron)*
+*Hình: Cùng một mạng nơ-ron, khi thay đổi đầu vào $$x$$, sẽ tạo ra các điểm nằm trên một đường cong phức tạp. (Minh họa từ video về bản chất mạng nơ-ron)*
 
-**Trực giác tuyến tính → phi tuyến.** Hồi quy tuyến tính $$f(x)=xw+b$$ chỉ vẽ được đường thẳng; với dữ liệu gợn sóng thì **không đủ**.
+**Từ mô hình tuyến tính đến phi tuyến:** Hồi quy tuyến tính $$f(x)=xw+b$$ chỉ biểu diễn được đường thẳng nên không đủ để khớp dữ liệu có dạng đường cong uốn lượn.
 
 ![Công thức hồi quy tuyến tính](/deep-learning-self-learning/img/chapter_img/chapter01/nn_linear_regression_formula.jpg)
-*Hình: Neuron tuyến tính là mở rộng của $$f(x)=xw+b$$. (Minh họa từ video về bản chất mạng nơ-ron)*
+*Hình: Nơ-ron tuyến tính là dạng mở rộng của hàm $$f(x)=xw+b$$. (Minh họa từ video về bản chất mạng nơ-ron)*
 
 ![Tuyến tính thất bại trên dữ liệu phi tuyến](/deep-learning-self-learning/img/chapter_img/chapter01/nn_linear_fails_nonlinear.jpg)
-*Hình: Mô hình tuyến tính bị giới hạn — không khớp được đường cong phức tạp. (Minh họa từ video về bản chất mạng nơ-ron)*
+*Hình: Mô hình tuyến tính có giới hạn rõ rệt — không thể khớp được đường cong phức tạp. (Minh họa từ video về bản chất mạng nơ-ron)*
 
-Với kích hoạt phi tuyến (ví dụ sigmoid-like), một mạng có thể khớp được các hình dạng mềm:
+Khi bổ sung hàm kích hoạt phi tuyến (chẳng hạn dạng sigmoid), mạng nơ-ron có thể khớp được các đường cong trơn và phức tạp hơn:
 
 ![Khớp đường cong dạng sigmoid](/deep-learning-self-learning/img/chapter_img/chapter01/nn_sigmoid_curve_fit.jpg)
-*Hình: Ví dụ hàm “mềm” mà mô hình có thể xấp xỉ. (Minh họa từ video về bản chất mạng nơ-ron)*
+*Hình: Ví dụ về hàm trơn mà mạng nơ-ron có thể xấp xỉ. (Minh họa từ video về bản chất mạng nơ-ron)*
 
 ### Định lý xấp xỉ phổ quát
 
-Một kết quả lý thuyết nền tảng khẳng định rằng mạng nơ-ron chỉ với một tầng ẩn, nếu có đủ số nơ-ron, có thể xấp xỉ bất kỳ hàm liên tục nào với độ chính xác tùy ý. Về mặt toán học, với mọi hàm liên tục $$g: \mathbb{R}^n \to \mathbb{R}^m$$ và mọi $$\epsilon > 0$$, tồn tại mạng nơ-ron $$f_\theta$$ sao cho:
+Một kết quả lý thuyết nền tảng khẳng định rằng mạng nơ-ron chỉ cần một tầng ẩn, nếu có đủ số nơ-ron, có thể xấp xỉ bất kỳ hàm liên tục nào trên một miền đóng và bị chặn với độ chính xác tùy ý. Về mặt toán học, với mọi hàm liên tục $$g: \mathbb{R}^n \to \mathbb{R}^m$$ và mọi $$\epsilon > 0$$, tồn tại mạng nơ-ron $$f_\theta$$ sao cho:
 
 $$\|f_\theta(\mathbf{x}) - g(\mathbf{x})\| < \epsilon \quad \text{for all } \mathbf{x}$$
 
-Điều này đáng chú ý: mạng nơ-ron là **bộ xấp xỉ hàm phổ quát** (*universal function approximators*).
+Kết quả này cho thấy mạng nơ-ron là **bộ xấp xỉ hàm phổ quát** (*universal function approximators*).
 
 ![Kết luận: universal function approximator](/deep-learning-self-learning/img/chapter_img/chapter01/nn_conclusion_universal_approx.jpg)
-*Hình: Cốt lõi — mạng nơ-ron là bộ xấp xỉ hàm phổ quát. (Minh họa từ video về bản chất mạng nơ-ron)*
+*Hình: Kết luận cốt lõi — mạng nơ-ron là bộ xấp xỉ hàm phổ quát. (Minh họa từ video về bản chất mạng nơ-ron)*
 
-Tuy nhiên, định lý có những hạn chế quan trọng. Nó đảm bảo sự tồn tại nhưng không đảm bảo khả năng học được — việc tìm tham số $$\theta$$ bằng gradient descent không được đảm bảo. Nó có thể đòi hỏi số nơ-ron ở tầng ẩn tăng theo hàm mũ, điều không thực tế. Và nó áp dụng cho mạng nông, chưa giải thích vì sao mạng sâu thường hiệu quả hơn trong thực tiễn.
+Tuy nhiên, định lý này có những giới hạn quan trọng. Thứ nhất, nó chỉ khẳng định sự tồn tại của tham số $$\theta$$ chứ không đảm bảo thuật toán *gradient descent* sẽ tìm được tham số đó. Thứ hai, số lượng nơ-ron cần thiết ở tầng ẩn có thể tăng theo hàm mũ, điều không khả thi trong thực tế. Thứ ba, định lý xét mạng nông nên chưa giải thích được vì sao mạng sâu thường hiệu quả hơn khi áp dụng vào bài toán thực tiễn.
 
 ### Vì sao độ sâu quan trọng
 
-Dù mạng nông về lý thuyết là đủ, **mạng sâu** thường hiệu quả hơn theo hàm mũ với nhiều hàm thực tế. Xét việc biểu diễn một hàm với $$k$$ mức hợp thành: $$f = f_k \circ f_{k-1} \circ \cdots \circ f_1$$. Một mạng nông có thể cần số nơ-ron tăng theo hàm mũ để biểu diễn, trong khi mạng sâu với $$k$$ tầng có thể biểu diễn tự nhiên với độ phức tạp đa thức.
+Dù mạng nông đủ mạnh về mặt lý thuyết, **mạng sâu** thường tiết kiệm tham số hơn theo cấp số mũ đối với nhiều hàm thực tế. Xét một hàm có cấu trúc hợp thành gồm $$k$$ mức: $$f = f_k \circ f_{k-1} \circ \cdots \circ f_1$$. Một mạng nông có thể cần số nơ-ron tăng theo hàm mũ để xấp xỉ hàm này, trong khi mạng sâu có $$k$$ tầng có thể biểu diễn tự nhiên với số tham số chỉ tăng theo đa thức.
 
-Trực giác toán học là nhiều hàm trong tự nhiên mang cấu trúc hợp thành. Để nhận diện khuôn mặt, ta trước hết phát hiện cạnh, rồi kết hợp cạnh thành đặc trưng khuôn mặt (mắt, mũi, miệng), rồi kết hợp các đặc trưng thành biểu diễn khuôn mặt. Cấu trúc phân cấp này được biểu diễn tự nhiên bằng các phép biến đổi liên tiếp qua các tầng:
+Trực giác toán học đằng sau điều này là nhiều hàm trong tự nhiên vốn có cấu trúc hợp thành. Để nhận diện khuôn mặt, hệ thống trước hết phát hiện các cạnh, sau đó ghép cạnh thành các bộ phận (mắt, mũi, miệng), rồi tổng hợp các bộ phận thành khuôn mặt hoàn chỉnh. Cấu trúc phân cấp đó được mô tả trực tiếp qua chuỗi phép biến đổi giữa các tầng:
 
 $$\mathbf{h}^{(1)} = \sigma(\mathbf{W}^{(1)}\mathbf{x} + \mathbf{b}^{(1)})$$
 $$\mathbf{h}^{(2)} = \sigma(\mathbf{W}^{(2)}\mathbf{h}^{(1)} + \mathbf{b}^{(2)})$$
 $$\vdots$$
 $$\mathbf{y} = \mathbf{W}^{(L)}\mathbf{h}^{(L-1)} + \mathbf{b}^{(L)}$$
 
-trong đó $$\sigma$$ là hàm kích hoạt phi tuyến (ReLU, sigmoid, tanh), $$\mathbf{W}^{(l)}$$ là ma trận trọng số và $$\mathbf{b}^{(l)}$$ là vector bias ở tầng $$l$$.
+trong đó $$\sigma$$ là hàm kích hoạt phi tuyến (ReLU, sigmoid, tanh), $$\mathbf{W}^{(l)}$$ là ma trận trọng số và $$\mathbf{b}^{(l)}$$ là vector độ lệch (*bias*) tại tầng $$l$$.
 
 ### Mục tiêu học
 
-Huấn luyện mạng nơ-ron nghĩa là tìm tham số $$\theta = \{\mathbf{W}^{(1)}, \mathbf{b}^{(1)}, \ldots, \mathbf{W}^{(L)}, \mathbf{b}^{(L)}\}$$ cực tiểu hóa hàm mất mát $$\mathcal{L}(\theta)$$ đo lỗi dự đoán:
+Huấn luyện mạng nơ-ron là quá trình tìm tập tham số $$\theta = \{\mathbf{W}^{(1)}, \mathbf{b}^{(1)}, \ldots, \mathbf{W}^{(L)}, \mathbf{b}^{(L)}\}$$ nhằm cực tiểu hóa hàm mất mát $$\mathcal{L}(\theta)$$ đo sai số dự đoán:
 
 $$\theta^* = \arg\min_\theta \frac{1}{n}\sum_{i=1}^n \mathcal{L}(f_\theta(\mathbf{x}_i), y_i)$$
 
-Với phân loại, ta thường dùng mất mát entropy chéo (*cross-entropy*):
+Với bài toán phân loại, ta thường dùng hàm mất mát entropy chéo (*cross-entropy*):
 $$\mathcal{L}(\hat{\mathbf{y}}, \mathbf{y}) = -\sum_j y_j \log \hat{y}_j$$
 
-Với hồi quy, lỗi bình phương trung bình:
+Với bài toán hồi quy, ta thường dùng sai số bình phương trung bình:
 $$\mathcal{L}(\hat{y}, y) = \frac{1}{2}(y - \hat{y})^2$$
 
-Ta tối ưu bằng **gradient descent**: cập nhật tham số lặp theo hướng làm giảm mất mát:
+Quá trình tối ưu được thực hiện bằng **gradient descent**, tức cập nhật tham số lặp đi lặp lại theo hướng làm giảm hàm mất mát:
 
 $$\theta \leftarrow \theta - \eta \nabla_\theta \mathcal{L}(\theta)$$
 
-trong đó $$\eta$$ là tốc độ học (*learning rate*). Việc tính gradient hiệu quả qua lan truyền ngược (*backpropagation*) — áp dụng quy tắc chuỗi tầng theo tầng — chính là điều khiến huấn luyện mạng sâu trở nên khả thi.
+trong đó $$\eta$$ là tốc độ học (*learning rate*). Khả năng tính gradient hiệu quả nhờ lan truyền ngược (*backpropagation*) — áp dụng quy tắc dây chuyền qua từng tầng — là yếu tố giúp việc huấn luyện mạng sâu trở nên khả thi.
 
-### Vì sao nó hoạt động: cân bằng bias–variance
+### Vì sao học sâu hoạt động hiệu quả: cân bằng bias–variance
 
-Thành công của học sâu có thể hiểu qua cân bằng bias–variance cổ điển. Bias cao (underfitting) nghĩa là mô hình không nắm bắt được độ phức tạp của dữ liệu. Variance cao (overfitting) nghĩa là mô hình khớp nhiễu thay vì mẫu thật. Mạng sâu có dung lượng rất lớn (bias thấp) nhưng lại đáng ngạc nhiên kháng overfitting khi được chính quy hóa đúng cách, đạt variance thấp dù có hàng triệu tham số — thường nhiều hơn số mẫu huấn luyện!
+Thành công của học sâu có thể được nhìn qua lăng kính cân bằng độ chệch–phương sai (*bias–variance tradeoff*) cổ điển. Độ chệch cao (*underfitting*) xảy ra khi mô hình quá đơn giản để nắm bắt cấu trúc dữ liệu, còn phương sai cao (*overfitting*) xảy ra khi mô hình khớp cả nhiễu thay vì quy luật thực. Mạng sâu có dung lượng biểu diễn rất lớn (độ chệch thấp), nhưng khi được chính quy hóa phù hợp lại có khả năng chống quá khớp tốt và giữ phương sai thấp ngay cả khi số tham số lên tới hàng triệu — thường lớn hơn nhiều so với số mẫu huấn luyện.
 
-Điều này dường như mâu thuẫn với lý thuyết học thống kê cổ điển, vốn gợi ý mô hình nên đơn giản hơn dữ liệu. Các công trình lý thuyết gần đây về "double descent" và "chính quy hóa ngầm" (*implicit regularization*) cho thấy mạng overparameterized huấn luyện bằng gradient descent ngầm ưu tiên các hàm đơn giản hơn, tạo ra một dạng chính quy hóa tự động mà lý thuyết cổ điển chưa tính đến.
+Hiện tượng này thoạt nhìn mâu thuẫn với lý thuyết học thống kê cổ điển, vốn khuyến nghị mô hình nên đơn giản hơn dữ liệu. Các nghiên cứu lý thuyết gần đây về hiện tượng "giảm kép" (*double descent*) và "chính quy hóa ngầm" (*implicit regularization*) cho thấy các mạng thừa tham số (*overparameterized*) khi huấn luyện bằng *gradient descent* có xu hướng ưu tiên những hàm đơn giản hơn, tạo ra một cơ chế chính quy hóa tự động mà khung lý thuyết cổ điển chưa mô tả đầy đủ.
 
-## 3. Ví dụ / Trực giác
+## 3. Ví dụ và trực giác
 
-Để xây dựng trực giác về cách học sâu hoạt động, ta xét một ví dụ cụ thể: dạy mạng nhận dạng chữ số viết tay.
+Để hình dung cụ thể cách học sâu vận hành, ta xét bài toán kinh điển: huấn luyện mạng nhận dạng chữ số viết tay.
 
 ### Bài toán: nhận dạng chữ số MNIST
 
-Giả sử ta có ảnh xám kích thước 28×28 của chữ số viết tay (0–9) và muốn một hệ thống xác định đúng chữ số trong mỗi ảnh. Mỗi ảnh chỉ là một vector 784 chiều (28×28 = 784 pixel, mỗi pixel có cường độ 0–255).
+Giả sử ta có các ảnh xám kích thước 28×28 của chữ số viết tay (từ 0 đến 9) và muốn xây dựng hệ thống nhận diện đúng chữ số trong từng ảnh. Mỗi ảnh có thể biểu diễn dưới dạng vector 784 chiều (28×28 = 784 điểm ảnh, mỗi điểm ảnh có cường độ sáng từ 0 đến 255).
 
-**Cách tiếp cận truyền thống**: thiết kế đặc trưng thủ công:
-- Đếm vòng lặp (0, 6, 8, 9 có vòng; 1, 7 không)
-- Phát hiện nét dọc/ngang
-- Đo tỷ lệ chiều cao–chiều rộng
-- Xác định điểm cuối và giao điểm
+**Cách tiếp cận truyền thống** đòi hỏi thiết kế đặc trưng thủ công, chẳng hạn:
+- Đếm số vòng kín (0, 6, 8, 9 có vòng kín; 1 và 7 không có).
+- Phát hiện các nét dọc và nét ngang.
+- Đo tỷ lệ chiều cao trên chiều rộng.
+- Xác định các điểm đầu mút và giao điểm của nét.
 
-Cách này đòi hỏi chuyên môn sâu và khái quát kém (còn chữ viết hoa? font khác?).
+Cách làm này đòi hỏi nhiều công sức chuyên môn và khó khái quát hóa sang các bài toán tương tự (ví dụ chữ cái viết hoa hoặc các kiểu chữ khác).
 
-**Cách tiếp cận học sâu**: đưa trực tiếp 784 giá trị pixel vào mạng nơ-ron:
+**Cách tiếp cận học sâu** đưa trực tiếp toàn bộ 784 giá trị điểm ảnh vào mạng nơ-ron:
 
 ```
 Input (784 pixels) → Hidden Layer 1 (128 neurons) → Hidden Layer 2 (64 neurons) → Output (10 classes)
 ```
 
-Mạng tự động học:
-- **Tầng 1** khám phá bộ phát hiện cạnh — các nơ-ron kích hoạt với đường dọc, ngang, đường cong ở các vị trí khác nhau
-- **Tầng 2** kết hợp cạnh thành mẫu nét — nét dọc dài (cho 1, 7), hình tròn (cho 0, 6, 8, 9), tổ hợp đường cong cụ thể
-- **Tầng đầu ra** kết hợp các mẫu này để nhận diện chữ số hoàn chỉnh
+Trong quá trình huấn luyện, mạng tự động học các tầng đặc trưng:
+- **Tầng 1:** hình thành các bộ phát hiện cạnh — những nơ-ron kích hoạt mạnh trước nét dọc, nét ngang hoặc đường cong tại các vị trí khác nhau.
+- **Tầng 2:** kết hợp các cạnh thành mẫu nét phức tạp hơn — nét dọc dài (cho 1, 7), vòng tròn (cho 0, 6, 8, 9), hoặc các tổ hợp đường cong đặc trưng.
+- **Tầng đầu ra:** tổng hợp các mẫu này để phân loại chữ số hoàn chỉnh.
 
-### Học diễn ra như thế nào: ví dụ trực quan
+### Quá trình học diễn ra như thế nào
 
-Ban đầu, trọng số là ngẫu nhiên. Khi đưa vào một ảnh "3":
-1. **Lan truyền xuôi** (*forward pass*): mạng đưa ra dự đoán ngẫu nhiên, ví dụ tin 70% đó là "7"
-2. **Tính lỗi**: nhãn đúng là "3", dự đoán là "7" — lỗi lớn!
-3. **Lan truyền ngược** (*backpropagation*):
-   - Tầng đầu ra: "nên kích hoạt nơ-ron 3 mạnh hơn và nơ-ron 7 yếu hơn"
-   - Các tầng ẩn: "kích hoạt nào đã góp phần vào dự đoán sai? điều chỉnh trọng số để sửa"
-4. **Cập nhật trọng số**: điều chỉnh nhẹ mọi trọng số để giảm lỗi cụ thể này
-5. **Lặp lại**: sau hàng nghìn ảnh "3" với nhiều kiểu viết tay, mạng học được các đặc trưng cốt yếu của "tính chất là 3"
+Ban đầu, các trọng số được khởi tạo ngẫu nhiên. Khi đưa vào một ảnh chữ số "3":
+1. **Lan truyền xuôi (*forward pass*):** Mạng đưa ra dự đoán ngẫu nhiên, chẳng hạn gán xác suất 70% cho chữ số "7".
+2. **Tính sai số:** Nhãn đúng là "3" trong khi dự đoán là "7", tạo ra giá trị mất mát lớn.
+3. **Lan truyền ngược (*backpropagation*):**
+   - Tầng đầu ra xác định cần tăng mức kích hoạt của nơ-ron ứng với lớp "3" và giảm mức kích hoạt của nơ-ron ứng với lớp "7".
+   - Các tầng ẩn tính toán mức độ đóng góp của từng kích hoạt vào sai số để xác định hướng điều chỉnh trọng số tương ứng.
+4. **Cập nhật trọng số:** Điều chỉnh nhẹ toàn bộ trọng số nhằm giảm sai số cho mẫu này.
+5. **Lặp lại:** Sau khi xử lý hàng nghìn ảnh chữ số "3" với nhiều nét viết khác nhau, mạng dần rút ra các đặc trưng cốt lõi giúp nhận diện chữ số "3".
 
-Điều kỳ diệu là quy trình đơn giản này — lan truyền xuôi, tính lỗi, lan truyền ngược, cập nhật — khi lặp lại hàng triệu lần, khám phá được các đặc trưng phân cấp cần thiết cho nhận dạng.
+Điểm đáng chú ý là quy trình tương đối đơn giản này — lan truyền xuôi, tính sai số, lan truyền ngược và cập nhật trọng số — khi lặp lại đủ nhiều lần trên dữ liệu sẽ tự hình thành các đặc trưng phân cấp cần thiết cho bài toán nhận dạng.
 
 ### Vì sao học phân cấp quan trọng
 
-Xét bài toán nhận diện khuôn mặt:
-- **Đặc trưng mức thấp** (Tầng 1): bộ phát hiện cạnh ở nhiều hướng, vùng màu
-- **Đặc trưng mức trung** (Tầng 2–3): kết hợp cạnh thành hình dạng đơn giản — đường cong, góc, texture
-- **Đặc trưng mức cao** (Tầng 4–5): kết hợp hình dạng thành bộ phận khuôn mặt — mắt (cặp vòng tối có highlight), mũi (vùng tam giác có bóng), miệng (vùng tối ngang, có thể có răng)
-- **Khái niệm hoàn chỉnh** (Đầu ra): kết hợp các bộ phận thành danh tính khuôn mặt cụ thể
+Xét ví dụ bài toán nhận diện khuôn mặt:
+- **Đặc trưng mức thấp (Tầng 1):** phát hiện cạnh theo nhiều hướng và các vùng màu cơ bản.
+- **Đặc trưng mức trung (Tầng 2–3):** ghép cạnh thành hình dạng đơn giản như đường cong, góc và kết cấu bề mặt.
+- **Đặc trưng mức cao (Tầng 4–5):** kết hợp hình dạng thành bộ phận khuôn mặt — mắt (cặp vùng tối kèm điểm sáng), mũi (vùng tam giác có đổ bóng), miệng (vùng tối nằm ngang, có thể kèm răng).
+- **Khái niệm hoàn chỉnh (Tầng đầu ra):** tổng hợp các bộ phận để xác định danh tính khuôn mặt.
 
-Mỗi tầng học biểu diễn ngày càng trừu tượng, nắm bắt tự nhiên bản chất hợp thành của nhận dạng thị giác. Mạng phát hiện rằng mắt, mũi, miệng là các thành phần tái sử dụng xuất hiện ở mọi khuôn mặt, giống như nét và đường cong là thành phần tái sử dụng trong mọi chữ số.
+Mỗi tầng học một mức biểu diễn trừu tượng cao hơn, phản ánh tự nhiên bản chất hợp thành của nhận thức thị giác. Mạng nhận ra rằng mắt, mũi, miệng là những thành phần có thể tái sử dụng trên mọi khuôn mặt, tương tự như nét thẳng và đường cong là các thành phần dùng chung ở mọi chữ số.
 
-Biểu diễn phân cấp, phân tán này cũng giải thích hiệu quả mẫu của học sâu. Một khi mạng đã học nơ-ron "phát hiện cạnh" và "phát hiện hình tròn" từ chữ số, chính các nơ-ron đó hỗ trợ nhận diện chữ cái, khuôn mặt và đối tượng — chuyển giao học (*transfer learning*) diễn ra tự nhiên nhờ đặc trưng mức thấp được chia sẻ.
+Biểu diễn phân cấp và phân tán này cũng giúp cải thiện hiệu quả sử dụng dữ liệu. Khi mạng đã học được các nơ-ron phát hiện cạnh hay vòng tròn từ bài toán chữ số, những nơ-ron đó có thể tiếp tục hữu ích cho việc nhận diện chữ cái, khuôn mặt hoặc vật thể khác — giúp **học chuyển giao** (*transfer learning*) hoạt động hiệu quả nhờ các đặc trưng mức thấp được chia sẻ.
 
 <!-- video-references -->
 
 ## Nguồn video (tham chiếu)
 
-Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
+Một số hình minh họa trong bài được trích từ video của kênh *Machine Learning Thực Chiến*. Nguồn gốc để tra cứu:
 
 - [Mạng nơ-ron là bộ xấp xỉ hàm](https://www.facebook.com/reel/720970114372332)
 
 ## Video tham khảo
 
-- **xem trước** [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Neuron xếp lớp như bộ xấp xỉ hàm là định nghĩa bài dựng.
-- [The Essential Main Ideas of Neural Networks](https://www.youtube.com/watch?v=CqOfi41LfDw) — StatQuest with Josh Starmer, tiếng Anh. Một lượt chậm hơn trên cùng nút, trọng số và ý tưởng khớp đường cong, mọi đại lượng đều được gắn nhãn.
-- [Tất tần tật về Neural Network trong 12 phút](https://www.youtube.com/watch?v=sWPNm_GhhCA) — Việt Nguyễn AI, tiếng Việt. Cùng mạng xếp lớp, giải thích bằng tiếng Việt.
+- **Xem trước:** [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Giới thiệu trực quan mạng nơ-ron nhiều tầng như một bộ xấp xỉ hàm, sát với định nghĩa trong bài.
+- [The Essential Main Ideas of Neural Networks](https://www.youtube.com/watch?v=CqOfi41LfDw) — StatQuest with Josh Starmer, tiếng Anh. Trình bày chậm rãi về nút, trọng số và ý tưởng khớp đường cong, giải thích rõ từng đại lượng.
+- [Tất tần tật về Neural Network trong 12 phút](https://www.youtube.com/watch?v=sWPNm_GhhCA) — Việt Nguyễn AI, tiếng Việt. Giải thích cấu trúc mạng nơ-ron nhiều tầng bằng tiếng Việt, phù hợp để ôn nhanh khái niệm.

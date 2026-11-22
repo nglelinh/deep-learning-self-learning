@@ -9,10 +9,10 @@ categories:
 - chapter00
 ---
 
-Bài học này bao gồm các khái niệm đại số tuyến tính cần thiết cho tối ưu hóa, được tổ chức thành ba phần chính để học tập có hệ thống.
+Phần này trình bày các khái niệm đại số tuyến tính cốt lõi cho tối ưu hóa, được chia thành ba bài học chính giúp bạn tiếp cận một cách có hệ thống.
 
 ## Video tham khảo
 
-- **xem trước** [Vectors | Chapter 1, Essence of linear algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs) — 3Blue1Brown, tiếng Anh. Vector trong R^n là đối tượng của cả khối đại số tuyến tính.
-- [Linear transformations and matrices | Chapter 3, Essence of linear algebra](https://www.youtube.com/watch?v=kYB8IZa5AuE) — 3Blue1Brown, tiếng Anh. Ma trận như ánh xạ tuyến tính là bài thứ hai của khối.
-- [Eigenvectors and eigenvalues | Chapter 14, Essence of linear algebra](https://www.youtube.com/watch?v=PFDu9oVAE-g) — 3Blue1Brown, tiếng Anh. Vector riêng là bài thứ ba; đây là bức tranh hình học trước mọi thuật toán.
+- **Xem trước:** [Vectors | Chapter 1, Essence of linear algebra](https://www.youtube.com/watch?v=fNk_zzaMoSs) — 3Blue1Brown, tiếng Anh. Giới thiệu trực quan về vector trong $$\mathbb{R}^n$$ — đối tượng trung tâm của toàn bộ phần đại số tuyến tính.
+- [Linear transformations and matrices | Chapter 3, Essence of linear algebra](https://www.youtube.com/watch?v=kYB8IZa5AuE) — 3Blue1Brown, tiếng Anh. Trình bày cách nhìn ma trận như phép biến đổi tuyến tính, tương ứng với bài thứ hai.
+- [Eigenvectors and eigenvalues | Chapter 14, Essence of linear algebra](https://www.youtube.com/watch?v=PFDu9oVAE-g) — 3Blue1Brown, tiếng Anh. Minh họa trực giác hình học về giá trị riêng và vector riêng trước khi đi vào các thuật toán tính toán.

@@ -10,52 +10,52 @@ categories:
 lesson_type: optional
 ---
 
-# Tùy chọn: VAE như latent cho khuếch tán, video, và nén
+# Tùy chọn: VAE trong vai trò không gian ẩn cho khuếch tán, video và nén
 
-> Bài này là **tùy chọn**. Nó **không** thay ELBO, tái tham số hóa, hay cài đặt VAE. Nó cho thấy cùng autoencoder biến phân trở thành **codec** trong hệ sinh 2022–2026.
+> Bài này mang tính **tùy chọn** và **không** thay thế phần ELBO, thủ thuật tái tham số hóa hay cài đặt VAE cốt lõi. Nội dung cho thấy cùng kiến trúc autoencoder biến phân đã trở thành **bộ nén (codec)** chuẩn trong các hệ thống sinh giai đoạn 2022–2026 như thế nào.
 
-ELBO
+Mục tiêu ELBO:
 
 $$\mathcal{L}(\theta,\phi) = \mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] - D_{\mathrm{KL}}(q_\phi(z|x)\,\|\,p(z))$$
 
-vẫn là mục tiêu đúng. Sản phẩm ít khi lấy mẫu “khuôn mặt từ $$z\sim\mathcal{N}(0,I)$$”; chúng huấn luyện VAE để mô hình **thứ hai** (khuếch tán hoặc Transformer) làm việc trong không gian $$z$$.
+vẫn giữ nguyên vai trò nền tảng. Trong các hệ thống thực tế hiện nay, VAE ít được dùng để lấy mẫu trực tiếp từ $$z\sim\mathcal{N}(0,I)$$ mà thường đóng vai trò nén dữ liệu sang không gian ẩn $$z$$ cho một mô hình **thứ hai** (khuếch tán hoặc Transformer) hoạt động hiệu quả hơn.
 
-## 1. VAE của Stable Diffusion
+## 1. VAE trong Stable Diffusion
 
-[Rombach et al., 2022](https://arxiv.org/abs/2112.10752) huấn luyện autoencoder chính quy KL (thường gọi `AutoencoderKL`) với latent là lưới không gian giảm mẫu, không phải một vector. Hạng KL là regularizer Chương 13; hạng tri giác + đối kháng giữ tái tạo đủ sắc cho bộ khử nhiễu. Hầu hết pipeline text-to-image mở vẫn giao mẫu này (SD, SDXL, nhiều stack lớp SD3).
+[Rombach et al., 2022](https://arxiv.org/abs/2112.10752) huấn luyện một autoencoder chính quy hóa KL (thường gọi là `AutoencoderKL`) với đầu ra ẩn là một lưới không gian giảm kích thước thay vì vector 1D. Số hạng KL tương ứng trực tiếp với chính quy hóa trong Chương 13, còn mất mát cảm nhận và đối kháng giúp giữ độ sắc nét tái tạo cho mạng khử nhiễu hoạt động ở phía sau. Phần lớn các pipeline sinh ảnh từ văn bản mã nguồn mở (SD, SDXL và nhiều hệ thống thế hệ SD3) đều áp dụng thiết kế này.
 
-## 2. Ứng dụng cụ thể
+## 2. Một số ứng dụng tiêu biểu
 
-### Latent video và 3D
+### Không gian ẩn cho video và dữ liệu 3D
 
-Stable Video Diffusion và các mô hình video sau tái sử dụng VAE ảnh hoặc huấn luyện VAE **thời gian** để bộ khử nhiễu đắt thấy ít token hơn. Toán vẫn encoder–decoder + KL; kỹ thuật là conv 3D/nhân quả.
+Stable Video Diffusion và các mô hình sinh video sau này tái sử dụng VAE ảnh hoặc huấn luyện VAE **không gian–thời gian** (dùng tích chập 3D hoặc tích chập nhân quả) để nén chuỗi khung hình thành ít token hơn trước khi đưa vào bộ khử nhiễu.
 
-### Consistency và generator một bước trong latent
+### Mô hình nhất quán (*consistency models*) và bộ sinh một bước trong không gian ẩn
 
-[Song et al., 2023](https://arxiv.org/abs/2303.01469) (consistency models) và latent consistency (LCM) chưng cất ODE khuếch tán trong latent VAE. VAE đóng băng; việc mới là bộ lấy mẫu. Đó là lý do Chương 13 vẫn cần sau khi khuếch tán “thắng.”
+[Song et al., 2023](https://arxiv.org/abs/2303.01469) (consistency models) và Latent Consistency Models (LCM) chưng cất quá trình giải ODE khuếch tán ngay trong không gian ẩn của VAE. Trong các hệ thống này, VAE được giữ cố định và phần cải tiến tập trung vào bộ lấy mẫu — cho thấy VAE vẫn là thành phần cốt lõi ngay cả khi khuếch tán chiếm ưu thế.
 
 ### Học biểu diễn
 
-Tách $$\beta$$-VAE kém thời thượng hơn 2018, nhưng nút thắt **biến phân** vẫn xuất hiện trong world model (DreamerV3, bài tùy chọn Chương 21) và nén.
+Hướng tách nhân tố bằng $$\beta$$-VAE không còn là tâm điểm như giai đoạn 2018, nhưng nút thắt **biến phân** vẫn xuất hiện đều đặn trong các mô hình thế giới (*world models* như DreamerV3, xem bài tùy chọn Chương 21) và bài toán nén dữ liệu học được.
 
-## 3. Phần mềm phổ biến
+## 3. Thư viện và mã nguồn phổ biến
 
-- [diffusers](https://github.com/huggingface/diffusers) `AutoencoderKL` / `AutoencoderTiny` (TAESD).
-- Checkpoint VAE Stability-AI trên Hub.
+- [diffusers](https://github.com/huggingface/diffusers) với `AutoencoderKL` và `AutoencoderTiny` (TAESD).
+- Các checkpoint VAE của Stability-AI trên Hugging Face Hub.
 - [openai/consistency_models](https://github.com/openai/consistency_models).
 
-## 4. Trích dẫn (2022–2026)
+## 4. Tài liệu tham khảo (2022–2026)
 
 - [Latent Diffusion Models (Rombach et al., 2022)](https://arxiv.org/abs/2112.10752).
 - [Consistency Models (Song et al., 2023)](https://arxiv.org/abs/2303.01469).
-- [SD3 (Esser et al., 2024)](https://arxiv.org/abs/2403.03206) — vẫn autoencoder ẩn + flow.
+- [SD3 (Esser et al., 2024)](https://arxiv.org/abs/2403.03206) — tiếp tục kết hợp autoencoder ẩn với flow matching.
 
-## 5. Bài này bổ sung gì cho ghi chú cốt lõi
+## 5. Phần bổ sung so với nội dung cốt lõi
 
-Suy ra ELBO và mẹo tái tham số trước. Bài này chỉ cho thấy **$$z$$ được tiêu thụ ở đâu** trong sản phẩm 2022–2026 — không phải cận dưới chứng cứ mới.
+Bạn nên tự suy ra ELBO và nắm vững thủ thuật tái tham số hóa trước. Bài này chỉ minh họa **không gian ẩn $$z$$ được khai thác ở đâu** trong các hệ thống giai đoạn 2022–2026 chứ không thay đổi cận dưới ELBO cơ bản.
 
 ## Video tham khảo
 
-- **xem trước** [How does Stable Diffusion work? – Latent Diffusion Models EXPLAINED](https://www.youtube.com/watch?v=J87hffSMB60) — AI Coffee Break with Letitia, tiếng Anh. VAE của Stable Diffusion là hậu duệ đã triển khai mà ghi chú mô tả.
-- [Variational Autoencoders](https://www.youtube.com/watch?v=9zKuYvjFFS8) — Arxiv Insights, tiếng Anh. ELBO mà VAE đó vẫn huấn luyện, kể cả khi nó chỉ là bộ nén đứng trước khuếch tán.
-- [But how do AI images and videos actually work? | Guest video by Welch Labs](https://www.youtube.com/watch?v=iv-5mZ_9CPY) — 3Blue1Brown, tiếng Anh. Mô hình khuếch tán làm gì với latent của VAE.
+- **Xem trước:** [How does Stable Diffusion work? – Latent Diffusion Models EXPLAINED](https://www.youtube.com/watch?v=J87hffSMB60) — AI Coffee Break with Letitia, tiếng Anh. Giải thích vai trò của VAE trong Stable Diffusion như phần trình bày của bài.
+- [Variational Autoencoders](https://www.youtube.com/watch?v=9zKuYvjFFS8) — Arxiv Insights, tiếng Anh. Ôn lại mục tiêu ELBO mà VAE vẫn tối ưu khi làm bộ nén cho khuếch tán.
+- [But how do AI images and videos actually work? | Guest video by Welch Labs](https://www.youtube.com/watch?v=iv-5mZ_9CPY) — 3Blue1Brown, tiếng Anh. Minh họa cách mô hình khuếch tán thao tác trên không gian ẩn của VAE.

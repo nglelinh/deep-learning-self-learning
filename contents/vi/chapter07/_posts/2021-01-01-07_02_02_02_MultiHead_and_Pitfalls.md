@@ -11,32 +11,32 @@ categories:
 
 # Multi-Head Attention, Papers và Cạm bẫy
 
-Có thể cài single-head attention mà vẫn bỏ lỡ những gì khiến Transformer hoạt động trong thực tế: **nhiều mẫu attention song song**, đóng gói head đúng, giải mã causal, và các chế độ hỏng chỉ xuất hiện khi scale lên. Bài này hoàn tất nhánh cài đặt.
+Cài đặt được single-head attention mới chỉ là bước đầu; trong các hệ thống Transformer thực tế, hiệu năng phụ thuộc chặt chẽ vào **nhiều head chú ý song song**, thao tác tách/ghép chiều tensor chính xác, mặt nạ nhân quả và khả năng phát hiện các lỗi ẩn khi mở rộng quy mô. Bài này hoàn thiện phần cài đặt cho Chương 7.
 
 ---
 
 ## 1. Tổng quan khái niệm
 
-Multi-head attention không phải “attention nhưng chậm hơn.” Đó là cơ chế dung lượng: mỗi head dùng phép chiếu riêng $$(W_h^Q, W_h^K, W_h^V)$$, nên mỗi head có thể học một khái niệm tương đồng khác và một soft routing khác trên các vị trí. Nối các head giữ các kênh đó; ma trận đầu ra $$W^O$$ trộn chúng vào chiều mô hình.
+Multi-head attention không đơn thuần là lặp lại attention cho chậm hơn mà là cơ chế mở rộng năng lực biểu diễn. Mỗi head sử dụng bộ ma trận chiếu riêng $$(W_h^Q, W_h^K, W_h^V)$$, cho phép nó học một tiêu chí tương đồng và một mẫu định tuyến thông tin khác nhau. Các đầu ra sau đó được nối lại theo chiều đặc trưng và trộn qua ma trận $$W^O$$ để trở về chiều của mô hình.
 
 ![Kiến trúc Transformer + zoom Multi-Head / Scaled Dot-Product](/deep-learning-self-learning/img/chapter_img/chapter08/tf_full_arch_multihead_zoom.jpg)
-*Hình: Multi-head = nhiều nhánh Linear(Q,K,V) → scaled attention → concat → Linear. (Minh họa từ video Attention trong Transformer)*
+*Hình: Multi-head gồm nhiều nhánh Linear(Q, K, V) → scaled attention → nối (concat) → lớp tuyến tính đầu ra. (Minh họa từ video Attention trong Transformer)*
 
 ![$$d_k = d_{\mathrm{model}}/H$$](/deep-learning-self-learning/img/chapter_img/chapter07/qkv_multihead_dk_split.jpg)
-*Hình: Ví dụ $$512/8=64$$ — chiều mỗi head. (Minh họa từ video công thức Attention QKV)*
+*Hình: Ví dụ $$512/8=64$$ chiều cho mỗi head. (Minh họa từ video công thức Attention QKV)*
 
 ![Đầu ra multi-head](/deep-learning-self-learning/img/chapter_img/chapter07/qkv_multihead_output_stack.jpg)
-*Hình: Ghép các head trước linear $$W^O$$. (Minh họa từ video công thức Attention QKV)*
+*Hình: Ghép đầu ra của các head trước khi nhân ma trận $$W^O$$. (Minh họa từ video công thức Attention QKV)*
 
-Về thao tác, multi-head attention là:
+Quy trình thực hiện multi-head attention gồm 5 bước:
 
-1. Chiếu $$\mathbf{X}$$ thành Q, K, V ở full $$d_{\mathrm{model}}$$.  
-2. Reshape thành $$(B, H, L, d_k)$$ với $$d_k=d_{\mathrm{model}}/H$$.  
-3. Chạy scaled attention **theo head** (theo batch).  
-4. Gộp heads → $$(B, L, d_{\mathrm{model}})$$.  
-5. Ánh xạ tuyến tính cuối $$W^O$$.
+1. Chiếu $$\mathbf{X}$$ sang Q, K, V với đầy đủ chiều $$d_{\mathrm{model}}$$.
+2. Tách và hoán vị chiều thành $$(B, H, L, d_k)$$ với $$d_k=d_{\mathrm{model}}/H$$.
+3. Chạy scaled dot-product attention song song trên tất cả các head.
+4. Ghép lại các head thành $$(B, L, d_{\mathrm{model}})$$.
+5. Áp dụng phép chiếu tuyến tính cuối $$W^O$$.
 
-Reshape/transpose sai thì shape vẫn “đúng” trong khi thông tin bị xáo trộn—do đó có các test bên dưới.
+Nếu thao tác reshape hoặc transpose bị sai thứ tự, tensor đầu ra vẫn có thể giữ nguyên kích thước mong đợi nhưng dữ liệu bên trong bị trộn lẫn. Do đó, kiểm thử đơn vị cho bước tách/ghép head là rất cần thiết.
 
 ---
 
@@ -50,7 +50,7 @@ $$
 \mathrm{MultiHead}(X)=\mathrm{Concat}_h(\mathrm{head}_h)\,W^O
 $$
 
-Với ma trận lớn dùng chung (phổ biến trong code), ta chiếu một lần lên $$d_{\mathrm{model}}$$, rồi **view** chiều cuối như $$H \times d_k$$:
+Trong cài đặt thực tế, thay vì thực hiện $$H$$ phép nhân nhỏ tách rời, ta nhân một lần với ma trận lớn kích thước $$d_{\mathrm{model}}$$ rồi tách chiều cuối thành $$H \times d_k$$:
 
 $$
 Q = X W^Q \in \mathbb{R}^{B\times L\times (H d_k)}
@@ -58,30 +58,30 @@ Q = X W^Q \in \mathbb{R}^{B\times L\times (H d_k)}
 \mathbb{R}^{B\times H\times L\times d_k}.
 $$
 
-Giải mã causal dùng
+Trong giải mã tự hồi quy (causal), mặt nạ:
 
 $$
 M_{ij}=\begin{cases}0 & j\le i\\ -\infty & j>i\end{cases}
 $$
 
-cộng vào điểm số trong mọi head (cùng mask broadcast qua các head).
+được cộng vào ma trận điểm số và broadcast đồng loạt trên mọi batch và mọi head.
 
 ---
 
-## 3. Ví dụ / Trực giác
+## 3. Ví dụ và Trực giác
 
-Trên câu như “The cat sat,” các head khác nhau thường chuyên biệt sau huấn luyện:
+Trên một câu ngắn như *"The cat sat"*, sau quá trình huấn luyện các head thường tự chuyên biệt hóa theo những vai trò khác nhau:
 
-- Head A: bigram cục bộ (`cat`↔`The`, `sat`↔`cat`)  
-- Head B: cú pháp yếu (`sat` chú ý chủ ngữ `cat`)  
-- Head C: gần như vị trí (đường chéo mạnh)
+- Head A theo dõi quan hệ lân cận cục bộ (`cat` ↔ `The`, `sat` ↔ `cat`).
+- Head B nắm bắt liên kết cú pháp (`sat` chú ý vào chủ ngữ `cat`).
+- Head C tập trung gần đường chéo chính (chủ yếu theo vị trí).
 
-Ta không lập trình các vai trò đó; tham số riêng + áp lực đa nhiệm từ loss khuyến khích đa dạng. Trực quan hóa bản đồ theo head là cách thực tiễn để thấy chuyên biệt hóa.
+Các vai trò này không được lập trình cứng mà hình thành tự nhiên từ tham số khởi tạo riêng biệt và áp lực tối ưu hóa hàm mất mát. Trực quan hóa bản đồ trọng số của từng head giúp quan sát rõ sự phân hóa này.
 
 ---
 
 ## 4. Mã minh họa
-### 4.1 Multi-head self-attention (PyTorch, phiên bản dạy)
+### 4.1 Multi-head self-attention (PyTorch, phiên bản giảng dạy)
 
 ```python
 import math
@@ -163,7 +163,7 @@ y2, w2 = official(x, x, x, need_weights=True, average_attn_weights=False)
 print(y2.shape, w2.shape)
 ```
 
-Luôn kiểm tra kỹ quy ước mask theo phiên bản PyTorch (`bool` so với float cộng).
+Cần kiểm tra kỹ tài liệu theo đúng phiên bản PyTorch đang sử dụng vì quy ước kiểu dữ liệu của `attn_mask` (`bool` so với `float` cộng) có thể khác nhau.
 
 ### 4.3 Phác thảo seq2seq-with-attention tối giản
 
@@ -242,45 +242,45 @@ def plot_attention(weights_2d, x_labels=None, y_labels=None, title="Attention"):
 
 ## 5. Khái niệm liên quan
 
-- **Residual + LayerNorm** quanh khối multi-head (Pre-LN so với Post-LN) chi phối khả năng huấn luyện.  
-- **Relative position bias** (T5, Shaw et al.) thêm hạng khoảng cách vào điểm số.  
-- **Cross-attention** trong Transformer encoder–decoder tái sử dụng cùng code multi-head với Q từ decoder và K,V từ encoder.  
-- **FlashAttention / SDPA** hợp nhất matmul-softmax-matmul để tiết kiệm bộ nhớ; toán học không đổi.  
-- **Sparse attention** (Longformer, BigBird) hạn chế support của $$\alpha$$ khi $$L$$ dài.
+- **Residual và LayerNorm**: cách bố trí Pre-LN hay Post-LN quanh khối multi-head ảnh hưởng trực tiếp tới độ ổn định khi huấn luyện mạng sâu.
+- **Độ lệch vị trí tương đối (Relative position bias)**: các mô hình như T5 hay Shaw et al. cộng thêm hạng tử phụ thuộc khoảng cách tương đối vào điểm số attention.
+- **Cross-attention**: trong Transformer encoder–decoder, cross-attention dùng lại đúng cấu trúc multi-head nhưng lấy Q từ decoder và K, V từ encoder.
+- **FlashAttention / SDPA**: tối ưu hóa truy cập bộ nhớ bằng cách hợp nhất chuỗi phép tính matmul–softmax–matmul trong khi giữ nguyên kết quả toán học.
+- **Attention thưa (Sparse attention)**: các kiến trúc như Longformer hay BigBird giới hạn tập vị trí có trọng số $$\alpha$$ khác 0 để xử lý chuỗi rất dài.
 
 ---
 
 ## 6. Các bài báo nền tảng
 
 1. **[Bahdanau et al., 2015](https://arxiv.org/abs/1409.0473)** — *Neural Machine Translation by Jointly Learning to Align and Translate.*  
-   Additive attention nền tảng; decoder soft-search các trạng thái nguồn. Thiết lập alignment học được không cần giám sát tường minh.
+   Giới thiệu attention cộng tính giúp decoder tự học căn chỉnh mềm với các trạng thái nguồn mà không cần nhãn căn chỉnh tường minh.
 
 2. **[Luong et al., 2015](https://arxiv.org/abs/1508.04025)** — *Effective Approaches to Attention-based NMT.*  
-   Điểm số nhân tính, attention global so với local, mẹo decoder thực tiễn (input feeding).
+   Trình bày các hàm chấm điểm nhân tính, phân biệt attention toàn cục và cục bộ cùng kỹ thuật *input feeding* cho decoder.
 
 3. **[Xu et al., 2015](https://arxiv.org/abs/1502.03044)** — *Show, Attend and Tell.*  
-   Attention thị giác cho chú thích ảnh; soft so với hard attention; tính tổng quát đa phương thức của ý tưởng.
+   Áp dụng attention thị giác (cả dạng mềm và dạng cứng) cho bài toán sinh chú thích ảnh, mở rộng phạm vi ứng dụng đa phương thức.
 
 4. **[Vaswani et al., 2017](https://arxiv.org/abs/1706.03762)** — *Attention Is All You Need.*  
-   Multi-head scaled self-attention như toán tử chuỗi chính; khuôn mẫu cho các stack hiện đại.
+   Đề xuất multi-head scaled self-attention làm phép toán xử lý chuỗi trung tâm cho kiến trúc Transformer.
 
 5. **[Shaw et al., 2018](https://arxiv.org/abs/1803.02155)** — *Self-Attention with Relative Position Representations.*  
-   Khoảng cách tương đối trong logit attention; cải thiện tổng quát hóa độ dài ở nhiều biến thể.
+   Đưa biểu diễn khoảng cách tương đối vào điểm số attention, giúp cải thiện khả năng tổng quát hóa theo độ dài chuỗi.
 
 ---
 
 ## 7. Cạm bẫy thường gặp và mẹo thực hành
-### Lỗi nghiêm trọng
+### Các lỗi nghiêm trọng cần tránh
 
-1. **Softmax sai trục** — phải là trục key/bộ nhớ.  
-2. **Mask sau softmax** — dùng `-inf` cộng trên logit.  
-3. **Quên $$1/\sqrt{d_k}$$** — attention sắc, gradient thấp khi chiều rộng lớn.  
-4. **Reshape head sai** — luôn test `view → transpose → attention → transpose → view` trên tensor biết trước.  
-5. **Rò rỉ padding** — `key_padding_mask` / vị trí pad tường minh trong mọi lần chạy batch.  
-6. **Rò rỉ causal** — unit-test tam giác trên của weights ~0.  
-7. **Dropout trên scores so với weights** — biết đường code dùng cái nào; giữ mode train/eval nhất quán.
+1. **Softmax sai trục** — phải luôn chuẩn hóa dọc theo trục key/bộ nhớ.
+2. **Áp mask sau softmax** — cần cộng `-inf` trực tiếp vào điểm số trước softmax.
+3. **Quên hệ số $$1/\sqrt{d_k}$$** — gây bão hòa softmax và suy giảm gradient khi chiều head lớn.
+4. **Reshape head sai thứ tự** — luôn kiểm thử chuỗi `view → transpose → attention → transpose → view` trên tensor đã biết giá trị.
+5. **Rò rỉ padding** — luôn truyền `key_padding_mask` tường minh khi huấn luyện theo batch có độ dài khác nhau.
+6. **Rò rỉ thông tin tương lai (causal)** — kiểm tra bằng unit-test để đảm bảo phần tam giác trên của trọng số bằng 0.
+7. **Nhầm vị trí đặt dropout** — cần nhất quán xem dropout áp lên trọng số sau softmax hay ở đầu ra, đồng thời đảm bảo chuyển đúng chế độ `train`/`eval`.
 
-### Checklist debug
+### Danh mục kiểm tra gỡ lỗi
 
 ```text
 [ ] In shapes: Q,K,V,scores,weights,output
@@ -291,35 +291,36 @@ def plot_attention(weights_2d, x_labels=None, y_labels=None, title="Attention"):
 [ ] Gradient chảy tới Wq/Wk/Wv (hook hoặc .grad sau backward)
 ```
 
-### Mẹo thực tiễn
+### Mẹo thực hành
 
-- Bắt đầu với **một head** và full attention; chỉ thêm heads khi huấn luyện single-head đã ổn.  
-- Ghi **entropy của attention** theo lớp: entropy gần zero nghĩa là sụp; rất cao có thể là nhiễu đều.  
-- Với mô hình kiểu NMT, trực quan hóa vài cặp câu mỗi epoch—mask hỏng lộ ngay.  
-- Ưu tiên SDPA fused trong production; giữ cài đặt tham chiếu chậm cho test.
+- Bắt đầu kiểm chứng với **một head** và attention đầy đủ; chỉ mở rộng sang nhiều head sau khi phiên bản đơn giản đã hoạt động ổn định.
+- Theo dõi **entropy của phân phối attention** theo từng lớp: entropy quá gần 0 cho thấy phân phối bị tập trung cực đoan, còn quá cao có thể báo hiệu trọng số gần như đều nhau (chưa học được mẫu).
+- Với bài toán dịch máy hoặc seq2seq, trực quan hóa bản đồ attention trên vài cặp câu mẫu sau mỗi epoch để phát hiện sớm lỗi mask.
+- Dùng các kernel SDPA tối ưu khi chạy thực tế, nhưng giữ bản cài đặt chuẩn đơn giản để làm mốc đối chiếu khi kiểm thử.
 
 ---
 
 ## 8. Tóm tắt các điểm chính
-1. **Multi-head attention = các soft router song song + trộn đầu ra**, không phải ensemble trang trí.  
-2. Đóng gói heads là **bài toán layout**; coi test reshape là bắt buộc.  
-3. **Causal và padding masks** là một phần định nghĩa thuật toán trong hệ thống thật.  
-4. Papers cổ điển (Bahdanau → Luong → Vaswani) đánh dấu đường đi từ phần bổ sung RNN tới kiến trúc độc lập.  
-5. Hầu hết lỗi “attention hỏng” là **trục, mask, hoặc scale**—không phải phép thuật optimizer.
 
-Giờ đã có đường đầy đủ: cơ sở → toán học → code cốt lõi → thực hành multi-head. Chương 08 sẽ xếp chồng các khối này với lớp feed-forward, residual và positional encoding thành Transformer đầy đủ.
+1. **Multi-head attention** kết hợp nhiều cơ chế định tuyến mềm chạy song song rồi trộn đầu ra qua lớp tuyến tính $$W^O$$.
+2. Thao tác tách và ghép head là bài toán sắp xếp chiều tensor nên cần kiểm thử cẩn thận.
+3. **Causal mask và padding mask** là bộ phận cấu thành của thuật toán trong mọi hệ thống thực tế.
+4. Chuỗi bài báo từ Bahdanau, Luong đến Vaswani đánh dấu bước chuyển từ thành phần bổ trợ cho RNN sang kiến trúc độc lập.
+5. Phần lớn lỗi khi attention không hội tụ xuất phát từ **sai trục softmax, sai mask hoặc thiếu chia tỉ lệ**, hơn là do bộ tối ưu.
+
+Đến đây, bạn đã đi trọn mạch từ trực giác, toán học, mã nguồn cốt lõi đến multi-head attention. Chương 08 sẽ kết hợp các khối này cùng mạng feed-forward, kết nối phần dư và mã hóa vị trí để xây dựng kiến trúc Transformer hoàn chỉnh.
 
 <!-- video-references -->
 
 ## Nguồn video (tham chiếu)
 
-Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
+Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến); các đường dẫn dưới đây được lưu lại để tra cứu và ghi nhận nguồn:
 
 - [Công thức Attention: tự tay tính Q, K, V](https://www.facebook.com/reel/1806844676942638)
 - [Attention trong Transformer (Self, Masked, Cross, Multi-Head)](https://www.facebook.com/reel/1007473105556936)
 
 ## Video tham khảo
 
-- **xem trước** [A Dive Into Multihead Attention, Self-Attention and Cross-Attention](https://www.youtube.com/watch?v=mmzRYGCfTzc) — Machine Learning Studio, tiếng Anh. Multi-head là nhiều bản đồ attention, không phải một softmax lớn hơn.
-- [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown, tiếng Anh. Che (masking), đúng ràng buộc nhân quả của phần cạm bẫy.
-- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Một mặt nạ nhân quả trong mã, để cạm bẫy hiện ra như lỗi chỉ số nếu bạn bỏ nó.
+- **Xem trước:** [A Dive Into Multihead Attention, Self-Attention and Cross-Attention](https://www.youtube.com/watch?v=mmzRYGCfTzc) — Machine Learning Studio (tiếng Anh). Làm rõ bản chất của multi-head là nhiều bản đồ attention song song thay vì một lớp softmax lớn hơn.
+- [Attention in transformers, step-by-step | Deep Learning Chapter 6](https://www.youtube.com/watch?v=eMlx5fFNoYc) — 3Blue1Brown (tiếng Anh). Trình bày trực quan kỹ thuật che (masking) cho ràng buộc nhân quả trong phần bẫy thường gặp.
+- [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy (tiếng Anh). Cài đặt mặt nạ nhân quả trực tiếp trong mã nguồn, giúp thấy rõ hậu quả nếu thiếu bước này.

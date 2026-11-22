@@ -12,117 +12,117 @@ lesson_type: optional
 
 # Tùy chọn: Lộ trình luyện Deep Learning Interviews
 
-> Bài này là **tùy chọn**. Nó **không** thay thế bất kỳ chương lý thuyết nào. Đây là bản đồ và kế hoạch học để dùng một cuốn sách phỏng vấn miễn phí như bài luyện thêm — sau khi bạn đã xong ghi chú khóa học tương ứng.
+> Bài này là phần **tùy chọn**, **không** thay thế bất kỳ chương lý thuyết nào. Đây là bảng đối chiếu và kế hoạch học giúp bạn kết hợp một cuốn sách luyện phỏng vấn miễn phí như nguồn bài tập bổ sung sau khi đã học xong phần lý thuyết tương ứng trong khóa.
 
-## Sách là gì
+## Giới thiệu cuốn sách
 
-**Deep Learning Interviews** (ấn bản thứ hai) của **Shlomo Kashani** và **Amir Ivry** là tập bài toán phỏng vấn / thi cử đã giải đầy đủ, phủ các chủ đề cốt lõi của AI. Sách viết cho học viên cao học và ứng viên cần trình bày rõ dưới áp lực thời gian; cũng hữu ích như danh sách kiểm tra nền tảng nghiên cứu.
+**Deep Learning Interviews** (ấn bản thứ hai) của **Shlomo Kashani** và **Amir Ivry** là tuyển tập các bài toán phỏng vấn và thi cử có lời giải chi tiết, bao phủ nhiều chủ đề cốt lõi của trí tuệ nhân tạo. Sách phù hợp cho học viên cao học và ứng viên cần trình bày rõ ràng dưới áp lực thời gian, đồng thời có thể dùng như danh mục kiểm tra kiến thức nền tảng cho nghiên cứu.
 
-Khóa học này **không** in lại sách. Hãy mở nguồn chính thức:
+Khóa học này **không** sao chép lại nội dung sách. Bạn hãy truy cập trực tiếp các nguồn chính thức:
 
-- PDF / tóm tắt: [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)
-- Kho kèm theo: [github.com/BoltzmannEntropy/interviews.ai](https://github.com/BoltzmannEntropy/interviews.ai)
-- Trang tác giả: [interviews.ai](http://www.interviews.ai/)
+- PDF và tóm tắt: [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)
+- Kho mã nguồn kèm theo: [github.com/BoltzmannEntropy/interviews.ai](https://github.com/BoltzmannEntropy/interviews.ai)
+- Trang của tác giả: [interviews.ai](http://www.interviews.ai/)
 
-Tải PDF từ arXiv (hoặc liên kết của tác giả). Tôn trọng điều khoản trên các trang đó. Đừng dán đoạn trích dài vào ghi chú, issue, hay đáp án dùng chung.
+Hãy tải tệp PDF từ arXiv hoặc liên kết chính thức của tác giả, tuân thủ điều khoản sử dụng trên các trang đó và không dán các đoạn trích dài vào ghi chú, issue hay lời giải công khai.
 
-## Cách dùng cùng khóa học
+## Cách kết hợp sách với khóa học
 
-Chọn một chế độ và giữ kỷ luật thời gian:
+Hãy chọn một mục tiêu học phù hợp và giữ kỷ luật về thời gian:
 
-1. **Luyện phỏng vấn.** Sau mỗi chương, trả lời *thành tiếng* các câu gốc trong bài tùy chọn của chương đó, rồi mở sách để làm bộ khó hơn, đã giải, cùng *chủ đề*.
-2. **Quiz trên lớp.** Giảng viên có thể giao 2–3 câu companion như bài kiểm tra ngắn. Dùng sách làm đáp án giáo viên / bài về nhà thêm, không sao chép thành phiếu bài tập.
-3. **Nền tảng nghiên cứu.** Trước khi đọc bài báo dựa trên lý thuyết thông tin, autodiff, hoặc bất định, lướt *vùng chủ đề* tương ứng trong sách (không dump cả chương) và bài lý thuyết của khóa.
+1. **Luyện phỏng vấn:** Sau khi hoàn thành mỗi chương, hãy tự trình bày *thành tiếng* câu trả lời cho các câu hỏi gốc trong bài luyện tập bổ trợ của chương đó, rồi mở sách để làm thêm các bài khó hơn có lời giải cùng chủ đề.
+2. **Kiểm tra ngắn trên lớp:** Giảng viên có thể chọn 2–3 câu trong bài bổ trợ làm bài kiểm tra nhanh, dùng sách làm nguồn tham khảo lời giải hoặc bài tập về nhà mở rộng mà không sao chép trực tiếp thành phiếu bài tập.
+3. **Củng cố nền tảng nghiên cứu:** Trước khi đọc các bài báo dựa trên lý thuyết thông tin, vi phân tự động (*autodiff*) hoặc ước lượng bất định, hãy rà soát phần chủ đề tương ứng trong sách (tránh đọc dàn trải cả chương) kết hợp với bài lý thuyết của khóa.
 
-Làm đóng sách trước. Rồi xem gợi ý khóa học. Chỉ sau đó mới mở PDF để đọc thêm Q&A đã giải.
+Nguyên tắc chung là tự giải khi **đóng sách** trước, sau đó xem phần gợi ý của khóa học, và chỉ mở tệp PDF sau cùng để đối chiếu thêm các câu hỏi–đáp có lời giải.
 
-## Kế hoạch học: chủ đề sách → chương 00–26
+## Kế hoạch học: đối chiếu chủ đề sách với Chương 00–26
 
-Sách sắp theo chủ đề phỏng vấn, không theo số chương khóa học. Dùng bảng như tờ chỉ đường. Tên chủ đề dưới đây chỉ là **nhãn mức cao** — không phải mục lục sao chép.
+Cuốn sách được sắp xếp theo nhóm chủ đề phỏng vấn chứ không theo thứ tự chương của khóa học. Bảng dưới đây giúp bạn tra cứu tương ứng; tên chủ đề chỉ là **nhãn khái quát ở mức cao**, không phải mục lục sao chép từ sách.
 
-| Chương khóa | Chủ đề khóa | Chủ đề sách nên đọc (trong PDF) | Bài tùy chọn |
+| Chương khóa | Chủ đề khóa | Chủ đề nên đọc trong sách (PDF) | Bài tùy chọn |
 | --- | --- | --- | --- |
-| 00 | Toán tiên quyết | Lý thuyết thông tin (entropy, KL, thông tin tương hỗ); giải tích / trực giác autodiff | **00-98** |
-| 01 | Giới thiệu và hướng dẫn | Cách dùng sách; hub này | bài này |
-| 02 | Nền tảng mạng neuron | Perceptron, hàm kích hoạt, phần kiến trúc “deep learning mở rộng” | **02-98** |
-| 03 | Huấn luyện, loss, lan truyền ngược | Vi phân thuật toán; trực giác Hessian; logistic / phân loại | **03-98** |
-| 04 | CNN | Tích chập, kiến trúc CNN, ý tưởng tách đặc trưng ban đầu | **04-98** |
-| 05–08 | RNN, LSTM, attention, Transformer | Volume I không có nhà — bám ghi chú khóa; Volume II dự kiến NLP / chuỗi | chỉ trên hub |
-| 09 | Chính quy hóa | Overfitting, kiểm định, kiểm soát dung lượng | **09-98** |
-| 10 | Bộ tối ưu | Phương pháp thích nghi (Adam và họ hàng), siêu tham số, động lực huấn luyện | **10-98** |
-| 11–14 | Mô hình sinh (kể cả VAE, GAN) | Volume I không có nhà — kế hoạch Volume II nhắc GAN / VAE; dùng chương khóa | chỉ trên hub |
-| 15 | Học chuyển giao | Tách đặc trưng CNN và backbone đóng băng so với tinh chỉnh | **15-98** |
-| 16–23 | SSL, CV, NLP, tiếng nói, RL, GNN, hiệu năng | Volume I không có nhà. Volume II dự kiến detection, segmentation, NLP, RL — dùng chương khóa khớp | chỉ trên hub |
-| 24 | Giải thích mô hình | Chỉ bàn liên quan; *bất định* Bayesian nằm ở 25 | chỉ trên hub |
+| 00 | Toán tiên quyết | Lý thuyết thông tin (entropy, phân kỳ KL, thông tin tương hỗ); giải tích và trực giác autodiff | **00-98** |
+| 01 | Giới thiệu và hướng dẫn | Cách sử dụng sách; trang tổng hợp này | bài này |
+| 02 | Nền tảng mạng nơ-ron | Perceptron, hàm kích hoạt, phần kiến trúc mở rộng của học sâu | **02-98** |
+| 03 | Huấn luyện, hàm mất mát, lan truyền ngược | Vi phân thuật toán; trực giác ma trận Hessian; hồi quy logistic và phân loại | **03-98** |
+| 04 | CNN | Phép tích chập, kiến trúc CNN, trích xuất đặc trưng ban đầu | **04-98** |
+| 05–08 | RNN, LSTM, attention, Transformer | Tập I chưa có mục riêng — bám sát bài giảng khóa học; Tập II dự kiến đề cập NLP và chuỗi | chỉ trên trang này |
+| 09 | Chính quy hóa | Quá khớp (*overfitting*), kiểm định, kiểm soát dung lượng mô hình | **09-98** |
+| 10 | Bộ tối ưu | Phương pháp thích nghi (Adam và các biến thể), siêu tham số, động lực học huấn luyện | **10-98** |
+| 11–14 | Mô hình sinh (gồm VAE, GAN) | Tập I chưa có mục riêng — kế hoạch Tập II nhắc tới GAN và VAE; dùng bài giảng khóa học | chỉ trên trang này |
+| 15 | Học chuyển giao | Trích xuất đặc trưng CNN, so sánh đóng băng *backbone* và tinh chỉnh (*fine-tuning*) | **15-98** |
+| 16–23 | SSL, CV, NLP, tiếng nói, RL, GNN, hiệu năng | Tập I chưa có mục riêng; Tập II dự kiến gồm phát hiện đối tượng, phân đoạn, NLP, RL — dùng các chương tương ứng của khóa | chỉ trên trang này |
+| 24 | Giải thích mô hình | Chỉ đề cập ở mức liên quan; phần *bất định* Bayesian nằm ở Chương 25 | chỉ trên trang này |
 | 25 | Chủ đề nâng cao | Học sâu Bayesian và tư duy xác suất | **25-98** |
-| 26 | Mô hình ngôn ngữ lớn | Volume I không có nhà — dùng hub LLM của khóa (toán tiền huấn luyện, prompting, căn chỉnh, phục vụ, chưng cất, nội tại) | **26-06** |
+| 26 | Mô hình ngôn ngữ lớn | Tập I chưa có mục riêng — dùng mục tổng hợp LLM của khóa (toán tiền huấn luyện, prompting, căn chỉnh, phục vụ, chưng cất, cơ chế nội tại) | **26-06** |
 
-### Chủ đề không có chương riêng
+### Các chủ đề không có chương riêng
 
-Giữ các mục này trên hub. **Không** tạo chương bắt buộc mới.
+Những nội dung này được tóm tắt ngay tại đây thay vì tạo thêm chương bắt buộc mới.
 
-**Ensemble (bagging / boosting / stacking).** Sách coi ensemble mạng neuron là chủ đề phỏng vấn. Khóa không có chương ensemble riêng. Nếu bị hỏi:
+**Tổ hợp mô hình (*ensemble*: bagging / boosting / stacking):** Cuốn sách coi tổ hợp mạng nơ-ron là một chủ đề phỏng vấn quan trọng, dù khóa học không có chương riêng. Nếu được hỏi, bạn cần phân biệt rõ ba hướng chính:
 
-- Bagging: trung bình nhiều mô hình huấn luyện độc lập để giảm phương sai.
-- Boosting: thêm mô hình sửa lỗi phần dư (giảm bias nhiều hơn bagging).
-- Stacking: một mô hình tầng hai học cách tổ hợp các dự đoán gốc.
+- **Bagging:** lấy trung bình nhiều mô hình huấn luyện độc lập để giảm phương sai.
+- **Boosting:** huấn luyện tuần tự các mô hình nhằm sửa phần dư của mô hình trước, giúp giảm độ chệch (*bias*) mạnh hơn *bagging*.
+- **Stacking:** dùng một mô hình tầng hai học cách kết hợp dự đoán của các mô hình cơ sở.
 
-**Thảo luận (gốc, không lấy từ sách).** Khi nào bạn nên bagging mười CNN độc lập hơn là huấn luyện một mô hình lớn gấp mười? Điều gì hỏng nếu các mô hình gốc tương quan mạnh?
+**Câu hỏi thảo luận (do khóa biên soạn, không lấy từ sách):** Khi nào nên áp dụng *bagging* với mười mạng CNN độc lập thay vì huấn luyện một mô hình lớn gấp mười lần? Điều gì sẽ xảy ra nếu các mô hình cơ sở có tương quan cao với nhau?
 
-**Volume II (dự kiến).** Tác giả phác thảo tập sau về CNN nâng cao, detection, segmentation, NLP, GAN, VAE, và học tăng cường. Cho đến khi tập đó là giáo trình được giao, hãy dùng Chương 11–21 của khóa này cho các chủ đề ấy và coi PDF Volume I là nguồn luyện đã giải cho bảng trên.
+**Tập II (dự kiến):** Các tác giả đã phác thảo tập tiếp theo về CNN nâng cao, phát hiện đối tượng, phân đoạn ảnh, NLP, GAN, VAE và học tăng cường. Khi tập này chưa được đưa vào giáo trình, bạn hãy học các chủ đề đó qua Chương 11–21 của khóa học và dùng tệp PDF Tập I làm nguồn bài tập có lời giải theo bảng đối chiếu trên.
 
-## Khởi động gốc (chỉ trên hub)
+## Ba câu khởi động gốc (chỉ có tại trang này)
 
-Ba câu sau do khóa soạn. Không lấy từ sách.
+Ba câu hỏi dưới đây do khóa học tự soạn, không trích từ sách.
 
-### H1. Người phỏng vấn đang kiểm tra gì?
+### H1. Người phỏng vấn đang kiểm tra điều gì?
 
-Bạn được hỏi “vì sao dùng cross-entropy chứ không phải MSE cho phân loại 10 lớp?” trong hai phút. Nêu lý do *mô hình hóa* và lý do *tối ưu*, rồi dừng.
+Bạn được yêu cầu giải thích trong hai phút: "Vì sao bài toán phân loại 10 lớp thường dùng *cross-entropy* thay vì MSE?" Hãy nêu rõ một lý do về *mô hình hóa* và một lý do về *tối ưu hóa*, rồi dừng lại.
 
-**Gợi ý.** Nghĩ hợp lý của phân phối categorical, và dạng gradient khi dự đoán sai nhưng rất chắc.
+**Gợi ý:** Liên hệ với hàm hợp lý (*likelihood*) của phân phối phân loại (*categorical*) và độ lớn của gradient khi mô hình dự đoán sai nhưng lại có độ tự tin rất cao.
 
-**Thảo luận.** Mô hình hóa: softmax là phân phối rời rạc; cross-entropy là âm log-hợp lý của mô hình đó. Tối ưu: MSE trên xác suất thường cho gradient yếu khi lớp dự đoán đã nhọn ở nhãn sai; NLL vẫn đẩy logit của lớp đúng lên. Sau đó mở PDF để xem thêm câu loss / phân loại — đừng chép vào đây.
+**Thảo luận:** Về mô hình hóa, *softmax* biểu diễn một phân phối xác suất rời rạc, và *cross-entropy* chính là âm log-hợp lý (*negative log-likelihood*) của phân phối đó. Về tối ưu hóa, MSE tính trên xác suất thường cho gradient nhỏ khi xác suất tập trung sai vào một lớp, trong khi *negative log-likelihood* vẫn duy trì tín hiệu đẩy *logit* của lớp đúng lên. Sau khi tự trả lời, bạn có thể mở tệp PDF để luyện thêm các câu về hàm mất mát và phân loại (không sao chép lại vào đây).
 
-### H2. Đóng sách và mở sách
+### H2. Luyện tập đóng sách và mở sách
 
-Bạn được dùng PDF trong bài take-home nhưng không được dùng trong buổi onsite 45 phút. Việc luyện hàng tuần nên đổi thế nào?
+Nếu bạn được phép tra cứu PDF trong bài làm tại nhà (*take-home*) nhưng không được dùng tài liệu trong buổi phỏng vấn trực tiếp 45 phút, kế hoạch luyện tập hằng tuần nên thay đổi như thế nào?
 
-**Gợi ý.** Phỏng vấn onsite thưởng các biến đổi ngắn viết được trên bảng (đạo hàm sigmoid, kích thước đầu ra conv, một dòng cập nhật Adam).
+**Gợi ý:** Phỏng vấn trực tiếp thường đánh giá khả năng biến đổi ngắn gọn ngay trên bảng (như đạo hàm hàm sigmoid, công thức kích thước đầu ra tầng tích chập, hay một bước cập nhật của Adam).
 
-**Thảo luận.** Luyện câu companion theo đồng hồ. Dùng sách để đào sâu và kiểm tra cách diễn đạt. Nếu chỉ giải được khi mở PDF, chủ đề đó chưa sẵn sàng cho phỏng vấn.
+**Thảo luận:** Hãy bấm giờ khi làm các câu trong bài luyện tập bổ trợ, còn cuốn sách dùng để đào sâu và chuẩn hóa cách diễn đạt. Nếu một chủ đề chỉ giải được khi mở PDF, nghĩa là bạn chưa đủ sẵn sàng cho vòng phỏng vấn trực tiếp.
 
-### H3. Ensemble khi khóa không có chương ensemble
+### H3. Tổ hợp mô hình khi khóa không có chương riêng
 
-Một vòng tuyển dụng yêu cầu giảm phương sai của ResNet đã chỉnh tốt mà không đổi kiến trúc. Đưa hai cách *không phải* “thu thập thêm nhãn.”
+Trong một vòng tuyển dụng, bạn được yêu cầu giảm phương sai của một mạng ResNet đã tinh chỉnh tốt mà không thay đổi kiến trúc. Hãy nêu hai cách *không phải* là "thu thập thêm dữ liệu có nhãn".
 
-**Gợi ý.** Một cách đổi cách dùng mô hình sẵn có; một cách đổi cách dùng dữ liệu sẵn có.
+**Gợi ý:** Một cách thay đổi cách sử dụng mô hình sẵn có; cách còn lại thay đổi cách sử dụng dữ liệu sẵn có.
 
-**Thảo luận.** Snapshot / fine-tune bagging, tăng cường lúc suy luận, và dropout-như-ensemble lúc test đều giảm phương sai. Mô hình lớn hơn là đổi dung lượng, không phải ensemble giảm phương sai. Các bài ensemble đã giải đầy đủ thuộc về sách, không thuộc repo này.
+**Thảo luận:** Có thể áp dụng *snapshot ensemble* hoặc *bagging* nhiều bản tinh chỉnh, tăng cường dữ liệu lúc suy luận (*test-time augmentation*), hoặc dùng *dropout* nhiều lần lúc kiểm thử như một dạng tổ hợp. Việc tăng kích thước mô hình làm thay đổi dung lượng chứ không phải tổ hợp giảm phương sai. Các bài toán tổ hợp mô hình có lời giải chi tiết hơn nằm trong sách, không lưu trong kho này.
 
-## Mục lục companion
+## Danh mục các bài luyện tập bổ trợ
 
-Sau bài lý thuyết khớp, mở:
+Sau khi hoàn thành bài lý thuyết tương ứng, bạn có thể mở các bài sau:
 
-- **00-98** — lý thuyết thông tin và giải tích / autodiff
-- **02-98** — neuron, hàm kích hoạt, cấu trúc MLP
-- **03-98** — autodiff, trực giác Hessian, phân loại logistic
-- **04-98** — hình học và kiến trúc CNN
-- **09-98** — overfitting và bộ chính quy
-- **10-98** — bộ tối ưu họ Adam
-- **15-98** — tách đặc trưng và chuyển giao
-- **25-98** — chủ đề Bayesian / bất định
-- **26-06** — hub LLM (toán tiền huấn luyện, phục vụ, nội tại, chưng cất; chỉ câu gốc)
+- **00-98** — lý thuyết thông tin, giải tích và vi phân tự động (*autodiff*).
+- **02-98** — nơ-ron, hàm kích hoạt và cấu trúc MLP.
+- **03-98** — vi phân tự động, trực giác Hessian và phân loại logistic.
+- **04-98** — hình học phép tích chập và kiến trúc CNN.
+- **09-98** — quá khớp (*overfitting*) và các kỹ thuật chính quy hóa.
+- **10-98** — họ bộ tối ưu Adam.
+- **15-98** — trích xuất đặc trưng và học chuyển giao.
+- **25-98** — học sâu Bayesian và bất định.
+- **26-06** — mục tổng hợp LLM (toán tiền huấn luyện, phục vụ, cơ chế nội tại, chưng cất; chỉ gồm câu hỏi gốc).
 
-Mỗi companion có 3–6 câu **gốc** kèm gợi ý ngắn. Chúng không viết lại lý thuyết.
+Mỗi bài bổ trợ gồm 3–6 câu hỏi **gốc** kèm gợi ý ngắn, không viết lại phần lý thuyết đã học.
 
-## Ghi công và nhắc giấy phép
+## Ghi công và lưu ý bản quyền
 
 Kashani, S., và Ivry, A. *Deep Learning Interviews*. arXiv:2201.00650. GitHub: [BoltzmannEntropy/interviews.ai](https://github.com/BoltzmannEntropy/interviews.ai).
 
-Ngân hàng câu hỏi đã giải là tác phẩm của các tác giả. Khóa này chỉ trích tiêu đề, tác giả, mã arXiv, và tên chủ đề, rồi thêm bài luyện gốc của riêng mình. **Người học tải sách từ arXiv** (hoặc GitHub / interviews.ai chính thức). Đừng đưa bản PDF vào kho này và đừng dán nguyên văn đáng kể của sách vào pull request.
+Ngân hàng câu hỏi có lời giải thuộc quyền tác giả của cuốn sách. Khóa học này chỉ dẫn tiêu đề, tên tác giả, mã arXiv và tên chủ đề khái quát, đồng thời bổ sung bộ câu hỏi luyện tập riêng. **Người học tự tải sách từ arXiv** (hoặc trang GitHub / interviews.ai chính thức); không đưa tệp PDF vào kho lưu trữ này và không dán các đoạn trích nguyên văn lớn từ sách vào *pull request*.
 
 ## Video tham khảo
 
-- **xem trước** [MIT Introduction to Deep Learning (2024) | 6.S191](https://www.youtube.com/watch?v=ErnWZxJovaM) — Alexander Amini, tiếng Anh. Bức tranh mức đề cương mà lộ trình luyện ánh xạ các chủ đề phỏng vấn vào đó.
-- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, tiếng Anh. Dùng video này cho nửa hiện đại của lộ trình (các mô hình chưa có khi sách phỏng vấn cũ được viết).
-- [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0) — Andrej Karpathy, tiếng Anh. Lộ trình đòi bạn tự suy lan truyền ngược; đây là phép suy đã làm sẵn.
+- **Xem trước:** [MIT Introduction to Deep Learning (2024) | 6.S191](https://www.youtube.com/watch?v=ErnWZxJovaM) — Alexander Amini, tiếng Anh. Cung cấp khung đề cương tổng thể tương ứng với bản đồ các chủ đề phỏng vấn trong lộ trình này.
+- [\[1hr Talk\] Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) — Andrej Karpathy, tiếng Anh. Bổ sung mảng kiến thức hiện đại về mô hình ngôn ngữ lớn — phần chưa có mặt khi các tài liệu phỏng vấn trước đây được biên soạn.
+- [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0) — Andrej Karpathy, tiếng Anh. Hướng dẫn tự triển khai chi tiết thuật toán lan truyền ngược, hỗ trợ trực tiếp cho kỹ năng tự suy diễn công thức khi phỏng vấn.

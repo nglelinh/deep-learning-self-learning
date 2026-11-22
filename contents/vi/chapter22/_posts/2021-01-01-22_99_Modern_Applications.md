@@ -10,35 +10,35 @@ categories:
 lesson_type: optional
 ---
 
-# Tùy chọn: GNN sau truyền tin — Graph Transformer và AlphaFold 3
+# Tùy chọn: GNN sau truyền thông điệp — Graph Transformer và AlphaFold 3
 
-> Bài này là **tùy chọn**. Nó **không** thay truyền tin, bất biến hoán vị, hay cập nhật kiểu GCN. Nó phủ các mô hình 2022–2025 trộn **attention trên đồ thị** với lớp MPNN cổ điển, cộng sản phẩm dự đoán cấu trúc khiến GNN nổi ngoài recsys.
+> Bài này là **tùy chọn**, **không** thay thế lý thuyết về truyền thông điệp, tính bất biến hoán vị hay phép cập nhật GCN. Nội dung bổ sung các mô hình giai đoạn 2022–2025 kết hợp **attention trên đồ thị** với lớp truyền thông điệp cổ điển, cùng ứng dụng dự đoán cấu trúc sinh học nổi bật ngoài hệ thống gợi ý.
 
-Bước MPNN
+Công thức truyền thông điệp (MPNN):
 
 $$\mathbf{h}_i^{(t+1)} = \mathrm{UPD}\Big(\mathbf{h}_i^{(t)},\; \mathrm{AGG}_{j\in\mathcal{N}(i)} \mathrm{MSG}(\mathbf{h}_i^{(t)},\mathbf{h}_j^{(t)},e_{ij})\Big)$$
 
-vẫn là thuật toán đầu đúng. Nhiều mô hình SOTA giờ cho **mọi nút attend nhiều nút khác** (Graphormer, GraphGPS) khi đồ thị đủ nhỏ (phân tử, protein).
+vẫn là nền tảng cốt lõi. Tuy nhiên, nhiều mô hình hiện đại cho phép **mọi nút chú ý trực tiếp đến nhiều nút khác** (như Graphormer, GraphGPS) khi kích thước đồ thị đủ nhỏ (ví dụ phân tử hoặc protein).
 
 ## 1. Graph Transformer
 
-[Ying et al., 2021](https://arxiv.org/abs/2106.05234) (Graphormer) và [Rampášek et al., 2022](https://arxiv.org/abs/2205.12454) (GraphGPS) thêm mã hóa Laplacian / không gian để Transformer tôn trọng khoảng cách đồ thị. Dùng trên phân tử (hàng trăm nút), không trên đồ thị xã hội 10M nút — ở đó vẫn cần lấy mẫu láng giềng (GraphSAGE) như ghi chú lý thuyết.
+[Ying et al., 2021](https://arxiv.org/abs/2106.05234) (Graphormer) và [Rampášek et al., 2022](https://arxiv.org/abs/2205.12454) (GraphGPS) bổ sung mã hóa vị trí Laplacian hoặc mã hóa khoảng cách đồ thị để Transformer tôn trọng cấu trúc liên kết. Hướng này hiệu quả trên các đồ thị kích thước nhỏ đến trung bình (như phân tử có vài chục đến vài trăm nút), nhưng không phù hợp với đồ thị mạng xã hội hàng chục triệu nút — nơi kỹ thuật lấy mẫu láng giềng kiểu GraphSAGE trong bài lý thuyết vẫn cần thiết.
 
 ## 2. Ứng dụng cụ thể
 
 ### AlphaFold 3
 
-[Abramson et al., 2024](https://www.nature.com/articles/s41586-024-07487-w) (AlphaFold 3) dự đoán phức sinh phân tử bằng mô-đun **khuếch tán** trên tọa độ nguyên tử cộng thân cặp/token. Thân cặp là hậu duệ trí tuệ của attention-trên-đồ-thị từ AlphaFold 2. Ứng dụng: khám phá thuốc và sinh học cấu trúc, không phải công thức GCN mới.
+[Abramson et al., 2024](https://www.nature.com/articles/s41586-024-07487-w) (AlphaFold 3) dự đoán cấu trúc phức hợp sinh học bằng mô-đun **khuếch tán** trên tọa độ nguyên tử kết hợp với nhánh biểu diễn cặp (*pairformer*) kế thừa ý tưởng *attention* trên đồ thị từ AlphaFold 2. Đây là ứng dụng tiêu biểu trong khám phá thuốc và sinh học cấu trúc, phát triển từ cùng nền tảng biểu diễn quan hệ cặp.
 
-### Recsys và knowledge graph
+### Hệ thống gợi ý và đồ thị tri thức
 
-Hệ gợi ý production vẫn chạy **GNN hai phía** hoặc embedding two-tower (họ PinSage). Paper 2023–2025 thêm đặc trưng LLM trên nút; bộ tổng hợp vẫn là GNN.
+Các hệ thống gợi ý thực tế vẫn sử dụng phổ biến **GNN trên đồ thị hai phía** hoặc mô hình nhúng *two-tower* (như họ PinSage). Các nghiên cứu giai đoạn 2023–2025 thường bổ sung đặc trưng trích xuất từ LLM cho từng nút, trong khi tầng tổng hợp cấu trúc vẫn dựa trên GNN.
 
-### Phần mềm
+### Phần mềm phổ biến
 
-- [pyg-team/pytorch_geometric](https://github.com/pyg-team/pytorch_geometric) 2.x — `TransformerConv`, ví dụ GraphGPS.
+- [pyg-team/pytorch_geometric](https://github.com/pyg-team/pytorch_geometric) 2.x — hỗ trợ `TransformerConv` và ví dụ GraphGPS.
 - [dmlc/dgl](https://github.com/dmlc/dgl).
-- [google-deepmind/alphafold3](https://github.com/google-deepmind/alphafold3) (mã suy luận, 2024+).
+- [google-deepmind/alphafold3](https://github.com/google-deepmind/alphafold3) (mã suy luận phát hành từ 2024).
 
 ## 3. Trích dẫn (2022–2026)
 
@@ -48,10 +48,10 @@ Hệ gợi ý production vẫn chạy **GNN hai phía** hoặc embedding two-tow
 
 ## 4. Bài này bổ sung gì cho ghi chú cốt lõi
 
-Viết một lớp truyền tin trước. Bài này chỉ thêm **Graph Transformer** và **AlphaFold 3** như ứng dụng trích ý tưởng chương này trong 2024–2026.
+Trước hết nên tự cài đặt một lớp truyền thông điệp cơ bản từ bài cốt lõi. Bài này bổ sung **Graph Transformer** và **AlphaFold 3** như những ví dụ tiêu biểu ứng dụng ý tưởng của chương trong giai đoạn 2024–2026.
 
 ## Video tham khảo
 
-- **xem trước** [Graph Neural Networks Explained: A Clear Guide to GNN Basics & Models](https://www.youtube.com/watch?v=eGoszzMkGfU) — IBM Technology, tiếng Anh. Truyền thông điệp là việc một graph transformer vẫn làm, với một mặt nạ attention được học.
-- [Message Passing: How Graph Neural Networks Actually Work](https://www.youtube.com/watch?v=1DmNdMUbDkg) — The Synthetic Mind, tiếng Anh. Một vòng đơn, để khối graph transformer có mốc so.
-- [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Self-attention là bộ trộn khối đó dùng khi hàng xóm không còn là token duy nhất nó được đọc.
+- **Xem trước** [Graph Neural Networks Explained: A Clear Guide to GNN Basics & Models](https://www.youtube.com/watch?v=eGoszzMkGfU) — IBM Technology, tiếng Anh. Ôn lại cơ chế truyền thông điệp mà Graph Transformer mở rộng bằng trọng số *attention* học được.
+- [Message Passing: How Graph Neural Networks Actually Work](https://www.youtube.com/watch?v=1DmNdMUbDkg) — The Synthetic Mind, tiếng Anh. Làm rõ một vòng truyền thông điệp cục bộ để đối chiếu với khối Graph Transformer.
+- [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Giải thích cơ chế *self-attention* toàn cục khi nút có thể trao đổi thông tin vượt ra ngoài tập láng giềng trực tiếp.

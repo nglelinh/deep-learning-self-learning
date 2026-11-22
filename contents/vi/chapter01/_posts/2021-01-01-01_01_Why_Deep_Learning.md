@@ -9,13 +9,13 @@ categories:
 - chapter01
 ---
 
-Vì sao học sâu, và khi nào nên dùng:
+Mục này giải thích lý do học sâu đạt hiệu quả cao và khi nào nên lựa chọn phương pháp này:
 
-1. **Hạn chế của học máy truyền thống và điều làm học sâu khác biệt**
-2. **Khi nào dùng học sâu và hệ sinh thái** — câu chuyện thành công, dữ liệu/tính toán, quy trình, công cụ, sách, xu hướng
+1. **Hạn chế của học máy truyền thống và điều làm học sâu khác biệt** — phân tích giới hạn của đặc trưng thủ công, biểu diễn cố định và lợi thế học biểu diễn phân cấp.
+2. **Khi nào dùng học sâu và hệ sinh thái** — các bài toán tiêu biểu, vai trò của dữ liệu và tính toán, quy trình triển khai, công cụ, tài liệu và xu hướng hiện nay.
 
 ## Video tham khảo
 
-- **xem trước** [Machine Learning vs Deep Learning](https://www.youtube.com/watch?v=q6kJ71tEYqM) — IBM Technology, tiếng Anh. Video nói học sâu thêm gì so với học máy cổ điển, đúng câu hỏi của khối này.
-- [MIT Introduction to Deep Learning (2024) | 6.S191](https://www.youtube.com/watch?v=ErnWZxJovaM) — Alexander Amini, tiếng Anh. Đoạn 'vì sao học sâu' của bài MIT liệt kê các lý do về quy mô và dữ liệu mà bài học mở rộng.
-- [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Cho thấy đặc trưng phân cấp khiến độ sâu hữu ích trên ảnh, ca thành công mà khối này hay dẫn.
+- **Xem trước:** [Machine Learning vs Deep Learning](https://www.youtube.com/watch?v=q6kJ71tEYqM) — IBM Technology, tiếng Anh. So sánh những điểm học sâu bổ sung so với học máy cổ điển, trả lời trực tiếp câu hỏi trọng tâm của phần này.
+- [MIT Introduction to Deep Learning (2024) | 6.S191](https://www.youtube.com/watch?v=ErnWZxJovaM) — Alexander Amini, tiếng Anh. Phần mở đầu trình bày các yếu tố về quy mô dữ liệu và tính toán giúp học sâu phát triển, làm rõ bối cảnh của bài học.
+- [But what is a neural network? | Deep learning chapter 1](https://www.youtube.com/watch?v=aircAruvnKk) — 3Blue1Brown, tiếng Anh. Minh họa cách biểu diễn đặc trưng phân cấp giúp mạng sâu xử lý ảnh hiệu quả.

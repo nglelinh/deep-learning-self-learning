@@ -9,35 +9,35 @@ categories:
 - chapter00
 ---
 
-### 3. Phân Phối Đa Biến
+### 3. Phân phối đa biến
 
-#### Phân Phối Chuẩn Đa Biến
+#### Phân phối chuẩn đa biến (*Multivariate Normal*)
 
-Mở rộng của phân phối chuẩn cho nhiều chiều.
+Phân phối chuẩn đa biến là sự mở rộng của phân phối chuẩn sang không gian nhiều chiều.
 
-**Tham số**: $$\boldsymbol{\mu} \in \mathbb{R}^d$$ (vector kỳ vọng), $$\boldsymbol{\Sigma} \in \mathbb{R}^{d \times d}$$ (ma trận hiệp phương sai, xác định dương)
+**Tham số:** vector kỳ vọng $$\boldsymbol{\mu} \in \mathbb{R}^d$$ và ma trận hiệp phương sai xác định dương $$\boldsymbol{\Sigma} \in \mathbb{R}^{d \times d}$$.
 
-**PDF**: $$f(\mathbf{x}) = \frac{1}{(2\pi)^{d/2}|\boldsymbol{\Sigma}|^{1/2}} \exp\left(-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^T\boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})\right)$$
+**PDF:** $$f(\mathbf{x}) = \frac{1}{(2\pi)^{d/2}|\boldsymbol{\Sigma}|^{1/2}} \exp\left(-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^T\boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})\right)$$
 
-**Tính chất**:
-- Phân phối biên là chuẩn
-- Tổ hợp tuyến tính là chuẩn
-- Phân phối có điều kiện là chuẩn
+**Tính chất:**
+- Mọi phân phối biên đều là phân phối chuẩn.
+- Mọi tổ hợp tuyến tính của các thành phần đều tuân theo phân phối chuẩn.
+- Mọi phân phối có điều kiện đều là phân phối chuẩn.
 
 <div id="multivariate-demo" style="border: 2px solid #ddd; padding: 20px; margin: 20px 0; border-radius: 10px; background-color: #f0f8ff;">
-    <h4 style="text-align: center; color: #333;">Phân Phối Chuẩn Đa Biến</h4>
+    <h4 style="text-align: center; color: #333;">Phân phối chuẩn đa biến</h4>
     
     <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;">
         <div style="flex: 1; min-width: 400px;">
             <canvas id="multivariateCanvas" width="400" height="300" style="border: 1px solid #ccc; background: white;"></canvas>
             <p style="font-size: 12px; color: #666; margin-top: 5px;">
-                <strong>Trực Quan 2D:</strong> Đồ thị đường đồng mức của phân phối chuẩn hai biến. Các mẫu hiển thị dưới dạng chấm.
+                <strong>Trực quan hóa 2D:</strong> Đồ thị đường đồng mức của phân phối chuẩn hai biến; các mẫu sinh ra hiển thị dưới dạng chấm.
             </p>
         </div>
         
         <div style="flex: 1; min-width: 250px;">
             <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                <h5 style="margin-top: 0; color: #444;">Tham Số</h5>
+                <h5 style="margin-top: 0; color: #444;">Tham số</h5>
                 
                 <div style="margin-bottom: 15px;">
                     <label for="mu1-slider" style="display: block; margin-bottom: 5px; font-weight: bold;">μ₁: <span id="mu1-value">0.0</span></label>
@@ -64,10 +64,10 @@ Mở rộng của phân phối chuẩn cho nhiều chiều.
                     <input type="range" id="rho-slider" min="-0.9" max="0.9" step="0.1" value="0" style="width: 100%;">
                 </div>
                 
-                <button id="generate-samples" style="width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px;">Tạo Mẫu</button>
+                <button id="generate-samples" style="width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px;">Tạo mẫu</button>
                 
                 <div id="multivariate-stats" style="font-family: monospace; font-size: 12px; line-height: 1.4; background: #f8f9fa; padding: 10px; border-radius: 4px;">
-                    <div><strong>Ma Trận Hiệp Phương Sai:</strong></div>
+                    <div><strong>Ma trận hiệp phương sai:</strong></div>
                     <div>Σ₁₁: <span id="cov11">1.000</span></div>
                     <div>Σ₁₂: <span id="cov12">0.000</span></div>
                     <div>Σ₂₂: <span id="cov22">1.000</span></div>
@@ -78,35 +78,35 @@ Mở rộng của phân phối chuẩn cho nhiều chiều.
     </div>
 </div>
 
-### 4. Ứng Dụng trong Tối Ưu Hóa
+### 4. Ứng dụng trong tối ưu hóa
 
-#### Ước Lượng Hợp Lý Tối Đa
-Nhiều bài toán tối ưu hóa liên quan đến việc tìm tham số để tối đa hóa likelihood của dữ liệu quan sát dưới một phân phối cụ thể:
+#### Ước lượng hợp lý cực đại (MLE)
+Nhiều bài toán tối ưu hóa tìm tham số cực đại hóa hàm hợp lý của dữ liệu quan sát theo một phân phối giả định:
 
 $$\hat{\theta} = \arg\max_\theta \prod_{i=1}^n f(x_i; \theta)$$
 
-#### Tối Ưu Hóa Bayes
-Phân phối prior mã hóa niềm tin về tham số trước khi thấy dữ liệu:
+#### Tối ưu hóa Bayes
+Phân phối tiên nghiệm (*prior*) biểu diễn niềm tin ban đầu về tham số trước khi quan sát dữ liệu:
 
 $$p(\theta|dữ\ liệu) \propto p(dữ\ liệu|\theta) \cdot p(\theta)$$
 
-#### Regularization
-Phân phối có thể được sử dụng như prior để regularize bài toán tối ưu hóa:
-- L2 regularization ↔ Prior Gaussian
-- L1 regularization ↔ Prior Laplace
+#### Điều chuẩn (*Regularization*)
+Các phân phối xác suất có thể đóng vai trò phân phối tiên nghiệm để điều chuẩn bài toán tối ưu:
+- Điều chuẩn $$L_2$$ ↔ phân phối tiên nghiệm Gauss (*Gaussian prior*).
+- Điều chuẩn $$L_1$$ ↔ phân phối tiên nghiệm Laplace (*Laplace prior*).
 
-#### Tối Ưu Hóa Ngẫu Nhiên
-Phân phối mô hình nhiễu và sự bất định trong hàm mục tiêu và ràng buộc.
+#### Tối ưu hóa ngẫu nhiên
+Phân phối xác suất dùng để mô hình hóa nhiễu và yếu tố bất định trong hàm mục tiêu cũng như ràng buộc.
 
-### Những Hiểu Biết Quan Trọng cho Tối Ưu Hóa
+### Điểm cần ghi nhớ cho tối ưu hóa
 
-1. **Lựa Chọn Mô Hình**: Chọn phân phối phù hợp với đặc điểm dữ liệu của bạn
-2. **Ước Lượng Tham Số**: Sử dụng MLE hoặc phương pháp Bayes để ước lượng tham số phân phối
-3. **Định Lượng Sự Bất Định**: Phân phối cung cấp cách tự nhiên để định lượng sự bất định
-4. **Regularization**: Phân phối prior có thể ngăn overfitting
-5. **Hiệu Quả Tính Toán**: Một số phân phối có nghiệm dạng đóng cho các phép toán thông dụng
+1. **Lựa chọn mô hình:** chọn phân phối phù hợp với đặc tính thực tế của dữ liệu.
+2. **Ước lượng tham số:** dùng MLE hoặc suy luận Bayes để ước lượng tham số phân phối.
+3. **Định lượng bất định:** phân phối xác suất cung cấp ngôn ngữ chuẩn để đo lường sự bất định.
+4. **Điều chuẩn:** phân phối tiên nghiệm giúp hạn chế quá khớp (*overfitting*).
+5. **Hiệu quả tính toán:** nhiều phân phối quen thuộc có biểu thức nghiệm dạng đóng (*closed-form*) cho các phép tính thông dụng.
 
-Hiểu các phân phối này và tính chất của chúng là quan trọng để xây dựng và giải quyết các bài toán tối ưu hóa trong học máy, thống kê và các ứng dụng kỹ thuật.
+Hiểu rõ các phân phối đa biến và tính chất của chúng giúp ta mô hình hóa và giải hiệu quả nhiều bài toán tối ưu trong học máy, thống kê và kỹ thuật.
 
 <script>
 class MultivariateDemo {
@@ -309,6 +309,6 @@ canvas {
 
 ## Video tham khảo
 
-- **xem trước** [Multivariate Normal (Gaussian) Distribution Explained](https://www.youtube.com/watch?v=UVvuwv-ne1I) — DataMListic, tiếng Anh. Gauss đa biến là phân phối đồng thời mà bài dựng.
-- [MaDL - Expectation, Variance and Covariance](https://www.youtube.com/watch?v=kmRm3XIND8M) — Tübingen Machine Learning, tiếng Anh. Hiệp phương sai là ma trận bên trong Gauss đó, và là cầu nối của bài tới các đặc trưng cùng biến thiên.
-- [MaDL - Common Probability Distributions](https://www.youtube.com/watch?v=NbzVwvE_syQ) — Tübingen Machine Learning, tiếng Anh. Cho thấy các họ đa biến nằm đâu so với phân phối một chiều của bài trước.
+- **Xem trước:** [Multivariate Normal (Gaussian) Distribution Explained](https://www.youtube.com/watch?v=UVvuwv-ne1I) — DataMListic, tiếng Anh. Giải thích trực quan về phân phối chuẩn đa biến — đối tượng chính của bài.
+- [MaDL - Expectation, Variance and Covariance](https://www.youtube.com/watch?v=kmRm3XIND8M) — Tübingen Machine Learning, tiếng Anh. Làm rõ vai trò của ma trận hiệp phương sai trong phân phối chuẩn đa biến khi các đặc trưng tương quan nhau.
+- [MaDL - Common Probability Distributions](https://www.youtube.com/watch?v=NbzVwvE_syQ) — Tübingen Machine Learning, tiếng Anh. Đặt các họ phân phối đa biến trong bức tranh chung cùng các phân phối một chiều ở bài trước.

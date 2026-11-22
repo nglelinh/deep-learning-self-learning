@@ -9,15 +9,15 @@ categories:
 - chapter01
 ---
 
-## Sức mạnh của học sâu
+## Lợi thế của học sâu
 
-Học sâu đã trở thành cách tiếp cận thống trị trong trí tuệ nhân tạo vì nó giải quyết các hạn chế căn bản của học máy truyền thống.
+Học sâu trở thành hướng tiếp cận chủ đạo trong nhiều bài toán trí tuệ nhân tạo vì nó giải quyết được những hạn chế cốt lõi của học máy truyền thống.
 
 ## Hạn chế của học máy truyền thống
 
 ### 1. Thiết kế đặc trưng thủ công
 
-**Cách tiếp cận truyền thống**:
+**Cách tiếp cận truyền thống:**
 ```python
 # Trích xuất đặc trưng thủ công cho phân loại ảnh
 features = []
@@ -30,13 +30,13 @@ features.append(compute_color_moments(image))
 model = train_svm(features, labels)
 ```
 
-**Vấn đề**:
-- Đòi hỏi chuyên môn miền
-- Tốn thời gian
-- Có thể bỏ sót mẫu quan trọng
-- Khó mở rộng qua các miền
+**Hạn chế:**
+- Đòi hỏi kiến thức chuyên sâu về từng miền bài toán.
+- Tốn nhiều thời gian thiết kế và tinh chỉnh.
+- Dễ bỏ sót các mẫu thông tin quan trọng.
+- Khó tái sử dụng hoặc mở rộng sang các miền bài toán khác.
 
-**Giải pháp học sâu**:
+**Cách tiếp cận học sâu:**
 ```python
 # Học đầu-cuối
 model = build_cnn()
@@ -45,18 +45,16 @@ model.train(images, labels)  # Tự động học đặc trưng!
 
 ### 2. Biểu diễn cố định
 
-Học máy truyền thống dùng đặc trưng thủ công, vốn:
-- Không thích nghi với dữ liệu
-- Có thể không tối ưu cho tác vụ
-- Cần thiết kế lại cho bài toán mới
+Học máy truyền thống phụ thuộc vào các đặc trưng thiết kế sẵn, vốn có các nhược điểm:
+- Không tự thích nghi theo phân phối dữ liệu.
+- Có thể không tối ưu cho mục tiêu dự đoán cụ thể.
+- Phải thiết kế lại gần như từ đầu khi chuyển sang bài toán mới.
 
-Học sâu **học biểu diễn tối ưu** cho từng tác vụ cụ thể.
+Ngược lại, học sâu **tự học biểu diễn phù hợp** cho từng tác vụ trực tiếp từ dữ liệu.
 
 ### 3. Hạn chế về khả năng mở rộng
 
-**Học máy truyền thống**: thường bão hòa khi có thêm dữ liệu
-
-**Học sâu**: hiệu năng cải thiện theo quy mô
+Trong nhiều bài toán phức tạp, **học máy truyền thống** thường sớm bão hòa khi lượng dữ liệu tăng lên, còn **học sâu** tiếp tục cải thiện hiệu năng khi có thêm dữ liệu và năng lực tính toán:
 
 ```
 Traditional ML:  _______________  (bão hòa)
@@ -71,9 +69,7 @@ Deep Learning:     /  (tiếp tục cải thiện)
 
 ### 1. Học đặc trưng phân cấp
 
-Mạng sâu học đặc trưng ở nhiều mức:
-
-**Ví dụ: nhận diện khuôn mặt**
+Mạng nơ-ron sâu học đặc trưng ở nhiều mức trừu tượng khác nhau. Chẳng hạn, với bài toán **nhận diện khuôn mặt**:
 
 ```
 Layer 1 (Low-level):    Cạnh, màu, mẫu đơn giản
@@ -85,17 +81,17 @@ Layer 3 (High-level):   Khuôn mặt hoàn chỉnh, biểu cảm
 Output:                  Danh tính người
 ```
 
-Cấu trúc này phản ánh cách con người nhận thức — từ khái niệm đơn giản đến phức tạp.
+Cấu trúc phân cấp này tương đồng với cách con người tiếp nhận thông tin thị giác — đi từ các chi tiết đơn giản đến khái niệm hoàn chỉnh.
 
-### 2. Học đầu-cuối
+### 2. Học từ đầu đến cuối (*end-to-end learning*)
 
-**Pipeline truyền thống**:
+**Quy trình truyền thống:**
 ```
 Raw Data → Preprocessing → Feature Extraction → Feature Selection → Model → Output
          (Thủ công)       (Thủ công)           (Thủ công)
 ```
 
-**Học sâu**:
+**Quy trình học sâu:**
 ```
 Raw Data → Neural Network → Output
          (Tất cả được học tự động)
@@ -103,17 +99,15 @@ Raw Data → Neural Network → Output
 
 ### 3. Bộ xấp xỉ hàm phổ quát
 
-**Định lý xấp xỉ phổ quát**: Mạng nơ-ron chỉ với một tầng ẩn, nếu có đủ số nơ-ron, có thể xấp xỉ bất kỳ hàm liên tục nào.
-
-Mạng sâu có thể học xấp xỉ:
-- Phép biến đổi ảnh
-- Mẫu ngôn ngữ
-- Chiến lược game
-- Mô phỏng vật lý
-- Ranh giới quyết định phức tạp
+Theo **định lý xấp xỉ phổ quát**, một mạng nơ-ron chỉ cần một tầng ẩn với đủ số lượng nơ-ron có thể xấp xỉ bất kỳ hàm liên tục nào trên một miền đóng và bị chặn với độ chính xác tùy ý. Nhờ khả năng biểu diễn linh hoạt này, mạng sâu có thể học xấp xỉ nhiều dạng ánh xạ phức tạp như:
+- Phép biến đổi trên ảnh.
+- Cấu trúc và quy luật ngôn ngữ.
+- Chiến lược trong trò chơi.
+- Mô phỏng các hệ thống vật lý.
+- Ranh giới quyết định phi tuyến phức tạp.
 
 ## Video tham khảo
 
-- **xem trước** [Machine Learning vs Deep Learning](https://www.youtube.com/watch?v=q6kJ71tEYqM) — IBM Technology, tiếng Anh. Ranh giới giữa chế tác đặc trưng và biểu diễn được học.
-- [The Essential Main Ideas of Neural Networks](https://www.youtube.com/watch?v=CqOfi41LfDw) — StatQuest with Josh Starmer, tiếng Anh. Cho một tập dữ liệu đường thẳng không khớp được còn mạng nhỏ thì khớp, đúng hạn chế bài nêu.
-- [MIT Introduction to Deep Learning (2024) | 6.S191](https://www.youtube.com/watch?v=ErnWZxJovaM) — Alexander Amini, tiếng Anh. Đặt sự tương phản đó vào một câu chuyện huấn luyện đầy đủ: dữ liệu, tính toán và độ sâu cùng lúc.
+- **Xem trước:** [Machine Learning vs Deep Learning](https://www.youtube.com/watch?v=q6kJ71tEYqM) — IBM Technology, tiếng Anh. Phân tích sự khác biệt giữa thiết kế đặc trưng thủ công và học biểu diễn tự động.
+- [The Essential Main Ideas of Neural Networks](https://www.youtube.com/watch?v=CqOfi41LfDw) — StatQuest with Josh Starmer, tiếng Anh. Minh họa ví dụ dữ liệu mà mô hình tuyến tính không khớp được nhưng một mạng nơ-ron nhỏ có thể giải quyết, làm rõ hạn chế được nêu trong bài.
+- [MIT Introduction to Deep Learning (2024) | 6.S191](https://www.youtube.com/watch?v=ErnWZxJovaM) — Alexander Amini, tiếng Anh. Đặt sự khác biệt giữa học máy cổ điển và học sâu vào bức tranh tổng thể về dữ liệu, tính toán và độ sâu mô hình.

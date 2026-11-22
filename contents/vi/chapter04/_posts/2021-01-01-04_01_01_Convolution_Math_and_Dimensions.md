@@ -15,17 +15,18 @@ categories:
 *Tổng quan kiến trúc Mạng Neuron Tích chập (CNN). Nguồn: AnalyticsVidhya*
 
 ## 1. Tổng quan khái niệm
-**Tầng tích chập** (*convolutional layers*) là các tầng mạng neuron chuyên biệt để xử lý dữ liệu dạng lưới, đặc biệt là ảnh. Thay vì nối mọi đầu vào với mọi neuron (kết nối đầy đủ), tầng tích chập dùng các bộ lọc nhỏ, học được, trượt trên đầu vào để phát hiện các mẫu cục bộ.
 
-**Vì sao CNN quan trọng**:
-- **Hiệu quả tham số**: Ít hơn hàng triệu tham số so với mạng kết nối đầy đủ
-- **Bất biến tịnh tiến**: Phát hiện đặc trưng bất kể vị trí trên ảnh
-- **Học phân cấp**: Tự động học đặc trưng thấp → trung → cao
-- **Tiên tiến**: Hiệu năng tốt nhất trên hầu hết tác vụ thị giác
+**Tầng tích chập** (*convolutional layers*) là thành phần chuyên dụng của mạng neuron dùng để xử lý dữ liệu dạng lưới, đặc biệt là ảnh. Thay vì nối mọi đầu vào với mọi neuron như tầng liên kết đầy đủ, tầng tích chập sử dụng các bộ lọc nhỏ có thể học được, trượt qua toàn bộ đầu vào để phát hiện các mẫu cục bộ.
 
-**Hiểu biết then chốt**: Ảnh có cấu trúc không gian — các điểm ảnh gần nhau có liên quan. Tầng tích chập khai thác cấu trúc này qua **kết nối cục bộ** và **chia sẻ tham số**.
+**Các ưu điểm chính của CNN:**
+- **Hiệu quả tham số:** Giảm hàng triệu tham số so với mạng liên kết đầy đủ.
+- **Tính bất biến tịnh tiến:** Có khả năng phát hiện cùng một đặc trưng ở bất kỳ vị trí nào trên ảnh.
+- **Học đặc trưng phân cấp:** Tự động trích xuất dần từ đặc trưng mức thấp đến mức trung bình và mức cao.
+- **Hiệu quả thực tiễn cao:** Đạt kết quả tốt trên nhiều bài toán thị giác máy tính.
 
-**Phép ẩn dụ**: Hãy nghĩ tích chập như trượt một kính lúp (bộ lọc) trên ảnh để tìm các mẫu cụ thể (cạnh, kết cấu, hình dạng). Mỗi bộ lọc chuyên phát hiện một kiểu mẫu, và bạn dùng cùng một kính lúp ở mọi vị trí trên ảnh thay vì một kính khác cho mỗi vị trí.
+**Ý tưởng cốt lõi:** Ảnh có cấu trúc không gian chặt chẽ — các điểm ảnh lân cận thường liên hệ mật thiết với nhau. Tầng tích chập khai thác tính chất này thông qua **kết nối cục bộ** và **chia sẻ tham số**.
+
+**Trực giác:** Có thể hình dung phép tích chập giống như việc trượt một kính lúp (bộ lọc) khắp bức ảnh để tìm một mẫu cụ thể (như cạnh, kết cấu hay hình dạng). Mỗi bộ lọc chuyên phát hiện một loại đặc trưng, và ta dùng cùng một bộ lọc đó cho mọi vị trí thay vì học riêng từng bộ trọng số cho từng vùng ảnh.
 
 ![CNN](/deep-learning-self-learning/img/chapter_img/chapter04/conv2.jpg)
 *Tổng quan kiến trúc Mạng Neuron Tích chập (CNN). Nguồn: AnalyticsVidhya*
@@ -33,90 +34,78 @@ categories:
 ### Cảm hứng Sinh học
 
 ![CNN Inspiration from Human Eye](/deep-learning-self-learning/img/chapter_img/chapter04/conv3.jpg)
-*CNN được lấy cảm hứng trực tiếp từ cách não người xử lý thông tin thị giác. Mắt bạn phát hiện cạnh trước, rồi ghép thành hình dạng, rồi khớp mẫu với trí nhớ. CNN làm đúng điều đó. Nguồn: Analytics Vidhya*
+*CNN lấy cảm hứng từ cách hệ thống thị giác của não người xử lý hình ảnh: phát hiện cạnh trước, ghép thành hình dạng rồi nhận diện đối tượng. Nguồn: Analytics Vidhya*
 
-Năm 1959, các nhà thần kinh sinh lý David Hubel và Torsten Wiesel phát hiện rằng neuron trong vỏ thị giác đáp ứng với các mẫu cụ thể trong các vùng cục bộ của trường thị giác (gọi là “trường tiếp nhận” — *receptive fields*). Một số neuron đáp ứng với cạnh theo hướng nhất định, số khác với chuyển động theo hướng cụ thể. Quá trình xử lý phân cấp này — từ đặc trưng đơn giản đến đối tượng phức tạp — đã trực tiếp truyền cảm hứng cho thiết kế mạng neuron tích chập.
+Năm 1959, hai nhà thần kinh sinh lý học David Hubel và Torsten Wiesel phát hiện rằng các neuron trong vỏ não thị giác chỉ phản ứng với những mẫu nhất định nằm trong một vùng cục bộ của trường nhìn — gọi là "trường tiếp nhận" (*receptive field*). Một số neuron nhạy với cạnh theo hướng cụ thể, trong khi các lớp sâu hơn kết hợp chúng để nhận diện cấu trúc phức tạp hơn. Cơ chế xử lý phân cấp này đã trực tiếp gợi ý cho thiết kế của mạng neuron tích chập.
 
 ---
 
 ## 2. Nền tảng toán học
+
 ### Phân biệt Tích chập và Tương quan chéo
 
-Đây là sự phân biệt quan trọng thường gây nhầm lẫn cho người mới. Hãy hiểu cẩn thận cả hai phép toán.
+Đây là điểm khác biệt về thuật ngữ và định nghĩa mà người mới học thường dễ nhầm lẫn.
 
 ![Convolution Operation](https://miro.medium.com/v2/resize:fit:1400/1*Zx-ZMLKab7VOCQTxdZ1OAw.gif)
 *Minh họa phép tích chập 2D trên ảnh. Nguồn: Medium*
 
 ![The Convolution Filter Sliding](/deep-learning-self-learning/img/chapter_img/chapter04/conv4.jpg)
-*Một cửa sổ nhỏ gọi là bộ lọc trượt trên ảnh, quét từng vùng. Tại mỗi vị trí nó hỏi: “Đặc trưng này có ở đây không?” Các bộ lọc khác nhau phát hiện mẫu khác nhau — cạnh, làm mờ, làm nét. CNN tự học hàng trăm bộ lọc trong quá trình huấn luyện. Nguồn: Analytics Vidhya*
+*Một cửa sổ nhỏ gọi là bộ lọc trượt qua từng vùng của ảnh để kiểm tra sự hiện diện của một đặc trưng nhất định (cạnh, làm mờ, làm nét). Trong quá trình huấn luyện, CNN tự học hàng trăm bộ lọc như vậy. Nguồn: Analytics Vidhya*
 
-#### Tích chập Đích thực (Định nghĩa Xử lý Tín hiệu)
+#### Tích chập Đúng nghĩa (Định nghĩa trong Xử lý Tín hiệu)
 
-Trong xử lý tín hiệu và toán học, **tích chập đích thực** bao gồm **lật nhân** (xoay 180°) trước khi trượt trên đầu vào. Với ảnh 2D $$I$$ và nhân $$K$$:
+Trong toán học và xử lý tín hiệu, **tích chập** (*convolution*) bao gồm bước **lật nhân** (xoay 180°) trước khi trượt trên đầu vào. Với ảnh 2D $$I$$ và nhân $$K$$:
 
-$$(I * K)[i,j] = \sum_{m=0}^{k-1}\sum_{n=0}^{k-1} I[m, n] \cdot K[i-m, j-n]$$
+$$(I * K)[i,j] = \sum_{m}\sum_{n} I[m, n] \cdot K[i-m, j-n]$$
 
-Với tín hiệu rời rạc hữu hạn và nhân kích thước $$k \times k$$:
+Khi viết theo chỉ số của nhân kích thước $$k \times k$$:
 
 $$(I * K)[i,j] = \sum_{m=0}^{k-1}\sum_{n=0}^{k-1} I[i-m, j-n] \cdot K[m,n]$$
 
-Tính chất then chốt ở đây là phép **trừ** trong chỉ số ($$i-m, j-n$$), vốn hiệu quả là lật nhân.
+Đặc trưng nhận diện là dấu **trừ** ở chỉ số ($$i-m, j-n$$), tương đương với thao tác lật nhân theo cả hai trục.
 
-**Vì sao tích chập lật nhân?** Tích chập ban đầu được thiết kế để mô tả cách hệ thống đáp ứng với đầu vào theo thời gian. Việc lật đảm bảo tích chập:
-1. **Giao hoán**: $$I * K = K * I$$
-2. **Kết hợp**: $$(I * K_1) * K_2 = I * (K_1 * K_2)$$
+**Vì sao xử lý tín hiệu cần lật nhân?** Việc lật nhân giúp phép tích chập thỏa mãn hai tính chất đại số quan trọng cho hệ thống tuyến tính bất biến theo thời gian (LTI):
+1. **Tính giao hoán:** $$I * K = K * I$$
+2. **Tính kết hợp:** $$(I * K_1) * K_2 = I * (K_1 * K_2)$$
 
-Các tính chất này thiết yếu trong xử lý tín hiệu để phân tích hệ thống tuyến tính bất biến theo thời gian.
+#### Tương quan chéo (Phép toán Học sâu Thực tế Sử dụng)
 
-#### Tương quan chéo (Những gì Học sâu Thực sự Dùng)
-
-**Tương quan chéo** (*cross-correlation*) tương tự nhưng **không lật nhân**:
+**Tương quan chéo** (*cross-correlation*) có cấu trúc tương tự nhưng **không lật nhân**:
 
 $$S[i,j] = \sum_{m=0}^{k-1}\sum_{n=0}^{k-1} I[i+m, j+n] \cdot K[m,n]$$
 
-Lưu ý phép **cộng** trong chỉ số ($$i+m, j+n$$) — ta đơn giản trượt nhân nguyên trạng trên ảnh.
+Chú ý dấu **cộng** trong chỉ số ($$i+m, j+n$$) — ta trượt trực tiếp nhân nguyên trạng qua ảnh.
 
-#### So sánh Trực quan: Tích chập và Tương quan chéo
+#### Ví dụ So sánh: Tích chập và Tương quan chéo
 
-Hãy làm cụ thể bằng một ví dụ:
-
-**Nhân** $$K$$:
+Xét nhân $$K$$:
 $$K = \begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \end{bmatrix}$$
 
-**Nhân đã lật** (cho tích chập đích thực):
+Nhân sau khi lật 180° (dùng cho tích chập đúng nghĩa):
 $$K_{flipped} = \begin{bmatrix} 9 & 8 & 7 \\ 6 & 5 & 4 \\ 3 & 2 & 1 \end{bmatrix}$$
 
-**Với nhân đối xứng** (như nhiều bộ dò cạnh):
+Với một bộ dò cạnh đứng:
 $$K = \begin{bmatrix} 1 & 0 & -1 \\ 1 & 0 & -1 \\ 1 & 0 & -1 \end{bmatrix}$$
 
-Lật nhân này cho:
+Khi lật nhân, dấu hai cột đổi chỗ cho nhau:
 $$K_{flipped} = \begin{bmatrix} -1 & 0 & 1 \\ -1 & 0 & 1 \\ -1 & 0 & 1 \end{bmatrix}$$
 
-Lưu ý phiên bản đã lật phát hiện cạnh theo **hướng ngược lại**!
+Như vậy, bản đã lật sẽ phát hiện sự chuyển sáng–tối theo **chiều ngược lại**.
 
-#### Vì sao Học sâu Dùng Tương quan chéo (và Gọi là “Tích chập”)
+#### Vì sao Học sâu Dùng Tương quan chéo nhưng Vẫn Gọi là "Tích chập"
 
-Hiểu biết then chốt: **Trong học sâu, ta không quan tâm đến việc lật vì trọng số nhân được học**.
+Điểm mấu chốt là **trong học sâu, trọng số của nhân được học tự động từ dữ liệu**:
 
-Xét lý luận sau:
+1. **Nếu cài đặt tích chập có lật:** Mạng học ma trận trọng số $$W$$ rồi lật nó khi tính lượt xuôi.
+2. **Nếu cài đặt tương quan chéo:** Mạng học trực tiếp ma trận trọng số $$W'$$ mà không cần bước lật.
 
-1. **Nếu dùng tích chập đích thực**: Mạng học trọng số $$W$$, rồi áp dụng chúng đã lật trong lượt xuôi
-2. **Nếu dùng tương quan chéo**: Mạng học trọng số $$W'$$, áp dụng không lật
+Vì $$W'$$ chỉ đơn giản học thành phiên bản lật của $$W$$, **khả năng biểu diễn của mạng là hoàn toàn tương đương**. Dùng tương quan chéo vừa gọn hơn khi cài đặt, vừa trực quan hơn khi quan sát bộ lọc vì hình dạng của nhân khớp trực tiếp với mẫu mà nó phát hiện.
 
-Vì mạng học trọng số từ dữ liệu dù sao, $$W'$$ đơn giản học thành phiên bản đã lật của những gì $$W$$ sẽ là. **Mạng sẽ học cùng hàm bất kể cách nào**.
+Trong cộng đồng học sâu, thuật ngữ "tích chập" đã trở thành cách gọi quen thuộc dù đa số thư viện cài đặt phép tương quan chéo. Nắm rõ sự khác biệt này vẫn hữu ích khi đọc tài liệu xử lý tín hiệu hoặc tự viết phép toán tùy chỉnh.
 
-**Lợi ích của tương quan chéo**:
-- **Cài đặt đơn giản hơn**: Không cần lật nhân
-- **Trực quan hơn**: “Mẫu” của nhân khớp trực tiếp với mẫu nó phát hiện
-- **Cùng khả năng học**: Mạng có thể học bất kỳ hàm nào dù sao
+### Ví dụ Tính Tương quan chéo Từng bước
 
-**Ghi chú lịch sử**: Cộng đồng học sâu chấp nhận thuật ngữ “tích chập” dù về kỹ thuật ta dùng tương quan chéo. Đây giờ là thuật ngữ chuẩn, nhưng hiểu sự phân biệt giúp khi đọc tài liệu xử lý tín hiệu hoặc cài đặt phép toán tùy chỉnh.
-
-### Ví dụ Tích chập Từng bước
-
-Hãy lần theo một ví dụ đầy đủ để củng cố hiểu biết:
-
-**Ảnh đầu vào** $$I$$ (5×5):
+Xét ảnh đầu vào $$I$$ kích thước 5×5:
 $$I = \begin{bmatrix} 
 1 & 2 & 3 & 0 & 1 \\
 0 & 1 & 2 & 3 & 1 \\
@@ -125,19 +114,19 @@ $$I = \begin{bmatrix}
 2 & 1 & 0 & 1 & 1
 \end{bmatrix}$$
 
-**Nhân** $$K$$ (3×3):
+và nhân $$K$$ kích thước 3×3:
 $$K = \begin{bmatrix} 
 1 & 0 & -1 \\
 1 & 0 & -1 \\
 1 & 0 & -1
 \end{bmatrix}$$
 
-**Tính đầu ra tại vị trí (0,0)** bằng tương quan chéo:
+**Tính đầu ra tại vị trí (0,0):**
 
-Ta trích vùng 3×3 bắt đầu tại (0,0):
+Trích vùng 3×3 bắt đầu từ góc (0,0):
 $$\text{region} = \begin{bmatrix} 1 & 2 & 3 \\ 0 & 1 & 2 \\ 1 & 2 & 1 \end{bmatrix}$$
 
-Nhân theo phần tử rồi cộng:
+Nhân từng phần tử tương ứng rồi cộng tổng:
 $$\begin{align}
 S[0,0] &= (1 \times 1) + (2 \times 0) + (3 \times -1) \\
 &+ (0 \times 1) + (1 \times 0) + (2 \times -1) \\
@@ -146,9 +135,9 @@ S[0,0] &= (1 \times 1) + (2 \times 0) + (3 \times -1) \\
 &= -4
 \end{align}$$
 
-**Tính đầu ra tại vị trí (0,1)**:
+**Tính đầu ra tại vị trí (0,1):**
 
-Vùng bắt đầu tại (0,1):
+Trích vùng 3×3 bắt đầu từ (0,1):
 $$\text{region} = \begin{bmatrix} 2 & 3 & 0 \\ 1 & 2 & 3 \\ 2 & 1 & 0 \end{bmatrix}$$
 
 $$\begin{align}
@@ -159,78 +148,78 @@ S[0,1] &= (2 \times 1) + (3 \times 0) + (0 \times -1) \\
 &= 2
 \end{align}$$
 
-Tiếp tục quá trình này cho mọi vị trí hợp lệ để có đầu ra đầy đủ.
+Lặp lại phép tính này trên mọi vị trí hợp lệ sẽ thu được toàn bộ bản đồ đặc trưng đầu ra.
 
 ### Tích chập Đa kênh
 
-Ảnh thực có nhiều kênh (RGB có 3; các tầng CNN trung gian có thể có 64, 128, 256 hoặc hơn). Tích chập mở rộng như sau:
+Ảnh màu thực tế có nhiều kênh (ảnh RGB có 3 kênh; các tầng trung gian trong CNN có thể có 64, 128, 256 kênh hoặc nhiều hơn). Khi đó, phép tích chập được mở rộng như sau:
 
-**Với đầu vào có $$C_{in}$$ kênh** (ví dụ $$H \times W \times C_{in}$$) và **bộ lọc kích thước $$k \times k \times C_{in}$$**:
+**Với đầu vào có $$C_{in}$$ kênh** (kích thước $$H \times W \times C_{in}$$) và **một bộ lọc kích thước $$k \times k \times C_{in}$$**:
 
 $$S[i,j] = \sum_{c=0}^{C_{in}-1} \sum_{m=0}^{k-1}\sum_{n=0}^{k-1} I[i+m, j+n, c] \cdot K[m,n,c] + b$$
 
 Trong đó:
-- $$C_{in}$$: số kênh đầu vào (3 với RGB)
-- $$b$$: hệ số bias (một vô hướng cho mỗi bộ lọc)
-- Mỗi bộ lọc tạo **một** kênh đầu ra
+- $$C_{in}$$: số kênh đầu vào (bằng 3 với ảnh RGB)
+- $$b$$: hệ số độ lệch (một số vô hướng cho mỗi bộ lọc)
+- Mỗi bộ lọc tạo ra **một** kênh đầu ra
 
-**Để tạo $$C_{out}$$ kênh đầu ra**, ta cần $$C_{out}$$ bộ lọc, mỗi bộ kích thước $$k \times k \times C_{in}$$.
+**Để tạo $$C_{out}$$ kênh đầu ra**, tầng tích chập sử dụng $$C_{out}$$ bộ lọc độc lập, mỗi bộ lọc có kích thước $$k \times k \times C_{in}$$.
 
-**Trực giác hình ảnh**: Với ảnh RGB, mỗi bộ lọc thực sự là một khối 3D (ví dụ 3×3×3). Bộ lọc có trọng số riêng cho mỗi kênh màu, và tất cả được cộng lại để tạo một giá trị đầu ra. Nhờ đó bộ lọc có thể học các mẫu phụ thuộc màu (ví dụ phát hiện bầu trời xanh so với cỏ xanh).
+**Trực giác:** Với ảnh RGB, mỗi bộ lọc là một khối 3D (ví dụ 3×3×3) có trọng số riêng cho từng kênh màu rồi cộng gộp kết quả lại thành một số vô hướng tại mỗi vị trí. Nhờ đó bộ lọc có thể học các đặc trưng kết hợp thông tin màu sắc (ví dụ phân biệt màu xanh da trời và màu xanh của cỏ).
 
 ### Công thức Kích thước Đầu ra
 
-Hiểu cách kích thước đầu vào biến đổi qua các tầng tích chập là thiết yếu khi thiết kế kiến trúc.
+Nắm chắc cách thay đổi kích thước không gian qua từng tầng là điều cần thiết khi thiết kế CNN.
 
-**Cho trước**:
+**Các tham số:**
 - Kích thước đầu vào: $$H_{in} \times W_{in}$$
 - Kích thước nhân: $$k \times k$$
-- Bước nhảy (*stride*): $$s$$ (số điểm ảnh di chuyển giữa các vị trí)
-- Đệm (*padding*): $$p$$ (số không thêm quanh biên)
+- Bước nhảy (*stride*): $$s$$ (số điểm ảnh dịch chuyển giữa hai vị trí liên tiếp)
+- Đệm (*padding*): $$p$$ (số hàng/cột giá trị 0 thêm vào mỗi cạnh)
 
-**Kích thước đầu ra**:
+**Kích thước đầu ra:**
 
 $$H_{out} = \left\lfloor \frac{H_{in} + 2p - k}{s} \right\rfloor + 1$$
 
 $$W_{out} = \left\lfloor \frac{W_{in} + 2p - k}{s} \right\rfloor + 1$$
 
-**Các cấu hình thường gặp**:
+**Các cấu hình thường gặp:**
 
 | Cấu hình | Mục đích | Kết quả |
 |--------|---------|----------------|
-| $$k=3, s=1, p=1$$ | Đệm “same” | $$n_{out} = n_{in}$$ |
-| $$k=3, s=2, p=1$$ | Giảm mẫu 2 lần | $$n_{out} = \lceil n_{in}/2 \rceil$$ |
+| $$k=3, s=1, p=1$$ | Đệm "same" (giữ nguyên kích thước) | $$n_{out} = n_{in}$$ |
+| $$k=3, s=2, p=1$$ | Giảm kích thước một nửa | $$n_{out} = \lceil n_{in}/2 \rceil$$ |
 | $$k=1, s=1, p=0$$ | Tích chập 1×1 | $$n_{out} = n_{in}$$ |
-| $$k=7, s=2, p=3$$ | Giảm mẫu mạnh | $$n_{out} = \lceil n_{in}/2 \rceil$$ |
+| $$k=7, s=2, p=3$$ | Giảm kích thước ở tầng đầu | $$n_{out} = \lceil n_{in}/2 \rceil$$ |
 
-### Phân tích Số tham số
+### Phân tích Số Tham số
 
-Với một tầng tích chập:
+Tổng số tham số của một tầng tích chập:
 
 $$\text{Parameters} = (k \times k \times C_{in}) \times C_{out} + C_{out}$$
 
-Số hạng đầu là trọng số (mỗi bộ lọc có $$k \times k \times C_{in}$$ trọng số, và ta có $$C_{out}$$ bộ lọc). Số hạng thứ hai là bias (một cho mỗi kênh đầu ra).
+Số hạng thứ nhất là số trọng số ($$C_{out}$$ bộ lọc, mỗi bộ gồm $$k \times k \times C_{in}$$ trọng số), và số hạng thứ hai là số hệ số độ lệch (một cho mỗi kênh đầu ra).
 
-**Ví dụ tính toán**:
+**Ví dụ minh họa:**
 - Đầu vào: $$32 \times 32 \times 3$$ (ảnh RGB CIFAR-10)
-- Bộ lọc: $$3 \times 3$$, 64 bộ lọc
-- Tham số: $$(3 \times 3 \times 3) \times 64 + 64 = 27 \times 64 + 64 = 1,792$$
+- Tầng tích chập: 64 bộ lọc kích thước $$3 \times 3$$
+- Số tham số: $$(3 \times 3 \times 3) \times 64 + 64 = 27 \times 64 + 64 = 1,792$$
 
-**So với tầng kết nối đầy đủ**:
-- Đầu vào: $$32 \times 32 \times 3 = 3,072$$ neuron
+**So sánh với tầng liên kết đầy đủ:**
+- Đầu vào: $$32 \times 32 \times 3 = 3,072$$ giá trị
 - Đầu ra: 64 neuron
-- Tham số: $$3,072 \times 64 + 64 = 196,672$$
+- Số tham số: $$3,072 \times 64 + 64 = 196,672$$
 
-**Hệ số giảm**: $$196,672 / 1,792 \approx 110\times$$ ít tham số hơn!
+**Mức giảm:** $$196,672 / 1,792 \approx 110$$ lần ít tham số hơn.
 
-Sự giảm mạnh này đến từ hai tính chất:
-1. **Kết nối cục bộ**: Mỗi đầu ra chỉ nối với một vùng nhỏ của đầu vào
-2. **Chia sẻ tham số**: Cùng trọng số bộ lọc dùng ở mọi vị trí không gian
+Hiệu quả vượt trội về tham số này bắt nguồn trực tiếp từ hai cơ chế:
+1. **Kết nối cục bộ:** Mỗi phần tử đầu ra chỉ phụ thuộc vào một vùng nhỏ của đầu vào.
+2. **Chia sẻ tham số:** Cùng một bộ trọng số được áp dụng trên toàn bộ không gian ảnh.
 
 ---
 
 ## Video tham khảo
 
-- **xem trước** [But what is a convolution?](https://www.youtube.com/watch?v=KuXjwB4LzSA) — 3Blue1Brown, tiếng Anh. Tổng định nghĩa tích chập.
-- [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, tiếng Anh. Chiều cao và chiều rộng đầu ra theo kernel, padding và stride được suy trong bài giảng này.
-- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Các số trên một ảnh nhỏ để công thức kích thước kiểm được bằng tay.
+- **Xem trước:** [But what is a convolution?](https://www.youtube.com/watch?v=KuXjwB4LzSA) — 3Blue1Brown, tiếng Anh. Giải thích bản chất của tổng định nghĩa tích chập.
+- [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, tiếng Anh. Trình bày công thức tính chiều cao và chiều rộng đầu ra theo kích thước nhân, padding và stride.
+- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Ví dụ số trên ảnh nhỏ giúp tự kiểm chứng công thức kích thước bằng tay.

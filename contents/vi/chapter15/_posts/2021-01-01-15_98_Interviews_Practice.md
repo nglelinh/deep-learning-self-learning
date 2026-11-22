@@ -10,54 +10,54 @@ categories:
 lesson_type: optional
 ---
 
-# Tùy chọn: luyện phỏng vấn — tách đặc trưng và chuyển giao
+# Tùy chọn: Luyện phỏng vấn — Trích xuất đặc trưng và Học chuyển giao
 
-> Bài này là **tùy chọn**. Nó **không** thay thế lý thuyết tách đặc trưng so với fine-tune. Sau các ghi chú đó, dùng bài luyện này, rồi mở *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) để làm các câu đã giải về tách đặc trưng CNN. Hình học kiến trúc ở **04-98**.
+> Bài này mang tính **tùy chọn** và **không** thay thế phần lý thuyết so sánh trích xuất đặc trưng với tinh chỉnh. Sau khi học xong các bài chính, bạn có thể luyện với các câu hỏi dưới đây rồi mở *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) để xem thêm các câu hỏi có lời giải về trích xuất đặc trưng CNN. Phần hình học kiến trúc CNN nằm ở **04-98**.
 
-**Chủ đề sách cho chương này (đọc trong PDF, không phải ở đây):** dùng CNN đã huấn luyện như bộ tách đặc trưng; thân đóng băng so với thân huấn luyện được.
+**Chủ đề tương ứng trong sách (đọc trong bản PDF, không tóm tắt lại ở đây):** sử dụng CNN đã huấn luyện làm bộ trích xuất đặc trưng; so sánh thân mạng đóng băng với thân mạng cho phép tinh chỉnh.
 
-Hub: **01-98 Lộ trình luyện Deep Learning Interviews**.
+Trang tổng hợp: **01-98 Lộ trình luyện Deep Learning Interviews**.
 
-## Câu luyện (gốc)
+## Câu hỏi luyện tập (tự soạn)
 
-### Q1. Linear probe so với fine-tune khối cuối
+### Q1. Linear probe so với tinh chỉnh khối cuối
 
-Bạn có 800 ảnh y khoa có nhãn và ResNet tiền huấn luyện trên ImageNet. So (a) đóng băng thân, huấn luyện đầu tuyến tính và (b) mở khóa giai đoạn residual cuối cùng cộng đầu. (b) thêm rủi ro gì mà (a) không có?
+Bạn có 800 ảnh y khoa có nhãn và một mạng ResNet tiền huấn luyện trên ImageNet. Hãy so sánh hai phương án: (a) đóng băng toàn bộ thân mạng, chỉ huấn luyện một tầng đầu ra tuyến tính và (b) mở băng khối residual cuối cùng cùng tầng đầu ra. Phương án (b) mang lại thêm rủi ro gì mà (a) không có?
 
-**Gợi ý.** Số tham số huấn luyện được so với mức gần của thống kê nguồn và đích.
+**Gợi ý.** So sánh số tham số cần huấn luyện với mức độ gần nhau về phân phối thống kê giữa miền nguồn và miền đích.
 
-**Thảo luận.** (a) là linear probe: rẻ, khó phá bộ lọc đã học, thường là baseline mạnh. (b) có thể thích nghi bộ lọc trung/cao với tổn thương hoặc kết cấu ImageNet chưa thấy, nhưng 800 ảnh có thể ghi đè các bộ lọc đó (fine-tune thảm họa). Thương lượng thực tế là learning rate nhỏ trên thân và lớn trên đầu, hoặc adapter (ghi chú hiện đại tùy chọn Chương 15) — nói như phần mở rộng, không phải câu trả lời lõi.
+**Thảo luận.** Phương án (a) (*linear probe*) tốn ít chi phí, không làm hỏng các bộ lọc đã học và thường là mốc cơ sở vững chắc. Phương án (b) cho phép điều chỉnh các bộ lọc mức trung và cao cho phù hợp với tổn thương hoặc kết cấu chưa có trong ImageNet, nhưng với chỉ 800 ảnh rất dễ quá khớp và ghi đè các bộ lọc hữu ích (tinh chỉnh quá mức). Giải pháp cân bằng trong thực tế là đặt learning rate nhỏ trên thân mạng và lớn hơn trên tầng đầu ra, hoặc dùng adapter (xem bài tùy chọn hiện đại Chương 15) — nên nhắc đến như phần mở rộng sau khi đã trả lời đúng trọng tâm.
 
-### Q2. Khi đặc trưng đóng băng là sai công cụ
+### Q2. Khi nào đặc trưng đóng băng không phù hợp
 
-Đưa một miền đích cụ thể mà kích hoạt ImageNet là biểu diễn yếu dù nguồn và đích đều là “ảnh,” và nêu chỗ lệch.
+Hãy nêu một miền đích cụ thể mà đặc trưng đóng băng từ ImageNet hoạt động kém dù cả miền nguồn lẫn miền đích đều là ảnh, và chỉ rõ nguồn gốc của sự sai lệch.
 
-**Gợi ý.** Nghĩ cảm biến, góc nhìn, hoặc độ mịn nhãn — không phải “tập nhỏ.”
+**Gợi ý.** Xét đến loại cảm biến, góc chụp hoặc bản chất nhãn — không chỉ lý do "tập dữ liệu nhỏ".
 
-**Thảo luận.** Ví dụ: mô bệnh học xám 40×, kênh vệ tinh ngoài RGB, hoặc khuyết tật công nghiệp cận cảnh. Chỗ lệch là *thống kê thấp và ngữ nghĩa*, không chỉ cỡ mẫu. Fine-tune nhiều phần thân hơn, hoặc tiền huấn luyện trong miền (tự giám sát, Chương 16), thẳng thắn hơn là chồng MLP sâu lên đặc trưng vật-thể RGB đóng băng.
+**Thảo luận.** Ví dụ điển hình gồm ảnh mô bệnh học độ phóng đại 40×, ảnh vệ tinh có kênh ngoài dải RGB, hoặc ảnh kiểm tra khuyết tật công nghiệp cận cảnh. Sự sai lệch nằm ở cả *thống kê mức thấp lẫn ngữ nghĩa*, không chỉ ở kích thước mẫu. Trong các trường hợp này, tinh chỉnh sâu hơn vào thân mạng hoặc tiền huấn luyện trong miền bằng học tự giám sát (Chương 16) sẽ hiệu quả hơn việc chỉ gắn thêm mạng MLP sâu lên trên đặc trưng RGB đóng băng.
 
-### Q3. Bạn thực sự tách cái gì
+### Q3. Nên giữ cấu trúc nào khi trích xuất đặc trưng
 
-Một đồng đội “tách đặc trưng” bằng cách lấy bản đồ $$7\times7\times2048$$ của ResNet-50 rồi làm phẳng để huấn luyện SVM. Đưa một lý do nên global-average-pool trước, và một tác vụ bạn sẽ *giữ* bản đồ không gian.
+Một đồng nghiệp "trích xuất đặc trưng" bằng cách lấy bản đồ đặc trưng $$7\times7\times2048$$ của ResNet-50 rồi trải phẳng toàn bộ để huấn luyện SVM. Hãy nêu một lý do nên áp dụng *global average pooling* (GAP) trước, và một loại tác vụ mà ta cần *giữ nguyên* bản đồ không gian.
 
-**Gợi ý.** Bất biến so với định vị.
+**Gợi ý.** Cân nhắc giữa tính bất biến tịnh tiến và yêu cầu định vị không gian.
 
-**Thảo luận.** GAP thành $$2048$$ chiều cho mô tả chịu tịnh tiến và số chiều SVM vừa phải. Detection, segmentation, hoặc tác vụ cần biết vật *ở đâu* nên giữ tensor không gian (hoặc dùng kim tự tháp đặc trưng). “Tách đặc trưng” không phải một shape vector; đó là chọn bất biến bạn muốn.
+**Thảo luận.** Áp dụng GAP rút gọn đặc trưng xuống vector $$2048$$ chiều có tính bất biến tịnh tiến và kích thước phù hợp để huấn luyện SVM (tránh bùng nổ số chiều thành 100.352). Ngược lại, các bài toán phát hiện đối tượng (*detection*), phân đoạn (*segmentation*) hoặc định vị vị trí vật thể cần giữ nguyên tensor không gian (hoặc dùng kim tự tháp đặc trưng). "Trích xuất đặc trưng" không chỉ là chọn kích thước vector mà là chọn tính bất biến phù hợp với bài toán.
 
-### Q4. Lệch miền trong một bức tranh
+### Q4. Lệch miền trong thực tế triển khai
 
-Ảnh huấn luyện là ảnh sản phẩm studio; ảnh production là ảnh điện thoại trong kho. Bạn chỉ fine-tune đầu và accuracy val rất đẹp (val cũng là studio). Bạn đã đo gì, và thí nghiệm nào cần thêm trước khi giao hàng?
+Tập huấn luyện gồm ảnh sản phẩm chụp trong studio, còn ảnh thực tế khi triển khai là ảnh chụp bằng điện thoại trong kho hàng. Bạn chỉ tinh chỉnh tầng đầu ra và đạt độ chính xác rất cao trên tập validation (vốn cũng là ảnh studio). Bạn thực sự mới đo được điều gì, và cần bổ sung thí nghiệm nào trước khi đưa vào sử dụng?
 
-**Gợi ý.** Val i.i.d. so với phân phối triển khai.
+**Gợi ý.** Phân biệt đánh giá trên tập validation cùng phân phối (*i.i.d.*) với phân phối triển khai thực tế.
 
-**Thảo luận.** Bạn đo chất lượng đầu trong miền, không phải chuyển giao. Thêm một lát có nhãn trong kho (hoặc proxy khớp thị giác) và báo cáo số đó. Augmentation màu / crop bắt chước ánh sáng kho là bước trung gian rẻ; không thay được val đích thật. Người phỏng vấn muốn sự khiêm tốn này hơn một tên kiến trúc thần kỳ.
+**Thảo luận.** Kết quả đó mới chỉ đo chất lượng tầng đầu ra trong cùng miền studio chứ chưa kiểm chứng khả năng chuyển giao sang môi trường kho. Trước khi triển khai, cần thu thập và gán nhãn một tập kiểm tra nhỏ chụp trực tiếp trong kho để đo hiệu năng thực tế. Các phép tăng cường dữ liệu như biến đổi ánh sáng, màu sắc hay cắt khung có thể hỗ trợ thu hẹp khoảng cách nhưng không thể thay thế tập validation thuộc miền đích.
 
 ## Ghi công
 
-Kashani, S., và Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Tải PDF từ arXiv để xem toàn bộ Q&A đã giải. Trang này là bài luyện gốc của khóa, không phải bản in lại.
+Kashani, S., và Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Bạn có thể tải bản PDF từ arXiv để xem toàn bộ bộ câu hỏi và lời giải. Các câu hỏi trên trang này được biên soạn riêng cho khóa học, không phải bản sao chép lại từ sách.
 
 ## Video tham khảo
 
-- **xem trước** [Fine-tuning a Neural Network explained](https://www.youtube.com/watch?v=5T-iXNNiwIs) — deeplizard, tiếng Anh. Các câu về tách đặc trưng so với tinh chỉnh.
-- [Pytorch Transfer Learning and Fine Tuning Tutorial](https://www.youtube.com/watch?v=qaDe0qQZ5AQ) — Aladdin Persson, tiếng Anh. Cần nói được tham số nào vẫn nhận gradient.
-- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Vì sao các bộ lọc sớm là thứ đáng giữ.
+- **Xem trước:** [Fine-tuning a Neural Network explained](https://www.youtube.com/watch?v=5T-iXNNiwIs) — deeplizard, tiếng Anh. Ôn lại các câu hỏi cốt lõi về trích xuất đặc trưng và tinh chỉnh.
+- [Pytorch Transfer Learning and Fine Tuning Tutorial](https://www.youtube.com/watch?v=qaDe0qQZ5AQ) — Aladdin Persson, tiếng Anh. Nắm rõ nhóm tham số nào nhận gradient trong từng chiến lược.
+- [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Giải thích vì sao các bộ lọc ở tầng sớm thường nên được giữ lại.

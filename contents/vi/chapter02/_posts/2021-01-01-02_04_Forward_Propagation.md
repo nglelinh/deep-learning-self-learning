@@ -9,45 +9,45 @@ categories:
 - chapter02
 ---
 
-Bài này cung cấp hiểu biết toàn diện về lan truyền xuôi (*forward propagation*), quá trình mạng neuron đưa ra dự đoán.
+Bài này trình bày chi tiết về lan truyền xuôi (*forward propagation*) — quá trình mạng neuron tính toán và đưa ra dự đoán từ dữ liệu đầu vào.
 
 ---
 
 ## Lan truyền Xuôi là gì?
 
-**Lan truyền xuôi** là quá trình tính đầu ra của mạng neuron khi cho trước một đầu vào. Dữ liệu "chảy xuôi" qua mạng từ lớp đầu vào đến lớp đầu ra, đi qua tất cả các lớp ẩn theo thứ tự.
+**Lan truyền xuôi** là quá trình tính toán đầu ra của mạng neuron ứng với một đầu vào cho trước. Dữ liệu đi theo chiều thuận từ lớp đầu vào, lần lượt qua tất cả các lớp ẩn cho đến lớp đầu ra.
 
-Đây là pha **suy luận** (*inference*) hoặc **dự đoán** của mạng neuron.
+Đây chính là giai đoạn **suy luận** (*inference*) hoặc **dự đoán** của mạng neuron.
 
-### Trực giác hình học của một bước forward
+### Trực giác hình học của một bước lan truyền xuôi
 
-Với một lớp ẩn ReLU và đầu ra qua $$\sigma$$, forward có thể viết gọn:
+Với một lớp ẩn dùng ReLU và lớp đầu ra dùng hàm kích hoạt $$\sigma$$, quá trình lan truyền xuôi có thể viết gọn:
 
 $$\mathbf{h} = (W_h \mathbf{x} + b_h)^+,\qquad \hat{\mathbf{y}} = \sigma(W_y \mathbf{h} + b_y)$$
 
 ![Forward: hidden ReLU rồi output σ](/deep-learning-self-learning/img/chapter_img/chapter02/mlp_hidden_relu_forward.jpg)
-*Hình: Pipeline $$x \to h \to \hat{y}$$ với ReLU ở lớp ẩn và $$\sigma$$ ở đầu ra. (Minh họa từ video nhập môn neural network)*
+*Hình: Luồng tính toán $$x \to h \to \hat{y}$$ với ReLU ở lớp ẩn và $$\sigma$$ ở lớp đầu ra. (Minh họa từ video nhập môn mạng neuron)*
 
-Mỗi lớp **affine** (nhân $$W$$, cộng $$b$$) biến đổi không gian; ReLU “gấp / cắt” nửa không gian âm — đó là nguồn phi tuyến khiến nhiều lớp mạnh hơn một lớp tuyến tính.
+Mỗi phép biến đổi **affine** (nhân $$W$$ rồi cộng $$b$$) thực hiện xoay, kéo giãn hoặc tịnh tiến không gian; sau đó ReLU "gấp" nửa không gian âm về 0. Chính thao tác phi tuyến này giúp mạng nhiều lớp biểu diễn được các ranh giới phức tạp hơn một phép biến đổi tuyến tính.
 
 ![ReLU gấp không gian đặc trưng](/deep-learning-self-learning/img/chapter_img/chapter02/feature_space_folding_relu.jpg)
-*Hình: Sau $$h=(W_h x+b_h)^+$$, đám điểm bị gấp/biến dạng phi tuyến trong không gian feature. (Minh họa từ video nhập môn neural network)*
+*Hình: Sau phép biến đổi $$h=(W_h x+b_h)^+$$, tập điểm dữ liệu được gấp và biến dạng phi tuyến trong không gian đặc trưng. (Minh họa từ video nhập môn mạng neuron)*
 
 ![Biểu diễn sau biến đổi lớp](/deep-learning-self-learning/img/chapter_img/chapter02/feature_space_after_transform.jpg)
-*Hình: Cùng dữ liệu nhìn trong không gian sau các lớp — forward là chuỗi biến đổi hình học, không chỉ “nhân ma trận khô”. (Minh họa từ video nhập môn neural network)*
+*Hình: Dữ liệu sau khi đi qua các lớp — lan truyền xuôi có thể được hình dung như chuỗi các phép biến đổi hình học liên tiếp. (Minh họa từ video nhập môn mạng neuron)*
 
-**Forward = “vẽ” hàm.** Với hồi quy 1D, mỗi lần đẩy một $$x$$ qua mạng sinh một điểm $$(x,\hat{y})$$; lặp trên nhiều $$x$$ sẽ tái tạo đường cong đã học. Neuron ẩn sáng/tối khác nhau tùy vùng input.
+**Lan truyền xuôi như quá trình tái tạo hàm số:** Trong bài toán hồi quy 1D, mỗi lần đưa một giá trị $$x$$ qua mạng ta thu được một điểm $$(x, \hat{y})$$; lặp lại trên nhiều giá trị $$x$$ sẽ vẽ ra đường cong mà mạng đã học. Các neuron ẩn sẽ kích hoạt mạnh hoặc yếu khác nhau tùy thuộc vào vùng giá trị của đầu vào.
 
 ![Dự đoán nhiều điểm trên đường cong](/deep-learning-self-learning/img/chapter_img/chapter02/nn_predictions_complex_curve.jpg)
-*Hình: Lan truyền xuôi lặp lại “vẽ” hàm xấp xỉ. (Minh họa từ video về bản chất mạng nơ-ron)*
+*Hình: Thực hiện lan truyền xuôi trên nhiều điểm $$x$$ giúp tái tạo đường cong xấp xỉ. (Minh họa từ video về bản chất mạng neuron)*
 
-## Bước Lan truyền Xuôi: Từng Bước
+## Quy trình Lan truyền Xuôi Từng Bước
 
 Xét một mạng 3 lớp đơn giản:
-- **Lớp đầu vào**: $$n^{[0]} = 3$$ đặc trưng
-- **Lớp ẩn 1**: $$n^{[1]} = 4$$ neuron với ReLU
-- **Lớp ẩn 2**: $$n^{[2]} = 4$$ neuron với ReLU  
-- **Lớp đầu ra**: $$n^{[3]} = 1$$ neuron với sigmoid (phân loại nhị phân)
+- **Lớp đầu vào:** $$n^{[0]} = 3$$ đặc trưng
+- **Lớp ẩn 1:** $$n^{[1]} = 4$$ neuron với ReLU
+- **Lớp ẩn 2:** $$n^{[2]} = 4$$ neuron với ReLU  
+- **Lớp đầu ra:** $$n^{[3]} = 1$$ neuron với sigmoid (phân loại nhị phân)
 
 ### Lớp 0: Đầu vào
 
@@ -60,15 +60,15 @@ $$\mathbf{a}^{[0]} = \mathbf{x} = \begin{bmatrix} x_1 \\ x_2 \\ x_3 \end{bmatrix
 $$\mathbf{z}^{[1]} = \mathbf{W}^{[1]} \mathbf{a}^{[0]} + \mathbf{b}^{[1]}$$
 
 Trong đó:
-- $$\mathbf{W}^{[1]} \in \mathbb{R}^{4 \times 3}$$ (4 neuron, mỗi neuron 3 đầu vào)
-- $$\mathbf{b}^{[1]} \in \mathbb{R}^{4}$$ (4 độ lệch)
-- $$\mathbf{z}^{[1]} \in \mathbb{R}^{4}$$ (giá trị tiền kích hoạt)
+- $$\mathbf{W}^{[1]} \in \mathbb{R}^{4 \times 3}$$ (4 neuron, mỗi neuron nhận 3 đầu vào)
+- $$\mathbf{b}^{[1]} \in \mathbb{R}^{4}$$ (4 hệ số độ lệch)
+- $$\mathbf{z}^{[1]} \in \mathbb{R}^{4}$$ (các giá trị tiền kích hoạt)
 
 **Kích hoạt:**
 
 $$\mathbf{a}^{[1]} = \text{ReLU}(\mathbf{z}^{[1]}) = \max(0, \mathbf{z}^{[1]})$$
 
-$$\mathbf{a}^{[1]} \in \mathbb{R}^{4}$$ (kích hoạt/đầu ra của lớp 1)
+$$\mathbf{a}^{[1]} \in \mathbb{R}^{4}$$ (vector đầu ra của lớp 1)
 
 ### Lớp 2: Lớp Ẩn Thứ hai
 
@@ -98,23 +98,23 @@ Trong đó:
 
 $$\hat{y} = \mathbf{a}^{[3]} = \sigma(\mathbf{z}^{[3]}) = \frac{1}{1 + e^{-\mathbf{z}^{[3]}}}$$
 
-Kết quả là xác suất dự đoán của lớp dương.
+Kết quả thu được là xác suất dự đoán mẫu thuộc lớp dương.
 
-## Lan truyền Xuôi Dạng Vectơ
+## Lan truyền Xuôi Dạng Ma trận (Vector hóa)
 
-Vì hiệu quả tính toán, ta xử lý **nhiều mẫu đồng thời** bằng **vectorization**.
+Để tận dụng phần cứng và tăng tốc tính toán, ta xử lý **nhiều mẫu đồng thời** thông qua kỹ thuật **vector hóa** (*vectorization*).
 
 ### Xử lý theo Batch
 
-Thay vì xử lý từng mẫu một, ta tổ chức $$m$$ mẫu thành một ma trận:
+Thay vì đưa từng mẫu một vào mạng, ta xếp $$m$$ mẫu thành các cột của một ma trận:
 
 $$\mathbf{X} = \begin{bmatrix} | & | & & | \\ \mathbf{x}^{(1)} & \mathbf{x}^{(2)} & \cdots & \mathbf{x}^{(m)} \\ | & | & & | \end{bmatrix} \in \mathbb{R}^{n^{[0]} \times m}$$
 
-Mỗi cột là một mẫu huấn luyện.
+Mỗi cột tương ứng với một mẫu dữ liệu.
 
-### Tính toán Dạng Vectơ
+### Phép tính theo Batch
 
-Với lớp $$l$$:
+Tại lớp $$l$$:
 
 $$\mathbf{Z}^{[l]} = \mathbf{W}^{[l]} \mathbf{A}^{[l-1]} + \mathbf{b}^{[l]}$$
 
@@ -124,21 +124,21 @@ Trong đó:
 - $$\mathbf{A}^{[l]} \in \mathbb{R}^{n^{[l]} \times m}$$ (mỗi cột là kích hoạt của một mẫu)
 - $$\mathbf{Z}^{[l]} \in \mathbb{R}^{n^{[l]} \times m}$$
 - $$\mathbf{W}^{[l]} \in \mathbb{R}^{n^{[l]} \times n^{[l-1]}}$$
-- $$\mathbf{b}^{[l]} \in \mathbb{R}^{n^{[l]} \times 1}$$ (được phát sóng qua tất cả $$m$$ mẫu)
+- $$\mathbf{b}^{[l]} \in \mathbb{R}^{n^{[l]} \times 1}$$ (được mở rộng chiều tự động qua tất cả $$m$$ mẫu)
 
-### Broadcasting
+### Cơ chế Broadcasting
 
-Python/NumPy tự động phát sóng $$\mathbf{b}^{[l]}$$ qua mọi mẫu:
+Python/NumPy tự động thực hiện *broadcasting* cho $$\mathbf{b}^{[l]}$$ trên toàn bộ các cột của batch:
 
 $$\mathbf{b}^{[l]} \in \mathbb{R}^{n^{[l]} \times 1} \rightarrow \mathbb{R}^{n^{[l]} \times m}$$
 
-Mỗi cột của kết quả được cộng cùng một vectơ độ lệch.
+Nhờ đó, mọi cột của ma trận tích đều được cộng cùng một vector độ lệch.
 
-## Ví dụ Cụ thể với Số
+## Ví dụ Tính toán Cụ thể
 
-Ta xét một ví dụ nhỏ với số thực.
+Hãy theo dõi một ví dụ nhỏ với các con số cụ thể.
 
-### Thiết lập Mạng
+### Cấu hình Mạng
 
 - Đầu vào: 2 đặc trưng ($$n^{[0]} = 2$$)
 - Lớp ẩn: 3 neuron với ReLU ($$n^{[1]} = 3$$)
@@ -165,13 +165,13 @@ $$\mathbf{Z}^{[1]} = \mathbf{W}^{[1]} \mathbf{A}^{[0]} + \mathbf{b}^{[1]}$$
 
 $$= \begin{bmatrix} 0.5 & -0.3 \\ 0.2 & 0.8 \\ -0.4 & 0.6 \end{bmatrix} \begin{bmatrix} 1.0 & 0.5 \\ 2.0 & 1.5 \end{bmatrix} + \begin{bmatrix} 0.1 \\ -0.2 \\ 0.3 \end{bmatrix}$$
 
-**Nhân ma trận:**
+**Kết quả nhân ma trận:**
 
 Cột thứ nhất: $$\begin{bmatrix} 0.5(1.0) + (-0.3)(2.0) \\ 0.2(1.0) + 0.8(2.0) \\ -0.4(1.0) + 0.6(2.0) \end{bmatrix} = \begin{bmatrix} -0.1 \\ 1.8 \\ 0.8 \end{bmatrix}$$
 
 Cột thứ hai: $$\begin{bmatrix} 0.5(0.5) + (-0.3)(1.5) \\ 0.2(0.5) + 0.8(1.5) \\ -0.4(0.5) + 0.6(1.5) \end{bmatrix} = \begin{bmatrix} -0.2 \\ 1.3 \\ 0.7 \end{bmatrix}$$
 
-Sau khi cộng độ lệch:
+Sau khi cộng vector độ lệch:
 
 $$\mathbf{Z}^{[1]} = \begin{bmatrix} -0.1+0.1 & -0.2+0.1 \\ 1.8-0.2 & 1.3-0.2 \\ 0.8+0.3 & 0.7+0.3 \end{bmatrix} = \begin{bmatrix} 0.0 & -0.1 \\ 1.6 & 1.1 \\ 1.1 & 1.0 \end{bmatrix}$$
 
@@ -334,16 +334,16 @@ predictions, caches = nn.forward(X)
 print("Predictions:", predictions)
 ```
 
-## Các Vấn đề Thường gặp và Gỡ lỗi
+## Các Lỗi Thường gặp và Cách Gỡ lỗi
 
-### 1. Không khớp Chiều
+### 1. Không khớp Kích thước Ma trận
 
-**Vấn đề**: Nhân ma trận thất bại do chiều không tương thích.
+**Vấn đề:** Phép nhân ma trận báo lỗi do kích thước không tương thích.
 
-**Giải pháp**: 
-- Kiểm tra $$\mathbf{W}^{[l]}$$ có dạng $$(n^{[l]}, n^{[l-1]})$$
-- Kiểm tra $$\mathbf{A}^{[l-1]}$$ có dạng $$(n^{[l-1]}, m)$$
-- Dùng print hoặc debugger để xác minh dạng
+**Cách xử lý:**
+- Kiểm tra $$\mathbf{W}^{[l]}$$ có kích thước $$(n^{[l]}, n^{[l-1]})$$
+- Kiểm tra $$\mathbf{A}^{[l-1]}$$ có kích thước $$(n^{[l-1]}, m)$$
+- In kích thước từng tensor hoặc dùng debugger để đối chiếu
 
 ```python
 print(f"Layer {l}:")
@@ -355,9 +355,9 @@ print(f"  Z shape: {Z.shape}")
 
 ### 2. Bất ổn Số học
 
-**Vấn đề**: Tràn trên hoặc tràn dưới với hàm mũ (đặc biệt sigmoid/softmax).
+**Vấn đề:** Hiện tượng tràn số trên (*overflow*) hoặc tràn số dưới (*underflow*) khi tính hàm mũ, đặc biệt trong sigmoid và softmax.
 
-**Giải pháp**: Dùng các mẹo ổn định số:
+**Cách xử lý:** Dùng dạng công thức ổn định số:
 
 ```python
 # Không ổn định
@@ -371,11 +371,11 @@ def sigmoid_stable(z):
                     np.exp(z) / (1 + np.exp(z)))
 ```
 
-### 3. Broadcasting Sai
+### 3. Lỗi Broadcasting ở Độ lệch
 
-**Vấn đề**: Độ lệch không được phát sóng đúng.
+**Vấn đề:** Vector độ lệch bị cộng sai chiều do thiếu trục cột.
 
-**Giải pháp**: Đảm bảo độ lệch có dạng $$(n^{[l]}, 1)$$ chứ không phải $$(n^{[l]},)$$
+**Cách xử lý:** Luôn giữ kích thước của độ lệch là $$(n^{[l]}, 1)$$ thay vì mảng 1 chiều $$(n^{[l]},)$$.
 
 ```python
 # Đúng
@@ -389,45 +389,45 @@ b = np.zeros(n_l)  # Dạng (n_l,)
 
 ### Độ phức tạp Thời gian
 
-Với mạng có $$L$$ lớp và $$n$$ neuron mỗi lớp:
+Với mạng gồm $$L$$ lớp và mỗi lớp có $$n$$ neuron:
 
 $$O(L \cdot n^2 \cdot m)$$
 
 trong đó $$m$$ là kích thước batch.
 
-**Phân tích:**
-- Mỗi lớp: $$O(n^2 \cdot m)$$ cho nhân ma trận $$\mathbf{W}^{[l]} \mathbf{A}^{[l-1]}$$
-- Tổng cộng $$L$$ lớp
+**Giải thích:**
+- Mỗi lớp tốn $$O(n^2 \cdot m)$$ cho phép nhân ma trận $$\mathbf{W}^{[l]} \mathbf{A}^{[l-1]}$$
+- Nhân với tổng số $$L$$ lớp
 
 ### Độ phức tạp Không gian
 
 $$O(L \cdot n \cdot m)$$
 
-Cần lưu kích hoạt của mỗi lớp (cần cho lan truyền ngược).
+Bộ nhớ này dùng để lưu lại các giá trị kích hoạt trung gian ở từng lớp phục vụ cho quá trình lan truyền ngược.
 
 ## Tóm tắt
 
-- **Lan truyền xuôi** tính dự đoán bằng cách truyền đầu vào qua mạng
-- Mỗi lớp thực hiện: **biến đổi tuyến tính** → **hàm kích hoạt**
-- **Vectorization** cho phép xử lý batch nhiều mẫu hiệu quả
-- Quá trình là: $$\mathbf{Z}^{[l]} = \mathbf{W}^{[l]} \mathbf{A}^{[l-1]} + \mathbf{b}^{[l]}, \quad \mathbf{A}^{[l]} = g^{[l]}(\mathbf{Z}^{[l]})$$
-- **Lưu cache** các giá trị trung gian là thiết yếu cho lan truyền ngược hiệu quả
-- Xử lý đúng **chiều** và **ổn định số** là then chốt
-- Lan truyền xuôi **hiệu quả tính toán** ($$O(L \cdot n^2 \cdot m)$$)
+- **Lan truyền xuôi** tính đầu ra dự đoán bằng cách đưa dữ liệu đi tuần tự qua các lớp của mạng.
+- Mỗi lớp thực hiện hai bước: **biến đổi tuyến tính** rồi **áp dụng hàm kích hoạt**.
+- **Vector hóa** giúp tính toán song song trên cả batch dữ liệu với hiệu năng cao.
+- Biểu thức tổng quát: $$\mathbf{Z}^{[l]} = \mathbf{W}^{[l]} \mathbf{A}^{[l-1]} + \mathbf{b}^{[l]}, \quad \mathbf{A}^{[l]} = g^{[l]}(\mathbf{Z}^{[l]})$$.
+- **Lưu đệm (*cache*)** các giá trị trung gian là cần thiết để lan truyền ngược tính gradient nhanh chóng.
+- Kiểm soát đúng **kích thước ma trận** và **ổn định số học** giúp tránh nhiều lỗi cài đặt phổ biến.
+- Độ phức tạp thời gian của lan truyền xuôi là $$O(L \cdot n^2 \cdot m)$$.
 
-Khi đã hiểu cách mạng đưa ra dự đoán, ta cần học cách huấn luyện chúng. Ở chương tiếp theo, ta sẽ trình bày **lan truyền ngược** và **gradient descent**, các thuật toán cho phép mạng neuron học từ dữ liệu.
+Sau khi nắm cách mạng tính toán dự đoán, chương tiếp theo sẽ trình bày **lan truyền ngược** và **gradient descent** — các thuật toán giúp mạng học tham số từ dữ liệu.
 
 <!-- video-references -->
 
 ## Nguồn video (tham chiếu)
 
-Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
+Một số hình minh họa trong bài được trích từ các video của Machine Learning Thực Chiến:
 
 - [Trực giác mạng nơ-ron (Perceptron → Deep Learning)](https://www.facebook.com/reel/793200140509765)
 - [Mạng nơ-ron là bộ xấp xỉ hàm](https://www.facebook.com/reel/720970114372332)
 
 ## Video tham khảo
 
-- **xem trước** [Forward Propagation in a Deep Network (C1W4L02)](https://www.youtube.com/watch?v=a8i2eJin0lY) — DeepLearningAI, tiếng Anh. Phương trình lan truyền xuôi, từng lớp một, đúng là bài này.
-- [Forward and Backward Propagation (C1W4L06)](https://www.youtube.com/watch?v=qzPQ8cEsVK8) — DeepLearningAI, tiếng Anh. Đặt lượt xuôi cạnh lượt ngược để các kích thước vừa tính có chỗ đi tới.
-- [Xây dựng mạng nơ-ron nhân tạo từ con số 0 | Writing a Neural Network from scratch](https://www.youtube.com/watch?v=VBviWbusHd8) — Học Lập Trình cùng Phát, tiếng Việt. Một bản mã tiếng Việt viết lan truyền xuôi từ đầu.
+- **Xem trước:** [Forward Propagation in a Deep Network (C1W4L02)](https://www.youtube.com/watch?v=a8i2eJin0lY) — DeepLearningAI, tiếng Anh. Trình bày từng phương trình lan truyền xuôi qua từng lớp, khớp trực tiếp với nội dung bài học.
+- [Forward and Backward Propagation (C1W4L06)](https://www.youtube.com/watch?v=qzPQ8cEsVK8) — DeepLearningAI, tiếng Anh. Đặt lượt xuôi bên cạnh lượt ngược để thấy cách sử dụng các giá trị lưu đệm vừa tính.
+- [Xây dựng mạng nơ-ron nhân tạo từ con số 0 | Writing a Neural Network from scratch](https://www.youtube.com/watch?v=VBviWbusHd8) — Học Lập Trình cùng Phát, tiếng Việt. Hướng dẫn cài đặt lan truyền xuôi từ đầu bằng tiếng Việt.

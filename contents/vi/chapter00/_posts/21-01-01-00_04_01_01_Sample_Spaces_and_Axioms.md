@@ -9,53 +9,53 @@ categories:
 - chapter00
 ---
 
-## Lý Thuyết Xác Suất Cơ Bản
+## Lý thuyết xác suất cơ bản
 
-Lý thuyết xác suất cung cấp khung toán học để lý luận về sự bất định, điều này là nền tảng cho nhiều bài toán tối ưu hóa trong học máy và khoa học dữ liệu.
+Lý thuyết xác suất cung cấp khung toán học để suy luận về sự bất định — nền tảng của nhiều bài toán tối ưu hóa trong học máy và khoa học dữ liệu.
 
-### 1. Không Gian Mẫu và Biến Cố
+### 1. Không gian mẫu và biến cố
 
-**Không Gian Mẫu (Ω)**: Tập hợp tất cả các kết quả có thể có của một thí nghiệm.
+**Không gian mẫu ($$\Omega$$):** tập hợp tất cả các kết quả có thể xảy ra của một phép thử ngẫu nhiên.
 
-**Biến Cố (A)**: Một tập con của không gian mẫu đại diện cho một tập hợp các kết quả.
+**Biến cố ($$A$$):** một tập con của không gian mẫu, đại diện cho một nhóm kết quả cụ thể.
 
 **Ví dụ:**
-- Tung đồng xu: Ω = {S, N}
-- Tung xúc xắc: Ω = {1, 2, 3, 4, 5, 6}
-- Liên tục: Ω = [0, 1] cho biến ngẫu nhiên đều
+- Tung đồng xu: $$\Omega = \{S, N\}$$
+- Tung xúc xắc: $$\Omega = \{1, 2, 3, 4, 5, 6\}$$
+- Phép thử liên tục: $$\Omega = [0, 1]$$ đối với biến ngẫu nhiên phân phối đều
 
 <div id="sample-space-demo" style="border: 2px solid #ddd; padding: 20px; margin: 20px 0; border-radius: 10px; background-color: #f9f9f9;">
-    <h4 style="text-align: center; color: #333;">Trực Quan Hóa Không Gian Mẫu Tương Tác</h4>
+    <h4 style="text-align: center; color: #333;">Trực quan hóa không gian mẫu tương tác</h4>
     
     <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;">
         <div style="flex: 1; min-width: 400px;">
             <canvas id="sampleSpaceCanvas" width="400" height="300" style="border: 1px solid #ccc; background: white;"></canvas>
             <p style="font-size: 12px; color: #666; margin-top: 5px;">
-                <strong>Trực quan hóa:</strong> Nhấp để tạo mẫu ngẫu nhiên. Các màu khác nhau đại diện cho các biến cố khác nhau.
+                <strong>Trực quan hóa:</strong> Nhấp để sinh mẫu ngẫu nhiên. Mỗi màu biểu thị một biến cố khác nhau.
             </p>
         </div>
         
         <div style="flex: 1; min-width: 250px;">
             <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                <h5 style="margin-top: 0; color: #444;">Loại Thí Nghiệm</h5>
+                <h5 style="margin-top: 0; color: #444;">Loại phép thử</h5>
                 
                 <div style="margin-bottom: 15px;">
                     <label style="display: block; margin-bottom: 10px;">
-                        <input type="radio" name="experiment" value="coin" checked> Tung Đồng Xu
+                        <input type="radio" name="experiment" value="coin" checked> Tung đồng xu
                     </label>
                     <label style="display: block; margin-bottom: 10px;">
-                        <input type="radio" name="experiment" value="dice"> Tung Xúc Xắc
+                        <input type="radio" name="experiment" value="dice"> Tung xúc xắc
                     </label>
                     <label style="display: block; margin-bottom: 10px;">
-                        <input type="radio" name="experiment" value="uniform"> Đều [0,1]
+                        <input type="radio" name="experiment" value="uniform"> Phân phối đều [0,1]
                     </label>
                 </div>
                 
-                <button id="generate-sample" style="width: 100%; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 10px;">Tạo Mẫu</button>
+                <button id="generate-sample" style="width: 100%; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 10px;">Tạo mẫu</button>
                 <button id="clear-samples" style="width: 100%; padding: 8px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px;">Xóa</button>
                 
                 <div id="sample-stats" style="font-family: monospace; font-size: 12px; line-height: 1.4; background: #f8f9fa; padding: 10px; border-radius: 4px;">
-                    <div><strong>Thống Kê:</strong></div>
+                    <div><strong>Thống kê:</strong></div>
                     <div>Tổng mẫu: <span id="total-samples">0</span></div>
                     <div>Biến cố A: <span id="event-a-count">0</span></div>
                     <div>Biến cố B: <span id="event-b-count">0</span></div>
@@ -67,30 +67,30 @@ Lý thuyết xác suất cung cấp khung toán học để lý luận về sự
     </div>
 </div>
 
-### 2. Tiên Đề Xác Suất (Tiên Đề Kolmogorov)
+### 2. Tiên đề xác suất (Tiên đề Kolmogorov)
 
-Với bất kỳ độ đo xác suất P nào, các tiên đề sau phải được thỏa mãn:
+Mọi độ đo xác suất $$P$$ đều phải thỏa mãn ba tiên đề sau:
 
-#### Tiên Đề 1: Tính Không Âm
+#### Tiên đề 1: Tính không âm
 $$P(A) \geq 0 \text{ với mọi biến cố } A$$
 
-#### Tiên Đề 2: Chuẩn Hóa
+#### Tiên đề 2: Chuẩn hóa
 $$P(\Omega) = 1$$
 
-#### Tiên Đề 3: Tính Cộng Đếm Được
-Với các biến cố xung khắc $$A_1, A_2, \ldots$$:
+#### Tiên đề 3: Tính cộng đếm được
+Với dãy các biến cố đôi một xung khắc $$A_1, A_2, \ldots$$:
 $$P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i)$$
 
-### 3. Tính Chất và Quy Tắc Cơ Bản
+### 3. Tính chất và quy tắc cơ bản
 
-#### Quy Tắc Phần Bù
+#### Quy tắc phần bù
 $$P(A^c) = 1 - P(A)$$
 
-#### Quy Tắc Cộng
-Với hai biến cố A và B bất kỳ:
+#### Quy tắc cộng
+Với hai biến cố $$A$$ và $$B$$ bất kỳ:
 $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
 
-#### Quy Tắc Nhân
+#### Quy tắc nhân
 $$P(A \cap B) = P(A|B) \cdot P(B) = P(B|A) \cdot P(A)$$
 
 <script>
@@ -287,6 +287,6 @@ canvas {
 
 ## Video tham khảo
 
-- **xem trước** [L01.4 Probability Axioms](https://www.youtube.com/watch?v=pA83XtLeVig) — MIT OpenCourseWare, tiếng Anh. Không gian mẫu, biến cố và ba tiên đề đúng là nội dung bài này.
-- [The Main Ideas behind Probability Distributions](https://www.youtube.com/watch?v=oI3hZJqXJuc) — StatQuest with Josh Starmer, tiếng Anh. Cho thấy độ đo xác suất trên không gian mẫu đó trở thành một phân phối như thế nào.
-- [Bayes theorem, the geometry of changing beliefs](https://www.youtube.com/watch?v=HZGCoVF3YvM) — 3Blue1Brown, tiếng Anh. Quy tắc Bayes là một đẳng thức trong cùng các tiên đề, hữu ích khi các biến cố không còn độc lập.
+- **Xem trước:** [L01.4 Probability Axioms](https://www.youtube.com/watch?v=pA83XtLeVig) — MIT OpenCourseWare, tiếng Anh. Trình bày không gian mẫu, biến cố và ba tiên đề xác suất tương ứng trực tiếp với nội dung bài này.
+- [The Main Ideas behind Probability Distributions](https://www.youtube.com/watch?v=oI3hZJqXJuc) — StatQuest with Josh Starmer, tiếng Anh. Giải thích cách độ đo xác suất trên không gian mẫu hình thành nên một phân phối xác suất.
+- [Bayes theorem, the geometry of changing beliefs](https://www.youtube.com/watch?v=HZGCoVF3YvM) — 3Blue1Brown, tiếng Anh. Minh họa trực quan định lý Bayes — hệ quả trực tiếp của các tiên đề xác suất khi các biến cố phụ thuộc nhau.

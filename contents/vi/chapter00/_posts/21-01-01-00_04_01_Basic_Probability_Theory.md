@@ -9,16 +9,16 @@ categories:
 - chapter00
 ---
 
-Bài học này trình bày lý thuyết xác suất cơ bản cho deep learning, chia thành các phần:
+Bài học này trình bày lý thuyết xác suất cơ bản phục vụ cho học sâu (*deep learning*), gồm ba phần chính:
 
-1. **Không Gian Mẫu và Tiên Đề Xác Suất**
-2. **Xác Suất Có Điều Kiện và Tính Độc Lập**
-3. **Biến Ngẫu Nhiên và Deep Learning**
+1. **Không gian mẫu và tiên đề xác suất**
+2. **Xác suất có điều kiện và tính độc lập**
+3. **Biến ngẫu nhiên và học sâu**
 
-Mỗi phần kèm demo tương tác (nếu có).
+Mỗi phần có kèm minh họa tương tác (nếu có).
 
 ## Video tham khảo
 
-- **xem trước** [L01.4 Probability Axioms](https://www.youtube.com/watch?v=pA83XtLeVig) — MIT OpenCourseWare, tiếng Anh. Bài tiên đề mà phần tổng quan này mở ra.
-- [Conditional Probabilities, Clearly Explained!!!](https://www.youtube.com/watch?v=_IgyaD7vOOA) — StatQuest with Josh Starmer, tiếng Anh. Xác suất có điều kiện là bài thứ hai của khối.
-- [MaDL - Random Variables and Probability Distributions](https://www.youtube.com/watch?v=bvBukLjHZh8) — Tübingen Machine Learning, tiếng Anh. Biến ngẫu nhiên là bài thứ ba, gắn với cách mạng nhìn dữ liệu.
+- **Xem trước:** [L01.4 Probability Axioms](https://www.youtube.com/watch?v=pA83XtLeVig) — MIT OpenCourseWare, tiếng Anh. Trình bày các tiên đề xác suất mở đầu cho cụm bài này.
+- [Conditional Probabilities, Clearly Explained!!!](https://www.youtube.com/watch?v=_IgyaD7vOOA) — StatQuest with Josh Starmer, tiếng Anh. Giải thích rõ ràng về xác suất có điều kiện, nội dung trọng tâm của bài thứ hai.
+- [MaDL - Random Variables and Probability Distributions](https://www.youtube.com/watch?v=bvBukLjHZh8) — Tübingen Machine Learning, tiếng Anh. Giới thiệu biến ngẫu nhiên và phân phối, gắn với cách mô hình học sâu biểu diễn dữ liệu.

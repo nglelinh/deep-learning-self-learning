@@ -11,24 +11,26 @@ categories:
 
 # Cài đặt Cốt lõi Transformer
 
-Bài này cài đặt các **khối xây dựng** của một encoder Transformer (và lõi attention dùng chung với decoder). Mã được viết ưu tiên rõ ràng và shape đúng trước; hệ thống sản xuất sau đó thay bằng kernel gộp (`scaled_dot_product_attention`) và cấu hình lớn hơn.
+Bài này cài đặt các **khối nền tảng** của một encoder Transformer (cùng lõi attention dùng chung với decoder) bằng PyTorch. Mã nguồn ưu tiên tính minh bạch và kiểm soát đúng kích thước tensor; trong hệ thống sản xuất, các khối này thường được thay bằng hàm tối ưu hóa tích hợp (`scaled_dot_product_attention`) với quy mô lớn hơn.
 
 ---
 
 ## 1. Tổng quan khái niệm
-Chúng ta sẽ cài đặt, từ dưới lên:
 
-1. Scaled dot-product attention  
-2. Multi-head attention  
-3. Mã hóa vị trí dạng sin-cos  
-4. FFN theo vị trí  
-5. Tầng encoder + chồng encoder  
+Ta sẽ xây dựng lần lượt từ dưới lên theo năm thành phần:
 
-Mỗi mảnh là một `nn.Module` với chữ ký forward tường minh để bạn có thể unit-test độc lập.
+1. Scaled dot-product attention
+2. Multi-head attention
+3. Mã hóa vị trí dạng sin–cos
+4. Mạng FFN theo từng vị trí
+5. Tầng encoder và khối encoder hoàn chỉnh
+
+Mỗi thành phần là một `nn.Module` độc lập với giao diện `forward` rõ ràng để dễ dàng kiểm thử riêng lẻ.
 
 ---
 
-## 2. Nhắc lại toán học
+## 2. Nhắc lại công thức
+
 $$
 \mathrm{Attention}(Q,K,V)=\mathrm{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V
 $$
@@ -38,7 +40,7 @@ $$
 \mathrm{PE}_{(pos,2i+1)}=\cos(pos/10000^{2i/d})
 $$
 
-Tầng encoder (kiểu Pre-LN dùng bên dưới để ổn định ở chồng sâu):
+Một tầng encoder theo bố cục Pre-LN (được dùng trong mã nguồn bên dưới để tăng ổn định huấn luyện):
 
 $$
 \begin{aligned}
@@ -49,15 +51,15 @@ $$
 
 ---
 
-## 3. Ví dụ / Trực giác cho các demo
+## 3. Kiểm chứng luồng dữ liệu
 
-Chúng ta chạy id token ngẫu nhiên qua encoder và kiểm tra:
+Ta chạy các chuỗi chỉ số token ngẫu nhiên qua encoder để kiểm tra ba tiêu chí cơ bản:
 
-- shape đầu ra bằng $$(B, L, d_{\mathrm{model}})$$,  
-- mask nhân quả/đệm triệt tiêu trọng số bị cấm,  
-- một forward ngắn khả vi (`loss.backward()` hoạt động).
+- Đầu ra giữ đúng kích thước $$(B, L, d_{\mathrm{model}})$$.
+- Mặt nạ nhân quả / đệm triệt tiêu hoàn toàn trọng số tại các vị trí bị cấm.
+- Lượt lan truyền ngược (`loss.backward()`) thực thi suôn sẻ, chứng tỏ đồ thị tính toán khả vi hoàn chỉnh.
 
-Huấn luyện một mô hình ngôn ngữ *thật* không phải mục tiêu ở đây—đúng “đường ống” mới là mục tiêu.
+Mục tiêu của bước này là đảm bảo tính chính xác của **kiến trúc và luồng tensor** trước khi bước sang huấn luyện thực tế.
 
 ---
 
@@ -239,62 +241,66 @@ if __name__ == "__main__":
     print("backward OK")
 ```
 
-### Ghi chú quy ước mask
+### Lưu ý về quy ước mặt nạ (mask)
 
-Mã này dùng **boolean keep-mask** (`True` = được phép attend). Nhiều API dùng nghĩa bool ngược hoặc mask float cộng. Luôn đọc docstring của hàm bạn gọi—lỗi cực tính mask là footgun số 1 của Transformer.
+Đoạn mã trên dùng **boolean keep-mask** (`True` nghĩa là vị trí được phép chú ý). Nhiều thư viện lại dùng quy ước ngược lại (`True` là bị che) hoặc dùng mask số thực cộng (`0` / `-inf`). Luôn đọc kỹ tài liệu của hàm đang gọi vì nhầm quy ước mặt nạ là lỗi phổ biến hàng đầu khi cài đặt Transformer.
 
-### Móc cho padding
+### Mở rộng cho padding mask
 
-Với độ dài biến đổi, xây mask shape $$(B,1,1,L)$$ (broadcast qua head và query) với `False` trên key pad, hoặc kết hợp với causal bằng AND logic cho decoder.
+Với các chuỗi có độ dài khác nhau trong một batch, hãy tạo mặt nạ kích thước $$(B, 1, 1, L)$$ (tự broadcast qua các head và vị trí query) gán `False` ở các vị trí `PAD`, sau đó kết hợp bằng phép `AND` logic với mặt nạ nhân quả khi dùng ở decoder.
 
 ---
 
 ## 5. Khái niệm liên quan
-- **`nn.TransformerEncoder`** — tương đương thư viện của chồng này.  
-- **Tầng decoder** — thêm khối MHA thứ hai cho cross-attention + mask nhân quả trên self-attn.  
-- **Weight tying** — chia sẻ nhúng đầu vào và chiếu đầu ra trong LM.  
-- **SDPA / FlashAttention** — cùng toán, kernel gộp.
+
+- **`nn.TransformerEncoder`**: phiên bản tích hợp sẵn trong PyTorch tương ứng với khối vừa viết.
+- **Tầng decoder**: bổ sung thêm một khối MHA cho cross-attention và mặt nạ nhân quả cho self-attention.
+- **Chia sẻ trọng số (Weight tying)**: dùng chung ma trận nhúng đầu vào và ma trận chiếu đầu ra trong mô hình ngôn ngữ.
+- **SDPA / FlashAttention**: giữ nguyên kết quả toán học nhưng tối ưu hóa tốc độ và bộ nhớ ở tầng kernel.
 
 ---
 
-## 6. Các bài báo nền tảng (liên quan cài đặt)
-1. [Vaswani et al., 2017](https://arxiv.org/abs/1706.03762) — danh sách module tham chiếu và siêu tham số base.  
-2. [Phuong & Hutter, 2022](https://arxiv.org/abs/2207.09238) — thuật toán hình thức; xuất sắc khi cài lại.  
-3. PyTorch: [`torch.nn.Transformer`](https://pytorch.org/docs/stable/generated/torch.nn.Transformer.html) — API hướng sản xuất.
+## 6. Tài liệu tham khảo liên quan đến cài đặt
+
+1. [Vaswani et al., 2017](https://arxiv.org/abs/1706.03762) — danh sách module và bộ siêu tham số chuẩn.
+2. [Phuong & Hutter, 2022](https://arxiv.org/abs/2207.09238) — mô tả thuật toán chính thức, rất hữu ích khi cài đặt lại từ đầu.
+3. Tài liệu PyTorch: [`torch.nn.Transformer`](https://pytorch.org/docs/stable/generated/torch.nn.Transformer.html) — giao diện chuẩn dùng cho sản xuất.
 
 ---
 
 ## 7. Cạm bẫy thường gặp và mẹo thực hành
-| Bẫy | Cách sửa |
-|---------|-----|
-| Độ dài PE < độ dài chuỗi | Tăng `max_len` hoặc dùng lược đồ tương đối/RoPE |
-| Dropout vẫn bật lúc eval | `model.eval()` + `torch.no_grad()` |
-| Quên scale embedding với $$\sqrt{d}$$ | Khớp bài báo gốc; giữ nhất quán |
-| Nhánh residual sai | Cộng *đầu vào* của tầng con, không chỉ đường đã chuẩn hóa mà không residual |
-| Toán tử in-place trên tensor cần cho grad | Tránh in-place trên view dùng cho backward |
 
-**Mẹo:** kiểm tra từng module bằng `torch.autograd.gradcheck` trên đầu vào float64 nhỏ khi viết attention tùy chỉnh.
+| Lỗi thường gặp | Cách khắc phục |
+|---------|-----|
+| Chiều dài bảng PE nhỏ hơn độ dài chuỗi | Tăng `max_len` hoặc chuyển sang mã hóa vị trí tương đối / RoPE |
+| Quên tắt dropout khi đánh giá | Luôn gọi `model.eval()` kết hợp `torch.no_grad()` |
+| Không nhất quán hệ số nhân $$\sqrt{d}$$ cho embedding | Giữ nhất quán theo chuẩn bài báo gốc (nhân $$\sqrt{d_{\mathrm{model}}}$$ trước khi cộng PE) |
+| Cộng sai nhánh phần dư | Cộng trực tiếp vào *đầu vào gốc* của tầng con, không bỏ qua đường tắt |
+| Phép toán in-place làm hỏng đồ thị gradient | Tránh dùng thao tác in-place lên tensor đang cần cho `backward()` |
+
+**Mẹo:** khi tự viết lớp attention tùy chỉnh, có thể kiểm tra gradient bằng `torch.autograd.gradcheck` trên tensor `float64` kích thước nhỏ.
 
 ---
 
 ## 8. Tóm tắt các điểm chính
-1. Cài đặt theo thứ tự **attention → multi-head → PE → FFN → chồng tầng**.  
-2. Khối residual Pre-LN là mặc định ổn định cho chồng sâu.  
-3. Mask là một phần hợp đồng API—ghi rõ cực tính.  
-4. Smoke test về shape, cấu trúc nhân quả, và backward là bắt buộc trước khi huấn luyện.
 
-Tiếp theo: demo, bài báo dạng tường thuật, và bẫy vận hành.
+1. Thứ tự xây dựng tự nhiên là **attention → multi-head → PE → FFN → xếp chồng các tầng**.
+2. Bố cục phần dư Pre-LN là lựa chọn mặc định ổn định cho các mô hình nhiều tầng.
+3. Quy ước mặt nạ là một phần của giao diện API nên cần ghi chú rõ ràng.
+4. Kiểm thử nhanh (smoke test) cho kích thước tensor, ràng buộc nhân quả và lan truyền ngược là bước bắt buộc trước khi huấn luyện.
+
+Bài tiếp theo sẽ chạy thử huấn luyện trên bài toán nhỏ, tổng hợp tài liệu nền tảng và danh mục gỡ lỗi vận hành.
 
 <!-- video-references -->
 
 ## Nguồn video (tham chiếu)
 
-Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến). Giữ URL để tra cứu / ghi công nguồn:
+Một số hình minh họa trong bài được trích từ các video sau (Machine Learning Thực Chiến); các đường dẫn dưới đây được lưu lại để tra cứu và ghi nhận nguồn:
 
 - [Position Encoding trong Transformer (từng bước)](https://www.facebook.com/reel/1306224801415127)
 
 ## Video tham khảo
 
-- **xem trước** [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, tiếng Anh. Các module cốt lõi. Video dài; đây là bản cài từ đầu chuẩn của bài này.
-- [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown, tiếng Anh. Giữ hình luồng dữ liệu cạnh notebook.
-- [Positional embeddings in transformers EXPLAINED | Demystifying positional encodings.](https://www.youtube.com/watch?v=1biZfFLPRSY) — AI Coffee Break with Letitia, tiếng Anh. Thêm video này khi nhúng token không có vị trí và mô hình bỏ qua thứ tự.
+- **Xem trước:** [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy (tiếng Anh). Hướng dẫn cài đặt chi tiết từ đầu các module cốt lõi của Transformer (video dài, rất sát với bài này).
+- [Transformers, the tech behind LLMs | Deep Learning Chapter 5](https://www.youtube.com/watch?v=wjZofJX0v4M) — 3Blue1Brown (tiếng Anh). Sơ đồ luồng dữ liệu trực quan để đối chiếu song song khi viết mã.
+- [Positional embeddings in transformers EXPLAINED | Demystifying positional encodings.](https://www.youtube.com/watch?v=1biZfFLPRSY) — AI Coffee Break with Letitia (tiếng Anh). Giải thích chi tiết vai trò của mã hóa vị trí khi mô hình cần nhận diện thứ tự chuỗi.

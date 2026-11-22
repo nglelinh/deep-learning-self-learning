@@ -10,62 +10,62 @@ categories:
 lesson_type: optional
 ---
 
-# Tùy chọn: luyện phỏng vấn — CNN và đặc trưng sớm
+# Tùy chọn: Luyện phỏng vấn — CNN và Đặc trưng Sớm
 
-> Bài này là **tùy chọn**. Nó **không** viết lại toán tích chập, pooling, hay ghi chú LeNet–ResNet. Sau các bài đó, dùng bài luyện này, rồi mở *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) để làm các câu đã giải về tích chập, kiến trúc CNN, và tách đặc trưng ban đầu.
+> Bài này là **tùy chọn** và **không** lặp lại phần toán tích chập, tầng gộp hay lịch sử LeNet–ResNet. Sau khi học các bài chính trong chương, bạn có thể luyện tập với bộ câu hỏi dưới đây rồi mở *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) để tham khảo thêm các câu hỏi kèm lời giải đầy đủ về tích chập, kiến trúc CNN và trích xuất đặc trưng ban đầu.
 
-**Chủ đề sách cho chương này (đọc trong PDF, không phải ở đây):** hình học tích chập, kiến trúc CNN, và nửa đầu chủ đề tách đặc trưng. Luyện học chuyển giao tiếp tục ở **15-98**.
+**Chủ đề tham khảo trong sách cho chương này (đọc trực tiếp trong bản PDF):** hình học tích chập, kiến trúc CNN và phần đầu của chủ đề trích xuất đặc trưng. Phần luyện về học chuyển giao tiếp tục ở **15-98**.
 
-Hub: **01-98 Lộ trình luyện Deep Learning Interviews**.
+Trang tổng hợp: **01-98 Lộ trình luyện Deep Learning Interviews**.
 
-## Câu luyện (gốc)
+## Câu hỏi luyện tập
 
-### Q1. Đếm tham số conv so với dense
+### Q1. So sánh số tham số: tầng tích chập và tầng liên kết đầy đủ
 
-Một tầng ánh xạ tensor $$32\times32\times3$$ thành đặc trưng $$32\times32\times16$$. So (a) tầng dày đặc làm phẳng đầu vào và (b) tích chập $$3\times3$$ với 16 kênh ra, same padding, có bias. Số nào bạn nên nêu trước khi phỏng vấn?
+Một tầng ánh xạ tensor kích thước $$32\times32\times3$$ thành bản đồ đặc trưng $$32\times32\times16$$. Hãy so sánh số tham số giữa (a) một tầng liên kết đầy đủ (*dense*) nhận đầu vào đã làm phẳng và (b) một tầng tích chập $$3\times3$$ với 16 kênh đầu ra, `same` padding, có bias. Trong buổi phỏng vấn, bạn nên nêu điểm nào trước?
 
-**Gợi ý.** Conv: $$k_h k_w c_{\mathrm{in}} c_{\mathrm{out}} + c_{\mathrm{out}}$$.
+**Gợi ý.** Công thức số tham số của tầng tích chập là $$k_h k_w c_{\mathrm{in}} c_{\mathrm{out}} + c_{\mathrm{out}}$$.
 
-**Thảo luận.** Dense: đầu vào $$32\cdot32\cdot3=3072$$, đầu ra $$32\cdot32\cdot16=16384$$, khoảng $$3072\cdot16384+16384$$ trọng số — hàng chục triệu. Conv: $$3\cdot3\cdot3\cdot16+16=448$$. Nêu số conv trước, rồi *lý do*: kết nối cục bộ và chia sẻ trọng số. Nhiều ứng viên trượt vì chỉ nói “CNN ít tham số hơn” mà không có công thức.
+**Thảo luận.** Với tầng liên kết đầy đủ: đầu vào có $$32\cdot32\cdot3=3072$$ phần tử, đầu ra có $$32\cdot32\cdot16=16384$$ phần tử, nên tổng tham số là $$3072\cdot16384+16384$$ (hơn 50 triệu). Với tầng tích chập: chỉ cần $$3\cdot3\cdot3\cdot16+16=448$$ tham số. Khi trả lời phỏng vấn, nên nêu trực tiếp con số của tầng tích chập cùng công thức, sau đó giải thích *lý do* (kết nối cục bộ và chia sẻ trọng số) thay vì chỉ nói chung chung rằng CNN ít tham số hơn.
 
-### Q2. Hình dạng đầu ra tính tay
+### Q2. Tính tay kích thước đầu ra
 
-Đầu vào $$H\times W=28\times28$$, kernel $$5\times5$$, stride $$s=1$$, padding $$p=0$$, $$c_{\mathrm{out}}=8$$. Shape tensor đầu ra? Nếu $$s=2$$ và $$p=2$$?
+Cho đầu vào kích thước $$H\times W=28\times28$$, nhân $$5\times5$$, bước nhảy $$s=1$$, đệm $$p=0$$, và $$c_{\mathrm{out}}=8$$. Kích thước tensor đầu ra là bao nhiêu? Kết quả thay đổi thế nào nếu $$s=2$$ và $$p=2$$?
 
-**Gợi ý.** $$H'=\bigl\lfloor(H+2p-k)/s\bigr\rfloor+1$$ (tương tự $$W$$).
+**Gợi ý.** Áp dụng công thức $$H'=\bigl\lfloor(H+2p-k)/s\bigr\rfloor+1$$ (tương tự cho $$W'$$).
 
-**Thảo luận.** Trường hợp một: $$H'=28-5+1=24$$, shape $$24\times24\times8$$. Trường hợp hai: $$(28+4-5)/2+1=14$$, shape $$14\times14\times8$$. Luôn nêu layout (channels-last hay channels-first); các framework không thống nhất.
+**Thảo luận.** Trường hợp thứ nhất: $$H'=28-5+1=24$$, kích thước đầu ra là $$24\times24\times8$$. Trường hợp thứ hai: $$H'=\lfloor(28+4-5)/2\rfloor+1=\lfloor 27/2\rfloor+1=14$$, kích thước đầu ra là $$14\times14\times8$$. Khi trả lời, luôn ghi rõ quy ước sắp xếp chiều (*channels-last* hay *channels-first*) vì các framework dùng quy ước khác nhau.
 
-### Q3. Hai $$3\times3$$ so với một $$5\times5$$
+### Q3. Hai tầng $$3\times3$$ so với một tầng $$5\times5$$
 
-Hai tích chập $$3\times3$$ xếp chồng (không pooling, stride 1, padding giữ kích thước) và một tích chập $$5\times5$$ có cùng trường tiếp nhận lý thuyết trên đầu vào. Đưa một lý do đếm tham số và một lý do biểu đạt để chọn chồng. Giả sử $$c$$ kênh suốt.
+Hai tầng tích chập $$3\times3$$ xếp chồng (không pooling, stride 1, padding giữ kích thước) và một tầng tích chập $$5\times5$$ có cùng trường tiếp nhận lý thuyết trên đầu vào. Giả sử số kênh luôn là $$c$$, hãy nêu một lý do về số tham số và một lý do về năng lực biểu diễn để chọn cấu trúc xếp chồng.
 
-**Gợi ý.** Trường tiếp nhận cộng $$(k-1)$$ mỗi tầng khi stride bằng 1.
+**Gợi ý.** Khi stride bằng 1, mỗi tầng cộng thêm $$(k-1)$$ vào trường tiếp nhận.
 
-**Thảo luận.** Một $$5\times5$$: $$25c^2$$ trọng số. Hai $$3\times3$$: $$18c^2$$ trọng số, cộng thêm một phi tuyến ở giữa, nên ánh xạ hợp thành không còn là một bộ lọc tuyến tính. Chồng kiểu VGG dùng đúng lập luận này. Nếu người hỏi chuyển sang depthwise-separable hay bottleneck $$1\times1$$, đó là câu nối, không bắt buộc cho chương này.
+**Thảo luận.** Một tầng $$5\times5$$ cần $$25c^2$$ trọng số, trong khi hai tầng $$3\times3$$ chỉ cần $$2 \times 9c^2 = 18c^2$$ trọng số và bổ sung thêm một hàm kích hoạt phi tuyến ở giữa, khiến phép biến đổi hợp thành không còn là một bộ lọc tuyến tính đơn thuần. Thiết kế của VGG dựa đúng trên lập luận này. (Nếu người phỏng vấn hỏi mở rộng sang depthwise-separable hay bottleneck $$1\times1$$, đó là câu hỏi nâng cao ngoài trọng tâm cơ bản của chương.)
 
-### Q4. Equivariance và invariance
+### Q4. Đồng biến tịnh tiến (*equivariance*) và bất biến tịnh tiến (*invariance*)
 
-Một bộ lọc cạnh dọc được áp lên ảnh, rồi ảnh được cuốn hai pixel sang phải và lọc lại. Feature map phải đổi thế nào nếu cài đặt là tích chập đúng? Bạn thêm phép gì nếu *bộ phân loại* không được quan tâm tới độ dịch đó?
+Áp dụng một bộ lọc dò cạnh đứng lên ảnh, sau đó dịch ảnh sang phải 2 pixel rồi lọc lại. Bản đồ đặc trưng đầu ra sẽ thay đổi thế nào nếu phép toán là tích chập đúng nghĩa? Cần thêm phép toán gì nếu muốn *bộ phân loại* không bị ảnh hưởng bởi độ dịch đó?
 
-**Gợi ý.** Tích chập giao hoán với tịnh tiến; pooling toàn cục bỏ vị trí không gian.
+**Gợi ý.** Tích chập giao hoán với phép tịnh tiến; gộp toàn cục (*global pooling*) loại bỏ thông tin vị trí không gian.
 
-**Thảo luận.** Feature map phải cuốn cùng hai pixel (*equivariance* với tịnh tiến). Global average / max pool cuối (hoặc downsample đủ mạnh) làm *vector* đưa vào đầu tuyến tính gần *bất biến* tịnh tiến hơn. Trộn hai từ này là lỗi phỏng vấn phổ biến.
+**Thảo luận.** Bản đồ đặc trưng đầu ra cũng sẽ dịch sang phải đúng 2 pixel — đây là tính *đồng biến tịnh tiến* (*translation equivariance*). Khi bổ sung tầng global average/max pooling (hoặc giảm mẫu đủ mạnh) ở cuối mạng, vector đặc trưng đưa vào lớp phân loại trở nên gần *bất biến tịnh tiến* (*translation invariance*) hơn. Nhầm lẫn giữa hai thuật ngữ này là lỗi rất phổ biến khi phỏng vấn.
 
-### Q5. Skip đồng nhất để làm gì
+### Q5. Vai trò của kết nối tắt đồng nhất
 
-Trong khối residual $$ \mathbf{y} = \mathbf{x} + \mathcal{F}(\mathbf{x}) $$, viết $$\partial\mathbf{y}/\partial\mathbf{x}$$ dạng sơ đồ. Vì sao điều này giúp CNN 50 tầng hơn là “chỉ thêm ReLU”?
+Trong một khối dư $$\mathbf{y} = \mathbf{x} + \mathcal{F}(\mathbf{x})$$, hãy viết dạng tổng quát của đạo hàm $$\partial\mathbf{y}/\partial\mathbf{x}$$. Vì sao điều này giúp huấn luyện CNN 50 tầng hiệu quả hơn so với chỉ dùng ReLU?
 
-**Gợi ý.** Số $$+1$$ từ skip là câu chuyện; $$\mathcal{F}$$ có thể nhỏ lúc khởi tạo.
+**Gợi ý.** Chú ý hạng tử ma trận đơn vị $$I$$ từ nhánh tắt; $$\mathcal{F}$$ có thể nhỏ khi mới khởi tạo.
 
-**Thảo luận.** $$\frac{\partial\mathbf{y}}{\partial\mathbf{x}} = I + \frac{\partial\mathcal{F}}{\partial\mathbf{x}}$$. Hạng identity giữ một đường có hệ số không biến mất khi $$\mathcal{F}$$ gần không, nên gradient đi được nhiều khối. Thêm ReLU không skip vẫn nhân nhiều Jacobian có thể co. Đây là câu trả lời kiến trúc, không phải tuyên bố “ResNet luôn thắng accuracy.”
+**Thảo luận.** Ta có $$\frac{\partial\mathbf{y}}{\partial\mathbf{x}} = I + \frac{\partial\mathcal{F}}{\partial\mathbf{x}}$$. Thành phần đơn vị $$I$$ duy trì một đường truyền không bị suy giảm cho gradient ngay cả khi $$\partial\mathcal{F}/\partial\mathbf{x}$$ nhỏ, nhờ đó tín hiệu đạo hàm đi qua được nhiều khối liên tiếp. Ngược lại, mạng thuần không có kết nối tắt (dù dùng ReLU) vẫn phải nhân liên tiếp nhiều ma trận Jacobian có thể làm gradient co nhỏ. Đây là lý do về mặt tối ưu kiến trúc, không phải khẳng định tuyệt đối rằng ResNet luôn cho độ chính xác cao nhất trong mọi bài toán.
 
 ## Ghi công
 
-Kashani, S., và Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Tải PDF từ arXiv để xem toàn bộ Q&A đã giải. Trang này là bài luyện gốc của khóa, không phải bản in lại.
+Kashani, S., và Ivry, A. *Deep Learning Interviews*, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650). Bạn có thể tải bản PDF từ arXiv để tham khảo đầy đủ bộ câu hỏi và lời giải. Trang này là bộ bài luyện gốc của khóa học, không phải bản sao chép từ sách.
 
 ## Video tham khảo
 
-- **xem trước** [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Trước các câu về số học tích chập.
-- [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, tiếng Anh. Các câu về kích thước đầu ra được trả lời bằng công thức trong bài giảng này.
-- [But what is a convolution?](https://www.youtube.com/watch?v=KuXjwB4LzSA) — 3Blue1Brown, tiếng Anh. Dùng video này nếu câu hỏi kernel đang dò cái gì, chứ không hỏi đầu ra lớn bao nhiêu.
+- **Xem trước:** [Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)](https://www.youtube.com/watch?v=HGwBXDKFk9I) — StatQuest with Josh Starmer, tiếng Anh. Nên xem trước khi làm các câu hỏi tính toán về tích chập.
+- [Lecture 5 | Convolutional Neural Networks](https://www.youtube.com/watch?v=bNb2fEVKeEo) — Stanford University School of Engineering, tiếng Anh. Ôn lại công thức tính kích thước đầu ra dùng cho câu Q2.
+- [But what is a convolution?](https://www.youtube.com/watch?v=KuXjwB4LzSA) — 3Blue1Brown, tiếng Anh. Hữu ích khi cần giải thích trực quan bộ lọc đang phát hiện đặc trưng gì.

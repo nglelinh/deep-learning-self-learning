@@ -10,54 +10,54 @@ categories:
 lesson_type: optional
 ---
 
-# Tùy chọn: GAN sau khuếch tán — khuôn mặt, inversion, và generator một bước
+# Tùy chọn: GAN sau làn sóng khuếch tán — Khuôn mặt, Inversion và Bộ sinh một bước
 
-> Bài này là **tùy chọn**. Nó **không** thay loss GAN, lý thuyết DCGAN/StyleGAN, hay ghi chú pitfalls huấn luyện. Nó ghi nhận GAN vẫn *dùng để làm gì* sau khi khuếch tán thành bộ lấy mẫu mặc định.
+> Bài này mang tính **tùy chọn** và **không** thay thế phần hàm mất mát GAN, lý thuyết DCGAN/StyleGAN hay các lưu ý huấn luyện trong chương. Nội dung tổng hợp những vai trò mà GAN vẫn đảm nhiệm tốt sau khi mô hình khuếch tán trở thành bộ lấy mẫu mặc định.
 
-Cặp đối kháng
+Công thức đối kháng cốt lõi:
 
 $$\min_G \max_D \mathbb{E}_{x}[\log D(x)] + \mathbb{E}_{z}[\log(1-D(G(z)))]$$
 
-không đổi. Thị phần đổi: text-to-image chủ yếu khuếch tán/flow; **GAN còn** khi cần lấy mẫu tức thì, inversion, hoặc prior khuôn mặt đã nghiên cứu kỹ.
+không thay đổi; điều thay đổi là phạm vi ứng dụng. Sinh ảnh từ văn bản mở hiện chủ yếu dựa trên khuếch tán và flow matching, còn **GAN vẫn giữ ưu thế** khi cần sinh ảnh tức thì trong một bước, thực hiện ánh xạ ngược (*inversion*) hoặc khai thác không gian khuôn mặt đã được nghiên cứu sâu.
 
-## 1. StyleGAN3 và stack khuôn mặt 2022–2023
+## 1. StyleGAN3 và các hệ thống tổng hợp khuôn mặt giai đoạn 2022–2023
 
-[Karras et al., 2021](https://arxiv.org/abs/2106.12423) (StyleGAN3, dùng suốt 2022–2024) bỏ dính texture nhờ conv không alias. Công nghiệp vẫn dùng StyleGAN2/3 cho danh tính, tuổi tác, chỉnh sửa vì latent **W / W+** khả nghịch và chỉnh được. Inversion khuếch tán tồn tại, nhưng inversion StyleGAN rẻ và chín hơn.
+[Karras et al., 2021](https://arxiv.org/abs/2106.12423) (StyleGAN3, ứng dụng rộng rãi giai đoạn 2022–2024) khắc phục hiện tượng kết cấu bị dính vào tọa độ ảnh (*texture sticking*) nhờ phép tích chập chống răng cưa (*alias-free*). Trong thực tế công nghiệp, StyleGAN2/3 vẫn được dùng cho các tác vụ chỉnh sửa khuôn mặt, thay đổi tuổi tác và bảo toàn danh tính vì không gian ẩn **W / W+** hỗ trợ ánh xạ ngược và điều chỉnh thuộc tính nhanh, ổn định hơn so với inversion trên mô hình khuếch tán.
 
-## 2. Ứng dụng cụ thể
+## 2. Một số ứng dụng tiêu biểu
 
-### GigaGAN và GAN text-to-image quy mô lớn
+### GigaGAN và GAN sinh ảnh từ văn bản quy mô lớn
 
-[Kang et al., 2023](https://arxiv.org/abs/2303.05511) (GigaGAN) cho thấy GAN có thể đạt chất lượng text-to-image gần khuếch tán với **một lượt thuận**. Bài báo là bằng chứng huấn luyện đối kháng không chết; hầu hết sản phẩm mở vẫn chọn khuếch tán vì ổn định.
+[Kang et al., 2023](https://arxiv.org/abs/2303.05511) (GigaGAN) chứng minh GAN vẫn có thể đạt chất lượng sinh ảnh từ văn bản tiệm cận mô hình khuếch tán chỉ với **một lượt truyền xuôi**. Kết quả này cho thấy huấn luyện đối kháng vẫn có tiềm năng mở rộng quy mô, dù phần lớn hệ thống mã nguồn mở ưu tiên khuếch tán nhờ tính ổn định cao hơn.
 
-### Chưng cất: GAN làm học sinh của khuếch tán
+### Chưng cất mô hình: GAN làm thành phần huấn luyện cho mô hình khuếch tán một bước
 
-Nhiều generator một bước (SD-Turbo, chưng cất kiểu LCM-LoRA, họ UFOGen) thêm đầu **đối kháng** để học sinh nhỏ khớp giáo viên chậm. Đó là discriminator Chương 14 dùng như công cụ *chưng cất*, không phải mô hình sinh duy nhất.
+Nhiều bộ sinh một bước hoặc vài bước (như SD-Turbo, các phương pháp chưng cất kết hợp LCM-LoRA, họ UFOGen) bổ sung đầu **đối kháng** giúp mô hình học sinh nhỏ khớp tốt với mô hình giáo viên khuếch tán nhiều bước. Ở đây, bộ phân biệt của Chương 14 đóng vai trò công cụ *chưng cất*, không phải mô hình sinh độc lập.
 
-### Khi nào chọn GAN năm 2026
+### Khi nào nên chọn GAN trong giai đoạn hiện nay
 
-- Avatar thời gian thực, talking-head, sprite game.
-- Cân bằng lại tập khi đã fit StyleGAN.
-- Không phải lựa chọn đầu cho “một khối đỏ trên mặt trăng” mở từ vựng.
+- Ứng dụng cần tốc độ thời gian thực như avatar, *talking-head* hoặc đồ họa game (*sprite*).
+- Bổ sung dữ liệu cân bằng lớp trên miền hẹp đã có sẵn mô hình StyleGAN phù hợp.
+- Không phải lựa chọn ưu tiên cho bài toán sinh ảnh từ văn bản tự do nhiều khái niệm mở.
 
-## 3. Phần mềm phổ biến
+## 3. Thư viện và mã nguồn phổ biến
 
 - [NVlabs/stylegan3](https://github.com/NVlabs/stylegan3) và StyleGAN2-ADA.
 - [mingukkang/GigaGAN](https://github.com/mingukkang/GigaGAN).
-- [diffusers](https://github.com/huggingface/diffusers) — một số checkpoint turbo/đối kháng.
+- [diffusers](https://github.com/huggingface/diffusers) — cung cấp một số checkpoint turbo sử dụng chưng cất đối kháng.
 
-## 4. Trích dẫn (2022–2026)
+## 4. Tài liệu tham khảo (2022–2026)
 
 - [StyleGAN3 (Karras et al., 2021)](https://arxiv.org/abs/2106.12423).
 - [GigaGAN (Kang et al., 2023)](https://arxiv.org/abs/2303.05511).
-- [Adversarial Diffusion Distillation (Sauer et al., 2023)](https://arxiv.org/abs/2311.17042) — SD-Turbo.
+- [Adversarial Diffusion Distillation (Sauer et al., 2023)](https://arxiv.org/abs/2311.17042) — nền tảng của SD-Turbo.
 
-## 5. Bài này bổ sung gì cho ghi chú cốt lõi
+## 5. Phần bổ sung so với nội dung cốt lõi
 
-Huấn luyện GAN đồ chơi và đọc ghi chú mode-collapse trước. Bài này chỉ trả lời “vì sao StyleGAN vẫn trong production trong khi demo lớp DALL·E dùng khuếch tán?”
+Bạn nên tự huấn luyện mô hình GAN cơ bản và nắm rõ hiện tượng sụp đổ mode trước. Bài này chỉ giải thích vì sao StyleGAN và huấn luyện đối kháng vẫn tiếp tục hiện diện trong thực tế sản xuất ngay cả khi các hệ thống sinh ảnh tổng quát đã chuyển sang khuếch tán.
 
 ## Video tham khảo
 
-- **xem trước** [AI generated faces - StyleGAN explained!](https://www.youtube.com/watch?v=4LNO8nLxF4Y) — AI Bites, tiếng Anh. StyleGAN là chồng tổng hợp khuôn mặt mà phần 2022–2023 của ghi chú mô tả.
-- [A Friendly Introduction to Generative Adversarial Networks (GANs)](https://www.youtube.com/watch?v=8L11aMN5KY8) — Luis Serrano Academy, tiếng Anh. Trò chơi hai người ban đầu mà StyleGAN không thay thế.
-- [What are GANs (Generative Adversarial Networks)?](https://www.youtube.com/watch?v=TpMIssRdhco) — IBM Technology, tiếng Anh. Một mốc ngắn nếu không gian style của StyleGAN khó tách khỏi GAN thuần.
+- **Xem trước:** [AI generated faces - StyleGAN explained!](https://www.youtube.com/watch?v=4LNO8nLxF4Y) — AI Bites, tiếng Anh. Giải thích kiến trúc StyleGAN tương ứng với phần ứng dụng tổng hợp khuôn mặt trong bài.
+- [A Friendly Introduction to Generative Adversarial Networks (GANs)](https://www.youtube.com/watch?v=8L11aMN5KY8) — Luis Serrano Academy, tiếng Anh. Ôn lại cơ chế trò chơi hai người mà StyleGAN vẫn kế thừa.
+- [What are GANs (Generative Adversarial Networks)?](https://www.youtube.com/watch?v=TpMIssRdhco) — IBM Technology, tiếng Anh. Tóm tắt nhanh giúp đối chiếu điểm khác biệt giữa không gian phong cách của StyleGAN và GAN chuẩn.

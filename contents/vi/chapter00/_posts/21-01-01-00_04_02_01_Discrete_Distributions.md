@@ -9,73 +9,73 @@ categories:
 - chapter00
 ---
 
-## Các Phân Phối Xác Suất Thông Dụng
+## Các phân phối xác suất thông dụng
 
-Hiểu các phân phối xác suất chính là điều thiết yếu cho các bài toán tối ưu hóa trong học máy và thống kê. Các phân phối này thường xuất hiện như giả thuyết trong mô hình, prior trong phương pháp Bayes, và mô hình lỗi trong hồi quy.
+Nắm vững các phân phối xác suất cơ bản là yêu cầu thiết yếu cho các bài toán tối ưu hóa trong học máy và thống kê. Các phân phối này thường xuất hiện dưới dạng giả định mô hình dữ liệu, phân phối tiên nghiệm (*prior*) trong phương pháp Bayes và mô hình nhiễu trong hồi quy.
 
-### 1. Phân Phối Rời Rạc
+### 1. Phân phối rời rạc
 
-#### Phân Phối Bernoulli
+#### Phân phối Bernoulli
 
-Mô hình một thí nghiệm đơn với hai kết quả (thành công/thất bại).
+Mô hình hóa một phép thử đơn lẻ chỉ có hai kết quả (thành công hoặc thất bại).
 
-**Tham số**: $$p \in [0,1]$$ (xác suất thành công)
+**Tham số:** $$p \in [0,1]$$ (xác suất thành công)
 
-**PMF**: $$P(X = k) = p^k (1-p)^{1-k}$$ với $$k \in \{0,1\}$$
+**PMF:** $$P(X = k) = p^k (1-p)^{1-k}$$ với $$k \in \{0,1\}$$
 
-**Kỳ vọng**: $$\mathbb{E}[X] = p$$
+**Kỳ vọng:** $$\mathbb{E}[X] = p$$
 
-**Phương sai**: $$\text{Var}(X) = p(1-p)$$
+**Phương sai:** $$\text{Var}(X) = p(1-p)$$
 
-**Ứng dụng**: Phân loại nhị phân, tung đồng xu, kiểm định A/B
+**Ứng dụng:** phân loại nhị phân, tung đồng xu, kiểm định A/B.
 
-#### Phân Phối Nhị Thức
+#### Phân phối nhị thức (*Binomial*)
 
-Mô hình số lần thành công trong $n$ thí nghiệm Bernoulli độc lập.
+Mô hình hóa số lần thành công trong $$n$$ phép thử Bernoulli độc lập.
 
-**Tham số**: $$n \in \mathbb{N}$$ (số thí nghiệm), $$p \in [0,1]$$ (xác suất thành công)
+**Tham số:** $$n \in \mathbb{N}$$ (số phép thử), $$p \in [0,1]$$ (xác suất thành công ở mỗi phép thử)
 
-**PMF**: $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}$$ với $$k = 0,1,\ldots,n$$
+**PMF:** $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}$$ với $$k = 0,1,\ldots,n$$
 
-**Kỳ vọng**: $$\mathbb{E}[X] = np$$
+**Kỳ vọng:** $$\mathbb{E}[X] = np$$
 
-**Phương sai**: $$\text{Var}(X) = np(1-p)$$
+**Phương sai:** $$\text{Var}(X) = np(1-p)$$
 
-#### Phân Phối Poisson
+#### Phân phối Poisson
 
-Mô hình số sự kiện trong một khoảng thời gian cố định khi các sự kiện xảy ra độc lập với tốc độ không đổi.
+Mô hình hóa số sự kiện xảy ra trong một khoảng thời gian (hoặc không gian) cố định khi các sự kiện xuất hiện độc lập với tốc độ trung bình không đổi.
 
-**Tham số**: $$\lambda > 0$$ (tham số tốc độ)
+**Tham số:** $$\lambda > 0$$ (tốc độ xuất hiện trung bình)
 
-**PMF**: $$P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}$$ với $$k = 0,1,2,\ldots$$
+**PMF:** $$P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}$$ với $$k = 0,1,2,\ldots$$
 
-**Kỳ vọng**: $$\mathbb{E}[X] = \lambda$$
+**Kỳ vọng:** $$\mathbb{E}[X] = \lambda$$
 
-**Phương sai**: $$\text{Var}(X) = \lambda$$
+**Phương sai:** $$\text{Var}(X) = \lambda$$
 
-**Ứng dụng**: Dữ liệu đếm, sự kiện hiếm, lý thuyết hàng đợi
+**Ứng dụng:** dữ liệu đếm, sự kiện hiếm, lý thuyết hàng đợi.
 
 <div id="discrete-distributions-demo" style="border: 2px solid #ddd; padding: 20px; margin: 20px 0; border-radius: 10px; background-color: #f9f9f9;">
-    <h4 style="text-align: center; color: #333;">Phân Phối Rời Rạc Tương Tác</h4>
+    <h4 style="text-align: center; color: #333;">Phân phối rời rạc tương tác</h4>
     
     <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;">
         <div style="flex: 1; min-width: 400px;">
             <canvas id="discreteCanvas" width="400" height="300" style="border: 1px solid #ccc; background: white;"></canvas>
             <p style="font-size: 12px; color: #666; margin-top: 5px;">
-                <strong>Trực quan hóa:</strong> Hàm khối xác suất của các phân phối rời rạc.
+                <strong>Trực quan hóa:</strong> Hàm khối xác suất (PMF) của các phân phối rời rạc.
             </p>
         </div>
         
         <div style="flex: 1; min-width: 250px;">
             <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                <h5 style="margin-top: 0; color: #444;">Loại Phân Phối</h5>
+                <h5 style="margin-top: 0; color: #444;">Loại phân phối</h5>
                 
                 <div style="margin-bottom: 15px;">
                     <label style="display: block; margin-bottom: 10px;">
                         <input type="radio" name="discrete-dist" value="bernoulli" checked> Bernoulli
                     </label>
                     <label style="display: block; margin-bottom: 10px;">
-                        <input type="radio" name="discrete-dist" value="binomial"> Nhị Thức
+                        <input type="radio" name="discrete-dist" value="binomial"> Nhị thức
                     </label>
                     <label style="display: block; margin-bottom: 10px;">
                         <input type="radio" name="discrete-dist" value="poisson"> Poisson
@@ -100,7 +100,7 @@ Mô hình số sự kiện trong một khoảng thời gian cố định khi cá
                 </div>
                 
                 <div id="discrete-stats" style="font-family: monospace; font-size: 12px; line-height: 1.4; background: #f8f9fa; padding: 10px; border-radius: 4px;">
-                    <div><strong>Thống Kê:</strong></div>
+                    <div><strong>Thống kê:</strong></div>
                     <div>Kỳ vọng: <span id="discrete-mean">0.500</span></div>
                     <div>Phương sai: <span id="discrete-variance">0.250</span></div>
                     <div>Mode: <span id="discrete-mode">0 hoặc 1</span></div>
@@ -339,6 +339,6 @@ canvas {
 
 ## Video tham khảo
 
-- **xem trước** [The Binomial Distribution and Test, Clearly Explained!!!](https://www.youtube.com/watch?v=J8jNoF-K8E8) — StatQuest with Josh Starmer, tiếng Anh. Phép thử Bernoulli và phân phối nhị thức là các mô hình rời rạc chính của bài.
-- [Binomial distributions | Probabilities of probabilities, part 1](https://www.youtube.com/watch?v=8idr1WZ1A7Q) — 3Blue1Brown, tiếng Anh. Cách nhìn hình học cho cùng xác suất nhị thức, hữu ích khi số lần thành công là biến ngẫu nhiên.
-- [An Introduction to the Poisson Distribution](https://www.youtube.com/watch?v=jmqZG6roVqU) — jbstatistics, tiếng Anh. Phân phối Poisson là họ rời rạc còn lại mà bài đặt cạnh nhị thức.
+- **Xem trước:** [The Binomial Distribution and Test, Clearly Explained!!!](https://www.youtube.com/watch?v=J8jNoF-K8E8) — StatQuest with Josh Starmer, tiếng Anh. Giải thích rõ phép thử Bernoulli và phân phối nhị thức — hai mô hình rời rạc trọng tâm của bài.
+- [Binomial distributions | Probabilities of probabilities, part 1](https://www.youtube.com/watch?v=8idr1WZ1A7Q) — 3Blue1Brown, tiếng Anh. Trình bày góc nhìn trực quan về phân phối nhị thức khi số lần thành công là biến ngẫu nhiên.
+- [An Introduction to the Poisson Distribution](https://www.youtube.com/watch?v=jmqZG6roVqU) — jbstatistics, tiếng Anh. Giới thiệu phân phối Poisson, họ phân phối rời rạc còn lại được khảo sát trong bài.
