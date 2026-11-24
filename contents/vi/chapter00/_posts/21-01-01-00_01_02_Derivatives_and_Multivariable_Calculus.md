@@ -9,6 +9,35 @@ categories:
 - chapter00
 ---
 
+Khi huấn luyện một mạng nơ-ron nhỏ nhất cũng có hàng nghìn trọng số cùng lúc tác động lên hàm mất mát, ta không còn đứng trên một đường cong 2D nữa mà đang đứng giữa một địa hình núi non nghìn chiều. Làm thế nào để biết việc tăng trọng số $$w_{17}$$ thêm $$0.001$$ sẽ làm giảm sai số hay đẩy nó tăng vọt, trong khi mọi trọng số khác vẫn đang đồng thời thay đổi? Câu trả lời nằm ở **đạo hàm riêng**, **quy tắc dây chuyền đa biến** và **ma trận Jacobian**—những viên gạch trực tiếp kiến tạo nên thuật toán lan truyền ngược.
+
+## Bản đồ kiến thức nền: Bốn khái niệm trụ cột của Giải tích Đa biến
+
+1. **Đạo hàm riêng (Partial Derivatives)**:
+   Đóng băng tất cả các biến khác và chỉ đo độ nhạy của hàm theo duy nhất một tọa độ $$x_i$$, tương ứng với độ dốc khi cắt mặt cong bằng một mặt phẳng song song trục tọa độ.
+
+2. **Đường mức (Level Curves / Contours)**:
+   Tập hợp các điểm có cùng giá trị hàm $$f(x, y) = c$$. Nhìn vào bản đồ đường mức (giống bản đồ địa hình), ta nhận diện ngay đáy thung lũng, yên ngựa và vùng khe hẹp khó hội tụ.
+
+3. **Ma trận Jacobian và Hessian**:
+   Jacobian tổng hợp toàn bộ đạo hàm riêng bậc nhất cho hàm nhận vector và trả về vector (như một lớp mạng nơ-ron), còn Hessian lưu đạo hàm bậc hai mô tả độ cong lồi/lõm của bề mặt mất mát.
+
+4. **Quy tắc dây chuyền đa biến (Multivariable Chain Rule)**:
+   Cộng dồn mọi đường lan truyền ảnh hưởng từ một biến đầu vào qua nhiều biến trung gian tới đầu ra cuối cùng—chính xác là cơ chế tính gradient qua các tầng nối tiếp và kết nối tắt (*skip connections*) của ResNet.
+
+### Khung giải thích (nên đọc chậm): Tính tay đạo hàm riêng và quy tắc dây chuyền cho mạng 2 nhánh
+
+Xét một hàm hợp mô phỏng mạng hai nhánh hội tụ: $$z = u^2 + 3uv$$, trong đó hai nhánh trung gian phụ thuộc vào cùng một tham số $$t$$ theo $$u(t) = 2t$$ và $$v(t) = t + 1$$. Hãy tính $$\frac{dz}{dt}$$ tại $$t = 1$$ theo đúng quy tắc dây chuyền đa biến:
+
+1. **Tính giá trị lan truyền xuôi tại $$t = 1$$**:
+   $$u(1) = 2(1) = 2, \quad v(1) = 1 + 1 = 2 \implies z(1) = 2^2 + 3(2)(2) = 4 + 12 = 16.$$
+2. **Tính các đạo hàm riêng cục bộ**:
+   $$\frac{\partial z}{\partial u} = 2u + 3v = 2(2) + 3(2) = 10, \quad \frac{\partial z}{\partial v} = 3u = 3(2) = 6.$$
+   $$\frac{du}{dt} = 2, \quad \frac{dv}{dt} = 1.$$
+3. **Cộng đóng góp từ cả hai nhánh (Chain Rule)**:
+   $$\frac{dz}{dt} = \frac{\partial z}{\partial u}\frac{du}{dt} + \frac{\partial z}{\partial v}\frac{dv}{dt} = 10 \times 2 + 6 \times 1 = 26.$$
+4. **Kiểm tra chéo bằng cách thế trực tiếp**: $$z(t) = (2t)^2 + 3(2t)(t+1) = 4t^2 + 6t^2 + 6t = 10t^2 + 6t \implies z'(t) = 20t + 6 \implies z'(1) = 26$$. Khớp hoàn toàn! Đây chính là lý do trong đồ thị tính toán, mỗi khi một biến rẽ nhánh, gradient chảy ngược về nó phải được **cộng dồn**.
+
 Bài học này trình bày khái niệm đạo hàm và các công cụ giải tích đa biến cốt lõi làm nền tảng cho lý thuyết và thuật toán tối ưu hóa.
 
 ---

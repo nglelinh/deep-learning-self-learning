@@ -9,6 +9,28 @@ categories:
 - chapter26
 ---
 
+Pretraining on the open internet teaches an LLM to imitate everything humanity has ever written—textbooks and conspiracy forums alike. Supervised Fine-Tuning (SFT) teaches it the *format* of a helpful assistant, yet SFT alone still struggles to distinguish a subtly hallucinated answer from a careful, honest one because both look fluent under cross-entropy. Preference alignment (RLHF, DPO, GRPO) adds the crucial comparative signal: given two fluent responses to the exact same prompt, push up the probability of the better one while anchoring to the reference model with a KL leash.
+
+## Background Knowledge Map: The Three-Stage LLM Post-Training Pipeline
+
+- **Pillar 1 — Supervised Fine-Tuning (SFT) & Loss Masking**: Fine-tunes on high-quality `(prompt, response)` dialogues while masking loss on prompt tokens (`label = -100`) so gradients train only assistant completions.
+- **Pillar 2 — Bradley–Terry Reward Modeling**: Converts pairwise human rankings $(y_w \succ y_l \mid x)$ into a scalar reward function via $\mathcal{L}_{\text{RM}} = -\mathbb{E}[\log\sigma(r_\phi(x, y_w) - r_\phi(x, y_l))]$.
+- **Pillar 3 — KL-Regularized Preference Optimization (PPO vs. DPO)**: Optimizes expected preference while penalizing $\beta D_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$ to prevent reward hacking, verbosity inflation, and mode collapse.
+- **Pillar 4 — Scope & Limits of Alignment**: Distinguishes behavioral shaping (tone, refusal, helpfulness) from factual grounding—alignment cannot invent knowledge absent from pretraining or retrieval.
+
+### Step-by-Step Worked Example (Read Slowly): Bradley–Terry Reward Loss & KL-Penalized Objective
+
+Suppose for prompt $x$, a reward model scores the preferred answer $r(x, y_w) = 2.5$ and the rejected answer $r(x, y_l) = 1.5$.
+
+1. **Reward margin & Bradley–Terry probability**:
+   $$\Delta r = 2.5 - 1.5 = +1.0 \implies P(y_w \succ y_l) = \sigma(1.0) = \frac{1}{1 + e^{-1}} \approx 0.7311.$$
+2. **Reward Model training loss**:
+   $$\mathcal{L}_{\text{RM}} = -\ln(0.7311) \approx 0.3133\text{ nats}.$$
+3. **KL-penalized RLHF net reward** with $\beta = 0.05$:
+   Suppose our updated policy $\pi_\theta$ generates a response with reward $r = 3.2$, summed log-prob $\log \pi_\theta(y \mid x) = -12.0$, and reference log-prob $\log \pi_{\text{ref}}(y \mid x) = -22.0$ (so token-level KL proxy $\log\frac{\pi_\theta}{\pi_{\text{ref}}} = +10.0$).
+   $$R_{\text{total}} = r - \beta\log\frac{\pi_\theta(y \mid x)}{\pi_{\text{ref}}(y \mid x)} = 3.2 - 0.05(10.0) = 3.2 - 0.5 = 2.7.$$
+4. **Takeaway**: Even if the policy finds a strange phrasing that bumps raw reward from $2.5$ to $3.2$, drifting too far from $\pi_{\text{ref}}$ triggers a KL tax that keeps language natural and grounded.
+
 # Alignment: SFT to Preference Optimization
 
 Pretraining teaches *what text looks like*. SFT teaches *how to answer a request*. **Alignment** here means a further step: among many fluent answers, prefer the ones a rater (human or AI) would rank higher — helpful, harmless, honest enough for the product.

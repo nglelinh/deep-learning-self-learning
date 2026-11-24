@@ -10,6 +10,34 @@ categories:
 lesson_type: optional
 ---
 
+Ở vòng phỏng vấn kỹ thuật Deep Learning, chương Mạng Nơ-ron và Hàm Kích hoạt là "mỏ vàng" của những câu hỏi kiểm tra tư duy sâu: *Nếu bỏ hết hàm kích hoạt phi tuyến trong mạng 10 tầng thì chuyện gì xảy ra? Chứng minh Softmax bất biến khi cộng một hằng số? Tại sao Dying ReLU xuất hiện khi learning rate quá lớn?* Những câu hỏi này không đòi hỏi bạn nhớ công thức dài dòng, mà kiểm tra xem bạn có nắm chắc bản chất toán học để giải thích gãy gọn trên bảng trắng hay không.
+
+## Bản đồ kiến thức nền: Bốn chủ đề Phỏng vấn trọng tâm của Chương 02
+
+1. **Vai trò Không thể thay thế của Tính Phi tuyến**:
+   Chứng minh nhanh tích của $$L$$ biến đổi affine vẫn là một biến đổi affine duy nhất ($$\mathbf{W}_L \cdots \mathbf{W}_1 \mathbf{x} + \tilde{\mathbf{b}}$$), khiến mọi độ sâu trở nên vô nghĩa nếu thiếu hàm kích hoạt.
+
+2. **Tính chất Đại số & Ổn định Số học của Softmax**:
+   Chứng minh $$\text{softmax}(\mathbf{z} + c\mathbf{1}) = \text{softmax}(\mathbf{z})$$, giải thích cách chọn $$c = -\max_i z_i$$ chống tràn số, và phân tích ảnh hưởng của tham số nhiệt độ (*temperature* $$T$$) trong $$\text{softmax}(\mathbf{z}/T)$$.
+
+3. **Phân tích Đạo hàm & Bệnh lý của Hàm Kích hoạt**:
+   So sánh định lượng tốc độ suy giảm gradient của Sigmoid ($$\le 0.25^L$$) với ReLU ($$1$$ trên miền dương), đồng thời giải thích cơ chế *Dying ReLU* và các phương án thay thế (Leaky ReLU, GELU, SwiGLU).
+
+4. **Đếm Tham số và Chi phí Tính toán (FLOPs)**:
+   Kỹ năng tính nhẩm cực nhanh số trọng số, bias và bộ nhớ activation của một khối MLP—kỹ năng thực chiến hay bị hỏi trực tiếp trong phỏng vấn ML Engineer.
+
+### Khung giải thích (nên đọc chậm): Tính tay ảnh hưởng của Nhiệt độ (Temperature $$T$$) lên Softmax
+
+Một câu hỏi phỏng vấn rất hay gặp trong kỷ nguyên LLM: *"Tham số temperature $$T$$ trong $$\text{softmax}(\mathbf{z}/T)$$ làm thay đổi phân phối xác suất như thế nào?"* Hãy thử trên vector logit $$\mathbf{z} = [2, 1, 0]$$ với 3 mức nhiệt độ:
+
+| Nhiệt độ $$T$$ | Logit sau chia $$\mathbf{z}/T$$ | Xác suất Softmax $$\mathbf{p}$$ | Hành vi sinh/phân loại |
+| :---: | :---: | :---: | :--- |
+| **$$T = 0.5$$ (Lạnh)** | $$[4, 2, 0]$$ | $$[0.8668,\; 0.1173,\; 0.0159]$$ | **Nhọn (tự tin cao)**, tiến dần về `argmax` khi $$T \to 0^+$$ |
+| **$$T = 1.0$$ (Chuẩn)** | $$[2, 1, 0]$$ | $$[0.6652,\; 0.2447,\; 0.0900]$$ | Phân phối Softmax tiêu chuẩn |
+| **$$T = 2.0$$ (Nóng)** | $$[1, 0.5, 0]$$ | $$[0.5065,\; 0.3072,\; 0.1863]$$ | **Phẳng (đa dạng hơn)**, tiến về phân phối đều $$[1/3, 1/3, 1/3]$$ khi $$T \to \infty$$ |
+
+Chỉ bằng 3 dòng tính tay trên vector $$[2, 1, 0]$$, bạn vừa chứng minh được bản chất của Temperature Sampling trong ChatGPT lẫn Knowledge Distillation!
+
 # Tùy chọn: Luyện phỏng vấn — Neuron và Hàm kích hoạt
 
 > Bài này là **tùy chọn** và **không** lặp lại phần lý thuyết về perceptron, kiến trúc hay hàm kích hoạt. Sau khi học các bài chính trong chương, bạn có thể dùng bộ câu hỏi dưới đây để tự kiểm tra, rồi tham khảo thêm *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) để xem các câu hỏi kèm lời giải đầy đủ về perceptron, hàm kích hoạt và kiến trúc MLP.

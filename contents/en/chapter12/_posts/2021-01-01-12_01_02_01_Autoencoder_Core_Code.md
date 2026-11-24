@@ -9,6 +9,31 @@ categories:
 - chapter12
 ---
 
+When you build a PyTorch autoencoder for MNIST from scratch, the subtle bugs are rarely syntax errors—they are architectural mismatches. Use a ReLU on the final decoder layer when your pixels live in $[0, 1]$ and your loss will stall; feed noisy images to both the input *and* target of a denoising autoencoder and you will teach the network to preserve static instead of removing it. Walking carefully through tensor shapes, activation ranges, and corruption targets turns abstract equations into clean, debuggable code.
+
+## Background Knowledge Map: Engineering Autoencoders in PyTorch
+
+- **Pillar 1 — Symmetric Encoder–Decoder Tensor Flow**: Maps flattened $28 \times 28 = 784$-dimensional images down through bottleneck layers ($784 \to 256 \to 64 \to d_z$) and symmetrically back to $784$, balancing parameter count and compression ratio.
+- **Pillar 2 — Output Activation & Loss Pairing**: Matches `Sigmoid` outputs in $[0, 1]$ with `BCELoss` or `MSELoss`, versus `Tanh` outputs in $[-1, 1]$ with `MSELoss`, preventing saturation and range clipping.
+- **Pillar 3 — Denoising Corruption Pipeline**: Injects Gaussian or masking noise on-the-fly (`x_noisy = torch.clamp(x + noise, 0, 1)`) while computing loss strictly against the *clean* target `x`.
+- **Pillar 4 — Optimization & Reconstruction Monitoring**: Tracks per-pixel MSE and visual side-by-side reconstructions across epochs to verify that the bottleneck captures global shape rather than mean-gray averages.
+
+### Step-by-Step Worked Example (Read Slowly): Parameter Count and Compression Ratio of an MNIST MLP Autoencoder
+
+Consider an encoder `784 -> 256 -> 64 -> 16` and symmetric decoder `16 -> 64 -> 256 -> 784` (all linear layers with biases).
+
+1. **Compression ratio at the bottleneck**:
+   $$\text{Compression Ratio} = \frac{784}{16} = 49\times \quad (\text{keeping only } 2.04\% \text{ of input dimensionality}).$$
+2. **Encoder parameter count**:
+   - Layer 1 ($784 \to 256$): $784 \times 256 + 256 = 200{,}704 + 256 = 200{,}960$.
+   - Layer 2 ($256 \to 64$): $256 \times 64 + 64 = 16{,}384 + 64 = 16{,}448$.
+   - Layer 3 ($64 \to 16$): $64 \times 16 + 16 = 1{,}024 + 16 = 1{,}040$.
+   - Total encoder parameters: $200{,}960 + 16{,}448 + 1{,}040 = 218{,}448$.
+3. **Decoder parameter count**:
+   - $16 \times 64 + 64 = 1{,}088$; $\; 64 \times 256 + 256 = 16{,}640$; $\; 256 \times 784 + 784 = 201{,}488$.
+   - Total decoder parameters: $219{,}216$; grand total $= 437{,}664$ parameters ($\approx 1.67\text{ MB}$ in FP32).
+4. **Takeaway**: Over $91\%$ of the network's parameters live in the first and last $784 \leftrightarrow 256$ layers—which is why switching to convolutional encoders/decoders dramatically improves parameter efficiency on images.
+
 ## 4. Code Snippet
 
 Let's implement autoencoders from scratch with complete training pipeline:
@@ -260,3 +285,4 @@ with torch.no_grad():
 - **xem trước** [What are Autoencoders?](https://www.youtube.com/watch?v=qiUEgSCyY5o) — IBM Technology, English. The two-module shape the core code should have.
 - [PyTorch Tutorial 06 - Training Pipeline: Model, Loss, and Optimizer](https://www.youtube.com/watch?v=VVDHU_TWwUg) — Patrick Loeber, English. Optimizer, loss, and step, once encode and decode exist.
 - [Lecture 13 | Generative Models](https://www.youtube.com/watch?v=5WoItGTWV54) — Stanford University School of Engineering, English. What a healthy reconstruction looks like, so a bug is visible.
+```

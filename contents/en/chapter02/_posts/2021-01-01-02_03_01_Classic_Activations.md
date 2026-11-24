@@ -9,6 +9,32 @@ categories:
 - chapter02
 ---
 
+> *For twenty years, researchers defaulted to sigmoid and tanh because they looked like smooth biological firing rates—until deep networks refused to train past five layers. Switching to the deceptively trivial function $$\max(0, z)$$ (ReLU) unlocked deep vision models overnight, and understanding its derivative explains why.*
+
+## Background Knowledge Map: Comparing Classic Activation Families
+
+1. **Sigmoid ($$\sigma(z) = \frac{1}{1+e^{-z}}$$)**: Squashes $$\mathbb{R} \to (0, 1)$$, ideal for binary probability outputs and LSTM gates, but suffers from saturation ($$\max \sigma'(z) = 0.25$$) and non-zero-centered outputs.
+2. **Hyperbolic Tangent ($$\tanh(z)$$)**: Rescales sigmoid to $$(-1, 1)$$ with zero-centered outputs and steeper peak slope ($$\tanh'(0) = 1$$), yet still saturates exponentially for $$\lvert z\rvert > 3$$.
+3. **ReLU ($$\max(0, z)$$)**: Maintains an exact unit derivative $$1$$ for all $$z > 0$$ (eliminating positive-side vanishing gradients) at trivial compute cost, but risks "dying ReLUs" if weights push $$z < 0$$ permanently.
+4. **Leaky ReLU & ELU**: Restore a small nonzero slope ($$\alpha = 0.01$$ or smooth exponential tail) for $$z < 0$$ so negative pre-activations still receive recovery gradients.
+
+### Step-by-Step Worked Example (Read Slowly): Comparing Forward Values and Gradients at $$z = 0$$ and $$z = 4$$
+
+Evaluate Sigmoid, Tanh, ReLU, and Leaky ReLU ($$\alpha = 0.01$$) at both $$z = 0$$ (active center) and $$z = 4$$ (large pre-activation, noting $$e^{-4} \approx 0.0183$$).
+
+1. **At $$z = 0$$**:
+   - **Sigmoid**: $$\sigma(0) = 0.500$$, derivative $$\sigma'(0) = 0.5(1 - 0.5) = 0.250$$.
+   - **Tanh**: $$\tanh(0) = 0.000$$, derivative $$\tanh'(0) = 1 - 0^2 = 1.000$$.
+   - **ReLU / Leaky ReLU**: value $$0.000$$, right derivative $$1.000$$.
+2. **At $$z = 4$$ (Large Activation Regime)**:
+   - **Sigmoid**: $$\sigma(4) = \frac{1}{1 + 0.0183} \approx 0.9820$$, derivative:
+     $$\sigma'(4) = 0.9820 \times 0.0180 \approx 0.0177$$ (over $$56\times$$ smaller than 1!).
+   - **Tanh**: $$\tanh(4) \approx 0.9993$$, derivative:
+     $$\tanh'(4) = 1 - (0.9993)^2 \approx 0.0013$$ (over $$750\times$$ smaller than 1!).
+   - **ReLU & Leaky ReLU**: value $$4.000$$, derivative $$1.000$$ (zero attenuation!).
+3. **Chain-Rule Consequence Across 10 Layers**:
+   Even at the *best possible* point $$z = 0$$, multiplying $$\sigma'(0) = 0.25$$ across 10 layers shrinks the gradient by $$(0.25)^{10} = 9.54 \times 10^{-7}$$—a million-fold vanish! ReLU preserves $$1^{10} = 1$$.
+
 This lesson provides an in-depth exploration of activation functions, their properties, and how to choose the right one for your neural network.
 
 ---

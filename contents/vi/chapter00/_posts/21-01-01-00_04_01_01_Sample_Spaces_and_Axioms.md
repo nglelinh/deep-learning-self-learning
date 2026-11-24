@@ -9,6 +9,33 @@ categories:
 - chapter00
 ---
 
+Năm 1933, nhà toán học Andrey Kolmogorov đã làm một điều phi thường: chỉ bằng **ba tiên đề ngắn gọn**, ông biến toàn bộ lĩnh vực xác suất—vốn trước đó chỉ xoay quanh các bài toán cờ bạc tung xúc xắc—thành một hệ thống giải tích chặt chẽ như hình học Euclid. Ngày nay, mỗi khi tầng Softmax ở cuối mạng phân loại ảnh ép đầu ra thành các con số nằm trong $$[0, 1]$$ và có tổng đúng bằng $$1$$, nó đang tôn trọng chính xác ba tiên đề Kolmogorov ấy. Bài học này xây dựng nền móng không gian mẫu, biến cố và hệ tiên đề xác suất để bạn hiểu rõ ngôn ngữ gốc của mọi mô hình phân loại.
+
+## Bản đồ kiến thức nền: Ba trụ cột của Không gian Mẫu và Tiên đề Kolmogorov
+
+1. **Không gian mẫu ($$\Omega$$) và Biến cố ($$A \subseteq \Omega$$)**:
+   Liệt kê toàn bộ kết cục có thể xảy ra (từ 10 lớp chữ số MNIST đến 50{,}000 token từ vựng của LLM); mỗi biến cố là một tập con chứa các kết cục ta quan tâm.
+
+2. **Ba tiên đề Kolmogorov (Không âm, Chuẩn hóa, Cộng tính)**:
+   Mọi xác suất đều thỏa $$P(A) \ge 0$$, $$P(\Omega) = 1$$, và với các biến cố đôi một xung khắc ($$A_i \cap A_j = \emptyset$$), $$P(\bigcup_i A_i) = \sum_i P(A_i)$$.
+
+3. **Các hệ quả trực tiếp (Phần bù và Luật cộng tổng quát)**:
+   Tính xác suất "không xảy ra" bằng $$P(A^c) = 1 - P(A)$$ và xử lý các biến cố chồng lấn bằng $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$, tránh lỗi đếm trùng cực kỳ phổ biến khi phân tích sai số mô hình.
+
+### Khung giải thích (nên đọc chậm): Kiểm tra tiên đề Kolmogorov trên đầu ra Softmax và lỗi đếm trùng
+
+Giả sử một bộ phân loại ảnh 3 lớp $$\Omega = \{\text{Mèo}, \text{Chó}, \text{Chim}\}$$ xuất ra vector xác suất $$P(\text{Mèo}) = 0.65$$, $$P(\text{Chó}) = 0.25$$, $$P(\text{Chim}) = 0.10$$:
+
+1. **Kiểm tra ba tiên đề Kolmogorov**:
+   - Không âm: cả ba số đều $$\ge 0$$.
+   - Chuẩn hóa: $$0.65 + 0.25 + 0.10 = 1.00 = P(\Omega)$$.
+   - Cộng tính xung khắc: biến cố $$A = \{\text{Động vật bốn chân}\} = \{\text{Mèo}, \text{Chó}\}$$ có $$P(A) = 0.65 + 0.25 = 0.90$$, và phần bù $$P(A^c) = 1 - 0.90 = 0.10 = P(\text{Chim})$$.
+2. **Xử lý hai biến cố *không* xung khắc trên bộ kiểm thử**:
+   Trong 100 ảnh test, có 20 ảnh bị mờ ($$P(M) = 0.20$$), 15 ảnh thiếu sáng ($$P(T) = 0.15$$), và 6 ảnh vừa mờ vừa thiếu sáng ($$P(M \cap T) = 0.06$$).
+   - Xác suất ảnh bị mờ **hoặc** thiếu sáng là:
+     $$P(M \cup T) = 0.20 + 0.15 - 0.06 = 0.29 \quad (\text{không phải } 0.35!).$$
+   - Xác suất ảnh sạch (không mờ, không thiếu sáng): $$1 - 0.29 = 0.71$$.
+
 ## Lý thuyết xác suất cơ bản
 
 Lý thuyết xác suất cung cấp khung toán học để suy luận về sự bất định — nền tảng của nhiều bài toán tối ưu hóa trong học máy và khoa học dữ liệu.

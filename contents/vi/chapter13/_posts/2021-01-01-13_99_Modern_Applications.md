@@ -10,6 +10,27 @@ categories:
 lesson_type: optional
 ---
 
+Có một sự thật thú vị ít người để ý: dù Stable Diffusion, Sora hay Veo nổi tiếng nhờ mô hình khuếch tán và Transformer, nhưng bức ảnh hay thước phim cuối cùng bạn nhìn thấy trên màn hình lại luôn được "vẽ ra" bởi một **VAE**! Thay vì cạnh tranh trực tiếp với Diffusion về độ sắc nét, VAE hiện đại đã tìm thấy vị trí không thể thay thế trong vai trò bộ mã hóa – giải mã không gian ẩn cho ảnh độ phân giải cao, video 3D và các bộ sinh một bước.
+
+## Bản đồ kiến thức nền: Vai trò chiến lược của VAE trong hệ sinh thái tạo sinh 2022–2026
+
+- **KL-VAE + Perceptual/GAN Loss trong Stable Diffusion:** Kết hợp trọng số KL rất nhỏ ($$\sim 10^{-6}$$) với hàm mất mát cảm nhận (LPIPS) và bộ phân biệt PatchGAN để xóa bỏ nhược điểm ảnh mờ của VAE cổ điển.
+- **Causal 3D VAE cho mô hình sinh video:** Mở rộng nén theo cả không gian lẫn thời gian (ví dụ $$4\times$$ thời gian và $$8\times 8$$ không gian) giúp nén 1 đoạn video thành chuỗi token gọn nhẹ cho DiT.
+- **VQ-VAE và mã hóa rời rạc (Discrete Tokenizers):** Ánh xạ vector ẩn vào sổ mã hữu hạn (codebook) để ghép nối trực tiếp ảnh/video với mô hình ngôn ngữ tự hồi quy.
+- **Chưng cất khuếch tán và Consistency Models trong không gian ẩn:** Thực hiện sinh ảnh trong 1–4 bước ngay trên không gian ẩn của VAE, giảm độ trễ từ vài giây xuống dưới 100 mili-giây.
+
+### Khung giải thích (nên đọc chậm): Tính hệ số nén của Causal 3D VAE trên một đoạn video ngắn
+
+Xét một đoạn video 4 giây ở tốc độ 24 khung hình/giây ($$T = 96$$ khung hình), độ phân giải $$512 \times 512$$ với 3 kênh màu RGB.
+
+1. **Số giá trị pixel thô:**
+   $$96 \times 512 \times 512 \times 3 = 75{,}497{,}472 \text{ giá trị (}\approx 75{,}5\text{ triệu số).}$$
+2. **Qua Causal 3D VAE** với hệ số nén $$4\times$$ theo thời gian, $$8\times$$ theo chiều cao, $$8\times$$ theo chiều rộng và $$C_z = 16$$ kênh ẩn:
+   - Kích thước tensor ẩn: $$(96/4) \times (512/8) \times (512/8) \times 16 = 24 \times 64 \times 64 \times 16 = 1{,}572{,}864$$ giá trị.
+3. **Tỷ lệ nén tổng thể:**
+   $$\frac{75{,}497{,}472}{1{,}572{,}864} = 48\times.$$
+   Quan trọng hơn, số vị trí không-thời gian giảm từ $$96 \times 512 \times 512$$ xuống $$24 \times 64 \times 64 = 98{,}304$$ (giảm $$256\times$$) — biến việc huấn luyện Diffusion Transformer trên video từ bất khả thi thành khả thi trên cụm GPU hiện đại.
+
 # Tùy chọn: VAE trong vai trò không gian ẩn cho khuếch tán, video và nén
 
 > Bài này mang tính **tùy chọn** và **không** thay thế phần ELBO, thủ thuật tái tham số hóa hay cài đặt VAE cốt lõi. Nội dung cho thấy cùng kiến trúc autoencoder biến phân đã trở thành **bộ nén (codec)** chuẩn trong các hệ thống sinh giai đoạn 2022–2026 như thế nào.

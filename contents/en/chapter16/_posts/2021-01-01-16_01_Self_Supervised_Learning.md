@@ -9,6 +9,29 @@ categories:
 - chapter16
 ---
 
+In 2020, SimCLR startled the computer vision community by showing that a simple ResNet trained with *zero* class labels—just matching two random crops and color jitters of the same photo—could nearly match fully supervised ImageNet accuracy on a linear probe. Beneath that apparent simplicity lies a rich mathematical interplay between mutual information lower bounds, hyperspherical alignment and uniformity, and why throwing away the projection head after pretraining boosts downstream accuracy by over 10%.
+
+## Background Knowledge Map: Mathematical & Architectural Mechanics of SSL
+
+- **Pillar 1 — Mutual Information & InfoNCE Bounds**: Proves that minimizing InfoNCE maximizes a lower bound $I(X; Y) \ge \log(N) - \mathcal{L}_{\text{InfoNCE}}$, explaining why larger batch sizes $N$ tighten the bound.
+- **Pillar 2 — Alignment & Uniformity on the Hypersphere**: Decomposes contrastive learning into two geometric forces: *alignment* (positive views map to nearby unit vectors) and *uniformity* (all embeddings spread evenly across $\mathbb{S}^{d-1}$).
+- **Pillar 3 — Role of the Nonlinear Projection Head $g(\cdot)$**: Absorbs augmentation-specific invariance (like color distortion) inside $z = g(h)$, keeping the upstream representation $h = f(x)$ rich in color and pose information for downstream tasks.
+- **Pillar 4 — Masked Modeling vs. Joint-Embedding Architectures**: Contrasts pixel/token reconstruction (BERT, MAE) with representation-space prediction (BYOL, DINO, SimCLR), clarifying their inductive biases.
+
+### Step-by-Step Worked Example (Read Slowly): How Temperature $\tau$ Reweights Hard vs. Easy Negatives
+
+Using the cosine similarities $s_+ = 0.80$, $s_{\text{hard}} = 0.60$, $s_{\text{easy}} = 0.00$, compare the softmax negative weights $w_k = \frac{e^{s_k/\tau}}{\sum e^{s_m/\tau}}$ at $\tau = 0.5$ versus $\tau = 0.1$.
+
+1. **At warm temperature $\tau = 0.5$** (logits: $1.6, 1.2, 0.0$):
+   $$e^{1.6} = 4.953, \quad e^{1.2} = 3.320, \quad e^{0.0} = 1.000 \implies Z = 9.273.$$
+   - Hard-negative weight: $w_{\text{hard}} = 3.320 / 9.273 = 35.8\%$.
+   - Easy-negative weight: $w_{\text{easy}} = 1.000 / 9.273 = 10.8\%$ (ratio hard/easy $= 3.3\times$).
+2. **At sharp temperature $\tau = 0.1$** (logits: $8.0, 6.0, 0.0$):
+   $$e^8 = 2981.0, \quad e^6 = 403.4, \quad e^0 = 1.0 \implies Z = 3385.4.$$
+   - Hard-negative weight: $w_{\text{hard}} = 403.4 / 3385.4 = 11.9\%$.
+   - Easy-negative weight: $w_{\text{easy}} = 1.0 / 3385.4 = 0.03\%$ (ratio hard/easy $= 403\times$!).
+3. **Takeaway**: Temperature $\tau$ acts as an automatic hard-negative miner—at $\tau = 0.1$, gradients concentrate $403\times$ more strongly on the confusing negative ($0.60$) than on the already-separated one ($0.00$).
+
 # Self-Supervised Learning: Learning from Data Itself
 
 ## 1. Concept Overview

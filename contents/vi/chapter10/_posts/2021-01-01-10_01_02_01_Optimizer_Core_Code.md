@@ -9,6 +9,32 @@ categories:
 - chapter10
 ---
 
+Viết lại trọn bộ SGD, Momentum, Nesterov, AdaGrad, RMSprop và Adam bằng NumPy thuần chỉ tốn chưa đầy 100 dòng code, nhưng giá trị nhận lại cực kỳ lớn: bạn sẽ hiểu chính xác biến đếm bước `self.t` tăng ở đâu trong Adam, tại sao phép toán `in-place` tiết kiệm bộ nhớ GPU, và cách viết dạng triển khai tương đương của Nesterov mà không phải gọi thêm một lượt forward/backward thứ hai!
+
+## Bản đồ kiến thức nền: Bốn chi tiết kỹ thuật khi viết mã lõi Bộ tối ưu
+
+1. **Quản lý trạng thái per-parameter theo danh sách/từ điển**:
+   Mỗi tensor trọng số (ma trận $$W_1$$, vector $$b_1$$, $$W_2$$, ...) cần các bộ đệm `m` và `v` có cùng chính xác shape, khởi tạo bằng `np.zeros_like(param)`.
+2. **Dạng cài đặt 1-pass của Nesterov Momentum**:
+   Thay vì tính gradient ở điểm dự đoán $$\theta - \eta \beta v$$ (rất bất tiện với API tự động đạo hàm), các framework như PyTorch dùng phép đổi biến tương đương để chỉ cần gọi gradient tại điểm hiện tại nhưng vẫn tạo ra hiệu ứng "nhìn trước" giống hệt.
+3. **Thứ tự tăng bộ đếm `t += 1` trong Adam**:
+   Phải tăng `self.t += 1` **trước** khi tính `1 - beta1 ** self.t` và `1 - beta2 ** self.t`; nếu để `t = 0` ở bước đầu sẽ lập tức xảy ra lỗi chia cho 0 (`ZeroDivisionError` / `NaN`)!
+4. **Hằng số $$\epsilon$$ đặt ngoài dấu căn bậc hai**:
+   Trong cài đặt Adam chuẩn (`m_hat / (np.sqrt(v_hat) + eps)`), $$\epsilon$$ nằm ngoài dấu căn (mặc định `1e-8`, nhưng khi huấn luyện FP16/BF16 nên tăng lên `1e-6` để tránh underflow làm tròn về 0).
+
+### Khung giải thích (nên đọc chậm): Tính tay so sánh tốc độ giảm bước của AdaGrad và RMSprop sau 3 bước gradient lớn
+
+Giả sử một tham số liên tục nhận gradient $$g_1 = g_2 = g_3 = 10{,}0$$, tốc độ học cơ sở $$\eta = 1{,}0$$, và hệ số suy giảm của RMSprop là $$\rho = 0{,}9$$ (bỏ qua $$\epsilon$$ nhỏ):
+
+| Bước $$t$$ | Tích lũy AdaGrad $$G_t = \sum g_i^2$$ | Bước nhảy AdaGrad $$\frac{\eta g_t}{\sqrt{G_t}}$$ | EMA RMSprop $$s_t = 0{,}9 s_{t-1} + 0{,}1 g_t^2$$ | Bước nhảy RMSprop $$\frac{\eta g_t}{\sqrt{s_t}}$$ |
+| :---: | :---: | :---: | :---: | :---: |
+| $$t = 1$$ | $$100$$ | $$\frac{10}{\sqrt{100}} = \mathbf{1{,}000}$$ | $$10{,}0$$ | $$\frac{10}{\sqrt{10}} \approx \mathbf{3{,}162}$$ |
+| $$t = 2$$ | $$200$$ | $$\frac{10}{\sqrt{200}} \approx \mathbf{0{,}707}$$ | $$19{,}0$$ | $$\frac{10}{\sqrt{19}} \approx \mathbf{2{,}294}$$ |
+| $$t = 3$$ | $$300$$ | $$\frac{10}{\sqrt{300}} \approx \mathbf{0{,}577}$$ | $$27{,}1$$ | $$\frac{10}{\sqrt{27{,}1}} \approx \mathbf{1{,}921}$$ |
+| $$t \to \infty$$ | $$\to \infty$$ | **$$\to 0$$ (tắt hẳn!)** | Hội tụ về $$100{,}0$$ | **Hội tụ về $$1{,}000$$ (ổn định!)** |
+
+Khi $$t$$ lớn, mẫu số của AdaGrad phình vô hạn kéo tốc độ học về 0, còn mẫu số của RMSprop tự cân bằng đúng về giá trị bình phương gradient hiện hành ($$10^2 = 100$$) giúp mô hình tiếp tục học bền bỉ!
+
 ## 4. Đoạn mã
 
 Dưới đây là phần cài đặt các bộ tối ưu từ đầu bằng NumPy để minh họa trực tiếp cơ chế cập nhật của từng thuật toán:

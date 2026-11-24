@@ -9,6 +9,30 @@ categories:
 - chapter26
 ---
 
+At the bottom of every trillion-parameter LLM lies one astonishingly clean equation: for next-token cross-entropy loss with a softmax language-model head, the gradient with respect to the raw vocabulary logits $z$ is simply $p - t$—predicted probability minus the one-hot target. Understanding how that gradient interacts with log-sum-exp numerical stability, SwiGLU activations, selective AdamW weight decay, and BPE tokenization turns LLM pretraining from black magic into transparent numerical engineering.
+
+## Background Knowledge Map: Foundations of LLM Pretraining & Tokenization
+
+- **Pillar 1 — Causal Next-Token Objective & Softmax Gradient**: Shifts inputs `x[:-1]` against targets `x[1:]` across sequence length $T$ and exploits $\frac{\partial \mathcal{L}}{\partial z} = p - t$ for fast, clean backpropagation.
+- **Pillar 2 — Log-Sum-Exp & Online Softmax Stability**: Subtracts $m = \max_j z_j$ before exponentiating to eliminate `inf`/`NaN` overflows, and generalizes to streaming block-wise max/normalizer updates inside FlashAttention.
+- **Pillar 3 — Modern FFN Activations & Selective AdamW Decay**: Uses SwiGLU gated linear units and applies AdamW decoupled weight decay *only* to 2D weight matrices—never to 1D LayerNorm/RMSNorm scales or biases.
+- **Pillar 4 — Byte-Pair Encoding (BPE) Subword Trade-offs**: Iteratively merges the most frequent adjacent byte/symbol pairs to balance sequence compression against embedding-table size $|V| \times d_{\text{model}}$.
+
+### Step-by-Step Worked Example (Read Slowly): Log-Sum-Exp Softmax, Cross-Entropy Loss, and Exact Logit Gradient
+
+Suppose at position $t$, a tiny 3-token vocabulary `{0: "cat", 1: "dog", 2: "mat"}` produces raw logits $z = [100.0,\; 102.0,\; 100.0]$, and the true next token is index `1` (`"dog"`, so $t = [0, 1, 0]$).
+
+1. **Shift by $m = \max(z) = 102.0$** (naive $e^{102}$ risks overflow in FP16 where max finite value is $65{,}504$!):
+   $$z - m = [-2.0,\; 0.0,\; -2.0].$$
+2. **Compute shifted exponentials and partition sum**:
+   $$e^{-2} \approx 0.1353, \quad e^0 = 1.0000, \quad e^{-2} \approx 0.1353 \implies Z = 1.2707.$$
+3. **Softmax probabilities $p$ and Cross-Entropy Loss $\mathcal{L}$**:
+   $$p = [0.1065,\; 0.7870,\; 0.1065], \qquad \mathcal{L} = -\ln(0.7870) \approx 0.2395\text{ nats (Perplexity } e^{0.2395} = 1.271\text{)}.$$
+4. **Exact logit gradient $\frac{\partial \mathcal{L}}{\partial z} = p - t$**:
+   $$p - t = [0.1065,\; 0.7870 - 1,\; 0.1065] = [+0.1065,\; -0.2130,\; +0.1065].$$
+   Notice the gradients sum strictly to $0.0000$, pushing the true token logit up and suppressing wrong tokens proportionally to their probability!
+5. **Takeaway**: Subtracting $m = 102.0$ keeps FP16/BF16 arithmetic completely finite while producing exact probabilities and zero-sum gradients.
+
 # Pretraining and Tokenization
 
 A modern LLM is pretrained as a **next-token predictor**. Everything later — prompting, instruction-following, tools — sits on top of a model that, given tokens $$x_1,\ldots,x_{t-1}$$, outputs a distribution over the next token $$x_t$$.

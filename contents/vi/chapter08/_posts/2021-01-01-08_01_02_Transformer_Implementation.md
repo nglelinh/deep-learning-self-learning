@@ -9,6 +9,30 @@ categories:
 - chapter08
 ---
 
+Tự tay lắp ráp một Transformer hoạt động trơn tru bằng PyTorch không dài như nhiều người tưởng — toàn bộ lõi từ Positional Encoding, Multi-Head Attention, FFN đến một Encoder–Decoder hoàn chỉnh chỉ gói gọn trong chưa đầy 200 dòng code rõ ràng. Bí quyết nằm ở việc chia mô-đun rành mạch và thiết lập các bài kiểm tra khói (smoke tests) ngay trước khi bước vào vòng huấn luyện.
+
+## Bản đồ kiến thức nền: Ba nguyên tắc vàng khi lập trình kiến trúc Transformer
+
+1. **Phân tách mô-đun sạch theo sơ đồ dữ liệu**:
+   Xây dựng tuần tự từ dưới lên: `PositionalEncoding` $$\to$$ `MultiHeadAttention` $$\to$$ `PositionwiseFFN` $$\to$$ `EncoderLayer` / `DecoderLayer` $$\to$$ `Transformer`. Mỗi mô-đun có hợp đồng đầu vào/đầu ra `(B, L, d_model)` thống nhất.
+2. **Quản lý hai loại mặt nạ độc lập (Padding Mask và Causal Mask)**:
+   Kết hợp bằng phép giao logic (chỉ cho phép chú ý những vị trí **vừa** không phải `<PAD>`, **vừa** không nằm ở tương lai) với hình dạng broadcast `(B, 1, L_q, L_k)` để áp dụng cho mọi head.
+3. **Danh mục kiểm tra trước khi huấn luyện quy mô lớn**:
+   Kiểm tra tính nhân quả (*causal leak test*: đổi token cuối xem logit các token trước có đổi 0,0 hay không), kiểm tra dòng gradient không bị `NaN`, và thử nghiệm overfit hoàn hảo trên 1 batch nhỏ (10 mẫu) để xác minh không có lỗi logic ngầm.
+
+### Khung giải thích (nên đọc chậm): Tính tay phép kết hợp Padding Mask và Causal Mask cho chuỗi dài $$L = 4$$
+
+Giả sử trong một batch, câu có độ dài tối đa $$L = 4$$, nhưng câu này chỉ có 3 từ thật và vị trí cuối (`idx=3`) là `<PAD>`. Quy ước `1 = được phép chú ý`, `0 = bị che`:
+
+- **Causal Mask** (tam giác dưới $$4 \times 4$$):
+  $$\begin{bmatrix} 1 & 0 & 0 & 0 \\ 1 & 1 & 0 & 0 \\ 1 & 1 & 1 & 0 \\ 1 & 1 & 1 & 1 \end{bmatrix}$$
+- **Key Padding Mask** (`[1, 1, 1, 0]` phát sóng theo mọi hàng):
+  $$\begin{bmatrix} 1 & 1 & 1 & 0 \\ 1 & 1 & 1 & 0 \\ 1 & 1 & 1 & 0 \\ 1 & 1 & 1 & 0 \end{bmatrix}$$
+- **Mặt nạ kết hợp (`causal & padding`)**:
+  $$\begin{bmatrix} 1 & 0 & 0 & 0 \\ 1 & 1 & 0 & 0 \\ 1 & 1 & 1 & 0 \\ 1 & 1 & 1 & 0 \end{bmatrix}$$
+
+Tại hàng `idx=2` (từ thật thứ 3), mô hình nhìn thấy các vị trí `0, 1, 2` và không bao giờ nhìn thấy `<PAD>` ở cột `3` — sạch sẽ tuyệt đối!
+
 # 08-01-02 Cài đặt Transformer
 
 Phần lý thuyết mô tả các phép biến đổi toán học, còn phần cài đặt đảm bảo mô hình tuân thủ chặt chẽ **kích thước tensor, quy ước mặt nạ, thứ tự kết nối phần dư và độ ổn định số học**. Hai bài trong mục này hướng dẫn xây dựng một mô hình Transformer nhỏ gọn nhưng đầy đủ.

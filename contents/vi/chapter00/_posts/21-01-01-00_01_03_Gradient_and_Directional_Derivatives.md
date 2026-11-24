@@ -9,6 +9,35 @@ categories:
 - chapter00
 ---
 
+Giữa màn sương dày đặc trên sườn núi, bạn không thấy đỉnh núi cũng chẳng thấy thung lũng, nhưng đôi chân bạn cảm nhận được mặt đất đang dốc về hướng nào. Nếu muốn xuống núi nhanh nhất có thể trong bước tiếp theo, bạn nên bước theo hướng nào? Câu hỏi hình học đơn giản ấy dẫn thẳng tới **vector gradient** và **đạo hàm theo hướng**—hai khái niệm định nghĩa nên chiếc la bàn vạn năng của toàn bộ ngành Học sâu hiện đại.
+
+## Bản đồ kiến thức nền: Bốn góc nhìn cốt lõi về Gradient và Đạo hàm theo hướng
+
+1. **Vector Gradient ($$\nabla f$$)**:
+   Gom mọi đạo hàm riêng thành một vector duy nhất sống trong không gian tham số, đóng vai trò mũi tên chỉ chính xác hướng tăng dốc nhất của hàm số.
+
+2. **Đạo hàm theo hướng (Directional Derivative)**:
+   Đo tốc độ biến thiên của $$f$$ khi đi theo một vector đơn vị $$\mathbf{u}$$ bất kỳ bằng tích vô hướng $$D_{\mathbf{u}} f(\mathbf{x}) = \nabla f(\mathbf{x}) \cdot \mathbf{u} = \|\nabla f(\mathbf{x})\|\cos\theta$$.
+
+3. **Tính vuông góc với đường mức (Orthogonality to Contours)**:
+   Tại mọi điểm, vector gradient luôn vuông góc với đường mức đi qua điểm đó—lý giải vì sao trên thung lũng hình elip dẹt, Gradient Descent lại chạy zig-zag qua lại hai vách núi thay vì đi thẳng tới đáy.
+
+4. **Hướng giảm nhanh nhất (Steepest Descent)**:
+   Vì $$\cos\theta$$ đạt cực tiểu bằng $$-1$$ khi $$\theta = 180^\circ$$, bước đi theo hướng $$\mathbf{u} = -\frac{\nabla f}{\|\nabla f\|}$$ đảm bảo hàm mất mát giảm nhanh nhất trong lân cận vô cùng bé.
+
+### Khung giải thích (nên đọc chậm): So sánh tốc độ giảm khi bước theo nhiều hướng khác nhau
+
+Xét hàm mất mát hai biến $$f(x, y) = x^2 + 4y^2$$ (một thung lũng elip) tại điểm hiện tại $$\mathbf{p} = (2, 1)$$, nơi $$f(2, 1) = 4 + 4 = 8$$:
+
+1. **Tính vector gradient tại $$\mathbf{p} = (2, 1)$$**:
+   $$\nabla f(x, y) = (2x, 8y) \implies \nabla f(2, 1) = (4, 8).$$
+   Độ lớn gradient là $$\|\nabla f(2, 1)\| = \sqrt{4^2 + 8^2} = \sqrt{80} \approx 8.944$$.
+2. **Thử đi theo 3 hướng đơn vị khác nhau**:
+   - **Hướng sang trái** $$\mathbf{u}_1 = (-1, 0)$$: $$D_{\mathbf{u}_1} f = (4, 8) \cdot (-1, 0) = -4$$ (hàm giảm với tốc độ 4).
+   - **Hướng đi thẳng về gốc tọa độ** $$\mathbf{u}_2 = \frac{(-2, -1)}{\sqrt{5}} \approx (-0.894, -0.447)$$: $$D_{\mathbf{u}_2} f = \frac{4(-2) + 8(-1)}{\sqrt{5}} = \frac{-16}{\sqrt{5}} \approx -7.155$$.
+   - **Hướng ngược gradient** $$\mathbf{u}_3 = \frac{(-4, -8)}{\sqrt{80}} \approx (-0.447, -0.894)$$: $$D_{\mathbf{u}_3} f = -\sqrt{80} \approx -8.944$$ (giảm nhanh nhất!).
+3. **Điểm tinh tế đáng suy ngẫm**: Hướng ngược gradient $$\mathbf{u}_3$$ giảm nhanh nhất *tại chỗ*, nhưng lại **không** chỉ thẳng về đáy $$(0, 0)$$ (là hướng $$\mathbf{u}_2$$) do trục $$y$$ dốc gấp 4 lần trục $$x$$. Đây chính là nguồn gốc của hiện tượng zig-zag và lý do ra đời của Momentum và Adam sau này!
+
 Bài học này trình bày vector gradient (*gradient*) và đạo hàm theo hướng (*directional derivative*) — hai khái niệm trung tâm trong tối ưu hóa, giúp ta xác định tốc độ biến thiên của hàm số theo từng hướng khác nhau.
 
 ---

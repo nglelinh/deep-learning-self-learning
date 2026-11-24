@@ -9,6 +9,29 @@ categories:
 - chapter20
 ---
 
+Điều kỳ diệu của **Q-Learning** (Chris Watkins, 1989) là tác tử không cần ai đưa cho bản đồ xác suất của môi trường, cũng không cần chờ tới cuối ván mới rút kinh nghiệm — chỉ sau *một bước đi duy nhất* từ trạng thái $$s$$ sang $$s'$$, nó đã có thể tự hiệu chỉnh niềm tin của mình bằng sai số thời gian TD (*Temporal Difference Error*). Bài học nền tảng này dẫn bạn qua phương trình Bellman, sự khác biệt tinh tế giữa on-policy (SARSA) và off-policy (Q-Learning), cùng vòng lặp cài đặt bảng Q hoàn chỉnh.
+
+## Bản đồ kiến thức nền: Khung toán học cốt lõi của MDP và Q-Learning
+
+- **Phương trình kỳ vọng và tối ưu Bellman:** Thiết lập điều kiện điểm bất động cho $$V^*(s) = \max_a Q^*(s, a)$$ và $$Q^*(s, a) = R(s,a) + \gamma \sum_{s'} P(s'\mid s,a)\max_{a'} Q^*(s', a')$$.
+- **Bootstrapping và sai số TD ($$\delta_t$$):** Thay vì dùng tổng phần thưởng thật đến hết tập (Monte Carlo — phương sai cao), dùng ngay ước lượng $$r + \gamma \max_{a'} Q(s', a')$$ làm mục tiêu cập nhật tại mỗi bước.
+- **Off-Policy (Q-Learning) vs. On-Policy (SARSA):** Q-Learning luôn cập nhật theo hành động tham lam $$\max_{a'} Q(s', a')$$ bất kể đang khám phá $$\epsilon$$-greedy (tìm đường tối ưu sát mép vực), còn SARSA cập nhật theo đúng hành động thực tế $$a'$$ (an toàn hơn khi có nhiễu khám phá).
+- **Giới hạn của học tăng cường dạng bảng (Tabular RL):** Giải thích vì sao bảng $$|\mathcal{S}| \times |\mathcal{A}|$$ sụp đổ khi trạng thái là ảnh pixel liên tục — cầu nối sang Học Tăng cường Sâu (Chương 21).
+
+### Khung giải thích (nên đọc chậm): Tính tay một bước cập nhật Q-Learning trên bảng Q nhỏ
+
+Giả sử tác tử đang ở ô $$s_1$$, chọn hành động `Phải`, nhận phần thưởng tức thì $$r = -1$$ và chuyển sang ô $$s_2$$. Biết tốc độ học $$\alpha = 0{,}5$$, hệ số chiết khấu $$\gamma = 0{,}9$$, và các giá trị Q hiện tại là:
+- $$Q(s_1, \text{Phải}) = 2{,}0$$
+- Tại ô kế tiếp $$s_2$$: $$Q(s_2, \text{Lên}) = 8{,}0$$, $$Q(s_2, \text{Phải}) = 5{,}0$$.
+
+1. **Tính mục tiêu TD (TD Target):**
+   $$y = r + \gamma \max_{a'} Q(s_2, a') = -1 + 0{,}9 \times \max(8{,}0,\; 5{,}0) = -1 + 0{,}9(8{,}0) = 6{,}2.$$
+2. **Tính sai số TD (TD Error):**
+   $$\delta = y - Q(s_1, \text{Phải}) = 6{,}2 - 2{,}0 = +4{,}2.$$
+3. **Cập nhật bảng Q:**
+   $$Q_{\text{mới}}(s_1, \text{Phải}) = 2{,}0 + 0{,}5 \times (+4{,}2) = 4{,}1.$$
+   Nhìn cách thông tin phần thưởng tốt ở $$s_2$$ ($$8{,}0$$) vừa lan ngược lại một bước về $$s_1$$ (kéo từ $$2{,}0 \to 4{,}1$$) — lặp lại đủ số lần, giá trị mục tiêu sẽ lan tỏa khắp toàn bộ bản đồ!
+
 # Học Tăng cường: Học từ Tương tác
 
 ![Reinforcement Learning Diagram](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Reinforcement_learning_diagram.svg/800px-Reinforcement_learning_diagram.svg.png)

@@ -10,6 +10,27 @@ categories:
 lesson_type: optional
 ---
 
+Liệu mô hình khuếch tán đã "khai tử" hoàn toàn GAN? Nếu bạn mở mã nguồn của Stable Diffusion XL Turbo, SDXL-Lightning hay hệ thống nén ảnh/video thế hệ mới, bạn sẽ ngạc nhiên khi thấy **bộ phân biệt đối kháng (Discriminator)** vẫn đang âm thầm làm việc ở tuyến đầu! Bài cập nhật này giải thích sự chuyển mình của GAN giai đoạn 2022–2026: từ vị trí bộ sinh độc lập sang "vũ khí bí mật" cho tổng hợp khuôn mặt thời gian thực, GAN Inversion và chưng cất mô hình khuếch tán một bước.
+
+## Bản đồ kiến thức nền: Ba mặt trận hiện đại nơi tư duy GAN vẫn tỏa sáng
+
+- **StyleGAN3 và bất biến dịch chuyển/xoay:** Loại bỏ hiện tượng "dính kết cấu" (texture sticking) bằng xử lý tín hiệu chống răng cưa, phục vụ chỉnh sửa khuôn mặt và nhân vật ảo thời gian thực.
+- **GAN Inversion và chỉnh sửa ngữ nghĩa trong không gian $$\mathcal{W}+$$:** Tìm ngược mã ẩn $$\mathbf{w}^*$$ tái tạo chính xác một bức ảnh thật rồi trượt theo các hướng thuộc tính (tuổi tác, ánh sáng, biểu cảm).
+- **GigaGAN và bộ sinh quy mô tỷ tham số:** Chứng minh GAN có thể mở rộng lên sinh ảnh từ văn bản với tốc độ dưới 0,2 giây/ảnh.
+- **Chưng cất đối kháng (ADD / DMD / SDXL-Turbo):** Dùng bộ phân biệt đối kháng ép mô hình khuếch tán sinh ảnh sắc nét chỉ trong **1 đến 4 bước** thay vì 50 bước.
+
+### Khung giải thích (nên đọc chậm): So sánh độ trễ suy luận: Diffusion 50 bước vs. Diffusion chưng cất GAN 1–4 bước
+
+Giả sử một lượt suy luận mạng UNet/DiT trên ảnh $$1024 \times 1024$$ tốn $$45\text{ ms}$$ trên một GPU tầm trung, và bước giải mã VAE cuối cùng tốn $$25\text{ ms}$$.
+
+1. **Diffusion chuẩn (50 bước, có Classifier-Free Guidance chạy 2 nhánh/bước):**
+   - Thời gian khử nhiễu: $$50 \times 2 \times 45\text{ ms} = 4{,}500\text{ ms}$$.
+   - Tổng thời gian sinh 1 ảnh: $$4{,}500 + 25 = 4{,}525\text{ ms} \approx 4{,}53\text{ giây}$$.
+2. **Mô hình chưng cất đối kháng (kiểu Adversarial Diffusion Distillation — 2 bước, không cần CFG):**
+   - Thời gian khử nhiễu: $$2 \times 45\text{ ms} = 90\text{ ms}$$.
+   - Tổng thời gian sinh 1 ảnh: $$90 + 25 = 115\text{ ms} \approx 0{,}115\text{ giây}$$.
+3. **Hiệu quả tăng tốc:** $$4{,}525 / 115 \approx 39{,}3\times$$ — biến trải nghiệm tạo ảnh từ "chờ gần 5 giây" thành **tương tác tức thời theo từng nét vẽ**, nhờ chính hàm loss đối kháng của GAN đảm bảo độ sắc nét ngay ở bước 1–2!
+
 # Tùy chọn: GAN sau làn sóng khuếch tán — Khuôn mặt, Inversion và Bộ sinh một bước
 
 > Bài này mang tính **tùy chọn** và **không** thay thế phần hàm mất mát GAN, lý thuyết DCGAN/StyleGAN hay các lưu ý huấn luyện trong chương. Nội dung tổng hợp những vai trò mà GAN vẫn đảm nhiệm tốt sau khi mô hình khuếch tán trở thành bộ lấy mẫu mặc định.

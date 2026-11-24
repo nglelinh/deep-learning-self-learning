@@ -9,6 +9,34 @@ categories:
 - chapter03
 ---
 
+Hiểu lý thuyết Backpropagation trên giấy mới đi được nửa chặng đường; nửa chặng đường còn lại—và là trải nghiệm đáng giá nhất với mọi kỹ sư Học sâu—là **tự tay cài đặt toàn bộ mạng MLP và lan truyền ngược từ đầu chỉ bằng NumPy**, rồi thấy nó tự học giải gọn bài toán XOR mà không cần bất kỳ dòng PyTorch nào! Một lỗi nhỏ về chiều ma trận (quên chuyển vị, quên chia cho kích thước batch $$B$$, hay dùng nhầm giá trị đã kích hoạt thay vì tiền kích hoạt) có thể khiến mạng học sai lặng lẽ. Bài thực hành này giúp bạn viết mã sạch, kiểm tra kích thước chặt chẽ và kiểm chứng độ chính xác bằng Gradient Checking.
+
+## Bản đồ kiến thức nền: Bốn kỷ luật lập trình khi Tự cài Backpropagation bằng NumPy
+
+1. **Quy tắc Khớp Chiều Ma trận (Shape Invariant Check)**:
+   Gradient của mọi tham số **bắt buộc phải có kích thước giống hệt chính tham số đó**: `dW.shape == W.shape`, `db.shape == b.shape`, `dA.shape == A.shape`. Cài sẵn các dòng `assert` kiểm tra shape giúp bắt ngay 90% lỗi lập trình.
+
+2. **Lưu Cache đúng lúc Forward để dùng lúc Backward**:
+   Để tính `dW_l = A_{l-1}.T @ dZ_l / B` và `dZ_l = dA_l * act_deriv(Z_l)`, hàm `forward` phải lưu lại danh sách `(A_{l-1}, Z_l)` theo đúng thứ tự tầng để `backward` duyệt ngược từ tầng `L` về `1`.
+
+3. **Cẩn thận phép Cộng dồn và Broadcasting cho Bias (`axis=0, keepdims=True`)**:
+   Vì bias $$\mathbf{b}^{(\ell)} \in \mathbb{R}^{1 \times n_\ell}$$ được cộng vào mọi mẫu trong batch $$B$$, khi đạo hàm ngược ta phải cộng (hoặc lấy trung bình) dọc theo trục mẫu `axis=0` để giữ nguyên kích thước `(1, n_l)`.
+
+4. **Kiểm tra Sai số Tương đối bằng Sai phân Trung tâm (Gradient Checking)**:
+   So sánh `grad_analytic` và `grad_numeric` qua công thức $$\frac{\|g_a - g_n\|_2}{\|g_a\|_2 + \|g_n\|_2}$$: nếu nhỏ hơn $$10^{-7}$$ (với `float64`), cài đặt Backprop của bạn đã chính xác tuyệt đối!
+
+### Khung giải thích (nên đọc chậm): Tính tay một phép kiểm tra Gradient Checking với $$\varepsilon = 10^{-4}$$
+
+Giả sử bạn nghi ngờ công thức đạo hàm giải tích của hàm $$L(w) = w^3$$ tại $$w = 2.0$$ (đạo hàm đúng là $$g_a = 3(2)^2 = 12.000000$$). Hãy kiểm tra bằng sai phân trung tâm với $$\varepsilon = 10^{-4}$$:
+
+1. Tính $$L(2 + 10^{-4}) = (2.0001)^3 = 8.001200060001$$.
+2. Tính $$L(2 - 10^{-4}) = (1.9999)^3 = 7.998800059999$$.
+3. Lấy hiệu chia cho $$2\varepsilon = 2 \times 10^{-4}$$:
+   $$g_n = \frac{8.001200060001 - 7.998800059999}{0.0002} = \frac{0.002400000002}{0.0002} = 12.00000001.$$
+4. **Sai số tương đối**:
+   $$\frac{\lvert 12.0 - 12.00000001 \rvert}{12.0 + 12.00000001} \approx 4.17 \times 10^{-10} \ll 10^{-7} \implies \textbf{ĐẠT CHUẨN!}$$
+Ngược lại, nếu bạn lỡ viết nhầm đạo hàm trong code thành $$2w^2 = 8.0$$, sai số tương đối lập tức nhảy lên $$\frac{4}{20} = 0.2$$—phát hiện bug ngay trong nháy mắt!
+
 ## 4. Đoạn Mã
 
 Dưới đây là cài đặt lan truyền ngược từ đầu bằng NumPy để nắm rõ từng bước tính toán, sau đó đối chiếu với cách PyTorch tự động hóa quá trình này:

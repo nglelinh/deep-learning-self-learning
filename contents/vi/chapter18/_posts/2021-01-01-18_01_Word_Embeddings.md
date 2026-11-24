@@ -9,6 +9,31 @@ categories:
 - chapter18
 ---
 
+Phép tính nổi tiếng nhất lịch sử NLP hiện đại không phải là một định lý giải tích phức tạp, mà là một phép cộng trừ tiểu học: $$\vec{\text{king}} - \vec{\text{man}} + \vec{\text{woman}} \approx \vec{\text{queen}}$$. Làm thế nào một mạng nơ-ron nông chỉ gồm đúng hai ma trận trọng số như **Word2Vec (Skip-gram)** hay phép phân tích ma trận đồng xuất hiện của **GloVe** lại có thể tự động chưng cất ra cả giới tính, số ít/số nhiều lẫn quan hệ thủ đô–quốc gia? Bài học này mổ xẻ trọn vẹn cơ chế toán học và cài đặt của nhúng từ.
+
+## Bản đồ kiến thức nền: Nền tảng toán học và kỹ thuật của Nhúng Từ
+
+- **Mô hình Skip-gram và CBOW (Word2Vec):** Dự đoán từ ngữ cảnh quanh từ trung tâm (hoặc ngược lại) bằng tích vô hướng giữa hai ma trận nhúng $$\mathbf{v}_w$$ (đầu vào) và $$\mathbf{u}_c$$ (ngữ cảnh).
+- **Lấy mẫu âm (Negative Sampling — SGNS):** Thay phép Softmax cực đắt trên toàn bộ $$|V|$$ từ bằng $$1$$ cặp dương và $$k$$ cặp âm rút theo phân phối $$P_n(w) \propto \text{count}(w)^{3/4}$$, giảm độ phức tạp mỗi bước từ $$O(|V|)$$ xuống $$O(k)$$.
+- **GloVe (Global Vectors):** Khai thác thống kê đồng xuất hiện toàn cục bằng hồi quy bình phương có trọng số $$\mathbf{v}_i^\top \mathbf{u}_j + b_i + \tilde{b}_j \approx \ln X_{ij}$$, kết nối trực tiếp phương pháp đếm ma trận với mạng dự đoán.
+- **FastText và giới hạn từ đa nghĩa:** Biểu diễn từ bằng tổng các n-gram ký tự để xử lý từ hiếm/sai chính tả, đồng thời chỉ rõ giới hạn cố hữu của nhúng tĩnh (ví dụ từ "đường" trong "đường phố" và "đường ăn" bị gộp chung một vector).
+
+### Khung giải thích (nên đọc chậm): Tính tay một bước hàm mất mát Skip-gram Negative Sampling (SGNS)
+
+Xét từ trung tâm `mèo` có vector $$\mathbf{v} = (1{,}0,\; 0{,}5)$$, từ ngữ cảnh thật `ngủ` có vector $$\mathbf{u}_{+} = (0{,}8,\; 0{,}4)$$, và 2 mẫu âm ngẫu nhiên `búa` ($$\mathbf{u}_{-,1} = (-0{,}5,\; 0{,}2)$$), `thuế` ($$\mathbf{u}_{-,2} = (0{,}4,\; -0{,}8)$$). Hàm loss SGNS là:
+$$\mathcal{L} = -\ln \sigma(\mathbf{u}_+^\top \mathbf{v}) - \sum_{k=1}^{2} \ln \sigma(-\mathbf{u}_{-,k}^\top \mathbf{v}).$$
+
+1. **Tính các tích vô hướng:**
+   - Cặp dương: $$\mathbf{u}_+^\top \mathbf{v} = 0{,}8(1{,}0) + 0{,}4(0{,}5) = 1{,}00$$.
+   - Mẫu âm 1: $$\mathbf{u}_{-,1}^\top \mathbf{v} = -0{,}5(1{,}0) + 0{,}2(0{,}5) = -0{,}40$$ → đổi dấu thành $$+0{,}40$$.
+   - Mẫu âm 2: $$\mathbf{u}_{-,2}^\top \mathbf{v} = 0{,}4(1{,}0) - 0{,}8(0{,}5) = 0{,}00$$ → đổi dấu vẫn là $$0{,}00$$.
+2. **Tính hàm Sigmoid và mất mát:**
+   - $$\sigma(1{,}00) \approx 0{,}7311 \implies -\ln(0{,}7311) \approx 0{,}3132$$.
+   - $$\sigma(0{,}40) \approx 0{,}5987 \implies -\ln(0{,}5987) \approx 0{,}5130$$.
+   - $$\sigma(0{,}00) = 0{,}5000 \implies -\ln(0{,}5000) \approx 0{,}6931$$.
+   - **Tổng loss:** $$\mathcal{L} \approx 0{,}3132 + 0{,}5130 + 0{,}6931 = 1{,}5193$$.
+3. **Hiệu quả tốc độ:** Thay vì tính $$50{,}000$$ tích vô hướng cho Softmax, bước cập nhật này chỉ cần đúng $$3$$ tích vô hướng (nhanh hơn hơn **16.000 lần**) mà vẫn đẩy `mèo` lại gần `ngủ` và tách xa `búa`, `thuế`!
+
 # Nhúng Từ: Biểu diễn Ngôn ngữ trong Không gian Vectơ
 
 ![Word2Vec Visualization](https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Word2vec.png/800px-Word2vec.png)

@@ -10,6 +10,28 @@ categories:
 lesson_type: optional
 ---
 
+> *Neural-architecture interview questions rarely test obscure papers; they probe whether you can spot subtle pitfalls on a whiteboard in 60 seconds—like why removing nonlinearities collapses depth, why softmax overflows without max-subtraction, or why a dead ReLU neuron can never revive itself.*
+
+## Background Knowledge Map: High-Frequency Architecture Interview Concepts
+
+1. **Nonlinearity & Rank Collapse**: Proving concisely why an $$L$$-layer linear MLP has rank bounded by $$\min_l d_l$$ and collapses to one affine map.
+2. **Numerical Stability of Softmax & LogSumExp**: Using shift invariance $$\text{softmax}(\mathbf{z} - c) = \text{softmax}(\mathbf{z})$$ to prevent overflow and underflow in `float16`/`float32`.
+3. **Saturation & Dead-Neuron Pathology**: Diagnosing why large positive/negative logits freeze sigmoid gradients ($$\sigma'(z) \to 0$$) and why large negative biases permanently silence ReLU units.
+4. **Parameter & FLOP Estimation**: Mentally computing parameter counts and memory footprints of dense layers to spot capacity bottlenecks during system design.
+
+### Step-by-Step Worked Example (Read Slowly): Diagnosing a Dead ReLU Neuron After One Aggressive Update
+
+Suppose a ReLU neuron $$a = \text{ReLU}(w x + b)$$ receives positive inputs $$x \in [0, 1]$$, starts with $$w = 0.5, b = 0.2$$, and on a single outlier sample $$(x = 1.0, \frac{\partial L}{\partial a} = +20.0)$$ takes a gradient step with overly large learning rate $$\eta = 0.5$$.
+
+1. **Compute Forward Activation & Gradients Before the Update**:
+   $$z = 0.5(1.0) + 0.2 = 0.7 > 0 \implies a = 0.7, \quad \frac{\partial a}{\partial z} = 1$$
+   $$\frac{\partial L}{\partial w} = 20.0 \times 1.0 = 20.0, \qquad \frac{\partial L}{\partial b} = 20.0$$
+2. **Apply the Aggressive Gradient Step ($$\eta = 0.5$$)**:
+   $$w_{\text{new}} = 0.5 - 0.5(20.0) = -9.5, \qquad b_{\text{new}} = 0.2 - 0.5(20.0) = -9.8$$
+3. **Check Subsequent Pre-Activations for ANY Input $$x \in [0, 1]$$**:
+   $$z_{\text{new}} = -9.5 x - 9.8 \leq -9.8 < 0 \quad \forall x \in [0, 1]$$
+   Because $$z_{\text{new}} < 0$$ on the entire dataset, $$\frac{\partial a}{\partial z} = 0$$ forever, so $$\frac{\partial L}{\partial w} = \frac{\partial L}{\partial b} = 0$$ on every future step. The neuron is permanently **dead**—directly explaining why gradient clipping, moderate learning rates, and LeakyReLU/GELU exist.
+
 # Optional: interview practice — neurons and activations
 
 > This lesson is **optional**. It does **not** rewrite perceptron, architecture, or activation theory. After those notes, use this drill, then open *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) for solved items on perceptrons, activations, and the “expanded deep learning” architecture basics.

@@ -10,6 +10,30 @@ categories:
 lesson_type: optional
 ---
 
+Trong các buổi phỏng vấn kỹ sư AI, chủ đề **quá khớp (overfitting) và chính quy hóa** là phép thử nhanh nhất để phân biệt người chỉ biết gọi thư viện với người thực sự hiểu toán học huấn luyện. Chỉ cần một câu hỏi như *"Tại sao phạt $$L_1$$ tạo ra trọng số bằng đúng 0 còn $$L_2$$ thì không?"* hay *"Điều gì xảy ra nếu bạn quên `model.eval()` trên mạng có cả Dropout và BatchNorm?"*, người phỏng vấn sẽ đánh giá ngay độ sâu tư duy của bạn.
+
+## Bản đồ kiến thức nền: Bốn nhóm câu hỏi phỏng vấn kinh điển về Chính quy hóa
+
+1. **Chẩn đoán đường cong học tập (Learning Curves)**:
+   Phân biệt rõ *overfitting* (train loss giảm sâu, val loss quay đầu tăng), *underfitting* (cả hai đều cao) và *data leakage/distribution shift*, cùng thứ tự ưu tiên xử lý (thêm dữ liệu/augmentation $$\to$$ giảm độ phức tạp/tăng regularization $$\to$$ chỉnh early stopping).
+2. **Hình học của $$L_1$$ (Lasso) vs. $$L_2$$ (Ridge / Weight Decay)**:
+   Đạo hàm của $$\lambda |w|$$ có độ lớn hằng số $$\lambda$$ kéo thẳng các trọng số nhỏ về đúng $$0$$ (tạo độ thưa — sparsity); trong khi đạo hàm của $$\frac{\lambda}{2} w^2$$ là $$\lambda w$$ giảm dần khi $$w$$ nhỏ nên chỉ nén trọng số về gần 0 chứ hiếm khi triệt tiêu tuyệt đối.
+3. **Cơ chế Train vs. Eval của Dropout và BatchNorm**:
+   Nêu rõ cả hai điểm: Dropout tắt mặt nạ ngẫu nhiên và bỏ hệ số $$1/(1-p)$$; BatchNorm chuyển từ thống kê mini-batch sang `running_mean`/`running_var`.
+4. **Data Augmentation và Implicit Regularization**:
+   Giải thích vì sao cắt xoay ảnh, Mixup, hay ngay cả nhiễu ngẫu nhiên của Mini-batch SGD cũng đóng vai trò chính quy hóa mạnh mẽ bằng cách ép mô hình bất biến theo phép biến đổi và tìm vùng cực tiểu phẳng.
+
+### Khung giải thích (nên đọc chậm): So sánh bằng số bước co trọng số của $$L_1$$ và $$L_2$$ khi trọng số đã nhỏ ($$w = 0{,}05$$)
+
+Giả sử đạo hàm từ dữ liệu bằng $$0$$ (trọng số này không giúp giảm loss), ta xét lực kéo về 0 của $$L_1$$ và $$L_2$$ với cùng $$\lambda = 0{,}1$$ và $$\eta = 0{,}5$$ tại $$w = 0{,}05$$:
+
+| Loại phạt | Công thức lực kéo (gradient phạt) | Độ lớn bước kéo $$\eta \cdot \text{grad}$$ | Giá trị $$w_{\text{new}}$$ sau 1 bước | Hệ quả hình học |
+| :--- | :---: | :---: | :---: | :--- |
+| **Phạt $$L_2$$** ($$\frac{\lambda}{2}w^2$$) | $$\lambda w = 0{,}1(0{,}05) = 0{,}005$$ | $$0{,}0025$$ | $$0{,}05 - 0{,}0025 = \mathbf{0{,}0475}$$ | Lực kéo yếu dần theo $$w$$ $$\to$$ chỉ tiệm cận 0 |
+| **Phạt $$L_1$$** ($$\lambda |w|$$) | $$\lambda \operatorname{sign}(w) = 0{,}1$$ | $$0{,}0500$$ | $$0{,}05 - 0{,}05 = \mathbf{0{,}0000}$$ | Lực kéo không đổi $$\to$$ chạm chính xác **0** (thưa!) |
+
+Chỉ bằng 2 dòng tính tay như vậy trong buổi phỏng vấn, bạn đã giải thích trọn vẹn bản chất toán học của độ thưa $$L_1$$ mà không cần vẽ hình phức tạp!
+
 # Tùy chọn: Luyện phỏng vấn — Quá khớp và chính quy hóa
 
 > Bài này mang tính **tùy chọn** và **không** thay thế các bài lý thuyết về dropout, BatchNorm hay các kỹ thuật chính quy hóa khác. Sau khi học xong phần cốt lõi, hãy dùng các câu hỏi dưới đây để tự kiểm tra, đồng thời tham khảo thêm bộ câu hỏi có lời giải trong *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)).

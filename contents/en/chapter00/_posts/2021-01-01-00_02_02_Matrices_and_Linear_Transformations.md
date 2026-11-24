@@ -9,6 +9,31 @@ categories:
 - chapter00
 ---
 
+> *When PyTorch executes `nn.Linear(768, 3072)`, it is not merely shuffling a grid of numbers—it is applying a linear map that embeds a 768-dimensional token representation into a richer 3072-dimensional space where previously entangled concepts become linearly separable.*
+
+## Background Knowledge Map: Matrices as Geometric Operators
+
+1. **Matrices as Linear Maps**: Every $$m \times n$$ matrix $$A$$ uniquely specifies a linear transformation $$T(\mathbf{x}) = A\mathbf{x}$$ from $$\mathbb{R}^n$$ to $$\mathbb{R}^m$$, with its columns showing exactly where the standard basis vectors land.
+2. **Matrix Multiplication as Composition**: Multiplying $$B(A\mathbf{x}) = (BA)\mathbf{x}$$ composes two sequential transformations; this also explains why stacking linear layers without nonlinear activations collapses into a single matrix $$W_{\text{eff}} = W_2 W_1$$.
+3. **Rank, Nullspace, and Information Bottlenecks**: The rank of $$W$$ equals the dimension of its output subspace, while its nullspace $$\ker(W) = \{\mathbf{x} : W\mathbf{x} = \mathbf{0}\}$$ captures all input directions permanently erased by the layer.
+4. **Transpose and Adjoint (The Backward Pass Operator)**: If a forward layer multiplies by $$W$$, backpropagating gradients multiplies by $$W^\top$$, mapping output sensitivities back into the input coordinate space.
+
+### Step-by-Step Worked Example (Read Slowly): Composing Two Linear Layers and Verifying Non-Commutativity
+
+Let Layer 1 project from $$\mathbb{R}^2 \to \mathbb{R}^2$$ via $$A = \begin{bmatrix} 1 & 2 \\ 0 & 1 \end{bmatrix}$$ (horizontal shear) and Layer 2 scale coordinates via $$B = \begin{bmatrix} 2 & 0 \\ 0 & -1 \end{bmatrix}$$. Apply them to $$\mathbf{x} = \begin{bmatrix} 3 \\ 4 \end{bmatrix}$$.
+
+1. **Step-by-Step Application ($$A$$ then $$B$$)**:
+   - First apply $$A$$:
+     $$\mathbf{h} = A\mathbf{x} = \begin{bmatrix} 1(3) + 2(4) \\ 0(3) + 1(4) \end{bmatrix} = \begin{bmatrix} 11 \\ 4 \end{bmatrix}$$
+   - Then apply $$B$$:
+     $$\mathbf{y} = B\mathbf{h} = \begin{bmatrix} 2(11) + 0(4) \\ 0(11) + (-1)(4) \end{bmatrix} = \begin{bmatrix} 22 \\ -4 \end{bmatrix}$$
+2. **Collapsed Composite Matrix $$BA$$**:
+   $$BA = \begin{bmatrix} 2 & 0 \\ 0 & -1 \end{bmatrix}\begin{bmatrix} 1 & 2 \\ 0 & 1 \end{bmatrix} = \begin{bmatrix} 2 & 4 \\ 0 & -1 \end{bmatrix}$$
+   Check directly: $$(BA)\mathbf{x} = \begin{bmatrix} 2(3) + 4(4) \\ 0(3) - 1(4) \end{bmatrix} = \begin{bmatrix} 22 \\ -4 \end{bmatrix}$$. Exact match!
+3. **Check the Reverse Order $$AB$$ (Non-Commutativity)**:
+   $$AB = \begin{bmatrix} 1 & 2 \\ 0 & 1 \end{bmatrix}\begin{bmatrix} 2 & 0 \\ 0 & -1 \end{bmatrix} = \begin{bmatrix} 2 & -2 \\ 0 & -1 \end{bmatrix} \neq BA$$
+   Applying $$AB$$ to $$\mathbf{x}$$ gives $$\begin{bmatrix} 2(3) - 2(4) \\ -4 \end{bmatrix} = \begin{bmatrix} -2 \\ -4 \end{bmatrix}$$. Order of transformations matters dramatically in deep architectures.
+
 This lesson covers matrices, matrix operations, and linear transformations, which are fundamental tools for representing and solving deep-learning problems.
 
 ---

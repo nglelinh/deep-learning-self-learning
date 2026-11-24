@@ -9,6 +9,29 @@ categories:
 - chapter03
 ---
 
+> *Should you compute gradients over all 1,000,000 training examples before taking a single step, or update after every single sample? The answer—mini-batch SGD with a carefully scheduled learning rate—sits at the sweet spot between statistical variance, GPU vectorization, and generalization.*
+
+## Background Knowledge Map: GD Variants & Learning-Rate Dynamics
+
+1. **Batch vs. Stochastic vs. Mini-Batch GD**: Trades off gradient variance ($$\propto \sigma^2 / B$$) against update frequency and hardware utilization; mini-batches ($$B = 32$$ to $$4096$$) keep GPUs saturated while preserving helpful gradient noise.
+2. **Linear Scaling Rule & Warmup**: Increasing batch size by $$k\times$$ reduces gradient noise, often allowing a larger learning rate, while initial linear warmup prevents early instability before curvature statistics settle.
+3. **Learning Rate Schedules (Step, Cosine, Exponential)**: Starts high to traverse flat plateaus and escape poor basins, then decays smoothly so stochastic updates settle tightly inside the bottom of a minimum.
+4. **Variance Floor of Constant-LR SGD**: With a fixed $$\eta$$, noisy mini-batch gradients orbit in a ball of radius $$O(\eta \sigma^2)$$ around the optimum rather than converging to zero error—necessitating decay.
+
+### Step-by-Step Worked Example (Read Slowly): Quantifying Gradient Variance Reduction Across Batch Sizes
+
+Suppose a dataset of $$N = 4$$ points has individual gradients $$g_1 = 2, g_2 = 6, g_3 = 10, g_4 = 14$$ at the current weight $$w$$.
+
+1. **Compute the Exact Full-Batch Gradient ($$B = 4$$)**:
+   $$\bar{g} = \frac{2 + 6 + 10 + 14}{4} = \frac{32}{4} = 8.0$$
+2. **Compute Single-Sample SGD Variance ($$B = 1$$)**:
+   $$\sigma_1^2 = \frac{1}{4}\left[(2-8)^2 + (6-8)^2 + (10-8)^2 + (14-8)^2\right] = \frac{36 + 4 + 4 + 36}{4} = \frac{80}{4} = 20.0$$
+   Standard deviation of a single-sample gradient is $$\sqrt{20} \approx 4.47$$ (over 55% of the true gradient magnitude!).
+3. **Compare Mini-Batch Size $$B = 2$$ (Sampling With Replacement)**:
+   For i.i.d. mini-batches of size $$B$$, variance scales strictly as $$\sigma_B^2 = \sigma_1^2 / B$$:
+   $$\sigma_2^2 = \frac{20.0}{2} = 10.0 \quad (\text{std} \approx 3.16)$$
+   And for $$B = 64$$ on a large dataset with $$\sigma_1^2 = 20.0$$, variance drops to $$20/64 = 0.3125$$ (std $$\approx 0.56$$), yielding an $$8\times$$ cleaner descent direction per step while letting the GPU process all 64 samples in parallel!
+
 This lesson introduces gradient descent, the fundamental deep-learning algorithm used to train neural networks.
 
 ---

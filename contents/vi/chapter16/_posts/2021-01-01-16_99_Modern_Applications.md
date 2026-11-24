@@ -10,6 +10,25 @@ categories:
 lesson_type: optional
 ---
 
+Nếu năm 2020 SimCLR vẫn còn là câu chuyện nghiên cứu cần batch size 4.096 và phải tinh chỉnh lại cho từng tác vụ, thì giai đoạn 2023–2026 đã chứng kiến bước trưởng thành vượt bậc: **DINOv2** cho ra đặc trưng thị giác đóng băng dùng thẳng cho ước lượng độ sâu lẫn phân đoạn, **SigLIP** thay thế Softmax toàn cục bằng hàm sigmoid song song cực gọn, còn **I-JEPA** của Yann LeCun dự đoán trực tiếp trong không gian biểu diễn thay vì vẽ lại từng điểm ảnh.
+
+## Bản đồ kiến thức nền: Ba hướng đột phá của Học Tự giám sát hiện đại (2022–2026)
+
+- **DINOv2 và xương sống thị giác phổ dụng:** Kết hợp chưng cất tự thân cấp ảnh + cấp patch (iBOT) cùng quy trình lọc dữ liệu tự động LVD-142M để tạo ra bộ đặc trưng đóng băng xuất sắc cho cả phân loại, phân đoạn lẫn ước lượng độ sâu 3D.
+- **SigLIP / SigLIP 2 (Sigmoid Contrastive Loss):** Thay bài toán Softmax phụ thuộc toàn batch của CLIP bằng phân loại nhị phân độc lập trên từng cặp ảnh–văn bản, loại bỏ nút cổ chai đồng bộ hóa GPU và mở rộng dễ dàng ở mọi batch size.
+- **I-JEPA / V-JEPA (Joint-Embedding Predictive Architecture):** Dự đoán biểu diễn ẩn của vùng bị che thay vì tái tạo pixel thô, loại bỏ chi tiết nhiễu không liên quan ngữ nghĩa (như vị trí từng chiếc lá rung trong gió).
+- **Hội tụ với hệ sinh thái đa phương thức:** Các bộ mã hóa SSL hiện đại (SigLIP, DINOv2) chính là "đôi mắt" mặc định được cắm trực tiếp vào các mô hình ngôn ngữ thị giác (VLM) thế hệ mới.
+
+### Khung giải thích (nên đọc chậm): So sánh tính toán của Softmax CLIP vs. Sigmoid SigLIP trên một batch $$B = 4$$ cặp ảnh–văn bản
+
+Xét ma trận độ tương đồng $$4 \times 4$$ giữa 4 ảnh và 4 chú thích văn bản (đường chéo chính là 4 cặp dương $$y_{ij} = +1$$, 12 ô ngoài đường chéo là cặp âm $$y_{ij} = -1$$). Giả sử ô dương $$(1,1)$$ có điểm $$z_{11} = +3{,}0$$ (sau hệ số thang $$t$$ và bias $$b$$) và một ô âm $$(1,2)$$ có $$z_{12} = -2{,}0$$.
+
+1. **Với CLIP (Softmax Cross-Entropy):** Muốn tính xác suất cho ô $$(1,1)$$, GPU phải tập hợp (all-gather) điểm tương đồng với **toàn bộ** $$B$$ văn bản trên mọi GPU để tính mẫu số $$\sum_{j=1}^B e^{z_{1j}}$$.
+2. **Với SigLIP (Pairwise Sigmoid Loss):** Mỗi ô $$(i, j)$$ tính độc lập bằng công thức $$\ell_{ij} = \ln(1 + e^{-y_{ij} z_{ij}})$$:
+   - Ô dương $$(1,1)$$ ($$y = +1, z = +3{,}0$$): $$\ell_{11} = \ln(1 + e^{-3{,}0}) \approx \ln(1{,}0498) \approx 0{,}0486$$.
+   - Ô âm $$(1,2)$$ ($$y = -1, z = -2{,}0$$): $$\ell_{12} = \ln(1 + e^{-(-1)(-2{,}0)}) = \ln(1 + e^{-2{,}0}) \approx \ln(1{,}1353) \approx 0{,}1269$$.
+3. **Ưu thế hệ thống:** Vì không cần mẫu số chuẩn hóa toàn cục, SigLIP cho phép tính chia khối (chunked) giữa các GPU với bộ nhớ cực nhỏ và hoạt động ổn định ngay cả ở batch size nhỏ lẫn cực lớn (hàng chục nghìn cặp).
+
 # Tùy chọn: Học tự giám sát sau SimCLR — DINOv2, SigLIP và JEPA
 
 > Bài này là **tùy chọn**, **không** thay thế phần lý thuyết học đối chiếu / MLM hay bản phác thảo SimCLR trong chương. Nội dung cập nhật các phương pháp học tự giám sát (SSL) cho **thị giác và đa phương thức** được dùng rộng rãi từ sau năm 2022.

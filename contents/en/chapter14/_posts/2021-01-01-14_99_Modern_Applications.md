@@ -10,6 +10,27 @@ categories:
 lesson_type: optional
 ---
 
+Many observers declared GANs dead once Latent Diffusion took over text-to-image generation in 2022—yet look inside 2024–2026's fastest one-step image generators (SDXL-Turbo, DMD2, LADD) and neural codecs, and you will find an adversarial discriminator doing the heavy lifting. While diffusion owns iterative multi-step sampling, GANs remain unmatched whenever you need single-step sub-50ms inference, razor-sharp local texture, or clean latent-space facial editing.
+
+## Background Knowledge Map: GANs in the Post-Diffusion Era (2022–2026)
+
+- **Pillar 1 — StyleGAN3 & Disentangled Latent Inversion**: Achieves alias-free equivariant synthesis and projects real photographs into $\mathcal{W}^+$ latent space for instant semantic editing (age, lighting, gaze).
+- **Pillar 2 — Adversarial Diffusion Distillation (ADD / LADD)**: Combines a pretrained diffusion teacher with a PatchGAN/feature-space discriminator to collapse 50-step diffusion down to 1–4 real-time steps without losing sharpness.
+- **Pillar 3 — Perceptual Discriminators Inside Codecs**: Uses multi-scale PatchGAN and multi-period audio discriminators (HiFi-GAN, EnCodec) so VAE and audio-codec decoders reconstruct crisp edges and harmonics.
+- **Pillar 4 — Latency vs. Diversity Engineering Trade-offs**: Defines when to choose a GAN or adversarially distilled student (real-time video, on-device filters, super-resolution) over multi-step diffusion.
+
+### Step-by-Step Worked Example (Read Slowly): Inference Latency Speedup of Adversarial Diffusion Distillation
+
+Suppose a standard diffusion U-Net/DiT takes $t_{\text{step}} = 35\text{ ms}$ per denoising step on a consumer GPU, uses Classifier-Free Guidance (doubling batch size so each step costs $2 \times 35 = 70\text{ ms}$), runs for $N = 30$ steps, plus a $40\text{ ms}$ VAE decode. Compare this to an adversarially distilled 1-step GAN-diffusion student (no CFG needed at inference).
+
+1. **Standard 30-step Diffusion with CFG**:
+   $$T_{\text{diff}} = 30 \times 70\text{ ms} + 40\text{ ms} = 2{,}140\text{ ms} \approx 2.14\text{ seconds/image}.$$
+2. **Adversarially Distilled 1-Step Student**:
+   $$T_{\text{1-step}} = 1 \times 35\text{ ms} + 40\text{ ms} = 75\text{ ms/image} \quad (\approx 13.3\text{ frames/sec}).$$
+3. **End-to-end speedup**:
+   $$\frac{2{,}140}{75} \approx 28.5\times\text{ faster}.$$
+4. **Takeaway**: Pairing adversarial discriminators with diffusion teachers preserves modern foundation-model semantics while restoring classic GAN single-pass speed.
+
 # Optional: GANs after diffusion — faces, inversion, and one-step generators
 
 > This lesson is **optional**. It does **not** replace GAN losses, DCGAN/StyleGAN theory, or the training-pitfalls notes. It records what GANs are still *for* after diffusion became the default sampler.

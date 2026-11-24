@@ -9,6 +9,31 @@ categories:
 - chapter00
 ---
 
+> *Every evaluation metric you compute in machine learning—precision, recall, Intersection-over-Union (IoU) in object detection, or train/validation/test splits—is literally an operation on sets. Mastering set notation and laws prevents subtle bugs like data leakage and miscalculated class metrics.*
+
+## Background Knowledge Map: Set Operations in Machine Learning Workflows
+
+1. **Sets, Subsets, and Partitions (Dataset Splitting)**: Formalizes how a full dataset $$D$$ must be partitioned into pairwise disjoint subsets $$D_{\text{train}}, D_{\text{val}}, D_{\text{test}}$$ whose union is $$D$$ and pairwise intersections are $$\emptyset$$ (zero leakage).
+2. **Union, Intersection, and Set Difference (Evaluation Metrics)**: Directly defines True Positives ($$P \cap T$$), False Positives ($$P \setminus T$$), False Negatives ($$T \setminus P$$), and Jaccard / IoU similarity $$\frac{\lvert A \cap B\rvert}{\lvert A \cup B\rvert}$$.
+3. **De Morgan's Laws & Complements (Logical Filtering)**: Translates complex boolean data filters—such as excluding samples that are either corrupted or unlabeled—into clean, bug-free set identities: $$(A \cup B)^c = A^c \cap B^c$$.
+4. **Cartesian Products & Functions (Input–Output Spaces)**: Defines labeled datasets as subsets of $$\mathcal{X} \times \mathcal{Y}$$ and neural models as mappings $$f: \mathcal{X} \to \mathcal{Y}$$ between structured sets.
+
+### Step-by-Step Worked Example (Read Slowly): Computing IoU and Verifying Inclusion–Exclusion on Detection Sets
+
+Suppose an object detector predicts a set of foreground pixels $$P$$ of size $$\lvert P\rvert = 120$$, while the ground-truth bounding mask $$T$$ has $$\lvert T\rvert = 100$$ pixels, and they overlap on $$\lvert P \cap T\rvert = 80$$ pixels inside a $$500$$-pixel image $$U$$.
+
+1. **Compute the Union via Inclusion–Exclusion**:
+   $$\lvert P \cup T\rvert = \lvert P\rvert + \lvert T\rvert - \lvert P \cap T\rvert = 120 + 100 - 80 = 140$$
+2. **Compute Intersection-over-Union (IoU / Jaccard Index)**:
+   $$\text{IoU}(P, T) = \frac{\lvert P \cap T\rvert}{\lvert P \cup T\rvert} = \frac{80}{140} = \frac{4}{7} \approx 0.5714$$
+3. **Decompose Errors Using Set Difference**:
+   - False Positives: $$\lvert P \setminus T\rvert = \lvert P\rvert - \lvert P \cap T\rvert = 120 - 80 = 40$$.
+   - False Negatives: $$\lvert T \setminus P\rvert = \lvert T\rvert - \lvert P \cap T\rvert = 100 - 80 = 20$$.
+4. **Verify True Negatives via De Morgan's Law**:
+   Background pixels correctly ignored are $$P^c \cap T^c = (P \cup T)^c$$, so:
+   $$\lvert P^c \cap T^c\rvert = \lvert U\rvert - \lvert P \cup T\rvert = 500 - 140 = 360$$
+   Partition check: $$\text{TP} + \text{FP} + \text{FN} + \text{TN} = 80 + 40 + 20 + 360 = 500 = \lvert U\rvert$$. Every pixel is accounted for exactly once.
+
 This lesson covers fundamental concepts from set theory that provide the mathematical foundation for understanding deep-learning problems, constraints, and feasible regions.
 
 ---

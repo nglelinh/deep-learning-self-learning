@@ -9,6 +9,27 @@ categories:
 - chapter12
 ---
 
+Một câu hỏi hóc búa từng khiến nhiều người mới học phải khựng lại: nếu mục tiêu của Autoencoder chỉ là tái tạo lại đúng đầu vào $$\mathbf{x}$$, vậy tại sao mạng không đơn giản là "chép nguyên xi" đầu vào ra đầu ra để đạt loss bằng 0? Câu trả lời nằm ở hình học của những ràng buộc: chính việc *tước bỏ năng lực ghi nhớ tầm thường* mới buộc mạng phải học ra các đặc trưng bậc cao. Bài lý thuyết này phân tích chặt chẽ từ toán học tuyến tính (PCA) đến các biến thể Denoising và Sparse Autoencoder.
+
+## Bản đồ kiến thức nền: Nền tảng toán học của Autoencoder và các cơ chế chính quy hóa
+
+- **Autoencoder thiếu hoàn chỉnh (Undercomplete) và định lý tương đương PCA:** Chứng minh khi kích hoạt tuyến tính và loss MSE, nghiệm tối ưu của Autoencoder trải cùng không gian con với $$d$$ vector riêng hàng đầu của ma trận hiệp phương sai.
+- **Autoencoder dư thừa (Overcomplete) và nguy cơ ánh xạ đồng nhất:** Giải thích vì sao khi $$d \ge D$$, mục tiêu tái tạo thuần túy trở nên vô nghĩa nếu thiếu ràng buộc cấu trúc.
+- **Denoising Autoencoder (DAE) và hình học trường vector:** Làm nhiễu đầu vào $$\tilde{\mathbf{x}} \sim q(\tilde{\mathbf{x}}|\mathbf{x})$$ rồi bắt mạng khôi phục $$\mathbf{x}$$, thực chất dạy mạng học vector kéo điểm nhiễu quay về đa tạp dữ liệu.
+- **Sparse & Contractive Autoencoder:** Dùng phạt phân kỳ KL lên độ kích hoạt trung bình $$\hat{\rho}_j$$ hoặc chuẩn Frobenius của Jacobian $$\|J_f(\mathbf{x})\|_F^2$$ để tạo biểu diễn chọn lọc và bền vững.
+
+### Khung giải thích (nên đọc chậm): Tính tay số hạng phạt thưa KL trong Sparse Autoencoder
+
+Trong Sparse Autoencoder, ta mong muốn mỗi nơ-ron ẩn chỉ "bật" trung bình khoảng $$\rho = 0{,}05$$ ($$5\%$$ số mẫu trong batch). Hàm phạt phân kỳ KL giữa phân phối Bernoulli($$\rho$$) và độ kích hoạt thực tế $$\hat{\rho}_j$$ là:
+$$\Omega_{\text{sparse}}(\hat{\rho}_j) = \rho \ln\frac{\rho}{\hat{\rho}_j} + (1 - \rho)\ln\frac{1 - \rho}{1 - \hat{\rho}_j}.$$
+
+So sánh hai nơ-ron ẩn trên cùng một batch:
+1. **Nơ-ron A hoạt động đúng mục tiêu** ($$\hat{\rho}_A = 0{,}05$$):
+   $$\Omega(0{,}05) = 0{,}05\ln(1) + 0{,}95\ln(1) = 0.$$
+2. **Nơ-ron B bị "bật tràn lan"** ($$\hat{\rho}_B = 0{,}50$$):
+   $$\Omega(0{,}50) = 0{,}05\ln\frac{0{,}05}{0{,}50} + 0{,}95\ln\frac{0{,}95}{0{,}50} = 0{,}05(-2{,}3026) + 0{,}95(0{,}6419) = -0{,}1151 + 0{,}6098 = 0{,}4947.$$
+3. **Hiệu ứng tối ưu:** Nơ-ron B chịu mức phạt gần $$0{,}50$$ nhân hệ số $$\beta$$, tạo gradient dương ép bias và trọng số của nó giảm xuống cho đến khi nó chỉ phản ứng mạnh với một mẫu đặc trưng thực sự chuyên biệt.
+
 # Autoencoder: Học biểu diễn hiệu quả
 
 ![Autoencoder Architecture](https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Autoencoder_structure.png/600px-Autoencoder_structure.png)

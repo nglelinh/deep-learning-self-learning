@@ -9,6 +9,30 @@ categories:
 - chapter03
 ---
 
+> *Writing a 10-line gradient descent loop in NumPy is easy; keeping it from oscillating in narrow ravines, stalling on high-dimensional saddle points, or diverging from unscaled features is where real optimization engineering begins.*
+
+## Background Knowledge Map: Practical Obstacles in Gradient Descent
+
+1. **Ill-Conditioned Ravines (Anisotropic Curvature)**: When one parameter axis is $$100\times$$ steeper than another, vanilla GD bounces violently across the narrow canyon while barely moving along the valley floor.
+2. **Saddle Points vs. Local Minima**: In high-dimensional parameter spaces ($$d \gg 10^6$$), nearly all critical points with $$\nabla L = \mathbf{0}$$ are saddle points (some positive, some negative Hessian eigenvalues), where deterministic GD can stall indefinitely.
+3. **Feature Scaling & Condition Number**: Feeding unnormalized features (e.g., age $$[0, 100]$$ next to income $$[0, 10^6]$$) stretches loss contours by $$10^4\times$$, crippling vanilla GD until features are standardized.
+4. **Vectorized Implementation & Numerical Checks**: Replacing Python loops with matrix ops and verifying analytic gradients against finite-difference numerical gradients eliminates silent bugs.
+
+### Step-by-Step Worked Example (Read Slowly): Watching Vanilla GD Zig-Zag in an Ill-Conditioned Valley
+
+Minimize $$L(w_1, w_2) = 0.5 w_1^2 + 5 w_2^2$$ (Hessian eigenvalues $$\lambda_1 = 1, \lambda_2 = 10$$, condition number $$\kappa = 10$$), starting at $$(w_1, w_2) = (10, 1)$$ with learning rate $$\eta = 0.18$$ (just under the stability limit $$2/\lambda_2 = 0.20$$).
+
+1. **Compute Gradients**:
+   $$\frac{\partial L}{\partial w_1} = w_1, \qquad \frac{\partial L}{\partial w_2} = 10 w_2$$
+2. **Trace Step 1 ($$t = 0 \to 1$$)**:
+   - $$w_1^{(1)} = 10 - 0.18(10) = 8.20$$ (smooth progress toward $$0$$).
+   - $$w_2^{(1)} = 1 - 0.18(10 \times 1) = 1 - 1.8 = -0.80$$ (overshot zero to the opposite wall!).
+3. **Trace Step 2 ($$t = 1 \to 2$$)**:
+   - $$w_1^{(2)} = 8.20 - 0.18(8.20) = 6.724$$.
+   - $$w_2^{(2)} = -0.80 - 0.18(-8.0) = -0.80 + 1.44 = +0.64$$ (bounced back across zero!).
+4. **Diagnosis**:
+   Even though $$\eta = 0.18$$ is barely safe for $$w_2$$ (decay factor $$-0.8$$ per step), $$w_1$$ only shrinks by $$0.82$$ per step. Increasing $$\eta$$ to speed up $$w_1$$ immediately blows up $$w_2$$! Rescaling features or adding momentum resolves this exact bottleneck.
+
 ## Implementation
 
 ### Basic Gradient Descent

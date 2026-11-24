@@ -9,6 +9,29 @@ categories:
 - chapter01
 ---
 
+> *When AlexNet crushed the 2012 ImageNet competition by more than 10 percentage points, it wasn't because researchers suddenly discovered a secret equation—backpropagation was already 26 years old. What changed was realizing that compositional depth turns exponentially complex patterns into a sequence of simple, learnable geometric warps.*
+
+## Background Knowledge Map: What Defines Deep Learning Mathematically
+
+1. **AI vs. Machine Learning vs. Deep Learning**: Nests deep learning as the subfield of representation learning that uses multi-layer parameterized compositions rather than shallow fixed-basis models (SVMs, linear regression, decision trees).
+2. **Universal Approximation Theorem (Expressive Power)**: Proves that even a single sufficiently wide hidden layer with a non-polynomial activation can approximate any continuous function on a compact domain—establishing *existence*, though not *efficiency*.
+3. **Depth Efficiency (Compositional Advantage)**: Shows that deep networks can represent hierarchical functions with exponentially fewer parameters than shallow networks by reusing shared intermediate sub-features across layers.
+4. **Empirical Risk Minimization (ERM)**: Formalizes learning as minimizing $$\hat{R}(\theta) = \frac{1}{N}\sum_{i=1}^N \mathcal{L}(f_\theta(x_i), y_i) + \lambda \Omega(\theta)$$ over parameters $$\theta$$ via stochastic gradient optimization.
+
+### Step-by-Step Worked Example (Read Slowly): Counting Linear Regions to See Why Depth Beats Width
+
+A ReLU network partitions its input space into piecewise linear regions. With a budget of $$K = 6$$ hidden ReLU neurons on a 1D input $$x \in \mathbb{R}$$, compare a **shallow** (1 layer of 6 neurons) vs. a **deep** (3 layers of 2 neurons each) network.
+
+1. **Shallow Network (1 Layer, Width $$n = 6$$)**:
+   Each 1D ReLU neuron introduces at most $$1$$ hinge (breakpoint) on the real line. Six hinges divide $$\mathbb{R}$$ into at most:
+   $$R_{\text{shallow}} = 6 + 1 = 7\text{ linear regions}$$
+2. **Deep Network (3 Layers, Width $$n = 2$$ per Layer)**:
+   A 2-neuron layer can fold the real line in half (creating a sawtooth map like $$g(x) = \text{ReLU}(2x) - \text{ReLU}(4x - 2)$$, which doubles the number of pieces at every layer!). Composing $$L = 3$$ such layers multiplies the region count:
+   $$R_{\text{deep}} = 2^3 = 8\text{ linear regions}$$
+3. **Scaling to $$K = 20$$ Neurons (Width 20 vs. 10 Layers of Width 2)**:
+   - Shallow: $$R_{\text{shallow}} = 20 + 1 = 21$$ regions.
+   - Deep: $$R_{\text{deep}} = 2^{10} = 1{,}024$$ regions—nearly $$50\times$$ more expressive pieces using the exact same number of neurons! That exponential factor $$2^L$$ vs. linear $$n$$ is the mathematical heartbeat of *deep* learning.
+
 # Introduction to Deep Learning
 
 ## 1. Concept Overview

@@ -10,6 +10,27 @@ categories:
 lesson_type: optional
 ---
 
+You might think tabular MDPs only live in toy GridWorlds—until you realize that every modern recommendation feed, dynamic pricing engine, and RLHF LLM post-training run is literally an MDP. In RLHF, the state is the prompt plus tokens generated so far, the action is the next token from the vocabulary, the policy is the LLM itself, and the reward arrives at the end of the response from a preference model or verifier.
+
+## Background Knowledge Map: Classical RL Concepts in Production (2022–2026)
+
+- **Pillar 1 — RLHF as a Token-Level MDP**: Maps prompt-to-response generation directly onto $(\mathcal{S}, \mathcal{A}, P, R, \gamma)$ with deterministic string-concatenation transitions and terminal reward plus per-token KL penalty.
+- **Pillar 2 — Contextual Bandits in Ranking & RecSys**: Solves 1-step MDPs ($\gamma = 0$) where context $x$ is the user/session, actions $a$ are candidate items, and algorithms like LinUCB or Thompson Sampling balance revenue against exploration.
+- **Pillar 3 — Offline / Batch RL & Propensity Weighting**: Learns improved policies strictly from logged historical interactions using Inverse Propensity Scoring (IPS) or Conservative Q-Learning (CQL) when live exploration is risky or expensive.
+- **Pillar 4 — Sim-to-Real & Reward Hacking Prevention**: Tests policies in simulators before deployment and guards against Goodhart's Law (where optimizing a proxy metric like clickbait destroys true user satisfaction).
+
+### Step-by-Step Worked Example (Read Slowly): Inverse Propensity Scoring (IPS) for Offline Policy Evaluation
+
+Suppose a logged recommendation system showed Item A with probability $\pi_0(A \mid x) = 0.20$ and observed click reward $r = 1.0$, and showed Item B with probability $\pi_0(B \mid x) = 0.80$ and observed reward $r = 0.0$. We want to evaluate a new candidate policy $\pi_{\text{new}}$ that puts probability $\pi_{\text{new}}(A \mid x) = 0.70$ and $\pi_{\text{new}}(B \mid x) = 0.30$—without deploying it live yet!
+
+1. **Compute importance weights $w(a) = \frac{\pi_{\text{new}}(a \mid x)}{\pi_0(a \mid x)}$**:
+   $$w(A) = \frac{0.70}{0.20} = 3.50, \qquad w(B) = \frac{0.30}{0.80} = 0.375.$$
+2. **Compute the IPS-estimated expected reward across these 2 logged impressions**:
+   $$\hat{V}_{\text{IPS}}(\pi_{\text{new}}) = \frac{1}{2}\big[w(A)\cdot 1.0 + w(B)\cdot 0.0\big] = \frac{3.50 + 0}{2} = 1.75\text{ (unclipped!)}.$$
+3. **Self-Normalized IPS (SNIPS) to control variance**:
+   $$\hat{V}_{\text{SNIPS}} = \frac{w(A)\cdot 1.0 + w(B)\cdot 0.0}{w(A) + w(B)} = \frac{3.50}{3.50 + 0.375} = \frac{3.50}{3.875} \approx 0.903.$$
+4. **Takeaway**: Notice how raw IPS can even exceed the maximum possible reward $1.0$ when logging propensities are small ($0.20$), which is why production offline RL systems rely on Self-Normalized IPS or clipped importance ratios.
+
 # Optional: RL fundamentals in production — bandits, recsys, and RLHF’s MDP
 
 > This lesson is **optional**. It does **not** replace MDPs, returns, or policy/value definitions. It shows where those objects showed up in 2022–2026 *data-science* systems — especially preference-based language training.

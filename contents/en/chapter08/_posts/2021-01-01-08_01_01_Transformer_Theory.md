@@ -9,6 +9,31 @@ categories:
 - chapter08
 ---
 
+Every sub-component inside a Transformer block was forged to solve a specific mathematical instability. Remove LayerNorm or place it poorly at high learning rates, and deep Transformers diverge; remove the $$4\times$$ expansion inside the position-wise FFN, and the model loses its nonlinear representational capacity; remove sinusoidal/relative phase shifts, and attention cannot distinguish word order. Reading the Transformer block as a unified dynamical system—residual stream, normalization, attention mixing, and FFN expansion—makes every hyperparameter choice transparent.
+
+## Background Knowledge Map: Mathematical Theory of the Transformer Block
+
+- **Sinusoidal Positional Encodings & Linear Shift Property**: Encoding position $$p$$ with $$\sin(p / 10000^{2i/d})$$ and $$\cos(p / 10000^{2i/d})$$ ensures that any fixed offset $$\Delta$$ corresponds to an exact $$2 \times 2$$ orthogonal rotation matrix independent of $$p$$, letting attention compute relative distances via linear projections.
+- **Pre-LN vs. Post-LN Residual Dynamics**: The original 2017 paper used Post-LN ($$\text{LN}(x + F(x))$$), which required delicate learning-rate warmup to prevent early gradient explosion. Modern LLMs use Pre-LN ($$x + F(\text{LN}(x))$$), keeping a completely clean, unnormalized identity residual highway from input to output.
+- **Position-Wise Feed-Forward Network (FFN)**: Applied identically to each token position, $$\text{FFN}(x) = W_2 \sigma(W_1 x + b_1) + b_2$$ expands dimension $$d_{\text{model}} \to 4 d_{\text{model}} \to d_{\text{model}}$$ and actually holds **two-thirds** of a standard Transformer block's parameters!
+- **Cross-Entropy Label Smoothing & Weight Tying**: Sharing the input token embedding matrix with the final output unembedding projection ($$W_{\text{out}} = W_{\text{emb}}^\top$$) saves tens of millions of parameters while regularizing the logit space.
+
+### Step-by-Step Worked Example (Read Slowly): Exact Parameter Audit of One Transformer Block
+
+Consider a canonical Transformer encoder/decoder block with $$d_{\text{model}} = 512$$, $$h = 8$$ heads, and $$d_{\text{ff}} = 4 d_{\text{model}} = 2{,}048$ (including biases):
+
+1. **Multi-Head Self-Attention (`W_Q, W_K, W_V, W_O`)**:
+   $$4 \times (512 \times 512 + 512) = 4 \times 262{,}656 = 1{,}050{,}624.$$
+2. **Position-wise FFN (`512 -> 2048 -> 512`)**:
+   - First linear: $$512 \times 2{,}048 + 2{,}048 = 1{,}050{,}624$$.
+   - Second linear: $$2{,}048 \times 512 + 512 = 1{,}049{,}088$$.
+   - FFN subtotal: $$2{,}099{,}712$$.
+3. **Two LayerNorm layers** ($$\gamma, \beta \in \mathbb{R}^{512}$$ each):
+   $$2 \times (2 \times 512) = 2{,}048.$$
+4. **Grand total per block**:
+   $$1{,}050{,}624 + 2{,}099{,}712 + 2{,}048 = 3{,}152{,}384 \approx 12 d_{\text{model}}^2.$$
+   Notice the iconic rule of thumb: **$$12 d_{\text{model}}^2$$** parameters per Transformer block—with **$$66.6\%$$** inside the FFN and **$$33.3\%$$** inside self-attention!
+
 # Transformer Theory
 
 ![Transformer Architecture](/deep-learning-self-learning/img/chapter_img/chapter08/transformer_architecture.png)

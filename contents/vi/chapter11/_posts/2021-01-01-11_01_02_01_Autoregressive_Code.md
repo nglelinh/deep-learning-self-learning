@@ -9,6 +9,26 @@ categories:
 - chapter11
 ---
 
+Khi chuyển từ phương trình trên bảng đen sang những dòng mã PyTorch chạy thật, một câu hỏi thực tế lập tức nảy sinh: làm sao một mạng nơ-ron có thể học phân phối của 8 cụm điểm nằm trên một vòng tròn chỉ bằng cách dự đoán tọa độ $$x_2$$ sau khi đã biết $$x_1$$? Trong bài thực hành này, ta sẽ tự tay lắp ráp một mô hình tự hồi quy tối giản cho dữ liệu 2D và nhìn thấy tận mắt cách mạng chuyển từ "đoán mù" sang vẽ trọn vẹn cấu trúc vòng tròn xác suất.
+
+## Bản đồ kiến thức nền: Cấu trúc kỹ thuật của cài đặt mô hình tự hồi quy 2D
+
+- **Phân rã hai chiều có điều kiện:** Biểu diễn mật độ đồng thời $$p(x_1, x_2) = p(x_1)\,p(x_2 \mid x_1)$$, trong đó mô hình hóa phân phối biên $$p(x_1)$$ và dùng mạng MLP dự đoán tham số $$(\mu_2(x_1), \sigma_2(x_1))$$ cho $$p(x_2 \mid x_1)$$.
+- **Hàm mất mát Negative Log-Likelihood (NLL) của phân phối chuẩn:** Chuyển đổi công thức mật độ Gaussian sang dạng ổn định số học bằng `log_var` hoặc `softplus` để tránh phương sai âm và chia cho 0.
+- **Quy trình lấy mẫu tuần tự (Ancestral Sampling):** Rút mẫu $$x_1 \sim p(x_1)$$ trước, rồi đưa $$x_1$$ vào mạng để lấy tham số và rút $$x_2 \sim p(x_2 \mid x_1)$$, minh họa trực tiếp lý do mô hình tự hồi quy sinh chậm trên dữ liệu nhiều chiều.
+- **Giới hạn biểu diễn của phân phối điều kiện đơn đỉnh:** Nhận diện điểm yếu khi $$p(x_2 \mid x_1)$$ thực tế có hai đỉnh (nửa trên và nửa dưới vòng tròn) nhưng mô hình chỉ dùng một Gaussian duy nhất.
+
+### Khung giải thích (nên đọc chậm): Tính tay một bước loss NLL và lấy mẫu tuần tự trên điểm $$(x_1, x_2)$$
+
+Giả sử với một điểm dữ liệu trên vòng tròn bán kính $$2$$ là $$(x_1, x_2) = (0{,}0,\; 2{,}0)$$, mạng dự đoán phân phối điều kiện $$p(x_2 \mid x_1 = 0) = \mathcal{N}(\mu = 0{,}5,\; \sigma = 1{,}0)$$ (tức $$\log \sigma^2 = 0$$).
+
+1. **Tính Negative Log-Likelihood cho chiều $$x_2$$:**
+   $$-\ln p(x_2 \mid x_1) = \frac{1}{2}\ln(2\pi) + \ln \sigma + \frac{(x_2 - \mu)^2}{2\sigma^2} = 0{,}9189 + 0 + \frac{(2{,}0 - 0{,}5)^2}{2(1{,}0)^2} = 0{,}9189 + 1{,}125 = 2{,}0439.$$
+2. **Gradient theo $$\mu$$:**
+   $$\frac{\partial \text{NLL}}{\partial \mu} = -\frac{x_2 - \mu}{\sigma^2} = -\frac{2{,}0 - 0{,}5}{1{,}0} = -1{,}5.$$
+   Với tốc độ học $$\eta = 0{,}1$$, bước cập nhật kéo $$\mu$$ về phía $$x_2$$: $$\mu_{\text{mới}} = 0{,}5 - 0{,}1(-1{,}5) = 0{,}65$$.
+3. **Nhận xét quan trọng trên vòng tròn:** Vì vòng tròn đối xứng nên tại $$x_1 = 0$$ có cả $$(0, +2)$$ lẫn $$(0, -2)$$. Một Gaussian đơn đỉnh sẽ bị kéo về trung bình $$\mu = 0$$ và phình to $$\sigma \approx 2$$ — minh họa trực tiếp lý do trong thực tế ta cần **hỗn hợp Gaussian (Mixture of Gaussians)** hoặc **rời rạc hóa thành phân loại softmax** (như PixelCNN) để mô tả phân phối điều kiện đa đỉnh.
+
 ## 4. Đoạn mã
 
 Dưới đây là phần cài đặt mô hình tự hồi quy trên một tập dữ liệu 2D đơn giản nhằm minh họa cơ chế huấn luyện và lấy mẫu của mô hình mật độ tường minh:

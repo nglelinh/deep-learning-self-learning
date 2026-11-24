@@ -10,6 +10,31 @@ categories:
 lesson_type: optional
 ---
 
+Khi Vision Transformer (ViT) xuất hiện năm 2020, từng có dự đoán rằng mạng tích chập (CNN) sẽ sớm trở thành "đồ cổ" trong thị giác máy tính. Thế nhưng thực tế giai đoạn 2022–2026 lại kể một câu chuyện thú vị hơn nhiều: khi được cập nhật đúng quy trình huấn luyện hiện đại và thiết kế khối tối ưu như **ConvNeXt**, CNN không những bắt kịp ViT về độ chính xác mà còn tiếp tục thống trị thị giác thời gian thực, ảnh y khoa và thiết bị biên (edge AI).
+
+## Bản đồ kiến thức nền: Bốn xu hướng hiện đại của CNN (2022–2026)
+
+1. **ConvNeXt — Hiện đại hóa ResNet bằng công thức của Transformer**:
+   Áp dụng nhân depthwise lớn $$7 \times 7$$, khối cổ chai đảo ngược (inverted bottleneck), LayerNorm thay cho BatchNorm, GELU thay cho ReLU và công thức huấn luyện AdamW + Mixup + Stochastic Depth.
+2. **Kiến trúc lai (Hybrid CNN–Transformer)**:
+   Kết hợp tầng tích chập ở các giai đoạn đầu (khai thác thiên kiến cục bộ và hạ độ phân giải nhanh) với tầng Self-Attention ở giai đoạn sâu (mô hình hóa ngữ cảnh toàn cục), như trong CoAtNet hay FasterViT.
+3. **Vai trò cốt lõi trong Mô hình Nền tảng và Phát hiện Vật thể**:
+   Dù SAM hay DINOv2 dùng encoder ViT, các bộ phát hiện thời gian thực (họ YOLO v8–v11) và decoder phân đoạn ảnh y khoa (U-Net hiện đại) vẫn đặt nền móng trên tích chập.
+4. **Đánh đổi Độ phức tạp: $$O(N)$$ của CNN vs. $$O(N^2)$$ của Attention**:
+   Với ảnh độ phân giải cực cao (ảnh vệ tinh, ảnh giải phẫu bệnh học), chi phí bậc hai theo số patch của Self-Attention tăng vọt, khiến CNN tuyến tính theo số pixel vẫn giữ ưu thế áp đảo về độ trễ và năng lượng.
+
+### Khung giải thích (nên đọc chậm): Tính tay sự chênh lệch chi phí giữa Depthwise Conv $$7 \times 7$$ và Self-Attention trên ảnh độ phân giải cao
+
+Xét một bản đồ đặc trưng kích thước $$56 \times 56$$ (tổng cộng $$N = 56 \times 56 = 3{,}136$$ vị trí không gian) với số kênh $$C = 96$$:
+
+1. **Self-Attention toàn cục** (chi phí tương tác giữa mọi cặp vị trí $$N \times N \times C$$):
+   Số phép nhân-cộng riêng cho tích ma trận $$Q K^T$$ và $$A V$$ là:
+   $$2 \times N^2 \times C = 2 \times (3{,}136)^2 \times 96 \approx \mathbf{1{,}888 \text{ triệu MACs}}$$
+2. **Depthwise Convolution $$7 \times 7$$ trong ConvNeXt** (mỗi vị trí chỉ nhân với $$7 \times 7 = 49$$ láng giềng trên từng kênh):
+   $$N \times k^2 \times C = 3{,}136 \times 49 \times 96 \approx \mathbf{14{,}75 \text{ triệu MACs}}$$
+
+Ở độ phân giải $$56 \times 56$$, phép lọc không gian của ConvNeXt rẻ hơn Self-Attention toàn cục tới **128 lần** — đó là lý do cốt lõi khiến CNN hiện đại vẫn là lựa chọn hàng đầu cho suy luận độ trễ thấp trên điện thoại, camera và NPU biên.
+
 # Tùy chọn: ConvNet sau ConvNeXt và Mô hình Nền tảng Thị giác
 
 > Bài này là **tùy chọn** và **không** trình bày lại toán tích chập, tầng gộp hay lịch sử LeNet–ResNet. Nội dung tập trung cập nhật những kiến trúc và cách triển khai phổ biến trong thị giác máy tính từ sau năm 2022.

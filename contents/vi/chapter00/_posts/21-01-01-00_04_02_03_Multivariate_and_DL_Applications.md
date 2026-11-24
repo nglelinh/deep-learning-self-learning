@@ -9,6 +9,35 @@ categories:
 - chapter00
 ---
 
+Trong dữ liệu thực tế, các đặc trưng hiếm khi "mạnh ai nấy chạy": chiều cao thường đi đôi với cân nặng, độ sáng của hai điểm ảnh cạnh nhau gần như giống hệt nhau, và các chiều của vector embedding ngôn ngữ tương tác chặt chẽ với nhau. Để mô tả trọn vẹn thế giới đa chiều ấy, ta cần **phân phối chuẩn đa biến** (*Multivariate Normal*) với **ma trận hiệp phương sai** $$\boldsymbol{\Sigma}$$—chìa khóa toán học đứng sau cả phép làm trắng dữ liệu (*PCA Whitening*), khoảng cách Mahalanobis, lẫn thủ thuật tái tham số hóa (*reparameterization trick*) của Variational Autoencoder (VAE).
+
+## Bản đồ kiến thức nền: Bốn trụ cột của Phân phối Đa biến trong Học sâu
+
+1. **Vector kỳ vọng ($$\boldsymbol{\mu}$$) và Ma trận Hiệp phương sai ($$\boldsymbol{\Sigma}$$)**:
+   Đường chéo chính của $$\boldsymbol{\Sigma}$$ chứa phương sai từng chiều; các phần tử ngoài đường chéo $$\Sigma_{ij} = \text{Cov}(X_i, X_j)$$ đo mức độ hai đặc trưng biến thiên cùng chiều hay ngược chiều.
+
+2. **Hình học đường đồng mức Elip và Khoảng cách Mahalanobis**:
+   Số mũ $$-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x}-\boldsymbol{\mu})$$ đo khoảng cách có tính đến độ co giãn và độ nghiêng của đám mây dữ liệu, giúp phát hiện điểm bất thường (*anomaly detection*) chuẩn xác hơn nhiều so với khoảng cách Euclid.
+
+3. **Thủ thuật Tái tham số hóa (Reparameterization Trick trong VAE)**:
+   Chuyển việc lấy mẫu ngẫu nhiên $$\mathbf{z} \sim \mathcal{N}(\boldsymbol{\mu}, \text{diag}(\boldsymbol{\sigma}^2))$$ thành $$\mathbf{z} = \boldsymbol{\mu} + \boldsymbol{\sigma} \odot \boldsymbol{\varepsilon}$$ với $$\boldsymbol{\varepsilon} \sim \mathcal{N}(\mathbf{0}, \mathbf{I})$$, giúp đạo hàm lan truyền ngược mượt mà qua $$\boldsymbol{\mu}$$ và $$\boldsymbol{\sigma}$$.
+
+4. **Phân phối Biên và Phân phối Có điều kiện**:
+   Một tính chất đẹp hiếm có của Gaussian đa biến là mọi phép chiếu biên và mọi phân phối có điều kiện của nó đều vẫn là Gaussian—nền tảng của Gaussian Processes và bộ lọc Kalman.
+
+### Khung giải thích (nên đọc chậm): Tính tay khoảng cách Mahalanobis và kiểm tra bước tái tham số hóa VAE
+
+**Phần A — Khoảng cách Mahalanobis vs. Euclid:**
+Xét phân phối chuẩn 2D có $$\boldsymbol{\mu} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}$$ và ma trận hiệp phương sai chéo $$\boldsymbol{\Sigma} = \begin{bmatrix} 4 & 0 \\ 0 & 0.25 \end{bmatrix}$$ (chiều $$x_1$$ trải rộng với $$\sigma_1 = 2$$, chiều $$x_2$$ hẹp với $$\sigma_2 = 0.5$$), suy ra $$\boldsymbol{\Sigma}^{-1} = \begin{bmatrix} 0.25 & 0 \\ 0 & 4 \end{bmatrix}$$.
+So sánh hai điểm có **cùng khoảng cách Euclid bằng 1** tới gốc tọa độ: $$\mathbf{a} = (1, 0)$$ và $$\mathbf{b} = (0, 1)$$:
+- Với $$\mathbf{a} = (1, 0)$$: $$d_M^2(\mathbf{a}) = 1^2(0.25) + 0^2(4) = 0.25 \implies d_M(\mathbf{a}) = 0.5$$ (chỉ lệch $$0.5\sigma_1$$, rất bình thường).
+- Với $$\mathbf{b} = (0, 1)$$: $$d_M^2(\mathbf{b}) = 0^2(0.25) + 1^2(4) = 4.00 \implies d_M(\mathbf{b}) = 2.0$$ (lệch tới $$2\sigma_2$$, hiếm hơn hẳn!).
+
+**Phần B — Tính tay 1 mẫu ẩn VAE:**
+Encoder xuất ra $$\boldsymbol{\mu} = (1.5, -0.5)$$ và $$\boldsymbol{\sigma} = (0.4, 0.2)$$. Rút nhiễu chuẩn $$\boldsymbol{\varepsilon} = (0.5, -1.0)$$:
+$$\mathbf{z} = \boldsymbol{\mu} + \boldsymbol{\sigma} \odot \boldsymbol{\varepsilon} = (1.5 + 0.4 \times 0.5,\; -0.5 + 0.2 \times (-1.0)) = (1.7,\; -0.7).$$
+Ta thấy ngay $$\frac{\partial z_1}{\partial \mu_1} = 1$$ và $$\frac{\partial z_1}{\partial \sigma_1} = \varepsilon_1 = 0.5$$—hoàn toàn khả vi để chạy backpropagation!
+
 ### 3. Phân phối đa biến
 
 #### Phân phối chuẩn đa biến (*Multivariate Normal*)

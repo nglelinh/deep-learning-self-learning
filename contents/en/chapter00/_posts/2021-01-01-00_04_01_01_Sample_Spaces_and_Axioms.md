@@ -9,6 +9,33 @@ categories:
 - chapter00
 ---
 
+> *In 1933, Andrey Kolmogorov reduced all of probability theory to just three deceptively simple axioms. Every softmax output layer in deep learning is explicitly engineered so that its vector of class scores obeys those exact three axioms.*
+
+## Background Knowledge Map: Kolmogorov's Axioms and Softmax Validity
+
+1. **Sample Space $$\Omega$$ and Event Space $$\mathcal{F}$$**: Defines the exhaustive universe of mutually exclusive outcomes (e.g., the 10 digit classes $$\{0, \dots, 9\}$$ in MNIST or the 50,000 tokens in a vocabulary).
+2. **Non-Negativity & Normalization (Axioms 1 & 2)**: Demands $$P(A) \geq 0$$ and $$P(\Omega) = 1$$; in neural classifiers, exponentiating logits guarantees positivity and dividing by their sum enforces normalization.
+3. **Countable Additivity (Axiom 3)**: States that for disjoint events, the probability of their union is the sum of their probabilities—letting us compute top-$$k$$ accuracy or group-level class probabilities by simple summation.
+4. **Derived Rules (Complement & Inclusion–Exclusion)**: Immediately gives $$P(A^c) = 1 - P(A)$$ and $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$, preventing double-counting in multi-label classification.
+
+### Step-by-Step Worked Example (Read Slowly): Verifying Kolmogorov's Axioms on a Softmax Output
+
+Suppose a 3-class image classifier outputs raw logits $$\mathbf{z} = [0, \ln 2, \ln 5]$$ for classes $$\{\text{cat}, \text{dog}, \text{bird}\}$$.
+
+1. **Exponentiate Logits (Enforcing Axiom 1: Non-Negativity)**:
+   $$e^0 = 1, \quad e^{\ln 2} = 2, \quad e^{\ln 5} = 5$$
+   All values are strictly positive.
+2. **Normalize by Total Partition Sum $$Z$$ (Enforcing Axiom 2: Normalization)**:
+   $$Z = 1 + 2 + 5 = 8$$
+   $$P(\text{cat}) = \frac{1}{8} = 0.125, \quad P(\text{dog}) = \frac{2}{8} = 0.250, \quad P(\text{bird}) = \frac{5}{8} = 0.625$$
+   Sum check: $$0.125 + 0.250 + 0.625 = 1.000 = P(\Omega)$$.
+3. **Apply Axiom 3 (Additivity) and Complement Rule**:
+   - Probability of a mammal ($$\{\text{cat}\} \cup \{\text{dog}\}$$, disjoint):
+     $$P(\text{mammal}) = P(\text{cat}) + P(\text{dog}) = 0.125 + 0.250 = 0.375$$
+   - Complement check:
+     $$P(\text{not mammal}) = 1 - 0.375 = 0.625 = P(\text{bird})$$
+   Every softmax layer is an axiomatic probability projector.
+
 ## Basic Probability Theory
 
 Probability theory provides the mathematical framework for reasoning about uncertainty, which is fundamental to many deep-learning problems in machine learning and data science.

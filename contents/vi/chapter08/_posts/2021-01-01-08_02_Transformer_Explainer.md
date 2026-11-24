@@ -9,6 +9,33 @@ categories:
 - chapter08
 ---
 
+Đọc công thức GPT-2 trên giấy giống như đọc bản vẽ kiến trúc của một tòa nhà, còn tương tác trực tiếp với **Transformer Explainer** (công cụ trực quan hóa chạy ngay GPT-2 trong trình duyệt của nhóm nghiên cứu Georgia Tech) giống như bước thẳng vào bên trong tòa nhà đó và nhìn dòng điện chạy qua từng dây dẫn: từ lúc một câu tiếng Anh bị cắt thành token, đi qua 12 tầng Multi-Head Attention và MLP, cho tới khi biến thành xác suất chọn từ tiếp theo!
+
+## Bản đồ kiến thức nền: Bốn chặng quan sát cốt lõi trên Transformer Explainer
+
+1. **Từ văn bản thô sang Token ID và Vector Embedding + Vị trí**:
+   Thấy trực tiếp cách bộ tách từ BPE (Byte-Pair Encoding) chia từ hiếm thành nhiều mảnh (*subwords*) và cộng vector ngữ nghĩa với vector vị trí thành đầu vào `768` chiều của GPT-2 Small.
+2. **Dòng chảy Q, K, V và bản đồ chú ý nhân quả trên 12 Head**:
+   Nhìn thấy rõ ràng đường chéo tam giác dưới của Causal Self-Attention: mỗi token chỉ nối dây về các token đứng trước nó, và các head khác nhau tạo ra các đường nối sáng đậm ở những từ hoàn toàn khác nhau.
+3. **Vai trò mở rộng $$4\times$$ của khối MLP (768 $$\to$$ 3072 $$\to$$ 768)**:
+   Quan sát quá trình biến đổi phi tuyến qua GELU tinh chỉnh biểu diễn của từng token sau khi đã thu thập ngữ cảnh từ Attention.
+4. **Logits $$\to$$ Temperature $$\to$$ Top-k / Top-p (Nucleus) Sampling**:
+   Thấy ngay trong thời gian thực: chỉ cần kéo thanh trượt Temperature hoặc Top-p, danh sách các từ ứng viên tiếp theo lập tức co gọn (chính xác, ít bất ngờ) hoặc giãn rộng (sáng tạo, đa dạng).
+
+### Khung giải thích (nên đọc chậm): Tính tay bước lọc Top-p (Nucleus Sampling) với $$p = 0{,}80$$
+
+Giả sử sau khi qua `softmax` (tại nhiệt độ $$\tau = 1{,}0$$), GPT-2 gán xác suất cho 5 từ ứng viên đứng đầu (đã sắp xếp giảm dần) như sau:
+
+| Thứ hạng | Từ ứng viên | Xác suất gốc $$P(w)$$ | Xác suất tích lũy | Giữ lại với Top-p ($$p=0{,}80$$)? | Xác suất sau chuẩn hóa lại |
+| :---: | :--- | :---: | :---: | :---: | :---: |
+| 1 | `"data"` | $$0{,}45$$ | $$0{,}45$$ | **Giữ** | $$0{,}45 / 0{,}85 = \mathbf{52{,}9\%}$$ |
+| 2 | `"models"` | $$0{,}25$$ | $$0{,}70$$ | **Giữ** | $$0{,}25 / 0{,}85 = \mathbf{29{,}4\%}$$ |
+| 3 | `"learning"` | $$0{,}15$$ | $$0{,}85 \ge 0{,}80$$ | **Giữ** (đạt ngưỡng!) | $$0{,}15 / 0{,}85 = \mathbf{17{,}6\%}$$ |
+| 4 | `"pizza"` | $$0{,}10$$ | $$0{,}95$$ | Loại bỏ | $$0\%$$ |
+| 5 | `"cloud"` | $$0{,}05$$ | $$1{,}00$$ | Loại bỏ | $$0\%$$ |
+
+Top-p tự động co nhóm ứng viên lại khi mô hình đã rất chắc chắn (đôi khi chỉ giữ 1–2 từ) và mở rộng nhóm khi có nhiều câu trả lời hợp lý — khắc phục nhược điểm cứng nhắc của Top-k cố định!
+
 # Transformer Explainer
 
 Các phương trình trong chương này mô tả *những gì Transformer tính toán*, còn [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) cho phép bạn *quan sát trực tiếp* các phép tính đó trên một mô hình ngôn ngữ thực tế mà không cần cài đặt hay dùng GPU. Công cụ chạy trực tiếp trên trình duyệt mô hình **GPT-2 (small)** (124 triệu tham số, 12 khối Transformer xếp chồng), nên mọi con số hiển thị đều là kết quả truyền xuôi thật từ prompt bạn nhập.

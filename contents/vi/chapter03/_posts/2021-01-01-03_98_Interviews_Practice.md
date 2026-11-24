@@ -10,6 +10,35 @@ categories:
 lesson_type: optional
 ---
 
+Trong các vòng phỏng vấn chuyên sâu về Deep Learning và Machine Learning, ba chủ đề **Tự động tính đạo hàm (Autodiff)**, **Ma trận Hessian (độ cong bậc hai)** và **Hồi quy Logistic** xuất hiện dày đặc đến mức gần như trở thành "bài thi nhập môn bắt buộc". Tại sao? Bởi vì hồi quy logistic là trường hợp nhỏ nhất, trong suốt nhất của mạng nơ-ron, nơi bạn có thể tự tay chứng minh tính lồi toàn cục của Cross-Entropy, giải thích ý nghĩa log-odds và tính trọn vẹn cả gradient lẫn ma trận Hessian chỉ trên một trang giấy!
+
+## Bản đồ kiến thức nền: Bốn trọng tâm Phỏng vấn của Chương 03
+
+1. **Autodiff (Chế độ Tiến vs. Chế độ Lùi — Forward vs. Reverse Mode)**:
+   Với hàm $$f: \mathbb{R}^n \to \mathbb{R}^m$$: Forward-mode tính nhanh khi $$n \ll m$$ (ít biến vào, nhiều đầu ra); Reverse-mode (Backprop) tính nhanh khi $$n \gg m$$ (hàng triệu trọng số $$\to$$ 1 giá trị loss vô hướng).
+
+2. **Gradient và Tính Lồi của Hồi quy Logistic**:
+   Đạo hàm âm log-likelihood theo $$\mathbf{w}$$ là $$\nabla_{\mathbf{w}} L = \frac{1}{N}\mathbf{X}^\top(\hat{\mathbf{y}} - \mathbf{y})$$; ma trận Hessian là $$\mathbf{H} = \frac{1}{N}\mathbf{X}^\top \mathbf{D} \mathbf{X}$$ với $$D_{ii} = \hat{y}_i(1 - \hat{y}_i) > 0$$, luôn nửa xác định dương $$\implies$$ hàm mất mát **lồi toàn cục**, không bao giờ có cực tiểu địa phương xấu!
+
+3. **Ý nghĩa Odds và Log-Odds (Logit)**:
+   Từ $$p = \frac{1}{1+e^{-z}}$$ suy ra $$\ln\frac{p}{1-p} = \mathbf{w}^\top\mathbf{x} + b$$: tăng đặc trưng $$x_j$$ thêm 1 đơn vị sẽ nhân tỷ lệ cược (*odds*) $$\frac{p}{1-p}$$ lên đúng $$e^{w_j}$$ lần.
+
+4. **Phân biệt Độ cong Hessian & Phương pháp Newton**:
+   Dấu của các giá trị riêng Hessian phân loại tức thì điểm dừng: toàn dương (cực tiểu), toàn âm (cực đại), lẫn lộn dương và âm (**điểm yên ngựa**).
+
+### Khung giải thích (nên đọc chậm): Chứng minh tay tính nửa xác định dương của Hessian Hồi quy Logistic trên 2 mẫu
+
+Xét 2 mẫu 1 chiều $$x_1 = 1, x_2 = 2$$ với dự đoán xác suất hiện tại $$\hat{y}_1 = 0.5, \hat{y}_2 = 0.8$$ (bỏ qua bias):
+
+1. **Tính các phần tử đường chéo $$D_{ii} = \hat{y}_i(1 - \hat{y}_i)$$**:
+   - $$D_{11} = 0.5(1 - 0.5) = 0.25 > 0$$.
+   - $$D_{22} = 0.8(1 - 0.8) = 0.16 > 0$$.
+2. **Tính Hessian (ở 1 chiều là đạo hàm bậc hai $$L''(w)$$)**:
+   $$H = \frac{1}{2}\big(x_1^2 D_{11} + x_2^2 D_{22}\big) = \frac{1}{2}\big(1^2(0.25) + 2^2(0.16)\big) = \frac{1}{2}(0.25 + 0.64) = \mathbf{0.445 > 0}.$$
+3. **Tổng quát hóa cho mọi vector $$\mathbf{v} \in \mathbb{R}^d$$**:
+   $$\mathbf{v}^\top \mathbf{H} \mathbf{v} = \frac{1}{N}\sum_{i=1}^N \underbrace{\hat{y}_i(1-\hat{y}_i)}_{> 0}\,\underbrace{(\mathbf{x}_i^\top \mathbf{v})^2}_{\ge 0} \ge 0.$$
+Chỉ bằng đúng 3 dòng đại số ấy, bạn đã chứng minh chặt chẽ trước người phỏng vấn rằng Hồi quy Logistic với Cross-Entropy **luôn lồi toàn cục**!
+
 # Tùy chọn: Luyện phỏng vấn — Autodiff, Hessian và Hồi quy Logistic
 
 > Bài này là **tùy chọn** và **không** thay thế phần lý thuyết về hàm mất mát, gradient descent hay lan truyền ngược. Sau khi học các bài chính trong chương, bạn có thể luyện với bộ câu hỏi dưới đây rồi mở *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) để tham khảo thêm các câu hỏi kèm lời giải đầy đủ về vi phân tự động, độ cong và hồi quy logistic.

@@ -9,6 +9,26 @@ categories:
 - chapter11
 ---
 
+Đằng sau mỗi bức ảnh khuôn mặt do AI tạo ra không hề có một chiếc máy ảnh nào — chỉ có một hàm mật độ xác suất trong không gian hàng trăm nghìn chiều đang thì thầm rằng "tổ hợp điểm ảnh này rất hợp lý". Nhưng làm thế nào để ta viết ra, tính toán và tối ưu được một hàm mật độ phức tạp như vậy mà không rơi vào bế tắc tích phân? Bài lý thuyết này mở khóa tấm bản đồ toán học phân tách mọi mô hình sinh thành hai trường phái lớn: mật độ tường minh và mật độ ẩn.
+
+## Bản đồ kiến thức nền: Nền tảng toán học phân loại các họ mô hình sinh
+
+- **Quy tắc chuỗi và mô hình tự hồi quy:** Dùng đồng nhất thức $$p(\mathbf{x}) = \prod_{i=1}^d p(x_i \mid \mathbf{x}_{<i})$$ để biến mật độ đồng thời phức tạp thành chuỗi bài toán phân loại/hồi quy có điều kiện tính được chính xác.
+- **Định lý đổi biến và chuẩn hóa luồng (Normalizing Flows):** Khai thác phép biến đổi khả nghịch $$\mathbf{x} = f(\mathbf{z})$$ cùng định thức ma trận Jacobian $$|\det J_{f^{-1}}(\mathbf{x})|$$ để vừa lấy mẫu nhanh vừa tính mật độ chính xác.
+- **Suy diễn biến phân và cận dưới ELBO:** Khi tích phân biên $$\int p(\mathbf{x}|\mathbf{z})p(\mathbf{z})d\mathbf{z}$$ bất khả tính, đưa vào phân phối xấp xỉ $$q_\phi(\mathbf{z}|\mathbf{x})$$ để tối ưu cận dưới khả tính.
+- **Khoảng cách giữa hai phân phối (KL, FID, IS):** Liên kết lý thuyết thông tin (phân kỳ KL, entropy) với hình học xác suất (khoảng cách Fréchet giữa hai phân phối chuẩn) để đánh giá chất lượng sinh.
+
+### Khung giải thích (nên đọc chậm): Tính tay định thức Jacobian trong mô hình luồng và chỉ số FID trên đặc trưng 1D
+
+**Phần A — Công thức đổi biến (Normalizing Flow 1D):** Giả sử biến ẩn $$z \sim \mathcal{N}(0, 1)$$ có mật độ $$p_z(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2}$$, và phép biến đổi khả nghịch là $$x = f(z) = 2z + 3$$ (nên $$z = f^{-1}(x) = \frac{x - 3}{2}$$).
+1. Tính đạo hàm ngược: $$\left|\frac{df^{-1}(x)}{dx}\right| = \frac{1}{2} = 0{,}5$$.
+2. Tại điểm $$x = 5$$, ta có $$z = (5-3)/2 = 1$$ và $$p_z(1) = \frac{1}{\sqrt{2\pi}}e^{-0{,}5} \approx 0{,}2420$$.
+3. Mật độ tại $$x = 5$$ là $$p_x(5) = 0{,}2420 \times 0{,}5 = 0{,}1210$$. Hệ số Jacobian $$0{,}5$$ chính là yếu tố bảo toàn tổng xác suất bằng $$1$$ khi phép biến đổi kéo giãn trục số gấp đôi.
+
+**Phần B — Tính tay FID trên đặc trưng 1D:** Giả sử đặc trưng Inception 1 chiều của ảnh thật có trung bình $$\mu_r = 2{,}0$$, phương sai $$\sigma_r^2 = 4{,}0$$; ảnh sinh có $$\mu_g = 2{,}5$$, phương sai $$\sigma_g^2 = 1{,}0$$.
+$$\text{FID} = (\mu_r - \mu_g)^2 + \left(\sigma_r^2 + \sigma_g^2 - 2\sqrt{\sigma_r^2 \sigma_g^2}\right) = (2{,}0 - 2{,}5)^2 + (4{,}0 + 1{,}0 - 2\sqrt{4{,}0 \cdot 1{,}0}) = 0{,}25 + (5 - 4) = 1{,}25.$$
+Quan sát: Dù trung bình chỉ lệch $$0{,}5$$ (đóng góp $$0{,}25$$), việc phương sai bị thu hẹp từ $$4{,}0$$ xuống $$1{,}0$$ (dấu hiệu thiếu đa dạng / sụp đổ mode) làm FID vọt thêm $$1{,}00$$ đơn vị.
+
 # Mô hình Sinh: Học cách tạo ra dữ liệu
 
 ## 1. Tổng quan khái niệm

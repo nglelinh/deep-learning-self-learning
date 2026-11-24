@@ -9,6 +9,34 @@ categories:
 - chapter24
 ---
 
+Muốn nhìn thấy mạng ResNet-50 đang tập trung vào đâu trên bức ảnh mà không phải viết lại hay sửa đổi kiến trúc mạng, vũ khí bí mật của PyTorch chính là cơ chế **Hooks** (`register_forward_hook` và `register_full_backward_hook`). Trong bài thực hành này, bạn sẽ tự tay cài đặt lớp `GradCAM`, cài đặt bản đồ Saliency, Integrated Gradients và kết hợp với thư viện giải thích để soi sáng từng dự đoán của mạng CNN.
+
+## Bản đồ kiến thức nền: Kỹ thuật lập trình Grad-CAM và Integrated Gradients trong PyTorch
+
+- **Cơ chế Forward & Backward Hooks:** Bắt giữ trọn vẹn bản đồ đặc trưng $$A^k$$ (lượt xuôi) và gradient $$\partial y^c / \partial A^k$$ (lượt ngược) tại tầng tích chập cuối (`layer4[-1]`) mà không sửa mã nguồn mô hình.
+- **Tính trọng số kênh và phóng to bản đồ nhiệt:** Lấy `mean(dim=(2, 3))` trên gradient, nhân tổ hợp tuyến tính với feature map, áp dụng `F.relu(...)` và nội suy song tuyến (`bilinear`) về đúng kích thước ảnh gốc.
+- **Riemann Sum cho Integrated Gradients:** Chia đoạn thẳng từ ảnh đen $$\mathbf{x}'$$ tới ảnh gốc $$\mathbf{x}$$ thành $$m = 50$$ bước rời rạc để xấp xỉ tích phân mượt và kiểm tra sai số hội tụ (completeness delta).
+- **Quản lý vòng đời Hook & `zero_grad()`:** Luôn gỡ hook (`handle.remove()`) sau khi dùng xong để tránh rò rỉ bộ nhớ GPU và nhớ xóa gradient trước mỗi lớp mục tiêu.
+
+### Khung giải thích (nên đọc chậm): Tính tay một bản đồ nhiệt Grad-CAM kích thước $$2 \times 2$$ từ 2 kênh đặc trưng
+
+Giả sử tầng tích chập cuối có 2 kênh đặc trưng kích thước $$2 \times 2$$:
+$$A^1 = \begin{pmatrix} 2 & 0 \\ 1 & 3 \end{pmatrix}, \quad A^2 = \begin{pmatrix} 1 & 4 \\ 0 & 1 \end{pmatrix}$$
+và gradient của điểm lớp mục tiêu $$y^c$$ theo hai kênh này là:
+$$\frac{\partial y^c}{\partial A^1} = \begin{pmatrix} 0{,}6 & 0{,}2 \\ 0{,}4 & 0{,}8 \end{pmatrix}, \quad \frac{\partial y^c}{\partial A^2} = \begin{pmatrix} -0{,}2 & -0{,}6 \\ -0{,}4 & 0{,}0 \end{pmatrix}.$$
+
+1. **Tính trọng số tầm quan trọng từng kênh (Global Average Pooling trên gradient):**
+   - $$\alpha_1 = \frac{0{,}6 + 0{,}2 + 0{,}4 + 0{,}8}{4} = +0{,}50$$.
+   - $$\alpha_2 = \frac{-0{,}2 - 0{,}6 - 0{,}4 + 0{,}0}{4} = -0{,}30$$.
+2. **Tổ hợp tuyến tính $$L = \alpha_1 A^1 + \alpha_2 A^2$$:**
+   - Góc trên-trái: $$0{,}5(2) - 0{,}3(1) = +0{,}70$$
+   - Góc trên-phải: $$0{,}5(0) - 0{,}3(4) = -1{,}20$$
+   - Góc dưới-trái: $$0{,}5(1) - 0{,}3(0) = +0{,}50$$
+   - Góc dưới-phải: $$0{,}5(3) - 0{,}3(1) = +1{,}20$$
+3. **Áp dụng ReLU** (loại bỏ bằng chứng chống lại lớp $$c$$) và chuẩn hóa về $$[0, 1]$$:
+   $$\text{Grad-CAM} = \begin{pmatrix} 0{,}70 & 0 \\ 0{,}50 & 1{,}20 \end{pmatrix} \xrightarrow{\div 1{,}20} \begin{pmatrix} 0{,}58 & 0{,}00 \\ 0{,}42 & 1{,}00 \end{pmatrix}.$$
+   Vùng nóng nhất nằm ở góc dưới-phải ($$1{,}00$$), còn góc trên-phải bị cắt về $$0$$!
+
 ## 4. Mã minh họa
 
 Ví dụ cài đặt Grad-CAM và xấp xỉ SHAP đơn giản bằng PyTorch:

@@ -9,6 +9,30 @@ categories:
 - chapter02
 ---
 
+> *If you write a forward pass with Python `for` loops over individual neurons and samples, training MNIST takes hours; rewrite the exact same math as batched matrix multiplications (GEMM) and it finishes in seconds. Forward propagation is where abstract graph equations become high-throughput tensor algebra.*
+
+## Background Knowledge Map: Batched Forward Propagation & Tensor Mechanics
+
+1. **Layer-by-Layer State Transitions**: Maps input tensor $$A^{[0]} = X \in \mathbb{R}^{B \times d_0}$$ through $$Z^{[l]} = A^{[l-1]} W^{[l]\top} + \mathbf{1}\mathbf{b}^{[l]\top}$$ and $$A^{[l]} = g^{[l]}(Z^{[l]})$$, caching $$Z^{[l]}$$ and $$A^{[l-1]}$$ for the backward pass.
+2. **Broadcasting Semantics**: Explains how a 1D bias vector of shape `(d_out,)` automatically stretches across the batch dimension `(B, d_out)` without duplicating memory on disk.
+3. **Vectorization & Hardware Arithmetic Intensity**: Grouping $$B$$ examples into a matrix converts memory-bound matrix-vector products into compute-bound matrix-matrix multiplications that saturate GPU Tensor Cores.
+4. **Activation Caching & Memory Trade-Off**: During training, every intermediate activation $$A^{[l]}$$ must stay in VRAM until backprop consumes it—which is why batch size $$B$$ scales activation memory linearly.
+
+### Step-by-Step Worked Example (Read Slowly): Full Batched Matrix Forward Pass ($$B = 2$$)
+
+Compute one batched forward pass for $$B = 2$$ samples in $$\mathbb{R}^2$$ through a `2 -> 2 -> 1` ReLU network:
+$$X = \begin{bmatrix} 1 & 2 \\ -1 & 1 \end{bmatrix}, \quad W^{[1]} = \begin{bmatrix} 1 & -1 \\ 2 & 1 \end{bmatrix}, \quad \mathbf{b}^{[1]} = \begin{bmatrix} 0.5 \\ -1.0 \end{bmatrix}, \quad W^{[2]} = \begin{bmatrix} 3 & -2 \end{bmatrix}, \quad b^{[2]} = 1.0$$
+
+1. **Layer 1 Pre-Activation $$Z^{[1]} = X W^{[1]\top} + \mathbf{b}^{[1]\top}$$** (shape `(2,2) @ (2,2) -> (2,2)`):
+   $$W^{[1]\top} = \begin{bmatrix} 1 & 2 \\ -1 & 1 \end{bmatrix} \implies X W^{[1]\top} = \begin{bmatrix} 1(1)+2(-1) & 1(2)+2(1) \\ -1(1)+1(-1) & -1(2)+1(1) \end{bmatrix} = \begin{bmatrix} -1 & 4 \\ -2 & -1 \end{bmatrix}$$
+   Broadcast and add $$\mathbf{b}^{[1]\top} = [0.5, -1.0]$$ to each row:
+   $$Z^{[1]} = \begin{bmatrix} -0.5 & 3.0 \\ -1.5 & -2.0 \end{bmatrix}$$
+2. **Layer 1 ReLU Activation $$A^{[1]} = \max(0, Z^{[1]})$$**:
+   $$A^{[1]} = \begin{bmatrix} 0.0 & 3.0 \\ 0.0 & 0.0 \end{bmatrix}$$
+3. **Layer 2 Output $$\hat{\mathbf{y}} = A^{[1]} W^{[2]\top} + b^{[2]}$$** (shape `(2,2) @ (2,1) -> (2,1)`):
+   $$\hat{\mathbf{y}} = \begin{bmatrix} 0.0(3) + 3.0(-2) \\ 0.0(3) + 0.0(-2) \end{bmatrix} + \begin{bmatrix} 1.0 \\ 1.0 \end{bmatrix} = \begin{bmatrix} -5.0 \\ 1.0 \end{bmatrix}$$
+   Both samples were evaluated simultaneously in two matrix multiplications, and Sample 2's hidden vector was completely zeroed out—a live glimpse of a dead-ReLU activation state!
+
 This lesson provides a comprehensive understanding of forward propagation, the process by which neural networks make predictions.
 
 ---

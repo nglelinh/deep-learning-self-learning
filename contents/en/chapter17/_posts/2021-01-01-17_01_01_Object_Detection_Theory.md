@@ -9,6 +9,30 @@ categories:
 - chapter17
 ---
 
+Object detection asks a single network to answer two fundamentally different questions at once: *"What is it?"* (a discrete, translation-invariant classification problem) and *"Where is it?"* (a continuous, translation-equivariant geometry problem). The breakthrough of modern detectors—from Faster R-CNN's anchor-based Region Proposal Networks to YOLO's dense grid predictions—was reframing raw coordinate prediction as predicting small, scale-invariant *offsets* relative to reference anchors, then pruning duplicates with Non-Maximum Suppression (NMS).
+
+## Background Knowledge Map: Mathematical Core of Object Detection
+
+- **Pillar 1 — Intersection over Union (IoU & GIoU)**: Defines geometric overlap between predicted and ground-truth boxes to assign positive/negative training anchors and evaluate detection quality.
+- **Pillar 2 — Scale-Invariant Box Parameterization**: Regresses normalized center offsets $(t_x, t_y)$ and log-scale ratios $(t_w, t_h)$ relative to an anchor $(x_a, y_a, w_a, h_a)$ so small and large objects contribute balanced gradients.
+- **Pillar 3 — Multi-Task Loss & Class Imbalance**: Combines classification loss (Cross-Entropy or Focal Loss to suppress easy background anchors) with Smooth-L1 or IoU-based box regression loss.
+- **Pillar 4 — Non-Maximum Suppression (NMS) & mAP**: Removes redundant overlapping detections per class via greedy IoU thresholding and integrates precision–recall curves across IoU thresholds (AP@50, AP@[.50:.95]).
+
+### Step-by-Step Worked Example (Read Slowly): Computing Exact Box IoU and Anchor Regression Targets
+
+Suppose an anchor box is $A = (x_1=10, y_1=10, x_2=50, y_2=50)$ (center $(30, 30)$, width $w_a = 40$, height $h_a = 40$), and a ground-truth box is $G = (x_1=20, y_1=20, x_2=60, y_2=60)$ (center $(40, 40)$, width $w_g = 40$, height $h_g = 40$).
+
+1. **Compute Intersection box**:
+   $$x_{\text{left}} = \max(10, 20) = 20, \quad y_{\text{top}} = \max(10, 20) = 20,$$
+   $$x_{\text{right}} = \min(50, 60) = 50, \quad y_{\text{bottom}} = \min(50, 60) = 50.$$
+   $$\text{Area}_{\text{inter}} = (50 - 20) \times (50 - 20) = 30 \times 30 = 900.$$
+2. **Compute Union and IoU**:
+   $$\text{Area}_A = 40 \times 40 = 1600, \quad \text{Area}_G = 1600, \quad \text{Area}_{\text{union}} = 1600 + 1600 - 900 = 2300.$$
+   $$\text{IoU}(A, G) = \frac{900}{2300} \approx 0.3913.$$
+3. **Compute Faster R-CNN regression targets $(t_x^*, t_y^*, t_w^*, t_h^*)$**:
+   $$t_x^* = \frac{40 - 30}{40} = +0.25, \quad t_y^* = \frac{40 - 30}{40} = +0.25, \quad t_w^* = \ln\frac{40}{40} = 0, \quad t_h^* = \ln\frac{40}{40} = 0.$$
+4. **Takeaway**: Even shifting a box by just $25\%$ of its width drops IoU from $1.0$ to $0.3913$ (below the standard $0.50$ positive threshold), while log-normalized targets keep regression values neatly bounded near $[-1, 1]$.
+
 # Object Detection: Localization and Recognition
 
 ![Object Detection Example](https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Detected-with-YOLO--Schreibtisch-mit-Objekten.jpg/800px-Detected-with-YOLO--Schreibtisch-mit-Objekten.jpg)

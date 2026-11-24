@@ -9,6 +9,33 @@ categories:
 - chapter18
 ---
 
+When Mikolov et al. published Word2Vec in 2013, the machine learning world was mesmerized by a single vector equation: $\mathbf{v}_{\text{king}} - \mathbf{v}_{\text{man}} + \mathbf{v}_{\text{woman}} \approx \mathbf{v}_{\text{queen}}$. Nobody explicitly taught the network gender or royalty; that linear parallelogram emerged automatically because Skip-gram with Negative Sampling implicitly factorizes the shifted Pointwise Mutual Information (PMI) matrix of the entire corpus.
+
+## Background Knowledge Map: Mathematical Foundations of Word Embeddings
+
+- **Pillar 1 — Skip-Gram & Negative Sampling (SGNS)**: Replaces an expensive $O(|V|)$ vocabulary softmax with $k + 1$ binary logistic classifications (1 true context word vs. $k$ noise words drawn from $P_n(w) \propto f(w)^{3/4}$).
+- **Pillar 2 — Implicit Matrix Factorization & PMI**: Proves (Levy & Goldberg, 2014) that optimal SGNS dot products satisfy $u_w^\top v_c = \text{PMI}(w, c) - \log k$, unifying neural Word2Vec with classical count-based distributional semantics.
+- **Pillar 3 — GloVe (Global Vectors)**: Explicitly regresses $w_i^\top \tilde{w}_j + b_i + \tilde{b}_j \approx \log X_{ij}$ with a bounded weighting function $f(X_{ij})$ so global co-occurrence ratios map directly to vector differences.
+- **Pillar 4 — Dual Embedding Matrices & Polysemy Limits**: Explains why Skip-gram keeps separate target (`in`) and context (`out`) embedding tables, and why static embeddings still cannot separate homonyms like *"bat"* (animal vs. baseball).
+
+### Step-by-Step Worked Example (Read Slowly): One Skip-Gram Negative Sampling Loss & Gradient Step
+
+Suppose target word `"king"` has input vector $v_c = [1.0,\; 0.5]$, true context word `"crown"` has output vector $u_o = [0.8,\; 0.4]$, and one negative sample `"banana"` has output vector $u_n = [-0.5,\; 1.0]$.
+
+1. **Compute dot products**:
+   - Positive pair: $s_+ = v_c^\top u_o = (1.0)(0.8) + (0.5)(0.4) = 1.00$.
+   - Negative pair: $s_- = v_c^\top u_n = (1.0)(-0.5) + (0.5)(1.0) = 0.00$.
+2. **Evaluate SGNS loss $\mathcal{L} = -\ln\sigma(s_+) - \ln\sigma(-s_-)$**:
+   Using $\sigma(1.0) \approx 0.7311$ and $\sigma(0.0) = 0.5000$:
+   $$\mathcal{L} = -\ln(0.7311) - \ln(0.5000) = 0.3133 + 0.6931 = 1.0064\text{ nats}.$$
+3. **Compute exact gradient with respect to target vector $v_c$**:
+   $$\nabla_{v_c}\mathcal{L} = (\sigma(s_+) - 1)u_o + \sigma(s_-)u_n = (-0.2689)[0.8, 0.4] + (0.5000)[-0.5, 1.0]$$
+   $$= [-0.2151, -0.1076] + [-0.2500, +0.5000] = [-0.4651,\; +0.3924].$$
+4. **Take one SGD step with $\eta = 0.1$**:
+   $$v_c^{\text{new}} = [1.0, 0.5] - 0.1[-0.4651, 0.3924] = [1.0465,\; 0.4608].$$
+   Check new dot products: $s_+^{\text{new}} = 1.0215$ (increased!) and $s_-^{\text{new}} = -0.0625$ (decreased!).
+5. **Takeaway**: Every SGNS update geometrically pulls the target word toward its true neighbor and pushes it away from noise words in $O(k \cdot d)$ time instead of $O(|V| \cdot d)$.
+
 # Word Embeddings: Representing Language in Vector Space
 
 ![Word2Vec Visualization](https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Word2vec.png/800px-Word2vec.png)

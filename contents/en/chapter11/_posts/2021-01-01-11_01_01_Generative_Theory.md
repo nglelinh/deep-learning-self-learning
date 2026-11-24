@@ -9,6 +9,30 @@ categories:
 - chapter11
 ---
 
+Every time a neural network synthesizes a photorealistic face or composes a Bach chorale, it is solving one of the hardest inverse problems in statistics: given a finite cloud of points scattered inside a million-dimensional space, infer the exact probability density that produced them. Early theorists realized that choosing *how* to measure closeness to $p_{\text{data}}$—forward KL, reverse KL, or integral probability metrics—dramatically changes whether a model hedges its bets with blurry averages or commits sharply to a few modes.
+
+## Background Knowledge Map: Foundations of Generative Theory
+
+- **Pillar 1 — Maximum Likelihood & Forward KL Minimization**: Shows that $\arg\max_\theta \mathbb{E}_{x \sim p_{\text{data}}}[\log p_\theta(x)]$ is equivalent to minimizing $D_{\text{KL}}(p_{\text{data}} \| p_\theta)$, which strongly penalizes placing zero mass where data exists ("mode-covering" behavior).
+- **Pillar 2 — Explicit vs. Implicit Density Taxonomy**: Divides generative models into tractable explicit densities (autoregressive models, normalizing flows), approximate explicit densities (VAEs, EBMs), and implicit samplers (GANs) that generate $x = G_\theta(z)$ without evaluating $p_\theta(x)$.
+- **Pillar 3 — Marginalization & Intractable Partition Functions**: Explains why summing or integrating over latent variables $p_\theta(x) = \int p_\theta(x \mid z)p(z)\,dz$ or normalizing energies $Z(\theta) = \int e^{-E_\theta(x)}\,dx$ is computationally intractable in high dimensions, motivating variational bounds and score matching.
+- **Pillar 4 — Statistical Divergences & Fréchet Distance**: Connects distribution geometry to evaluation metrics such as Bits Per Dimension (BPD) and Fréchet Inception Distance (FID), which approximates feature clouds as multivariate Gaussians.
+
+### Step-by-Step Worked Example (Read Slowly): Computing Exact Forward KL, BPD, and 1D Fréchet Distance
+
+Consider a 1D continuous data distribution $p_{\text{data}} = \mathcal{N}(\mu_1 = 2, \sigma_1^2 = 1)$ and a learned generative model $p_\theta = \mathcal{N}(\mu_2 = 0, \sigma_2^2 = 4)$ (so $\sigma_1 = 1, \sigma_2 = 2$).
+
+1. **Exact Forward KL Divergence $D_{\text{KL}}(p_{\text{data}} \| p_\theta)$**:
+   For two 1D Gaussians,
+   $$D_{\text{KL}}\big(\mathcal{N}(\mu_1,\sigma_1^2) \,\|\, \mathcal{N}(\mu_2,\sigma_2^2)\big) = \ln\frac{\sigma_2}{\sigma_1} + \frac{\sigma_1^2 + (\mu_1 - \mu_2)^2}{2\sigma_2^2} - \frac{1}{2}.$$
+   Substituting $\mu_1=2, \sigma_1=1, \mu_2=0, \sigma_2=2$:
+   $$D_{\text{KL}} = \ln(2) + \frac{1 + (2 - 0)^2}{2 \cdot 4} - \frac{1}{2} = 0.6931 + \frac{5}{8} - 0.5 = 0.6931 + 0.125 = 0.8181\text{ nats}.$$
+2. **Convert excess coding cost to bits**:
+   $$\frac{0.8181}{\ln 2} \approx 1.180\text{ extra bits per scalar dimension}.$$
+3. **1D Fréchet Distance (the exact scalar form of FID)**:
+   $$\text{FD}^2 = (\mu_1 - \mu_2)^2 + (\sigma_1 - \sigma_2)^2 = (2 - 0)^2 + (1 - 2)^2 = 4 + 1 = 5.0.$$
+4. **Takeaway**: Notice how $D_{\text{KL}}$ penalizes variance mismatch logarithmically and mean error scaled by $1/\sigma_2^2$, whereas Fréchet Distance penalizes mean and standard-deviation shifts symmetrically in Euclidean space.
+
 # Generative Models: Learning to Create
 
 ## 1. Concept Overview

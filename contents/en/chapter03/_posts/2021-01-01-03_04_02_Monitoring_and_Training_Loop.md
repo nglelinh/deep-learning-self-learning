@@ -9,6 +9,28 @@ categories:
 - chapter03
 ---
 
+> *Training a neural network without logging both training and validation curves is like flying a plane in zero visibility with the instrument panel taped over. Loss curves, generalization gaps, and early-stopping patience counters tell you exactly when a model is learning, when it starts memorizing noise, and when to pull the plug.*
+
+## Background Knowledge Map: Diagnostics & Training Loop Engineering
+
+1. **Bias–Variance Reading of Loss Curves**: Both train and val loss high $$\implies$$ underfitting (increase capacity/LR or train longer); train loss dropping while val loss rises $$\implies$$ overfitting (regularize, augment, or stop early).
+2. **Early Stopping as Implicit Regularization**: Monitors validation loss with a `patience` window and `min_delta` tolerance, restoring the best checkpoint weights before memorization degrades generalization.
+3. **Gradient Norm & Activation Telemetry**: Logging global gradient norm $$\|\mathbf{g}\|_2$$ exposes impending explosions (spikes before `NaN`) or vanishing layers long before accuracy collapses.
+4. **Epoch Hygiene & Evaluation Modes**: Properly toggling `model.train()` vs. `model.eval()` and wrapping validation in `torch.no_grad()` prevents BatchNorm/Dropout corruption and OOM crashes.
+
+### Step-by-Step Worked Example (Read Slowly): Tracing an Early-Stopping State Machine Across 7 Epochs
+
+Suppose an early-stopping controller uses `patience = 3` and `min_delta = 0.01`, tracking validation losses across epochs 1–7:
+`[0.85, 0.72, 0.65, 0.645, 0.66, 0.68, 0.70]`.
+
+1. **Epoch 1 (val = 0.850)**: First checkpoint. `best_loss = 0.850`, `best_epoch = 1`, `counter = 0` (save weights).
+2. **Epoch 2 (val = 0.720)**: Improvement $$0.850 - 0.720 = 0.130 \geq 0.01$$. `best_loss = 0.720`, `best_epoch = 2`, `counter = 0` (save weights).
+3. **Epoch 3 (val = 0.650)**: Improvement $$0.720 - 0.650 = 0.070 \geq 0.01$$. `best_loss = 0.650`, `best_epoch = 3`, `counter = 0` (save weights).
+4. **Epoch 4 (val = 0.645)**: Drop is $$0.650 - 0.645 = 0.005 < 0.01$$ (`min_delta` not met!). `counter = 1`.
+5. **Epoch 5 (val = 0.660)**: Worse than `best_loss`. `counter = 2`.
+6. **Epoch 6 (val = 0.680)**: Worse than `best_loss`. `counter = 3 == patience` $$\implies$$ **STOP TRAINING**!
+7. **Post-Stop Action**: Do **not** deploy Epoch 6's weights (val loss $$0.680$$)—reload the saved checkpoint from **Epoch 3** (val loss $$0.650$$)!
+
 ## Monitoring Training
 
 ### Metrics to Track

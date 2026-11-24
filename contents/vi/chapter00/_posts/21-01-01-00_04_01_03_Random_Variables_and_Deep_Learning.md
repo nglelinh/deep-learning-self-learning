@@ -9,6 +9,35 @@ categories:
 - chapter00
 ---
 
+Máy tính không thể cộng trừ chữ "Mèo" hay "Mưa", nhưng ngay khi ta gán cho mỗi kết cục ngẫu nhiên một con số thực—gọi là **biến ngẫu nhiên** (*random variable*)—toàn bộ kho vũ khí của giải tích và đại số lập tức phát huy tác dụng. Trong một mạng nơ-ron đang huấn luyện, gần như mọi thứ đều là biến ngẫu nhiên: từ mẫu dữ liệu rút ngẫu nhiên trong mini-batch, mặt nạ Dropout bật/tắt 0–1, cho tới chính trọng số khởi tạo ban đầu. Hiểu rõ kỳ vọng, phương sai và hiệp phương sai của biến ngẫu nhiên giúp bạn kiểm soát dòng chảy tín hiệu xuyên qua hàng trăm tầng mạng.
+
+## Bản đồ kiến thức nền: Bốn công cụ của Biến Ngẫu nhiên trong Học sâu
+
+1. **Biến ngẫu nhiên Rời rạc (PMF) vs. Liên tục (PDF & CDF)**:
+   Biến rời rạc dùng hàm khối xác suất $$P(X = x)$$ và tổng $$\sum$$; biến liên tục dùng hàm mật độ $$p(x)$$ (có thể lớn hơn $$1$$!) và tích phân $$\int p(x)\,dx = 1$$.
+
+2. **Kỳ vọng ($$\mathbb{E}[X]$$) và Tính tuyến tính của Kỳ vọng**:
+   $$\mathbb{E}[aX + bY] = a\mathbb{E}[X] + b\mathbb{E}[Y]$$ luôn đúng *kể cả khi $$X, Y$$ phụ thuộc nhau*—đây là cơ sở chứng minh công thức bù tỷ lệ $$\frac{1}{1-p}$$ của Inverted Dropout!
+
+3. **Phương sai ($$\text{Var}(X)$$) và Luật nhân hệ số**:
+   $$\text{Var}(aX) = a^2 \text{Var}(X)$$, và với các biến độc lập, $$\text{Var}\!\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i)$$. Công thức này dẫn thẳng tới công thức khởi tạo trọng số **Xavier** ($$\text{Var}(w) = 1/n_{\text{in}}$$) để tín hiệu không phình to khi đi qua lớp rộng.
+
+4. **Hàm mất mát dưới góc nhìn Kỳ vọng (Expected Risk)**:
+   Mục tiêu lý tưởng của Deep Learning là cực tiểu hóa rủi ro kỳ vọng $$\mathbb{E}_{(x,y)\sim P_{\text{data}}}[\ell(f_\theta(x), y)]$$, và tập huấn luyện chỉ là trung bình thực nghiệm xấp xỉ kỳ vọng đó.
+
+### Khung giải thích (nên đọc chậm): Tính tay phương sai qua một nơ-ron tuyến tính để hiểu khởi tạo Xavier
+
+Giả sử một nơ-ron nhận $$n = 100$$ đầu vào độc lập $$x_1, \dots, x_{100}$$ đều có $$\mathbb{E}[x_i] = 0, \text{Var}(x_i) = 1$$, và ta khởi tạo trọng số độc lập $$w_1, \dots, w_{100}$$ với $$\mathbb{E}[w_i] = 0, \text{Var}(w_i) = \sigma_w^2$$. Xét đầu ra $$z = \sum_{i=1}^{100} w_i x_i$$:
+
+1. **Kỳ vọng của $$z$$**: Do $$w_i$$ và $$x_i$$ độc lập, $$\mathbb{E}[w_i x_i] = \mathbb{E}[w_i]\mathbb{E}[x_i] = 0 \implies \mathbb{E}[z] = 0$$.
+2. **Phương sai của từng tích $$w_i x_i$$**:
+   $$\text{Var}(w_i x_i) = \mathbb{E}[w_i^2 x_i^2] - (\mathbb{E}[w_i x_i])^2 = \mathbb{E}[w_i^2]\mathbb{E}[x_i^2] = \sigma_w^2 \times 1 = \sigma_w^2.$$
+3. **Phương sai tổng $$z$$**: Vì 100 số hạng độc lập nhau,
+   $$\text{Var}(z) = \sum_{i=1}^{100} \text{Var}(w_i x_i) = 100\,\sigma_w^2.$$
+4. **Thử thay số**:
+   - Nếu chọn ngây thơ $$\sigma_w = 1$$: $$\text{Var}(z) = 100$$ (độ lệch chuẩn tăng gấp 10 chỉ sau 1 tầng—đi qua 5 tầng sẽ bùng nổ thành $$10^{10}$$!).
+   - Nếu chọn $$\sigma_w^2 = \frac{1}{100} \implies \sigma_w = 0.1$$: $$\text{Var}(z) = 100 \times 0.01 = 1$$ (giữ nguyên thang đo tín hiệu!). Đó chính là linh hồn toán học của khởi tạo Xavier/He.
+
 ### 6. Biến ngẫu nhiên
 
 **Biến ngẫu nhiên** $$X$$ là một hàm ánh xạ mỗi kết quả trong không gian mẫu sang một số thực:

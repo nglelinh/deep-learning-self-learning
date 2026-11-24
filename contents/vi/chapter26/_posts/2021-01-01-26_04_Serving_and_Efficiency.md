@@ -9,6 +9,27 @@ categories:
 - chapter26
 ---
 
+Tại sao khi bạn gửi một văn bản dài 2.000 từ cho LLM, nó chỉ mất chưa đầy 1 giây để "đọc" hết toàn bộ văn bản đó, nhưng sau đó lại phải mất tới 5 giây chỉ để "viết" ra 200 từ trả lời? Bí mật nằm ở hai pha vật lý hoàn toàn trái ngược nhau trên GPU: **Prefill** (nghẽn tính toán — compute-bound, chạy song song toàn bộ prompt) và **Decode** (nghẽn băng thông bộ nhớ — memory-bandwidth-bound, sinh từng token một). Bài học này mở khóa toàn bộ nghệ thuật phục vụ LLM tốc độ cao.
+
+## Bản đồ kiến thức nền: Bốn trụ cột của Phục vụ và Hiệu năng suy luận LLM
+
+- **Hai pha Prefill vs. Decode và hai thước đo TTFT / TPOT:** Tách biệt *Time-To-First-Token* (độ trễ pha Prefill) với *Time-Per-Output-Token* (tốc độ sinh từng token ở pha Decode) để chẩn đoán đúng nút cổ chai phần cứng.
+- **KV Cache, PagedAttention và Continuous Batching:** Tái sử dụng vector Key/Value của các token cũ tránh tính lại bậc hai, quản lý VRAM không phân mảnh theo trang (kiểu hệ điều hành), và chèn/nhả yêu cầu ở cấp độ từng token.
+- **Chiến lược giải mã lấy mẫu (Temperature, Top-$$k$$, Top-$$p$$ Nucleus):** Kiểm soát trực tiếp sự đánh đổi giữa tính xác định chính xác (code, toán) và độ sáng tạo đa dạng (viết lách).
+- **Speculative Decoding và Disaggregated Serving:** Dùng mô hình nháp kiểm định song song nhiều token một lượt để bẻ gãy nút cổ chai băng thông của pha Decode.
+
+### Khung giải thích (nên đọc chậm): Tính tay tác động của Nhiệt độ $$T$$ và lọc Top-$$p$$ (Nucleus Sampling) lên phân phối token
+
+Giả sử tại bước sinh hiện tại, 4 token ứng viên có logit là $$\mathbf{z} = [4{,}0,\; 3{,}0,\; 2{,}0,\; 1{,}0]$$.
+
+1. **Ở nhiệt độ chuẩn $$T = 1{,}0$$:**
+   - Trừ cực đại $$4{,}0$$ được $$[0, -1, -2, -3]$$ → hàm mũ $$[1{,}000,\; 0{,}368,\; 0{,}135,\; 0{,}050]$$ (tổng $$1{,}553$$).
+   - Xác suất: $$[64{,}4\%,\; 23{,}7\%,\; 8{,}7\%,\; 3{,}2\%]$$.
+   - **Áp dụng Top-$$p = 0{,}85$$:** Tổng xác suất tích lũy sau token 1 là $$64{,}4\% < 85\%$$; sau token 2 là $$64{,}4\% + 23{,}7\% = 88{,}1\% \ge 85\%$$ → **chỉ giữ 2 token đầu**, chuẩn hóa lại thành $$[73{,}1\%,\; 26{,}9\%]$$ (cắt bỏ hoàn toàn đuôi nhiễu 2 token cuối).
+2. **Khi giảm nhiệt độ $$T = 0{,}5$$ (làm nhọn phân phối cho bài toán code/toán):**
+   - Logit chia $$0{,}5$$ thành $$[0, -2, -4, -6]$$ → hàm mũ $$[1{,}000,\; 0{,}135,\; 0{,}018,\; 0{,}002]$$ (tổng $$1{,}155$$).
+   - Xác suất token đứng đầu vọt từ $$64{,}4\%$$ lên **$$86{,}6\%$$** — mô hình trở nên tập trung và ít sinh từ ngẫu nhiên sai lệch hơn hẳn!
+
 # Phục vụ và hiệu năng cho LLM
 
 Một mô hình decoder đã qua tiền huấn luyện, SFT và căn chỉnh vẫn có chi phí vận hành cao **trên từng token sinh ra**. Trong khi huấn luyện là khoản chi một lần (hoặc theo chu kỳ dài), chi phí phục vụ suy luận tăng liên tục theo số lượng người dùng. Bài này trình bày các kỹ thuật tối ưu phục vụ nên cân nhắc trước khi quyết định huấn luyện một mô hình học sinh qua chưng cất.

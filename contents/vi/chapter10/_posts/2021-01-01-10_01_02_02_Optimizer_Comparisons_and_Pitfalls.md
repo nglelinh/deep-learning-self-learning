@@ -9,6 +9,31 @@ categories:
 - chapter10
 ---
 
+Chạy cùng một mạng neuron trên cùng một bộ dữ liệu, tại sao có bài toán Adam chỉ mất 50 epoch để chạm đáy trong khi SGD mất 500 epoch — nhưng lại có những cuộc thi thị giác máy tính mà SGD + Momentum sau khi tinh chỉnh kỹ lịch Cosine Annealing lại vượt Adam 1–2% độ chính xác kiểm định? Bài học này đặt các bộ tối ưu lên bàn cân thực nghiệm, phân tích lý do đằng sau khoảng cách tổng quát hóa và liệt kê những cạm bẫy tinh chỉnh hay gặp nhất.
+
+## Bản đồ kiến thức nền: Bốn bài học thực nghiệm khi so sánh và tinh chỉnh Bộ tối ưu
+
+1. **Tốc độ hội tụ sớm vs. Chất lượng tổng quát hóa cuối cùng**:
+   Adam/AdamW thích nghi siêu nhanh ở giai đoạn đầu và rất ít nhạy cảm với tốc độ học khởi tạo, nên là lựa chọn số 1 cho NLP/Transformer và thử nghiệm nhanh; SGD + Momentum tuy cần chỉnh `lr` kỹ hơn nhưng thường hội tụ vào các cực tiểu phẳng hơn trên CNN thị giác.
+2. **Định luật phối hợp Siêu tham số (LR × Batch Size × Weight Decay)**:
+   Khi tăng gấp $$k$$ lần `batch_size`, phương sai nhiễu gradient giảm đi $$k$$ lần — ta thường tăng learning rate theo quy tắc tuyến tính (Linear Scaling cho SGD) hoặc căn bậc hai ($$\sqrt{k}$$ cho Adam), kèm giai đoạn warmup.
+3. **Không áp dụng Weight Decay cho Bias và LayerNorm/BatchNorm**:
+   Phạt trọng số lên hệ số dịch `bias` hay hệ số co giãn $$\gamma$$ của LayerNorm/BatchNorm không giúp chống overfitting mà còn làm suy yếu khả năng biểu diễn; thực tế luôn tách `param_groups` để đặt `weight_decay=0.0` cho các tham số 1D này.
+4. **Cạm bẫy kinh điển khi huấn luyện với Bộ tối ưu thích nghi**:
+   Dùng chung một `lr` (ví dụ `0.1` của SGD mang sang Adam sẽ lập tức nổ loss!), quên giảm learning rate ở cuối quá trình (Cosine/Step Decay), hoặc chọn $$\beta_2 = 0{,}999$$ quá cao trên bài toán gradient thay đổi đột ngột (như GAN hay RL, nơi $$\beta_2 = 0{,}95$$ hoặc $$0{,}9$$ ổn định hơn nhiều).
+
+### Khung giải thích (nên đọc chậm): Tính tay quy tắc tách nhóm tham số Weight Decay và tỷ lệ điều chỉnh Learning Rate theo Batch Size
+
+**Phần A — Tách nhóm tham số Weight Decay cho 1 tầng Linear `128 -> 64` kèm LayerNorm `64`**:
+- Nhóm 1 (`weight_decay = 0.01`): ma trận trọng số `W` có $$128 \times 64 = \mathbf{8{,}192}$$ tham số (2D).
+- Nhóm 2 (`weight_decay = 0.0`): `bias` (64) + `LayerNorm.weight` (64) + `LayerNorm.bias` (64) = **192** tham số (1D).
+
+**Phần B — Điều chỉnh Learning Rate khi tăng Batch Size từ $$B_1 = 64$$ lên $$B_2 = 256$$ (gấp $$k = 4$$ lần)**:
+- Với **SGD + Momentum** (Linear Scaling Rule): $$\eta_2 = k \cdot \eta_1 = 4 \times 0{,}01 = \mathbf{0{,}04}$$.
+- Với **Adam / AdamW** (Square-Root Scaling Rule): $$\eta_2 = \sqrt{k} \cdot \eta_1 = \sqrt{4} \times 3\times 10^{-4} = \mathbf{6 \times 10^{-4}}$$.
+
+Nắm vững hai quy tắc đơn giản này giúp bạn mở rộng huấn luyện từ 1 GPU lên 4–8 GPU mà giữ nguyên đường cong hội tụ!
+
 ```python
 # Demo so sánh bộ tối ưu trên bài toán tối ưu 2D
 print("="*70)

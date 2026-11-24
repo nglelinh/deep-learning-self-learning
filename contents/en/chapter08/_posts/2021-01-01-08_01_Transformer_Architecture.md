@@ -9,6 +9,23 @@ categories:
 - chapter08
 ---
 
+How did one architecture unify machine translation, code generation, protein folding, and image recognition under a single set of building blocks? Because the Transformer separates *where information flows* (self- and cross-attention) from *how each token transforms it* (position-wise MLPs), wrapped inside a deeply stable residual stream. This module hub connects the full mathematical theory of the Transformer with its step-by-step PyTorch implementation and diagnostic demos.
+
+## Background Knowledge Map: Mastering the Transformer Module
+
+- **Theory & Equations**: Positional encodings, Pre-LN vs. Post-LN residual blocks, FFN capacity, and encoder–decoder vs. decoder-only topologies.
+- **From-Scratch Code**: Modular PyTorch layers, mask broadcasting, buffer registration, and unit tests.
+- **Training & Diagnostics**: Learning-rate warmup, attention map inspection, and classic failure modes.
+
+### Step-by-Step Worked Example (Read Slowly): Encoder-Only vs. Decoder-Only Attention Complexity
+
+Compare a 6-layer Encoder-only model (BERT-style) and a 6-layer Decoder-only model (GPT-style) on a sequence of length $$T = 128$$:
+
+1. **Active entries in the $$128 \times 128$$ attention matrix per head**:
+   - Bidirectional Encoder: every token attends to all $$128$$ tokens $$\implies 128^2 = 16{,}384$$ active entries.
+   - Causal Decoder: token $$i$$ attends only to tokens $$0 \dots i$$ $$\implies \frac{128 \times 129}{2} = 8{,}256$$ active entries (roughly $$50\%$$ of the matrix is strictly masked to zero!).
+2. **Systems implication**: FlashAttention exploits this exact causal triangle to skip computing the upper-right half of the tile grid—achieving nearly a $$2\times$$ speedup on causal LLMs compared to bidirectional encoders at the same sequence length.
+
 # 08-01 The Transformer Architecture
 
 This section is the heart of the chapter: how attention pieces from Chapter 07 assemble into a full model.

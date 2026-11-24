@@ -10,6 +10,27 @@ categories:
 lesson_type: optional
 ---
 
+Optimization questions are a favorite stress test in ML interviews because they expose whether you understand *why* training recipes work rather than blindly copying `Adam(lr=1e-3)` from a tutorial. Can you explain on a whiteboard why Adam's bias correction matters specifically at $$t = 1$$, why AdamW fixes a genuine bug in L2-regularized Adam, or why warmup stabilizes early Transformer updates? These five prompts drill the exact intuition interviewers look for.
+
+## Background Knowledge Map: Core Interview Competency Pillars for Optimizers
+
+- **Momentum & Ravine Geometry**: Explaining how exponential velocity averaging cancels alternating orthogonal gradients across steep canyon walls while compounding parallel descent components.
+- **Adam Bias Correction & Stability**: Proving from $$m_t = (1-\beta_1)\sum \beta_1^{t-i} g_i$$ why dividing by $$(1 - \beta^t)$$ prevents zero-bias distortion during early steps.
+- **Adam vs. AdamW Decoupling**: Showing why L2 weight decay inside Adam gets divided by $$\sqrt{\hat{v}_t}$$ and loses uniformity across parameters.
+- **Warmup & Generalization Trade-offs**: Articulating why warmup prevents early large-variance adaptive jumps and when SGD + Momentum still competes with AdamW.
+
+### Step-by-Step Worked Example (Read Slowly): Quick Whiteboard Proof of Adam's Bias Correction Factor
+
+Suppose the true gradient is a constant $$g_1 = g_2 = \dots = g_t = g$$, and we initialize $$m_0 = 0$$ with $$m_t = \beta m_{t-1} + (1 - \beta) g_t$$.
+
+1. **Expand the geometric series**:
+   $$m_t = (1 - \beta) g \sum_{k=0}^{t-1} \beta^k.$$
+2. **Apply the finite geometric sum formula** ($$\sum_{k=0}^{t-1} \beta^k = \frac{1 - \beta^t}{1 - \beta}$$):
+   $$m_t = (1 - \beta) g \cdot \frac{1 - \beta^t}{1 - \beta} = (1 - \beta^t)\, g.$$
+3. **Numerical check at $$t = 1$$ with $$\beta = 0.999$$**:
+   $$m_1 = (1 - 0.999)\, g = 0.001\, g \quad (\text{off by a factor of } 1{,}000\times!).$$
+4. **Exact fix**: Dividing by $$(1 - \beta^t)$$ recovers $$\hat{m}_t = \frac{m_t}{1 - \beta^t} = g$$ identically for every $$t \ge 1$$!
+
 # Optional: interview practice — optimizers
 
 > This lesson is **optional**. It does **not** replace momentum, RMSprop, or Adam theory. After those notes, use this drill, then open *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) for solved items on adaptive methods, hyperparameters, and training dynamics.

@@ -9,6 +9,31 @@ categories:
 - chapter09
 ---
 
+Before 2015, training a 20-layer neural network felt like balancing a broomstick on your fingertip: choose a learning rate slightly too large or initialize weights slightly off scale, and layer activations either exploded into `NaN` or collapsed into dead ReLUs. Sergey Ioffe and Christian Szegedy's **Batch Normalization** transformed deep learning overnight by standardizing each feature channel to zero mean and unit variance across the mini-batch—then letting two learnable parameters $$(\gamma, \beta)$$ restore any scale or shift the network actually needs. Later work (Santurkar et al., 2018) revealed an even deeper secret: BatchNorm works primarily because it dramatically smooths the loss surface's Lipschitzness, letting SGD take bold, stable steps.
+
+## Background Knowledge Map: The Exact Mechanics of Batch Normalization
+
+- **Per-Channel Standardization**: For a mini-batch of $$m$$ activations $$\{x_1, \dots, x_m\}$$ at one channel/feature, BatchNorm computes $$\mu_B = \frac{1}{m}\sum x_i$$, $$\sigma_B^2 = \frac{1}{m}\sum (x_i - \mu_B)^2$$, and normalizes $$\hat{x}_i = \frac{x_i - \mu_B}{\sqrt{\sigma_B^2 + \epsilon}}$$.
+- **Learnable Affine Recovery ($$\gamma, \beta$$)**: Pure standardization would restrict activations to mean 0 and variance 1 (e.g., trapping inputs inside the linear region of a sigmoid). Adding $$y_i = \gamma \hat{x}_i + \beta$$ guarantees BatchNorm can even recover the exact identity function if $$\gamma = \sigma_B, \beta = \mu_B$$.
+- **Exponential Moving Average (EMA) for Inference**: At test time, predictions for a single image must be deterministic and independent of other images in the batch—so BatchNorm swaps $$(\mu_B, \sigma_B^2)$$ for running statistics updated during training via $$\mu_{\text{run}} \leftarrow (1 - \alpha)\mu_{\text{run}} + \alpha \mu_B$$.
+- **Scale Invariance of Weights**: Scaling the weights of the preceding linear/conv layer by any constant $$c > 0$$ multiplies both $$x$$ and $$\sigma_B$$ by $$c$$, which cancels out in $$\hat{x}$$—making effective step sizes self-stabilizing!
+
+### Step-by-Step Worked Example (Read Slowly): Hand-Computing a Complete BatchNorm Forward Pass
+
+Suppose a single feature channel receives a mini-batch of $$m = 4$$ values $$x = [2.0,\; 4.0,\; 6.0,\; 8.0]$$, with learnable parameters $$\gamma = 1.5$$, $$\beta = 0.5$$, and $$\epsilon = 0$$ (for clean exact arithmetic).
+
+1. **Batch mean $$\mu_B$$**:
+   $$\mu_B = \frac{2 + 4 + 6 + 8}{4} = \frac{20}{4} = 5.0.$$
+2. **Batch variance $$\sigma_B^2$$ and standard deviation $$\sigma_B$$**:
+   $$\sigma_B^2 = \frac{(2-5)^2 + (4-5)^2 + (6-5)^2 + (8-5)^2}{4} = \frac{9 + 1 + 1 + 9}{4} = \frac{20}{4} = 5.0 \implies \sigma_B = \sqrt{5} \approx 2.2361.$$
+3. **Standardize each sample $$\hat{x}_i = (x_i - 5.0) / 2.2361$$**:
+   $$\hat{x} \approx [-1.3416,\; -0.4472,\; +0.4472,\; +1.3416].$$
+   (Check: mean $$= 0.0$$, variance $$= (1.8 + 0.2 + 0.2 + 1.8)/4 = 1.0$$.)
+4. **Apply learnable affine transform $$y_i = 1.5 \hat{x}_i + 0.5$$**:
+   $$y \approx [-1.5124,\; -0.1708,\; +1.1708,\; +2.5124].$$
+5. **Update running mean** (starting from $$\mu_{\text{run}}^{(0)} = 0$$ with PyTorch momentum $$\alpha = 0.1$$):
+   $$\mu_{\text{run}}^{(1)} = 0.9(0) + 0.1(5.0) = 0.5.$$
+
 ## What is Batch Normalization?
 
 **Batch Normalization** (BatchNorm or BN), introduced by Ioffe and Szegedy (2015), normalizes the inputs of each layer to have zero mean and unit variance. It has become one of the most important techniques in modern deep learning.

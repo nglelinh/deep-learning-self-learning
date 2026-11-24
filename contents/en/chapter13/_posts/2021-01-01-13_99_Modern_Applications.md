@@ -10,6 +10,30 @@ categories:
 lesson_type: optional
 ---
 
+If you open the checkpoint of Stable Diffusion, Flux, Sora, or modern video generators, you will find a surprisingly familiar component right at the entrance and exit: a KL-regularized Variational Autoencoder. Rather than generating pixels directly, today's frontier generative systems split the problem in two—a VAE handles perceptual compression into a compact continuous latent tensor, while a diffusion or flow-matching Transformer models global semantics in that latent space.
+
+## Background Knowledge Map: VAEs in Modern Multimodal Systems (2022–2026)
+
+- **Pillar 1 — Perceptual Latent VAEs (KL-f8 / SDXL / Flux)**: Uses a very tiny KL weight ($\beta \approx 10^{-6}$) plus LPIPS and PatchGAN losses so the VAE preserves crisp high-frequency textures while keeping latents smoothly Gaussian for downstream diffusion.
+- **Pillar 2 — Spatiotemporal 3D Causal VAEs for Video**: Compresses video tensors $(T, H, W, 3)$ across both time (e.g., $4\times$) and space ($8\times \times 8\times$) using causal 3D convolutions so frames can be decoded streamingly without future leakage.
+- **Pillar 3 — Latent Scaling Factors**: Normalizes encoded latents by an empirical scale factor $s$ (e.g., $0.18215$ in SD 1.5) so latent variance equals $1.0$, aligning perfectly with standard diffusion noise schedules.
+- **Pillar 4 — Channel Width vs. Reconstruction Trade-off**: Explains why modern VAEs increased latent channels from $4$ (SD 1.5) to $16$ (SD3 / Flux)—dramatically improving small text, faces, and fine edges.
+
+### Step-by-Step Worked Example (Read Slowly): Spatiotemporal Compression Factor of a Video VAE
+
+Consider a 1-second HD video clip of $T = 25$ frames at resolution $H = 512, W = 512$ with $C = 3$ RGB channels, encoded by a causal 3D VAE with temporal stride $4$ (keeping the first frame separate: $1 + (T-1)/4$), spatial stride $8$, and $C_z = 16$ latent channels.
+
+1. **Raw video tensor size**:
+   $$25 \times 512 \times 512 \times 3 = 19{,}660{,}800\text{ scalar values}.$$
+2. **Compressed latent tensor dimensions**:
+   - Temporal frames: $T_z = 1 + \frac{25 - 1}{4} = 7$.
+   - Spatial size: $H_z = 512/8 = 64$, $W_z = 512/8 = 64$.
+   - Total latent scalars: $7 \times 64 \times 64 \times 16 = 458{,}752$.
+3. **Overall compression ratio**:
+   $$\frac{19{,}660{,}800}{458{,}752} \approx 42.86\times\text{ fewer scalars},$$
+   and spatiotemporal tokens (with $2 \times 2$ ViT patching) drop to $7 \times 32 \times 32 = 7{,}168$ tokens—small enough for full 3D self-attention on a single GPU.
+4. **Takeaway**: Modern VAEs are no longer standalone blurry image generators; they are the ultra-efficient perceptual codecs that make megapixel image and video synthesis tractable.
+
 # Optional: VAEs as latents for diffusion, video, and compression
 
 > This lesson is **optional**. It does **not** replace ELBO, reparameterization, or the VAE implementation. It shows how the same variational autoencoder became the **codec** in 2022–2026 generative systems.

@@ -10,6 +10,31 @@ categories:
 lesson_type: optional
 ---
 
+Trong các buổi phỏng vấn vị trí Machine Learning / Deep Learning Engineer tại những công ty công nghệ hàng đầu, người phỏng vấn hiếm khi hỏi bạn thuộc lòng cú pháp PyTorch. Thay vào đó, họ đặt ra những câu hỏi toán học sắc lẹm chỉ dài hai dòng—như *"Hãy phân tách Cross-Entropy thành Entropy và KL-Divergence"* hay *"Điều gì xảy ra với Thông tin Tương hỗ của một bộ phân loại hoàn hảo?"*—để kiểm tra xem bạn có thực sự hiểu bản chất đằng sau dòng code mình viết hay không. Bài luyện phỏng vấn này rèn cho bạn tư duy trả lời gọn, chặt chẽ và chạm đúng gốc rễ lý thuyết thông tin cùng giải tích.
+
+## Bản đồ kiến thức nền: Ba trụ cột Lý thuyết Thông tin & Giải tích hay gặp nhất khi Phỏng vấn
+
+1. **Entropy ($$H(P)$$), Cross-Entropy ($$H(P, Q)$$) và KL-Divergence ($$D_{\text{KL}}(P \| Q)$$)**:
+   Ba đại lượng gắn kết bằng đẳng thức vàng $$H(P, Q) = H(P) + D_{\text{KL}}(P \| Q)$$. Vì $$H(P)$$ cố định theo dữ liệu thật, tối thiểu hóa Cross-Entropy tương đương kéo phân phối dự đoán $$Q$$ sát phân phối thật $$P$$ theo khoảng cách KL.
+
+2. **Thông tin Tương hỗ (Mutual Information $$I(X; Y)$$)**:
+   Đo lượng bất định về $$Y$$ được giảm bớt khi biết $$X$$: $$I(X; Y) = H(Y) - H(Y \mid X) = D_{\text{KL}}(P_{XY} \| P_X P_Y)$$. Khác với hệ số tương quan tuyến tính, $$I(X; Y)$$ phát hiện được cả quan hệ phi tuyến.
+
+3. **Giải tích trong Tối ưu hóa (Độ lồi, Bất đẳng thức Jensen, Điểm dừng)**:
+   Bất đẳng thức Jensen là vũ khí chứng minh nhanh $$D_{\text{KL}}(P \| Q) \ge 0$$ (bất đẳng thức Gibbs) cũng như suy ra cận dưới ELBO trong Variational Autoencoder—những câu hỏi phỏng vấn cấp độ Senior/Research.
+
+### Khung giải thích (nên đọc chậm): Tính tay Entropy, Cross-Entropy và KL-Divergence trên phân phối 2 lớp
+
+Giả sử phân phối nhãn thật của một bài toán là $$P = (0.8, 0.2)$$ và mô hình của bạn dự đoán $$Q = (0.5, 0.5)$$ (dùng log cơ số 2, đơn vị *bit*):
+
+1. **Entropy của phân phối thật $$P$$** (độ bất định tối thiểu không thể vượt qua):
+   $$H(P) = -(0.8\log_2 0.8 + 0.2\log_2 0.2) \approx -(0.8 \times (-0.3219) + 0.2 \times (-2.3219)) = 0.2575 + 0.4644 = 0.7219\text{ bit}.$$
+2. **Cross-Entropy giữa $$P$$ và $$Q$$**:
+   $$H(P, Q) = -(0.8\log_2 0.5 + 0.2\log_2 0.5) = -(0.8(-1) + 0.2(-1)) = 1.0000\text{ bit}.$$
+3. **KL-Divergence (lượng bit "phí phạm" do dùng mô hình $$Q$$ thay vì $$P$$)**:
+   $$D_{\text{KL}}(P \| Q) = 0.8\log_2\frac{0.8}{0.5} + 0.2\log_2\frac{0.2}{0.5} \approx 0.8(0.6781) + 0.2(-1.3219) = 0.5425 - 0.2644 = 0.2781\text{ bit}.$$
+4. **Kiểm chứng đẳng thức vàng**: $$H(P) + D_{\text{KL}}(P \| Q) = 0.7219 + 0.2781 = 1.0000 = H(P, Q)$$. Khi phỏng vấn, chỉ cần trình bày đẳng thức này kèm ví dụ số gọn gàng như trên là bạn đã ghi điểm tuyệt đối!
+
 # Tùy chọn: Luyện phỏng vấn — Lý thuyết thông tin và giải tích
 
 > Bài này là phần **tùy chọn**, **không** thay thế các bài học cốt lõi về giải tích, đại số tuyến tính và xác suất. Sau khi hoàn thành những bài đó, bạn có thể luyện tập với các câu hỏi dưới đây, rồi tham khảo thêm *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) để xem thêm ngân hàng câu hỏi đã có lời giải cùng chủ đề.

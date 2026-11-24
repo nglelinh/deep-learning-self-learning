@@ -9,6 +9,32 @@ categories:
 - chapter16
 ---
 
+Trong thế giới không nhãn, mối nguy lớn nhất luôn rình rập mọi thuật toán học biểu diễn là **sụp đổ biểu diễn (Representation Collapse)**: nếu bộ mã hóa ánh xạ *mọi* bức ảnh về đúng một vector hằng số $$\mathbf{z} = (0, 0, \dots, 0)$$, thì mọi cặp ảnh giống nhau đều có khoảng cách bằng 0! Bài học này giải phẫu cơ chế toán học của **InfoNCE**, **Masked Prediction** và **BYOL/DINO** — ba con đường thông minh giúp học sâu thoát khỏi bẫy sụp đổ để tạo ra những bộ biểu diễn còn mạnh hơn cả học có giám sát.
+
+## Bản đồ kiến thức nền: Cơ chế toán học ngăn sụp đổ biểu diễn trong SSL
+
+- **Hàm mất mát InfoNCE (NT-Xent) và nhiệt độ $$\tau$$:** Xây dựng bài toán phân loại $$(2N-1)$$ lớp bằng độ tương đồng cosin chia nhiệt độ $$\tau$$, tạo đồng thời lực hút (cặp dương) và lực đẩy (cặp âm) chống sụp đổ.
+- **Liên hệ với thông tin tương hỗ (Mutual Information):** Chứng minh cực tiểu hóa InfoNCE tương đương cực đại hóa cận dưới của thông tin tương hỗ $$I(\mathbf{v}_1; \mathbf{v}_2)$$ giữa hai góc nhìn.
+- **Dự đoán phần bị che (BERT / MAE):** Khai thác sự dư thừa ngữ cảnh trong chuỗi văn bản hoặc mảng ảnh; phần mất mát chỉ tính trên các vị trí bị che giúp mô hình học cấu trúc toàn cục.
+- **Phá đối xứng không cần cặp âm (BYOL / SimSiam / DINO):** Dùng mạng đích cập nhật trượt (EMA), đầu dự đoán (predictor), `stop-gradient` và căn giữa (centering) để học biểu diễn giàu thông tin mà không cần batch size khổng lồ.
+
+### Khung giải thích (nên đọc chậm): Tính tay hàm mất mát InfoNCE (NT-Xent) cho một cặp dương và hai mẫu âm
+
+Xét một vector truy vấn $$\mathbf{z}_i$$ (đã chuẩn hóa đơn vị $$\|\mathbf{z}\|_2 = 1$$) với cặp dương $$\mathbf{z}_j$$ và hai mẫu âm $$\mathbf{z}_{k_1}, \mathbf{z}_{k_2}$$. Giả sử độ tương đồng cosin lần lượt là:
+- $$s(i, j) = 0{,}80$$ (cặp dương)
+- $$s(i, k_1) = 0{,}20$$, $$s(i, k_2) = -0{,}20$$ (hai mẫu âm)
+Chọn tham số nhiệt độ $$\tau = 0{,}2$$.
+
+1. **Chia nhiệt độ $$\tau$$ để tạo logit:**
+   - Cặp dương: $$0{,}80 / 0{,}2 = 4{,}0$$.
+   - Hai mẫu âm: $$0{,}20 / 0{,}2 = 1{,}0$$ và $$-0{,}20 / 0{,}2 = -1{,}0$$.
+2. **Tính hàm mũ và xác suất Softmax của cặp dương:**
+   - $$e^{4{,}0} \approx 54{,}60$$, $$e^{1{,}0} \approx 2{,}72$$, $$e^{-1{,}0} \approx 0{,}37$$.
+   - Tổng mẫu số: $$54{,}60 + 2{,}72 + 0{,}37 = 57{,}69$$.
+   - Xác suất nhận đúng cặp dương: $$p = \frac{54{,}60}{57{,}69} \approx 0{,}9464$$.
+3. **Tính InfoNCE loss:** $$\mathcal{L}_i = -\ln(0{,}9464) \approx 0{,}055$$.
+   *Thử nghiệm tư duy:* Nếu tăng $$\tau = 1{,}0$$, các logit co lại thành $$0{,}8; 0{,}2; -0{,}2$$ và $$p$$ tụt xuống $$0{,}526$$ ($$\mathcal{L}_i = 0{,}642$$). Nhiệt độ $$\tau$$ nhỏ giúp khuếch đại gradient đặc biệt mạnh lên những **mẫu âm khó (hard negatives)** có độ tương đồng gần cặp dương!
+
 # Học Tự giám sát: Học từ Chính Dữ liệu
 
 ## 1. Tổng quan khái niệm

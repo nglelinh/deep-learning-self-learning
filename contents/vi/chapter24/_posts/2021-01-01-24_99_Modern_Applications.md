@@ -10,6 +10,25 @@ categories:
 lesson_type: optional
 ---
 
+Khi cố nhìn trực tiếp vào một nơ-ron đơn lẻ bên trong một Mô hình Ngôn ngữ Lớn, các nhà nghiên cứu phát hiện một điều gây choáng: *cùng một nơ-ron* vừa sáng lên khi thấy mã nguồn Python, vừa sáng lên khi thấy trích dẫn Kinh Thánh, lại vừa sáng lên khi thấy công thức hóa học! Hiện tượng **Chồng chập (Superposition)** này khiến việc đọc từng nơ-ron thất bại — và thúc đẩy cuộc cách mạng **Diễn giải Cơ chế (Mechanistic Interpretability)** giai đoạn 2023–2026 với **Sparse Autoencoder (SAE)** và **Circuit Analysis**.
+
+## Bản đồ kiến thức nền: Ba đột phá của Diễn giải Mô hình hiện đại (2022–2026)
+
+- **Giả thuyết chồng chập (Superposition) và nơ-ron đa nghĩa (Polysemanticity):** Mạng nơ-ron nhồi nhét $$M \gg d$$ khái niệm thưa vào một không gian kích hoạt $$d$$ chiều dưới dạng các hướng gần trực giao.
+- **Sparse Autoencoder (SAE) tách đặc trưng đơn nghĩa:** Mở rộng vector kích hoạt $$\mathbf{h} \in \mathbb{R}^d$$ sang không gian từ điển rộng hơn nhiều $$\mathbf{f} \in \mathbb{R}^M$$ ($$M = 8d\text{–}64d$$) với phạt thưa $$L_1$$ hoặc TopK để tách riêng từng khái niệm sạch (ví dụ đặc trưng "Cầu Cổng Vàng", "lỗi bảo mật SQL").
+- **Phân tích mạch (Circuit Analysis) và Vá kích hoạt (Activation Patching):** Thay thế kích hoạt ở từng đầu chú ý/tầng MLP giữa câu sạch và câu nhiễu để chứng minh *quan hệ nhân quả* của các mạch như Induction Heads.
+- **Ứng dụng điều hướng hành vi (Feature Steering):** Tăng hoặc khóa trực tiếp cường độ của một đặc trưng SAE đã phát hiện để kiểm soát phong cách hoặc giảm hành vi không an toàn của LLM ngay lúc suy luận.
+
+### Khung giải thích (nên đọc chậm): Hiểu định lượng về Chồng chập (Superposition) và không gian từ điển của Sparse Autoencoder
+
+Trong một tầng Transformer có chiều ẩn $$d = 4{,}096$$, giả sử mô hình cần biểu diễn $$M = 65{,}536$$ khái niệm thực tế (gấp $$16\times$$ số chiều sẵn có!), nhưng tại mỗi token trung bình chỉ có $$k = 32$$ khái niệm thực sự xuất hiện cùng lúc.
+
+1. **Tỷ lệ mở rộng (Expansion Factor) của SAE:** $$M / d = 65{,}536 / 4{,}096 = 16\times$$.
+2. **Mật độ kích hoạt (Sparsity $$L_0$$):** Chỉ $$32 / 65{,}536 \approx 0{,}049\%$$ số đặc trưng SAE khác 0 trên mỗi token.
+3. **Hàm mục tiêu của SAE trên một vector kích hoạt $$\mathbf{h}$$:**
+   $$\mathcal{L}_{\text{SAE}} = \|\mathbf{h} - \hat{\mathbf{h}}\|_2^2 + \lambda \|\mathbf{f}\|_1.$$
+   Ví dụ nếu $$\|\mathbf{h} - \hat{\mathbf{h}}\|_2^2 = 0{,}08$$, tổng độ lớn đặc trưng $$\|\mathbf{f}\|_1 = 24{,}0$$ và $$\lambda = 0{,}005$$, thì $$\mathcal{L}_{\text{SAE}} = 0{,}08 + 0{,}12 = 0{,}20$$. Chính sự giằng co giữa sai số tái tạo và phạt $$L_1$$ buộc SAE chọn ra bộ từ điển các khái niệm **đơn nghĩa** nhất thay vì tái tạo bằng các tổ hợp pha trộn!
+
 # Tùy chọn: Diễn giải sau LIME/SHAP — Mạch Transformer và Autoencoder thưa
 
 > Bài này là **tùy chọn**, **không** thay thế các phần lý thuyết và cài đặt về *saliency*, LIME hay SHAP. Nội dung giới thiệu nhánh **diễn giải cơ chế** (*mechanistic interpretability*) cho Transformer — hướng nghiên cứu phát triển mạnh cho LLM trong giai đoạn 2022–2026.

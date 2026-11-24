@@ -9,6 +9,28 @@ categories:
 - chapter11
 ---
 
+Nếu mô hình tự hồi quy giống một nghệ nhân tỉ mỉ vẽ từng nét theo công thức xác suất, thì GAN lại giống một cuộc đấu trí kịch tính giữa kẻ làm tiền giả và chuyên gia kiểm định. Trên cùng tập dữ liệu 8 cụm Gaussian nằm trên vòng tròn, chỉ cần vài chục dòng mã là bạn sẽ chứng kiến tận mắt hiện tượng đáng sợ nhất của GAN: *mode collapse* — khi bộ sinh bỏ mặc 7 cụm dữ liệu còn lại để chỉ vẽ đi vẽ lại đúng 1 cụm duy nhất nhằm đánh lừa bộ phân biệt.
+
+## Bản đồ kiến thức nền: Cơ chế thực nghiệm và các bẫy kinh điển khi huấn luyện GAN
+
+- **Vòng lặp đối kháng xen kẽ (Alternating Optimization):** Cập nhật bộ phân biệt $$D$$ để tách mẫu thật/giả trước, rồi đóng băng $$D$$ để cập nhật bộ sinh $$G$$ theo hướng làm tăng xác suất $$D(G(\mathbf{z}))$$.
+- **Chẩn đoán sụp đổ mode (Mode Collapse):** Đo độ phủ trên từng tâm cụm thật để phát hiện sớm tình trạng $$G$$ chỉ sinh ra các mẫu rất đẹp nhưng lặp đi lặp lại ở một vài vùng hẹp.
+- **Đánh đổi giữa hợp lý tường minh và chất lượng mẫu:** So sánh trực tiếp trên cùng bộ dữ liệu toy giữa mô hình tự hồi quy (tính được NLL chính xác, phủ đều mode nhưng có thể tràn xác suất) và GAN (mẫu sắc nét nhưng không có log-likelihood).
+- **Kỹ thuật ổn định thực hành:** Nhận biết bẫy bão hòa gradient của hàm loss gốc, lệch nhịp tốc độ học giữa $$G$$ và $$D$$, cùng giải pháp non-saturating loss.
+
+### Khung giải thích (nên đọc chậm): So sánh gradient của hàm loss gốc và non-saturating loss khi $$D(G(\mathbf{z}))$$ gần 0
+
+Ở giai đoạn đầu huấn luyện, ảnh giả còn rất thô nên bộ phân biệt dễ dàng bác bỏ: giả sử $$D(G(\mathbf{z})) = 0{,}01$$ (logit $$u = \text{logit}(0{,}01) \approx -4{,}595$$).
+
+1. **Hàm mục tiêu minimax gốc của $$G$$:** $$\mathcal{L}_G^{\text{minimax}} = \ln(1 - D(G(\mathbf{z}))) = \ln(1 - \sigma(u))$$.
+   Đạo hàm theo logit $$u$$ là:
+   $$\frac{\partial \mathcal{L}_G^{\text{minimax}}}{\partial u} = -\sigma(u) = -0{,}01.$$
+   Độ lớn gradient chỉ bằng $$0{,}01$$ — gần như **triệt tiêu** đúng lúc $$G$$ cần học mạnh nhất!
+2. **Hàm mục tiêu non-saturating (dùng trong thực tế):** $$\mathcal{L}_G^{\text{NS}} = -\ln D(G(\mathbf{z})) = -\ln \sigma(u)$$.
+   Đạo hàm theo logit $$u$$ là:
+   $$\frac{\partial \mathcal{L}_G^{\text{NS}}}{\partial u} = -(1 - \sigma(u)) = -(1 - 0{,}01) = -0{,}99.$$
+3. **Kết luận định lượng:** Tại cùng một trạng thái $$D(G(\mathbf{z})) = 0{,}01$$, non-saturating loss tạo ra tín hiệu gradient **mạnh gấp 99 lần** so với công thức minimax gốc, giúp $$G$$ thoát khỏi điểm chết ban đầu mà vẫn giữ nguyên điểm tối ưu toàn cục.
+
 ```python
 # 2. GAN đơn giản để so sánh
 print("\n2. Huấn luyện GAN (Mật độ Ẩn)")

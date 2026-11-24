@@ -9,6 +9,34 @@ categories:
 - chapter04
 ---
 
+Standard dense convolution launched the deep vision revolution, but deploying CNNs onto real hardware—from smartphone cameras to high-resolution medical segmentation—quickly exposed its cracks: quadratic compute growth with kernel size, checkerboard artifacts, vanishing gradients in deep stacks, and bloated parameter counts. The innovations that followed—depthwise separable convolutions (MobileNet), dilated convolutions (DeepLab), residual connections (ResNet), and careful normalization—are not disconnected tricks; they are targeted mathematical surgeries on the original convolutional operator.
+
+## Background Knowledge Map: Architectural Variants and Failure Modes of Convolution
+
+- **Depthwise Separable Factorization**: Standard convolution couples spatial filtering and cross-channel mixing into one $$C_{\text{in}} C_{\text{out}} k^2$$ tensor. Factoring it into a per-channel **depthwise** $$k \times k$$ conv followed by a **pointwise** $$1 \times 1$$ conv decouples space from depth, slashing MACs and weights by roughly $$8\times$$–$$9\times$$ for $$3 \times 3$$ kernels.
+- **Dilated (Atrous) Convolutions**: Inserting spacing $$d$$ between kernel elements expands the receptive field exponentially ($$k_{\text{eff}} = d(k-1)+1$$) without losing spatial resolution or adding parameters—critical for dense prediction tasks like semantic segmentation—though uncoordinated dilation rates can cause "gridding" blind spots.
+- **Residual Skip Paths & Gradient Highways**: Adding the identity mapping $$y = F(x) + x$$ ensures that the Jacobian $$\partial y / \partial x = I + \partial F / \partial x$$ stays well-conditioned even across 100+ layers, preventing degradation where deeper plain CNNs perform worse on training data than shallower ones.
+- **Boundary Artifacts & Receptive Field Mismatch**: Repeated zero-padding leaks border-position information into interior activations, while aggressive early striding can alias fine textures before the network has extracted them.
+
+### Step-by-Step Worked Example (Read Slowly): Standard vs. Depthwise Separable Convolution Cost
+
+Suppose a mobile vision layer transforms a $$28 \times 28$$ feature map from $$C_{\text{in}} = 64$$ channels to $$C_{\text{out}} = 128$$ channels using $$k = 3$$, stride $$s = 1$$, padding $$p = 1$$ (so spatial output remains $$28 \times 28 = 784$$ positions).
+
+1. **Standard 2D convolution**:
+   - Parameters (excluding bias):
+     $$P_{\text{std}} = C_{\text{in}} \cdot C_{\text{out}} \cdot k^2 = 64 \times 128 \times 9 = 73{,}728.$$
+   - Multiply-accumulate operations (MACs):
+     $$\text{MACs}_{\text{std}} = 784 \times 73{,}728 = 57{,}802{,}752 \approx 57.8\text{M}.$$
+2. **Depthwise separable convolution**:
+   - **Stage 1 (Depthwise $$3 \times 3$$, `groups=64`)**: $$64$$ independent $$3 \times 3$$ filters:
+     $$P_{\text{dw}} = 64 \times 9 = 576, \quad \text{MACs}_{\text{dw}} = 784 \times 576 = 451{,}584.$$
+   - **Stage 2 (Pointwise $$1 \times 1$$)**: mixes $$64 \to 128$$ channels:
+     $$P_{\text{pw}} = 64 \times 128 \times 1 = 8{,}192, \quad \text{MACs}_{\text{pw}} = 784 \times 8{,}192 = 6{,}422{,}528.$$
+   - **Total**:
+     $$P_{\text{sep}} = 576 + 8{,}192 = 8{,}768, \quad \text{MACs}_{\text{sep}} = 6{,}874{,}112 \approx 6.87\text{M}.$$
+3. **Exact efficiency ratio**:
+   $$\frac{P_{\text{sep}}}{P_{\text{std}}} = \frac{1}{C_{\text{out}}} + \frac{1}{k^2} = \frac{1}{128} + \frac{1}{9} \approx 0.00781 + 0.11111 = 0.1189 \implies 8.41\times \text{ reduction!}$$
+
 ## 5. Related Concepts
 
 ### CNN vs Regular Neural Networks

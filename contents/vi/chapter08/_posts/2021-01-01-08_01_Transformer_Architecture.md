@@ -9,6 +9,29 @@ categories:
 - chapter08
 ---
 
+Nhiều người mới học cảm thấy sơ đồ kiến trúc Transformer trong bài báo gốc năm 2017 trông như một mê cung đầy mũi tên rẽ nhánh. Nhưng khi tách nó thành hai góc nhìn — **lý thuyết từng khối con** (tại sao cần FFN mở rộng $$4\times$$, tại sao Pre-LN ổn định hơn Post-LN) và **cài đặt mã nguồn gọn sạch** — bạn sẽ nhận ra Transformer thực chất là một trong những kiến trúc tối giản và đối xứng nhất lịch sử học sâu.
+
+## Bản đồ kiến thức nền: Ba trụ cột học phần Kiến trúc Transformer
+
+1. **Giải phẫu toán học từng khối con**:
+   Token Embedding (nhân $$\sqrt{d_{\text{model}}}$$), Positional Encoding, Multi-Head Attention, Position-wise FFN ($$\text{Linear} \to \text{Activation} \to \text{Linear}$$), Residual Connection và LayerNorm.
+2. **Thiết kế ba họ mô hình từ cùng một bộ khối**:
+   Chỉ bằng cách bật/tắt mặt nạ nhân quả (causal mask) và giữ hay bỏ khối cross-attention, cùng một khối lõi sinh ra cả BERT, GPT lẫn T5.
+3. **Kiểm chứng từ code tới thực nghiệm**:
+   Tự lắp ráp một Transformer mini hoàn chỉnh bằng PyTorch, kiểm tra bằng smoke tests (shape, gradient, causal leak) và hiểu rõ các cạm bẫy khi mở rộng quy mô (warmup, weight tying, KV-cache).
+
+### Khung giải thích (nên đọc chậm): Tính tay tỷ lệ phân bổ tham số giữa Attention và FFN trong 1 tầng Transformer
+
+Với $$d_{\text{model}} = 512$$ và chiều ẩn của FFN chuẩn là $$d_{\text{ff}} = 4 \, d_{\text{model}} = 2{,}048$$ (bỏ qua bias và LayerNorm nhỏ):
+
+1. **Khối Multi-Head Self-Attention** (4 ma trận $$W^Q, W^K, W^V, W^O$$ kích thước $$512 \times 512$$):
+   $$4 \times 512^2 = \mathbf{1{,}048{,}576}$$ tham số (**33,3%**).
+2. **Khối Feed-Forward Network (FFN)** (hai ma trận $$W_1 \in \mathbb{R}^{512 \times 2048}$$ và $$W_2 \in \mathbb{R}^{2048 \times 512}$$):
+   $$2 \times 512 \times 2{,}048 = 8 \times 512^2 = \mathbf{2{,}097{,}152}$$ tham số (**66,7%**).
+3. **Tổng 1 tầng Transformer Encoder/Decoder-only**: $$12 \, d_{\text{model}}^2 = \mathbf{3{,}145{,}728}$$ tham số!
+
+Một sự thật hay gây bất ngờ: **hai phần ba** số tham số của một mô hình ngôn ngữ Transformer không nằm ở Attention, mà nằm ở các tầng **FFN** — nơi mô hình lưu trữ phần lớn tri thức sự kiện (*factual knowledge*) như một bộ nhớ khóa–giá trị khổng lồ!
+
 # 08-01 Kiến trúc Transformer
 
 Đây là phần trọng tâm của Chương 08, trình bày cách ghép nối các thành phần attention từ Chương 07 thành kiến trúc Transformer hoàn chỉnh.

@@ -9,6 +9,25 @@ categories:
 - chapter07
 ---
 
+Once you see how Bahdanau alignment rescues an RNN translator from the fixed-vector bottleneck, the next natural leap is mathematical abstraction: strip away the RNN entirely and ask what happens when attention operates as a standalone, batched matrix operator with scaled dot products and multiple parallel heads. This module bridges conceptual intuition to the exact linear algebra, variance scaling, and PyTorch multi-head code that power modern Transformers.
+
+## Background Knowledge Map: Deepening Attention from Alignment to Multi-Head Tensors
+
+- **Exact Scaled Dot-Product Algebra**: Deriving why dividing $$Q K^\top$$ by $$\sqrt{d_k}$$ stabilizes softmax variance across growing head dimensions.
+- **Masking Geometry**: Constructing padding masks (to ignore `<PAD>` tokens) and causal upper-triangular masks (to enforce autoregressive causality) by injecting $$-\infty$$ *before* softmax.
+- **Multi-Head Subspace Decomposition**: Splitting $$d_{\text{model}}$$ into $$h$$ heads of dimension $$d_k = d_{\text{model}}/h$$ so the model can simultaneously track syntactic dependencies, coreference, and positional proximity.
+
+### Step-by-Step Worked Example (Read Slowly): Shape & Cost Audit of Batched Attention
+
+Consider a batch of $$B = 4$$ sentences of length $$T = 16$$ with model dimension $$d_{\text{model}} = 64$$ split into $$h = 8$$ heads ($$d_k = 64 / 8 = 8$$).
+
+1. **Projected Q, K, V shapes after head splitting**:
+   `Q, K, V` each have shape `(B, h, T, d_k) = (4, 8, 16, 8)`.
+2. **Attention score matrix `Q @ K.T`**:
+   Shape is `(4, 8, 16, 16)` — holding $$4 \times 8 \times 256 = 8{,}192$$ pairwise alignment scores.
+3. **Weighted value output `attn @ V` and head re-concatenation**:
+   `(4, 8, 16, 16) @ (4, 8, 16, 8) -> (4, 8, 16, 8)`, which transposes and reshapes cleanly back to `(4, 16, 64)` before the final output projection $$W_O \in \mathbb{R}^{64 \times 64}$$.
+
 # 07-02 Attention Mechanisms in Depth
 
 This block goes **beyond the fundamentals lesson**. You already know *why* attention exists and the basic formulas. Here we tighten the mathematics, then implement every moving part carefully.

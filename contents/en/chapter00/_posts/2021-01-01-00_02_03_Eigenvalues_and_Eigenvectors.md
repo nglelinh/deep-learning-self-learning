@@ -9,6 +9,34 @@ categories:
 - chapter00
 ---
 
+> *Train a 50-layer recurrent network with carelessly scaled weights and within seconds your gradients either collapse to `0.0` or explode to `NaN`. Why? Because multiplying by the same matrix $$W$$ fifty times scales every component along its eigenvectors by $$\lambda_i^{50}$$—and eigenvalues tell you at a glance whether a system will die, stabilize, or blow up.*
+
+## Background Knowledge Map: Spectral Structure of Matrices
+
+1. **Eigenvalues & Eigenvectors (Invariant Directions)**: Nonzero vectors $$\mathbf{v}$$ that a matrix $$A$$ merely stretches or flips ($$A\mathbf{v} = \lambda\mathbf{v}$$) without rotating, revealing the intrinsic coordinate axes of the transformation.
+2. **Characteristic Polynomial & Trace/Determinant Checks**: Eigenvalues satisfy $$\det(A - \lambda I) = 0$$, and always obey two quick sanity checks: $$\sum_i \lambda_i = \text{tr}(A)$$ and $$\prod_i \lambda_i = \det(A)$$.
+3. **Spectral Theorem for Symmetric Matrices**: Real symmetric matrices (such as covariance matrices in PCA and Hessians of smooth losses) always have real eigenvalues and an orthonormal eigenbasis, guaranteeing clean diagonalization $$A = Q\Lambda Q^\top$$.
+4. **Condition Number & Optimization Speed**: The ratio $$\kappa = \lvert \lambda_{\max}\rvert / \lvert \lambda_{\min}\rvert$$ of the Hessian controls how elongated a loss valley is; large $$\kappa$$ forces vanilla gradient descent to crawl, motivating preconditioning and normalization.
+
+### Step-by-Step Worked Example (Read Slowly): Full Eigendecomposition and Condition Number of a Hessian
+
+Consider the symmetric Hessian matrix $$H = \begin{bmatrix} 5 & 2 \\ 2 & 2 \end{bmatrix}$$ of a quadratic loss $$L(\mathbf{w}) = \frac{1}{2}\mathbf{w}^\top H \mathbf{w}$$.
+
+1. **Solve the Characteristic Equation $$\det(H - \lambda I) = 0$$**:
+   $$(5 - \lambda)(2 - \lambda) - (2)(2) = \lambda^2 - 7\lambda + 10 - 4 = \lambda^2 - 7\lambda + 6 = 0$$
+   Factoring gives $$(\lambda - 6)(\lambda - 1) = 0$$, so $$\lambda_1 = 6$$ and $$\lambda_2 = 1$$.
+   - Trace check: $$\lambda_1 + \lambda_2 = 6 + 1 = 7 = 5 + 2 = \text{tr}(H)$$.
+   - Determinant check: $$\lambda_1 \lambda_2 = 6 \times 1 = 6 = (5)(2) - 4 = \det(H)$$.
+2. **Find Orthonormal Eigenvectors**:
+   - For $$\lambda_1 = 6$$: $$(H - 6I)\mathbf{v} = \begin{bmatrix} -1 & 2 \\ 2 & -4 \end{bmatrix}\begin{bmatrix} v_1 \\ v_2 \end{bmatrix} = \mathbf{0} \implies v_1 = 2v_2$$.
+     Normalized: $$\mathbf{q}_1 = \frac{1}{\sqrt{5}}\begin{bmatrix} 2 \\ 1 \end{bmatrix}$$.
+   - For $$\lambda_2 = 1$$: $$(H - I)\mathbf{v} = \begin{bmatrix} 4 & 2 \\ 2 & 1 \end{bmatrix}\begin{bmatrix} v_1 \\ v_2 \end{bmatrix} = \mathbf{0} \implies v_2 = -2v_1$$.
+     Normalized: $$\mathbf{q}_2 = \frac{1}{\sqrt{5}}\begin{bmatrix} 1 \\ -2 \end{bmatrix}$$.
+   - Orthogonality check: $$\mathbf{q}_1^\top \mathbf{q}_2 = \frac{1}{5}(2 - 2) = 0$$.
+3. **Optimization Implication (Condition Number & Max Safe Step Size)**:
+   - Condition number: $$\kappa(H) = \frac{\lambda_1}{\lambda_2} = \frac{6}{1} = 6$$.
+   - Maximum stable gradient descent learning rate: $$\eta_{\max} = \frac{2}{\lambda_{\max}} = \frac{2}{6} = \frac{1}{3} \approx 0.333$$. Any step size $$\eta > 1/3$$ will oscillate and diverge along $$\mathbf{q}_1$$!
+
 This lesson covers eigenvalues and eigenvectors, which are crucial for understanding the behavior of linear transformations and quadratic functions in deep-learning.
 
 ---

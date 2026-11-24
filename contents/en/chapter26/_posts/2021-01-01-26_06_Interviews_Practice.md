@@ -10,6 +10,28 @@ categories:
 lesson_type: optional
 ---
 
+Senior LLM engineering interviews test whether you can reason across the full stack on a whiteboard without hand-waving: when to prompt vs. RAG vs. fine-tune, why you should check quantization and speculative decoding *before* launching a costly distillation run, how to derive the softmax head gradient in two lines, and how to count every parameter and KV-cache byte of a modern decoder block from scratch.
+
+## Background Knowledge Map: Full-Stack LLM Interview Readiness
+
+- **Pillar 1 — Build-vs-Retrieve-vs-Adapt Decision Tree**: Separates knowledge injection (RAG), style/format adaptation (prompting / LoRA SFT), and preference/reasoning shaping (DPO / GRPO).
+- **Pillar 2 — Serving & Compression Triage**: Evaluates latency and VRAM bottlenecks quantitatively—choosing quantization, prefix caching, or speculative decoding before retraining a student model.
+- **Pillar 3 — Core Math Derivations on Demand**: Fluently derives $\partial\mathcal{L}/\partial z = p - t$, temperature-scaled KD gradients, and attention FLOP / KV-cache scaling formulas.
+- **Pillar 4 — Architecture Accounting**: Identifies RMSNorm, RoPE, SwiGLU, and GQA in modern checkpoints and verifies parameter counts and memory budgets on the spot.
+
+### Step-by-Step Worked Example (Read Slowly): Solving an Interview Triage Prompt — RAG vs. Fine-Tune Latency & Cost
+
+An interviewer asks: *"Our 10,000-document internal policy corpus changes every week. Should we LoRA fine-tune our 8B model weekly or use RAG with a 500-token retrieved context?"* Let us quantify both sides:
+
+1. **Knowledge freshness & hallucination**:
+   - Fine-tuning bakes facts loosely into weights, requires weekly retraining/eval pipelines, and still cannot cite exact clause numbers reliably.
+   - RAG updates the vector index in seconds whenever a policy PDF changes and grounds answers with verbatim citations.
+2. **Incremental inference cost of RAG** (adding $500$ retrieved tokens to prefill on an 8B model):
+   - Extra prefill FLOPs: $2 \times 8 \times 10^9 \times 500 = 8 \times 10^{12}$ FLOPs.
+   - On an H100 running at $500\text{ TFLOP/s}$ effective BF16 throughput, $8\text{ TFLOPs} / 500\text{ TFLOP/s} = 16\text{ ms}$ extra TTFT!
+3. **Clean interview verdict**: **Use RAG for fast-changing factual knowledge** (only $16\text{ ms}$ prefill overhead, instant updates, auditable citations), and reserve **SFT/LoRA strictly for domain tone, tool-use formatting, or reasoning style**.
+4. **Takeaway**: Backing architectural choices with concrete latency and FLOP numbers turns a subjective interview question into a decisive engineering answer.
+
 # Optional: LLM interview prompts
 
 > This lesson is **optional**. It does **not** replace 26-01–26-05 or **26-07**. The prompts are course-written. They are **not** taken from Kashani & Ivry, *Deep Learning Interviews*, Alisa’s notes, or any blog.

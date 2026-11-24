@@ -9,6 +9,27 @@ categories:
 - chapter17
 ---
 
+Cài đặt một bộ phát hiện đối tượng thực thụ với `torchvision` khác hẳn bài toán phân loại ảnh ở một điểm cốt lõi: mỗi bức ảnh trong cùng một batch lại có **số lượng hộp bao khác nhau** (ảnh này có 1 vật thể, ảnh kia có 12 vật thể), nên bạn không thể xếp chồng nhãn thành một tensor hình chữ nhật thông thường! Bài thực hành này dẫn bạn qua trọn bộ kỹ thuật tinh chỉnh Faster R-CNN: thay `FastRCNNPredictor`, viết `collate_fn` chuẩn xác, xử lý định dạng `boxes`/`labels` và chạy suy luận kèm hậu xử lý ngưỡng tin cậy.
+
+## Bản đồ kiến thức nền: Kỹ thuật triển khai Faster R-CNN thực chiến trong PyTorch
+
+- **Thay thế đầu dự đoán lớp và hộp (`FastRCNNPredictor`):** Giữ nguyên xương sống ResNet-FPN và mạng RPN tiền huấn luyện COCO, chỉ đổi `num_classes = N + 1` (luôn cộng thêm lớp `0` cho nền background!).
+- **Cấu trúc Dataset & `collate_fn` động:** Trả về cặp `(image, target_dict)` với `boxes` dạng `[x_min, y_min, x_max, y_max]` thỏa mãn `x_max > x_min` và dùng `collate_fn=lambda b: tuple(zip(*b))` để giữ list các ảnh/nhãn có chiều dài khác nhau.
+- **Hành vi hai chế độ `train()` vs. `eval()` của `torchvision`:** Ở chế độ `train()`, mô hình nhận `(images, targets)` và trả về dictionary các thành phần loss (`loss_classifier`, `loss_box_reg`, `loss_objectness`, `loss_rpn_box_reg`); ở chế độ `eval()`, nó chỉ nhận `images` và trả về dự đoán đã qua NMS.
+- **Tăng cường dữ liệu đồng bộ hình học:** Mọi phép lật ngang, cắt hoặc đổi tỷ lệ ảnh đều phải biến đổi tọa độ hộp bao tương ứng (như `x_min_new = W - x_max`).
+
+### Khung giải thích (nên đọc chậm): Biến đổi tọa độ hộp bao khi lật ngang ảnh (Horizontal Flip) và đổi kích thước
+
+Giả sử ảnh gốc có chiều rộng $$W = 800$$, chiều cao $$H = 600$$ và một hộp bao có tọa độ `[x_min, y_min, x_max, y_max] = [120, 100, 320, 400]`.
+
+1. **Lật ngang ảnh (Horizontal Flip):** Chiều dọc $$y$$ giữ nguyên, còn trục ngang lật đối xứng qua $$W = 800$$ (chú ý đảo vai trò `x_min` và `x_max`!):
+   - $$x_{\min}' = W - x_{\max} = 800 - 320 = 480$$
+   - $$x_{\max}' = W - x_{\min} = 800 - 120 = 680$$
+   - Hộp mới: `[480, 100, 680, 400]` (kiểm tra chiều rộng vẫn là $$680 - 480 = 200$$ và `x_max' > x_min'`).
+2. **Thu nhỏ ảnh về $$400 \times 300$$ (hệ số $$s_x = 0{,}5, s_y = 0{,}5$$):**
+   - Nhân các tọa độ theo trục tương ứng: `[240, 50, 340, 200]`.
+   - Nếu một lỗi nhỏ trong augmentation để lọt hộp suy biến có `x_max <= x_min` (diện tích bằng 0), Faster R-CNN sẽ lập tức báo lỗi `AssertionError` trong quá trình tính toán RPN.
+
 ## 4. Mã minh họa
 
 Ví dụ cài đặt đầy đủ theo kiến trúc Faster R-CNN:

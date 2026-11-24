@@ -9,6 +9,30 @@ categories:
 - chapter03
 ---
 
+> *Why do we never train a softmax classifier with Mean Squared Error? Try computing the gradient of MSE through a sigmoid when the network is dead wrong ($$y = 1, \hat{y} = 0.01$$): the sigmoid derivative $$\hat{y}(1-\hat{y}) \approx 0.01$$ nearly zeroes out the error signal! Cross-entropy cancels that saturation factor completely.*
+
+## Background Knowledge Map: Classification Losses & Information Geometry
+
+1. **Binary Cross-Entropy (Log Loss)**: Measures negative log-likelihood of a Bernoulli output; paired with sigmoid, its logit gradient is simply $$\hat{p} - y$$, delivering maximum corrective push when the model is confidently wrong.
+2. **Categorical & Sparse Cross-Entropy**: Generalizes BCE to $$K$$ mutually exclusive classes via $$-\sum_k y_k \log p_k$$; sparse cross-entropy avoids materializing huge one-hot vectors by indexing directly into the true class's log-probability.
+3. **KL Divergence (Distillation & Soft Targets)**: Measures directed divergence $$D_{\text{KL}}(p \| q) = \sum_k p_k \log(p_k / q_k)$$, essential when training student models to match a teacher's soft probability distribution.
+4. **Hinge & Margin Losses**: Push the true class score above competing classes by a fixed geometric margin (e.g., $$\max(0, 1 - y z)$$), prioritizing decision-boundary separation over calibrated probabilities.
+
+### Step-by-Step Worked Example (Read Slowly): Computing Multi-Class Cross-Entropy and Its Logit Gradient
+
+Suppose a 3-class classifier outputs logits $$\mathbf{z} = [2.0, 1.0, 0.0]$$ for an example whose true label is Class 1 (one-hot $$\mathbf{y} = [0, 1, 0]$$). Use $$e^2 \approx 7.389, e^1 \approx 2.718, e^0 = 1.000$$.
+
+1. **Compute Softmax Probabilities $$\mathbf{p} = \text{softmax}(\mathbf{z})$$**:
+   $$Z = 7.389 + 2.718 + 1.000 = 11.107$$
+   $$p_0 = \frac{7.389}{11.107} \approx 0.6653, \quad p_1 = \frac{2.718}{11.107} \approx 0.2447, \quad p_2 = \frac{1.000}{11.107} \approx 0.0900$$
+2. **Compute Categorical Cross-Entropy Loss**:
+   Only the true class ($$k = 1$$) contributes:
+   $$L = -\ln(p_1) = -\ln(0.2447) \approx 1.4076\text{ nats}$$
+   (Equivalently via LogSumExp: $$L = \ln(11.107) - z_1 = 2.4076 - 1.0 = 1.4076$$.)
+3. **Compute Exact Logit Gradient $$\frac{\partial L}{\partial \mathbf{z}} = \mathbf{p} - \mathbf{y}$$**:
+   $$\frac{\partial L}{\partial \mathbf{z}} = \begin{bmatrix} 0.6653 - 0 \\ 0.2447 - 1 \\ 0.0900 - 0 \end{bmatrix} = \begin{bmatrix} +0.6653 \\ -0.7553 \\ +0.0900 \end{bmatrix}$$
+   Check the zero-sum conservation law: $$0.6653 - 0.7553 + 0.0900 = 0.0000$$. One gradient step pushes the true logit $$z_1$$ **up** by $$+0.7553\eta$$ while pushing wrong logits $$z_0, z_2$$ **down** in exact proportion to their erroneous probabilities!
+
 ## Loss Functions for Binary Classification
 
 ### 1. Binary Cross-Entropy (Log Loss)

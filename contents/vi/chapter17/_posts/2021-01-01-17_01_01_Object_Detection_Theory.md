@@ -9,6 +9,29 @@ categories:
 - chapter17
 ---
 
+Phát hiện đối tượng không đơn thuần là ghép bài toán phân loại với bài toán hồi quy 4 tọa độ: khi một bức ảnh có thể chứa 0, 3 hoặc 47 vật thể với đủ kích thước từ chú kiến nhỏ xíu đến chiếc xe buýt choán gần hết khung hình, mạng nơ-ron sẽ phải dự đoán bao nhiêu hộp bao? Bài lý thuyết này giải mã trọn bộ công cụ hình học giúp máy tính trả lời câu hỏi đó: **IoU**, **Anchor Boxes**, **hồi quy độ lệch log-scale**, **NMS** và thước đo chuẩn vàng **mAP**.
+
+## Bản đồ kiến thức nền: Cơ sở toán học của Phát hiện Đối tượng
+
+- **Intersection over Union (IoU) và các biến thể GIoU/CIoU:** Thước đo bất biến tỷ lệ giữa hộp dự đoán $$B_p$$ và hộp thật $$B_{gt}$$, làm nền tảng cho cả gán nhãn huấn luyện lẫn hàm mất mát hộp bao.
+- **Tham số hóa hộp bao theo Anchor (Bounding Box Regression):** Dự đoán độ lệch tương đối $$(t_x, t_y, t_w, t_h)$$ chuẩn hóa theo kích thước hộp neo và lấy logarit cho chiều rộng/cao để bất biến tỷ lệ và giữ kích thước luôn dương.
+- **Hàm mất mát đa tác vụ và Focal Loss:** Cân bằng giữa loss phân loại (xử lý mất cân bằng cực độ nền/vật thể bằng Focal Loss) và Smooth L1 / IoU loss cho tọa độ.
+- **Non-Maximum Suppression (NMS) và Mean Average Precision (mAP):** Hậu xử lý lọc hộp trùng lặp và tính diện tích dưới đường cong Precision–Recall ở các ngưỡng IoU (mAP@0.5, mAP@0.5:0.95).
+
+### Khung giải thích (nên đọc chậm): Tính tay IoU của hai hộp bao và một bước lọc Non-Maximum Suppression (NMS)
+
+Xét hộp nhãn thật $$B_{gt} = [x_1, y_1, x_2, y_2] = [10, 10, 50, 50]$$ và hai hộp dự đoán cho lớp `ô tô`: hộp A $$= [20, 20, 60, 60]$$ (điểm tin cậy $$0{,}92$$) và hộp B $$= [18, 18, 56, 56]$$ (điểm tin cậy $$0{,}75$$).
+
+1. **Tính IoU giữa hộp A và hộp thật $$B_{gt}$$:**
+   - Diện tích $$B_{gt}$$: $$(50-10)\times(50-10) = 1{,}600$$; diện tích A: $$(60-20)\times(60-20) = 1{,}600$$.
+   - Vùng giao: $$[\max(10,20),\max(10,20),\min(50,60),\min(50,60)] = [20, 20, 50, 50]$$, diện tích giao $$= 30 \times 30 = 900$$.
+   - Diện tích hợp: $$1{,}600 + 1{,}600 - 900 = 2{,}300$$.
+   - $$\text{IoU}(A, B_{gt}) = \frac{900}{2{,}300} \approx 0{,}3913$$ (chưa đạt ngưỡng $$0{,}50$$ nên bị tính là False Positive ở mAP@0.5!).
+2. **Chạy NMS với ngưỡng $$\tau_{\text{NMS}} = 0{,}5$$ giữa A và B:**
+   - Chọn hộp có điểm cao nhất trước là A ($$0{,}92$$). Tính vùng giao giữa A và B: $$[20, 20, 56, 56]$$ có diện tích $$36 \times 36 = 1{,}296$$.
+   - Diện tích B là $$38 \times 38 = 1{,}444$$, hợp $$A \cup B = 1{,}600 + 1{,}444 - 1{,}296 = 1{,}748$$.
+   - $$\text{IoU}(A, B) = \frac{1{,}296}{1{,}748} \approx 0{,}7414 > 0{,}5$$ → **loại bỏ hộp B** vì trùng lặp với A!
+
 # Phát hiện Đối tượng: Định vị và Nhận dạng
 
 ![Object Detection Example](https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Detected-with-YOLO--Schreibtisch-mit-Objekten.jpg/800px-Detected-with-YOLO--Schreibtisch-mit-Objekten.jpg)

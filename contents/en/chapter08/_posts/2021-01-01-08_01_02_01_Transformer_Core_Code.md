@@ -9,6 +9,29 @@ categories:
 - chapter08
 ---
 
+Assembling a full Transformer from scratch in PyTorch—`PositionalEncoding`, `MultiHeadAttention`, `PositionwiseFFN`, `EncoderLayer`, `DecoderLayer`, and top-level masks—is one of the most rewarding exercises in deep learning because the entire architecture fits cleanly in ~200 lines of readable code. Yet a single subtle convention mismatch—such as inverting the boolean mask polarity between padding and causal masks, or forgetting to scale embeddings by $$\sqrt{d_{\text{model}}}$$—can leave a syntactically valid model completely unable to converge.
+
+## Background Knowledge Map: Engineering a Clean PyTorch Transformer
+
+- **Embedding Scaling ($$\sqrt{d_{\text{model}}}$$)** : Multiplying learned token embeddings by $$\sqrt{d_{\text{model}}}$$ keeps their variance comparable to the $$[-1, 1]$$ sinusoidal positional encodings so position signals do not drown out word semantics at initialization.
+- **Unified Mask Polarity & Broadcasting**: Combining a 2D causal lower-triangular mask `(1, 1, T, T)` with a 1D padding mask `(B, 1, 1, T)` via logical `AND` (or `OR` depending on polarity) ensures every head and batch item enforces both causality and padding simultaneously.
+- **Registering Non-Trainable Buffers (`register_buffer`)**: Storing the precomputed sinusoidal positional encoding table via `self.register_buffer("pe", pe)` ensures it automatically moves with `.to(device)` and saves inside `state_dict` without receiving optimizer gradient updates.
+- **Smoke-Test Driven Verification**: Running shape assertions, causal leakage tests (perturbing token $$t+1$$ must change output at step $$t$$ by exactly `0.0`), and gradient-flow checks before training prevents hours of wasted GPU compute.
+
+### Step-by-Step Worked Example (Read Slowly): Verifying Zero Future Leakage in a Causal Mask Test
+
+How do you prove mathematically that your decoder implementation has zero future-token leakage?
+
+1. **Construct two length-4 input batches** that match on tokens `0, 1, 2` and differ *only* at token `3`:
+   - `x1 = [4, 9, 2, 7]`
+   - `x2 = [4, 9, 2, 99]`
+2. **Run `model.eval()`** (disabling dropout!) and compute `y1 = model(x1)` and `y2 = model(x2)` of shape `(1, 4, V)`.
+3. **Measure the absolute difference at positions `0, 1, 2`**:
+   $$\Delta_t = \max_v |y_1[0, t, v] - y_2[0, t, v]| \quad \text{for } t \in \{0, 1, 2\}.$$
+4. **Pass/Fail criterion**:
+   - **Pass**: $$\Delta_0 = \Delta_1 = \Delta_2 = 0.0$$ (to machine precision $$< 10^{-6}$$), while $$\Delta_3 > 0$$.
+   - **Fail**: If $$\Delta_2 > 0$$, your causal mask is transposed, inverted, or missing!
+
 # Transformer Core Implementation
 
 This lesson implements the **building blocks** of a Transformer encoder (and the attention core shared with decoders). Code is written for clarity and correct shapes first; production systems then swap in fused kernels (`scaled_dot_product_attention`) and larger configs.

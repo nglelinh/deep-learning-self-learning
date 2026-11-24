@@ -9,6 +9,34 @@ categories:
 - chapter03
 ---
 
+Tưởng tượng bạn xây mô hình dự báo giá căn hộ: 99 căn hộ bình thường có giá quanh 3 tỷ đồng, nhưng lọt vào tập dữ liệu đúng 1 căn biệt thự nhập nhầm giá 300 tỷ đồng. Nếu huấn luyện bằng **MSE**, chỉ duy nhất một điểm ngoại lai đó có thể kéo lệch toàn bộ mô hình vì sai số bị bình phương lên tới hàng chục nghìn lần! Ngược lại, **MAE** miễn nhiễm tốt với ngoại lai nhưng lại có độ dốc không đổi khiến tối ưu dễ rung lắc quanh đáy. Bài học này phân tích bộ ba **MSE, MAE và Huber Loss** để bạn biết chọn thước đo hồi quy tối ưu cho từng đặc thù nhiễu dữ liệu.
+
+## Bản đồ kiến thức nền: Bốn góc nhìn cốt lõi về Hàm Mất mát Hồi quy
+
+1. **MSE (Mean Squared Error — $$L_2$$ Loss)**:
+   Phạt theo bình phương sai số $$(y - \hat{y})^2$$, có đạo hàm tỷ lệ thuận với độ lớn sai số $$2(\hat{y} - y)$$ nên mượt quanh $$0$$ và tương ứng MLE của nhiễu Gaussian; nghiệm tối ưu hằng số là **trung bình (mean)**.
+
+2. **MAE (Mean Absolute Error — $$L_1$$ Loss)**:
+   Phạt tuyến tính theo $$\lvert y - \hat{y} \rvert$$, bền vững trước ngoại lai (*outliers*) với nghiệm tối ưu hằng số là **trung vị (median)**, nhưng không khả vi tại $$0$$ và gradient luôn có độ lớn $$\pm 1$$ kể cả khi rất gần nghiệm.
+
+3. **Huber Loss (Smooth $$L_1$$)**:
+   Kết hợp ưu điểm của cả hai: hành xử như parabol (MSE) khi sai số nhỏ $$\lvert e \rvert \le \delta$$ để hội tụ êm quanh đáy, và chuyển sang đường thẳng (MAE) khi $$\lvert e \rvert > \delta$$ để chặn tác động của ngoại lai—tiêu chuẩn vàng trong hồi quy khung bao Object Detection và DQN.
+
+4. **Log-Cosh và Biến đổi Miền (RMSE, RMSLE)**:
+   RMSE đưa đơn vị về lại thang đo gốc của $$y$$, còn RMSLE phạt sai số theo tỷ lệ phần trăm thay vì hiệu tuyệt đối—rất hữu ích khi giá trị mục tiêu trải rộng qua nhiều bậc độ lớn.
+
+### Khung giải thích (nên đọc chậm): Tính tay MSE, MAE và Huber Loss khi có 1 điểm ngoại lai
+
+Xét 4 mẫu dữ liệu với sai số $$e_i = \hat{y}_i - y_i$$ lần lượt là: $$e_1 = 0.5,\; e_2 = -0.5,\; e_3 = 0.2,\; e_4 = 10.0$$ (mẫu 4 là ngoại lai). Ta tính mức phạt và độ lớn đạo hàm trên mẫu ngoại lai $$e_4 = 10$$ với Huber ngưỡng $$\delta = 1.0$$:
+
+| Hàm mất mát | Công thức từng mẫu | Giá trị trên 3 mẫu sạch ($$e_1,e_2,e_3$$) | Giá trị trên ngoại lai ($$e_4=10$$) | Độ lớn gradient $$\lvert \partial L/\partial e_4 \rvert$$ |
+| :--- | :--- | :---: | :---: | :---: |
+| **MSE** | $$\frac{1}{2}e^2$$ | $$0.125,\; 0.125,\; 0.020$$ | **$$50.00$$** (chiếm 99.5% tổng loss!) | **$$10.0$$** |
+| **MAE** | $$\lvert e \rvert$$ | $$0.500,\; 0.500,\; 0.200$$ | $$10.00$$ | **$$1.0$$** |
+| **Huber ($$\delta=1$$)** | $$\frac{1}{2}e^2$$ nếu $$\lvert e \rvert \le 1$$; $$\lvert e \rvert - 0.5$$ nếu $$>1$$ | $$0.125,\; 0.125,\; 0.020$$ | $$9.50$$ | **$$1.0$$** |
+
+Nhìn vào cột cuối: tại 3 mẫu sạch, Huber giữ gradient mượt bằng $$e$$ (như MSE), nhưng tại mẫu ngoại lai $$e_4 = 10$$, Huber cắt trần độ lớn gradient đúng bằng $$\delta = 1.0$$—ngăn không cho một điểm dữ liệu lỗi kéo hỏng cả mini-batch!
+
 Bài này giới thiệu các hàm mất mát (*loss functions*, còn gọi là hàm chi phí hoặc hàm mục tiêu) dùng để định lượng mức độ sai lệch của mạng neuron, tập trung vào nhóm bài toán hồi quy.
 
 ---

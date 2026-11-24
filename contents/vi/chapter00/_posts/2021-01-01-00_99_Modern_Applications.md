@@ -10,6 +10,38 @@ categories:
 lesson_type: optional
 ---
 
+Một câu hỏi rất thực tế mà nhiều kỹ sư trẻ đặt ra trong giai đoạn 2022–2026 là: *"Khi đã có PyTorch, JAX, FlashAttention và các mô hình nền tảng hàng trăm tỷ tham số chạy sẵn qua API, liệu tôi còn cần học giải tích đa biến, giá trị riêng hay xác suất làm gì nữa?"* Thực tế tại các phòng thí nghiệm AI hàng đầu cho thấy điều hoàn toàn ngược lại: chính ở biên giới hiện đại—từ tinh chỉnh mô hình hạng thấp (LoRA), mạng nơ-ron tích hợp vật lý (PINN), cho tới mô hình sinh Diffusion và căn chỉnh RLHF—toán học nền tảng lại là thứ phân biệt người chỉ biết gọi thư viện với kỹ sư có thể chẩn đoán, tối ưu và sáng tạo kiến trúc mới.
+
+## Bản đồ kiến thức nền: Bốn cầu nối từ Toán nền tảng Chương 00 đến Deep Learning 2022–2026
+
+1. **Đại số tuyến tính hạng thấp $$\to$$ Tinh chỉnh hiệu quả tham số (LoRA / QLoRA)**:
+   Thay vì cập nhật toàn bộ ma trận trọng số $$\mathbf{W} \in \mathbb{R}^{d \times d}$$ của LLM, LoRA phân rã độ lệch $$\Delta \mathbf{W} = \mathbf{B}\mathbf{A}$$ với hạng $$r \ll d$$, cắt giảm tới >99% số tham số huấn luyện mà vẫn giữ nguyên hiệu năng.
+
+2. **Giải tích vi phân tự động bậc cao $$\to$$ Học máy Khoa học (PINN & Neural ODE)**:
+   Đưa trực tiếp các phương trình đạo hàm riêng (PDE) như Navier–Stokes hay phương trình truyền nhiệt vào hàm mất mát để mạng nơ-ron học nghiệm tuân thủ định luật vật lý.
+
+3. **Phân phối Gaussian & Quá trình ngẫu nhiên $$\to$$ Mô hình Diffusion & Flow Matching**:
+   Sinh ảnh/video độ phân giải cao bằng cách học đảo ngược quá trình cộng nhiễu Gaussian từng bước thông qua dự đoán hàm điểm (*score function* $$\nabla_{\mathbf{x}} \log p(\mathbf{x})$$).
+
+4. **KL-Divergence & Tối ưu có ràng buộc $$\to$$ Căn chỉnh LLM (RLHF / DPO)**:
+   Giữ cho mô hình ngôn ngữ sau tinh chỉnh không trôi quá xa phân phối gốc bằng số hạng phạt $$\beta\, D_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$$.
+
+### Khung giải thích (nên đọc chậm): Tính tay tỷ lệ tiết kiệm tham số của LoRA bằng phép nhân ma trận hạng thấp
+
+Giả sử một lớp chiếu (*projection layer*) trong mô hình ngôn ngữ lớn có ma trận trọng số vuông $$\mathbf{W} \in \mathbb{R}^{4096 \times 4096}$$:
+
+1. **Tinh chỉnh toàn phần (Full Fine-Tuning)**:
+   Số tham số cần cập nhật và lưu trạng thái optimizer cho riêng ma trận này là:
+   $$4096 \times 4096 = 16{,}777{,}216 \text{ tham số } (\approx 16.78\text{ triệu}).$$
+2. **Tinh chỉnh bằng LoRA với hạng $$r = 8$$**:
+   Ta đóng băng $$\mathbf{W}$$ và chỉ học hai ma trận mỏng $$\mathbf{B} \in \mathbb{R}^{4096 \times 8}$$ và $$\mathbf{A} \in \mathbb{R}^{8 \times 4096}$$ sao cho $$\Delta \mathbf{W} = \mathbf{B}\mathbf{A}$$:
+   - Số tham số của $$\mathbf{B}$$: $$4096 \times 8 = 32{,}768$$.
+   - Số tham số của $$\mathbf{A}$$: $$8 \times 4096 = 32{,}768$$.
+   - Tổng số tham số huấn luyện: $$65{,}536$$ tham số.
+3. **Tỷ lệ cắt giảm**:
+   $$\frac{65{,}536}{16{,}777{,}216} = \frac{1}{256} \approx 0.39\%!$$
+Chỉ từ một ý tưởng đại số tuyến tính cổ điển (phân rã hạng thấp), LoRA giúp bạn tinh chỉnh mô hình hàng tỷ tham số ngay trên một GPU cá nhân.
+
 # Tùy chọn: Giải tích, đại số tuyến tính và xác suất trong hệ sinh thái 2022–2026
 
 > Bài này là phần **tùy chọn**, **không** thay thế các bài học cốt lõi về giải tích, đại số tuyến tính hay xác suất. Mục đích của bài là minh họa các khái niệm toán học đó đang được dùng như thế nào trong phần mềm khoa học và hệ thống thực tế hiện nay.

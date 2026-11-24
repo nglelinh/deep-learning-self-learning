@@ -9,6 +9,30 @@ categories:
 - chapter23
 ---
 
+Over-parameterized neural networks are remarkably redundant: studies on the Lottery Ticket Hypothesis and post-training quantization show you can zero out 70% of weights or round 32-bit floats down to 8-bit integers and lose less than half a percent of accuracy. Understanding the exact arithmetic of affine quantization, temperature-scaled KL distillation, and depthwise-separable FLOPs lets you engineer compression budgets quantitatively instead of guessing.
+
+## Background Knowledge Map: Mathematical Mechanics of Model Compression
+
+- **Pillar 1 — Affine & Symmetric Quantization Arithmetic**: Maps floating-point ranges $[\alpha, \beta]$ to $b$-bit integers via scale $s = \frac{\beta - \alpha}{2^b - 1}$ and zero-point $z$, with Quantization-Aware Training (QAT) using Straight-Through Estimators (STE) to differentiate through `round()`.
+- **Pillar 2 — Temperature-Scaled Knowledge Distillation**: Softens teacher and student logits via $p_i^{(T)} = \operatorname{softmax}(z_i / T)$ and scales KL loss by $T^2$ so gradient magnitudes stay invariant to $T$.
+- **Pillar 3 — Structured vs. Unstructured Pruning**: Balances fine-grained weight-magnitude pruning against structured filter/neuron removal that immediately shrinks dense GEMM matrix dimensions.
+- **Pillar 4 — Depthwise Separable Convolutions**: Factors a $K \times K \times C_{\text{in}} \times C_{\text{out}}$ convolution into a $K \times K$ spatial pass plus a $1 \times 1$ pointwise mix, cutting MACs by roughly $K^2 \approx 8\times$–$9\times$.
+
+### Step-by-Step Worked Example (Read Slowly): Symmetric INT8 Quantization & Depthwise-Separable FLOP Ratio
+
+**Part A — Symmetric INT8 Quantization** ($q \in [-127, 127]$) of weight vector $w = [-0.635,\; 0.120,\; 1.270]$:
+1. Find max absolute value: $\alpha = \max |w| = 1.270$.
+2. Compute scale: $s = \frac{1.270}{127} = 0.010$.
+3. Quantize $q = \operatorname{round}(w / s)$:
+   $$q = [\operatorname{round}(-63.5),\; \operatorname{round}(12.0),\; \operatorname{round}(127.0)] = [-64,\; 12,\; 127].$$
+4. Dequantize $\hat{w} = s \cdot q$:
+   $$\hat{w} = [-0.640,\; 0.120,\; 1.270], \quad \text{max error } |w - \hat{w}| = 0.005 \text{ (exactly } s/2\text{!)}.$$
+
+**Part B — Depthwise Separable Parameter Reduction** for $K = 3, C_{\text{in}} = 64, C_{\text{out}} = 128$:
+- Standard Conv2d: $3 \times 3 \times 64 \times 128 = 73{,}728$ weights.
+- Depthwise ($3 \times 3 \times 64$) + Pointwise ($1 \times 1 \times 64 \times 128$): $576 + 8{,}192 = 8{,}768$ weights ($8.41\times$ fewer!).
+5. **Takeaway**: Both quantization error ($s/2$) and separable-conv savings ($\frac{1}{C_{\text{out}}} + \frac{1}{K^2}$) can be calculated on the back of an envelope before touching a GPU.
+
 # Efficient Deep Learning: Compression and Acceleration
 
 ## 1. Concept Overview

@@ -9,6 +9,31 @@ categories:
 - chapter08
 ---
 
+Once your Transformer passes forward smoke tests, training it on a real sequence task exposes a new class of real-world engineering challenges: training instability without warmup, teacher-forcing vs. autoregressive decoding loops, subtle off-by-one target shifting (`x = seq[:-1]`, `y = seq[1:]`), and interpreting noisy attention heatmaps (which do not always equal causal feature importance!). Walking through concrete forward demos, attention visualizations, and classic failure modes turns working toy code into reliable production intuition.
+
+## Background Knowledge Map: Training Dynamics, Decoding, and Transformer Pitfalls
+
+- **Next-Token Shift Alignment**: In causal language modeling, input `[BOS, A, B, C]` aligns with target `[A, B, C, EOS]`. Off-by-one shifting causes the model to learn the trivial identity function (`loss -> 0.0` instantly!) while producing gibberish at generation time.
+- **Warmup + Cosine / Inverse-Sqrt LR Schedules**: In early steps, Adam's second-moment variance estimates are noisy and Post-LN gradients are steep; linearly ramping the learning rate over the first $$N_{\text{warmup}}$$ steps prevents early attention entropy collapse.
+- **Autoregressive Decoding Latency & KV-Caching**: Recomputing the full forward pass over `[0..t]` at every generated token costs $$O(T^3)$$ total FLOPs for a length-$$T$$ generation; caching past $$K, V$$ drops total generation FLOPs to $$O(T^2)$$.
+- **Attention Is Not Always Explanation**: Because residual connections mix token representations across layers, high attention weight on token $$j$$ in layer 6 does not guarantee token $$j$$ drove the final prediction—gradient-based attribution or ablation is needed for causal claims.
+
+### Step-by-Step Worked Example (Read Slowly): Computing the Vaswani Warmup Learning Rate Schedule
+
+The original Transformer paper schedules the learning rate at step $$t$$ using:
+$$\eta(t) = d_{\text{model}}^{-0.5} \cdot \min\!\left(t^{-0.5},\; t \cdot N_{\text{warmup}}^{-1.5}\right).$$
+Let $$d_{\text{model}} = 512$$ (so $$d_{\text{model}}^{-0.5} = 1/\sqrt{512} \approx 0.04419$$) and $$N_{\text{warmup}} = 4{,}000$$ (so $$4000^{-1.5} = 1 / (4000 \times 63.246) \approx 3.953 \times 10^{-6}$$).
+
+1. **During warmup ($$t = 1{,}000$$)**:
+   - $$t^{-0.5} = 0.03162$$, while $$t \cdot N_{\text{warmup}}^{-1.5} = 1000 \times 3.953 \times 10^{-6} = 0.003953$$ (smaller).
+   - $$\eta(1000) = 0.04419 \times 0.003953 \approx 1.75 \times 10^{-4}$$.
+2. **At peak warmup ($$t = 4{,}000$$)**:
+   - Both terms equal $$4000^{-0.5} \approx 0.01581$$.
+   - $$\eta(4000) = 0.04419 \times 0.01581 \approx 6.99 \times 10^{-4}$$ (maximum LR).
+3. **Post-warmup decay ($$t = 16{,}000$$)**:
+   - $$t^{-0.5} = 1/\sqrt{16000} \approx 0.007906$$ (smaller).
+   - $$\eta(16000) = 0.04419 \times 0.007906 \approx 3.49 \times 10^{-4}$$ (exactly half the peak!).
+
 # Transformer Demos, Papers, and Pitfalls
 
 With modules in place, this lesson **runs** them, trains a tiny task so gradients mean something, situates the architecture in the literature, and catalogs the mistakes that waste the most engineering time.

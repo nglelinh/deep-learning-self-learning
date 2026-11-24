@@ -9,6 +9,35 @@ categories:
 - chapter05
 ---
 
+In 2015, Andrej Karpathy trained a tiny character-level RNN on raw Shakespeare plays and Linux C source code, and watched it spontaneously invent indentation, balanced curly braces, and iambic pentameter—one character at a time. A character-level language model distills sequence modeling to its purest form: given the prefix `"hell"`, predict the next probability distribution over the vocabulary so that `'o'` receives the highest probability. Yet building one also exposes every classic recurrent pitfall—temperature calibration, exposure bias, hidden-state detachment across truncated chunks, and vanishing long-range context.
+
+## Background Knowledge Map: Character-Level Language Modeling & Pitfalls
+
+- **Autoregressive Factorization**: A language model decomposes the joint probability of a character sequence into causal conditionals: $$P(c_1, \dots, c_T) = \prod_{t=1}^T P(c_t \mid c_{<t})$$, trained by minimizing cross-entropy loss (equivalently minimizing **perplexity** $$\exp(\mathcal{L}_{\text{CE}})$$).
+- **Teacher Forcing vs. Exposure Bias**: During training, the model receives the ground-truth previous character $$c_{t-1}$$ at every step; during generation, it feeds back its own sampled character $$\hat{c}_{t-1}$$, meaning early mistakes can compound along the rollout.
+- **Temperature-Scaled Sampling**: Dividing logits $$z$$ by temperature $$\tau > 0$$ before softmax—$$p_i = \frac{\exp(z_i/\tau)}{\sum_j \exp(z_j/\tau)}$$—controls the entropy of generation: $$\tau \to 0$$ approaches greedy argmax, $$\tau = 1$$ preserves learned probabilities, and $$\tau > 1$$ flattens the distribution for higher creativity (and higher error).
+- **Hidden State Detachment in TBPTT**: Carrying `h = h.detach()` across chunks preserves forward memory over long documents while severing the autograd graph so GPU memory stays constant instead of growing unboundedly.
+
+### Step-by-Step Worked Example (Read Slowly): Temperature Softmax & Perplexity on a 3-Character Vocabulary
+
+Suppose our character RNN has vocabulary $$\{\text{'e'}, \text{'l'}, \text{'o'}\}$$ and outputs raw logits $$z = [0.0, 1.0, 2.0]$$ when the true next character is `'o'`.
+
+1. **Standard probabilities ($$\tau = 1.0$$)**:
+   - Exponentials: $$e^0 = 1.000,\; e^1 \approx 2.718,\; e^2 \approx 7.389$$; sum $$Z = 11.107$$.
+   - Probabilities: $$p(\text{'e'}) = 0.090,\; p(\text{'l'}) = 0.245,\; p(\text{'o'}) = 0.665$$.
+2. **Cross-entropy loss and perplexity for target `'o'`**:
+   $$\mathcal{L} = -\ln(0.665) \approx 0.408\text{ nats}, \quad \text{PPL} = e^{0.408} = \frac{1}{0.665} \approx 1.50.$$
+   (Interpretation: the model is as uncertain as choosing uniformly among $$1.5$$ equally likely characters.)
+3. **Low temperature ($$\tau = 0.5$$ — sharper / more conservative)**:
+   - Scaled logits: $$z / 0.5 = [0.0, 2.0, 4.0]$$.
+   - Exponentials: $$1.000,\; 7.389,\; 54.598$$; sum $$= 62.987$$.
+   - Probabilities: $$p(\text{'e'}) = 0.016,\; p(\text{'l'}) = 0.117,\; p(\text{'o'}) = 0.867$$.
+4. **High temperature ($$\tau = 2.0$$ — flatter / more diverse)**:
+   - Scaled logits: $$z / 2.0 = [0.0, 0.5, 1.0]$$.
+   - Exponentials: $$1.000,\; 1.649,\; 2.718$$; sum $$= 5.367$$.
+   - Probabilities: $$p(\text{'e'}) = 0.186,\; p(\text{'l'}) = 0.307,\; p(\text{'o'}) = 0.506$$.
+
+```python
 # Character-level language model example
 print("\n" + "="*70)
 print("Character-Level Language Model with PyTorch RNN")

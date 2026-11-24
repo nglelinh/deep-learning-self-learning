@@ -9,6 +9,29 @@ categories:
 - chapter02
 ---
 
+> *Look at modern architectures across deep learning—the tapered pyramid of VGG classifiers, the hourglass bottleneck of autoencoders and U-Nets, or the uniform residual stream of Transformers—and you will see deliberate width profiles engineered to control information flow and compute.*
+
+## Background Knowledge Map: Width Profiles & Architectural Patterns
+
+1. **Tapered / Decreasing Width (Classification Funnels)**: Progressively compresses high-dimensional raw inputs (e.g., `784 -> 256 -> 64 -> 10`) into low-dimensional class logits, discarding nuisance variation layer by layer.
+2. **Hourglass / Bottleneck Pattern (Compression & Denoising)**: Forces representations through a narrow latent waist $$d_z \ll d_{\text{in}}$$ before expanding back, compelling the network to retain only the true generative factors of the data.
+3. **Uniform Width & Residual Streams (Transformers & ResNets)**: Keeps feature dimension $$d_{\text{model}}$$ constant across blocks so identity skip connections $$\mathbf{x} + F(\mathbf{x})$$ add cleanly without shape-matching projections.
+4. **Inverted Bottlenecks (MobileNet & Transformer FFNs)**: Temporarily expands width (e.g., $$d \to 4d \to d$$) to apply nonlinearities in a richer higher-dimensional space before projecting back to the compact residual stream.
+
+### Step-by-Step Worked Example (Read Slowly): Compute & Memory Analysis of a Transformer Inverted Bottleneck ($$d \to 4d \to d$$)
+
+Consider a standard Transformer MLP block with residual width $$d = 512$$ and expansion ratio $$4\times$$ (hidden width $$4d = 2048$$), processing a sequence of $$T = 128$$ tokens (batch $$B = 1$$).
+
+1. **Parameter Count of the Two Linear Layers**:
+   - Up-projection (`512 -> 2048`): $$512 \times 2048 + 2048 = 1{,}050{,}624$$
+   - Down-projection (`2048 -> 512`): $$2048 \times 512 + 512 = 1{,}049{,}088$$
+   - **Total parameters**: $$2{,}099{,}712 \approx 2.10\text{M}$$ (roughly $$8d^2$$).
+2. **Forward-Pass FLOPs (Multiply-Adds = $$2 \times \text{MACs}$$)**:
+   Each token performs $$512 \times 2048 = 1{,}048{,}576$$ MACs in each layer ($$2 \times 1.049\text{M} = 2.097\text{M}$$ MACs total, or $$4.194\text{M}$$ FLOPs per token). Across $$T = 128$$ tokens:
+   $$\text{Total FLOPs} = 128 \times 4.194 \times 10^6 \approx 5.37 \times 10^8\text{ FLOPs (0.537 GFLOPs)}$$
+3. **Peak Activation Memory (Stored for Backprop in `FP16`, 2 bytes/element)**:
+   The expanded hidden tensor has shape `(128, 2048)` = $$262{,}144$$ elements $$\times 2\text{ bytes} = 524{,}288\text{ bytes} = 512\text{ KB}$$ per layer—showing why expanding width boosts nonlinearity capacity while multiplying activation memory linearly with the expansion factor.
+
 ## Network Depth and Width
 
 ### Width

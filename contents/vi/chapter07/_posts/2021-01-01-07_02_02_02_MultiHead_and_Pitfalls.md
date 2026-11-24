@@ -9,6 +9,33 @@ categories:
 - chapter07
 ---
 
+Trong câu *"Con mèo không băng qua đường vì **nó** quá mệt"*, để hiểu đại từ **"nó"** chỉ con mèo (không phải con đường), mô hình vừa cần theo dõi quan hệ ngữ pháp chủ–vị, vừa cần theo dõi quan hệ ngữ nghĩa giữa *"mệt"* và sinh vật sống. Nếu chỉ dùng **một** đầu chú ý duy nhất, việc lấy trung bình tất cả các quan hệ khác nhau vào cùng một phân phối softmax sẽ làm mờ nhạt thông tin. **Multi-Head Attention** giải quyết bài toán này bằng cách cho phép nhiều đầu chú ý cùng hoạt động song song trên các không gian con khác nhau.
+
+## Bản đồ kiến thức nền: Bốn trụ cột của Multi-Head Attention và Cạm bẫy Thực tế
+
+1. **Phép chiếu đa không gian con ($$W_i^Q, W_i^K, W_i^V$$) và ghép nối $$W^O$$**:
+   Mỗi đầu $$i \in \{1 \dots H\}$$ chiếu vector $$d_{\text{model}}$$ xuống chiều nhỏ hơn $$d_k = d_{\text{model}} / H$$, tính attention độc lập, rồi ghép (concat) cả $$H$$ đầu về lại $$d_{\text{model}}$$ và trộn qua ma trận chiếu đầu ra $$W^O$$.
+2. **Bảo toàn ngân sách tính toán nhờ chia chiều $$d_k = d_{\text{model}} / H$$**:
+   Dùng 8 đầu với $$d_k = 64$$ tốn tổng số tham số và FLOPs xấp xỉ đúng bằng dùng 1 đầu đơn với $$d_k = 512$$, nhưng sức biểu đạt đa quan hệ tăng vượt trội.
+3. **Đối chiếu bản tự viết với `nn.MultiheadAttention` và `F.scaled_dot_product_attention`**:
+   Từ PyTorch 2.0+, `F.scaled_dot_product_attention` tự động chọn kernel FlashAttention trên GPU, chạy nhanh hơn nhiều lần và tốn bộ nhớ $$O(L)$$ thay vì $$O(L^2)$$.
+4. **Cạm bẫy kinh điển của Multi-Head Attention**:
+   Quên đặt `Dropout` lên trọng số chú ý (attention dropout), nhầm thứ tự quy ước `attn_mask` (boolean `True` nghĩa là **bị che** trong `nn.MultiheadAttention` nhưng lại khác ở một số hàm tự viết!), và hiện tượng một số head trở nên dư thừa (head redundancy).
+
+### Khung giải thích (nên đọc chậm): Tính tay tổng số tham số của một khối Multi-Head Attention chuẩn Transformer Base
+
+Xét cấu hình Transformer Base kinh điển: $$d_{\text{model}} = 512$$, số đầu $$H = 8 \implies d_k = d_v = 512 / 8 = 64$$ (bỏ qua bias để gọn):
+
+| Ma trận chiếu | Kích thước mỗi head | Số head $$H$$ | Ma trận gộp tương đương | Số tham số |
+| :--- | :---: | :---: | :---: | ---: |
+| $$W^Q$$ (Query) | $$512 \times 64$$ | 8 | $$512 \times 512$$ | 262,144 |
+| $$W^K$$ (Key) | $$512 \times 64$$ | 8 | $$512 \times 512$$ | 262,144 |
+| $$W^V$$ (Value) | $$512 \times 64$$ | 8 | $$512 \times 512$$ | 262,144 |
+| $$W^O$$ (Output) | — | — | $$512 \times 512$$ | 262,144 |
+| **Tổng cộng MHA** | | | **$$4 \, d_{\text{model}}^2$$** | **1,048,576** |
+
+Một con số cực dễ nhớ cho cả khi thiết kế kiến trúc lẫn phỏng vấn: mỗi khối Multi-Head Attention luôn có đúng **$$4 \, d_{\text{model}}^2$$** tham số trọng số, hoàn toàn **độc lập** với số lượng head $$H$$!
+
 # Multi-Head Attention, Papers và Cạm bẫy
 
 Cài đặt được single-head attention mới chỉ là bước đầu; trong các hệ thống Transformer thực tế, hiệu năng phụ thuộc chặt chẽ vào **nhiều head chú ý song song**, thao tác tách/ghép chiều tensor chính xác, mặt nạ nhân quả và khả năng phát hiện các lỗi ẩn khi mở rộng quy mô. Bài này hoàn thiện phần cài đặt cho Chương 7.

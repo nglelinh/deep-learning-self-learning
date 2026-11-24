@@ -9,6 +9,37 @@ categories:
 - chapter00
 ---
 
+Khi một ma trận tác động lên không gian, hầu hết mọi vector đều bị xoay lệch khỏi phương ban đầu. Thế nhưng luôn tồn tại những hướng đặc biệt—gọi là **vector riêng** (*eigenvectors*)—mà sau phép biến đổi, chúng không hề đổi phương, chỉ bị kéo dài ra hoặc co ngắn lại đúng bằng một hệ số gọi là **giá trị riêng** (*eigenvalue*). Khái niệm tưởng chừng thuần túy đại số này lại nắm giữ chìa khóa của hai hiện tượng nổi tiếng nhất trong Deep Learning: lý do gradient bùng nổ hoặc biến mất trong mạng hồi tiếp (RNN), và lý do dữ liệu hàng nghìn chiều có thể nén gọn qua PCA mà giữ nguyên cấu trúc chính.
+
+## Bản đồ kiến thức nền: Bốn ứng dụng cốt lõi của Giá trị riêng và Vector riêng
+
+1. **Phương trình đặc trưng $$\mathbf{A}\mathbf{v} = \lambda\mathbf{v}$$**:
+   Tìm các hướng bất biến bằng cách giải $$\det(\mathbf{A} - \lambda\mathbf{I}) = 0$$; dấu và độ lớn của $$\lambda$$ cho biết hướng đó bị phóng đại ($$\lvert\lambda\rvert > 1$$), triệt tiêu ($$\lvert\lambda\rvert < 1$$) hay đảo chiều ($$\lambda < 0$$).
+
+2. **Chéo hóa và Lũy thừa ma trận ($$\mathbf{A}^k = \mathbf{P}\mathbf{\Lambda}^k\mathbf{P}^{-1}$$)**:
+   Khi nhân lặp một ma trận trọng số $$k$$ lần (như RNN chạy qua $$k$$ bước thời gian), mọi thành phần tăng hoặc tắt theo $$\lambda_i^k$$. Chỉ cần $$\lvert\lambda_{\max}\rvert = 1.2$$ thì sau 50 bước, $$1.2^{50} \approx 9100$$ (bùng nổ gradient); còn nếu $$\lvert\lambda_{\max}\rvert = 0.8$$ thì $$0.8^{50} \approx 0.000014$$ (biến mất gradient)!
+
+3. **Định lý phổ cho ma trận đối xứng (Spectral Theorem)**:
+   Ma trận hiệp phương sai và ma trận Hessian đều đối xứng, nên chúng luôn có giá trị riêng thực và hệ vector riêng trực giao—cơ sở trực tiếp của phân tích thành phần chính (PCA) và phân tích độ cong tối ưu hóa.
+
+4. **Số điều kiện (Condition Number $$\kappa = \lvert\lambda_{\max}/\lambda_{\min}\rvert$$)**:
+   Đo mức độ "méo dẹt" của thung lũng mất mát: $$\kappa$$ càng lớn, Gradient Descent càng dao động mạnh và hội tụ càng chậm.
+
+### Khung giải thích (nên đọc chậm): Tính tay giá trị riêng, vector riêng và kiểm chứng lũy thừa $$\mathbf{A}^{10}$$
+
+Xét ma trận đối xứng $$\mathbf{A} = \begin{bmatrix} 3 & 1 \\ 1 & 3 \end{bmatrix}$$:
+
+1. **Lập phương trình đặc trưng**:
+   $$\det(\mathbf{A} - \lambda\mathbf{I}) = \det\begin{bmatrix} 3 - \lambda & 1 \\ 1 & 3 - \lambda \end{bmatrix} = (3 - \lambda)^2 - 1 = \lambda^2 - 6\lambda + 8 = (\lambda - 4)(\lambda - 2) = 0.$$
+   Vậy hai giá trị riêng là $$\lambda_1 = 4$$ và $$\lambda_2 = 2$$. (Kiểm tra nhanh: vết $$\text{tr}(\mathbf{A}) = 3 + 3 = 6 = 4 + 2$$; định thức $$\det(\mathbf{A}) = 9 - 1 = 8 = 4 \times 2$$).
+2. **Tìm vector riêng tương ứng**:
+   - Với $$\lambda_1 = 4$$: $$(\mathbf{A} - 4\mathbf{I})\mathbf{v}_1 = \begin{bmatrix} -1 & 1 \\ 1 & -1 \end{bmatrix}\mathbf{v}_1 = \mathbf{0} \implies \mathbf{v}_1 = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$$.
+   - Với $$\lambda_2 = 2$$: $$(\mathbf{A} - 2\mathbf{I})\mathbf{v}_2 = \begin{bmatrix} 1 & 1 \\ 1 & 1 \end{bmatrix}\mathbf{v}_2 = \mathbf{0} \implies \mathbf{v}_2 = \begin{bmatrix} 1 \\ -1 \end{bmatrix}$$.
+   Dễ thấy $$\mathbf{v}_1 \cdot \mathbf{v}_2 = 1(1) + 1(-1) = 0$$ (hai trục chính vuông góc nhau).
+3. **Tính nhanh $$\mathbf{A}^{10}\mathbf{x}$$ cho $$\mathbf{x} = \begin{bmatrix} 2 \\ 0 \end{bmatrix} = \mathbf{v}_1 + \mathbf{v}_2$$**:
+   $$\mathbf{A}^{10}\mathbf{x} = 4^{10}\mathbf{v}_1 + 2^{10}\mathbf{v}_2 = 1{,}048{,}576\begin{bmatrix} 1 \\ 1 \end{bmatrix} + 1{,}024\begin{bmatrix} 1 \\ -1 \end{bmatrix} = \begin{bmatrix} 1{,}049{,}600 \\ 1{,}047{,}552 \end{bmatrix}.$$
+   Sau 10 bước, thành phần dọc theo $$\mathbf{v}_1$$ đã lớn gấp hơn 1000 lần thành phần dọc theo $$\mathbf{v}_2$$—minh họa sống động cách giá trị riêng lớn nhất thống trị hoàn toàn động lực học của mạng sâu!
+
 Bài học này trình bày giá trị riêng (*eigenvalue*) và vector riêng (*eigenvector*) — những khái niệm cốt lõi để phân tích hành vi của phép biến đổi tuyến tính và các hàm bậc hai trong tối ưu hóa.
 
 ---

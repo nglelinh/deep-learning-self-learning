@@ -10,6 +10,30 @@ categories:
 lesson_type: optional
 ---
 
+When a foundation model has 70 billion parameters, classical full fine-tuning requires over a terabyte of GPU memory—putting adaptation out of reach for almost every team. Parameter-Efficient Fine-Tuning (PEFT) changed the economics of transfer learning overnight: by freezing the giant base weight matrix $W_0$ and learning a tiny low-rank update $\Delta W = B A$ (LoRA) on top of 4-bit quantized base weights (QLoRA), a single workstation GPU can specialize a frontier model while storing a 50 MB adapter instead of a 140 GB checkpoint.
+
+## Background Knowledge Map: Modern Transfer Learning via PEFT (2022–2026)
+
+- **Pillar 1 — Low-Rank Adaptation (LoRA)**: Parameterizes weight updates as $W = W_0 + \frac{\alpha}{r} B A$ with $B \in \mathbb{R}^{d_{\text{out}} \times r}$, $A \in \mathbb{R}^{r \times d_{\text{in}}}$ ($r \ll \min(d_{\text{in}}, d_{\text{out}})$), adding zero inference latency once merged into $W_0$.
+- **Pillar 2 — Quantized Transfer (QLoRA & NF4)**: Stores frozen $W_0$ in 4-bit NormalFloat with double quantization and dequantizes on-the-fly into BF16 during forward/backward passes, slashing memory by $\sim 4\times$.
+- **Pillar 3 — Multimodal & Multi-Tenant Adapters**: Enables serving dozens of domain-specific LoRA adapters dynamically on top of a single shared frozen base model in GPU memory.
+- **Pillar 4 — Limits of Low-Rank Updates**: Clarifies when full fine-tuning or continual pretraining still beats LoRA (e.g., injecting massive new factual knowledge or learning an entirely new language/modality).
+
+### Step-by-Step Worked Example (Read Slowly): LoRA Parameter Reduction & Rank-2 Matrix Update
+
+Consider a Transformer projection matrix $W_0 \in \mathbb{R}^{4096 \times 4096}$ adapted with LoRA rank $r = 16$ and scaling $\alpha = 32$.
+
+1. **Parameter count comparison**:
+   - Full matrix $W_0$: $4096 \times 4096 = 16{,}777{,}216$ parameters.
+   - LoRA matrices $A \in \mathbb{R}^{16 \times 4096}$ and $B \in \mathbb{R}^{4096 \times 16}$: $2 \times 16 \times 4096 = 131{,}072$ parameters.
+   - Reduction factor: $\frac{16{,}777{,}216}{131{,}072} = 128\times$ fewer trainable parameters ($0.78\%$).
+2. **Concrete $2 \times 2$ rank-1 LoRA forward pass** ($r = 1, \alpha = 2 \implies \alpha/r = 2$):
+   Let $W_0 = \begin{bmatrix}1 & 0\\ 0 & 1\end{bmatrix}$, $B = \begin{bmatrix}0.5\\ -0.5\end{bmatrix}$, $A = \begin{bmatrix}1.0 & 2.0\end{bmatrix}$, and input $x = \begin{bmatrix}2\\ 1\end{bmatrix}$.
+   - Base path: $W_0 x = [2,\; 1]^\top$.
+   - LoRA path: $A x = 1(2) + 2(1) = 4$; $\; B(Ax) = [2,\; -2]^\top$; $\; \frac{\alpha}{r} B A x = 2[2,\; -2]^\top = [4,\; -4]^\top$.
+   - Combined output: $y = [2, 1]^\top + [4, -4]^\top = [6,\; -3]^\top$.
+3. **Takeaway**: Because $B$ is initialized to $0$ and $A$ to Gaussian noise, $\Delta W = 0$ at step 0—preserving the pretrained model's exact behavior at initialization while cutting trainable parameters by $128\times$.
+
 # Optional: transfer learning as PEFT — LoRA, QLoRA, and adapters
 
 > This lesson is **optional**. It does **not** replace feature-extraction vs full fine-tune theory. The core notes still start from ResNet/BERT heads; this lesson is the 2022–2026 default for **billion-parameter** models.

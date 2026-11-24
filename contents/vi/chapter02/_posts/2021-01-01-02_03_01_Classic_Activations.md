@@ -9,6 +9,37 @@ categories:
 - chapter02
 ---
 
+Trong suốt thập niên 1980 và 1990, **Sigmoid** và **Tanh** từng là hai vị vua không thể thay thế của mạng nơ-ron: chúng trơn mượt, khả vi ở mọi điểm và nén mọi số thực về một khoảng gọn gàng. Thế nhưng khi các nhà nghiên cứu thử chồng từ 3 tầng lên 10 tầng, cả hai đột ngột khiến quá trình học đóng băng hoàn toàn—và chính cú đột phá chuyển sang **ReLU** ($$\max(0, x)$$) đã mở toang cánh cửa cho kỷ nguyên Học sâu hiện đại. Bài học này mổ xẻ toán học của Sigmoid, Tanh, ReLU và Softmax để bạn hiểu chính xác điểm mạnh và cái bẫy ẩn giấu trong từng hàm.
+
+## Bản đồ kiến thức nền: Bốn hàm Kích hoạt Kinh điển và đặc tính toán học
+
+1. **Sigmoid ($$\sigma(z) = \frac{1}{1+e^{-z}}$$)**:
+   Nén $$\mathbb{R} \to (0, 1)$$ với đạo hàm cực gọn $$\sigma'(z) = \sigma(z)(1 - \sigma(z))$$. Nhược điểm chí mạng: giá trị đạo hàm cực đại chỉ bằng $$0.25$$ tại $$z=0$$ và đầu ra luôn dương (*not zero-centered*), khiến cập nhật trọng số chạy zig-zag.
+
+2. **Tanh ($$\tanh(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}} = 2\sigma(2z) - 1$$)**:
+   Khắc phục nhược điểm lệch tâm bằng cách nén về $$(-1, 1)$$ (*zero-centered*) và có đạo hàm cực đại bằng $$1$$ tại $$z = 0$$, nhưng vẫn bị bão hòa ($$\tanh'(z) \to 0$$) khi $$\lvert z \rvert$$ lớn.
+
+3. **ReLU ($$\max(0, z)$$)**:
+   Đạo hàm bằng đúng $$1$$ trên toàn miền dương (triệt tiêu bão hòa phía dương) và tính toán siêu nhanh, nhưng tiềm ẩn hiện tượng **Dying ReLU** nếu một nơ-ron liên tục nhận $$z < 0$$ khiến đạo hàm mãi bằng $$0$$.
+
+4. **Softmax ($$\text{softmax}(z_i) = \frac{e^{z_i}}{\sum_j e^{z_j}}$$)**:
+   Biến vector logit bất kỳ thành phân phối xác suất hợp lệ trên $$K$$ lớp; luôn trừ $$\max_j z_j$$ trước khi lấy mũ (Log-Sum-Exp trick) để tránh tràn số `Inf/NaN`.
+
+### Khung giải thích (nên đọc chậm): Tính tay đạo hàm Sigmoid và bài toán tràn số Softmax
+
+**Phần A — Vì sao 10 tầng Sigmoid giết chết gradient?**
+Tại điểm đẹp nhất $$z = 0$$, $$\sigma(0) = 0.5 \implies \sigma'(0) = 0.5 \times (1 - 0.5) = 0.25$$.
+Nếu tại một nơ-ron bão hòa $$z = 5$$, $$\sigma(5) \approx 0.9933 \implies \sigma'(5) \approx 0.9933 \times 0.0067 \approx 0.0066$$.
+Đi qua 10 tầng Sigmoid ngay cả ở điều kiện *lý tưởng nhất* ($$z = 0$$):
+$$(0.25)^{10} = \frac{1}{4^{10}} = \frac{1}{1{,}048{,}576} \approx 9.5 \times 10^{-7}!$$
+Gradient đã co rút đi **hơn một triệu lần** trước khi chạm tới tầng đầu tiên!
+
+**Phần B — Thủ thuật chống tràn số của Softmax:**
+Xét vector logit $$\mathbf{z} = [1000, 1001, 999]$$. Nếu tính trực tiếp $$e^{1000}$$, `float32` lập tức tràn ra `Inf` và chia ra `NaN`.
+Nhờ tính bất biến tịnh tiến, ta trừ đi $$\max(\mathbf{z}) = 1001$$:
+$$\mathbf{z}' = [-1, 0, -2] \implies e^{\mathbf{z}'} \approx [0.3679,\; 1.0000,\; 0.1353], \quad \text{Tổng} \approx 1.5032.$$
+Chia cho tổng ta được xác suất hoàn hảo: $$[0.2447,\; 0.6652,\; 0.0900]$$ (tổng = $$1.0000$$), hoàn toàn không tràn số!
+
 Bài này phân tích chi tiết các hàm kích hoạt (*activation functions*), đặc tính toán học của chúng và cách lựa chọn hàm phù hợp cho mạng neuron.
 
 ---

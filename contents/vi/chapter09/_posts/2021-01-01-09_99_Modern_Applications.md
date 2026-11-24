@@ -10,6 +10,33 @@ categories:
 lesson_type: optional
 ---
 
+Nếu thập niên 2010 là sân khấu của Dropout và BatchNorm, thì giai đoạn 2022–2026 chứng kiến sự dịch chuyển ngoạn mục trong cách chính quy hóa các mô hình khổng lồ: Vision Transformer thay Dropout bằng **Stochastic Depth (DropPath)**, các mô hình LLM nghìn tỷ token gần như **tắt hẳn Dropout** để tận dụng dữ liệu khổng lồ kết hợp **RMSNorm + Weight Decay tách rời**, còn giới tối ưu hóa đón nhận **SAM (Sharpness-Aware Minimization)** để chủ động săn lùng các vùng cực tiểu phẳng!
+
+## Bản đồ kiến thức nền: Bốn xu hướng Chính quy hóa Hiện đại (2022–2026)
+
+1. **Sharpness-Aware Minimization (SAM)**:
+   Thay vì chỉ tìm điểm $$w$$ có mất mát thấp, SAM tìm điểm $$w$$ sao cho **cả vùng lân cận bán kính $$\rho$$** quanh nó đều có mất mát thấp: $$\min_w \max_{\|\epsilon\|_2 \le \rho} \mathcal{L}(w + \epsilon)$$. Cực tiểu phẳng (*flat minima*) tổng quát hóa tốt hơn hẳn cực tiểu nhọn (*sharp minima*).
+2. **Stochastic Depth / DropPath**:
+   Thay vì tắt từng neuron rời rạc như Dropout, DropPath tắt ngẫu nhiên **cả một nhánh khối Residual** ($$y = x + \text{DropPath}(F(x))$$) theo tỷ lệ tăng dần theo chiều sâu — chuẩn mực bắt buộc khi huấn luyện ViT, Swin Transformer và ConvNeXt.
+3. **Công thức chính quy hóa của LLM hiện đại (Pre-training vs. Fine-tuning)**:
+   Khi tiền huấn luyện trên hàng nghìn tỷ token (mỗi văn bản chỉ đi qua 1 lần — 1 epoch), bản thân dữ liệu khổng lồ đã ngăn overfitting nên hầu hết LLM lớn (Llama 3, Qwen, DeepSeek) đặt `dropout = 0.0` và dựa vào **decoupled weight decay (AdamW)**, gradient clipping và z-loss; chỉ bật lại Dropout nhẹ khi tinh chỉnh (LoRA/SFT) trên tập nhỏ.
+4. **Chuẩn hóa ổn định ở quy mô lớn (RMSNorm & QK-Norm)**:
+   Bên cạnh RMSNorm thay LayerNorm, nhiều mô hình đa phương thức và LLM mới áp dụng thêm **QK-Norm** (chuẩn hóa riêng Query và Key trước khi nhân $$Q K^T$$) để dập tắt hoàn toàn các đột biến *loss spike* khi huấn luyện FP16/BF16 sâu hàng trăm tầng.
+
+### Khung giải thích (nên đọc chậm): Tính tay 2 bước cập nhật của thuật toán SAM (Sharpness-Aware Minimization)
+
+Xét hàm mất mát 1 chiều $$\mathcal{L}(w) = (w - 1)^2$$ tại điểm hiện tại $$w = 2{,}0$$, bán kính nhiễu SAM $$\rho = 0{,}5$$ và tốc độ học $$\eta = 0{,}2$$:
+
+1. **Bước 1 — Leo lên đỉnh xấu nhất trong bán kính $$\rho$$ (Ascent Step)**:
+   - Gradient tại $$w = 2{,}0$$: $$g = \mathcal{L}'(2{,}0) = 2(2{,}0 - 1) = \mathbf{2{,}0}$$.
+   - Vector nhiễu hướng xấu nhất: $$\hat{\epsilon} = \rho \frac{g}{|g|} = 0{,}5 \times \frac{2{,}0}{2{,}0} = \mathbf{+0{,}5}$$.
+   - Điểm bị nhiễu: $$w_{\text{adv}} = w + \hat{\epsilon} = 2{,}0 + 0{,}5 = \mathbf{2{,}5}$$.
+2. **Bước 2 — Tính gradient tại điểm xấu nhất $$w_{\text{adv}}$$, rồi cập nhật cho điểm gốc $$w$$ (Descent Step)**:
+   - Gradient tại $$w_{\text{adv}} = 2{,}5$$: $$g_{\text{adv}} = \mathcal{L}'(2{,}5) = 2(2{,}5 - 1) = \mathbf{3{,}0}$$.
+   - Cập nhật $$w$$: $$w_{\text{new}} = w - \eta g_{\text{adv}} = 2{,}0 - 0{,}2(3{,}0) = \mathbf{1{,}40}$$.
+
+So với SGD thường ($$w_{\text{new}} = 2{,}0 - 0{,}2(2{,}0) = 1{,}60$$), SAM "nhìn trước" độ dốc ở lân cận $$w + \hat{\epsilon}$$ nên đẩy mạnh hơn khỏi các thung lũng hẹp có độ cong lớn — đánh đổi là tốn **gấp 2 lần** lượt forward/backward mỗi bước!
+
 # Tùy chọn: Chính quy hóa hiện đại — SAM, DropPath và công thức huấn luyện LLM
 
 > Bài này mang tính **tùy chọn** và **không** thay thế phần lý thuyết về dropout hay BatchNorm. Nội dung tổng hợp các kỹ thuật chính quy hóa thường xuất hiện trong quy trình huấn luyện giai đoạn 2022–2026.

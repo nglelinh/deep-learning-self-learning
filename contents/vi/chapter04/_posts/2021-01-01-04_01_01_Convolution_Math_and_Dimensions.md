@@ -9,6 +9,34 @@ categories:
 - chapter04
 ---
 
+Trong phòng thí nghiệm giải phẫu thần kinh năm 1959, David Hubel và Torsten Wiesel tình cờ phát hiện một điều kinh ngạc: tế bào vỏ não thị giác mèo không hề phản ứng với một đốm sáng tròn, nhưng lại phát xung dữ dội ngay khi mép tấm kính trượt tạo thành một **vạch thẳng nghiêng** lướt ngang trường nhìn. Hơn nửa thế kỷ sau, phép toán mô phỏng lại cơ chế quét mẫu cục bộ ấy — tích chập 2D đa kênh — đã trở thành ngôn ngữ nền tảng của toàn bộ thị giác máy tính.
+
+## Bản đồ kiến thức nền: Bốn trụ cột toán học của Tầng Tích chập
+
+1. **Tích chập (Convolution) vs. Tương quan chéo (Cross-Correlation)**:
+   Xử lý tín hiệu lật ngược bộ lọc 180° trước khi trượt để phép toán có tính giao hoán; Deep Learning bỏ bước lật vì trọng số do mạng tự học nên lật hay không cho cùng không gian hàm.
+2. **Tích chập đa kênh (Multi-Channel Convolution)**:
+   Với ảnh RGB ($$C_{\text{in}} = 3$$), mỗi bộ lọc thực chất là một khối 3D kích thước $$K_h \times K_w \times C_{\text{in}}$$ cộng gộp kết quả trên cả 3 kênh để sinh ra **một** bản đồ đặc trưng 2D; muốn có $$C_{\text{out}}$$ kênh đầu ra thì cần $$C_{\text{out}}$$ khối lọc độc lập.
+3. **Hình học đầu ra với Padding ($$P$$) và Stride ($$S$$)**:
+   Padding giữ nguyên thông tin biên ảnh và kiểm soát kích thước; Stride lớn hơn 1 giúp giảm độ phân giải ngay trong phép tích chập mà không cần thêm tầng gộp.
+4. **Ngân sách tham số và độ phức tạp tính toán**:
+   Số tham số độc lập với độ phân giải ảnh $$(H, W)$$, nhưng số phép tính FLOPs tỷ lệ thuận với $$H_{\text{out}} \cdot W_{\text{out}}$$ — đây là lý do ảnh độ phân giải cao tiêu tốn bộ nhớ kích hoạt rất lớn dù mô hình ít tham số.
+
+### Khung giải thích (nên đọc chậm): Tính tay tương quan chéo 2D với Padding và Stride
+
+Xét ma trận đầu vào $$I$$ kích thước $$4 \times 4$$ và bộ lọc phát hiện cạnh dọc $$K$$ kích thước $$2 \times 2$$ với $$P = 0, S = 2$$:
+
+$$I = \begin{bmatrix} 1 & 3 & 0 & 2 \\ 2 & 4 & 1 & 0 \\ 0 & 1 & 5 & 2 \\ 3 & 2 & 1 & 4 \end{bmatrix}, \qquad K = \begin{bmatrix} -1 & 1 \\ -1 & 1 \end{bmatrix}$$
+
+1. **Kiểm tra kích thước đầu ra**: $$H_{\text{out}} = \lfloor (4 + 0 - 2)/2 \rfloor + 1 = 2$$, nên đầu ra $$O$$ có kích thước $$2 \times 2$$.
+2. **Tính từng phần tử của $$O$$**:
+   - $$O[0,0]$$ (cửa sổ góc trên trái): $$(-1)(1) + (1)(3) + (-1)(2) + (1)(4) = -1 + 3 - 2 + 4 = 4$$.
+   - $$O[0,1]$$ (dịch phải $$S=2$$ cột): $$(-1)(0) + (1)(2) + (-1)(1) + (1)(0) = 0 + 2 - 1 + 0 = 1$$.
+   - $$O[1,0]$$ (dịch xuống $$S=2$$ hàng): $$(-1)(0) + (1)(1) + (-1)(3) + (1)(2) = 0 + 1 - 3 + 2 = 0$$.
+   - $$O[1,1]$$ (góc dưới phải): $$(-1)(5) + (1)(2) + (-1)(1) + (1)(4) = -5 + 2 - 1 + 4 = 0$$.
+
+Kết quả $$O = \begin{bmatrix} 4 & 1 \\ 0 & 0 \end{bmatrix}$$ cho thấy phản hồi mạnh nhất ($$4$$) nằm đúng ở góc trên trái — nơi giá trị pixel nhảy vọt từ cột trái (1, 2) sang cột phải (3, 4).
+
 # Tầng Tích chập: Khối Xây dựng của Thị giác Máy tính
 
 ![CNN](/deep-learning-self-learning/img/chapter_img/chapter04/conv1.jpg)

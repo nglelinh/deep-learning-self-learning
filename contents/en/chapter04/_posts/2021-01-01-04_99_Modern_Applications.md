@@ -10,6 +10,29 @@ categories:
 lesson_type: optional
 ---
 
+When Vision Transformers (ViT) arrived in 2020, many predicted the immediate extinction of Convolutional Neural Networks. Yet by 2022, ConvNeXt stunned the field by showing that a pure CNN—modernized with larger $$7 \times 7$$ depthwise kernels, inverted bottlenecks, LayerNorm, GELU, and AdamW training recipes—could match or surpass hierarchical Vision Transformers like Swin on ImageNet, COCO, and ADE20K. Today's frontier vision systems (from ConvNeXt V2 and SAM-style hybrids to edge robotics models) reveal a deeper truth: convolution and attention are complementary operators, not rivals.
+
+## Background Knowledge Map: Modernizing CNNs in the Transformer Era
+
+- **Training Recipe vs. Architectural Inductive Bias**: Much of ViT's early advantage came from modern optimization (AdamW, cosine decay, Mixup, CutMix, RandAugment, stochastic depth) rather than self-attention alone; porting those recipes back to ResNet/ConvNeXt closed the gap dramatically.
+- **Macro & Micro Modernizations (ConvNeXt Blueprint)**: Replacing $$3 \times 3$$ standard convs with $$7 \times 7$$ depthwise convs expands receptive fields cheaply, while inverted bottlenecks (expand $$4\times$$ then project back) mirror Transformer MLP blocks.
+- **Hybrid Convolution–Attention Backbones**: Modern vision foundation models routinely use convolutional stems (fast, inductive-bias-rich local feature extraction at high resolution) feeding global Transformer blocks at low resolution—avoiding the $$O(N^2)$$ cost of self-attention on raw pixels.
+- **Edge Deployment & Hardware Determinism**: On mobile NPUs, autonomous vehicles, and high-resolution medical imaging, CNNs still win on latency predictability, memory bandwidth, and small-data sample efficiency.
+
+### Step-by-Step Worked Example (Read Slowly): Why a $$7 \times 7$$ Depthwise Conv Beats a $$3 \times 3$$ Standard Conv
+
+Consider a modern ConvNeXt block operating on $$C = 96$$ channels at resolution $$56 \times 56$$:
+
+1. **Classic ResNet $$3 \times 3$$ standard conv ($$96 \to 96$$)**:
+   - Parameters: $$96 \times 96 \times 3 \times 3 = 82{,}944$$.
+   - Receptive field of this single layer: $$3 \times 3$$ (9 pixels).
+2. **ConvNeXt $$7 \times 7$$ depthwise conv (`groups=96`)**:
+   - Parameters: $$96 \times 1 \times 7 \times 7 = 4{,}704$$.
+   - Receptive field of this single layer: $$7 \times 7$$ (49 pixels—over $$5.4\times$$ larger area!).
+3. **Compare parameter cost**:
+   $$\frac{82{,}944}{4{,}704} = 17.63\times \text{ fewer parameters}$$
+   for the $$7 \times 7$$ depthwise spatial mixer! The saved parameter budget is then invested into the inverted pointwise MLP ($$96 \to 384 \to 96$$: $$2 \times 96 \times 384 = 73{,}728$$ weights), separating spatial mixing from channel mixing just like a Transformer block.
+
 # Optional: ConvNets after ConvNeXt and vision foundation models
 
 > This lesson is **optional**. It does **not** rewrite convolution math, pooling, or the LeNet–ResNet history. It updates what practitioners actually deploy for vision after 2022.

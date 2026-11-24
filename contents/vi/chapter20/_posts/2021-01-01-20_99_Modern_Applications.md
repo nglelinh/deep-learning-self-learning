@@ -10,6 +10,26 @@ categories:
 lesson_type: optional
 ---
 
+Khi nghe đến Học Tăng cường, nhiều người chỉ nghĩ tới robot đi bộ hay AI chơi cờ vây; nhưng trên thực tế, phần lớn hệ thống RL đang tạo ra giá trị kinh tế khổng lồ mỗi giây hôm nay lại nằm ở **hệ thống gợi ý (Contextual Bandits)**, **RL ngoại tuyến trên dữ liệu log (Offline RL)** và đặc biệt là **khung MDP của RLHF** giúp căn chỉnh các mô hình ngôn ngữ lớn như ChatGPT, Claude và Gemini!
+
+## Bản đồ kiến thức nền: Ba ứng dụng thực chiến của nền tảng RL hiện đại (2022–2026)
+
+- **Mô hình hóa sinh văn bản LLM dưới dạng MDP (RLHF):** Coi chuỗi token đã sinh là trạng thái $$s_t$$, token kế tiếp là hành động $$a_t \in V$$, chính sách là chính LLM $$\pi_\theta(a_t\mid s_t)$$, và phần thưởng nằm ở cuối câu kèm phạt KL để không trôi xa mô hình gốc.
+- **Contextual Multi-Armed Bandits trong xếp hạng & quảng cáo:** Bài toán RL một bước (không có chuyển trạng thái dài hạn) dùng UCB hoặc Thompson Sampling để vừa khai thác nội dung có tỷ lệ nhấp cao vừa khám phá nội dung mới.
+- **RL ngoại tuyến (Offline / Batch RL — CQL, IQL):** Huấn luyện chính sách hoàn toàn từ nhật ký lịch sử cố định (y tế, tài chính, công nghiệp) mà không được phép tương tác mạo hiểm với môi trường thật.
+- **Bẫy phân phối lệch (Distributional Shift) trong Offline RL:** Hiểu lý do Q-Learning tiêu chuẩn ước lượng quá cao các hành động ngoài tập log (OOD actions) và cần ràng buộc bảo thủ (conservative penalty).
+
+### Khung giải thích (nên đọc chậm): Tính điểm chọn cánh tay bằng thuật toán UCB1 (Upper Confidence Bound) trong Bandit
+
+Một hệ thống gợi ý tin tức có 2 bài viết ứng viên sau tổng cộng $$t = 100$$ lượt hiển thị ($$\ln 100 \approx 4{,}605$$):
+- **Bài A:** Đã hiển thị $$N_A = 80$$ lần, tỷ lệ nhấp trung bình $$\hat{\mu}_A = 0{,}20$$.
+- **Bài B:** Mới hiển thị $$N_B = 5$$ lần, tỷ lệ nhấp trung bình $$\hat{\mu}_B = 0{,}15$$.
+
+Áp dụng công thức UCB1 (hệ số khám phá $$c = 0{,}5$$): $$\text{UCB}(a) = \hat{\mu}_a + c\sqrt{\frac{\ln t}{N_a}}$$:
+1. **Bài A:** $$0{,}20 + 0{,}5\sqrt{\frac{4{,}605}{80}} = 0{,}20 + 0{,}5(0{,}240) = 0{,}320$$.
+2. **Bài B:** $$0{,}15 + 0{,}5\sqrt{\frac{4{,}605}{5}} = 0{,}15 + 0{,}5(0{,}960) = 0{,}630$$.
+3. **Quyết định:** Dù trung bình của B đang thấp hơn A ($$0{,}15 < 0{,}20$$), phần thưởng cho độ bất định của B lớn gấp 4 lần A nên UCB1 chọn **khám phá Bài B** trước — ngay khi $$N_B$$ tăng lên, khoảng tin cậy tự thu hẹp lại mà không cần tinh chỉnh $$\epsilon$$ thủ công!
+
 # Tùy chọn: Nền tảng RL trong thực tế — Bandit, hệ thống gợi ý và MDP của RLHF
 
 > Bài này là **tùy chọn**, **không** thay thế định nghĩa về MDP, tổng phần thưởng chiết khấu hay hàm chính sách/giá trị. Nội dung cho thấy các khái niệm đó xuất hiện ở đâu trong các hệ thống khoa học dữ liệu giai đoạn 2022–2026, đặc biệt là huấn luyện mô hình ngôn ngữ theo sở thích con người.

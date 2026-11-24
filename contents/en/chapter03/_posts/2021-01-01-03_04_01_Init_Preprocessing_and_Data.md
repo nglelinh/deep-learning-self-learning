@@ -9,6 +9,32 @@ categories:
 - chapter03
 ---
 
+> *Initialize every weight in a neural network to zero and something eerie happens: every neuron in a hidden layer computes the exact same activation, receives the exact same gradient, and updates to the exact same weight forever—turning a 1,000-neuron layer into a single expensive neuron. Breaking symmetry at the right variance scale is step zero of deep learning.*
+
+## Background Knowledge Map: Initialization, Preprocessing, and Batching
+
+1. **Symmetry Breaking (Why Zero Init Fails)**: Identical weights force all neurons in a layer to evolve identically across epochs; random initialization breaks symmetry so neurons specialize into distinct feature detectors.
+2. **Xavier (Glorot) vs. He (Kaiming) Variance Scaling**: Xavier sets $$\text{Var}(W) = \frac{2}{n_{\text{in}} + n_{\text{out}}}$$ for linear/tanh regimes; He sets $$\text{Var}(W) = \frac{2}{n_{\text{in}}}$$ to compensate for ReLU zeroing out half the activation energy.
+3. **Input Standardization (Zero Mean, Unit Variance)**: Centers and rescales features so loss contours become roughly spherical, preventing large-scale features from dominating gradient updates.
+4. **Mini-Batch Shuffling & Stratified Splits**: Randomizing batch order every epoch eliminates cyclical gradient bias, while stratified splitting preserves rare-class ratios across train, validation, and test sets.
+
+### Step-by-Step Worked Example (Read Slowly): Comparing He vs. Xavier Signal Variance Across a 10-Layer ReLU Network
+
+Suppose a 10-layer ReLU MLP has constant width $$n = 512$$ per layer and unit-variance input $$\text{Var}(a^{[0]}) = 1.0$$. For a ReLU layer with symmetric zero-mean weights, forward variance evolves as:
+$$\text{Var}(a^{[l]}) = \frac{1}{2}\,n\,\text{Var}(W)\,\text{Var}(a^{[l-1]})$$
+(The factor $$\frac{1}{2}$$ appears because ReLU zeros out the negative half of a symmetric zero-mean pre-activation!)
+
+1. **Using Xavier Initialization ($$\text{Var}(W) = \frac{1}{n} = \frac{1}{512}$$)**:
+   Each layer multiplies activation variance by $$\frac{1}{2} \cdot 512 \cdot \frac{1}{512} = 0.5$$.
+   After $$L = 10$$ layers:
+   $$\text{Var}(a^{[10]}) = (0.5)^{10} \times 1.0 = \frac{1}{1024} \approx 0.000977$$
+   The signal loses **99.9%** of its variance before even reaching the output layer!
+2. **Using He (Kaiming) Initialization ($$\text{Var}(W) = \frac{2}{n} = \frac{2}{512}$$)**:
+   Each layer multiplies activation variance by $$\frac{1}{2} \cdot 512 \cdot \frac{2}{512} = 1.0$$.
+   After $$L = 10$$ layers:
+   $$\text{Var}(a^{[10]}) = (1.0)^{10} \times 1.0 = 1.000$$
+   Variance stays locked at $$1.0$$ across all 10 (or 100!) layers—the exact mathematical reason He initialization unlocked deep ReLU networks.
+
 This lesson covers practical techniques and best practices for training neural networks effectively.
 
 ---

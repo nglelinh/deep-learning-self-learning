@@ -9,6 +9,36 @@ categories:
 - chapter02
 ---
 
+Nếu lan truyền ngược là quá trình "học từ sai lầm", thì **lan truyền xuôi (*forward propagation*)** chính là quá trình mạng nơ-ron "suy nghĩ và đưa ra câu trả lời". Viết vòng lặp `for` lồng nhau cho từng nơ-ron và từng mẫu dữ liệu bằng Python thuần có thể mất hàng giờ đồng hồ, nhưng chỉ cần viết lại đúng phép tính đó dưới dạng **nhân ma trận theo batch (vectorization)**, GPU có thể xử lý xong hàng chục nghìn ảnh trong vài mili-giây. Bài học này dẫn bạn đi từng bước toán học của lan truyền xuôi, từ một mẫu đơn lẻ đến mini-batch đa chiều và trực giác hình học đằng sau mỗi tầng biến đổi.
+
+## Bản đồ kiến thức nền: Bốn trụ cột của Lan truyền Xuôi
+
+1. **Chuỗi Biến đổi Đệ quy qua từng Tầng**:
+   Bắt đầu từ $$\mathbf{A}^{(0)} = \mathbf{X}$$, mỗi tầng $$\ell = 1, \dots, L$$ thực hiện đúng hai bước: biến đổi tuyến tính $$\mathbf{Z}^{(\ell)} = \mathbf{A}^{(\ell-1)}\mathbf{W}^{(\ell)} + \mathbf{b}^{(\ell)}$$ (có broadcasting cho $$\mathbf{b}^{(\ell)}$$) và kích hoạt phi tuyến $$\mathbf{A}^{(\ell)} = \sigma_\ell(\mathbf{Z}^{(\ell)})$$.
+
+2. **Kiểm soát Kích thước Ma trận (Shape Tracking)**:
+   Với mini-batch $$B$$ mẫu, nếu $$\mathbf{A}^{(\ell-1)} \in \mathbb{R}^{B \times n_{\ell-1}}$$ và $$\mathbf{W}^{(\ell)} \in \mathbb{R}^{n_{\ell-1} \times n_\ell}$$, thì $$\mathbf{Z}^{(\ell)}, \mathbf{A}^{(\ell)} \in \mathbb{R}^{B \times n_\ell}$$. Theo dõi kích thước ở từng dòng là kỹ năng phòng tránh lỗi `RuntimeError: mat1 and mat2 shapes cannot be multiplied` tốt nhất.
+
+3. **Lưu giữ Bộ nhớ Đệm (Activation Caching)**:
+   Trong chế độ huấn luyện, lan truyền xuôi không thể vứt bỏ các giá trị trung gian $$\mathbf{Z}^{(\ell)}, \mathbf{A}^{(\ell)}$$—nó phải giữ lại trong VRAM để phục vụ tính đạo hàm lúc lan truyền ngược (trừ khi bật `torch.no_grad()` lúc suy luận).
+
+4. **Trực giác Hình học của Chuỗi Tầng**:
+   Mỗi tầng không di chuyển điểm dữ liệu một cách hỗn loạn mà liên tục xoay, kéo giãn và gấp không gian để đến tầng cuối cùng, các lớp khác nhau nằm gọn trên hai phía đối diện của một siêu phẳng.
+
+### Khung giải thích (nên đọc chậm): Tính tay Lan truyền Xuôi cho một Mini-Batch 2 mẫu qua mạng 2–2–1
+
+Xét mini-batch gồm 2 mẫu $$\mathbf{X} = \begin{bmatrix} 1 & 0 \\ -1 & 2 \end{bmatrix} \in \mathbb{R}^{2 \times 2}$$ đi qua mạng có:
+$$\mathbf{W}^{(1)} = \begin{bmatrix} 1 & -1 \\ 2 & 1 \end{bmatrix}, \;\mathbf{b}^{(1)} = \begin{bmatrix} 0 & 1 \end{bmatrix}, \;\mathbf{W}^{(2)} = \begin{bmatrix} 1 \\ -2 \end{bmatrix}, \; b^{(2)} = 0.5.$$
+
+1. **Tầng ẩn 1 — Phép nhân ma trận + Broadcasting bias**:
+   $$\mathbf{Z}^{(1)} = \mathbf{X}\mathbf{W}^{(1)} + \mathbf{b}^{(1)} = \begin{bmatrix} 1(1)+0(2) & 1(-1)+0(1) \\ -1(1)+2(2) & -1(-1)+2(1) \end{bmatrix} + \begin{bmatrix} 0 & 1 \\ 0 & 1 \end{bmatrix} = \begin{bmatrix} 1 & -1 \\ 3 & 3 \end{bmatrix} + \begin{bmatrix} 0 & 1 \\ 0 & 1 \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 3 & 4 \end{bmatrix}.$$
+2. **Tầng ẩn 1 — Áp dụng ReLU từng phần tử**:
+   Vì mọi phần tử của $$\mathbf{Z}^{(1)}$$ đều $$\ge 0$$, ta có $$\mathbf{A}^{(1)} = \begin{bmatrix} 1 & 0 \\ 3 & 4 \end{bmatrix} \in \mathbb{R}^{2 \times 2}$$.
+3. **Tầng đầu ra — Biến đổi tuyến tính + Sigmoid**:
+   $$\mathbf{Z}^{(2)} = \mathbf{A}^{(1)}\mathbf{W}^{(2)} + b^{(2)} = \begin{bmatrix} 1(1) + 0(-2) + 0.5 \\ 3(1) + 4(-2) + 0.5 \end{bmatrix} = \begin{bmatrix} 1.5 \\ -4.5 \end{bmatrix}.$$
+   Qua Sigmoid: $$\hat{\mathbf{y}} = \begin{bmatrix} \sigma(1.5) \\ \sigma(-4.5) \end{bmatrix} \approx \begin{bmatrix} 0.8176 \\ 0.0110 \end{bmatrix}.$$
+Chỉ với hai phép nhân ma trận song song, cả hai mẫu đã được dự đoán đồng thời mà không cần bất kỳ vòng lặp `for` nào!
+
 Bài này trình bày chi tiết về lan truyền xuôi (*forward propagation*) — quá trình mạng neuron tính toán và đưa ra dự đoán từ dữ liệu đầu vào.
 
 ---

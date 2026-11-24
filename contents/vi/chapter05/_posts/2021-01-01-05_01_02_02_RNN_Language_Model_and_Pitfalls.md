@@ -9,6 +9,31 @@ categories:
 - chapter05
 ---
 
+Năm 2015, bài blog nổi tiếng *"The Unreasonable Effectiveness of Recurrent Neural Networks"* của Andrej Karpathy khiến cả cộng đồng lập trình sửng sốt: một mạng RNN cấp ký tự cực kỳ gọn nhẹ, chỉ học dự đoán **ký tự tiếp theo**, mà sau vài giờ huấn luyện đã biết tự gõ kịch Shakespeare đúng thể thơ, tự viết code C có đóng mở ngoặc `{}` khớp nhau, thậm chí tự sinh mã LaTeX gần như biên dịch được!
+
+## Bản đồ kiến thức nền: Bốn trụ cột của Mô hình Ngôn ngữ Cấp Ký tự (Char-RNN)
+
+1. **Bài toán học tự giám sát (Next-Token Prediction)**:
+   Từ chuỗi văn bản thô `"hello"`, ta không cần ai gán nhãn thủ công: đầu vào là `"hell"` và nhãn đích dịch phải 1 bước là `"ello"` — chính là nguyên lý tiền huấn luyện của mọi LLM hiện đại.
+2. **Mã hóa ký tự (One-Hot vs. `nn.Embedding`)**:
+   Với bảng chữ cái nhỏ (khoảng 50–100 ký tự), vector one-hot đủ dùng để minh họa, nhưng `nn.Embedding` tương đương phép tra bảng nhanh hơn nhiều và học được không gian ngữ nghĩa dày đặc.
+3. **Chiến lược lấy mẫu (Greedy vs. Multinomial Temperature Sampling)**:
+   Luôn chọn ký tự xác suất cao nhất (greedy) dễ rơi vào vòng lặp vô tận; lấy mẫu xác suất với nhiệt độ $$\tau$$ tạo sự cân bằng giữa độ mạch lạc và đa dạng.
+4. **Các cạm bẫy kinh điển khi huấn luyện RNN thực tế**:
+   Quên khởi tạo lại hoặc `detach` trạng thái ẩn giữa các batch độc lập, không dùng `pack_padded_sequence` khi chuỗi trong cùng batch có độ dài khác nhau (khiến `<PAD>` làm nhiễu trạng thái ẩn), và kỳ vọng RNN thuần nhớ được phụ thuộc xa hơn ~15–20 bước.
+
+### Khung giải thích (nên đọc chậm): Tính tay ảnh hưởng của Nhiệt độ (Temperature $$\tau$$) lên xác suất sinh ký tự tiếp theo
+
+Giả sử ở bước dự đoán ký tự sau `"hel"`, mạng đưa ra 3 logit cho các ký tự `('l', 'p', 'o')` lần lượt là $$\mathbf{z} = [2{,}0, \; 1{,}0, \; 0{,}0]$$. Xác suất lấy mẫu là $$p_i = \frac{e^{z_i / \tau}}{\sum_j e^{z_j / \tau}}$$:
+
+| Nhiệt độ $$\tau$$ | Logit sau chia $$\mathbf{z}/\tau$$ | $$P(\text{'l'})$$ | $$P(\text{'p'})$$ | $$P(\text{'o'})$$ | Hành vi sinh văn bản |
+| :---: | :---: | :---: | :---: | :---: | :--- |
+| **$$\tau = 0{,}5$$** (lạnh) | $$[4{,}0,\; 2{,}0,\; 0{,}0]$$ | **86,7%** | 11,7% | 1,6% | Rất tự tin, gần như luôn chọn `'l'` |
+| **$$\tau = 1{,}0$$** (chuẩn) | $$[2{,}0,\; 1{,}0,\; 0{,}0]$$ | **66,5%** | 24,5% | 9,0% | Cân bằng giữa `'l'` (`hello`) và `'p'` (`help`) |
+| **$$\tau = 2{,}0$$** (nóng) | $$[1{,}0,\; 0{,}5,\; 0{,}0]$$ | **50,6%** | 30,7% | 18,6% | Phẳng dần, dễ sinh ra `'o'` (sai chính tả nhưng đa dạng) |
+
+Chỉ bằng một tham số vô hướng $$\tau$$ lúc suy luận (không cần huấn luyện lại mô hình!), bạn kiểm soát hoàn toàn độ "liều lĩnh" của bộ sinh văn bản.
+
 ```python
 # Ví dụ mô hình ngôn ngữ cấp ký tự
 print("\n" + "="*70)

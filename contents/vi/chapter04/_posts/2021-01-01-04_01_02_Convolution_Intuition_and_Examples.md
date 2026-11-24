@@ -9,6 +9,34 @@ categories:
 - chapter04
 ---
 
+Làm thế nào một mạng chỉ toàn các bộ lọc bé xíu $$3 \times 3$$ — mỗi bộ lọc chỉ nhìn thấy 9 điểm ảnh — lại có thể nhận ra cả một chiếc ô tô hay một khuôn mặt người nằm trải dài hàng trăm pixel? Câu trả lời không nằm ở việc phóng to từng bộ lọc, mà nằm ở nghệ thuật **xếp chồng** để mở rộng tầm nhìn và lắp ghép đặc trưng theo từng tầng bậc.
+
+## Bản đồ kiến thức nền: Ba trực giác cốt lõi để "đọc vị" một mạng CNN
+
+1. **Bộ lọc như một máy đo độ tương đồng mẫu (Template Matching)**:
+   Phép tích vô hướng giữa cửa sổ ảnh và bộ lọc đạt cực đại khi vùng ảnh có hoa văn giống hệt bộ lọc (ví dụ Sobel dọc phản hồi cực đại tại ranh giới sáng–tối theo phương thẳng đứng).
+2. **Phân cấp đặc trưng tự phát (Emergent Hierarchy)**:
+   Khi trực quan hóa trọng số của một CNN đã huấn luyện trên ImageNet, tầng 1 luôn tự học các bộ lọc Gabor (cạnh và chuyển màu), tầng 2–3 ghép cạnh thành đường cong và kết cấu (lưới, lông thú), còn tầng 4–5 phản hồi với bánh xe, mắt người hay mặt chó.
+3. **Sự mở rộng của Trường tiếp nhận (Receptive Field)**:
+   Mỗi neuron ở tầng $$L$$ tổng hợp tín hiệu từ một vùng $$k \times k$$ của tầng $$L-1$$. Nhờ hiệu ứng cộng dồn (và nhân lên khi có stride/pooling), trường tiếp nhận hiệu dụng mở rộng nhanh theo chiều sâu.
+4. **Trường tiếp nhận lý thuyết vs. Trường tiếp nhận hiệu dụng (ERF)**:
+   Dù trường tiếp nhận lý thuyết phủ rộng, các điểm ảnh ở tâm đóng góp nhiều đường đi hơn nên trọng số ảnh hưởng thường phân bố dạng hình chuông Gaussian tập trung quanh trung tâm.
+
+### Khung giải thích (nên đọc chậm): Tính tay sự mở rộng trường tiếp nhận qua 3 tầng tích chập
+
+Giả sử ta xếp chồng các tầng tích chập $$3 \times 3$$ với `padding=1`. Công thức truy hồi trường tiếp nhận $$r_l$$ và bước nhảy tích lũy $$j_l$$ là:
+$$r_l = r_{l-1} + (k_l - 1) \cdot j_{l-1}, \qquad j_l = j_{l-1} \cdot s_l$$
+với giá trị khởi đầu tại ảnh gốc: $$r_0 = 1, \; j_0 = 1$$.
+
+| Tầng $$l$$ | Cấu hình tầng | Bước nhảy tích lũy $$j_{l-1}$$ | Công thức tính $$r_l$$ | Trường tiếp nhận $$r_l$$ |
+| :---: | :--- | :---: | :--- | :---: |
+| 0 | Ảnh đầu vào | — | — | $$1 \times 1$$ |
+| 1 | Conv $$3\times 3, s=1$$ | 1 | $$1 + (3-1)\cdot 1$$ | **$$3 \times 3$$** |
+| 2 | Conv $$3\times 3, s=2$$ | 1 | $$3 + (3-1)\cdot 1$$ | **$$5 \times 5$$** (và $$j_2 = 2$$) |
+| 3 | Conv $$3\times 3, s=1$$ | 2 | $$5 + (3-1)\cdot 2$$ | **$$9 \times 9$$** |
+
+Chỉ sau 3 tầng lọc nhỏ $$3\times 3$$ (với một bước stride 2 ở giữa), mỗi điểm đặc trưng đã "bao quát" một vùng ảnh gốc $$9 \times 9$$, nhưng tổng số trọng số trên mỗi kênh lại nhỏ hơn rất nhiều so với một bộ lọc $$9 \times 9$$ duy nhất ($$3 \times 9 = 27$$ so với $$81$$).
+
 ## 3. Ví dụ / Trực giác
 
 ### Ví dụ 1: Phát hiện Cạnh bằng Bộ lọc Thủ công

@@ -9,6 +9,33 @@ categories:
 - chapter08
 ---
 
+Nếu Self-Attention là "phòng họp" nơi các từ trao đổi thông tin với nhau, thì câu hỏi đặt ra là: *tại sao sau mỗi phòng họp, Transformer lại phải cho từng từ đi vào một "phòng làm việc riêng" gọi là FFN, rồi lại phải chuẩn hóa bằng LayerNorm và cộng đường tắt Residual?* Bài học lý thuyết này giải mã chính xác từng mắt xích toán học giữ cho cả cỗ máy Transformer 100 tầng vẫn huấn luyện mượt mà.
+
+## Bản đồ kiến thức nền: Bốn trụ cột lý thuyết của Transformer
+
+1. **Mã hóa vị trí lượng giác (Sinusoidal Positional Encoding)**:
+   Dùng cặp $$\sin(\text{pos}/10000^{2i/d})$$ và $$\cos(\text{pos}/10000^{2i/d})$$ ở nhiều tần số khác nhau — nhờ công thức cộng góc lượng giác, vị trí $$\text{pos} + k$$ luôn là một phép **biến đổi tuyến tính** (ma trận xoay 2D) của vị trí $$\text{pos}$$, giúp mô hình dễ dàng học khoảng cách tương đối!
+2. **Pre-LN vs. Post-LN (Vị trí đặt LayerNorm)**:
+   Bài báo gốc đặt LayerNorm *sau* phép cộng residual (Post-LN: $$\text{LN}(x + F(x))$$) nên rất nhạy với learning rate và bắt buộc phải có warmup kỹ. Hầu hết LLM hiện đại chuyển sang **Pre-LN** ($$x + F(\text{LN}(x))$$) để giữ đường cao tốc gradient thông suốt tuyệt đối từ tầng cuối về tầng đầu.
+3. **Position-wise Feed-Forward Network (FFN)**:
+   Nếu chỉ xếp chồng các tầng Attention thuần túy, sự kết hợp giữa các giá trị chủ yếu vẫn mang tính tuyến tính theo trọng số; FFN chiếu lên chiều $$4 d_{\text{model}}$$ qua ReLU/GELU/SwiGLU để tạo sức biểu đạt phi tuyến giàu có cho từng token.
+4. **Liên kết trọng số (Weight Tying) và hệ số $$\sqrt{d_{\text{model}}}$$**:
+   Chia sẻ chung ma trận giữa bảng Token Embedding đầu vào và tầng Linear dự đoán từ vựng đầu ra (LM Head) giúp tiết kiệm hàng chục triệu tham số, đồng thời nhân embedding với $$\sqrt{d_{\text{model}}}$$ để tín hiệu ngữ nghĩa không bị lấn át bởi Positional Encoding có biên độ $$\in [-1, 1]$$.
+
+### Khung giải thích (nên đọc chậm): Tính tay vector Positional Encoding lượng giác tại 3 vị trí đầu tiên ($$d_{\text{model}} = 4$$)
+
+Với $$d_{\text{model}} = 4$$, ta có 2 cặp chỉ số tần số:
+- Cặp $$i = 0$$ (tần số cao): $$\omega_0 = 1 / 10000^{0/4} = 1$$ $$\to$$ $$(\sin(\text{pos}), \; \cos(\text{pos}))$$
+- Cặp $$i = 1$$ (tần số thấp): $$\omega_1 = 1 / 10000^{2/4} = 1/100 = 0{,}01$$ $$\to$$ $$(\sin(0{,}01\,\text{pos}), \; \cos(0{,}01\,\text{pos}))$$
+
+| Vị trí `pos` | Chiều 0: $$\sin(\text{pos})$$ | Chiều 1: $$\cos(\text{pos})$$ | Chiều 2: $$\sin(0{,}01\,\text{pos})$$ | Chiều 3: $$\cos(0{,}01\,\text{pos})$$ |
+| :---: | :---: | :---: | :---: | :---: |
+| **`pos = 0`** | $$0{,}0000$$ | $$1{,}0000$$ | $$0{,}0000$$ | $$1{,}0000$$ |
+| **`pos = 1`** | $$0{,}8415$$ | $$0{,}5403$$ | $$0{,}0100$$ | $$0{,}9999$$ |
+| **`pos = 2`** | $$0{,}9093$$ | $$-0{,}4161$$ | $$0{,}0200$$ | $$0{,}9998$$ |
+
+Hãy tưởng tượng một chiếc đồng hồ nhị phân liên tục: cặp chiều `(0, 1)` đóng vai trò "kim giây" quay rất nhanh để phân biệt các từ kề nhau, còn cặp chiều `(2, 3)` đóng vai trò "kim giờ" quay chậm rãi để phân biệt các đoạn văn cách nhau hàng trăm từ!
+
 # Lý thuyết Transformer
 
 ![Transformer Architecture](/deep-learning-self-learning/img/chapter_img/chapter08/transformer_architecture.png)

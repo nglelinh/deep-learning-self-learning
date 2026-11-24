@@ -10,6 +10,28 @@ categories:
 lesson_type: optional
 ---
 
+Chỉ vài năm trước, GAN vẫn là "vị vua không ngai" của thế giới sinh ảnh; thế nhưng ngày nay, từ Stable Diffusion 3, Flux đến các hệ thống tạo video siêu thực, sân khấu trung tâm đã thuộc về **Mô hình Khuếch tán (Diffusion)** và **Flow Matching**. Điều gì khiến ý tưởng "phá hủy ảnh bằng nhiễu rồi học cách khử nhiễu từng bước" lại đánh bại được cả cuộc đấu trí đối kháng lẫn chuỗi tự hồi quy? Bài cập nhật này giải mã bước chuyển mình quan trọng nhất của AI tạo sinh giai đoạn 2022–2026.
+
+## Bản đồ kiến thức nền: Bốn trụ cột của AI tạo sinh hiện đại (2022–2026)
+
+- **Quá trình khuếch tán thuận và ngược (DDPM / Score Matching):** Thêm nhiễu chuẩn hóa theo lịch trình $$\bar{\alpha}_t$$ rồi huấn luyện mạng dự đoán nhiễu $$\boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t)$$ (tương đương học trường điểm số $$\nabla_{\mathbf{x}} \log p_t(\mathbf{x})$$).
+- **Flow Matching và đường đi thẳng (Rectified Flow):** Thay quỹ đạo nhiễu cong phức tạp bằng phép nội suy tuyến tính $$\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\mathbf{x}_1$$ và học trường vận tốc $$\mathbf{v}_\theta(\mathbf{x}_t, t) \approx \mathbf{x}_1 - \mathbf{x}_0$$ giúp giảm mạnh số bước lấy mẫu.
+- **Khuếch tán trong không gian ẩn (Latent Diffusion) và DiT:** Kết hợp bộ nén VAE (Chương 12–13) với kiến trúc Diffusion Transformer để mở rộng lên độ phân giải cao và dữ liệu video.
+- **Hệ sinh thái dẫn đường và tăng tốc:** Classifier-Free Guidance (CFG) để bám sát prompt văn bản, cùng các bộ giải ODE/SDE và chưng cất vài bước cho suy luận thực tế.
+
+### Khung giải thích (nên đọc chậm): Tính tay một bước thêm nhiễu DDPM và mục tiêu vận tốc Flow Matching
+
+Xét một giá trị điểm ảnh (đã chuẩn hóa) $$x_0 = 0{,}8$$ và một mẫu nhiễu chuẩn $$\epsilon = -0{,}5$$.
+
+**1. Quá trình thuận DDPM tại bước $$t$$ với $$\bar{\alpha}_t = 0{,}64$$:**
+   $$x_t = \sqrt{\bar{\alpha}_t}\,x_0 + \sqrt{1 - \bar{\alpha}_t}\,\epsilon = \sqrt{0{,}64}(0{,}8) + \sqrt{0{,}36}(-0{,}5) = 0{,}8(0{,}8) + 0{,}6(-0{,}5) = 0{,}64 - 0{,}30 = 0{,}34.$$
+   Mạng nhận đầu vào $$(x_t = 0{,}34, t)$$ và phải dự đoán $$\hat{\epsilon}$$ gần $$-0{,}5$$. Nếu mạng dự đoán $$\hat{\epsilon} = -0{,}4$$, loss MSE đơn giản là $$(-0{,}4 - (-0{,}5))^2 = 0{,}01$$ — hoàn toàn không cần trò chơi minimax!
+
+**2. Mục tiêu Flow Matching (đường đi thẳng) tại $$t = 0{,}5$$ giữa nhiễu $$x_0^{\text{nhiễu}} = -0{,}5$$ và ảnh thật $$x_1 = 0{,}8$$:**
+   - Điểm trung gian: $$x_{0{,}5} = (1 - 0{,}5)(-0{,}5) + 0{,}5(0{,}8) = 0{,}15$$.
+   - Vận tốc mục tiêu không đổi dọc đường thẳng: $$u_t = x_1 - x_0^{\text{nhiễu}} = 0{,}8 - (-0{,}5) = 1{,}3$$.
+   - Khi suy luận bằng 2 bước Euler ($$\Delta t = 0{,}5$$) với vận tốc chuẩn $$v = 1{,}3$$: $$-0{,}5 \xrightarrow{+0{,}65} 0{,}15 \xrightarrow{+0{,}65} 0{,}80$$ — chạm đúng ảnh thật chỉ sau 2 bước vì quỹ đạo là đường thẳng!
+
 # Tùy chọn: Mô hình sinh sau GAN — Khuếch tán và Flow Matching
 
 > Bài này mang tính **tùy chọn**, **không** thay thế phần nền tảng về hàm hợp lý, MLE và đánh giá mô hình của chương, cũng **không** thay thế các chương về VAE hay GAN. Nội dung ghi nhận sự chuyển dịch lớn giai đoạn 2022–2026: **mô hình khuếch tán dựa trên score** và **flow matching** đã trở thành lựa chọn mặc định cho sinh ảnh, sau đó mở rộng sang video và âm thanh.

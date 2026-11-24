@@ -9,6 +9,33 @@ categories:
 - chapter09
 ---
 
+Khi thiết kế một khối CNN hoặc Transformer thực tế, hai câu hỏi kỹ thuật luôn xuất hiện: *nên đặt BatchNorm trước hay sau hàm kích hoạt ReLU?* và *khi VRAM GPU chỉ đủ chạy batch size = 2 (như trong bài toán phân đoạn ảnh y khoa 3D hoặc Object Detection độ phân giải cao), vì sao BatchNorm sụp đổ và phải thay bằng gì?* Bài học này giải quyết dứt điểm cả hai bài toán thiết kế đó.
+
+## Bản đồ kiến thức nền: Bốn quyết định thiết kế về Vị trí và Biến thể Chuẩn hóa
+
+1. **Vị trí đặt BatchNorm (`Conv -> BN -> ReLU` vs. `Conv -> ReLU -> BN`)**:
+   Quy ước chuẩn công nghiệp (ResNet, EfficientNet) là `Conv(bias=False) -> BN -> ReLU` nhằm chuẩn hóa tín hiệu tiền kích hoạt (gần phân phối Gaussian đối xứng quanh 0) trước khi cắt phần âm bởi ReLU; riêng thiết kế Pre-Activation ResNet v2 đặt `BN -> ReLU -> Conv` để giữ đường residual sạch hoàn toàn.
+2. **Cách BatchNorm2d tính thống kê trên ảnh `(N, C, H, W)`**:
+   Với mỗi kênh $$c$$, trung bình và phương sai được tính trên tổng cộng $$N \times H \times W$$ điểm ảnh — nhờ vậy tính chất chia sẻ trọng số không gian của CNN được bảo toàn trọn vẹn, và lớp `BatchNorm2d(C)` chỉ có đúng $$2C$$ tham số học được ($$\gamma, \beta$$).
+3. **Điểm gãy của BatchNorm ở Batch Size nhỏ và giải pháp GroupNorm**:
+   Khi `batch_size` giảm xuống 1–4, ước lượng $$\mu_B, \sigma_B^2$$ nhiễu dữ dội khiến sai số tăng vọt (Wu & He, 2018). **Group Normalization** chia $$C$$ kênh thành $$G$$ nhóm (thường $$G = 32$$) và chuẩn hóa *độc lập trên từng ảnh*, giữ sai số ổn định ngay cả khi `batch_size = 1`!
+4. **Hợp nhất tầng lúc suy luận (Conv–BN Folding)**:
+   Vì ở chế độ `eval()`, BatchNorm chỉ là một phép biến đổi tuyến tính cố định, ta có thể gộp trực tiếp trọng số của nó vào ma trận trọng số và bias của tầng `Conv2d` đứng ngay trước — giúp suy luận nhanh hơn mà **không tốn thêm một phép tính nào** cho BatchNorm!
+
+### Khung giải thích (nên đọc chậm): Tính tay phép Gộp tầng Conv + BatchNorm lúc suy luận (Conv–BN Folding)
+
+Giả sử một kênh tích chập có trọng số $$w = 2{,}0$$ (không có bias), theo sau là BatchNorm ở chế độ `eval()` với $$\mu_{\text{run}} = 1{,}0, \; \sigma_{\text{run}} = 2{,}0, \; \gamma = 4{,}0, \; \beta = 0{,}5$$.
+
+Đầu ra khi chạy tuần tự 2 tầng là:
+$$y = \gamma \frac{w x - \mu_{\text{run}}}{\sigma_{\text{run}}} + \beta = \left(\frac{\gamma}{\sigma_{\text{run}}} w\right) x + \left(\beta - \frac{\gamma \mu_{\text{run}}}{\sigma_{\text{run}}}\right)$$
+
+Thay số để gộp thành **một tầng Conv duy nhất** có trọng số $$w_{\text{fold}}$$ và bias $$b_{\text{fold}}$$:
+1. **Trọng số gộp**: $$w_{\text{fold}} = \frac{4{,}0}{2{,}0} \times 2{,}0 = \mathbf{4{,}0}$$
+2. **Bias gộp**: $$b_{\text{fold}} = 0{,}5 - \frac{4{,}0 \times 1{,}0}{2{,}0} = 0{,}5 - 2{,}0 = \mathbf{-1{,}5}$$
+3. **Kiểm chứng với $$x = 3{,}0$$**:
+   - Chạy 2 tầng rời: $$w x = 6{,}0 \to \frac{6{,}0 - 1{,}0}{2{,}0} = 2{,}5 \to 4{,}0(2{,}5) + 0{,}5 = \mathbf{10{,}5}$$.
+   - Chạy 1 tầng gộp: $$w_{\text{fold}} x + b_{\text{fold}} = 4{,}0(3{,}0) - 1{,}5 = \mathbf{10{,}5}$$ — khớp tuyệt đối từng chữ số thập phân mà loại bỏ hoàn toàn tầng BatchNorm khi triển khai!
+
 ## Vị trí đặt BatchNorm
 
 ### Trước hay sau hàm kích hoạt?

@@ -9,6 +9,28 @@ categories:
 - chapter00
 ---
 
+> *When researchers talk about "adversarial $$\varepsilon$$-balls," "manifold hypotheses," or "flat versus sharp minima," they are speaking the language of point-set topology. Topology strips away coordinates to ask the questions optimization truly cares about: What is a neighborhood? Where is the boundary? And can a sequence escape?*
+
+## Background Knowledge Map: Metric Topology for Optimization & Generalization
+
+1. **Metric Spaces & Open Balls (Neighborhood Geometry)**: Defines the $$\varepsilon$$-ball $$B_\varepsilon(\mathbf{x}) = \{\mathbf{y} : d(\mathbf{x}, \mathbf{y}) < \varepsilon\}$$, which directly formalizes adversarial threat models ($$L_2$$ and $$L_\infty$$ perturbation balls) and local minima.
+2. **Open vs. Closed Sets & Boundary Points**: Distinguishes interior points (where small gradient steps stay feasible) from boundary points (where constraints like weight clipping or probability simplices activate).
+3. **Compactness (Heine–Borel Theorem)**: In $$\mathbb{R}^d$$, a set is compact if and only if it is closed and bounded—guaranteeing that every continuous loss achieves a global minimum and every bounded sequence has a convergent subsequence.
+4. **Connectedness & Path-Connectedness (Mode Connectivity)**: Explains whether two distinct neural network minima can be joined by a continuous low-loss curve, a cornerstone of modern loss-landscape research.
+
+### Step-by-Step Worked Example (Read Slowly): Comparing $$L_2$$ vs. $$L_\infty$$ Open Balls in Adversarial Perturbations
+
+Suppose an input image patch has two pixel intensities $$\mathbf{x} = (0.50, 0.50)$$ and an attacker can perturb it to $$\mathbf{y} = (0.58, 0.56)$$ with perturbation $$\boldsymbol{\delta} = \mathbf{y} - \mathbf{x} = (0.08, 0.06)$$. Test whether $$\mathbf{y}$$ lies inside the open ball $$B_{0.1}(\mathbf{x})$$ under the $$L_2$$ and $$L_\infty$$ metrics.
+
+1. **Compute the $$L_2$$ (Euclidean) Distance**:
+   $$d_2(\mathbf{x}, \mathbf{y}) = \sqrt{(0.08)^2 + (0.06)^2} = \sqrt{0.0064 + 0.0036} = \sqrt{0.0100} = 0.10$$
+   Because an **open** ball requires strict inequality $$d_2(\mathbf{x}, \mathbf{y}) < 0.10$$, $$\mathbf{y}$$ is **not** in the open $$L_2$$ ball—it lies right on the boundary sphere $$\partial B_{0.1}^{(2)}(\mathbf{x})$$!
+2. **Compute the $$L_\infty$$ (Chebyshev / Max-Pixel) Distance**:
+   $$d_\infty(\mathbf{x}, \mathbf{y}) = \max(\lvert 0.08\rvert, \lvert 0.06\rvert) = 0.08 < 0.10$$
+   So $$\mathbf{y}$$ **is** strictly in the interior of the open $$L_\infty$$ ball $$B_{0.1}^{(\infty)}(\mathbf{x})$$, with safety margin $$0.10 - 0.08 = 0.02$$ before hitting the boundary.
+3. **Geometric Takeaway**:
+   The $$L_\infty$$ ball is a square of side $$0.20$$ that encloses the $$L_2$$ circle of radius $$0.10$$; in $$d$$ dimensions, a corner of the $$L_\infty$$ ball has $$L_2$$ distance $$\varepsilon\sqrt{d}$$, explaining why tiny per-pixel $$L_\infty$$ attacks accumulate huge $$L_2$$ energy on high-resolution images.
+
 This lesson covers essential topological concepts from real analysis that are crucial for understanding the structure of feasible regions, continuity, and the existence of optimal solutions in deep-learning problems.
 
 ---

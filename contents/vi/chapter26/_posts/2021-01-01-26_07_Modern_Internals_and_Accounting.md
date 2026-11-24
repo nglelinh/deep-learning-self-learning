@@ -9,6 +9,28 @@ categories:
 - chapter26
 ---
 
+Nếu bạn đặt sơ đồ Transformer gốc năm 2017 cạnh mã nguồn của Llama 3, Qwen 2.5 hay Gemma 2, bạn sẽ nhận ra gần như mọi khối bên trong đều đã được nâng cấp tinh vi: `LayerNorm` đổi thành **RMSNorm**, `ReLU FFN` đổi thành **SwiGLU**, mã hóa vị trí cộng đổi thành phép quay **RoPE**, còn Multi-Head Attention đổi thành **GQA**! Bài học khép lại toàn bộ khóa học này biến bạn thành một "kế toán trưởng" kiến trúc LLM: hiểu sâu từng mảnh ghép hiện đại và tự tay hạch toán chính xác từng tham số, từng byte VRAM và từng phép tính FLOPs.
+
+## Bản đồ kiến thức nền: Bốn nâng cấp nội tại của khối Decoder LLM hiện đại
+
+- **RMSNorm (Root Mean Square Normalization):** Bỏ phép trừ trung bình của LayerNorm, chỉ chuẩn hóa theo căn trung bình bình phương $$\text{RMS}(\mathbf{x}) = \sqrt{\frac{1}{d}\sum x_i^2 + \epsilon}$$, giữ nguyên độ ổn định Pre-Norm mà giảm chi phí đọc/ghi bộ nhớ.
+- **FFN SwiGLU (Gated Linear Unit với SiLU):** Dùng 3 ma trận chiếu $$(W_{\text{gate}}, W_{\text{up}}, W_{\text{down}})$$ với kích thước ẩn $$d_{ff} \approx \frac{8}{3}d$$ để giữ nguyên tổng tham số như FFN chuẩn $$4d$$ nhưng tăng mạnh khả năng biểu diễn phi tuyến.
+- **RoPE (Rotary Position Embedding):** Xoay từng cặp chiều $$(2i, 2i+1)$$ của Query và Key một góc $$m\theta_i$$ theo vị trí $$m$$, khiến tích vô hướng $$Q_m \cdot K_n$$ tự động chỉ phụ thuộc vào **khoảng cách tương đối** $$(m - n)$$.
+- **Grouped-Query Attention (GQA) và Sổ sách chi phí:** Chia sẻ $$n_{\text{kv}}$$ đầu Key/Value cho $$n_q$$ đầu Query (tỷ lệ nhóm $$G = n_q / n_{\text{kv}}$$), cắt giảm tuyến tính kích thước KV Cache lẫn trọng số $$W_K, W_V$$.
+
+### Khung giải thích (nên đọc chậm): Tính tay một bước RMSNorm 2D và phép quay vị trí tương đối RoPE
+
+**Phần A — Tính tay RMSNorm** cho vector đầu vào $$\mathbf{x} = [3{,}0,\; 4{,}0]$$ với trọng số scale $$\boldsymbol{\gamma} = [1{,}0,\; 1{,}0]$$ ($$\epsilon \approx 0$$):
+1. Căn trung bình bình phương: $$\text{RMS}(\mathbf{x}) = \sqrt{\frac{3^2 + 4^2}{2}} = \sqrt{\frac{25}{2}} = \sqrt{12{,}5} \approx 3{,}5355$$.
+2. Đầu ra chuẩn hóa: $$\text{RMSNorm}(\mathbf{x}) = \left[\frac{3{,}0}{3{,}5355},\; \frac{4{,}0}{3{,}5355}\right] \approx [0{,}8485,\; 1{,}1314]$$ (không cần tính trung bình $$\mu = 3{,}5$$ và không có vector bias $$\boldsymbol{\beta}$$).
+
+**Phần B — Kiểm chứng tính tương đối của RoPE trên 1 cặp chiều 2D:**
+Giả sử $$\mathbf{q} = (1, 0)$$ ở vị trí $$m = 3$$ và $$\mathbf{k} = (1, 0)$$ ở vị trí $$n = 1$$, tần số góc $$\theta = 30^\circ$$:
+- Xoay $$\mathbf{q}$$ góc $$3 \times 30^\circ = 90^\circ$$ → $$\mathbf{q}_{\text{rot}} = (\cos 90^\circ, \sin 90^\circ) = (0, 1)$$.
+- Xoay $$\mathbf{k}$$ góc $$1 \times 30^\circ = 30^\circ$$ → $$\mathbf{k}_{\text{rot}} = (\cos 30^\circ, \sin 30^\circ) = (0{,}866,\; 0{,}500)$$.
+- Tích vô hướng: $$\mathbf{q}_{\text{rot}} \cdot \mathbf{k}_{\text{rot}} = 0(0{,}866) + 1(0{,}500) = 0{,}500 = \cos(60^\circ) = \cos((3 - 1)\cdot 30^\circ)$$!
+Nếu dịch cả hai token lên vị trí $$m = 103, n = 101$$, hiệu $$m - n$$ vẫn bằng $$2$$ nên tích vô hướng **vẫn đúng bằng $$0{,}500$$** — đó chính là vẻ đẹp hình học tuyệt đối của RoPE!
+
 # Nội tại decoder hiện đại và hạch toán chi phí
 
 Chương 08 đã trình bày kiến trúc Transformer năm 2017. Bài này đi vào **cấu trúc khối decoder thực tế** trong các mô hình giai đoạn 2024–2026: chuẩn hóa trước bằng RMSNorm, *attention* nhân quả kết hợp RoPE, mạng truyền thẳng SwiGLU và KV-cache khi giải mã. Đồng thời, bài cung cấp **các công thức ước lượng định lượng** thường dùng trong kỹ thuật hệ thống và phỏng vấn: đếm số tham số, ước lượng bộ nhớ kích hoạt, FLOPs huấn luyện và bộ nhớ suy luận.

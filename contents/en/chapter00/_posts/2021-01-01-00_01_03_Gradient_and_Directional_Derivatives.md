@@ -9,6 +9,33 @@ categories:
 - chapter00
 ---
 
+> *Picture yourself blindfolded on a foggy mountain ridge trying to descend as fast as possible with only a spirit level under your boots. You cannot see the valley floor, yet one local measurement—the gradient—points directly uphill, and its opposite points straight down the steepest local slope.*
+
+## Background Knowledge Map: Geometry of Gradients and Steepest Descent
+
+1. **Directional Derivative (Probing Any Direction)**: Measures the instantaneous rate of change of $$f$$ along a chosen unit vector $$\mathbf{u}$$ via the dot product $$D_{\mathbf{u}} f(\mathbf{x}) = \nabla f(\mathbf{x}) \cdot \mathbf{u}$$.
+2. **Cauchy–Schwarz Optimality (Why $$-\nabla f$$ Wins)**: Since $$\nabla f \cdot \mathbf{u} = \|\nabla f\| \|\mathbf{u}\| \cos\theta = \|\nabla f\|\cos\theta$$, ascent is maximized at $$\theta = 0$$ ($$\mathbf{u} = \nabla f / \|\nabla f\|$$) and descent is maximized at $$\theta = \pi$$ ($$\mathbf{u} = -\nabla f / \|\nabla f\|$$).
+3. **Orthogonality to Level Sets**: Every tangent vector along a contour curve $$f(\mathbf{x}) = c$$ has directional derivative $$0$$, proving that $$\nabla f$$ is always perpendicular to the level contours.
+4. **Anisotropic Conditioning (Why Gradients Zig-Zag)**: In elongated elliptical valleys, the negative gradient points perpendicular to the contour—toward the steep canyon wall rather than straight to the minimum—motivating momentum and adaptive optimizers.
+
+### Step-by-Step Worked Example (Read Slowly): Computing Directional Derivatives on an Elliptical Loss Bowl
+
+Consider the anisotropic quadratic loss $$f(x, y) = x^2 + 4y^2$$ at the point $$\mathbf{p} = (2, 1)$$, where $$f(2, 1) = 4 + 4 = 8$$.
+
+1. **Compute the Gradient at $$\mathbf{p} = (2, 1)$$**:
+   $$\nabla f(x, y) = \begin{bmatrix} 2x \\ 8y \end{bmatrix} \implies \nabla f(2, 1) = \begin{bmatrix} 4 \\ 8 \end{bmatrix}$$
+   Its Euclidean norm is $$\|\nabla f(2, 1)\| = \sqrt{4^2 + 8^2} = \sqrt{80} = 4\sqrt{5} \approx 8.944$$.
+2. **Directional Derivative Along an Arbitrary Vector $$\mathbf{v} = (3, -4)$$**:
+   First normalize $$\mathbf{v}$$ to a unit vector (never skip normalization!):
+   $$\|\mathbf{v}\| = \sqrt{3^2 + (-4)^2} = 5 \implies \mathbf{u} = \begin{bmatrix} 3/5 \\ -4/5 \end{bmatrix} = \begin{bmatrix} 0.6 \\ -0.8 \end{bmatrix}$$
+   Now take the dot product:
+   $$D_{\mathbf{u}} f(2, 1) = \nabla f(2, 1) \cdot \mathbf{u} = (4)(0.6) + (8)(-0.8) = 2.4 - 6.4 = -4.0$$
+   Because $$D_{\mathbf{u}} f < 0$$, moving in direction $$\mathbf{u}$$ decreases the loss at an initial rate of $$4.0$$ units per unit step.
+3. **Compare with the Steepest Descent Direction**:
+   The unit steepest descent vector is $$\mathbf{u}^* = -\frac{\nabla f}{\|\nabla f\|} = \begin{bmatrix} -1/\sqrt{5} \\ -2/\sqrt{5} \end{bmatrix} \approx \begin{bmatrix} -0.447 \\ -0.894 \end{bmatrix}$$, giving:
+   $$D_{\mathbf{u}^*} f(2, 1) = -\|\nabla f(2, 1)\| = -4\sqrt{5} \approx -8.944$$
+   Notice that the true direction from $$(2, 1)$$ directly to the minimum $$(0, 0)$$ is proportional to $$(-2, -1)$$, not $$(-1, -2)$$—so the steepest local descent vector misses the origin because the $$y$$-axis is $$4\times$$ steeper than the $$x$$-axis.
+
 This lesson explores the gradient vector and directional derivatives, which are central concepts in deep-learning for understanding how functions change in different directions.
 
 ---

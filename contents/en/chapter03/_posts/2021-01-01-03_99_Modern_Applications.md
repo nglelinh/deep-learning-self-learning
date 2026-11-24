@@ -10,6 +10,29 @@ categories:
 lesson_type: optional
 ---
 
+> *Mathematically, backpropagation in 2026 is still the exact same chain rule from 1986—yet on modern GPUs, executing it naively can leave 80% of the hardware sitting idle waiting on memory bandwidth. Modern training turns backprop into a compiler and systems problem: kernel fusion, activation checkpointing, mixed precision, and FlashAttention.*
+
+## Background Knowledge Map: Backpropagation as a Systems & Compiler Problem (2022–2026)
+
+1. **Graph Compilers (`torch.compile` & JAX `jit`)**: Fuse chains of elementwise ops (`LayerNorm + GeLU + Dropout`) into single GPU kernels so intermediate tensors stay in fast on-chip SRAM instead of round-tripping through slow HBM.
+2. **Mixed Precision (`FP16`/`BF16`) & Loss Scaling**: Runs matrix multiplies in 16-bit Tensor Cores while keeping master weights in `FP32`; `FP16` requires dynamic loss scaling to prevent small gradients from underflowing to zero, whereas `BF16` matches `FP32`'s exponent range.
+3. **Activation Checkpointing (Rematerialization)**: Discards selected intermediate forward activations to save massive VRAM and recomputes them on the fly during the backward pass—trading ~33% extra compute for up to $$O(\sqrt{L})$$ memory reduction.
+4. **IO-Aware Fused Backward Kernels (FlashAttention)**: Never materializes the $$O(T^2)$$ attention matrix in HBM during either forward or backward passes, computing exact softmax gradients tile-by-tile in SRAM.
+
+### Step-by-Step Worked Example (Read Slowly): Quantifying Activation Checkpointing Memory vs. Compute Trade-Off
+
+Consider a deep network of $$L = 64$$ identical layers, where each layer's cached activation occupies $$M = 100\text{ MB}$$ in VRAM and takes $$1\text{ ms}$$ for a forward pass and $$2\text{ ms}$$ for a backward pass.
+
+1. **Standard Backpropagation (Cache All 64 Layers)**:
+   - Activation VRAM: $$64 \times 100\text{ MB} = 6{,}400\text{ MB} = 6.4\text{ GB}$$.
+   - Step time: $$64 \times (1 + 2)\text{ ms} = 192\text{ ms}$$.
+2. **Sqrt-Checkpointing (Checkpoint Every $$\sqrt{64} = 8$$ Layers)**:
+   - We store only $$8$$ checkpoint boundaries permanently, plus at most $$8$$ layers inside the active recomputation segment:
+     $$\text{Peak VRAM} \approx (8 + 8) \times 100\text{ MB} = 1{,}600\text{ MB} = 1.6\text{ GB} \quad (4\times\text{ memory cut!})$$
+   - Compute overhead: every non-checkpoint layer runs one extra forward pass ($$+1\text{ ms}$$) during backprop, so total time is roughly:
+     $$64 \times (1 + 1 + 2)\text{ ms} = 256\text{ ms} \quad (\text{only } 33\%\text{ slower!})$$
+   Trading 33% compute for a $$4\times$$ (and on 100B-parameter models, $$10\times+$$) memory reduction is what makes long-context training fit on real GPUs.
+
 # Optional: backpropagation as a compiler problem
 
 > This lesson is **optional**. It does **not** replace loss-function, gradient-descent, or backpropagation theory. It maps those algorithms onto the compilers and kernels used to train models after 2022.

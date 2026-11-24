@@ -9,6 +9,28 @@ categories:
 - chapter11
 ---
 
+Before writing a single line of PyTorch for an autoregressive model, picture drawing a 2D point $(x_1, x_2)$ from a ring of eight Gaussian islands. If you try to predict $x_1$ and $x_2$ independently, you get a blurry square grid of 64 phantom islands. The chain rule of probability breaks that curse with surgical elegance: first sample the horizontal coordinate $x_1$ from a multimodal mixture, then ask a neural network—conditioned on the exact $x_1$ you just drew—where the vertical coordinate $x_2$ is allowed to land.
+
+## Background Knowledge Map: Implementing Autoregressive Density Models
+
+- **Pillar 1 — Probability Chain Rule Factorization**: Decomposes any joint density into exact conditionals $p_\theta(x_1, \dots, x_d) = \prod_{i=1}^d p_\theta(x_i \mid x_{<i})$, guaranteeing a normalized density with zero partition-function approximation.
+- **Pillar 2 — Mixture Density Parameterization**: Models each conditional $p_\theta(x_i \mid x_{<i})$ as a weighted mixture of logistics or Gaussians so a single input $x_1$ can map to multiple valid $x_2$ modes (e.g., top and bottom of a circle).
+- **Pillar 3 — Log-Sum-Exp Numerical Stability**: Evaluates $\log \sum_{k=1}^K \pi_k p_k(x)$ in log-space via `torch.logsumexp` so tiny probabilities never underflow to zero during backpropagation.
+- **Pillar 4 — Teacher Forcing vs. Sequential Ancestral Sampling**: Explains why training evaluates all conditionals in parallel using ground-truth prefixes, whereas generation must step sequentially from $x_1$ to $x_d$.
+
+### Step-by-Step Worked Example (Read Slowly): Evaluating a 2-Component Conditional Mixture Density
+
+Suppose at $x_1 = 0$, the ring of Gaussians has two vertical modes at $x_2 = +2$ and $x_2 = -2$. Our autoregressive network outputs mixture weights $\pi = (0.5, 0.5)$, means $\mu = (+2.0, -2.0)$, and equal standard deviations $\sigma = (0.5, 0.5)$. Let us compute the exact log-likelihood of a real observation $x_2 = 2.0$.
+
+1. **Component 1 log-density at $x_2 = 2.0$**:
+   $$\log \mathcal{N}(2.0; 2.0, 0.5^2) = -\frac{1}{2}\log(2\pi) - \log(0.5) - \frac{(2.0 - 2.0)^2}{2(0.25)} = -0.9189 + 0.6931 - 0 = -0.2258.$$
+2. **Component 2 log-density at $x_2 = 2.0$**:
+   $$\log \mathcal{N}(2.0; -2.0, 0.5^2) = -0.9189 + 0.6931 - \frac{16}{0.5} = -0.2258 - 32.0 = -32.2258.$$
+3. **Combine via Log-Sum-Exp with $\log \pi_k = \log(0.5) = -0.6931$**:
+   $$a_1 = -0.6931 - 0.2258 = -0.9189, \qquad a_2 = -0.6931 - 32.2258 = -32.9189.$$
+   $$\log p_\theta(x_2=2.0 \mid x_1=0) = a_1 + \log\big(1 + e^{a_2 - a_1}\big) = -0.9189 + \log(1 + e^{-32}) \approx -0.9189\text{ nats}.$$
+4. **Takeaway**: Because $e^{-32} \approx 1.27 \times 10^{-14}$, the distant mode contributes virtually zero gradient, while `logsumexp` keeps the computation completely free of numerical underflow.
+
 ## 4. Code Snippet
 
 Let's implement different generative modeling approaches on a toy dataset to understand their mechanics:
@@ -210,3 +232,4 @@ with torch.no_grad():
 - **xem trước** [The spelled-out intro to language modeling: building makemore](https://www.youtube.com/watch?v=PaCmpygFfXo) — Andrej Karpathy, English. Next-character prediction is the autoregressive model this lesson codes.
 - [Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY) — Andrej Karpathy, English. The same factorization inside a transformer, once the bigram model is too small.
 - [Sequence-to-Sequence (seq2seq) Encoder-Decoder Neural Networks, Clearly Explained!!!](https://www.youtube.com/watch?v=L8HKweZIOmg) — StatQuest with Josh Starmer, English. Sequence-to-sequence as the conditional version of that product of probabilities.
+```

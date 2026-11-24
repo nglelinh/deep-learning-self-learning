@@ -10,6 +10,28 @@ categories:
 lesson_type: optional
 ---
 
+For five years, the scaling game had only one lever: make pretraining bigger. Between 2024 and 2026, a second axis broke wide open—**test-time compute scaling**: letting a reasoning model spend extra thinking tokens, verify intermediate steps, call external tools (code interpreters, search, APIs), and process native images/audio in a single unified stream. Meanwhile, real-world energy and water constraints turned compute efficiency from an academic footnote into a first-class systems requirement.
+
+## Background Knowledge Map: What Shipped at the Frontier (2022–2026)
+
+- **Pillar 1 — Test-Time Compute Scaling**: Trades extra inference tokens (long chains of thought, best-of-$N$ verifier search, tree search) for dramatic gains on math, coding, and planning—complementing pretraining scaling.
+- **Pillar 2 — Tool-Using Agent Loops**: Connects LLM reasoning to deterministic external execution (Python sandboxes, SQL, browsers, MCP tools) via structured observe–think–act–verify loops.
+- **Pillar 3 — Native Multimodal Architectures**: Tokenizes text, image patches, audio frames, and video clips into one shared Transformer backbone instead of bolting fragile adapters onto a text-only LLM.
+- **Pillar 4 — Energy, Cost, and Routing Constraints**: Uses model routing (small fast models for easy queries, large reasoning models for hard ones) and batching to bound carbon footprint and serving cost.
+
+### Step-by-Step Worked Example (Read Slowly): Pass@$k$ / Best-of-$N$ Test-Time Compute Trade-off
+
+Suppose on a hard coding problem, a single sample from a small model succeeds with independent probability $p = 0.25$ and costs $c = \$0.001$ per attempt, and we have a unit-test suite that verifies correctness with $100\%$ precision.
+
+1. **Probability that at least 1 of $N$ independent samples passes (`pass@N`)**:
+   $$\text{pass@}N = 1 - (1 - p)^N.$$
+   - $N = 1$: $25.0\%$ (cost $\$0.001$).
+   - $N = 4$: $1 - (0.75)^4 = 1 - 0.3164 = 68.4\%$ (cost $\$0.004$).
+   - $N = 8$: $1 - (0.75)^8 = 1 - 0.1001 = 90.0\%$ (cost $\$0.008$).
+2. **Compare against a $10\times$ larger model** that achieves $85\%$ on a single pass at cost $\$0.015$:
+   Spending $8\times$ test-time compute on the small model reaches **higher accuracy ($90.0\%$ vs. $85.0\%$)** at almost **half the dollar cost ($\$0.008$ vs. $\$0.015$)**!
+3. **Takeaway**: Whenever a reliable verifier exists (unit tests, compilers, formal proof checkers), test-time compute scaling can beat brute-force parameter scaling on both accuracy and cost.
+
 # Optional: what actually shipped — test-time compute, agents, multimodal
 
 > This lesson is **optional**. It does **not** rewrite the chapter’s scaling-law / multimodal / safety survey. That note already looks forward; this lesson lists **concrete 2024–2026 deployments** so the “future” section stays tied to systems you can run.

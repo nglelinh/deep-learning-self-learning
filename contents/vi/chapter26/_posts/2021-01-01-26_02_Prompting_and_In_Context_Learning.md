@@ -9,6 +9,26 @@ categories:
 - chapter26
 ---
 
+Một trong những phát hiện làm ngỡ ngàng chính các tác giả GPT-3 vào năm 2020 là **Học trong Ngữ cảnh (In-Context Learning — ICL)**: không hề chạy một bước lan truyền ngược hay cập nhật bất kỳ trọng số nào, chỉ cần bạn đặt 3 ví dụ minh họa ngay trong phần mở đầu câu lệnh, mô hình bỗng "hiểu luật chơi" và giải đúng mẫu thứ 4! Bài học này giải mã bản chất thực sự của Prompting, sự khác biệt giữa mô hình nền (base model) với mô hình đã qua SFT, và cách viết prompt như một kỹ sư hệ thống.
+
+## Bản đồ kiến thức nền: Bốn trụ cột của Prompting và Học trong Ngữ cảnh (ICL)
+
+- **Prompt là điều kiện hóa xác suất trên chuỗi đầu vào:** Về mặt toán học, mọi kỹ thuật viết prompt đều là nghệ thuật chọn tiền tố $$x_{1:k}$$ sao cho phân phối có điều kiện $$P_\theta(x_{k+1:T} \mid x_{1:k})$$ tập trung vào vùng lời giải mong muốn.
+- **Zero-shot, Few-shot và In-Context Learning:** Cung cấp cặp (đầu vào → đầu ra) trong ngữ cảnh giúp các đầu chú ý (như Induction Heads) tự căn chỉnh định dạng, phân phối nhãn và phong cách mà không đổi trọng số.
+- **Vai trò quyết định của SFT trong tuân thủ chỉ dẫn:** Hiểu vì sao mô hình nền thuần tiền huấn luyện thường *viết tiếp* câu hỏi của bạn thay vì trả lời, còn mô hình hậu huấn luyện SFT biết đóng vai trợ lý tuân thủ chỉ dẫn.
+- **Kỹ thuật thiết kế Prompt có hệ thống:** Chỉ rõ vai trò, ràng buộc định dạng đầu ra, phân tách rõ dữ liệu với chỉ dẫn (chống prompt injection) và cung cấp ví dụ biên (edge cases).
+
+### Khung giải thích (nên đọc chậm): Phân tích sự thay đổi phân phối xác suất token khi chuyển từ Zero-shot sang Few-shot ICL
+
+Xét bài toán phân loại cảm xúc đánh giá sản phẩm chỉ được trả về đúng 1 từ trong tập `{Tích cực, Tiêu cực}`:
+
+1. **Prompt Zero-shot mơ hồ trên mô hình nền:** `Đánh giá: Giao hàng chậm quá! Cảm xúc:`
+   - Phân phối xác suất token kế tiếp bị phân tán rộng: `rất` ($$0{,}22$$), `khó` ($$0{,}18$$), `bực` ($$0{,}15$$), `Tiêu` ($$0{,}08$$), các từ khác ($$0{,}37$$) — entropy cao và dễ trả lời sai định dạng JSON/nhãn.
+2. **Prompt Few-shot (2 ví dụ định khung):**
+   `Đánh giá: Máy chạy êm -> Nhãn: Tích cực` + `Đánh giá: Pin tụt nhanh -> Nhãn: Tiêu cực` + `Đánh giá: Giao hàng chậm quá! -> Nhãn:`
+   - Các đầu chú ý so khớp mẫu `-> Nhãn:` lặp lại 2 lần trước đó và dồn khối xác suất trực tiếp vào đúng 2 token nhãn đã thấy: `Tiêu` ($$0{,}93$$), `Tích` ($$0{,}05$$), khác ($$0{,}02$$).
+   - Entropy Shannon giảm mạnh từ $$> 2{,}5\text{ nat}$$ xuống còn $$-0{,}93\ln(0{,}93) - 0{,}05\ln(0{,}05) - 0{,}02\ln(0{,}02) \approx 0{,}295\text{ nat}$$ — độ tin cậy và tính tuân thủ định dạng tăng vọt mà không cần cập nhật một trọng số nào!
+
 # Prompting, học trong ngữ cảnh và tuân thủ chỉ dẫn
 
 Sau giai đoạn tiền huấn luyện, bộ trọng số $$\theta$$ hiện thực một mô hình dự đoán token kế tiếp. **Prompting** là cách ít tốn kém nhất để điều hướng mô hình: ta chỉ thay đổi chuỗi tiền tố $$x_{<t}$$ mà không thay đổi $$\theta$$. Ngược lại, **tinh chỉnh** (*fine-tuning*) cập nhật trực tiếp $$\theta$$. Trong thực tế, phần lớn hệ thống LLM kết hợp cả hai cách tiếp cận này.

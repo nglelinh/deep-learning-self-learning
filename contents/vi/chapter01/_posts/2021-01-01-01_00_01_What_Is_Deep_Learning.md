@@ -9,6 +9,34 @@ categories:
 - chapter01
 ---
 
+Suốt nửa thế kỷ đầu của Trí tuệ Nhân tạo, các nhà khoa học tin rằng cách tốt nhất để máy tính thông minh là chép toàn bộ tri thức nhân loại vào cơ sở dữ liệu luật logic. Kết quả là máy có thể đánh thắng nhà vô địch cờ vua thế giới nhưng lại bó tay trước một việc đứa trẻ 3 tuổi làm trong chớp mắt: phân biệt con mèo với con chó trong ánh sáng mờ. **Học sâu** (*Deep Learning*) lật ngược hoàn toàn cách tiếp cận đó bằng cách cho phép mạng nơ-ron nhiều tầng tự học cấu trúc phân cấp của thế giới trực tiếp từ dữ liệu thô. Bài học này giải phẫu định nghĩa, bốn đặc trưng cốt lõi và sức mạnh biểu diễn của Học sâu.
+
+## Bản đồ kiến thức nền: Bốn đặc tính định hình bản sắc của Học sâu
+
+1. **Phân cấp khái niệm (Hierarchical Feature Learning)**:
+   Thay vì nhảy một bước từ điểm ảnh sang nhãn lớp, mạng xếp chồng nhiều phép biến đổi phi tuyến $$f(\mathbf{x}) = f_L(\dots f_2(f_1(\mathbf{x})))$$, mỗi tầng chắt lọc mức trừu tượng cao hơn tầng trước.
+
+2. **Tối ưu hóa Đầu-cuối (End-to-End Learning)**:
+   Mọi thành phần từ bộ trích xuất đặc trưng đến bộ phân loại cuối cùng đều được tối ưu đồng thời theo một hàm mất mát duy nhất, tránh lỗi tích lũy giữa các mô-đun rời rạc.
+
+3. **Biểu diễn Phân tán (Distributed Representations)**:
+   Nếu biểu diễn cục bộ (one-hot) cần $$N$$ nơ-ron để mã hóa $$N$$ khái niệm, thì biểu diễn phân tán nhị phân trên $$k$$ nơ-ron có thể mã hóa tới $$2^k$$ tổ hợp khái niệm khác nhau—tạo nên năng lực khái quát hóa vượt trội.
+
+4. **Định luật Mở rộng (Scaling Laws)**:
+   Hiệu năng Học sâu tiếp tục cải thiện một cách có quy luật khi tăng đồng thời dữ liệu ($$D$$), số tham số ($$N$$) và năng lực tính toán ($$C$$), thay vì sớm chạm trần như nhiều thuật toán cổ điển.
+
+### Khung giải thích (nên đọc chậm): Tính tay sức mạnh tổ hợp của Biểu diễn Phân tán vs. Biểu diễn Cục bộ
+
+Giả sử bạn muốn mô hình biểu diễn các vật thể theo 4 thuộc tính độc lập: *Màu sắc* (Đỏ/Xanh), *Hình dạng* (Tròn/Vuông), *Kích thước* (Lớn/Nhỏ), *Chất liệu* (Gỗ/Kim loại):
+
+1. **Cách biểu diễn cục bộ (1 nơ-ron cho mỗi tổ hợp riêng biệt)**:
+   Số tổ hợp khác nhau là $$2 \times 2 \times 2 \times 2 = 2^4 = 16$$. Bạn cần tới **16 nơ-ron độc lập**, và nếu mô hình chưa từng thấy "Khối vuông màu xanh bằng gỗ cỡ nhỏ", nó không biết bất kỳ thông tin gì về vật thể đó.
+2. **Cách biểu diễn phân tán (4 nơ-ron đại diện cho 4 trục thuộc tính)**:
+   Bạn chỉ cần **4 nơ-ron**, mỗi nơ-ron phụ trách một đặc trưng (ví dụ vector `[0, 1, 0, 1]` = Xanh, Vuông, Nhỏ, Kim loại).
+3. **Mở rộng lên 20 thuộc tính nhị phân**:
+   - Biểu diễn cục bộ cần $$2^{20} = 1{,}048{,}576$$ nơ-ron (và hàng triệu mẫu cho từng tổ hợp).
+   - Biểu diễn phân tán chỉ cần **20 nơ-ron**—và có thể khái quát ngay sang tổ hợp chưa từng gặp! Đó là lý do toán học sâu xa khiến mạng nơ-ron hiểu được những tình huống mới ngoài tập huấn luyện.
+
 # Giới thiệu về Học sâu
 
 ## 1. Tổng quan khái niệm

@@ -9,6 +9,28 @@ categories:
 - chapter10
 ---
 
+Benchmarking SGD, Momentum, RMSprop, and Adam on both a classic 2D ill-conditioned valley (like the Rosenbrock banana function) and a non-linear neural classification problem exposes a nuance that surprises many newcomers: **faster training convergence does not always equal better test generalization**. Adam rockets down ravines in the first 50 epochs with almost zero tuning, yet on vision benchmarks like ImageNet ResNets, carefully tuned SGD + Momentum + cosine decay frequently edges out vanilla Adam on test accuracy—until **AdamW** (decoupled weight decay) closes the gap.
+
+## Background Knowledge Map: Empirical Trade-offs & Optimizer Pitfalls
+
+- **Adam vs. AdamW (Coupled L2 vs. Decoupled Weight Decay)**: Adding $$\lambda \theta$$ to the gradient *before* Adam's adaptive normalization divides weight decay by $$\sqrt{\hat{v}_t}$$, weakening regularization on weights with large historical gradients! Loshchilov & Hutter (2019) fixed this by applying $$\theta \leftarrow (1 - \eta \lambda)\theta$$ directly outside the adaptive step.
+- **Learning Rate Scale Incompatibility Across Optimizers**: A learning rate that is optimal for SGD (`1e-1` or `1e-2`) will catastrophically blow up Adam (whose sweet spot is typically `1e-3` to `3e-4`), because Adam normalizes gradient magnitudes to $$O(1)$$.
+- **Why SGD + Momentum Can Still Generalize Better on CNNs**: SGD's isotropic mini-batch gradient noise acts as an implicit flat-minima regularizer, whereas adaptive coordinate scaling can slip into narrower, sharper valleys if weight decay is misconfigured.
+- **Learning Rate Schedules (Warmup + Cosine Decay)**: Pairing any optimizer with linear warmup and cosine annealing (`CosineAnnealingLR`) consistently outperforms constant learning rates by taking bold exploratory steps early and settling smoothly into the minimum late.
+
+### Step-by-Step Worked Example (Read Slowly): Numerical Proof That L2 Inside Adam Differs From AdamW
+
+Consider two parameters with the same value $$\theta_A = \theta_B = 1.0$$, weight decay $$\lambda = 0.1$$, and $$\eta = 0.01$$, where Feature A has large typical gradient scale $$\sqrt{\hat{v}_A} = 10.0$$ and Feature B has small typical gradient scale $$\sqrt{\hat{v}_B} = 0.1$$ (assume current data gradient $$g_{\text{data}} = 0$$ to isolate weight decay):
+
+1. **Coupled L2 inside vanilla Adam** (adds $$\lambda \theta = 0.1$$ to gradient, then divides by $$\sqrt{\hat{v}}$$):
+   - Decay on $$\theta_A$$: $$\Delta \theta_A = -0.01 \cdot \frac{0.1}{10.0} = -0.0001$$ ($$0.01\%$$ shrinkage!).
+   - Decay on $$\theta_B$$: $$\Delta \theta_B = -0.01 \cdot \frac{0.1}{0.1} = -0.0100$$ ($$1.00\%$$ shrinkage — **100× stronger**!).
+2. **Decoupled Weight Decay (AdamW)** (applies $$-\eta \lambda \theta$$ directly):
+   - Decay on $$\theta_A$$: $$\Delta \theta_A = -0.01 \times 0.1 \times 1.0 = -0.0010$$ ($$0.1\%$$).
+   - Decay on $$\theta_B$$: $$\Delta \theta_B = -0.01 \times 0.1 \times 1.0 = -0.0010$$ ($$0.1\%$$ — **strictly uniform**!).
+   That $$100\times$$ distortion is why AdamW replaced Adam+L2 across Transformers and modern vision models.
+
+```python
 # Demonstrate optimizer comparison on 2D optimization problem
 print("="*70)
 print("Comparing Optimizers on Rosenbrock Function")

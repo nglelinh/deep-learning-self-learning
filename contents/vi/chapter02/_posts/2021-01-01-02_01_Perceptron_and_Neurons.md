@@ -9,6 +9,40 @@ categories:
 - chapter02
 ---
 
+Từng có thời điểm năm 1969, cuốn sách *Perceptrons* của Marvin Minsky và Seymour Papert đã chứng minh rằng một Perceptron đơn lẻ hoàn toàn bất lực trước một cổng logic cực kỳ đơn giản: **phép XOR**—gây ra "mùa đông AI" đầu tiên kéo dài hơn một thập kỷ. Vì sao một phép tính nhỏ bé như XOR lại đánh bại được Perceptron? Câu trả lời nằm ngay trong hình học của phương trình $$\mathbf{w}^\top \mathbf{x} + b = 0$$: một nơ-ron đơn chỉ biết kẻ **một đường thẳng duy nhất**. Bài học này phân tích sâu cấu tạo toán học, trực giác siêu phẳng và giới hạn tuyến tính của Perceptron để thấy rõ vì sao ta buộc phải xây dựng mạng nhiều tầng.
+
+## Bản đồ kiến thức nền: Bốn mảnh ghép cốt lõi của Perceptron và Nơ-ron Nhân tạo
+
+1. **Tổng có trọng số và Độ lệch (Weighted Sum & Bias)**:
+   Vector trọng số $$\mathbf{w}$$ quyết định **hướng** (vector pháp tuyến) và độ nhạy của ranh giới quyết định; còn bias $$b$$ dịch chuyển siêu phẳng ra khỏi gốc tọa độ để khớp dữ liệu tự do hơn.
+
+2. **Hình học Siêu phẳng và Tính Khả tách Tuyến tính (Linear Separability)**:
+   Phương trình $$\mathbf{w}^\top \mathbf{x} + b = 0$$ chia $$\mathbb{R}^d$$ thành đúng hai nửa không gian dương/âm. Perceptron chỉ giải hoàn hảo các bài toán mà hai lớp có thể ngăn cách bởi một mặt phẳng (như AND, OR), và bó tay với XOR.
+
+3. **Hàm bước nhảy (Step Function) vs. Hàm kích hoạt khả vi (Sigmoid / ReLU)**:
+   Perceptron cổ điển dùng hàm bước Heaviside có đạo hàm bằng $$0$$ khắp nơi (và không xác định tại $$0$$), nên không dùng được Gradient Descent; thay bằng hàm trơn khả vi mở ra kỷ nguyên huấn luyện bằng lan truyền ngược.
+
+4. **Quy tắc cập nhật Perceptron (Perceptron Learning Rule)**:
+   Khi đoán sai mẫu $$(\mathbf{x}, y)$$, xoay vector trọng số theo $$\mathbf{w} \leftarrow \mathbf{w} + \eta (y - \hat{y})\mathbf{x}$$—định lý hội tụ Perceptron đảm bảo thuật toán dừng sau hữu hạn bước nếu dữ liệu khả tách tuyến tính.
+
+### Khung giải thích (nên đọc chậm): Tự tay kiểm chứng Perceptron giải được AND nhưng thất bại trước XOR
+
+Xét bốn điểm góc của hình vuông đơn vị $$(x_1, x_2) \in \{(0,0), (0,1), (1,0), (1,1)\}$$:
+
+**1. Perceptron giải cổng AND** với $$w_1 = 1, w_2 = 1, b = -1.5$$ và quy tắc $$\hat{y} = 1$$ nếu $$z = x_1 + x_2 - 1.5 \ge 0$$:
+- $$(0,0) \to z = -1.5 < 0 \implies \hat{y} = 0$$ (đúng)
+- $$(0,1) \to z = -0.5 < 0 \implies \hat{y} = 0$$ (đúng)
+- $$(1,0) \to z = -0.5 < 0 \implies \hat{y} = 0$$ (đúng)
+- $$(1,1) \to z = +0.5 \ge 0 \implies \hat{y} = 1$$ (đúng)
+
+**2. Chứng minh bằng phản chứng Perceptron KHÔNG THỂ giải XOR** (nhãn $$y(0,0)=0, y(1,1)=0$$ nhưng $$y(0,1)=1, y(1,0)=1$$):
+Giả sử tồn tại $$w_1, w_2, b$$ phân tách được XOR:
+- Tại $$(0,0)$$ cho $$0 \implies b < 0$$.
+- Tại $$(0,1)$$ cho $$1 \implies w_2 + b \ge 0$$.
+- Tại $$(1,0)$$ cho $$1 \implies w_1 + b \ge 0$$.
+- Cộng hai bất đẳng thức giữa: $$w_1 + w_2 + 2b \ge 0$$. Vì $$b < 0$$ nên $$w_1 + w_2 + b > w_1 + w_2 + 2b \ge 0$$!
+- Nhưng điều đó ép điểm $$(1,1)$$ phải cho $$z = w_1 + w_2 + b > 0 \implies \hat{y} = 1$$, **mâu thuẫn** với nhãn XOR bằng $$0$$! Chỉ cần 4 dòng bất đẳng thức, bạn đã thấy trọn vẹn lý do lịch sử buộc nhân loại phải phát minh ra mạng nhiều tầng (MLP)!
+
 # Perceptron và Neuron Nhân tạo
 
 ![Perceptron Diagram](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Perceptron_moj.png/400px-Perceptron_moj.png)

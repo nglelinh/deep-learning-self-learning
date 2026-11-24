@@ -10,6 +10,26 @@ categories:
 lesson_type: optional
 ---
 
+Until 2022, building a production speech stack meant wiring together fragile acoustic models, pronunciation lexicons, and language-model decoders tuned separately for each language. OpenAI's Whisper blew up that pipeline by training a single encoder–decoder Transformer on 680,000 hours of weakly supervised multilingual audio—and by 2024–2026, neural audio codecs and full-duplex speech-to-speech models turned spoken conversation into native token-stream modeling.
+
+## Background Knowledge Map: Modern Speech & Audio Stacks (2022–2026)
+
+- **Pillar 1 — Weakly Supervised Multilingual ASR (Whisper)**: Pads/chunks audio into 30-second 80/128-bin log-Mel windows, downsamples $2\times$ via strided convs into 1500 encoder frames, and uses special task tokens (`<|transcribe|>`, `<|translate|>`, timestamps) for multitask decoding.
+- **Pillar 2 — Neural Audio Codecs & Discrete Speech Tokens**: Quantizes continuous speech into semantic + acoustic RVQ token streams (EnCodec, Mimi, DAC) so LLMs can read and speak audio end-to-end without an intermediate text bottleneck.
+- **Pillar 3 — Full-Duplex Speech & Low-Latency Streaming**: Handles simultaneous listening and speaking (interruptions, backchannels) by predicting overlapping user/assistant token streams at fixed frame rates (e.g., 12.5 Hz).
+- **Pillar 4 — Speaker Diarization & Meeting Pipelines**: Combines Voice Activity Detection (VAD), speaker embeddings (`pyannote`), and Whisper ASR to answer *"who spoke what and when?"*
+
+### Step-by-Step Worked Example (Read Slowly): Computing Whisper's Encoder Frame Budget and Real-Time Factor (RTF)
+
+Whisper processes $30\text{ s}$ of $16\text{ kHz}$ audio using a $10\text{ ms}$ hop length ($3{,}000$ Mel frames) followed by two 1D convolutions where the second has `stride=2`.
+
+1. **Encoder token length per 30-second chunk**:
+   $$L_{\text{enc}} = \frac{3{,}000}{2} = 1{,}500\text{ frames} \implies \frac{30\text{ s}}{1{,}500} = 20\text{ ms per encoder token (50 Hz)}.$$
+2. **Real-Time Factor (RTF) for streaming vs. batch**:
+   Suppose `faster-whisper` (CTranslate2 INT8) transcribes a $600\text{ s}$ (10-minute) podcast in $12.0\text{ s}$ of GPU compute.
+   $$\text{RTF} = \frac{T_{\text{compute}}}{T_{\text{audio}}} = \frac{12.0}{600.0} = 0.02 \quad (50\times\text{ faster than real time!}).$$
+3. **Takeaway**: Every Whisper encoder token spans exactly $20\text{ ms}$ of speech, and tracking $\text{RTF} \ll 1$ tells you immediately whether a model can run comfortably in live production.
+
 # Optional: speech and audio after Whisper — multilingual ASR, codecs, TTS
 
 > This lesson is **optional**. The chapter intro already names Whisper and WaveNet. This note goes to the **2022–2026 software** actually used: Whisper-scale ASR, neural codecs, and multilingual speech translation — without rewriting spectrogram / MFCC theory (the chapter body is still thin; do not treat this as a theory replacement).

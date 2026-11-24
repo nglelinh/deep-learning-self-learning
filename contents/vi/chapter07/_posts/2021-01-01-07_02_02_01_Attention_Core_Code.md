@@ -9,6 +9,34 @@ categories:
 - chapter07
 ---
 
+Cách tốt nhất để biến công thức Attention từ một dòng ký hiệu trừu tượng thành công cụ bạn thực sự làm chủ là tự tay viết hàm `bahdanau_attention` và `scaled_dot_product_attention`, chạy trên một ví dụ nhỏ và **in thẳng ma trận trọng số chú ý $$\alpha$$ ra màn hình**. Khi thấy từng con số xác suất tự động sáng lên ở đúng các cặp từ tương ứng, trực giác về soft alignment sẽ khắc sâu ngay lập tức.
+
+## Bản đồ kiến thức nền: Bốn kỹ thuật lập trình cốt lõi cho Attention
+
+1. **Ổn định số học cho Softmax (Log-Sum-Exp Trick)**:
+   Trừ đi `max` trên trục tính softmax trước khi lấy `exp` giúp tránh tràn số `exp(1000) = inf`, đảm bảo kết quả luôn hữu hạn và chính xác.
+2. **Xử lý Mask an toàn với `masked_fill(mask == 0, -1e9)` (hoặc `-float('inf')`)**:
+   Lưu ý trường hợp biên: nếu cả một hàng bị mask toàn bộ thành `-inf` (ví dụ một câu toàn `<PAD>`), `softmax` sẽ sinh `NaN` — vì thế cần kiểm tra kỹ mask hoặc dùng `torch.nan_to_num`.
+3. **Tách rõ chiều `L_q` (Query) và `L_k` (Key/Value)**:
+   Trong Self-Attention thì $$L_q = L_k$$, nhưng trong Cross-Attention (dịch máy, hỏi đáp ảnh) thì $$L_q \ne L_k$$ — viết code luôn phân biệt rõ hai chiều này giúp hàm tái sử dụng được cho cả hai chế độ.
+4. **Kiểm chứng Soft Alignment bằng bảng trọng số**:
+   Quan sát tổng mỗi hàng bằng `1.000` và kiểm tra xem khi làm sắc nét điểm số (tăng độ lớn query/key), phân phối hội tụ dần về hard alignment (chỉ chọn 1 vị trí).
+
+### Khung giải thích (nên đọc chậm): Tính tay bước ổn định số học Softmax khi có giá trị lớn và vị trí bị Mask
+
+Giả sử một hàng điểm chú ý trước softmax là $$\mathbf{s} = [100{,}0, \; 102{,}0, \; 500{,}0]$$ nhưng vị trí thứ 3 là token `<PAD>` (bị mask):
+
+1. **Bước 1 — Áp dụng Mask trước Softmax**:
+   $$\mathbf{s}_{\text{masked}} = [100{,}0, \; 102{,}0, \; -\infty]$$
+2. **Bước 2 — Trừ đi giá trị lớn nhất của các phần tử hợp lệ** ($$m = \max(100{,}0, 102{,}0) = 102{,}0$$):
+   $$\mathbf{s}_{\text{shift}} = [-2{,}0, \; 0{,}0, \; -\infty]$$
+   (Nếu không trừ $$102{,}0$$, `exp(102)` bằng $$1{,}98 \times 10^{44}$$ sẽ tràn ngay giới hạn `float16` tối đa `65504`!)
+3. **Bước 3 — Tính hàm mũ và chuẩn hóa**:
+   $$e^{-2} \approx 0{,}1353, \quad e^{0} = 1{,}0000, \quad e^{-\infty} = 0$$
+   $$\boldsymbol{\alpha} = \left[\frac{0{,}1353}{1{,}1353}, \; \frac{1{,}0000}{1{,}1353}, \; 0\right] \approx \mathbf{[0{,}1192, \; 0{,}8808, \; 0{,}0000]}$$
+
+Không hề có tràn số FP16, tổng xác suất bằng đúng `1.0000`, và vị trí `<PAD>` nhận trọng số `0.0000` tuyệt đối!
+
 # Cài đặt Attention Cốt lõi
 
 Bài này chuyển các phương trình attention thành mã nguồn chạy được. Ta sẽ cài đặt attention cộng tính (Bahdanau) cho mô hình encoder–decoder và scaled self-attention bằng cả NumPy lẫn PyTorch, chú trọng vào kích thước tensor và độ ổn định số học.

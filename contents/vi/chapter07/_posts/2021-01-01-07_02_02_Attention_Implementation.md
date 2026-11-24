@@ -9,6 +9,30 @@ categories:
 - chapter07
 ---
 
+Trong thực tế lập trình Deep Learning, 90% lỗi liên quan đến Attention không nằm ở chỗ viết sai công thức toán, mà nằm ở ba chỗ âm thầm: **nhầm chiều `transpose` khi tách head**, **áp sai chiều broadcast của mask**, hoặc **quên chia cho $$\sqrt{d_k}$$**. Danh mục kiểm tra và lộ trình cài đặt ở mục này giúp bạn viết code Attention sạch, dễ kiểm thử và không dính bẫy ngầm.
+
+## Bản đồ kiến thức nền: Ba trụ cột khi triển khai mã nguồn Attention
+
+1. **Từ vòng lặp tường minh (Bahdanau) đến vector hóa theo batch (Scaled Dot-Product)**:
+   Viết bản Bahdanau tường minh giúp nhìn thấy rõ bảng gióng hàng giữa từng từ nguồn–đích, sau đó chuyển sang phép nhân tensor 4D `(B, H, L, d_k)` của Multi-Head Attention.
+2. **Chiến lược biến đổi hình dạng tensor (`view` + `transpose`)**:
+   Tách head đúng chuẩn là `x.view(B, L, H, d_k).transpose(1, 2)` để đưa trục `H` lên trước `L` (thành `(B, H, L, d_k)`), **tuyệt đối không** dùng trực tiếp `x.view(B, H, L, d_k)` vì sẽ xáo trộn dữ liệu giữa các token!
+3. **Bộ kiểm thử nhanh (Smoke Tests) bắt buộc**:
+   Luôn kiểm tra 3 bất biến: tổng trọng số softmax trên trục cuối bằng `1.0`, các vị trí bị che (causal/padding) có trọng số bằng đúng `0.0`, và thay đổi token tương lai không làm thay đổi đầu ra của token quá khứ.
+
+### Khung giải thích (nên đọc chậm): Minh họa bằng số vì sao `view(B, H, L, d_k)` sai hoàn toàn so với `view(B, L, H, d_k).transpose(1, 2)`
+
+Giả sử $$B=1, \; L=2$$ token, $$d_{\text{model}}=4$$, tách thành $$H=2$$ head (mỗi head $$d_k=2$$). Tensor gốc `x` gồm 2 token:
+- Token 0: `[a1, a2, a3, a4]` (trong đó `[a1, a2]` thuộc Head 0; `[a3, a4]` thuộc Head 1)
+- Token 1: `[b1, b2, b3, b4]` (trong đó `[b1, b2]` thuộc Head 0; `[b3, b4]` thuộc Head 1)
+
+| Cách biến đổi shape | Dữ liệu mà **Head 0** nhận được | Dữ liệu mà **Head 1** nhận được | Kết luận |
+| :--- | :--- | :--- | :--- |
+| **ĐÚNG**: `view(1, 2, 2, 2).transpose(1, 2)` | `[[a1, a2], [b1, b2]]` | `[[a3, a4], [b3, b4]]` | Head 0 thấy đủ cả 2 token trên 2 chiều đầu — **Chính xác!** |
+| **SAI**: `view(1, 2, 2, 2)` trực tiếp | `[[a1, a2], [a3, a4]]` | `[[b1, b2], [b3, b4]]` | Head 0 chỉ thấy Token 0 bị cắt đôi, Head 1 chỉ thấy Token 1 — **Hỏng hoàn toàn!** |
+
+Lỗi `view` trực tiếp không hề báo exception khi chạy PyTorch, nên tự kiểm tra bằng tay trên mảng 8 phần tử như trên sẽ cứu bạn khỏi hàng giờ debug vô ích!
+
 # 07-02-02 Cài đặt Attention
 
 Phần toán học xác định rõ attention tính những đại lượng nào, còn phần cài đặt đảm bảo phép toán đó được hiện thực hóa chính xác — từ kích thước tensor, mặt nạ, độ ổn định số học cho tới cách dùng API.

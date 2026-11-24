@@ -10,6 +10,31 @@ categories:
 lesson_type: optional
 ---
 
+Feed a standard ImageNet classifier a photo of pure TV static, and it will happily declare *"99.4% confident: toaster."* That dangerous overconfidence is why senior ML interviews probe Bayesian Deep Learning and uncertainty quantification: can you distinguish irreducible data noise (*aleatoric*) from model ignorance (*epistemic*), show why L2 weight decay is secretly a Gaussian prior, and estimate predictive uncertainty cheaply with Monte Carlo Dropout?
+
+## Background Knowledge Map: Bayesian Deep Learning & Uncertainty Quantification
+
+- **Pillar 1 — Aleatoric vs. Epistemic Uncertainty**: Separates irreducible observation noise in $p(y \mid x)$ (unreducible even with infinite data) from parameter uncertainty in $p(\theta \mid \mathcal{D})$ (which shrinks as you gather more data).
+- **Pillar 2 — MAP Estimation & Regularization Duality**: Proves that minimizing $\text{NLL} + \lambda \|\theta\|_2^2$ is mathematically identical to Maximum A Posteriori (MAP) inference under an isotropic Gaussian prior $\theta \sim \mathcal{N}(0, \sigma_0^2 I)$, while L1 corresponds to a Laplace prior.
+- **Pillar 3 — Point Estimates vs. Posterior Predictive Marginalization**: Explains why a single MAP weight $\hat{\theta}$ extrapolates linearly with unbounded logits far from training data, whereas averaging $p(y \mid x, \mathcal{D}) = \int p(y \mid x, \theta)p(\theta \mid \mathcal{D})\,d\theta$ moderates confidence.
+- **Pillar 4 — Practical Approximations (MC Dropout & Deep Ensembles)**: Runs $T$ stochastic forward passes with dropout active at test time (or averages $M$ independently trained models) to decompose total predictive variance.
+
+### Step-by-Step Worked Example (Read Slowly): Decomposing Predictive Uncertainty via MC Dropout
+
+Suppose we run $T = 4$ stochastic MC Dropout forward passes on an out-of-distribution image for a binary classifier, obtaining predicted probabilities $p^{(t)} = [0.90,\; 0.10,\; 0.80,\; 0.20]$.
+
+1. **Predictive mean probability**:
+   $$\bar{p} = \frac{0.90 + 0.10 + 0.80 + 0.20}{4} = 0.50.$$
+2. **Total predictive entropy $H(\bar{p})$**:
+   $$H(0.50) = -0.5\ln(0.5) - 0.5\ln(0.5) = 0.6931\text{ nats (maximum uncertainty!)}.$$
+3. **Expected individual entropy (Aleatoric component) $\frac{1}{T}\sum_t H(p^{(t)})$**:
+   - $H(0.90) = H(0.10) = -0.9\ln(0.9) - 0.1\ln(0.1) = 0.3251\text{ nats}$.
+   - $H(0.80) = H(0.20) = -0.8\ln(0.8) - 0.2\ln(0.2) = 0.5004\text{ nats}$.
+   - Mean aleatoric entropy $= \frac{0.3251 + 0.3251 + 0.5004 + 0.5004}{4} = 0.4128\text{ nats}$.
+4. **Mutual Information (Epistemic uncertainty)**:
+   $$I(y; \theta \mid x, \mathcal{D}) = H(\bar{p}) - \mathbb{E}[H(p^{(t)})] = 0.6931 - 0.4128 = 0.2803\text{ nats}.$$
+5. **Takeaway**: Individual passes look confident ($0.90$ vs. $0.10$), yet they wildly disagree—producing a high epistemic Mutual Information score ($0.280$ nats) that cleanly flags the input as out-of-distribution.
+
 # Optional: interview practice — Bayesian deep learning and uncertainty
 
 > This lesson is **optional**. It does **not** rewrite the chapter’s survey of future directions. After that survey (and the probability notes in Chapter 00), use this drill, then open *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) for solved items on probabilistic programming and Bayesian deep learning.

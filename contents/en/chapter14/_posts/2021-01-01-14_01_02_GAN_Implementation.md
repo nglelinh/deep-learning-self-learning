@@ -9,6 +9,30 @@ categories:
 - chapter14
 ---
 
+Coding a Deep Convolutional GAN (DCGAN) teaches you more about gradient hygiene than almost any other PyTorch exercise. Forget `.detach()` on `fake_images` when updating the discriminator and you waste compute backpropagating through the generator twice; use standard ReLU in the discriminator and dead neurons choke gradient flow back to $G$; set Adam's $\beta_1 = 0.9$ instead of $0.5$ and momentum overshoots the moving Nash equilibrium into wild oscillations.
+
+## Background Knowledge Map: Engineering DCGANs in PyTorch
+
+- **Pillar 1 — DCGAN Architectural Stabilizers**: Replaces pooling with strided convolutions (`D`) and transposed convolutions (`G`), applies `BatchNorm2d` (except `D`'s input and `G`'s output), and uses `LeakyReLU(0.2)` in `D` to keep negative gradients alive.
+- **Pillar 2 — Detaching & Alternating Optimizer Steps**: Separates discriminator updates (`fake.detach()`) from generator updates (`D(fake)` with `G` gradients active and `D` weights frozen/unstepped), preventing accidental graph corruption.
+- **Pillar 3 — Non-Saturating Loss & Label Smoothing**: Trains `G` with `BCEWithLogitsLoss(D(fake), ones)` and optionally smooths real labels to $0.9$ to keep `D` from becoming overconfident and starving `G` of gradients.
+- **Pillar 4 — Reduced Momentum ($\beta_1 = 0.5$) & Monitoring**: Lowers Adam's first-moment decay from $0.9$ to $0.5$ so optimizers adapt rapidly to a non-stationary opponent, while tracking `D(real)` and `D(fake)` probabilities every epoch.
+
+### Step-by-Step Worked Example (Read Slowly): Tracing One Discriminator & Generator Update Step on Logits
+
+Suppose for a mini-batch of 2 real and 2 fake images, the discriminator outputs raw logits $s_{\text{real}} = [2.0, 0.0]$ and $s_{\text{fake}} = [-2.0, 0.0]$. Using $\sigma(2) \approx 0.8808$, $\sigma(0) = 0.5$, $\sigma(-2) \approx 0.1192$:
+
+1. **Discriminator loss $\mathcal{L}_D = \text{BCE}(s_{\text{real}}, 1) + \text{BCE}(s_{\text{fake}}, 0)$**:
+   - Real term: $-\frac{1}{2}[\ln(0.8808) + \ln(0.5)] = -\frac{1}{2}[-0.1269 - 0.6931] = 0.4100$.
+   - Fake term: $-\frac{1}{2}[\ln(1 - 0.1192) + \ln(1 - 0.5)] = -\frac{1}{2}[-0.1269 - 0.6931] = 0.4100$.
+   - Total $\mathcal{L}_D = 0.4100 + 0.4100 = 0.8200$.
+2. **Non-saturating Generator loss $\mathcal{L}_G = \text{BCE}(s_{\text{fake}}, 1)$**:
+   $$\mathcal{L}_G = -\frac{1}{2}[\ln(0.1192) + \ln(0.5)] = -\frac{1}{2}[-2.1269 - 0.6931] = 1.4100.$$
+3. **Gradient on the generator's fake logits $\frac{\partial \mathcal{L}_G}{\partial s_{\text{fake}}} = \frac{1}{2}(\sigma(s_{\text{fake}}) - 1)$**:
+   - For $s_{\text{fake},1} = -2.0$: $\frac{1}{2}(0.1192 - 1) = -0.4404$ (strong push upward toward real!).
+   - For $s_{\text{fake},2} = 0.0$: $\frac{1}{2}(0.5 - 1) = -0.2500$.
+4. **Takeaway**: Even when a fake image is confidently rejected ($s = -2.0$), `BCEWithLogitsLoss(..., ones)` delivers a clean, non-vanishing gradient of $-0.4404$ straight into the generator.
+
 ## 4. Code Snippet
 
 Let's implement a complete GAN from scratch to understand the training dynamics:

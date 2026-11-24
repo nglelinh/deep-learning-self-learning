@@ -10,6 +10,35 @@ categories:
 lesson_type: optional
 ---
 
+Chuẩn bị phỏng vấn Deep Learning mà chỉ học tủ danh sách câu hỏi rời rạc rất dễ rơi vào cảnh "gặp câu hỏi biến tấu một chút là đứng hình". Lý do đơn giản là mọi câu hỏi phỏng vấn sắc bén đều bắt nguồn từ một hệ thống kiến thức liên thông: từ xác suất và giải tích (Chương 00), qua kiến trúc mạng và lan truyền ngược (Chương 02–03), đến tối ưu hóa, CNN, Transformer và thiết kế hệ thống ML. Bài học này thiết kế lộ trình đối chiếu từng chương của khóa học với các chủ đề trọng tâm của sách *Deep Learning Interviews*, giúp bạn tích lũy năng lực phỏng vấn song hành với tiến độ học hàng ngày.
+
+## Bản đồ kiến thức nền: Bốn nhóm câu hỏi cốt lõi trong Phỏng vấn Deep Learning
+
+1. **Nền tảng Toán & Thống kê (Ch 00–03)**:
+   Tự tay đạo hàm Softmax + Cross-Entropy, giải thích liên hệ MLE–MSE–Cross-Entropy, phân biệt L1/L2 Regularization, và phân tích nguyên nhân gradient biến mất/bùng nổ.
+
+2. **Kiến trúc & Cơ chế Hiện đại (Ch 04–16)**:
+   Tính kích thước đầu ra tầng tích chập (Conv2D), so sánh BatchNorm vs. LayerNorm, giải thích cơ chế Scaled Dot-Product Attention $$\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{d_k}}$$ và lý do chia cho $$\sqrt{d_k}$$.
+
+3. **Gỡ lỗi Huấn luyện & Thực chiến (Training & Debugging)**:
+   Chẩn đoán các kịch bản quen thuộc: train loss giảm nhưng val loss tăng (overfitting), cả hai cùng cao (underfitting/bug), loss bất ngờ vọt lên `NaN` (learning rate cao hoặc chia 0).
+
+4. **Thiết kế Hệ thống ML (ML System Design)**:
+   Biết chọn metric kinh doanh và metric mô hình, xử lý mất cân bằng dữ liệu, trôi phân phối (*data drift*) và tối ưu độ trễ suy luận (*latency/throughput*).
+
+### Khung giải thích (nên đọc chậm): Áp dụng khung trả lời 4 bước cho một câu hỏi phỏng vấn kinh điển
+
+**Đề bài mẫu**: *"Tại sao trong Scaled Dot-Product Attention ta phải chia tích vô hướng $$\mathbf{q} \cdot \mathbf{k}$$ cho $$\sqrt{d_k}$$ trước khi đưa vào Softmax?"*
+
+1. **Giả định thống kê**: Giả sử các thành phần $$q_i, k_i$$ độc lập, kỳ vọng $$0$$, phương sai $$1$$.
+2. **Tính tay phương sai của tích vô hướng**:
+   $$\text{Var}\!\left(\sum_{i=1}^{d_k} q_i k_i\right) = \sum_{i=1}^{d_k} \text{Var}(q_i)\text{Var}(k_i) = d_k.$$
+   Với $$d_k = 64$$, độ lệch chuẩn là $$\sqrt{64} = 8$$; với $$d_k = 512$$, độ lệch chuẩn vọt lên $$\approx 22.6$$!
+3. **Hệ quả nếu KHÔNG chia**: Các logit lớn tới $$\pm 20$$ đẩy Softmax vào vùng bão hòa (một phần tử $$\approx 1$$, mọi phần tử khác $$\approx 0$$), làm đạo hàm của Softmax gần bằng $$0$$ (vanishing gradient).
+4. **Hiệu quả khi chia cho $$\sqrt{d_k}$$**:
+   $$\text{Var}\!\left(\frac{\mathbf{q}\cdot\mathbf{k}}{\sqrt{d_k}}\right) = \frac{d_k}{(\sqrt{d_k})^2} = 1,$$
+   giữ phương sai đầu vào Softmax luôn ổn định bằng $$1$$ bất kể $$d_k$$ lớn đến đâu! Trả lời đủ 4 bước định lượng này, bạn sẽ luôn thuyết phục được hội đồng phỏng vấn.
+
 # Tùy chọn: Lộ trình luyện Deep Learning Interviews
 
 > Bài này là phần **tùy chọn**, **không** thay thế bất kỳ chương lý thuyết nào. Đây là bảng đối chiếu và kế hoạch học giúp bạn kết hợp một cuốn sách luyện phỏng vấn miễn phí như nguồn bài tập bổ sung sau khi đã học xong phần lý thuyết tương ứng trong khóa.

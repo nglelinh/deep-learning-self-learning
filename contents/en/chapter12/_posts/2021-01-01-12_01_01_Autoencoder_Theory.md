@@ -9,6 +9,28 @@ categories:
 - chapter12
 ---
 
+At first glance, training a neural network to output its own input looks like the most pointless objective in machine learning—an identity function $f(x) = x$ achieves zero loss immediately. The entire theoretical richness of autoencoders lies in *breaking* that trivial solution: by imposing bottlenecks, injecting noise, penalizing average neuron activation, or shrinking the encoder's Jacobian, we force the network to internalize the statistical regularities of the data distribution.
+
+## Background Knowledge Map: Mathematical Theory of Autoencoders
+
+- **Pillar 1 — Empirical Risk & Reconstruction Geometry**: Connects MSE loss to Gaussian log-likelihood and Binary Cross-Entropy to Bernoulli log-likelihood, showing how the choice of reconstruction loss encodes assumptions about pixel noise.
+- **Pillar 2 — Eckart–Young–Mirsky Theorem & Linear Autoencoders**: Proves why a linear autoencoder with bottleneck width $k$ recovers the top-$k$ singular subspace of the data matrix $X$.
+- **Pillar 3 — Sparse & Contractive Regularization**: Adds KL-divergence sparsity penalties $D_{\text{KL}}(\rho \| \hat{\rho}_j)$ on hidden activations or Frobenius-norm penalties $\|J_f(x)\|_F^2$ on the encoder Jacobian to make representations locally invariant to small perturbations.
+- **Pillar 4 — Denoising Score Connection**: Reveals that a Denoising Autoencoder trained with Gaussian corruption $\tilde{x} = x + \sigma\epsilon$ learns a vector field $g(f(\tilde{x})) - \tilde{x} \propto \nabla_{\tilde{x}} \log p_\sigma(\tilde{x})$, foreshadowing modern score-based diffusion models.
+
+### Step-by-Step Worked Example (Read Slowly): Computing Sparse KL Penalty and Contractive Jacobian Norm
+
+Suppose a single-layer sigmoid encoder $z = \sigma(Wx)$ has weight vector $w = [2.0,\, -1.0]$ for one hidden neuron. Across a mini-batch, this neuron's average activation is $\hat{\rho} = 0.40$, while our target sparsity level is $\rho = 0.05$.
+
+1. **Compute the Bernoulli KL Sparsity Penalty $D_{\text{KL}}(\rho \| \hat{\rho})$**:
+   $$D_{\text{KL}}(0.05 \| 0.40) = 0.05\ln\frac{0.05}{0.40} + 0.95\ln\frac{0.95}{0.60}$$
+   $$= 0.05\ln(0.125) + 0.95\ln(1.5833) = 0.05(-2.0794) + 0.95(0.4595) = -0.1040 + 0.4365 = 0.3325\text{ nats}.$$
+2. **Compute the Contractive Jacobian Penalty $\|J_f(x)\|_F^2$ at a point where $z = 0.5$**:
+   For a sigmoid unit, $\frac{\partial z}{\partial x_j} = z(1 - z)\,w_j$. At $z = 0.5$, $z(1-z) = 0.25$.
+   $$J_f(x) = [0.25 \cdot 2.0,\; 0.25 \cdot (-1.0)] = [0.50,\; -0.25].$$
+   $$\|J_f(x)\|_F^2 = 0.50^2 + (-0.25)^2 = 0.25 + 0.0625 = 0.3125.$$
+3. **Takeaway**: Both penalties act as geometric brakes on capacity—the sparsity term pushes the average firing rate down toward $5\%$, while the contractive term directly shrinks sensitivity to input jitter.
+
 # Autoencoders: Learning Efficient Representations
 
 ![Autoencoder Architecture](https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Autoencoder_structure.png/600px-Autoencoder_structure.png)

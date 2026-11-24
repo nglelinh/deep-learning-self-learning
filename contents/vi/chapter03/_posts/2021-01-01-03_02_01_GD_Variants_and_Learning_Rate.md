@@ -9,6 +9,37 @@ categories:
 - chapter03
 ---
 
+Nếu bạn có 10 triệu ảnh huấn luyện, việc tính gradient trên toàn bộ 10 triệu ảnh rồi mới nhích trọng số đi đúng **1 bước** (Batch GD) sẽ chậm tới mức không thể chấp nhận; ngược lại, cập nhật ngay sau từng ảnh đơn lẻ (Pure SGD) lại quá nhiễu và lãng phí 99% sức mạnh song song của GPU. Câu trả lời thực chiến nằm ở **Mini-Batch Gradient Descent** kết hợp **Lịch điều chỉnh Tốc độ Học (*Learning Rate Schedule*)**. Bài học này mổ xẻ cơ chế toán học của cả ba biến thể và nghệ thuật chọn, làm ấm (*warmup*) và giảm dần (*decay*) tốc độ học.
+
+## Bản đồ kiến thức nền: Bốn trụ cột về Biến thể GD và Learning Rate
+
+1. **Batch vs. Stochastic (SGD) vs. Mini-Batch GD**:
+   So sánh trên 3 trục: phương sai ước lượng gradient (tỷ lệ $$\propto 1/B$$), tần suất cập nhật mỗi epoch ($$\lceil N/B \rceil$$ bước), và khả năng khai thác phép nhân ma trận song song (GEMM) trên GPU.
+
+2. **Tác dụng Bất ngờ của Nhiễu Mini-Batch (Implicit Regularization)**:
+   Batch nhỏ (32–256) tạo nhiễu giúp mô hình nhảy ra khỏi các cực tiểu sắc nhọn (*sharp minima*) và dừng ở cực tiểu phẳng rộng (*flat minima*), nhờ đó khái quát hóa tốt hơn trên tập test!
+
+3. **Lịch trình Learning Rate (Step Decay, Cosine Annealing, Warmup)**:
+   Giai đoạn đầu cần $$\eta$$ lớn để vượt nhanh qua vùng phẳng và khám phá toàn cục (sau vài bước *linear warmup* tránh sốc khởi tạo); giai đoạn cuối hạ nhỏ $$\eta$$ theo đường cong Cosine để hạ cánh êm xuống đáy.
+
+4. **Quy tắc Mở rộng Tuyến tính (Linear Scaling Rule)**:
+   Khi tăng kích thước batch lên $$k$$ lần để huấn luyện phân tán trên nhiều GPU, phương sai gradient giảm $$k$$ lần nên ta thường tăng learning rate tương ứng (cỡ $$k$$ hoặc $$\sqrt{k}$$ lần kèm warmup).
+
+### Khung giải thích (nên đọc chậm): Tính tay tốc độ cập nhật và Cosine Decay Learning Rate
+
+**Phần A — So sánh số lần cập nhật trọng số trong 1 Epoch** với tập dữ liệu $$N = 50{,}000$$ mẫu:
+- **Batch GD** ($$B = 50{,}000$$): đúng **1 lần cập nhật / epoch** (rất mượt nhưng siêu chậm).
+- **Mini-Batch GD** ($$B = 64$$): $$\lceil 50{,}000 / 64 \rceil = \mathbf{782}$$ lần cập nhật / epoch (cân bằng tối ưu).
+- **Pure SGD** ($$B = 1$$): **50{,}000 lần cập nhật / epoch** (rất nhiễu, không tận dụng được GPU).
+
+**Phần B — Tính tay Learning Rate theo lịch Cosine Annealing** từ $$\eta_{\max} = 0.01$$ xuống $$\eta_{\min} = 0$$ qua $$T = 100$$ epoch:
+$$\eta_t = \eta_{\min} + \frac{1}{2}(\eta_{\max} - \eta_{\min})\left(1 + \cos\frac{\pi t}{T}\right).$$
+- Tại $$t = 0$$: $$\eta_0 = 0.005(1 + \cos 0) = \mathbf{0.0100}$$.
+- Tại $$t = 50$$ (nửa chặng đường): $$\eta_{50} = 0.005(1 + \cos \frac{\pi}{2}) = \mathbf{0.0050}$$.
+- Tại $$t = 75$$: $$\eta_{75} = 0.005(1 + \cos \frac{3\pi}{4}) \approx 0.005(1 - 0.7071) = \mathbf{0.00146}$$.
+- Tại $$t = 100$$: $$\eta_{100} = 0.005(1 + \cos\pi) = \mathbf{0.0000}$$.
+Đường cong Cosine giảm chậm lúc đầu (giữ sức khám phá), giảm nhanh ở giữa và giảm cực êm ở cuối để tinh chỉnh trọng số sát đáy nhất!
+
 Bài này giới thiệu gradient descent — thuật toán tối ưu nền tảng dùng để huấn luyện mạng neuron, cùng các biến thể chính và cách điều chỉnh tốc độ học (*learning rate*).
 
 ---

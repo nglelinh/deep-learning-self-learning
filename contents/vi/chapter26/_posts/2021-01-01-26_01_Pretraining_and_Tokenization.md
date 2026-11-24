@@ -9,6 +9,30 @@ categories:
 - chapter26
 ---
 
+Trước khi một dòng văn bản kịp chạm tới tầng Attention đầu tiên, nó phải đi qua "cánh cửa" **Tokenizer** — nơi một câu tiếng Việt có thể bị cắt thành vài token đẹp đẽ hoặc vụn vỡ thành hàng chục mảnh byte tùy cách huấn luyện BPE. Ngay sau đó là trái tim toán học của tiền huấn luyện LLM: công thức đạo hàm siêu gọn $$\partial\mathcal{L}/\partial z = p - t$$, mẹo **Log-Sum-Exp** chống tràn số mũ (tiền đề của FlashAttention), và quy ước chuyển vị $$X W^\top$$ của PyTorch.
+
+## Bản đồ kiến thức nền: Bốn trụ cột của Tiền huấn luyện và Tokenization
+
+- **Mô hình hóa ngôn ngữ tự hồi quy (Next-Token Prediction):** Tối ưu hóa trung bình Negative Log-Likelihood trên toàn chuỗi $$\mathcal{L} = -\frac{1}{T}\sum_{t=1}^T \ln P_\theta(x_t \mid x_{<t})$$, liên hệ trực tiếp với chỉ số Perplexity $$\text{PPL} = e^{\mathcal{L}}$$.
+- **Softmax + Cross-Entropy và đạo hàm $$p - t$$:** Rút gọn đạo hàm của tổ hợp hai hàm phức tạp thành hiệu trực giác giữa phân phối dự đoán $$p$$ và nhãn one-hot $$t$$.
+- **Ổn định số học Log-Sum-Exp và Online Softmax:** Trừ giá trị cực đại $$m = \max_i z_i$$ trước khi lấy hàm mũ để không bao giờ gặp `NaN`/`Inf`, đồng thời cập nhật thống kê trượt từng khối (tiling) trong FlashAttention.
+- **Quy ước hình học tầng tuyến tính `nn.Linear`:** Phân biệt công thức toán học $$Y = X W$$ với cách lưu ma trận chuyển vị `(out_features, in_features)` của PyTorch để tránh sai lệch khi tính FLOPs hay ghép ma trận LoRA.
+
+### Khung giải thích (nên đọc chậm): Tính tay Softmax ổn định số học, Cross-Entropy, Perplexity và gradient $$p - t$$
+
+Giả sử từ điển thu nhỏ có 3 token `[mèo, chó, cá]`, nhãn đúng là `mèo` ($$\mathbf{t} = [1, 0, 0]$$), và tầng chiếu cuối xuất ra logit rất lớn $$\mathbf{z} = [1002{,}0,\; 1000{,}0,\; 1000{,}0]$$.
+
+1. **Nếu tính ngây thơ `exp(1002)`:** Vượt quá giới hạn FP32 ($$\approx 3{,}4 \times 10^{38}$$) → lập tức trả về `Inf / Inf = NaN`!
+2. **Áp dụng mẹo trừ cực đại $$m = \max(\mathbf{z}) = 1002{,}0$$:**
+   - Logit dịch chuyển: $$\tilde{\mathbf{z}} = [0{,}0,\; -2{,}0,\; -2{,}0]$$.
+   - Hàm mũ an toàn: $$[e^0,\; e^{-2},\; e^{-2}] \approx [1{,}0000,\; 0{,}1353,\; 0{,}1353]$$ (tổng $$Z = 1{,}2706$$).
+   - Phân phối xác suất: $$\mathbf{p} \approx [0{,}7870,\; 0{,}1065,\; 0{,}1065]$$.
+3. **Cross-Entropy Loss & Perplexity:**
+   - $$\mathcal{L} = -\ln(0{,}7870) \approx 0{,}2395$$ → Perplexity tương ứng $$\text{PPL} = e^{0{,}2395} \approx 1{,}27$$ (mô hình chỉ phân vân tương đương $$1{,}27$$ lựa chọn).
+4. **Gradient theo logit ($$\mathbf{p} - \mathbf{t}$$):**
+   $$\frac{\partial \mathcal{L}}{\partial \mathbf{z}} = [0{,}7870 - 1,\; 0{,}1065 - 0,\; 0{,}1065 - 0] = [-0{,}2130,\; +0{,}1065,\; +0{,}1065].$$
+   Hạ gradient sẽ trừ đi giá trị này: **tăng** logit của `mèo` thêm $$0{,}213\eta$$ và **giảm** logit của `chó`, `cá` mỗi từ $$0{,}1065\eta$$!
+
 # Tiền huấn luyện và tokenization
 
 Mô hình ngôn ngữ lớn (LLM) hiện đại được tiền huấn luyện với mục tiêu **dự đoán token kế tiếp**. Mọi năng lực phía sau — *prompting*, tuân thủ chỉ dẫn hay sử dụng công cụ — đều xây dựng trên một mô hình nhận chuỗi token tiền tố $$x_1,\ldots,x_{t-1}$$ và xuất ra phân bố xác suất cho token kế tiếp $$x_t$$.

@@ -9,6 +9,33 @@ categories:
 - chapter04
 ---
 
+Năm 2015, nhóm nghiên cứu của Kaiming He tại Microsoft Research chứng kiến một hiện tượng hết sức trớ trêu: khi họ xếp chồng một mạng CNN thường lên 56 tầng thay vì 20 tầng trên tập CIFAR-10, **ngay cả sai số huấn luyện (training error)** của mạng 56 tầng cũng tệ hơn mạng 20 tầng! Đó không phải overfitting — mà là **vấn đề suy thoái (degradation problem)**. Và giải pháp của họ lại đơn giản đến mức ai cũng phải thốt lên: chỉ cần cộng thêm đầu vào $$x$$ vào đầu ra của khối tích chập, tạo nên **ResNet**.
+
+## Bản đồ kiến thức nền: Bốn nguyên lý thiết kế từ VGG đến ResNet
+
+1. **Nguyên lý VGG — Phân rã nhân lớn thành chuỗi nhân $$3 \times 3$$**:
+   Hai tầng $$3 \times 3$$ liên tiếp có cùng trường tiếp nhận với một tầng $$5 \times 5$$, và ba tầng $$3 \times 3$$ tương đương một tầng $$7 \times 7$$, nhưng ít tham số hơn nhiều và có thêm nhiều lớp ReLU phi tuyến ở giữa.
+2. **Nghịch lý suy thoái (Degradation) vs. Overfitting**:
+   Về lý thuyết, một mạng sâu hơn ít nhất phải tốt bằng mạng nông nếu các tầng thêm vào học ánh xạ đồng nhất $$H(x) = x$$. Thực tế, bộ tối ưu cực kỳ khó ép một chuỗi tầng phi tuyến học chính xác hàm đồng nhất.
+3. **Học phần dư (Residual Learning) $$H(x) = F(x) + x$$**:
+   Khi viết lại đầu ra khối là $$F(x) + x$$, muốn học ánh xạ đồng nhất, mạng chỉ cần đẩy các trọng số của nhánh $$F(x)$$ về $$0$$ — điều mà khởi tạo nhỏ và weight decay làm cực kỳ dễ dàng.
+4. **Đường cao tốc Gradient (Gradient Highway)**:
+   Khi đạo hàm ngược qua $$y = F(x) + x$$, ta có $$\frac{\partial \mathcal{L}}{\partial x} = \frac{\partial \mathcal{L}}{\partial y}\left(\frac{\partial F(x)}{\partial x} + I\right)$$. Số hạng đơn vị $$+I$$ đảm bảo gradient luôn chảy thẳng về các tầng đầu mà không bị triệt tiêu kể cả khi mạng sâu hơn 100 tầng.
+
+### Khung giải thích (nên đọc chậm): Tính tay so sánh 3 tầng $$3 \times 3$$ (VGG) với 1 tầng $$7 \times 7$$ và dòng gradient trong ResNet
+
+**Phần A — Tại sao VGG chọn 3 tầng $$3 \times 3$$ thay vì 1 tầng $$7 \times 7$$** (với $$C_{\text{in}} = C_{\text{out}} = C$$ kênh):
+- **Trường tiếp nhận**: Tầng 1 nhìn $$3\times 3$$ $$\to$$ Tầng 2 nhìn $$5\times 5$$ $$\to$$ Tầng 3 nhìn **$$7\times 7$$** (y hệt 1 tầng $$7\times 7$$).
+- **Số tham số**:
+  - 1 tầng $$7 \times 7$$: $$7 \times 7 \times C^2 = \mathbf{49 C^2}$$.
+  - 3 tầng $$3 \times 3$$: $$3 \times (3 \times 3 \times C^2) = \mathbf{27 C^2}$$ (tiết kiệm **45%** tham số!).
+- **Độ phi tuyến**: 3 lần ReLU thay vì chỉ 1 lần ReLU.
+
+**Phần B — Kiểm chứng đường cao tốc gradient của ResNet**:
+Giả sử một khối phi tuyến có đạo hàm rất nhỏ $$\frac{\partial F}{\partial x} = 0{,}1$$ và ta xếp chồng $$L = 20$$ khối:
+- **Mạng thường (không skip)**: Gradient thu nhỏ theo $$0{,}1^{20} = \mathbf{10^{-20}}$$ (tắt lịm hoàn toàn!).
+- **Mạng ResNet (có skip $$+x$$)**: Đạo hàm mỗi khối là $$1 + 0{,}1 = 1{,}1$$, gradient không những không tắt mà còn truyền nguyên vẹn từ tầng 20 về tầng 1 nhờ số hạng $$1$$.
+
 ### VGGNet (2014) — Đơn giản và Chiều sâu
 
 VGG của Simonyan và Zisserman cho thấy việc **tăng chiều sâu** với một cấu trúc **đồng nhất, đơn giản** mang lại cải thiện rõ rệt về độ chính xác.

@@ -10,6 +10,29 @@ categories:
 lesson_type: optional
 ---
 
+> *In 2016, "doing deep learning" meant collecting a custom dataset and training a ResNet from random weights. By 2022–2026, the default workflow inverted: you start from a massive pretrained foundation model, evaluate zero-shot or few-shot performance, and only fine-tune—often with parameter-efficient adapters—when the data proves it necessary.*
+
+## Background Knowledge Map: The Foundation-Model Workflow (2022–2026)
+
+1. **Pretrain–Adapt Paradigm**: Shifts compute from bespoke per-task training to massive self-supervised pretraining followed by lightweight adaptation (prompting, RAG, LoRA, DPO/RLHF).
+2. **Chinchilla & Inference-Optimal Scaling Laws**: Balances model parameters $$N$$ and training tokens $$D$$ under a fixed compute budget $$C \approx 6ND$$, revealing that many earlier models were severely undertrained relative to their size.
+3. **Open-Weight Ecosystem & Quantization**: Enables running billion-parameter models locally via 4-bit/8-bit weight quantization (AWQ, GPTQ, GGUF) and efficient KV-cache serving engines (vLLM, TensorRT-LLM).
+4. **Evaluation-Driven Iteration**: Treats rigorous benchmark suites, contamination checks, and slice-level error metrics as the primary bottleneck once model capabilities outpace naive accuracy metrics.
+
+### Step-by-Step Worked Example (Read Slowly): Applying the Chinchilla Compute-Optimal Rule ($$C \approx 6ND$$)
+
+Suppose your lab has a fixed pretraining compute budget of $$C = 1.2 \times 10^{21}$$ FLOPs and follows the Chinchilla ratio of roughly $$D \approx 20 N$$ training tokens per parameter.
+
+1. **Substitute $$D = 20N$$ into the Transformer Training FLOP Formula $$C \approx 6ND$$**:
+   $$C \approx 6 N (20 N) = 120 N^2$$
+2. **Solve for Optimal Parameter Count $$N$$**:
+   $$N^2 = \frac{1.2 \times 10^{21}}{120} = 1.0 \times 10^{19} \implies N = \sqrt{10 \times 10^{18}} \approx 3.16 \times 10^9\text{ parameters (3.16B)}$$
+3. **Solve for Optimal Training Token Count $$D$$**:
+   $$D = 20 N \approx 20 \times (3.16 \times 10^9) = 6.32 \times 10^{10}\text{ tokens (63.2B tokens)}$$
+4. **Sanity Check**:
+   $$6 \times (3.16 \times 10^9) \times (6.32 \times 10^{10}) \approx 1.198 \times 10^{21}\text{ FLOPs}$$
+   Notice that if you instead trained a 30B model on the same budget, it would only see $$D = \frac{1.2\times 10^{21}}{6 \times 3\times 10^{10}} = 6.67\text{B}$$ tokens—severely undertrained and slower at inference!
+
 # Optional: what “doing deep learning” means after foundation models
 
 > This lesson is **optional**. It does **not** replace the introductions to deep learning, MNIST, or the course guide. It updates the *practice* of the field after foundation models became the default starting point.

@@ -10,6 +10,25 @@ categories:
 lesson_type: optional
 ---
 
+In senior ML engineering interviews, transfer learning questions rarely ask you to recite definitions—they drop you into a messy production scenario: *"Your linear probe hits 78% on satellite imagery, full fine-tuning overfits to 71%, and your batch size is 4. What do you do?"* Practicing crisp, first-principles answers to these four diagnostic prompts trains you to reason about feature geometry, BatchNorm statistics, and domain shift under pressure.
+
+## Background Knowledge Map: Interview Reasoning on Transfer & Feature Extraction
+
+- **Pillar 1 — Bias–Variance Trade-off in Adaptation**: Diagnoses when frozen features underfit (high bias under domain shift) versus when full fine-tuning overfits (high variance on scarce labels).
+- **Pillar 2 — Layer Selection & Feature Extraction Mechanics**: Distinguishes penultimate pooled embeddings from intermediate spatial feature maps depending on whether the task needs semantic class identity or fine-grained localization.
+- **Pillar 3 — Domain Shift Diagnostics**: Separates covariate shift (input style/lighting changes), label shift (class priors change), and concept drift (label definitions change).
+- **Pillar 4 — Failure Modes in Low-Data Regimes**: Anticipates BatchNorm instability on small batches, head-initialization gradient shock (fixed by LP-FT), and negative transfer.
+
+### Step-by-Step Worked Example (Read Slowly): Diagnosing Feature-Distribution Drift via Cosine Similarity
+
+Suppose a frozen ImageNet encoder maps daytime cat photos to average unit embedding $\bar{u}_S = [0.8,\, 0.6,\, 0.0]^\top$, and infrared thermal cat photos to $\bar{u}_T = [0.2,\, 0.4,\, 0.8944]^\top$ (verify: $0.2^2 + 0.4^2 + 0.8944^2 = 0.04 + 0.16 + 0.80 = 1.00$).
+
+1. **Compute cosine similarity between source and target centroids**:
+   $$\cos(\theta) = \bar{u}_S^\top \bar{u}_T = (0.8)(0.2) + (0.6)(0.4) + (0.0)(0.8944) = 0.16 + 0.24 = 0.40 \implies \theta \approx 66.4^\circ.$$
+2. **Interpret for an interview decision**:
+   A $66.4^\circ$ shift into an orthogonal subspace ($z_3 = 0.8944$) means a frozen linear probe trained on source RGB features will misalign severely. The disciplined engineering response is: **unfreeze at least the top 1–2 residual stages (or add LoRA adapters) and recalibrate BatchNorm/LayerNorm statistics on target data** rather than relying solely on a frozen linear probe.
+3. **Takeaway**: Quantifying representation alignment turns hand-wavy interview intuition into an actionable architectural diagnosis.
+
 # Optional: interview practice — feature extraction and transfer
 
 > This lesson is **optional**. It does **not** replace feature-extraction vs fine-tune theory. After those notes, use this drill, then open *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) for solved items on CNN feature extraction. Architecture geometry stays in **04-98**.

@@ -9,6 +9,36 @@ categories:
 - chapter01
 ---
 
+Rất nhiều người bắt đầu học Deep Learning với tinh thần hừng hực, xem liền tù tì hàng chục giờ video bài giảng, sao chép sạch sẽ các notebook có sẵn—nhưng hai tháng sau, khi đứng trước một tập dữ liệu mới hoàn toàn, họ lại không biết bắt đầu từ đâu và mất phương hướng trước hàng trăm siêu tham số. Học sâu là một kỹ năng kết hợp giữa **tư duy toán học** và **kỷ luật thực nghiệm kỹ thuật**. Bài hướng dẫn này trình bày bức tranh ứng dụng thực tế cùng chiến lược học tập chủ động để bạn biến kiến thức thụ động thành năng lực giải quyết bài toán thật.
+
+## Bản đồ kiến thức nền: Bốn nguyên tắc vàng để làm chủ Học sâu hiệu quả
+
+1. **Học theo vòng lặp Lý thuyết $$\leftrightarrow$$ Cài đặt từ đầu $$\leftrightarrow$$ Thực nghiệm**:
+   Đừng chỉ đọc công thức rồi bỏ qua, cũng đừng chỉ gọi `.fit()` như hộp đen. Tự cài lại lan truyền ngược bằng NumPy một lần sẽ giúp bạn hiểu sâu hơn đọc mười bài blog.
+
+2. **Kỹ năng Gỡ lỗi Khoa học (Systematic Debugging)**:
+   Luôn kiểm tra mô hình trên một tập cực nhỏ (ví dụ 10–32 mẫu) để chắc chắn mạng có thể *overfit* tới loss $$\approx 0$$ trước khi huấn luyện toàn tập—đây là bài test nhanh phát hiện 80% lỗi code.
+
+3. **Quản trị Thực nghiệm và Thước đo Baseline**:
+   Mọi thay đổi kiến trúc hay siêu tham số chỉ có ý nghĩa khi so sánh với một *baseline* đơn giản (như hồi quy logistic hoặc MLP nhỏ) trên cùng tập validation cố định và cùng hạt giống ngẫu nhiên (*random seed*).
+
+4. **Kết nối Kiến trúc với Bản chất Dữ liệu**:
+   Nhìn thấy sợi dây xuyên suốt khóa học: MLP cho dữ liệu bảng/vector $$\to$$ CNN cho ảnh có tính cục bộ không gian $$\to$$ RNN/Transformer cho chuỗi và ngôn ngữ $$\to$$ Mô hình sinh cho phân phối dữ liệu.
+
+### Khung giải thích (nên đọc chậm): Tính nhanh ngân sách học tập và phép thử "Overfit 1 Batch"
+
+Giả sử bạn có một tập dữ liệu phân loại 5 lớp gồm 10{,}000 mẫu và muốn kiểm chứng code huấn luyện mới viết có đúng không trước khi chạy 50 epoch tốn 2 giờ:
+
+1. **Bước 1 — Thiết lập kỳ vọng toán học ở bước 0**:
+   Với 5 lớp cân bằng, dự đoán ngẫu nhiên có xác suất $$1/5 = 0.2$$, nên loss ban đầu phải gần $$-\ln(0.2) = \ln(5) \approx 1.609$$.
+2. **Bước 2 — Lấy đúng 1 mini-batch 16 mẫu và tắt Dropout/Weight Decay**:
+   Chạy 100 bước tối ưu chỉ trên đúng 16 mẫu này.
+3. **Bước 3 — Chẩn đoán bằng con số**:
+   - Nếu loss giảm mượt từ $$\approx 1.61 \to 0.40 \to 0.02$$ và độ chính xác trên 16 mẫu đạt $$16/16 = 100\%$$: đồ thị tính toán, nhãn và gradient đều sạch!
+   - Nếu loss đứng yên quanh $$1.61$$: khả năng cao bạn quên `optimizer.step()`, learning rate quá nhỏ, hoặc lỡ truyền xác suất (đã qua Softmax) vào `nn.CrossEntropyLoss` (vốn nhận logits)!
+
+Thói quen dành 2 phút cho bài kiểm tra định lượng nhỏ này sẽ tiết kiệm cho bạn hàng chục giờ chạy GPU vô ích.
+
 ## Ứng dụng của học sâu
 
 ![Deep Learning Applications](https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Deep_Learning_Applications.png/800px-Deep_Learning_Applications.png)

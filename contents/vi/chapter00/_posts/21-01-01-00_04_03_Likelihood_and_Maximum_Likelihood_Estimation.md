@@ -9,6 +9,41 @@ categories:
 lang: vi
 ---
 
+Một trong những khoảnh khắc "vỡ òa" lớn nhất khi học Deep Learning là nhận ra rằng những hàm mất mát tưởng như được nghĩ ra một cách tùy hứng—MSE cho hồi quy, Binary Cross-Entropy cho phân loại nhị phân, Categorical Cross-Entropy cho đa lớp—thực chất đều là **cùng một nguyên lý duy nhất** đội những chiếc mặt nạ khác nhau: **Ước lượng Hợp lý Cực đại (Maximum Likelihood Estimation — MLE)**. Bài học này mở khóa chiếc cầu nối vĩ đại giữa thống kê và tối ưu hóa, giúp bạn hiểu sâu *tại sao* ta lại huấn luyện mạng nơ-ron bằng chính các hàm mất mát đó.
+
+## Bản đồ kiến thức nền: Bốn trụ cột của Hàm Hợp lý và MLE
+
+1. **Xác suất vs. Hàm Hợp lý (Probability vs. Likelihood)**:
+   Xác suất cố định tham số $$\theta$$ và hỏi dữ liệu $$x$$ nào dễ xảy ra ($$P(x \mid \theta)$$); ngược lại, hàm hợp lý cố định dữ liệu $$x$$ đã quan sát và xoay tham số $$\theta$$ để xem mô hình nào giải thích dữ liệu tốt nhất ($$\mathcal{L}(\theta \mid x)$$).
+
+2. **Chuyển từ Tích sang Tổng nhờ Log-Likelihood**:
+   Với $$N$$ mẫu độc lập, tích $$\prod_{i=1}^N P(x_i \mid \theta)$$ rất nhanh chạm ngưỡng $$0$$ trên máy tính (underflow). Lấy logarit tự nhiên biến tích thành tổng $$\sum_{i=1}^N \ln P(x_i \mid \theta)$$ mà không làm đổi vị trí cực đại, vì $$\ln$$ là hàm đồng biến chặt.
+
+3. **Âm Log-Likelihood (NLL) chính là Hàm Mất mát**:
+   Cực đại hóa $$\ln \mathcal{L}(\theta)$$ tương đương cực tiểu hóa $$-\ln \mathcal{L}(\theta)$$:
+   - Giả định nhiễu Gaussian $$\implies$$ NLL trở thành **MSE**.
+   - Giả định nhãn Bernoulli/Categorical $$\implies$$ NLL trở thành **Cross-Entropy**.
+
+4. **Từ MLE đến MAP (Maximum A Posteriori) và Regularization**:
+   Khi nhân thêm phân phối tiên nghiệm $$P(\theta)$$ lên tham số (ví dụ Gaussian $$\mathcal{N}(0, \tau^2)$$), âm log hậu nghiệm tự động sinh ra số hạng phạt $$\lambda \|\theta\|_2^2$$—chính là **L2 Regularization (Weight Decay)**!
+
+### Khung giải thích (nên đọc chậm): Tự tay suy ra công thức MLE cho 10 lần tung đồng xu và liên hệ Cross-Entropy
+
+Giả sử bạn tung một đồng xu lạ 10 lần và thu được 7 lần Ngửa ($$y=1$$), 3 lần Sấp ($$y=0$$). Ta muốn tìm xác suất ra Ngửa $$p \in (0, 1)$$ hợp lý nhất:
+
+1. **Lập hàm hợp lý**:
+   $$\mathcal{L}(p) = p^7 (1 - p)^3.$$
+2. **Lấy Log-Likelihood**:
+   $$\ell(p) = \ln \mathcal{L}(p) = 7\ln p + 3\ln(1 - p).$$
+   (Chú ý rằng $$-\frac{1}{10}\ell(p) = -\big[0.7\ln p + 0.3\ln(1-p)\big]$$ chính là **Binary Cross-Entropy**!)
+3. **Đạo hàm theo $$p$$ và cho bằng 0**:
+   $$\frac{d\ell}{dp} = \frac{7}{p} - \frac{3}{1 - p} = 0 \iff 7(1 - p) = 3p \iff 7 = 10p \iff \hat{p}_{\text{MLE}} = 0.7.$$
+4. **Kiểm chứng số tại hai điểm**:
+   - Tại $$p = 0.7$$: $$\ell(0.7) = 7\ln(0.7) + 3\ln(0.3) \approx 7(-0.3567) + 3(-1.2040) = -6.1086$$.
+   - Tại $$p = 0.5$$: $$\ell(0.5) = 10\ln(0.5) \approx -6.9315 < -6.1086$$.
+
+Kết quả $$\hat{p}_{\text{MLE}} = 0.7$$ vừa khớp trực giác tần suất, vừa chứng minh việc tối thiểu hóa Cross-Entropy chính là đi tìm tham số làm dữ liệu huấn luyện có khả năng xảy ra cao nhất!
+
 ## Hàm hợp lý (*Likelihood*) và Ước lượng hợp lý cực đại (MLE)
 
 Trong xác suất thống kê, **hàm hợp lý** (*likelihood*) đo mức độ phù hợp của một mô hình hoặc một bộ tham số với dữ liệu đã quan sát. Dù được xây dựng từ công thức xác suất, hàm hợp lý không phải là một phân phối xác suất theo tham số, mà là hàm đánh giá xem từng giá trị tham số giải thích dữ liệu quan sát tốt đến mức nào.

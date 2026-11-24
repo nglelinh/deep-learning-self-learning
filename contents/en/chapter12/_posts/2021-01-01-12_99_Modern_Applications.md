@@ -10,6 +10,27 @@ categories:
 lesson_type: optional
 ---
 
+You might think classical autoencoders were retired once diffusion models and LLMs took over—in reality, they quietly became the load-bearing compression layer underneath almost every modern multimodal system. Stable Diffusion does not diffuse pixels; it diffuses inside an autoencoder's latent space. Audio language models do not predict raw 48 kHz waveforms; they predict discrete tokens emitted by a vector-quantized neural audio codec.
+
+## Background Knowledge Map: Modern Autoencoders (2022–2026)
+
+- **Pillar 1 — Latent Diffusion Codecs**: Compresses high-resolution RGB images (e.g., $512 \times 512 \times 3$) by a spatial factor of $8\times$ into compact $64 \times 64 \times 4$ latents, cutting quadratic self-attention cost by over $4{,}000\times$.
+- **Pillar 2 — Vector Quantization & Residual VQ (RVQ)**: Snaps continuous encoder vectors to nearest codebook entries $e_k$, turning images and audio into discrete token streams compatible with autoregressive Transformers.
+- **Pillar 3 — Masked Autoencoders (MAE)**: Drops $75\%$ of image patches at the encoder input and reconstructs missing pixels with a lightweight decoder, scaling self-supervised vision pretraining to billion-parameter ViTs.
+- **Pillar 4 — Perceptual & Adversarial Reconstruction Losses**: Replaces pure pixel MSE (which causes blur) with LPIPS perceptual losses plus PatchGAN discriminators so compressed reconstructions stay razor-sharp.
+
+### Step-by-Step Worked Example (Read Slowly): Compute Savings of Latent Compression & Residual Vector Quantization Bitrate
+
+1. **Spatial compression savings for a $512 \times 512 \times 3$ image encoded to $64 \times 64 \times 4$**:
+   - Raw pixel elements: $512 \times 512 \times 3 = 786{,}432$.
+   - Latent elements: $64 \times 64 \times 4 = 16{,}384$.
+   - Element compression factor: $786{,}432 / 16{,}384 = 48\times$.
+   - Sequence length for self-attention ($H \times W$): drops from $262{,}144$ to $4{,}096$ ($64\times$ shorter), reducing $O(N^2)$ attention operations by $64^2 = 4{,}096\times$!
+2. **Neural audio codec bitrate (EnCodec / DAC style)**:
+   Suppose an encoder produces $f_s = 75$ frames/second, each quantized by $N_q = 8$ residual VQ codebooks of size $K = 1024$ entries ($\log_2 1024 = 10$ bits per codebook).
+   $$\text{Bitrate} = 75 \text{ frames/s} \times 8 \text{ codebooks} \times 10 \text{ bits} = 6{,}000 \text{ bits/s} = 6.0\text{ kbps}.$$
+3. **Takeaway**: Modern autoencoders turn prohibitive raw media signals into $48\times$ smaller image latents and $6\text{ kbps}$ discrete audio tokens—making foundation-scale generation computationally feasible.
+
 # Optional: autoencoders as latents, codecs, and masked reconstructors
 
 > This lesson is **optional**. It does **not** replace vanilla / denoising / sparse autoencoder theory. It shows how the same encoder–decoder idea is used after 2022: **latent compression for diffusion**, **neural audio codecs**, and **masked image modeling**.

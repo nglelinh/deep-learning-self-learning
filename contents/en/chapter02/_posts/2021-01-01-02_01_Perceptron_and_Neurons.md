@@ -9,6 +9,35 @@ categories:
 - chapter02
 ---
 
+> *In 1969, Marvin Minsky and Seymour Papert proved that a single perceptron can never solve the humble 2-bit XOR gate, triggering the first AI winter. Understanding why a single hyperplane fails on XOR—and how adding just one hidden layer resolves it—is the foundational rite of passage in neural network theory.*
+
+## Background Knowledge Map: Geometry of the Perceptron
+
+1. **Hyperplane Decision Boundary**: The equation $$\mathbf{w}^\top \mathbf{x} + b = 0$$ defines a flat hyperplane with normal vector $$\mathbf{w}$$ pointing into the positive half-space and signed distance $$-b / \|\mathbf{w}\|$$ from the origin.
+2. **Perceptron Convergence Theorem**: Guarantees that if a dataset is strictly linearly separable with margin $$\gamma > 0$$, the classical mistake-driven update $$\mathbf{w} \leftarrow \mathbf{w} + y\mathbf{x}$$ terminates in at most $$(R/\gamma)^2$$ mistakes.
+3. **Linear Separability Ceiling (The XOR Barrier)**: Any function whose positive and negative points cannot be separated by a single flat cut (like XOR: $$(0,0),(1,1) \to 0$$ vs. $$(0,1),(1,0) \to 1$$) is impossible for a single neuron.
+4. **From Step Functions to Smooth Neurons**: Replacing the zero-derivative Heaviside step with smooth activations (sigmoid, tanh, ReLU) makes neurons differentiable so multi-layer networks can train via gradient descent.
+
+### Step-by-Step Worked Example (Read Slowly): Two Mistake-Driven Perceptron Updates by Hand
+
+Train a perceptron with initial weights $$\mathbf{w}_0 = [0, 0]^\top$$, bias $$b_0 = 0$$, and learning rate $$\eta = 1$$ on two labeled examples (labels $$y \in \{-1, +1\}$$):
+- Example 1: $$\mathbf{x}_1 = [2, 1]^\top, y_1 = +1$$
+- Example 2: $$\mathbf{x}_2 = [1, -2]^\top, y_2 = -1$$
+Prediction rule: $$\hat{y} = +1$$ if $$\mathbf{w}^\top\mathbf{x} + b > 0$$, else $$-1$$.
+
+1. **Step 1 (Evaluate Example 1)**:
+   $$z_1 = \mathbf{w}_0^\top \mathbf{x}_1 + b_0 = 0(2) + 0(1) + 0 = 0 \implies \hat{y}_1 = -1 \neq +1\text{ (mistake!)}$$
+   Update weights and bias:
+   $$\mathbf{w}_1 = \mathbf{w}_0 + y_1\mathbf{x}_1 = \begin{bmatrix} 0 \\ 0 \end{bmatrix} + (+1)\begin{bmatrix} 2 \\ 1 \end{bmatrix} = \begin{bmatrix} 2 \\ 1 \end{bmatrix}, \quad b_1 = 0 + (+1) = 1$$
+2. **Step 2 (Evaluate Example 2 with $$\mathbf{w}_1, b_1$$)**:
+   $$z_2 = 2(1) + 1(-2) + 1 = 1 > 0 \implies \hat{y}_2 = +1 \neq -1\text{ (mistake!)}$$
+   Update weights and bias:
+   $$\mathbf{w}_2 = \mathbf{w}_1 + y_2\mathbf{x}_2 = \begin{bmatrix} 2 \\ 1 \end{bmatrix} + (-1)\begin{bmatrix} 1 \\ -2 \end{bmatrix} = \begin{bmatrix} 1 \\ 3 \end{bmatrix}, \quad b_2 = 1 + (-1) = 0$$
+3. **Verify Both Examples Now Classify Correctly**:
+   - Example 1: $$\mathbf{w}_2^\top\mathbf{x}_1 + b_2 = 1(2) + 3(1) + 0 = +5 > 0 \implies \hat{y}_1 = +1$$ (correct!).
+   - Example 2: $$\mathbf{w}_2^\top\mathbf{x}_2 + b_2 = 1(1) + 3(-2) + 0 = -5 \leq 0 \implies \hat{y}_2 = -1$$ (correct!).
+   In just two updates, the hyperplane $$x_1 + 3x_2 = 0$$ separates both points with wide margin.
+
 # The Perceptron and Artificial Neurons
 
 ![Perceptron Diagram](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Perceptron_moj.png/400px-Perceptron_moj.png)

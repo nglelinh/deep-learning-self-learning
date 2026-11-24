@@ -9,6 +9,39 @@ categories:
 - chapter01
 ---
 
+Mọi ngôn ngữ lập trình đều có bài mở đầu `"Hello, World!"`, và trong thế giới Deep Learning, **"Hello, World!" chính là nhận diện chữ số viết tay MNIST**. Bộ dữ liệu gồm 70{,}000 ảnh chữ số từ 0 đến 9 do Yann LeCun và cộng sự tập hợp từ cuối thập niên 1990 đủ nhỏ để chạy trong vài giây trên máy tính cá nhân, nhưng lại chứa đầy đủ mọi thành phần cốt lõi của một hệ thống Học sâu thực thụ: chuẩn hóa tensor, thiết kế kiến trúc nhiều tầng, tính Cross-Entropy và chạy vòng lặp tối ưu. Bài thực hành này dẫn bạn đi từng dòng code để thực sự "chạm tay" vào mạng nơ-ron đầu tiên.
+
+## Bản đồ kiến thức nền: Bốn thành phần trong một Pipeline Huấn luyện PyTorch chuẩn
+
+1. **Dữ liệu và Tiền xử lý Tensor (`Dataset`, `DataLoader`, `Transforms`)**:
+   Chuyển ảnh PIL từ giá trị nguyên $$[0, 255]$$ sang tensor thực $$[0, 1]$$, rồi chuẩn hóa về trung bình $$0$$ và độ lệch chuẩn $$1$$ (với MNIST là $$\mu \approx 0.1307, \sigma \approx 0.3081$$), đồng thời xáo trộn (*shuffle*) và gom theo mini-batch.
+
+2. **Định nghĩa Kiến trúc (`nn.Module` & `forward`)**:
+   Trải phẳng ảnh $$(B, 1, 28, 28)$$ thành ma trận $$(B, 784)$$, đưa qua các lớp `nn.Linear` xen kẽ hàm kích hoạt phi tuyến `ReLU` để xuất ra 10 điểm số thô (*logits*) tương ứng 10 chữ số.
+
+3. **Hàm Mất mát và Bộ Tối ưu (`CrossEntropyLoss`, `Adam` / `SGD`)**:
+   `nn.CrossEntropyLoss` tự động kết hợp `LogSoftmax` và `NLLLoss` (ổn định số học hơn việc tự tính `Softmax` rồi lấy `log`), còn optimizer giữ nhiệm vụ cập nhật trọng số dựa trên gradient.
+
+4. **Vòng lặp Huấn luyện 5 bước kinh điển**:
+   `optimizer.zero_grad()` $$\to$$ `outputs = model(x)` $$\to$$ `loss = criterion(outputs, y)` $$\to$$ `loss.backward()` $$\to$$ `optimizer.step()`. Quên `zero_grad()` sẽ khiến gradient cộng dồn qua các batch làm mô hình hỏng ngay lập tức!
+
+### Khung giải thích (nên đọc chậm): Theo dõi kích thước Tensor và số bước cập nhật của 1 Epoch MNIST
+
+Giả sử bạn huấn luyện trên tập train MNIST có $$60{,}000$$ ảnh với `batch_size = 64` qua mạng `784 -> 128 -> 64 -> 10`:
+
+1. **Số bước cập nhật (iterations) trong 1 epoch**:
+   $$\left\lceil \frac{60{,}000}{64} \right\rceil = \lceil 937.5 \rceil = 938 \text{ bước}$$ (937 batch đủ 64 ảnh, và batch cuối cùng gồm $$60{,}000 - 937 \times 64 = 32$$ ảnh).
+2. **Truy vết kích thước (*shape*) Tensor qua từng lớp ở một batch đầy đủ**:
+   - Đầu vào ảnh gốc: `(64, 1, 28, 28)`
+   - Sau `x.view(-1, 784)` (trải phẳng): `(64, 784)`
+   - Sau `fc1` (`Linear(784, 128)`) + `ReLU`: `(64, 128)`
+   - Sau `fc2` (`Linear(128, 64)`) + `ReLU`: `(64, 64)`
+   - Sau `fc3` (`Linear(64, 10)` — logits): `(64, 10)`
+3. **Kiểm tra độ hợp lý của Loss ngay lúc khởi tạo ngẫu nhiên**:
+   Khi mạng chưa học gì, xác suất đoán cho cả 10 chữ số đều xấp xỉ $$1/10 = 0.1$$. Khi đó Cross-Entropy kỳ vọng ở bước 0 phải xấp xỉ:
+   $$-\ln(0.1) = \ln(10) \approx 2.3026.$$
+   Mẹo thực chiến cực hay: nếu ở epoch 0 bạn thấy loss ban đầu vọt lên $$15$$ hay tụt về $$0.01$$, hãy dừng lại kiểm tra ngay bug ở chuẩn hóa dữ liệu hoặc hàm mất mát!
+
 ## 4. Đoạn mã minh họa
 
 Ta triển khai một ví dụ học sâu cơ bản để làm rõ các khái niệm đã nêu. Mục tiêu là xây dựng một mạng nơ-ron phân loại chữ số viết tay MNIST bằng PyTorch.

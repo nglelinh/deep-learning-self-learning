@@ -9,6 +9,30 @@ categories:
 - chapter26
 ---
 
+Classical knowledge distillation matches a student's full probability vector to a teacher's softmax—easy when you have 10 CIFAR classes, painful when your LLM vocabulary has 128,256 tokens and storing full teacher logits for a billion tokens would take half a petabyte of disk! Modern LLM distillation therefore split into three practical regimes: black-box synthetic data (text-in, text-out), white-box top-$k$ / reverse-KL logit distillation, and hidden-state feature alignment—each carrying sharp engineering and legal/licensing boundaries.
+
+## Background Knowledge Map: Knowledge Distillation for Large Language Models
+
+- **Pillar 1 — Temperature-Scaled Logit KD & Dark Knowledge**: Softens teacher probabilities $p_T = \operatorname{softmax}(z_T / \tau)$ so non-target tokens transmit rich semantic similarity signals, scaled by $\tau^2$ to preserve gradient norms.
+- **Pillar 2 — Forward KL vs. Reverse KL for Generation**: Contrasts mode-covering forward KL $D_{\text{KL}}(p_T \| p_S)$ (which can cause small students to smear mass across low-probability phrases) with mode-seeking reverse KL $D_{\text{KL}}(p_S \| p_T)$ (sharp, fluent generations).
+- **Pillar 3 — Three Modern LLM Distillation Families**: Organizes synthetic-response SFT (black-box, cheapest, works across mismatched tokenizers), sparse top-$k$ logit KD (white-box, same tokenizer), and intermediate hidden-state matching.
+- **Pillar 4 — Governance & Terms-of-Service Hygiene**: Distinguishes legitimate in-house distillation (from your own or permissively licensed open-weight teachers) from unauthorized harvesting of proprietary APIs.
+
+### Step-by-Step Worked Example (Read Slowly): Why $\tau^2$ Scaling Is Mandatory in Temperature-Scaled KD
+
+Consider a 2-class teacher logit vector $z_T = [4.0, 2.0]$ and student logits $z_S = [3.0, 3.0]$ at temperature $\tau = 2.0$.
+
+1. **Compute softened probabilities at $\tau = 2.0$**:
+   - Teacher $z_T / 2 = [2.0, 1.0] \implies p_T^{(2)} = [\sigma(1.0),\; 1 - \sigma(1.0)] = [0.7311,\; 0.2689]$.
+   - Student $z_S / 2 = [1.5, 1.5] \implies p_S^{(2)} = [0.5000,\; 0.5000]$.
+2. **Compute KL divergence $D_{\text{KL}}(p_T^{(2)} \| p_S^{(2)})$**:
+   $$D_{\text{KL}} = 0.7311\ln\frac{0.7311}{0.5} + 0.2689\ln\frac{0.2689}{0.5} = 0.2778 - 0.1668 = 0.1110\text{ nats}.$$
+3. **Check the gradient on student logit $z_{S,1}$**:
+   - Unscaled $\frac{\partial D_{\text{KL}}}{\partial z_{S,1}} = \frac{1}{\tau}(p_{S,1}^{(2)} - p_{T,1}^{(2)}) = \frac{1}{2}(0.5000 - 0.7311) = -0.1156$.
+   - Notice that because $\frac{\partial (z_S/\tau)}{\partial z_S} = \frac{1}{\tau}$ *and* softmax sensitivity shrinks by another factor of $\frac{1}{\tau}$ at high $\tau$, the raw gradient shrinks as $O(1/\tau^2)$!
+   - Multiplying the KL loss by $\tau^2 = 4$ restores $\tau^2 \cdot \frac{\partial D_{\text{KL}}}{\partial z_{S,1}} = -0.4622$, keeping KD balanced with the $\tau=1$ hard-label cross-entropy term.
+4. **Takeaway**: Forgetting the $\tau^2$ multiplier silently weakens distillation by $4\times$ at $\tau=2$ and $16\times$ at $\tau=4$.
+
 # Model Distillation for LLMs
 
 Chapter 23 introduced **knowledge distillation (KD)** as a compression tool: a small student matches a large teacher. That picture still holds. What changes for LLMs is the *output space* (a huge token vocabulary, one step at a time) and the *interface* you have to the teacher (full weights vs text only).

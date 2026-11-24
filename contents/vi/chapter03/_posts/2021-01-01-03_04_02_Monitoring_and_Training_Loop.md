@@ -9,6 +9,39 @@ categories:
 - chapter03
 ---
 
+Huấn luyện một mạng nơ-ron mà không theo dõi biểu đồ `train_loss`, `val_loss` và chuẩn gradient giống như lái máy bay xuyên mây mà tắt toàn bộ bảng đồng hồ buồng lái: bạn không biết mình đang tăng độ cao êm đẹp hay sắp lao xuống đất. Nhiều mô hình đạt đỉnh hiệu năng ở epoch 18, nhưng vì người chạy cứ để mặc tới epoch 100 nên mô hình học vẹt hoàn toàn tập huấn luyện và tụt dốc không phanh trên tập thật. Bài học này hướng dẫn bạn xây dựng một **vòng lặp huấn luyện chuyên nghiệp** với hệ thống giám sát chỉ số, lưu checkpoint tốt nhất và cơ chế **Dừng sớm (*Early Stopping*)**.
+
+## Bản đồ kiến thức nền: Bốn thành phần của Vòng lặp Huấn luyện Chuyên nghiệp
+
+1. **Tách biệt Chế độ Huấn luyện (`model.train()`) và Đánh giá (`model.eval()` + `torch.no_grad()`)**:
+   Lúc đánh giá bắt buộc chuyển sang `eval()` để tắt Dropout và khóa thống kê chạy (*running stats*) của BatchNorm, đồng thời bọc `torch.no_grad()` để không tốn VRAM lưu đồ thị đạo hàm.
+
+2. **Bộ chỉ số Giám sát Đa chiều (Metrics & Diagnostics)**:
+   Không chỉ nhìn Loss: theo dõi song song Accuracy/F1/MAE, learning rate hiện hành, và chuẩn $$L_2$$ của gradient (`grad_norm`) để phát hiện sớm dấu hiệu bùng nổ hay bão hòa.
+
+3. **Dừng sớm (Early Stopping) với `patience` và `min_delta`**:
+   Theo dõi `best_val_loss`; mỗi khi `val_loss` cải thiện ít nhất `min_delta`, lưu lại trọng số (*model checkpoint*) và reset bộ đếm `counter = 0`. Nếu `counter` chạm ngưỡng `patience`, dừng sớm và nạp lại bản trọng số tốt nhất.
+
+4. **Tính Tái lập Thực nghiệm (Reproducibility & Logging)**:
+   Cố định hạt giống ngẫu nhiên (`seed`), ghi nhật ký đầy đủ siêu tham số và biểu đồ học (TensorBoard / Weights & Biases) để mọi kết quả tốt đều có thể lặp lại chính xác.
+
+### Khung giải thích (nên đọc chậm): Mô phỏng tay cơ chế Early Stopping với `patience = 3`, `min_delta = 0.01`
+
+Theo dõi chuỗi `val_loss` qua 9 epoch liên tiếp để thấy chính xác thời điểm lưu checkpoint và thời điểm dừng:
+
+| Epoch | `val_loss` | So với `best_loss - 0.01` | Hành động | `best_loss` | `counter` |
+| :---: | :---: | :--- | :--- | :---: | :---: |
+| 1 | `0.85` | Cải thiện lần đầu | **Lưu checkpoint (Epoch 1)** | `0.85` | `0` |
+| 2 | `0.62` | `0.62 < 0.84` (Tốt hơn) | **Lưu checkpoint (Epoch 2)** | `0.62` | `0` |
+| 3 | `0.48` | `0.48 < 0.61` (Tốt hơn) | **Lưu checkpoint (Epoch 3)** | `0.48` | `0` |
+| 4 | `0.475` | `0.475 >= 0.47` (Cải thiện quá nhỏ `< 0.01`) | Không lưu, tăng bộ đếm | `0.48` | `1` |
+| 5 | `0.45` | `0.45 < 0.47` (Tốt hơn!) | **Lưu checkpoint (Epoch 5)**, reset | `0.45` | `0` |
+| 6 | `0.46` | Tăng nhẹ | Tăng bộ đếm | `0.45` | `1` |
+| 7 | `0.49` | Tiếp tục tăng (overfitting) | Tăng bộ đếm | `0.45` | `2` |
+| 8 | `0.52` | Tăng liên tiếp 3 lần | `counter == 3` $$\to$$ **DỪNG SỚM!** | `0.45` | `3` |
+
+Sau khi dừng ở Epoch 8, ta **không dùng** trọng số Epoch 8 (đang có `val_loss = 0.52`), mà nạp lại bản checkpoint tốt nhất ở **Epoch 5** (`val_loss = 0.45`) để đánh giá trên tập Test!
+
 ## Giám sát Quá trình Huấn luyện
 
 ### Các Chỉ số Cần Theo dõi

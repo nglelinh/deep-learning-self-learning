@@ -10,6 +10,35 @@ categories:
 lesson_type: optional
 ---
 
+Ở mức toán học, công thức lan truyền ngược của một mô hình Llama-405B năm 2026 hoàn toàn giống hệt quy tắc dây chuyền năm 1986. Thế nhưng nếu chạy theo kiểu ngây thơ từng dòng Python, mô hình ấy sẽ hết sạch bộ nhớ VRAM ngay ở lớp thứ 5 và tốn hàng tháng trời chờ GPU truyền dữ liệu qua lại bộ nhớ! Cuộc cách mạng thực sự của huấn luyện Deep Learning hiện đại (2022–2026) nằm ở **góc nhìn trình biên dịch và hệ thống**: `torch.compile`, JAX `jit`, **Kernel Fusion**, **Gradient Checkpointing** và **FlashAttention**—biến cùng một quy tắc dây chuyền thành mã máy siêu tốc, tiết kiệm bộ nhớ gấp nhiều lần.
+
+## Bản đồ kiến thức nền: Bốn kỹ thuật Trình biên dịch & Hệ thống nâng tầm Backpropagation
+
+1. **Biên dịch Đồ thị & Hợp nhất Nhân tính toán (`torch.compile`, JAX `jit`, Kernel Fusion)**:
+   Thay vì đọc/ghi tensor trung gian ra bộ nhớ toàn cục (HBM) nhiều lần cho từng phép toán nhỏ (cộng, nhân, kích hoạt), trình biên dịch gộp chúng thành **một GPU kernel duy nhất** chạy ngay trên bộ nhớ đệm siêu nhanh SRAM.
+
+2. **Đánh đổi Tính toán lấy Bộ nhớ (Activation / Gradient Checkpointing)**:
+   Thay vì lưu toàn bộ $$L$$ tầng kích hoạt trung gian khi forward (tốn $$O(L)$$ VRAM), chỉ lưu ở các mốc cách nhau $$\sqrt{L}$$ tầng và **tính lại cục bộ** lúc backward—giảm bộ nhớ activation từ $$O(L)$$ xuống $$O(\sqrt{L})$$ với chi phí thêm chỉ ~30% thời gian tính!
+
+3. **Huấn luyện Độ chính xác Hỗn hợp (Mixed Precision — BF16 / FP8)**:
+   Chạy phép nhân ma trận ở `BF16` (hoặc `FP8`) nhanh gấp 2–4 lần trên Tensor Cores, trong khi vẫn giữ bản sao trọng số gốc (*master weights*) và phép cộng dồn ở `FP32` để không mất độ chính xác tích lũy.
+
+4. **FlashAttention (Nhận thức Phân cấp Bộ nhớ GPU — IO-Aware Backprop)**:
+   Chia nhỏ ma trận Attention theo từng khối (*tiling*) vừa khít SRAM và tái tính toán ma trận chú ý lúc backward thay vì ghi ma trận $$N \times N$$ khổng lồ xuống HBM—giảm bộ nhớ từ $$O(N^2)$$ xuống $$O(N)$$ mà kết quả toán học **chính xác 100%**!
+
+### Khung giải thích (nên đọc chậm): Tính tay mức tiết kiệm VRAM của Gradient Checkpointing trên mạng 100 tầng
+
+Giả sử bạn huấn luyện một mạng có $$L = 100$$ tầng giống nhau, mỗi tầng sinh ra tensor kích hoạt (*activation*) nặng $$100\text{ MB}$$:
+
+1. **Backpropagation tiêu chuẩn (Lưu toàn bộ kích hoạt)**:
+   - Bộ nhớ VRAM cho activation: $$100 \times 100\text{ MB} = \mathbf{10{,}000\text{ MB}\; (10\text{ GB})}$$.
+   - Số lượt tính forward cho 1 bước train: $$100$$ tầng.
+2. **Backpropagation có Gradient Checkpointing (đặt mốc mỗi $$\sqrt{100} = 10$$ tầng)**:
+   - Lưu đúng 10 mốc checkpoint (mỗi mốc $$100\text{ MB}$$): $$1{,}000\text{ MB}$$.
+   - Khi backward qua một đoạn 10 tầng, tính lại và giữ tạm tối đa 10 tầng trong đoạn đó: $$1{,}000\text{ MB}$$.
+   - **Tổng VRAM đỉnh**: chỉ khoảng **$$2{,}000\text{ MB}\; (2\text{ GB})$$**—**tiết kiệm gấp 5 lần bộ nhớ VRAM!**
+   - **Chi phí phải trả**: mỗi tầng được forward thêm 1 lần nữa (tổng thời gian 1 bước tăng khoảng 25–33%, đổi lại bạn chạy vừa mô hình lớn gấp 5 lần trên cùng một GPU!).
+
 # Tùy chọn: Lan truyền ngược dưới góc nhìn trình biên dịch
 
 > Bài này là **tùy chọn** và **không** thay thế lý thuyết về hàm mất mát, gradient descent hay lan truyền ngược. Mục đích của bài là kết nối các thuật toán nền tảng đó với trình biên dịch và nhân tính toán (*kernel*) dùng trong thực tế huấn luyện từ sau năm 2022.

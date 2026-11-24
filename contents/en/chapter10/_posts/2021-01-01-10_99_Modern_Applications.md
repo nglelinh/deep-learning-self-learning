@@ -10,6 +10,28 @@ categories:
 lesson_type: optional
 ---
 
+For nearly a decade, AdamW sat virtually unchallenged atop deep learning optimization—yet training 100B+ parameter LLMs exposed its two biggest costs: **16 bytes/parameter** of optimizer state memory and purely diagonal (coordinate-wise) preconditioning that ignores matrix structure across weight rows and columns. Between 2023 and 2025, a new wave of optimizers challenged that status quo: **Lion** (discovered via symbolic program search, using sign updates and cutting optimizer memory in half), **Sophia** (lightweight diagonal Hessian clipping), and **Muon** (orthogonalizing 2D weight-matrix momentum updates via Newton–Schulz iterations for dramatically faster LLM pretraining).
+
+## Background Knowledge Map: Beyond AdamW — The 2023–2025 Optimizer Frontier
+
+- **Sign-Based Memory Compression (Lion, 2023)**: Replaces Adam's second-moment buffer `v` entirely by taking $$\operatorname{sign}(\beta_1 m_{t-1} + (1 - \beta_1) g_t)$$—halving optimizer memory (only 1 momentum buffer) while requiring ~$$3\times\text{–}10\times$$ smaller learning rates and larger weight decay.
+- **Second-Order Curvature Approximation (Sophia, 2023)**: Periodically estimates the diagonal Hessian $$h_t$$ (via Hutchinson's or Gauss–Newton estimators) and clips the update $$\operatorname{clip}(m_t / \max(h_t, \epsilon), -1, 1)$$, accelerating along flat directions while braking aggressively on sharp curvature.
+- **Matrix-Aware Orthogonalization (Muon, 2024)**: Recognizes that linear-layer weights $$W \in \mathbb{R}^{m \times n}$$ are **matrices**, not unstructured vectors. Applying fast **Newton–Schulz** iterations to the momentum matrix $$M_t$$ approximates its polar factor $$U V^\top$$ (setting all singular values to $$1$$), updating every spectral direction at equal speed!
+- **Hybrid Production Recipes**: Frontier training runs increasingly pair Muon for hidden 2D weight matrices with AdamW for 1D biases, LayerNorm gains, and token embeddings—combining spectral speed with scalar stability.
+
+### Step-by-Step Worked Example (Read Slowly): Why Orthogonalizing a Momentum Matrix (Muon) Rescues Small Singular Directions
+
+Suppose a $$2 \times 2$$ weight layer has momentum matrix $$M = \begin{bmatrix} 10 & 0 \\ 0 & 0.1 \end{bmatrix}$$ (singular values $$\sigma_1 = 10, \sigma_2 = 0.1$$ — a $$100:1$$ anisotropy!).
+
+1. **Standard Momentum update** ($$\Delta W = -\eta M$$ with $$\eta = 0.01$$):
+   $$\Delta W_{\text{mom}} = \begin{bmatrix} -0.10 & 0 \\ 0 & -0.001 \end{bmatrix}.$$
+   Direction 2 moves $$100\times$$ slower than Direction 1.
+2. **Muon polar orthogonalization** (SVD $$M = U \Sigma V^\top \implies \operatorname{orth}(M) = U V^\top$$):
+   - Here $$U = I, V = I, \Sigma = \operatorname{diag}(10, 0.1)$$, so $$U V^\top = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$$.
+   - Muon update ($$\eta = 0.01$$):
+     $$\Delta W_{\text{Muon}} = -0.01 \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} = \begin{bmatrix} -0.01 & 0 \\ 0 & -0.01 \end{bmatrix}.$$
+3. **One-step Newton–Schulz check**: Starting from normalized $$X_0 = M / \|M\|_F \approx \operatorname{diag}(0.99995, 0.0099995)$$, the iteration $$X_{k+1} = \frac{3}{2} X_k - \frac{1}{2} X_k^3$$ rapidly inflates tiny singular values toward $$1$$ using only fast GPU matrix multiplications—no expensive SVD required!
+
 # Optional: AdamW and the 2023–2025 optimizer wave (Lion, Sophia, Muon)
 
 > This lesson is **optional**. It does **not** replace momentum / RMSprop / Adam theory. The core notes already mention AdamW; this lesson covers what became standard *after* AdamW, and when to stay with AdamW.

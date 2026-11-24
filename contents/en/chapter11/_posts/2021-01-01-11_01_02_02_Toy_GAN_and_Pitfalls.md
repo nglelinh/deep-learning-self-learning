@@ -9,6 +9,31 @@ categories:
 - chapter11
 ---
 
+Run a toy GAN on a ring of eight Gaussians and you will witness one of the most famous pathologies in deep learning unfold in real time: instead of covering all eight islands, the generator often discovers one island that fools the discriminator and piles every single sample onto that one spot. Watching an autoregressive model and a GAN side-by-side on the exact same 2D ring turns abstract textbook warnings—mode collapse, vanishing gradients, and likelihood-vs-realism gaps—into something you can measure in five seconds.
+
+## Background Knowledge Map: Implicit GANs, Mode Collapse, and Diagnostics
+
+- **Pillar 1 — Implicit Pushforward Distributions**: Defines $p_G$ not by a density formula, but by transforming noise $z \sim \mathcal{N}(0, I)$ through a deterministic map $x = G_\theta(z)$, making sampling $O(1)$ forward pass while sacrificing exact likelihood.
+- **Pillar 2 — Adversarial Minimax Dynamics**: Contrasts single-objective gradient descent (MLE) with two-player zero-sum optimization $\min_G \max_D V(D, G)$, where simultaneous gradient updates can orbit or collapse rather than converge.
+- **Pillar 3 — Mode Coverage vs. Sample Precision**: Distinguishes *precision* (are generated points near real data?) from *recall* (are all real modes represented?), exposing why visual sharpness alone hides catastrophic mode dropping.
+- **Pillar 4 — Empirical Failure Diagnostics**: Connects diagnostic scripts (counting covered modes, tracking discriminator saturation $D(x) \to 1$, comparing held-out NLL) to practical debugging in larger generative pipelines.
+
+### Step-by-Step Worked Example (Read Slowly): Quantifying Mode Collapse and Discriminator Saturation
+
+Suppose our 8-Gaussian ring has centers $c_1, \dots, c_8$, and we draw $N = 800$ samples from a trained toy GAN. Counting samples within radius $r = 0.5$ of each center yields:
+$$\text{counts} = [380,\, 390,\, 0,\, 0,\, 0,\, 0,\, 0,\, 0], \quad \text{and } 30 \text{ samples fall outside all } 8 \text{ disks.}$$
+
+1. **Mode Coverage (Recall at mode level)**:
+   Only $2$ out of $8$ modes have non-zero support, so $\text{Mode Coverage} = 2/8 = 25\%$.
+2. **Sample Precision (in-manifold fraction)**:
+   $(380 + 390) / 800 = 770 / 800 = 96.25\%$ of generated samples look "realistic" (right on top of true clusters), even though $75\%$ of the true distribution is completely missing!
+3. **Discriminator Saturation Gradient Check**:
+   If the discriminator outputs $D(G(z)) = 0.01$ on a fake sample, compare the original minimax generator gradient weight versus the non-saturating heuristic:
+   - Minimax loss $\mathcal{L}_G = \log(1 - D(G(z)))$ has derivative $\frac{\partial \mathcal{L}_G}{\partial D} = -\frac{1}{1 - 0.01} \approx -1.01$, which multiplied by sigmoid derivative $D(1-D) = 0.0099$ gives logit gradient magnitude $\approx 0.010$ (vanishing!).
+   - Non-saturating loss $\mathcal{L}_G^{\text{NS}} = -\log D(G(z))$ has derivative $-\frac{1}{D} = -100$, multiplied by $D(1-D) = 0.0099$ gives logit gradient magnitude $1 - D = 0.99$ (strong learning signal!).
+4. **Takeaway**: High sample realism ($96.25\%$) can coexist with severe mode collapse ($25\%$ coverage), and switching to $-\log D(G(z))$ restores a $99\times$ stronger gradient when the generator is weak.
+
+```python
 # 2. Simple GAN for comparison
 print("\n2. Training GAN (Implicit Density)")
 print("-" * 70)

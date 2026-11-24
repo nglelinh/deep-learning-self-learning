@@ -9,6 +9,38 @@ categories:
 - chapter02
 ---
 
+Nếu Định lý Xấp xỉ Phổ quát khẳng định chỉ **một tầng ẩn duy nhất** là đủ để xấp xỉ mọi hàm liên tục, vậy tại sao các kiến trúc hiện đại như ResNet hay Llama lại chồng tới 50, 100 thậm chí hơn 100 tầng sâu? Khoảng cách giữa *"tồn tại trên lý thuyết"* và *"học được thực tế với chi phí hữu hạn"* chính là bí mật của nghệ thuật thiết kế kiến trúc. Bài học này phân tích sâu sự đánh đổi giữa **độ sâu** (*depth*) và **độ rộng** (*width*), giới thiệu các mẫu thiết kế kinh điển như thắt cổ chai (*bottleneck*), hình phễu (*pyramid*) và kết nối tắt (*skip connections*).
+
+## Bản đồ kiến thức nền: Bốn nguyên lý Thiết kế Độ sâu, Độ rộng và Mẫu Kiến trúc
+
+1. **Định lý Xấp xỉ Phổ quát vs. Hiệu quả Độ sâu (Expressivity vs. Efficiency)**:
+   Mạng 1 tầng ẩn có thể cần số nơ-ron cỡ $$O(2^d)$$ để biểu diễn một hàm có cấu trúc phân cấp, trong khi mạng sâu chỉ cần $$O(d)$$ nơ-ron nhờ tính hợp hàm lặp lại.
+
+2. **Bệnh lý của Mạng quá sâu (Degradation Problem)**:
+   Trước khi có Residual Connection (2015), một mạng 56 tầng thậm chí có *train error* cao hơn mạng 20 tầng—không phải vì overfitting mà vì tối ưu hóa một chuỗi dài các ánh xạ đồng nhất cực kỳ khó khăn.
+
+3. **Các Mẫu Thiết kế Kiến trúc Kinh điển (Design Patterns)**:
+   - **Hình phễu (Funnel/Pyramid)**: Giảm dần chiều (ví dụ `512 -> 256 -> 128 -> 10`) để nén thông tin thành quyết định cô đọng.
+   - **Thắt cổ chai (Bottleneck / Autoencoder)**: Ép qua chiều nhỏ rồi mở rộng lại (như `256 -> 64 -> 256` trong ResNet) để giảm FLOPs mà giữ dung lượng.
+   - **Kết nối tắt (Residual $$\mathbf{y} = \mathbf{x} + F(\mathbf{x})$$)**: Tạo "đường cao tốc" cho cả tín hiệu lẫn gradient đi thẳng qua mạng sâu.
+
+4. **Quy tắc Thực chiến khi Chọn Kích thước Mạng**:
+   Bắt đầu từ kiến trúc gọn, kiểm chứng khả năng overfit dữ liệu huấn luyện trước, sau đó mới mở rộng độ sâu/độ rộng kết hợp Regularization và Normalization.
+
+### Khung giải thích (nên đọc chậm): Tính tay mức tiết kiệm FLOPs của khối Bottleneck so với khối Phẳng
+
+Giả sử bạn cần xử lý một vector đặc trưng 256 chiều đi qua hai lớp liên tiếp và trả về 256 chiều:
+
+1. **Khối Phẳng (Standard 2-layer block: `256 -> 256 -> 256`)**:
+   - Số trọng số lớp 1: $$256 \times 256 = 65{,}536$$.
+   - Số trọng số lớp 2: $$256 \times 256 = 65{,}536$$.
+   - **Tổng trọng số**: $$131{,}072$$ tham số.
+2. **Khối Thắt cổ chai (Bottleneck block: `256 -> 64 -> 256`)**:
+   - Nén chiều (`256 -> 64`): $$256 \times 64 = 16{,}384$$.
+   - Mở rộng lại (`64 -> 256`): $$64 \times 256 = 16{,}384$$.
+   - **Tổng trọng số**: $$32{,}768$$ tham số.
+3. **So sánh**: Khối Bottleneck cắt giảm đúng **4 lần** (75%) số tham số và chi phí nhân ma trận! Khi xếp 50 khối như vậy trong một mạng sâu, đây chính là bí quyết giúp các kiến trúc hiện đại vừa cực sâu vừa chạy kịp thời gian thực.
+
 ## Độ sâu và Độ rộng của Mạng
 
 ### Độ rộng

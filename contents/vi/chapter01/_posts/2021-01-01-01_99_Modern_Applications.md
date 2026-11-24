@@ -10,6 +10,35 @@ categories:
 lesson_type: optional
 ---
 
+Nếu năm 2016 câu hỏi mặc định khi bắt đầu một dự án AI là *"Mình nên thu thập bao nhiêu nghìn mẫu để huấn luyện mạng từ đầu?"*, thì trong giai đoạn 2022–2026 câu hỏi mặc định đã hoàn toàn thay đổi: *"Mình nên bắt đầu từ mô hình nền tảng (Foundation Model) nào, thử prompting/RAG trước hay tinh chỉnh nhẹ bằng LoRA?"* Sự chuyển dịch này không hề làm kiến thức nền tảng của bạn trở nên lỗi thời—ngược lại, nó giúp bạn đi xa hơn gấp nhiều lần nếu hiểu rõ quy trình thực hành hiện đại và biết đánh giá rủi ro của từng lựa chọn.
+
+## Bản đồ kiến thức nền: Bốn tầng của Quy trình Thực hành Học sâu Hiện đại
+
+1. **Bậc thang Thích ứng (Adaptation Ladder: Prompting $$\to$$ RAG $$\to$$ LoRA $$\to$$ Pretraining)**:
+   Luôn đi từ phương án chi phí thấp, lặp nhanh nhất trước khi đầu tư tinh chỉnh trọng số hay huấn luyện từ đầu—chỉ nâng bậc khi đo lường thực nghiệm chứng minh bậc dưới đã chạm trần.
+
+2. **Đánh giá Hệ thống (Evals-Driven Development)**:
+   Trong kỷ nguyên mô hình sinh, độ chính xác đơn thuần không còn đủ; kỹ sư phải xây dựng bộ *evals* tự động đo độ trung thực (chống ảo giác), độ tuân thủ định dạng, độ trễ và chi phí mỗi truy vấn.
+
+3. **Suy luận Hiệu quả và Triển khai (Quantization, KV-Cache, Serving)**:
+   Hiểu các nút thắt bộ nhớ băng thông (memory-bandwidth bound) khi sinh token, cách lượng tử hóa xuống `INT8`/`FP8`/`INT4` cắt giảm VRAM gấp 2–4 lần mà hầu như giữ nguyên chất lượng.
+
+4. **Sự kết hợp giữa Mô hình Nền tảng và Mô hình Chuyên biệt**:
+   Dùng mô hình lớn làm "giáo viên" sinh dữ liệu tổng hợp hoặc gán nhãn tự động, rồi chưng cất (*distill*) sang mô hình nhỏ chạy siêu nhanh và tiết kiệm chi phí trong sản xuất.
+
+### Khung giải thích (nên đọc chậm): Tính tay lượng VRAM cần thiết để nạp một LLM 7 tỷ tham số ở các độ chính xác khác nhau
+
+Giả sử bạn muốn chạy suy luận một mô hình nền tảng cỡ $$7\text{ tỷ}$$ tham số ($$7 \times 10^9$$) trên GPU cá nhân có 16 GB VRAM:
+
+| Định dạng số học | Số byte / tham số | Bộ nhớ chỉ riêng trọng số (ước tính) | Chạy vừa trên GPU 16 GB VRAM? |
+| :--- | :---: | :---: | :--- |
+| **FP32 (32-bit)** | $$4\text{ bytes}$$ | $$7 \times 4 = 28\text{ GB}$$ | **Không** (tràn VRAM ngay lập tức) |
+| **FP16 / BF16 (16-bit)** | $$2\text{ bytes}$$ | $$7 \times 2 = 14\text{ GB}$$ | **Sát ngưỡng** (chỉ còn 2 GB cho KV-cache) |
+| **INT8 (8-bit)** | $$1\text{ byte}$$ | $$7 \times 1 = 7\text{ GB}$$ | **Thoải mái** (còn 9 GB cho ngữ cảnh dài) |
+| **INT4 / Q4 (4-bit)** | $$0.5\text{ byte}$$ | $$7 \times 0.5 = 3.5\text{ GB}$$ | **Rất nhẹ** (chạy tốt cả trên laptop 8 GB VRAM) |
+
+Chỉ bằng một phép nhân đơn giản ($$\text{Số tham số} \times \text{Số byte}$$), bạn đã có thể ước tính tức thì cấu hình phần cứng và quyết định chiến lược triển khai mà không cần đoán mò!
+
 # Tùy chọn: Thực hành học sâu trong kỷ nguyên mô hình nền tảng
 
 > Bài này là phần **tùy chọn**, **không** thay thế các bài cốt lõi về giới thiệu học sâu, MNIST hay hướng dẫn khóa học. Mục đích của bài là cập nhật *quy trình thực hành* trong ngành kể từ khi mô hình nền tảng (*foundation model*) trở thành điểm xuất phát mặc định.

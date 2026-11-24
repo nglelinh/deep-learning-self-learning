@@ -10,6 +10,27 @@ categories:
 lesson_type: optional
 ---
 
+Suốt gần một thập kỷ, mọi bộ phát hiện đối tượng đều bị trói chặt vào hai thứ: danh sách lớp cố định (ví dụ đúng 80 lớp của COCO) và thuật toán hậu xử lý thủ công NMS. Từ năm 2022 đến 2026, cả hai rào cản đó đồng loạt bị phá vỡ: **RT-DETR** loại bỏ hoàn toàn NMS nhờ khớp hai phía Hungarian, **SAM / SAM 2** cắt tách bất kỳ vật thể nào trong ảnh/video chỉ bằng một cú nhấp chuột, còn **Grounding DINO** tìm vật thể bằng câu mô tả tiếng người tự do!
+
+## Bản đồ kiến thức nền: Ba bước ngoặt của Thị giác Máy tính hiện đại (2022–2026)
+
+- **Phân đoạn theo Prompt (SAM & SAM 2):** Tách biệt bộ mã hóa ảnh nặng (chạy 1 lần) với bộ giải mã mặt nạ siêu nhẹ nhận prompt điểm/hộp/văn bản; SAM 2 mở rộng thêm bộ nhớ thời gian để theo dõi đối tượng xuyên suốt video.
+- **Bộ phát hiện Transformer thời gian thực (RT-DETR / RF-DETR):** Dùng phép khớp một-một Hungarian lúc huấn luyện nên mỗi truy vấn đối tượng (object query) tạo đúng một dự đoán, bỏ hẳn Anchor Boxes và NMS.
+- **Phát hiện từ vựng mở (Open-Vocabulary Detection — Grounding DINO, YOLO-World):** Trộn chéo đặc trưng ảnh với vector văn bản để phát hiện cả những vật thể chưa từng có trong tập nhãn cố định.
+- **Chuỗi kết hợp Grounding DINO + SAM:** Quy trình tiêu chuẩn công nghiệp cho gắn nhãn tự động (auto-labeling): nhập cụm từ văn bản → Grounding DINO khoanh hộp → SAM cắt chính xác mặt nạ pixel.
+
+### Khung giải thích (nên đọc chậm): Tính tay bài toán khớp một-một Hungarian trong DETR (loại bỏ NMS)
+
+Giả sử ảnh có 2 đối tượng thật ($$y_1$$: `mèo`, $$y_2$$: `chó`) và bộ giải mã DETR tạo ra 3 dự đoán $$(\hat{y}_1, \hat{y}_2, \hat{y}_3)$$. Ma trận chi phí khớp (càng nhỏ càng tốt, gộp sai số lớp + sai số hộp GIoU) với đối tượng 3 là lớp rỗng $$\varnothing$$ (no-object) cho bởi:
+- $$\hat{y}_1$$: chi phí với `mèo` $$= 0{,}2$$, với `chó` $$= 2{,}5$$, với $$\varnothing = 1{,}0$$
+- $$\hat{y}_2$$: chi phí với `mèo` $$= 0{,}3$$, với `chó` $$= 0{,}4$$, với $$\varnothing = 1{,}0$$
+- $$\hat{y}_3$$: chi phí với `mèo` $$= 3{,}0$$, với `chó` $$= 2{,}8$$, với $$\varnothing = 0{,}1$$
+
+1. **So sánh hai phương án gán song ánh:**
+   - Phương án A ($$\hat{y}_1 \to \text{mèo},\; \hat{y}_2 \to \text{chó},\; \hat{y}_3 \to \varnothing$$): tổng chi phí $$= 0{,}2 + 0{,}4 + 0{,}1 = 0{,}7$$.
+   - Phương án B ($$\hat{y}_2 \to \text{mèo},\; \hat{y}_1 \to \text{chó},\; \hat{y}_3 \to \varnothing$$): tổng chi phí $$= 0{,}3 + 2{,}5 + 0{,}1 = 2{,}9$$.
+2. **Hệ quả kiến trúc:** Thuật toán Hungarian chọn phương án A ($$0{,}7$$). Vì **chỉ duy nhất một truy vấn** được khớp vào `mèo` (còn mọi truy vấn dư đều bị phạt hướng về $$\varnothing$$), mạng tự học cách không bao giờ đẻ ra hai hộp chồng lên nhau — xóa sổ hoàn toàn nhu cầu dùng NMS!
+
 # Tùy chọn: Phát hiện và phân đoạn sau YOLO / Mask R-CNN
 
 > Bài này là **tùy chọn**, **không** thay thế phần lý thuyết về bộ phát hiện một/hai giai đoạn hay các ghi chú về YOLO và Faster R-CNN. Nội dung bổ sung các mô hình được sử dụng rộng rãi trong thực tế giai đoạn 2023–2025: **SAM/SAM 2**, **RT-DETR**, **Grounding DINO** và các phiên bản YOLO mới.

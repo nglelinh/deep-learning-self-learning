@@ -9,6 +9,34 @@ categories:
 - chapter00
 ---
 
+> *When inverted dropout randomly zeros out neurons during training, it flips independent Bernoulli coins; when you count how many neurons survived across a layer, you get a Binomial variable; and when a server counts incoming inference requests per second, you get a Poisson distribution.*
+
+## Background Knowledge Map: Discrete Distributions in Neural Systems
+
+1. **Bernoulli Distribution ($$\text{Bern}(p)$$)**: Models a single binary trial—binary classification targets, dropout keep-masks $$m_i \sim \text{Bern}(p)$$, and pixel binarization—with mean $$p$$ and variance $$p(1-p)$$.
+2. **Binomial Distribution ($$\text{Bin}(n, p)$$)**: Counts the number of successes in $$n$$ independent Bernoulli trials, governing the distribution of active neurons in a dropout layer and exact confidence intervals for test-set accuracy.
+3. **Categorical Distribution ($$\text{Cat}(\mathbf{p})$$)**: Generalizes Bernoulli to $$K$$ mutually exclusive classes, serving as the output distribution of every softmax classifier and autoregressive language model.
+4. **Poisson Distribution ($$\text{Pois}(\lambda)$$)**: Models rare event counts per unit time or space (clicks, spikes in neuromorphic nets, arrivals) where mean equals variance ($$\lambda$$).
+
+### Step-by-Step Worked Example (Read Slowly): Exact Dropout Survival Probabilities and Inverted Scaling
+
+Consider a tiny hidden layer with $$n = 4$$ neurons, each with activation $$h_i = 2.0$$, where dropout keeps each neuron independently with probability $$p = 0.5$$.
+
+1. **Distribution of Surviving Neurons $$K \sim \text{Bin}(4, 0.5)$$**:
+   $$P(K = k) = \binom{4}{k}(0.5)^k(0.5)^{4-k} = \frac{\binom{4}{k}}{16}$$
+   - $$P(K = 0) = \frac{1}{16} = 0.0625$$ (entire layer drops out!)
+   - $$P(K = 1) = \frac{4}{16} = 0.2500$$
+   - $$P(K = 2) = \frac{6}{16} = 0.3750$$
+   - $$P(K = 3) = \frac{4}{16} = 0.2500$$
+   - $$P(K = 4) = \frac{1}{16} = 0.0625$$
+   Check sum: $$(1 + 4 + 6 + 4 + 1)/16 = 16/16 = 1.0$$.
+2. **Expected Sum Without Inverted Scaling**:
+   With $$m_i \sim \text{Bern}(0.5)$$, $$\mathbb{E}\!\left[\sum_{i=1}^4 m_i h_i\right] = 4 \times (0.5 \times 2.0) = 4.0$$, which is only half of the test-time sum $$\sum_{i=1}^4 h_i = 8.0$$!
+3. **Fix via Inverted Dropout (Divide by $$p = 0.5$$ During Training)**:
+   Define $$\tilde{h}_i = \frac{m_i}{p} h_i = 2 m_i h_i$$. Now:
+   $$\mathbb{E}\!\left[\sum_{i=1}^4 \tilde{h}_i\right] = 4 \times 2 \times 0.5 \times 2.0 = 8.0$$
+   Training and inference expectations match identically with zero extra work at test time.
+
 ## Common Probability Distributions
 
 Understanding key probability distributions is essential for deep-learning problems in machine learning and statistics. These distributions frequently appear as assumptions in models, priors in Bayesian methods, and error models in regression.

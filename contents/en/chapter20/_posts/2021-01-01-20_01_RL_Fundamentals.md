@@ -9,6 +9,29 @@ categories:
 - chapter20
 ---
 
+How does an agent learn the optimal route through a maze without ever seeing a map of the transition probabilities $P(s' \mid s, a)$? In 1989, Chris Watkins proved that **Q-Learning**—updating a simple lookup table $Q(s, a)$ by nudging it toward $r + \gamma \max_{a'} Q(s', a')$—is guaranteed to converge to the globally optimal action-value function $Q^*$ even while the agent follows an exploratory $\epsilon$-greedy policy. That off-policy bootstrapping trick is the ancestor of every value-based deep RL algorithm.
+
+## Background Knowledge Map: Bellman Equations, TD Learning, and Q-Learning
+
+- **Pillar 1 — Bellman Expectation vs. Bellman Optimality**: Distinguishes evaluating a fixed policy ($V^\pi$) from solving for the optimal policy ($V^*, Q^*$) via the $\max_a$ operator.
+- **Pillar 2 — Temporal-Difference (TD) Bootstrapping**: Updates value estimates after *every single step* using the TD error $\delta_t = r + \gamma \max_{a'} Q(s', a') - Q(s, a)$ rather than waiting for episode termination (Monte Carlo).
+- **Pillar 3 — On-Policy (SARSA) vs. Off-Policy (Q-Learning)**: Contrasts learning the value of the exploratory policy actually executed (SARSA, safer near cliffs) against learning the greedy optimal policy from exploratory trajectories (Q-Learning).
+- **Pillar 4 — Exploration Scheduling ($\epsilon$-Greedy)**: Guarantees infinite visitation of all state–action pairs early in training while annealing $\epsilon \to 0$ so the deployed policy exploits what it learned.
+
+### Step-by-Step Worked Example (Read Slowly): One Exact Q-Learning Update Step
+
+Suppose an agent is in state $s_1$, takes action $a = \text{Right}$, receives reward $r = -1$, and lands in state $s_2$. Current table values are:
+$$Q(s_1, \text{Right}) = 4.0, \qquad Q(s_2, \text{Left}) = 2.0, \qquad Q(s_2, \text{Right}) = 8.0,$$
+with learning rate $\alpha = 0.25$ and discount factor $\gamma = 0.9$.
+
+1. **Compute the TD target $y = r + \gamma \max_{a'} Q(s_2, a')$**:
+   $$y = -1 + 0.9 \times \max(2.0, 8.0) = -1 + 7.2 = 6.2.$$
+2. **Compute the Temporal-Difference (TD) error $\delta$**:
+   $$\delta = y - Q(s_1, \text{Right}) = 6.2 - 4.0 = +2.2.$$
+3. **Update $Q(s_1, \text{Right})$**:
+   $$Q_{\text{new}}(s_1, \text{Right}) = 4.0 + 0.25(2.2) = 4.0 + 0.55 = 4.55.$$
+4. **Takeaway**: Because the next state $s_2$ has a high value ($8.0$), Q-Learning pulls $Q(s_1, \text{Right})$ upward by $+0.55$ even though the immediate step cost $-1$—propagating future reward backward one step at a time.
+
 # Reinforcement Learning: Learning from Interaction
 
 ![Reinforcement Learning Diagram](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Reinforcement_learning_diagram.svg/800px-Reinforcement_learning_diagram.svg.png)

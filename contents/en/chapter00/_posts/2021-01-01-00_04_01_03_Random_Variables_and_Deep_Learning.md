@@ -9,6 +9,31 @@ categories:
 - chapter00
 ---
 
+> *Every weight initialization, every dropout mask, every mini-batch gradient, and every latent vector in a VAE is a random variable. Understanding expectation, variance, and linearity of expectation lets you predict whether activations will blow up across 100 layers before you even run a single epoch.*
+
+## Background Knowledge Map: Random Variables and Moment Propagation
+
+1. **Discrete vs. Continuous Random Variables**: Describes quantities via probability mass functions (PMFs) for discrete tokens/masks and probability density functions (PDFs) for continuous weights/activations.
+2. **Linearity of Expectation (Always Holds)**: Even when variables are correlated, $$\mathbb{E}[aX + bY] = a\mathbb{E}[X] + b\mathbb{E}[Y]$$, which guarantees that mini-batch SGD gradients are unbiased estimators of the full-dataset gradient.
+3. **Variance Scaling (The Key to Initialization)**: For independent variables, $$\text{Var}(aX + bY) = a^2\text{Var}(X) + b^2\text{Var}(Y)$$; this quadratic scaling by $$a^2$$ is the exact derivation behind Xavier/Glorot and He initialization.
+4. **Law of the Unconscious Statistician (LOTUS)**: Computes $$\mathbb{E}[g(X)]$$ directly from the distribution of $$X$$ without deriving the distribution of $$g(X)$$, enabling Monte Carlo gradient estimation in stochastic networks.
+
+### Step-by-Step Worked Example (Read Slowly): Deriving Variance Preservation for a Linear Layer
+
+Consider a single neuron computing $$z = \sum_{i=1}^{n} w_i x_i$$ with $$n = 100$$ inputs, where inputs $$x_i$$ and weights $$w_i$$ are mutually independent with mean $$0$$, input variance $$\text{Var}(x_i) = 1$$, and weight variance $$\text{Var}(w_i) = \sigma_w^2$$.
+
+1. **Compute the Mean of Each Product $$w_i x_i$$**:
+   By independence, $$\mathbb{E}[w_i x_i] = \mathbb{E}[w_i]\mathbb{E}[x_i] = 0 \times 0 = 0$$.
+   By linearity of expectation, $$\mathbb{E}[z] = \sum_{i=1}^{100} 0 = 0$$.
+2. **Compute the Variance of Each Product $$w_i x_i$$**:
+   Since both means are zero:
+   $$\text{Var}(w_i x_i) = \mathbb{E}[(w_i x_i)^2] - 0^2 = \mathbb{E}[w_i^2]\mathbb{E}[x_i^2] = \text{Var}(w_i)\text{Var}(x_i) = \sigma_w^2 \cdot 1 = \sigma_w^2$$
+3. **Sum Variances Across All $$n = 100$$ Independent Terms**:
+   $$\text{Var}(z) = \sum_{i=1}^{100} \text{Var}(w_i x_i) = 100\,\sigma_w^2$$
+4. **Solve for Signal-Preserving Weight Scale**:
+   - If you naively initialize $$\sigma_w = 1$$, then $$\text{Var}(z) = 100$$ after just one layer (and $$100^{10} = 10^{20}$$ after 10 layers!).
+   - Setting $$\text{Var}(z) = 1$$ requires $$100\,\sigma_w^2 = 1 \implies \sigma_w = \frac{1}{\sqrt{100}} = 0.1$$. That exact calculation is Xavier/LeCun initialization!
+
 ### 6. Random Variables
 
 A **random variable** X is a function that assigns a real number to each outcome in the sample space:

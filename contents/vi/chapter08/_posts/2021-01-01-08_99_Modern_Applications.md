@@ -10,6 +10,32 @@ categories:
 lesson_type: optional
 ---
 
+Nếu đem sơ đồ khối Transformer gốc năm 2017 đặt cạnh một mô hình ngôn ngữ lớn hiện đại giai đoạn 2024–2026 như **Llama 3**, **Qwen 2.5**, **DeepSeek** hay **Gemma 2**, bạn sẽ thấy bộ khung tổng thể vẫn gần như nguyên vẹn — nhưng gần như **mọi linh kiện bên trong** đều đã được tinh chỉnh sắc bén hơn để huấn luyện ổn định hơn ở quy mô nghìn tỷ token và suy luận nhanh hơn trên phần cứng thực tế.
+
+## Bản đồ kiến thức nền: Bốn nâng cấp tiêu chuẩn của Khối Transformer Hiện đại (2022–2026)
+
+1. **RMSNorm + Pre-LN thay cho Post-LN LayerNorm**:
+   RMSNorm bỏ bước trừ giá trị trung bình (chỉ chia cho căn trung bình bình phương $$\text{RMS}(x)$$), giảm ~10–15% chi phí tính toán chuẩn hóa mà chất lượng và độ ổn định tương đương LayerNorm.
+2. **RoPE (Rotary Position Embedding) thay cho Sinusoidal/Learned PE**:
+   Thay vì cộng vector vị trí ở tầng đầu, RoPE **xoay** trực tiếp các cặp tọa độ của vector $$Q$$ và $$K$$ theo góc tỷ lệ với vị trí $$m, n$$ — khiến tích vô hướng $$q_m^T k_n$$ chỉ phụ thuộc vào **khoảng cách tương đối** $$(m - n)$$ và dễ ngoại suy sang ngữ cảnh dài hơn!
+3. **SwiGLU thay cho FFN + ReLU cổ điển**:
+   Thêm nhánh cổng nhân (gating): $$\text{SwiGLU}(x) = (\text{SiLU}(x W_1) \odot (x W_3)) W_2$$. Vì có 3 ma trận thay vì 2, chiều ẩn trung gian thường lấy $$\frac{8}{3} d_{\text{model}}$$ thay vì $$4 d_{\text{model}}$$ để giữ nguyên tổng số tham số mà độ chính xác tăng rõ rệt.
+4. **Mixture of Experts (MoE) và Transformer Đa phương thức (Multimodal)**:
+   Thay 1 khối FFN đặc bằng nhiều chuyên gia (ví dụ 8–64 experts) nhưng chỉ kích hoạt Top-2 chuyên gia cho mỗi token (như Mixtral, DeepSeek-V3), cho phép mở rộng dung lượng tri thức lên hàng trăm tỷ tham số trong khi chi phí suy luận chỉ bằng mô hình cỡ nhỏ.
+
+### Khung giải thích (nên đọc chậm): Tính tay phép xoay vị trí RoPE 2 chiều để thấy tính bất biến khoảng cách tương đối
+
+Xét vector 2D $$\mathbf{q} = [1, 0]^T$$ đặt ở vị trí $$m$$ và $$\mathbf{k} = [1, 0]^T$$ đặt ở vị trí $$n$$, với góc xoay cơ sở $$\theta = 30^\circ$$. Ma trận xoay RoPE ở vị trí $$t$$ là $$R(t\theta) = \begin{bmatrix} \cos t\theta & -\sin t\theta \\ \sin t\theta & \cos t\theta \end{bmatrix}$$:
+
+1. **Trường hợp 1 ($$m = 1, \; n = 2$$, khoảng cách $$n - m = 1$$)**:
+   - $$\tilde{\mathbf{q}}_1 = R(30^\circ)\mathbf{q} = [\cos 30^\circ, \; \sin 30^\circ]^T = [0{,}866, \; 0{,}500]^T$$
+   - $$\tilde{\mathbf{k}}_2 = R(60^\circ)\mathbf{k} = [\cos 60^\circ, \; \sin 60^\circ]^T = [0{,}500, \; 0{,}866]^T$$
+   - Tích vô hướng: $$\tilde{\mathbf{q}}_1^T \tilde{\mathbf{k}}_2 = (0{,}866)(0{,}500) + (0{,}500)(0{,}866) = \mathbf{0{,}866} = \cos(30^\circ)$$
+2. **Trường hợp 2 (dịch cả hai từ xuống cuối đoạn văn: $$m = 10, \; n = 11$$, vẫn cách nhau $$1$$)**:
+   - $$\tilde{\mathbf{q}}_{10}^T \tilde{\mathbf{k}}_{11} = \mathbf{q}^T R(10\theta)^T R(11\theta) \mathbf{k} = \mathbf{q}^T R((11 - 10)\theta) \mathbf{k} = \cos(30^\circ) = \mathbf{0{,}866}$$!
+
+Dù hai từ đứng ở đầu hay ở tận cuối một tài liệu dài 100.000 từ, điểm chú ý RoPE giữa chúng vẫn **chỉ phụ thuộc vào khoảng cách tương đối $$n - m$$** — một tính chất hình học tuyệt đẹp!
+
 # Tùy chọn: Từ khối Transformer gốc đến hệ thống LLM hiện đại
 
 > Bài này mang tính **tùy chọn** và **không** thay thế phần lý thuyết encoder/decoder hay mã hóa vị trí. Nội dung đối chiếu khối Transformer năm 2017 với cấu trúc LLM giai đoạn 2022–2026 gồm RoPE, KV-cache, mô hình trọng số mở và hạ tầng phục vụ.

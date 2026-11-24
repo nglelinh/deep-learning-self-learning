@@ -10,6 +10,31 @@ categories:
 lesson_type: optional
 ---
 
+Trong phỏng vấn Machine Learning nâng cao, câu hỏi về bộ tối ưu hiếm khi dừng ở mức "Adam viết tắt của từ gì?". Người phỏng vấn muốn kiểm tra xem bạn có giải thích được bằng trực giác toán học **tại sao Adam cần bias correction**, **điểm khác biệt chí mạng giữa Adam và AdamW**, và **vì sao Transformer gần như không thể huấn luyện thiếu Learning Rate Warmup** hay không.
+
+## Bản đồ kiến thức nền: Bốn chủ đề phỏng vấn trọng tâm về Bộ tối ưu
+
+1. **Giải thích hình học của Momentum trên thung lũng hẹp**:
+   Gradient trên trục dốc đổi dấu liên tục ($$+, -, +, -$$) nên khi cộng dồn vào vận tốc $$v_t$$ chúng **tự triệt tiêu nhau**; trong khi gradient dọc đáy thung lũng luôn cùng dấu nên **cộng hưởng tăng tốc** lên tới hệ số $$\frac{1}{1 - \beta}$$ (với $$\beta = 0{,}9$$ là gấp 10 lần!).
+2. **Tại sao Adam cần Hiệu chỉnh độ lệch (Bias Correction)**:
+   Vì $$m_0 = v_0 = 0$$, ước lượng EMA bị kéo lệch mạnh về 0 ở những bước đầu khi $$\beta_1 = 0{,}9, \; \beta_2 = 0{,}999$$; chia cho $$(1 - \beta^t)$$ chuẩn hóa lại tổng trọng số của trung bình trượt về đúng 1.
+3. **Adam vs. AdamW (Decoupled Weight Decay)**:
+   Chỉ ra đúng lỗi của L2 gộp vào gradient bị chia cho $$\sqrt{\hat{v}_t}$$, làm mất tính đồng đều của trọng số phân rã.
+4. **Vai trò của Learning Rate Warmup**:
+   Ở vài trăm–vài nghìn bước đầu, phương sai ước lượng $$\hat{v}_t$$ của Adam rất nhiễu và các lớp chuẩn hóa chưa ổn định; giữ $$\eta$$ nhỏ rồi tăng dần giúp các thống kê moment ổn định trước khi bước những bước lớn.
+
+### Khung giải thích (nên đọc chậm): Tính tay hệ số khuếch đại vận tốc cực đại của Momentum khi gradient không đổi
+
+Giả sử dọc theo đáy thung lũng phẳng, gradient luôn giữ nguyên một hướng với giá trị hằng số $$g_t = g$$, và hệ số quán tính là $$\beta = 0{,}9$$. Ta tính vận tốc $$v_t = \beta v_{t-1} + g$$ (với $$v_0 = 0$$):
+
+- $$v_1 = g$$
+- $$v_2 = 0{,}9 g + g = 1{,}9 g$$
+- $$v_3 = 0{,}9^2 g + 0{,}9 g + g = 2{,}71 g$$
+- Tổng quát sau $$t$$ bước (tổng cấp số nhân):
+  $$v_t = g \sum_{k=0}^{t-1} \beta^k = g \cdot \frac{1 - \beta^t}{1 - \beta} \xrightarrow{t \to \infty} \mathbf{\frac{g}{1 - \beta}}$$
+
+Thay $$\beta = 0{,}9$$: vận tốc cuối cùng đạt $$\frac{1}{1 - 0{,}9} = \mathbf{10 \, g}$$ — tăng tốc đúng **10 lần** dọc theo đáy thung lũng mà không cần tăng learning rate (còn nếu $$\beta = 0{,}99$$ thì tăng tới **100 lần**)!
+
 # Tùy chọn: Luyện phỏng vấn — Bộ tối ưu
 
 > Bài này mang tính **tùy chọn** và **không** thay thế phần lý thuyết về momentum, RMSprop hay Adam. Sau khi học xong các bài chính, bạn có thể dùng bộ câu hỏi dưới đây để tự kiểm tra, sau đó tham khảo thêm cuốn *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) để luyện các câu hỏi có lời giải chi tiết về phương pháp thích nghi, siêu tham số và động lực huấn luyện.

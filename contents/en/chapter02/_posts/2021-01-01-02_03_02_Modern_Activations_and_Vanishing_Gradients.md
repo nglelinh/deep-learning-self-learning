@@ -9,6 +9,32 @@ categories:
 - chapter02
 ---
 
+> *Open the source code of GPT, Llama, or Gemma and you will not find a single ReLU in the Transformer blocks—instead you will see GELU, SiLU (Swish), and SwiGLU. Modern activations combine ReLU's non-saturating positive ray with smooth curvature near zero to stabilize deep optimization.*
+
+## Background Knowledge Map: Modern Activations & Gradient Preservation
+
+1. **GELU & SiLU/Swish (Smooth Stochastic Gating)**: Weight each input smoothly by a probability gate—$$\text{SiLU}(z) = z\sigma(z)$$ and $$\text{GELU}(z) = z\Phi(z)$$—giving smooth derivatives everywhere and slight non-monotonicity for negative $$z$$.
+2. **Gated Linear Units (SwiGLU)**: Splits the hidden projection into two pathways, $$\text{SwiGLU}(\mathbf{x}) = \text{SiLU}(\mathbf{x}W_1) \odot (\mathbf{x}W_2)$$, providing multiplicative feature interaction that consistently lowers LLM perplexity per FLOP.
+3. **Output-Layer Matching Principle**: Pairs the final activation strictly with the task's probability model—linear for regression, sigmoid for binary/multi-label, and numerically stabilized log-softmax for multi-class classification.
+4. **Vanishing Gradient Mitigation Stack**: Combines non-saturating activations with variance-preserving initialization (He/Xavier), normalization (LayerNorm/RMSNorm), and residual skip connections.
+
+### Step-by-Step Worked Example (Read Slowly): Computing SiLU (Swish) Value, Derivative, and Numerically Stable Softmax
+
+1. **SiLU Forward & Backward at $$z = 0$$ and $$z = -1$$** ($$\text{SiLU}(z) = z\sigma(z)$$):
+   By the product rule:
+   $$\text{SiLU}'(z) = \sigma(z) + z\,\sigma(z)(1 - \sigma(z)) = \sigma(z)\big(1 + z(1 - \sigma(z))\big)$$
+   - At $$z = 0$$ ($$\sigma(0) = 0.5$$):
+     $$\text{SiLU}(0) = 0, \qquad \text{SiLU}'(0) = 0.5(1 + 0) = 0.500$$
+   - At $$z = -1$$ ($$\sigma(-1) \approx 0.2689$$):
+     $$\text{SiLU}(-1) = -0.2689, \qquad \text{SiLU}'(-1) = 0.2689\big(1 - 1(0.7311)\big) = 0.2689(0.2689) \approx +0.0723$$
+   Unlike ReLU (whose derivative is identically $$0$$ at $$z = -1$$), SiLU remains smoothly differentiable with a gentle nonzero gradient.
+2. **Why Shift-Invariant Softmax Prevents Overflow**:
+   Suppose logits are $$\mathbf{z} = [1000, 1001, 1000]$$. Direct `exp(1000)` overflows `float32` (`inf / inf = NaN`).
+   Subtract $$\max(\mathbf{z}) = 1001$$ first: $$\tilde{\mathbf{z}} = [-1, 0, -1]$$.
+   $$e^{-1} \approx 0.3679, \quad e^0 = 1.0000 \implies Z = 1.7358$$
+   $$\text{softmax}(\mathbf{z}) = \left[\frac{0.3679}{1.7358}, \frac{1.0000}{1.7358}, \frac{0.3679}{1.7358}\right] \approx [0.2119, 0.5761, 0.2119]$$
+   Exact mathematical equality, zero floating-point overflow!
+
 ## Choosing the Right Activation Function
 
 ### For Hidden Layers

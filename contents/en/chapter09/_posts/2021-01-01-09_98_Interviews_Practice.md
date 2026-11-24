@@ -10,6 +10,27 @@ categories:
 lesson_type: optional
 ---
 
+Regularization and normalization questions are staples of ML engineering interviews because they separate practitioners who memorize API flags from those who actually debug diverging or overfitting training runs. Can you explain geometrically why L1 induces exact sparsity while L2 shrinks weights smoothly? Can you trace what breaks when `model.eval()` is forgotten on a network containing both Dropout and BatchNorm? These five focused prompts sharpen your diagnostic instincts.
+
+## Background Knowledge Map: High-Signal Interview Concepts in Regularization
+
+- **Diagnosing Overfitting vs. Underfitting**: Reading train/val loss divergence curves and matching remedies (data augmentation, weight decay, dropout, early stopping) to the actual failure mode.
+- **L1 vs. L2 Geometry & Subgradients**: Understanding why the diamond-shaped L1 ball intersects loss contours on coordinate axes (exact zeros / feature selection), whereas the circular L2 ball shrinks all coordinates proportionally without zeroing them.
+- **Train vs. Eval Mode Semantics**: Articulating the exact mathematical difference between `train()` and `eval()` for both Dropout (masking + $$1/(1-p)$$ scaling vs. identity) and BatchNorm (batch stats vs. EMA running stats).
+- **Data Augmentation as Implicit Invariance**: Framing random crops, flips, and Mixup as injecting domain-symmetry priors directly into the empirical risk distribution.
+
+### Step-by-Step Worked Example (Read Slowly): One Gradient Step — L1 vs. L2 Regularization on a Small Weight
+
+Suppose a single weight currently sits at $$w = 0.02$$, the data-loss gradient is $$g = 0$$ (an irrelevant feature!), learning rate is $$\eta = 0.1$$, and regularization strength is $$\lambda = 0.3$$.
+
+1. **Under L2 regularization ($$\frac{\lambda}{2} w^2$$, gradient $$\lambda w$$)**:
+   $$w_{\text{new}} = 0.02 - 0.1(0.3 \times 0.02) = 0.02 - 0.0006 = 0.0194.$$
+   As $$w$$ gets smaller, the L2 pull shrinks proportionally—so $$w$$ approaches $$0$$ asymptotically but never hits exact $$0$$.
+2. **Under L1 regularization ($$\lambda |w|$$, subgradient $$\lambda \operatorname{sign}(w)$$ with proximal/soft-thresholding)**:
+   - Pull magnitude is a constant $$\eta \lambda = 0.1 \times 0.3 = 0.03 > |w|$$.
+   - Proximal step snaps $$w_{\text{new}} = \operatorname{sign}(w)\max(|w| - \eta\lambda, 0) = 0.0$$ **exactly**!
+   That constant-slope pull near zero is why L1 yields sparse models while L2 yields small dense weights.
+
 # Optional: interview practice — overfitting and regularizers
 
 > This lesson is **optional**. It does **not** replace dropout, BatchNorm, or the other regularization notes. After those lessons, use this drill, then open *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) for solved items on overfitting, validation, and capacity control.

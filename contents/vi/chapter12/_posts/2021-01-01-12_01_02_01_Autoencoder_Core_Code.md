@@ -9,6 +9,27 @@ categories:
 - chapter12
 ---
 
+Một bức ảnh chữ số viết tay MNIST có tới $$784$$ điểm ảnh, nhưng liệu bao nhiêu con số là đủ để tái hiện lại dáng cong của số 3 hay nét thẳng của số 7? Khi tự tay viết mã nguồn Vanilla Autoencoder, Denoising Autoencoder và Convolutional Autoencoder bằng PyTorch, bạn sẽ thấy ngay sự khác biệt giữa việc ép phẳng ảnh thành vector (mất cấu trúc không gian) với việc dùng tầng tích chập và tích chập chuyển vị để giữ trọn hình dáng chữ số.
+
+## Bản đồ kiến thức nền: Thiết kế kiến trúc và quy trình huấn luyện Autoencoder trong PyTorch
+
+- **Thiết kế đối xứng Encoder–Decoder:** Giảm dần kích thước chiều (ví dụ $$784 \to 256 \to 64 \to 16$$) rồi mở rộng ngược lại, khớp hàm kích hoạt đầu ra (`Sigmoid` cho ảnh $$[0,1]$$, `Tanh` cho $$[-1,1]$$) với hàm mất mát.
+- **Biến thể Denoising ngay trong vòng huấn luyện:** Cộng nhiễu Gaussian $$\tilde{\mathbf{x}} = \text{clip}(\mathbf{x} + \sigma\boldsymbol{\epsilon}, 0, 1)$$ tại bước forward nhưng vẫn tính loss so với ảnh sạch $$\mathbf{x}$$.
+- **Convolutional Autoencoder (CAE):** Dùng `Conv2d(stride=2)` để hạ mẫu và `ConvTranspose2d` để nâng mẫu, khai thác tính bất biến tịnh tiến và giảm hàng chục lần số tham số so với MLP.
+- **Kiểm định trực quan và định lượng:** Theo dõi đồng thời MSE/BCE trên tập kiểm tra và bảng đối chiếu ảnh gốc – ảnh nhiễu – ảnh tái tạo.
+
+### Khung giải thích (nên đọc chậm): Tính kích thước tensor và số tham số: MLP Autoencoder vs. Conv Autoencoder trên MNIST
+
+Xét đầu vào MNIST kích thước $$1 \times 28 \times 28 = 784$$:
+
+1. **Tầng đầu của MLP Autoencoder** (`Linear(784, 256)`):
+   - Số tham số riêng tầng này: $$784 \times 256 + 256 = 200{,}960$$ tham số.
+2. **Tầng đầu của Conv Autoencoder** (`Conv2d(1, 16, kernel_size=3, stride=2, padding=1)`):
+   - Kích thước không gian đầu ra: $$H_{\text{out}} = \left\lfloor\frac{28 + 2(1) - 3}{2}\right\rfloor + 1 = 14$$, tức tensor $$16 \times 14 \times 14$$.
+   - Số tham số: $$16 \times (1 \times 3 \times 3 + 1) = 160$$ tham số — **ít hơn 1.256 lần** so với tầng MLP tương đương!
+3. **Tầng nâng mẫu tương ứng** (`ConvTranspose2d(16, 1, kernel_size=3, stride=2, padding=1, output_padding=1)`):
+   - Kích thước đầu ra: $$(14 - 1)\times 2 - 2(1) + 3 + 1 = 28$$, khớp chính xác $$1 \times 28 \times 28$$. Chỉ sai `output_padding=0` sẽ cho ra $$27 \times 27$$ và gây lỗi lệch kích thước khi tính loss!
+
 ## 4. Đoạn mã
 
 Phần mã dưới đây cài đặt autoencoder chuẩn và autoencoder khử nhiễu bằng PyTorch cùng quy trình huấn luyện đầy đủ trên tập dữ liệu MNIST:

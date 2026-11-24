@@ -9,6 +9,34 @@ categories:
 - chapter01
 ---
 
+> *MNIST is the "Hello, World!" of deep learning, yet treating it as a black-box copy-paste script hides the most valuable skill in the field: tracking tensor shapes, parameter counts, and memory budgets at every single line of a forward and backward pass.*
+
+## Background Knowledge Map: Anatomy of Your First End-to-End Neural Pipeline
+
+1. **Tensor Shape Accounting (Input to Logits)**: Tracks exact dimensions—from image batch $$(B, 1, 28, 28)$$ through flattening $$(B, 784)$$ to hidden layers and class logits $$(B, 10)$$—eliminating 90% of beginner runtime bugs.
+2. **Parameter & Capacity Budgeting**: Counts exact weights and biases per `nn.Linear(in, out)` layer as $$(\text{in} \times \text{out}) + \text{out}$$, revealing where memory and overfitting risk concentrate.
+3. **The Four-Step PyTorch Training Loop**: Separates (1) zeroing stale gradients (`zero_grad`), (2) forward pass & loss computation, (3) reverse-mode autodiff (`loss.backward`), and (4) parameter update (`optimizer.step`).
+4. **Evaluation Hygiene (`eval()` & `no_grad()`)**: Switches stochastic layers (Dropout, BatchNorm) to deterministic inference mode and disables autograd graph construction to prevent memory leaks during validation.
+
+### Step-by-Step Worked Example (Read Slowly): Exact Tensor Shapes and Parameter Count for a 3-Layer MNIST MLP
+
+Consider the classic MNIST MLP architecture: `784 -> 256 -> 128 -> 10` trained with mini-batch size $$B = 64$$ in `float32` (4 bytes per number).
+
+1. **Trace Tensor Shapes Through One Forward Pass**:
+   - Raw batch from DataLoader: `(64, 1, 28, 28)`
+   - After `view(64, -1)` flatten: `(64, 784)`
+   - After Layer 1 (`Linear(784, 256)` + ReLU): `(64, 256)`
+   - After Layer 2 (`Linear(256, 128)` + ReLU): `(64, 128)`
+   - After Output Layer (`Linear(128, 10)`): `(64, 10)` (raw logits, no softmax needed before `nn.CrossEntropyLoss`).
+2. **Count Exact Trainable Parameters**:
+   - Layer 1: $$784 \times 256 + 256 = 200{,}704 + 256 = 200{,}960$$
+   - Layer 2: $$256 \times 128 + 128 = 32{,}768 + 128 = 32{,}896$$
+   - Layer 3: $$128 \times 10 + 10 = 1{,}280 + 10 = 1{,}290$$
+   - **Total parameters**: $$200{,}960 + 32{,}896 + 1{,}290 = 235{,}146$$
+3. **Memory Footprint Check**:
+   - Parameters alone in `float32`: $$235{,}146 \times 4\text{ bytes} = 940{,}584\text{ bytes} \approx 0.90\text{ MB}$$.
+   - Notice that **85.5%** ($$200{,}960 / 235{,}146$$) of all parameters live in the very first layer because flattening a 2D image ignores spatial locality—a direct preview of why Convolutional Neural Networks (CNNs) were invented!
+
 ## 4. Code Snippet
 
 Let's implement a simple deep learning example to make concepts concrete. We'll build a neural network to classify MNIST digits using PyTorch.

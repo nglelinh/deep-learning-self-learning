@@ -9,6 +9,33 @@ categories:
 - chapter08
 ---
 
+Even after deriving every matrix equation of a Transformer, it is surprisingly hard to *feel* what happens to a single prompt—like `"Data visualization empowers users to"`—as it flows through tokenization, embeddings, 12 layers of multi-head self-attention and MLP expansions, and finally into a probability distribution over 50,257 GPT-2 vocabulary tokens. Interactive visualizers like Polo Club's *Transformer Explainer* turn those abstract tensors into a live glass box where you can watch temperature, top-$$k$$, and top-$$p$$ reshape the next word in real time.
+
+## Background Knowledge Map: Tracing One Live Token Through GPT-2
+
+- **Subword Tokenization (BPE) & Embedding Lookup**: Byte-Pair Encoding splits text into frequent subword chunks (avoiding out-of-vocabulary failures), mapping each integer token ID $$t_i \in \{0, \dots, 50256\}$$ to a 768-dimensional vector plus a learned positional vector.
+- **Multi-Head Self-Attention Flow**: In GPT-2 Small (12 layers, 12 heads, $$d_{\text{model}} = 768, d_k = 64$$), each token's residual vector is projected into 12 parallel `(Q, K, V)` subspaces, mixed causally, and added back to the residual stream.
+- **MLP Expansion & GELU Non-Linearity**: Each token independently expands $$768 \to 3{,}072 \to 768$$ through a smooth GELU activation, acting like a key-value associative memory bank that refines semantic predictions.
+- **Unembedding & Sampling Controls (Temperature, Top-$$k$$, Top-$$p$$)**: Multiplying the final hidden state by $$W_{\text{emb}}^\top$$ produces 50,257 logits; temperature rescales sharpness, top-$$k$$ truncates to the $$k$$ highest-scoring tokens, and top-$$p$$ (nucleus sampling) truncates to the smallest token set whose cumulative probability exceeds $$p$$.
+
+### Step-by-Step Worked Example (Read Slowly): Top-$$k$$ vs. Top-$$p$$ (Nucleus) Truncation on 5 Candidate Tokens
+
+Suppose GPT-2's softmax over the top 5 next-token candidates yields:
+- `"understand"`: $$0.45$$
+- `"explore"`: $$0.30$$
+- `"see"`: $$0.15$$
+- `"analyze"`: $$0.07$$
+- `"paint"`: $$0.03$$ (sum $$= 1.00$$)
+
+1. **Apply Top-$$k$$ with $$k = 2$$**:
+   - Keep only `"understand"` ($$0.45$$) and `"explore"` ($$0.30$$); total kept mass $$= 0.75$$.
+   - Renormalize: $$p(\text{"understand"}) = 0.45 / 0.75 = 0.60$$, $$p(\text{"explore"}) = 0.30 / 0.75 = 0.40$$.
+2. **Apply Top-$$p$$ (Nucleus) with $$p = 0.85$$**:
+   - Cumulative sums: $$0.45$$ (1 token), $$0.45 + 0.30 = 0.75$$ (2 tokens, still $$< 0.85$$), $$0.75 + 0.15 = 0.90$$ (3 tokens, crosses $$0.85$$!).
+   - Keep the top 3 tokens (`"understand"`, `"explore"`, `"see"`); total kept mass $$= 0.90$$.
+   - Renormalize: $$0.45/0.90 = 0.500$$, $$0.30/0.90 = 0.333$$, $$0.15/0.90 = 0.167$$.
+3. **Why practitioners prefer Top-$$p$$**: When the model is very confident (e.g., top token $$= 0.92$$), Top-$$p$$ dynamically shrinks to 1 token; when uncertain, it expands smoothly to include plausible continuations!
+
 # Transformer Explainer
 
 The equations in this chapter tell you *what* a Transformer computes. [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) lets you *watch* those computations on a real language model, with no installation and no GPU. It runs a live **GPT-2 (small)** model (124 million parameters, 12 stacked Transformer blocks) directly in the browser, so every number you see is the actual forward pass for the prompt you type.

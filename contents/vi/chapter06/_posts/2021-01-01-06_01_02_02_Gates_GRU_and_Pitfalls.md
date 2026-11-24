@@ -9,6 +9,32 @@ categories:
 - chapter06
 ---
 
+Làm sao biết chiếc LSTM bạn vừa huấn luyện thực sự "học được cách nhớ và quên" chứ không phải chỉ đang ghi nhớ vẹt? Cách trực quan nhất là **mở nắp ca-pô** và ghi lại giá trị mở của từng cổng $$f_t, i_t, o_t$$ qua từng bước thời gian — đồng thời đặt LSTM lên bàn cân trực tiếp với đối thủ gọn nhẹ hơn là **GRU**.
+
+## Bản đồ kiến thức nền: Bốn chủ đề phân tích sâu về Cổng, GRU và Cạm bẫy
+
+1. **Giải phẫu hành vi cổng trên chuỗi nhiễu**:
+   Trên chuỗi `[5, nhiễu, nhiễu, ..., 3]`, một LSTM tốt sẽ mở $$i_1 \approx 1$$ khi thấy số `5`, sau đó giữ $$f_t \approx 1, i_t \approx 0$$ suốt đoạn nhiễu để khóa kín bộ nhớ, và chỉ mở lại $$i_T, o_T$$ ở bước cuối.
+2. **So sánh thực chiến LSTM vs. GRU**:
+   GRU có ít hơn 25% tham số, huấn luyện nhanh hơn một chút và ít overfitting hơn trên tập nhỏ; LSTM nhỉnh hơn trên các bài toán đếm hoặc phụ thuộc cực dài nhờ tách biệt $$c_t$$ khỏi $$h_t$$.
+3. **Bốn cạm bẫy kinh điển khi huấn luyện LSTM/GRU**:
+   Quên áp dụng Dropout **chỉ giữa các tầng** (không tùy tiện đặt dropout chuẩn lên kết nối hồi tiếp làm đứt trí nhớ), quên khởi tạo $$b_f > 0$$, bỏ quên gradient clipping, và dùng chuỗi quá dài mà không dùng Attention.
+4. **Định vị LSTM trong bức tranh tiến hóa**:
+   Biết rõ giới hạn của LSTM (tuần tự hóa $$O(T)$$ không song song được trên GPU) để hiểu chính xác tại sao Chương 07 (Attention) và Chương 08 (Transformer) ra đời.
+
+### Khung giải thích (nên đọc chậm): Tính tay cơ chế nội suy lồi của GRU so với LSTM khi gặp nhiễu
+
+Xét một đơn vị GRU 1 chiều với trạng thái cũ $$h_{t-1} = 5{,}0$$ và ứng viên mới chứa tín hiệu nhiễu $$\tilde{h}_t = -1{,}0$$. Phương trình cập nhật của GRU là:
+$$h_t = (1 - z_t) \cdot h_{t-1} + z_t \cdot \tilde{h}_t$$
+
+| Giá trị cổng cập nhật $$z_t$$ | Tỷ lệ giữ cũ $$(1 - z_t)$$ | Tỷ lệ nhận mới $$z_t$$ | Trạng thái mới $$h_t$$ | Ý nghĩa |
+| :---: | :---: | :---: | :---: | :--- |
+| **$$z_t = 0{,}05$$** (đóng cửa trước nhiễu) | $$0{,}95$$ | $$0{,}05$$ | $$0{,}95(5{,}0) + 0{,}05(-1{,}0) = \mathbf{4{,}70}$$ | Bỏ qua nhiễu, bảo toàn gần nguyên vẹn số 5 |
+| **$$z_t = 0{,}50$$** (trộn đều) | $$0{,}50$$ | $$0{,}50$$ | $$0{,}50(5{,}0) + 0{,}50(-1{,}0) = \mathbf{2{,}00}$$ | Hòa trộn cũ và mới |
+| **$$z_t = 0{,}95$$** (ghi đè hoàn toàn) | $$0{,}05$$ | $$0{,}95$$ | $$0{,}05(5{,}0) + 0{,}95(-1{,}0) = \mathbf{-0{,}70}$$ | Xóa ký ức cũ, nhận thông tin mới |
+
+Khác với LSTM (cho phép cả $$f_t$$ và $$i_t$$ cùng bằng 1 để *cộng dồn* không giới hạn), GRU ràng buộc tổng trọng số cũ + mới luôn bằng đúng 1 — gọn nhẹ hơn nhưng cũng làm GRU khó học bài toán "đếm không giới hạn" bằng LSTM.
+
 ```python
 # Phân tích hành vi cổng
 print("\n" + "="*70)

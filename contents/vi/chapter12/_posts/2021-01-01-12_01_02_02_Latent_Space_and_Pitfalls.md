@@ -9,6 +9,28 @@ categories:
 - chapter12
 ---
 
+Hãy tưởng tượng bạn lấy mã ẩn của một chữ số 1 và một chữ số 7, rồi đi dọc theo đoạn thẳng nối giữa hai điểm đó trong không gian ẩn — liệu những bức ảnh giải mã dọc đường có biến hình mượt mà từ số 1 sang số 7 hay sẽ vỡ nát thành nhiễu hỗn độn? Bài học này đưa bạn bước vào bên trong "hộp đen" không gian ẩn của Autoencoder để trực quan hóa các cụm dữ liệu, thử nghiệm nội suy và nhận diện lý do chính Autoencoder thường chưa thể sinh dữ liệu mới một cách tin cậy.
+
+## Bản đồ kiến thức nền: Khám phá không gian ẩn và những giới hạn dẫn đường sang VAE
+
+- **Nội suy tuyến tính trong không gian ẩn:** Tính $$\mathbf{z}(\alpha) = (1-\alpha)\mathbf{z}_A + \alpha\mathbf{z}_B$$ và giải mã $$g_\theta(\mathbf{z}(\alpha))$$ để kiểm tra tính liên tục cục bộ của biểu diễn học được.
+- **Trực quan hóa không gian ẩn 2D:** Chiếu dữ liệu xuống $$d = 2$$ để quan sát cách các lớp tự tách cụm mà không hề dùng nhãn lớp trong quá trình huấn luyện.
+- **Lỗ hổng không gian ẩn (Holes in Latent Space):** Vì Autoencoder thường không áp đặt phân phối tiên nghiệm lên $$\mathbf{z}$$, nhiều vùng nằm giữa các cụm không hề tương ứng với dữ liệu thật, khiến việc lấy mẫu ngẫu nhiên tạo ra ảnh méo mó.
+- **Bẫy thực hành phổ biến:** Lạm dụng nút cổ chai quá rộng (học thuộc), dùng sai hàm mất mát (MSE gây mờ nhẹ trên ảnh nhị phân), hoặc quên chuẩn hóa thang ảnh.
+
+### Khung giải thích (nên đọc chậm): Tính tay một đường nội suy 5 bước trong không gian ẩn 2D và nhận diện vùng trống
+
+Giả sử sau khi huấn luyện Autoencoder 2D trên MNIST, ảnh chữ số `1` được mã hóa tại $$\mathbf{z}_A = (-2{,}0,\; 1{,}0)$$ và ảnh chữ số `7` tại $$\mathbf{z}_B = (2{,}0,\; 3{,}0)$$.
+
+Ta nội suy với $$\alpha \in \{0;\; 0{,}25;\; 0{,}50;\; 0{,}75;\; 1{,}0\}$$ theo công thức $$\mathbf{z}(\alpha) = (1-\alpha)\mathbf{z}_A + \alpha\mathbf{z}_B$$:
+- $$\alpha = 0{,}00$$: $$(-2{,}0,\; 1{,}0)$$ (ảnh `1` sắc nét)
+- $$\alpha = 0{,}25$$: $$(-1{,}0,\; 1{,}5)$$
+- $$\alpha = 0{,}50$$: $$(0{,}0,\; 2{,}0)$$ (trung điểm)
+- $$\alpha = 0{,}75$$: $$(1{,}0,\; 2{,}5)$$
+- $$\alpha = 1{,}00$$: $$(2{,}0,\; 3{,}0)$$ (ảnh `7` sắc nét)
+
+**Điểm mấu chốt:** Nếu cụm ảnh `1` tập trung trong bán kính $$0{,}8$$ quanh $$(-2, 1)$$ và cụm `7` tập trung trong bán kính $$0{,}8$$ quanh $$(2, 3)$$, thì điểm giữa $$(0{,}0,\; 2{,}0)$$ nằm cách cả hai tâm cụm một khoảng $$\sqrt{2^2 + 1^2} = \sqrt{5} \approx 2{,}24 \gg 0{,}8$$ — rơi trọn vào **vùng trống chưa từng được bộ giải mã nhìn thấy lúc huấn luyện**. Đây chính là động lực trực tiếp để Chương 13 (VAE) dùng phân kỳ KL nén mọi mã ẩn về một phân phối chuẩn liên tục.
+
 ```python
 # Minh họa nội suy không gian ẩn
 print("\n" + "="*70)

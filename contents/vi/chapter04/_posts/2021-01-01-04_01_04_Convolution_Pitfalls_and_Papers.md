@@ -9,6 +9,33 @@ categories:
 - chapter04
 ---
 
+Viết ra một mạng CNN chạy được mà không báo lỗi chỉ mới đi được nửa chặng đường. Nửa chặng đường khó hơn nằm ở việc nhận diện những cạm bẫy âm thầm giết chết hiệu năng — như kích thước đặc trưng co về 0 ở tầng sâu, mất thông tin biên ảnh, hay chi phí tính toán phình to khi triển khai lên điện thoại — và biết chọn đúng biến thể tích chập (Depthwise Separable, Dilated) cho từng bài toán.
+
+## Bản đồ kiến thức nền: Bốn nhánh kiến thức nâng cao về Tích chập
+
+1. **Tích chập Tách theo Chiều sâu (Depthwise Separable Convolution)**:
+   Tách phép lọc không gian (1 bộ lọc riêng cho từng kênh) khỏi phép trộn kênh (tích chập $$1\times 1$$), tạo nền tảng cho MobileNet và Xception chạy mượt trên thiết bị di động.
+2. **Tích chập Giãn (Dilated / Atrous Convolution)**:
+   Chèn các khoảng trống có độ giãn $$d$$ giữa các trọng số nhân để mở rộng trường tiếp nhận theo cấp số nhân mà không cần giảm độ phân giải ảnh — cực kỳ quan trọng trong phân đoạn ảnh (DeepLab) và xử lý âm thanh (WaveNet).
+3. **Hệ sinh thái tầng bổ trợ (Pooling, BatchNorm, Residual)**:
+   Tầng tích chập chỉ phát huy tối đa khi đặt đúng thứ tự với BatchNorm (loại bỏ bias dư thừa) và kết nối tắt (bảo toàn đường truyền gradient).
+4. **Chẩn đoán các cạm bẫy kinh điển**:
+   Từ hiệu ứng lưới bàn cờ (*checkerboard artifacts*) khi dùng transposed convolution, lỗi quên `padding` khiến ảnh co nhanh, cho tới nhầm lẫn giữa bất biến (invariance) và đồng biến (equivariance).
+
+### Khung giải thích (nên đọc chậm): Tính tay tỷ lệ tiết kiệm của Depthwise Separable và Trường tiếp nhận của Dilated Conv
+
+**Phần A — Depthwise Separable vs. Standard Conv** (với $$k = 3, C_{\text{in}} = 64, C_{\text{out}} = 128$$):
+- **Standard Conv**: $$3 \times 3 \times 64 \times 128 = \mathbf{73{,}728}$$ tham số.
+- **Depthwise** (lọc riêng từng kênh): $$3 \times 3 \times 64 = 576$$ tham số.
+- **Pointwise $$1 \times 1$$** (trộn 64 kênh ra 128 kênh): $$1 \times 1 \times 64 \times 128 = 8{,}192$$ tham số.
+- **Tổng Depthwise Separable**: $$576 + 8{,}192 = \mathbf{8{,}768}$$ tham số — giảm **8,4 lần** (xấp xỉ công thức lý thuyết $$\frac{1}{C_{\text{out}}} + \frac{1}{k^2} = \frac{1}{128} + \frac{1}{9} \approx 0{,}119$$).
+
+**Phần B — Kích thước hiệu dụng của Dilated Convolution**:
+Với nhân gốc $$k = 3$$ và hệ số giãn $$d$$, kích thước cửa sổ hiệu dụng là $$k_{\text{eff}} = k + (k - 1)(d - 1) = 1 + 2d$$:
+- $$d = 1 \Rightarrow k_{\text{eff}} = 3 \times 3$$ (tích chập thường).
+- $$d = 2 \Rightarrow k_{\text{eff}} = 5 \times 5$$ (vẫn chỉ tốn **9** trọng số thay vì 25!).
+- $$d = 4 \Rightarrow k_{\text{eff}} = 9 \times 9$$ (vẫn chỉ tốn **9** trọng số thay vì 81!).
+
 ## 5. Khái niệm Liên quan
 
 ### CNN so với Mạng Neuron Liên kết Đầy đủ

@@ -9,6 +9,41 @@ categories:
 - chapter02
 ---
 
+ReLU đã giải cứu Deep Learning khỏi cơn ác mộng bão hòa của Sigmoid, nhưng nó vẫn để lại hai vết gợn nhỏ: góc gãy không khả vi tại $$0$$ và những "nơ-ron chết" (*dying ReLU*) không bao giờ tỉnh lại khi bị đẩy sang vùng âm. Để đẩy độ chính xác và độ ổn định lên tầm cao mới cho BERT, GPT, Vision Transformer và Llama, cộng đồng nghiên cứu đã sáng tạo ra thế hệ hàm kích hoạt hiện đại: **Leaky ReLU, ELU, GELU, SiLU (Swish) và SwiGLU**. Bài học này giúp bạn chọn đúng hàm kích hoạt cho từng tầng và làm chủ toàn bộ bộ công cụ chống gradient biến mất.
+
+## Bản đồ kiến thức nền: Bốn mũi nhọn của Hàm Kích hoạt Hiện đại và Chống Gradient Biến mất
+
+1. **Họ sửa lỗi Dying ReLU (Leaky ReLU, PReLU, ELU)**:
+   Giữ một độ dốc nhỏ $$\alpha > 0$$ (thường $$0.01$$) ở miền âm để nơ-ron không bao giờ bị khóa chết hoàn toàn với đạo hàm bằng $$0$$.
+
+2. **Hàm kích hoạt trơn phi đơn điệu (GELU & SiLU/Swish)**:
+   - **GELU** ($$\approx x\Phi(x)$$): nhân đầu vào với xác suất nó lớn hơn nhiễu chuẩn—chuẩn mực trong BERT, GPT-2/3 và ViT.
+   - **SiLU / Swish** ($$x\cdot \sigma(x)$$) và biến thể cổng nhân **SwiGLU**: trơn khắp nơi, cho phép một vùng âm nhẹ (không đơn điệu) giúp tối ưu hóa mượt mà hơn trong LLM hiện đại (Llama, PaLM).
+
+3. **Cơ chế Toán học của Vanishing & Exploding Gradients**:
+   Trong mạng $$L$$ tầng, gradient chứa tích $$\prod_{\ell=1}^L \mathbf{W}^{(\ell)\top}\text{diag}(\sigma'(\mathbf{z}^{(\ell)}))$$. Chỉ cần chuẩn phổ trung bình của mỗi thừa số nhỏ hơn $$1$$ hoặc lớn hơn $$1$$ một chút, tích $$L$$ thừa số sẽ tắt dần về $$0$$ hoặc vọt lên $$\infty$$ theo hàm mũ.
+
+4. **Bộ tứ Giải pháp Đồng bộ**:
+   Hàm kích hoạt không bão hòa (ReLU/GELU) + Khởi tạo chuẩn (He/Xavier) + Chuẩn hóa (BatchNorm/LayerNorm/RMSNorm) + Kết nối tắt (Residual Connections) + Gradient Clipping.
+
+### Khung giải thích (nên đọc chậm): Tính tay giá trị và đạo hàm của Leaky ReLU vs. SiLU (Swish) tại $$x = -1$$
+
+Hãy đặt lên bàn cân ba hàm kích hoạt tại cùng một điểm âm $$x = -1$$ để thấy sự khác biệt về dòng chảy gradient:
+
+1. **ReLU**:
+   - Giá trị: $$\max(0, -1) = 0$$.
+   - Đạo hàm: $$0$$ (tín hiệu học bị cắt đứt hoàn toàn!).
+2. **Leaky ReLU** ($$\alpha = 0.05$$):
+   - Giá trị: $$0.05 \times (-1) = -0.05$$.
+   - Đạo hàm: $$0.05$$ (vẫn duy trì luồng gradient nhỏ để nơ-ron có cơ hội hồi phục).
+3. **SiLU / Swish** ($$f(x) = x\sigma(x)$$):
+   - Ta có $$\sigma(-1) = \frac{1}{1+e^1} \approx 0.2689$$.
+   - Giá trị: $$f(-1) = (-1)(0.2689) = -0.2689$$.
+   - Đạo hàm: $$f'(x) = \sigma(x) + x\sigma(x)(1 - \sigma(x))$$. Thay $$x = -1$$:
+     $$f'(-1) = 0.2689 + (-1)(0.2689)(0.7311) = 0.2689 - 0.1966 = +0.0723.$$
+
+Nhìn vào con số $$+0.0723$$: khác với ReLU bị "chết phẳng" bằng $$0$$, SiLU vẫn truyền được một lượng gradient mượt mà, liên tục ở vùng âm, giúp các mạng Transformer sâu hội tụ ổn định và đạt chất lượng biểu diễn cao hơn.
+
 ## Chọn Hàm Kích hoạt Phù hợp
 
 ### Cho Lớp Ẩn

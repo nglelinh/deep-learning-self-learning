@@ -10,6 +10,33 @@ categories:
 lesson_type: optional
 ---
 
+Suốt gần một thập kỷ, AdamW gần như không có đối thủ trong việc huấn luyện các mô hình nền tảng quy mô lớn — nhưng chi phí bộ nhớ khổng lồ của nó (lưu 2 bản sao trạng thái FP32 cho hàng trăm tỷ tham số) và khát vọng rút ngắn hàng triệu giờ GPU đã thúc đẩy một làn sóng bộ tối ưu mới đầy ấn tượng giai đoạn 2023–2025: từ **Lion** (do AI tự tiến hóa tìm ra!), **Sophia** (tận dụng thông tin bậc hai Hessian), cho tới **Muon** (tối ưu hóa trực giao hóa ma trận theo phổ giá trị kỳ dị).
+
+## Bản đồ kiến thức nền: Bốn đột phá Bộ tối ưu giai đoạn 2023–2025
+
+1. **Lion (EvoLved Sign Momentum, Google Brain 2023)**:
+   Được tìm ra bằng thuật toán tìm kiếm tiến hóa chương trình! Lion bỏ hoàn toàn moment bậc 2 $$v_t$$ (tiết kiệm ngay **50% bộ nhớ trạng thái optimizer** so với AdamW) và cập nhật tham số chỉ bằng **dấu** `sign(...)` của tổ hợp quán tính — nên mọi tham số có độ lớn bước nhảy đồng đều tuyệt đối.
+2. **Sophia (Second-Order Clipped Stochastic Optimization, Stanford 2023)**:
+   Thay vì dùng bình phương gradient $$g_t^2$$ (vốn đo độ lớn gradient chứ không phải độ cong thật), Sophia ước lượng nhẹ đường chéo **ma trận Hessian** $$h_t$$ định kỳ (mỗi $$k=10$$ bước) kết hợp cắt ngưỡng `clip` để tăng tốc huấn luyện LLM gấp ~2 lần so với AdamW.
+3. **Muon (MomentUm Orthogonalized by Newton–Schulz, 2024–2025)**:
+   Nhận ra rằng trọng số trong mạng sâu là **ma trận** chứ không phải một túi các số vô hướng rời rạc! Muon dùng vài vòng lặp Newton–Schulz siêu nhanh trên GPU để **trực giao hóa** ma trận cập nhật quán tính (đưa mọi giá trị kỳ dị về 1), lập kỷ lục tốc độ huấn luyện NanoGPT và được ứng dụng trong các LLM thế hệ mới (như Kimi K2).
+4. **Kỹ thuật tiết kiệm bộ nhớ hệ thống (8-bit AdamW, Adafactor, GaLore)**:
+   Lượng tử hóa trạng thái optimizer xuống 8-bit (`bitsandbytes`) hoặc chiếu gradient xuống không gian con hạng thấp (GaLore) giúp tinh chỉnh mô hình 7B–70B ngay trên một GPU tiêu dùng.
+
+### Khung giải thích (nên đọc chậm): Tính tay bước cập nhật bằng dấu của Lion và so sánh bộ nhớ trạng thái với AdamW
+
+**Phần A — Một bước cập nhật của Lion** (cho $$w = 1{,}0, \; m_0 = 0{,}5, \; g_1 = -2{,}0, \; \beta_1 = 0{,}9, \; \beta_2 = 0{,}99, \; \eta = 0{,}01, \; \lambda = 0{,}1$$):
+1. Tính hướng cập nhật tạm (nội suy bằng $$\beta_1$$):
+   $$c_1 = \beta_1 m_0 + (1 - \beta_1) g_1 = 0{,}9(0{,}5) + 0{,}1(-2{,}0) = 0{,}45 - 0{,}20 = \mathbf{+0{,}25}$$
+2. Cập nhật tham số chỉ dùng **dấu** của $$c_1$$ kèm weight decay tách rời:
+   $$w_1 = w_0 - \eta \big(\operatorname{sign}(c_1) + \lambda w_0\big) = 1{,}0 - 0{,}01\big(+1 + 0{,}1(1{,}0)\big) = \mathbf{0{,}989}$$
+3. Cập nhật bộ nhớ quán tính duy nhất (bằng $$\beta_2$$):
+   $$m_1 = \beta_2 m_0 + (1 - \beta_2) g_1 = 0{,}99(0{,}5) + 0{,}01(-2{,}0) = \mathbf{0{,}475}$$
+
+**Phần B — So sánh bộ nhớ trạng thái Optimizer cho mô hình 10 tỷ tham số (FP32 = 4 byte/số)**:
+- **AdamW** (lưu cả $$m$$ và $$v$$): $$2 \times 10^{10} \times 4\text{ B} = \mathbf{80\text{ GB VRAM}}$$.
+- **Lion / Muon** (chỉ lưu duy nhất 1 bảng quán tính $$m$$): $$1 \times 10^{10} \times 4\text{ B} = \mathbf{40\text{ GB VRAM}}$$ (cắt giảm đúng một nửa!).
+
 # Tùy chọn: AdamW và các bộ tối ưu giai đoạn 2023–2025 (Lion, Sophia, Muon)
 
 > Bài này mang tính **tùy chọn** và **không** thay thế lý thuyết về momentum, RMSprop hay Adam. Các bài chính đã trình bày AdamW; bài này tóm tắt những phương pháp nổi bật ra đời *sau* AdamW, đồng thời làm rõ khi nào vẫn nên tiếp tục dùng AdamW.

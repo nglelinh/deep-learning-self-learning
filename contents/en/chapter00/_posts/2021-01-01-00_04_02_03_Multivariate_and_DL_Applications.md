@@ -9,6 +9,29 @@ categories:
 - chapter00
 ---
 
+> *Individual pixels in a face image are never independent—knowing a pixel on the left cheek strongly constrains its neighbors. Multivariate distributions capture those cross-feature correlations through covariance matrices, powering everything from Batch Normalization and PCA whitening to Variational Autoencoders and Diffusion Models.*
+
+## Background Knowledge Map: Multivariate Probability in Deep Learning
+
+1. **Multivariate Normal Distribution ($$\mathcal{N}(\boldsymbol{\mu}, \Sigma)$$)**: Encodes both the center $$\boldsymbol{\mu}$$ and the ellipsoidal correlation geometry $$\Sigma$$; diagonal $$\Sigma$$ implies axis-aligned independence, while off-diagonal entries tilt the contours.
+2. **Mahalanobis Distance (Covariance-Aware Distance)**: Measures how far a point lies from a distribution via $$d_M(\mathbf{x}) = \sqrt{(\mathbf{x} - \boldsymbol{\mu})^\top \Sigma^{-1} (\mathbf{x} - \boldsymbol{\mu})}$$, normalizing away scale and correlation for out-of-distribution (OOD) detection.
+3. **Reparameterization Trick (Differentiable Sampling)**: Expresses $$\mathbf{z} \sim \mathcal{N}(\boldsymbol{\mu}, \text{diag}(\boldsymbol{\sigma}^2))$$ as $$\mathbf{z} = \boldsymbol{\mu} + \boldsymbol{\sigma} \odot \boldsymbol{\epsilon}$$ with $$\boldsymbol{\epsilon} \sim \mathcal{N}(\mathbf{0}, I)$$, allowing gradients to flow smoothly through stochastic latent layers.
+4. **MAP Estimation & Bayesian Regularization**: Shows that adding $$\frac{\lambda}{2}\|\mathbf{w}\|_2^2$$ to a loss is mathematically equivalent to placing an isotropic multivariate Gaussian prior $$\mathcal{N}(\mathbf{0}, \tau^2 I)$$ over the network weights.
+
+### Step-by-Step Worked Example (Read Slowly): Computing Mahalanobis Distance and a VAE Reparameterized Sample
+
+Consider a 2D latent distribution $$\mathcal{N}(\boldsymbol{\mu}, \Sigma)$$ with $$\boldsymbol{\mu} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}$$ and $$\Sigma = \begin{bmatrix} 4 & 2 \\ 2 & 2 \end{bmatrix}$$, and a test embedding $$\mathbf{x} = \begin{bmatrix} 3 \\ 4 \end{bmatrix}$$.
+
+1. **Center the Observation**:
+   $$\mathbf{d} = \mathbf{x} - \boldsymbol{\mu} = \begin{bmatrix} 3 - 1 \\ 4 - 2 \end{bmatrix} = \begin{bmatrix} 2 \\ 2 \end{bmatrix}$$
+2. **Invert the $$2 \times 2$$ Covariance Matrix $$\Sigma$$**:
+   $$\det(\Sigma) = (4)(2) - (2)(2) = 8 - 4 = 4$$
+   $$\Sigma^{-1} = \frac{1}{4}\begin{bmatrix} 2 & -2 \\ -2 & 4 \end{bmatrix} = \begin{bmatrix} 0.5 & -0.5 \\ -0.5 & 1.0 \end{bmatrix}$$
+3. **Compute Squared Mahalanobis Distance**:
+   $$\Sigma^{-1}\mathbf{d} = \begin{bmatrix} 0.5(2) - 0.5(2) \\ -0.5(2) + 1.0(2) \end{bmatrix} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$$
+   $$d_M^2(\mathbf{x}) = \mathbf{d}^\top \Sigma^{-1} \mathbf{d} = \begin{bmatrix} 2 & 2 \end{bmatrix}\begin{bmatrix} 0 \\ 1 \end{bmatrix} = 2 \implies d_M(\mathbf{x}) = \sqrt{2} \approx 1.414$$
+   Compare with Euclidean distance $$\|\mathbf{d}\|_2 = \sqrt{2^2 + 2^2} = \sqrt{8} \approx 2.828$$: because the two coordinates are positively correlated ($$\Sigma_{12} = 2 > 0$$), moving diagonally along $$(2, 2)$$ is actually twice as plausible in Mahalanobis units!
+
 ### 3. Multivariate Distributions
 
 #### Multivariate Normal Distribution

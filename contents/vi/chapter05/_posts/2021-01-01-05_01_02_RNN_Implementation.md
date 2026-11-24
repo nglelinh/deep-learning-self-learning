@@ -9,6 +9,30 @@ categories:
 - chapter05
 ---
 
+Giữa việc hiểu phương trình $$h_t = \tanh(W_{hh} h_{t-1} + W_{xh} x_t + b_h)$$ trên bảng và việc huấn luyện thành công một mô hình ngôn ngữ biết tự sinh văn bản là cả một khoảng cách kỹ thuật: cách tổ chức kích thước tensor 3D `(batch, seq_len, input_size)`, cách ngắt đồ thị tính toán (`detach()`) khi chạy chuỗi dài, và cách lấy mẫu phân phối đầu ra bằng nhiệt độ (*temperature*).
+
+## Bản đồ kiến thức nền: Ba trụ cột thực hành khi lập trình RNN
+
+1. **Quản lý hình dạng tensor 3D và cờ `batch_first`**:
+   Trong PyTorch, `nn.RNN` mặc định kỳ vọng `(seq_len, batch, input_size)` trừ khi bạn truyền tường minh `batch_first=True` để đổi thành `(batch, seq_len, input_size)` — nhầm thứ tự hai trục đầu là lỗi phổ biến nhất.
+2. **Vòng lặp BPTT và tách trạng thái ẩn (`h.detach()`)**:
+   Khi huấn luyện trên văn bản dài hàng triệu ký tự, ta cắt thành các đoạn $$T$$ bước và gọi `h = h.detach()` giữa các đoạn để truyền bộ nhớ sang đoạn sau mà không lưu đồ thị đạo hàm phình to vô hạn.
+3. **Suy luận tự hồi quy (Autoregressive Sampling) với Temperature**:
+   Chia logit cho nhiệt độ $$\tau$$ trước khi `softmax`: $$\tau < 1$$ làm phân phối nhọn hơn (an toàn, lặp), còn $$\tau > 1$$ làm phân phối phẳng hơn (sáng tạo nhưng dễ sai chính tả).
+
+### Khung giải thích (nên đọc chậm): Tính tay số tham số của `nn.RNN(input_size=10, hidden_size=32, num_layers=1)`
+
+Một tầng `nn.RNN` trong PyTorch chứa hai ma trận trọng số `weight_ih` (từ đầu vào $$x_t$$), `weight_hh` (từ trạng thái ẩn $$h_{t-1}$$) và hai vector bias tương ứng `bias_ih`, `bias_hh`:
+
+| Thành phần tham số | Kích thước ma trận/vector | Số lượng phần tử |
+| :--- | :---: | ---: |
+| `weight_ih_l0` ($$W_{xh}$$) | $$32 \times 10$$ | 320 |
+| `weight_hh_l0` ($$W_{hh}$$) | $$32 \times 32$$ | 1,024 |
+| `bias_ih_l0` + `bias_hh_l0` | $$32 + 32$$ | 64 |
+| **Tổng cộng tầng RNN** | | **1,408** |
+
+Lưu ý chi tiết thực tế: công thức tổng quát của `nn.RNN` trong PyTorch có **hai** vector bias ($$2 \cdot d_h$$) để tương thích chuẩn cuDNN, nhiều hơn $$d_h$$ tham số so với công thức sách giáo khoa chỉ viết 1 bias $$b_h$$.
+
 Phần cài đặt RNN gồm hai nội dung chính:
 
 1. **Triển khai Cốt lõi** — cài đặt RNN từ đầu bằng NumPy, dự đoán chuỗi và đối chiếu với PyTorch.

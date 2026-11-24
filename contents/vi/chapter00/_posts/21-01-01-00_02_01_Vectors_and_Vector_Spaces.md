@@ -9,6 +9,38 @@ categories:
 - chapter00
 ---
 
+Trong những mô hình ngôn ngữ nổi tiếng, phép toán huyền thoại $$\text{vector}(\text{"Vua"}) - \text{vector}(\text{"Nam"}) + \text{vector}(\text{"Nữ"}) \approx \text{vector}(\text{"Hoàng hậu"})$$ từng khiến cả giới công nghệ kinh ngạc. Điều kỳ diệu ấy không phải phép thuật—nó là hệ quả trực tiếp của cấu trúc **không gian vector**, nơi ngữ nghĩa được ánh xạ thành hướng và khoảng cách hình học. Bài học này xây dựng nền tảng chặt chẽ về vector, tổ hợp tuyến tính, độc lập tuyến tính, chuẩn và tích vô hướng để bạn làm chủ ngôn ngữ biểu diễn dữ liệu của Deep Learning.
+
+## Bản đồ kiến thức nền: Bốn khái niệm xương sống của Không gian Vector
+
+1. **Tổ hợp tuyến tính và Không gian sinh (Linear Combination & Span)**:
+   Mô tả tập hợp tất cả các điểm có thể tạo ra từ một bộ vector cơ sở; một lớp mạng tuyến tính thực chất đang lấy tổ hợp tuyến tính các cột của ma trận trọng số.
+
+2. **Độc lập tuyến tính và Số chiều (Linear Independence & Dimension)**:
+   Phát hiện sự dư thừa trong dữ liệu: nếu một đặc trưng là tổ hợp tuyến tính của các đặc trưng khác, không gian biểu diễn thực tế có chiều nhỏ hơn số cột bạn tưởng.
+
+3. **Chuẩn vector (Vector Norms — $$L_1, L_2, L_\infty$$)**:
+   Định nghĩa "độ dài" và "khoảng cách": chuẩn $$L_2$$ gắn với khoảng cách Euclid và Weight Decay (Ridge), còn chuẩn $$L_1$$ tạo ra tính thưa (*sparsity*), đẩy nhiều trọng số về đúng $$0$$.
+
+4. **Tích vô hướng và Độ tương đồng Cosine (Dot Product & Cosine Similarity)**:
+   Liên kết đại số với hình học qua công thức $$\mathbf{u} \cdot \mathbf{v} = \|\mathbf{u}\|_2 \|\mathbf{v}\|_2 \cos\theta$$—phép toán trung tâm của cả phép chiếu, phân loại tuyến tính lẫn cơ chế Self-Attention trong Transformer.
+
+### Khung giải thích (nên đọc chậm): Tính tay chuẩn $$L_1, L_2$$ và độ tương đồng Cosine giữa hai embedding
+
+Giả sử hai câu văn được mã hóa thành hai vector embedding 3 chiều: $$\mathbf{u} = (1, 2, 2)$$ và $$\mathbf{v} = (2, 1, -2)$$. Hãy tính tay toàn bộ các đại lượng hình học quan trọng:
+
+1. **Chuẩn $$L_1$$ và $$L_2$$**:
+   - $$\|\mathbf{u}\|_1 = \lvert 1 \rvert + \lvert 2 \rvert + \lvert 2 \rvert = 5$$; $$\|\mathbf{u}\|_2 = \sqrt{1^2 + 2^2 + 2^2} = \sqrt{9} = 3$$.
+   - $$\|\mathbf{v}\|_1 = \lvert 2 \rvert + \lvert 1 \rvert + \lvert -2 \rvert = 5$$; $$\|\mathbf{v}\|_2 = \sqrt{2^2 + 1^2 + (-2)^2} = \sqrt{9} = 3$$.
+2. **Tích vô hướng**:
+   $$\mathbf{u} \cdot \mathbf{v} = 1(2) + 2(1) + 2(-2) = 2 + 2 - 4 = 0.$$
+3. **Góc và Độ tương đồng Cosine**:
+   $$\cos\theta = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\|_2 \|\mathbf{v}\|_2} = \frac{0}{3 \times 3} = 0 \implies \theta = 90^\circ.$$
+4. **Khoảng cách Euclid giữa hai điểm**:
+   $$\|\mathbf{u} - \mathbf{v}\|_2 = \sqrt{(1-2)^2 + (2-1)^2 + (2 - (-2))^2} = \sqrt{1 + 1 + 16} = \sqrt{18} \approx 4.243.$$
+
+Dù hai vector có cùng độ dài ($$3$$), tích vô hướng bằng $$0$$ chứng tỏ chúng **trực giao** (độc lập về mặt hướng)—trong hệ thống tìm kiếm ngữ nghĩa (RAG), cặp văn bản này sẽ bị chấm điểm tương đồng bằng $$0$$.
+
 Bài học này giới thiệu vector, không gian vector và các khái niệm nền tảng của đại số tuyến tính trong bối cảnh tối ưu hóa.
 
 ---

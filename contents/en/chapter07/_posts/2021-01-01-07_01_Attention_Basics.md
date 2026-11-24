@@ -9,6 +9,29 @@ categories:
 - chapter07
 ---
 
+When Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio published *Neural Machine Translation by Jointly Learning to Align and Translate* (2015), they included a now-iconic heatmap of French-to-English attention weights: the diagonal tracked word-for-word correspondence, and at the phrase *"zone économique européenne"* $$\to$$ *"European Economic Area"*, the model's attention weights spontaneously jumped backward in exact reverse order to match French adjective placement. That visual proof showed that soft alignment could be learned purely from end-to-end translation loss—without a single hand-coded grammar rule.
+
+## Background Knowledge Map: Encoder–Decoder Alignment and Additive Attention
+
+- **Seq2Seq Compression Bottleneck**: In Sutskever et al. (2014), the encoder's final state $$h_T$$ had to encode every noun, tense, and clause of the entire input sentence. Mutual information between early source tokens and $$h_T$$ decays with sequence length.
+- **Bahdanau (Additive) Score Function**: Given decoder state $$s_{t-1}$$ and encoder annotation $$h_j$$, additive attention scores alignment via a small 1-hidden-layer MLP: $$e_{t,j} = v_a^\top \tanh(W_a s_{t-1} + U_a h_j)$$, allowing $$s_{t-1}$$ and $$h_j$$ to have completely different dimensions.
+- **Luong (Multiplicative / Dot-Product) Score Function**: Luong et al. (2015) showed that simpler bilinear/dot-product scoring $$e_{t,j} = s_t^\top W_a h_j$$ runs much faster on GPUs because it reduces to matrix multiplication rather than broadcasting a 3D addition tensor.
+- **Soft vs. Hard Alignment**: Soft attention computes a smooth expectation $$\sum_j \alpha_{t,j} h_j$$ (differentiable via standard backpropagation), whereas hard attention samples a single index $$j^* \sim \text{Cat}(\alpha_t)$$ (requiring REINFORCE / high-variance policy gradients).
+
+### Step-by-Step Worked Example (Read Slowly): Hand-Computing Bahdanau Additive Attention
+
+Suppose at decoder step $$t$$, we have scalar decoder state $$s_{t-1} = 1.0$$ and two encoder states $$h_1 = 2.0, h_2 = -1.0$$, with parameters $$W_a = 0.5, U_a = 0.5, v_a = 2.0$$.
+
+1. **Compute additive alignment energies $$e_{t,j} = v_a \tanh(W_a s_{t-1} + U_a h_j)$$**:
+   - For $$j = 1$$: $$W_a s_{t-1} + U_a h_1 = 0.5(1.0) + 0.5(2.0) = 1.5 \implies \tanh(1.5) \approx 0.9051 \implies e_{t,1} = 2.0(0.9051) = 1.8102$$.
+   - For $$j = 2$$: $$W_a s_{t-1} + U_a h_2 = 0.5(1.0) + 0.5(-1.0) = 0.0 \implies \tanh(0.0) = 0.0 \implies e_{t,2} = 2.0(0.0) = 0.0000$$.
+2. **Apply softmax over the source positions**:
+   $$e^{1.8102} \approx 6.112,\quad e^{0} = 1.000,\quad Z = 7.112.$$
+   $$\alpha_{t,1} = \frac{6.112}{7.112} \approx 0.8594,\quad \alpha_{t,2} = \frac{1.000}{7.112} \approx 0.1406.$$
+3. **Form the dynamic context vector $$c_t$$**:
+   $$c_t = \alpha_{t,1} h_1 + \alpha_{t,2} h_2 = 0.8594(2.0) + 0.1406(-1.0) = 1.7188 - 0.1406 = 1.5782.$$
+4. **Contrast with fixed-vector Seq2Seq**: Rather than being stuck with $$h_2 = -1.0$$ (the encoder's final state), the decoder pulls $$85.9\%$$ of its context directly from $$h_1$$!
+
 # Attention Mechanism Fundamentals
 
 ![Multi-Head Attention](/deep-learning-self-learning/img/chapter_img/chapter07/multihead_attention.png)

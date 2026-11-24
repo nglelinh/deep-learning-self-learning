@@ -10,6 +10,30 @@ categories:
 lesson_type: optional
 ---
 
+Từng có thời điểm ngay sau khi Transformer bùng nổ, nhiều người cho rằng tư tưởng hồi quy (recurrence) đã khép lại sứ mệnh lịch sử. Nhưng khi ngữ cảnh LLM kéo dài lên hàng trăm nghìn rồi hàng triệu token, nút thắt bộ nhớ KV-cache và chi phí $$O(L^2)$$ của Attention đã làm sống dậy một thế hệ **mô hình hồi quy tuyến tính hiện đại** — tiêu biểu là **Mamba (SSM)** và **RWKV** — kết hợp khả năng huấn luyện song song với tốc độ suy luận $$O(1)$$ cho mỗi token.
+
+## Bản đồ kiến thức nền: Bốn hướng phát triển của Tư duy Hồi quy giai đoạn 2022–2026
+
+1. **Vì sao hồi quy hồi sinh — Bài toán KV-Cache và Suy luận $$O(1)$$**:
+   Transformer phải giữ toàn bộ lịch sử khóa/giá trị trong bộ nhớ GPU (tăng tuyến tính theo độ dài chuỗi), trong khi mô hình hồi quy hiện đại chỉ cần duy trì một trạng thái kích thước **cố định** bất kể chuỗi dài bao nhiêu.
+2. **Mô hình Không gian Trạng thái có cấu trúc (SSM) và Mamba**:
+   Xuất phát từ phương trình vi phân tuyến tính $$h'(t) = A h(t) + B x(t)$$ được rời rạc hóa, Mamba (2023–2024) bổ sung cơ chế **chọn lọc theo đầu vào** ($$B_t, C_t, \Delta_t$$ phụ thuộc $$x_t$$) và thuật toán quét song song trên SRAM GPU.
+3. **RWKV (Receptance Weighted Key Value)**:
+   Viết lại attention thành dạng hồi quy tuyến tính cho phép "chế độ Transformer" (song song) khi huấn luyện và "chế độ RNN" (bộ nhớ hằng số) khi suy luận.
+4. **Kiến trúc lai (Hybrid SSM–Attention) và thiết bị biên**:
+   Các mô hình thực tiễn như Jamba, Zamba hay Nemotron-H xen kẽ các tầng Mamba (rẻ, dài) với một ít tầng Attention (truy xuất chính xác), đồng thời RNN nhỏ vẫn giữ vị thế trong xử lý âm thanh streaming độ trễ thấp.
+
+### Khung giải thích (nên đọc chậm): So sánh bằng số độ phức tạp suy luận ở độ dài ngữ cảnh $$L = 100{,}000$$ token
+
+Giả sử một mô hình 32 tầng với kích thước trạng thái/ẩn $$d = 4{,}096$$ sinh ra **1 token mới** khi ngữ cảnh đã đạt $$L = 100{,}000$$ token (dùng FP16 = 2 byte/số):
+
+| Kiến trúc | Bộ nhớ trạng thái cần đọc cho 1 token mới | Số phép tính để sinh thêm 1 token | Tính chất mở rộng khi $$L$$ tăng gấp 10 lần |
+| :--- | :--- | :--- | :--- |
+| **Transformer chuẩn (KV-Cache)** | $$32 \times 2 \times L \times d \times 2 \approx \mathbf{52{,}4\text{ GB}}$$ | Tỷ lệ với $$O(L \cdot d)$$ | Bộ nhớ và độ trễ **tăng gấp 10 lần** |
+| **Mô hình hồi quy hiện đại (Mamba / RWKV)** | Trạng thái cố định $$32 \times (N_{\text{state}} \cdot d) \times 2 \approx \mathbf{4\text{–}32\text{ MB}}$$ | Cố định $$O(N_{\text{state}} \cdot d)$$ | Bộ nhớ và độ trễ **không đổi ($$O(1)$$)** |
+
+Con số 52 GB so với vài chục MB giải thích rõ ràng vì sao nguyên lý trạng thái ẩn hồi quy của Chương 05 không hề lỗi thời, mà đang tái sinh mạnh mẽ trong các mô hình ngữ cảnh siêu dài.
+
 # Tùy chọn: Mô hình chuỗi hồi quy sau thời đại Transformer
 
 > Bài này mang tính **tùy chọn** và **không** thay thế phần lý thuyết RNN gốc hay bài cài đặt mô hình ngôn ngữ cấp ký tự. Nội dung tập trung làm rõ những bối cảnh mà cơ chế hồi quy vẫn được sử dụng, cũng như các kiến trúc giai đoạn 2023–2025 đưa ý tưởng "quét theo thời gian" trở lại.

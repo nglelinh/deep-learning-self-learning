@@ -10,6 +10,31 @@ categories:
 lesson_type: optional
 ---
 
+Nếu ở năm 2015 kỹ sư NLP chủ yếu tải vector Word2Vec/GloVe về để đưa vào LSTM phân loại cảm xúc, thì ngày nay nhúng từ tĩnh đã nhường sân khấu cho **Mô hình Ngôn ngữ Lớn (LLM)** và **nhúng ngữ nghĩa cấp đoạn văn (Dense Embeddings)** làm trái tim của hệ thống **RAG (Retrieval-Augmented Generation)**. Bài cập nhật này giải thích mạch chuyển tiếp liền lạc từ một vector cho mỗi từ sang hệ thống vừa truy hồi tri thức vừa sinh câu trả lời có căn cứ.
+
+## Bản đồ kiến thức nền: Bốn trụ cột của NLP hiện đại (2022–2026)
+
+- **Subword Tokenization (BPE / Unigram) và nhúng theo ngữ cảnh:** Biến văn bản thành chuỗi token con rồi đi qua nhiều tầng Self-Attention để cùng một từ mang vector khác nhau hoàn toàn theo ngữ cảnh.
+- **Truy hồi dày (Dense Retrieval) và RAG:** Nhúng cả câu hỏi lẫn các đoạn tài liệu thành vector chuẩn hóa, tìm top-$$k$$ đoạn gần nhất bằng tích vô hướng (hoặc kết hợp BM25), rồi nạp vào cửa sổ ngữ cảnh của LLM để giảm ảo giác.
+- **Trích xuất có cấu trúc (Structured Outputs / JSON Schema):** Dùng giải mã có ràng buộc ngữ pháp để ép LLM trả về dữ liệu JSON hợp lệ 100% cho các hệ thống phần mềm.
+- **Đánh giá hệ thống NLP ứng dụng:** Tách biệt rõ hai tầng lỗi trong RAG — lỗi truy hồi (Recall@k, MRR) và lỗi sinh câu trả lời trung thực (Faithfulness) — thay vì đánh giá mơ hồ.
+
+### Khung giải thích (nên đọc chậm): Tính tay điểm truy hồi lai (Hybrid Search: BM25 + Dense Cosine bằng RRF) trong RAG
+
+Trong hệ thống RAG thực tế, ta thường kết hợp xếp hạng từ khóa (BM25) với xếp hạng vector ngữ nghĩa (Dense Embedding) bằng công thức **Reciprocal Rank Fusion (RRF)** với hằng số làm mượt $$k = 60$$:
+$$\text{RRF}(d) = \frac{1}{k + r_{\text{BM25}}(d)} + \frac{1}{k + r_{\text{dense}}(d)}.$$
+
+Xét 3 đoạn tài liệu ứng viên cho câu hỏi về mã lỗi kỹ thuật `ERR_409`:
+- **Đoạn A** (chứa đúng mã `ERR_409` và giải thích đúng nghĩa): hạng BM25 $$= 1$$, hạng Dense $$= 2$$.
+- **Đoạn B** (diễn đạt đồng nghĩa rất tốt nhưng không ghi mã lỗi): hạng BM25 $$= 15$$, hạng Dense $$= 1$$.
+- **Đoạn C** (lặp mã `ERR_409` trong log rác): hạng BM25 $$= 2$$, hạng Dense $$= 20$$.
+
+Tính điểm RRF:
+1. $$\text{RRF}(A) = \frac{1}{61} + \frac{1}{62} \approx 0{,}01639 + 0{,}01613 = 0{,}03252$$ (**Hạng 1**).
+2. $$\text{RRF}(B) = \frac{1}{75} + \frac{1}{61} \approx 0{,}01333 + 0{,}01639 = 0{,}02972$$ (**Hạng 2**).
+3. $$\text{RRF}(C) = \frac{1}{62} + \frac{1}{80} \approx 0{,}01613 + 0{,}01250 = 0{,}02863$$ (**Hạng 3**).
+RRF tự động đưa đoạn A (tốt cả từ khóa lẫn ngữ nghĩa) lên đầu mà không cần cân chỉnh thang đo khó nhằn giữa điểm BM25 không bị chặn và cosin trong $$[-1, 1]$$!
+
 # Tùy chọn: NLP sau nhúng từ tĩnh — LLM, RAG và Tokenizer
 
 > Bài này là **tùy chọn**, **không** thay thế phần hình học của Word2Vec hay GloVe. Bài trước đã giới thiệu vectơ theo ngữ cảnh của BERT; bài này cập nhật **hệ sinh thái ứng dụng** được dùng rộng rãi trong các sản phẩm NLP giai đoạn 2022–2026.

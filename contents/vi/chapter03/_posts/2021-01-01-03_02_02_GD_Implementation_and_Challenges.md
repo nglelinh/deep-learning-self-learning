@@ -9,6 +9,34 @@ categories:
 - chapter03
 ---
 
+Viết công thức `w = w - lr * grad` chỉ tốn đúng một dòng code, nhưng đưa Gradient Descent vào huấn luyện mạng sâu thực tế lại giống như lái xe địa hình qua sa mạc đầy bẫy cát lún: hẻm núi dốc hẹp khiến tham số đập qua đập lại mãi không tiến tới, điểm yên ngựa làm gradient gần như bằng 0, và đặc trưng chưa chuẩn hóa khiến mặt cắt hàm mất mát méo xệch. Bài học này hướng dẫn cách triển khai Mini-Batch GD sạch sẽ bằng mã nguồn, đồng thời giải phẫu các thách thức hình học kinh điển mở đường cho Momentum và Adam.
+
+## Bản đồ kiến thức nền: Bốn thách thức thực chiến khi Triển khai Gradient Descent
+
+1. **Hẻm núi hẹp mất cân bằng độ cong (Ill-Conditioned Ravines)**:
+   Khi một chiều có độ cong (giá trị riêng Hessian) lớn gấp trăm lần chiều kia, Gradient Descent buộc phải dùng $$\eta$$ rất nhỏ để không nổ ở chiều dốc, dẫn tới lê lết cực chậm ở chiều phẳng.
+
+2. **Điểm Yên ngựa (Saddle Points) thay vì Cực tiểu Địa phương**:
+   Trong không gian hàng triệu chiều, cực tiểu địa phương thực sự rất hiếm (đòi hỏi *mọi* chiều đều cong lên); thứ cản đường chủ yếu là **điểm yên ngựa**—nơi gradient $$\approx \mathbf{0}$$ nhưng vẫn có hướng cong xuống để thoát ra.
+
+3. **Tầm quan trọng của Xáo trộn Dữ liệu (Shuffling) và Chuẩn hóa Đặc trưng (Feature Scaling)**:
+   Nếu không xáo trộn trước mỗi epoch, các batch liên tiếp bị lệch nhãn làm hướng cập nhật dao động tuần hoàn; nếu không chuẩn hóa đặc trưng về cùng thang đo, đường đồng mức bị kéo dẹt thành hình elip cực hẹp.
+
+4. **Lịch sử Động lượng (Momentum) & Cắt ngưỡng Gradient (Gradient Clipping)**:
+   Cộng dồn vận tốc quá khứ $$\mathbf{v}_t = \beta \mathbf{v}_{t-1} + \nabla L$$ giúp triệt tiêu dao động zig-zag và tăng tốc dọc đáy hẻm núi; còn Gradient Clipping chặn đứng những cú nhảy đột biến do vách đá dựng đứng.
+
+### Khung giải thích (nên đọc chậm): Tính tay hiện tượng Zig-Zag trên thung lũng elip $$L(x, y) = \frac{1}{2}(x^2 + 10y^2)$$
+
+Xét bề mặt có độ cong trục $$y$$ gấp 10 lần trục $$x$$, với gradient $$\nabla L = (x,\; 10y)$$. Xuất phát từ $$(x_0, y_0) = (10, 1)$$ và thử bước học $$\eta = 0.18$$:
+
+1. **Bước 1**: $$\nabla L(10, 1) = (10,\; 10)$$.
+   - $$x_1 = 10 - 0.18(10) = 8.20$$ (tiến chậm về 0).
+   - $$y_1 = 1 - 0.18(10) = -0.80$$ (**nhảy vọt sang bờ bên kia!**).
+2. **Bước 2**: $$\nabla L(8.2, -0.8) = (8.2,\; -8.0)$$.
+   - $$x_2 = 8.20 - 0.18(8.2) = 6.724$$.
+   - $$y_2 = -0.80 - 0.18(-8.0) = +0.64$$ (**lại bật ngược lại!**).
+3. **Quan sát chẩn đoán**: Trục $$y$$ cứ đổi dấu liên tục $$+1 \to -0.8 \to +0.64 \to -0.512$$ lãng phí phần lớn năng lượng, còn nếu tăng $$\eta \ge 0.2$$ thì trục $$y$$ lập tức phân kỳ! Đây chính là lý do trực giác khiến việc chuẩn hóa đặc trưng và thêm **Momentum** lại tạo ra khác biệt một trời một vực khi huấn luyện thực tế.
+
 ## Triển khai
 
 ### Gradient Descent Cơ bản

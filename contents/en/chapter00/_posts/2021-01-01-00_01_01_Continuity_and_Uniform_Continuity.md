@@ -9,6 +9,34 @@ categories:
 - chapter00
 ---
 
+> *Why can a single imperceptible pixel perturbation fool a high-accuracy image classifier into calling a panda a gibbon, or cause a GAN discriminator to explode? The answer lies not just in whether a network is continuous, but in how tightly its worst-case sensitivity—its Lipschitz constant—is controlled across the entire input space.*
+
+## Background Knowledge Map: Continuity, Uniformity, and Lipschitz Control
+
+1. **Pointwise Continuity (Local Predictability)**: Guarantees that around a specific input $$c$$, sufficiently small perturbations stay close in output space, though the required tolerance $$\delta(\varepsilon, c)$$ may shrink arbitrarily at other points.
+2. **Uniform Continuity (Global Consistency)**: Strengthens continuity by demanding a single $$\delta(\varepsilon)$$ that works simultaneously everywhere on the domain, preventing arbitrarily steep cliffs from forming as you move across the space.
+3. **Lipschitz Continuity (Quantitative Slope Bound)**: Caps the maximum amplification ratio $$\lvert f(x) - f(y)\rvert / \lvert x - y\rvert \leq L$$, which directly governs adversarial robustness, Wasserstein GAN constraints, and safe gradient descent step sizes ($$\eta < 2/L$$).
+4. **Compactness & Heine–Cantor Bridge**: Explains why continuous functions on closed, bounded domains (like normalized image hypercubes $$[0, 1]^d$$) are automatically uniformly continuous, giving theoretical safety on bounded feature spaces.
+
+### Step-by-Step Worked Example (Read Slowly): Computing Exact Lipschitz Bounds vs. Failure of Uniform Continuity
+
+Compare two functions on the open interval $$A = (0, 1]$$: $$f(x) = x^2$$ and $$g(x) = \frac{1}{x}$$.
+
+1. **Checking Lipschitz Continuity of $$f(x) = x^2$$ on $$(0, 1]$$**:
+   For any $$x, y \in (0, 1]$$, factor the difference:
+   $$\lvert f(x) - f(y)\rvert = \lvert x^2 - y^2\rvert = \lvert x + y\rvert \cdot \lvert x - y\rvert$$
+   Since $$x \leq 1$$ and $$y \leq 1$$, we have $$\lvert x + y\rvert \leq 2$$. Thus:
+   $$\lvert f(x) - f(y)\rvert \leq 2\lvert x - y\rvert$$
+   So $$f$$ is $$2$$-Lipschitz on $$(0, 1]$$, and hence uniformly continuous with $$\delta = \varepsilon / 2$$.
+2. **Concrete Numerical Verification for $$f$$**:
+   Take $$\varepsilon = 0.1$$, so $$\delta = 0.05$$. Pick $$x = 0.99, y = 0.96$$ (distance $$0.03 < 0.05$$):
+   $$\lvert 0.99^2 - 0.96^2\rvert = \lvert 0.9801 - 0.9216\rvert = 0.0585 < 0.1$$
+3. **Why $$g(x) = 1/x$$ Fails Uniform Continuity on $$(0, 1]$$**:
+   Fix $$\varepsilon = 1$$. For any candidate $$\delta > 0$$, choose an integer $$n$$ large enough that $$\frac{1}{n} < \delta$$, and set $$x = \frac{1}{n}, y = \frac{1}{2n}$$.
+   - Input distance: $$\lvert x - y\rvert = \frac{1}{2n} < \delta$$.
+   - Output jump: $$\lvert g(x) - g(y)\rvert = \lvert n - 2n\rvert = n \geq 1 = \varepsilon$$.
+   For example, with $$n = 100$$: $$x = 0.01, y = 0.005$$ are only $$0.005$$ apart, yet $$\lvert g(0.01) - g(0.005)\rvert = \lvert 100 - 200\rvert = 100$$. No single $$\delta$$ can tame this blow-up near $$0$$—the exact analytical pathology behind exploding gradients near singularities.
+
 This lesson introduces the fundamental concepts of continuity and uniform continuity, which are essential for understanding the behavior of functions in deep-learning.
 
 ---

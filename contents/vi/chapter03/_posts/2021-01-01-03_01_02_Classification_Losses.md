@@ -9,6 +9,37 @@ categories:
 - chapter03
 ---
 
+Nếu mô hình phân loại ảnh của bạn đoán xác suất bức ảnh là con chó bằng $$0.99$$ khi nhãn thật là con mèo, sai lầm đó không chỉ "sai 1 điểm" mà là một sự tự tin mù quáng cần bị phạt cực nặng. Đó là lý do các bài toán phân loại trong Học sâu hầu như luôn xoay quanh **Cross-Entropy (Log Loss)**—hàm mất mát có nguồn gốc từ Lý thuyết Thông tin và MLE—cùng những biến thể chuyên trị dữ liệu mất cân bằng như **Focal Loss**, **Label Smoothing** và **Hinge Loss**. Bài học này giải phẫu trọn vẹn bộ hàm mất mát phân loại và quy tắc lựa chọn trong từng tình huống.
+
+## Bản đồ kiến thức nền: Bốn trụ cột của Hàm Mất mát Phân loại
+
+1. **Binary Cross-Entropy (BCE) cho Phân loại Nhị phân & Đa nhãn**:
+   $$L = -[y\ln p + (1-y)\ln(1-p)]$$ với $$p = \sigma(z)$$. Trong PyTorch, luôn dùng `BCEWithLogitsLoss` (nhận trực tiếp logit $$z$$) thay vì tự chạy `Sigmoid` rồi `BCELoss` để đảm bảo ổn định số học.
+
+2. **Categorical Cross-Entropy cho Phân loại Đa lớp (Softmax + NLL)**:
+   Với nhãn one-hot tại lớp đúng $$c$$, mất mát rút gọn cực đẹp thành $$L = -\ln p_c = -z_c + \ln\!\left(\sum_j e^{z_j}\right)$$, và gradient theo vector logit đơn giản đáng kinh ngạc: $$\nabla_{\mathbf{z}} L = \mathbf{p} - \mathbf{y}$$.
+
+3. **Hinge Loss (Biên lề SVM) và Margin-based Losses**:
+   $$L = \max(0,\; 1 - y\cdot z)$$ với $$y \in \{-1, +1\}$$: chỉ phạt các mẫu bị đoán sai hoặc nằm quá sát biên quyết định ($$y z < 1$$), bỏ qua hoàn toàn các mẫu đã phân tách đủ xa.
+
+4. **Kỹ thuật nâng cao: Label Smoothing & Focal Loss**:
+   Label Smoothing làm mềm nhãn từ `[0, 1, 0]` thành `[0.05, 0.90, 0.05]` chống quá tự tin (*overconfidence*); còn Focal Loss nhân thêm $$(1 - p_t)^\gamma$$ để hạ trọng số mẫu dễ và tập trung sức học vào mẫu khó/lớp hiếm.
+
+### Khung giải thích (nên đọc chậm): Tính tay Cross-Entropy, Gradient $$\mathbf{p} - \mathbf{y}$$ và Focal Loss
+
+Giả sử bài toán 3 lớp có nhãn thật là lớp 0 ($$\mathbf{y} = [1, 0, 0]$$), và mạng xuất ra vector logit $$\mathbf{z} = [1.0,\; 2.0,\; 0.0]$$:
+
+1. **Tính xác suất Softmax**:
+   $$e^1 \approx 2.718,\; e^2 \approx 7.389,\; e^0 = 1.000 \implies \text{Tổng} = 11.107.$$
+   $$\mathbf{p} \approx \left[\frac{2.718}{11.107},\; \frac{7.389}{11.107},\; \frac{1.000}{11.107}\right] = [0.2447,\; 0.6652,\; 0.0900].$$
+2. **Tính Categorical Cross-Entropy**:
+   $$L_{\text{CE}} = -\ln(p_0) = -\ln(0.2447) \approx 1.4077.$$
+3. **Tính Gradient theo từng logit ($$\nabla_{\mathbf{z}} L = \mathbf{p} - \mathbf{y}$$)**:
+   $$\frac{\partial L}{\partial \mathbf{z}} = [0.2447 - 1,\; 0.6652 - 0,\; 0.0900 - 0] = [-0.7553,\; +0.6652,\; +0.0900].$$
+   Khi cập nhật ngược dấu gradient ($$\mathbf{z} \leftarrow \mathbf{z} - \eta \nabla_{\mathbf{z}} L$$), logit lớp đúng $$z_0$$ được **kéo tăng lên** (vì gradient âm), còn logit hai lớp sai $$z_1, z_2$$ bị **đẩy xuống** (vì gradient dương), trong đó lớp sai nổi bật nhất $$z_1$$ bị đẩy mạnh nhất!
+4. **So với Focal Loss ($$\gamma = 2$$)**:
+   Nhân thêm $$(1 - p_0)^2 = (1 - 0.2447)^2 \approx 0.5705$$: nếu một mẫu dễ có $$p_0 = 0.95$$, thừa số $$(1 - 0.95)^2 = 0.0025$$ làm giảm mức phạt xuống **400 lần** để mô hình dồn lực vào các mẫu khó!
+
 ## Hàm Mất mát cho Phân loại Nhị phân
 
 ### 1. Entropy Chéo Nhị phân (Log Loss)

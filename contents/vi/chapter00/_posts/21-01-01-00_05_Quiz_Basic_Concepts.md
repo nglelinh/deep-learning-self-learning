@@ -10,6 +10,35 @@ categories:
 lesson_type: quiz
 ---
 
+Đọc hiểu một công thức toán học trên màn hình thường tạo ra một ảo giác rất ngọt ngào: ta thấy "có lý" và nghĩ mình đã nắm vững, cho đến khi tự tay giải một bài toán trắc nghiệm bẫy và phát hiện mình vẫn nhầm giữa liên tục đều với Lipschitz, hay giữa độc lập với xung khắc. Bài kiểm tra tổng hợp này là trạm kiểm định chất lượng cho toàn bộ Chương 00—giúp bạn tự soi lại lỗ hổng kiến thức trên cả bốn mảng Giải tích, Đại số tuyến tính, Tôpô và Xác suất trước khi bước vào thế giới mạng nơ-ron.
+
+## Bản đồ kiến thức nền: Bốn cụm năng lực được kiểm tra trong Bộ Trắc nghiệm Chương 00
+
+1. **Giải tích & Tối ưu hóa (Đạo hàm, Gradient, Chuỗi Taylor, Lipschitz)**:
+   Kiểm tra khả năng tính nhanh đạo hàm riêng, đọc hướng tăng/giảm nhanh nhất từ vector gradient và nhận diện điều kiện áp dụng xấp xỉ Taylor.
+
+2. **Đại số tuyến tính (Vector, Ma trận, Hạng, Giá trị riêng)**:
+   Kiểm tra tư duy về chiều ma trận hợp lệ, tính không giao hoán, ý nghĩa hình học của định thức và cách giá trị riêng quyết định hành vi của phép nhân ma trận lặp.
+
+3. **Tập hợp & Tôpô trong $$\mathbb{R}^n$$ (Tập mở, Đóng, Compact, Lồi)**:
+   Kiểm tra các phản ví dụ kinh điển—nơi trực giác dễ đánh lừa nhất như tập không mở cũng không đóng, hay hàm liên tục trên tập mở không có cực trị.
+
+4. **Xác suất & Thống kê (Tiên đề, Bayes, Phân phối, MLE)**:
+   Kiểm tra phân biệt biến cố xung khắc vs. độc lập, tính xác suất có điều kiện bằng định lý Bayes và lập hàm log-likelihood để tìm ước lượng MLE.
+
+### Khung giải thích (nên đọc chậm): Chiến thuật giải nhanh 2 câu bẫy kinh điển trước khi làm bài
+
+**Bẫy 1 — Phân biệt "Xung khắc" (Mutually Exclusive) và "Độc lập" (Independent):**
+Giả sử hai biến cố $$A, B$$ đều có xác suất dương: $$P(A) = 0.4, P(B) = 0.5$$. Nếu $$A$$ và $$B$$ **xung khắc**, chúng có độc lập không?
+- Vì xung khắc nên $$P(A \cap B) = 0$$.
+- Nếu độc lập thì phải có $$P(A \cap B) = P(A)P(B) = 0.4 \times 0.5 = 0.2 \ne 0$$!
+- **Kết luận**: Hai biến cố có xác suất dương mà xung khắc thì **chắc chắn phụ thuộc mạnh** (biết $$A$$ xảy ra là biết ngay $$B$$ không thể xảy ra!).
+
+**Bẫy 2 — Kiểm tra nhanh kích thước phép nhân ma trận trong mạng nơ-ron:**
+Nếu đầu vào mini-batch $$\mathbf{X}$$ có kích thước $$(32 \times 784)$$ và lớp ẩn có $$128$$ nơ-ron với phép tính $$\mathbf{Z} = \mathbf{X}\mathbf{W} + \mathbf{b}$$:
+- Để nhân được với $$(32 \times 784)$$, số hàng của $$\mathbf{W}$$ phải bằng $$784$$, số cột bằng $$128 \implies \mathbf{W} \in \mathbb{R}^{784 \times 128}$$, kết quả $$\mathbf{Z} \in \mathbb{R}^{32 \times 128}$$.
+Hãy giữ thói quen kiểm tra bằng ví dụ số nhỏ như vậy với mọi câu hỏi trắc nghiệm bên dưới!
+
 Bài tập trắc nghiệm này giúp bạn kiểm tra mức độ nắm vững các khái niệm nền tảng của giải tích, đại số tuyến tính và xác suất — cơ sở trực tiếp cho tối ưu hóa và học sâu.
 
 ---

@@ -9,6 +9,27 @@ categories:
 - chapter26
 ---
 
+Ở Chương 23, chưng cất tri thức (Knowledge Distillation) trông rất gọn gàng: chỉ cần lấy toàn bộ vector logit của mô hình thầy chia nhiệt độ $$T$$ rồi dạy mô hình học sinh. Nhưng bước sang thế giới LLM, công thức đó lập tức vấp phải ba bức tường thực tế: từ điển thầy–trò có thể khác nhau, ma trận logit cho chuỗi 4.096 token với từ điển 128.000 từ nặng hàng gigabyte, và nhiều mô hình thầy mạnh nhất chỉ mở qua API "hộp đen"! Bài học này giải mã ba trường phái chưng cất LLM hiện đại.
+
+## Bản đồ kiến thức nền: Bốn trụ cột của Chưng cất Mô hình cho LLM
+
+- **Ôn lại KD cổ điển và điểm nghẽn trên LLM:** Khi $$|V| = 128{,}000$$, việc lưu và truyền phân phối Softmax đầy đủ trên mỗi token trở nên quá đắt đỏ, chưa kể bài toán lệch bộ tách từ (*tokenizer mismatch*).
+- **Nhóm 1 — Chưng cất hộp đen qua dữ liệu tổng hợp (Sequence-Level / CoT Distillation):** Dùng mô hình thầy sinh lời giải kèm chuỗi tư duy chi tiết, lọc chất lượng bằng bộ kiểm chứng (verifier), rồi huấn luyện SFT cho học sinh.
+- **Nhóm 2 — Chưng cất hộp trắng cấp Logit (Forward KL, Reverse KL, Skew KL):** Chỉ dùng Top-$$k$$ logit hoặc đảo chiều phân kỳ KL (Reverse KL tập trung vào mode chính thay vì trải phẳng *mode-covering* như Forward KL).
+- **Nhóm 3 — Chưng cất On-Policy (GKD / MiniLLM):** Để chính mô hình học sinh tự sinh chuỗi rồi nhờ thầy chấm logit ngay trên quỹ đạo đó, khắc phục triệt để lệch phân phối (*exposure bias*) lúc suy luận.
+
+### Khung giải thích (nên đọc chậm): Tính dung lượng lưu trữ ma trận Logit đầy đủ vs. Top-$$k$$ và so sánh Forward KL vs. Reverse KL
+
+**Phần A — Vì sao không thể lưu toàn bộ Logit của LLM?**
+Xét chỉ **1 chuỗi** dài $$L = 4{,}096$$ token với từ điển $$|V| = 128{,}000$$ lưu ở FP16 ($$2\text{ byte/số}$$):
+- Lưu toàn bộ logit: $$4{,}096 \times 128{,}000 \times 2\text{ byte} \approx 1{,}05\text{ GB}$$ cho *một* ví dụ duy nhất! Với 1 triệu ví dụ sẽ tốn hơn **1 Petabyte**!
+- Chỉ lưu Top-$$k = 64$$ logit cao nhất (kèm chỉ số token 4 byte): $$4{,}096 \times 64 \times (2 + 4)\text{ byte} \approx 1{,}57\text{ MB}$$ — **nhỏ hơn 668 lần** mà vẫn giữ gần trọn khối xác suất.
+
+**Phần B — Khác biệt hành vi giữa Forward KL và Reverse KL:**
+Giả sử thầy đặt xác suất lên 2 câu trả lời hợp lệ $$p = [0{,}5,\; 0{,}5,\; 0{,}0]$$ (token 3 sai hoàn toàn), còn học sinh nhỏ chỉ đủ sức học 1 kiểu trả lời:
+- **Forward KL** $$\sum p_i \ln(p_i/q_i)$$: nếu học sinh gán $$q_2 \to 0$$ thì $$0{,}5\ln(0{,}5/0) \to +\infty$$ → ép học sinh trải đều xác suất (dễ rớt vào vùng trung bình vô nghĩa).
+- **Reverse KL** $$\sum q_i \ln(q_i/p_i)$$: cho phép học sinh tập trung vào 1 mode tốt ($$q = [0{,}98, 0{,}02, 0]$$ chỉ chịu phạt hữu hạn $$\approx 0{,}60$$) nhưng phạt cực nặng nếu học sinh lỡ gán xác suất cho token sai $$p_3 = 0$$ — giúp LLM học sinh ít bịa đặt hơn!
+
 # Chưng cất mô hình cho LLM
 
 Chương 23 đã giới thiệu **chưng cất tri thức (KD)** như một phương pháp nén mô hình: huấn luyện một mạng học sinh nhỏ khớp theo dự đoán của mạng giáo viên lớn. Nguyên lý đó vẫn giữ nguyên đối với LLM, nhưng có hai điểm thay đổi quan trọng: *không gian đầu ra* là một từ vựng rất lớn dự đoán tuần tự từng bước, và *mức độ truy cập* tới giáo viên có thể chỉ là đầu ra văn bản thay vì toàn bộ trọng số.

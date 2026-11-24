@@ -10,6 +10,24 @@ categories:
 lesson_type: optional
 ---
 
+Phỏng vấn vị trí kỹ sư LLM năm 2026 không còn dừng ở việc đọc thuộc định nghĩa Self-Attention: nhà tuyển dụng sẽ đặt thẳng trước mặt bạn một bài toán sản phẩm thực tế — "Khi nào nên dùng Prompting, khi nào dùng RAG, khi nào phải Fine-Tune?" hay "Tại sao nhân $$T^2$$ trong công thức chưng cất của Hinton?" Bài luyện phỏng vấn này tổng hợp các câu hỏi phân loại trình độ Senior/Staff kèm khung tư duy trả lời sắc bén và chính xác toán học.
+
+## Bản đồ kiến thức nền: Bốn trục kiến thức trọng tâm trong phỏng vấn kỹ sư LLM
+
+- **Bản chất mục tiêu tiền huấn luyện:** Phân biệt rõ dự đoán token kế tiếp (tối thiểu hóa phân kỳ KL tới phân phối văn bản) với "học sự thật khách quan", từ đó giải thích căn nguyên toán học của hiện tượng ảo giác (*hallucination*).
+- **Ma trận quyết định Prompting vs. RAG vs. Fine-Tuning:** Prompting cho định hướng nhanh; RAG cho tri thức động, riêng tư và cần trích dẫn nguồn; Fine-Tuning/LoRA cho thay đổi phong cách, định dạng chuyên sâu hoặc kỹ năng miền hẹp.
+- **Chiến lược Chưng cất và Lượng tử hóa:** Giải thích rành mạch đánh đổi giữa chưng cất dữ liệu tổng hợp (hộp đen) vs. logit (hộp trắng), và vai trò hệ số $$T^2$$ cân bằng độ lớn gradient theo nhiệt độ $$T$$.
+- **Hạch toán hệ thống suy luận (System Accounting):** Biết tính nhẩm VRAM trọng số, KV Cache, điểm chuyển đổi compute-bound/memory-bound và lý do cần GQA + Continuous Batching.
+
+### Khung giải thích (nên đọc chậm): Chứng minh nhanh bằng số vì sao công thức chưng cất phải nhân thêm hệ số $$T^2$$
+
+Trong chưng cất tri thức với nhiệt độ $$T$$, xác suất làm mềm là $$q_i = \text{softmax}(z_i / T)$$ và $$p_i = \text{softmax}(v_i / T)$$. Khi $$T$$ lớn ($$e^{z_i/T} \approx 1 + z_i/T$$) và giả sử logit có trung bình bằng 0, đạo hàm của phân kỳ KL theo logit học sinh $$z_i$$ là:
+$$\frac{\partial D_{\text{KL}}(p \| q)}{\partial z_i} = \frac{1}{T}(q_i - p_i) \approx \frac{1}{T}\left(\frac{1 + z_i/T}{K} - \frac{1 + v_i/T}{K}\right) = \frac{1}{K T^2}(z_i - v_i).$$
+
+**Kiểm chứng bằng số với $$T = 4$$:**
+- Nếu **không nhân $$T^2$$**: độ lớn gradient từ nhánh KL bị thu nhỏ đi $$T^2 = 4^2 = 16\text{ lần}$$ so với nhánh Cross-Entropy nhãn cứng (ở $$T = 1$$)!
+- Khi **nhân thêm $$T^2 = 16$$** vào số hạng mất mát KL: nhân tử $$1/T^2$$ bị triệt tiêu hoàn toàn, giữ cho cường độ gradient của nhánh thầy luôn cân bằng bất kể bạn thử nghiệm $$T = 2, 4$$ hay $$8$$!
+
 # Tùy chọn: Câu hỏi luyện phỏng vấn về LLM
 
 > Bài này là **tùy chọn** và **không** thay thế nội dung các bài **26-01** đến **26-05** hay **26-07**. Bộ câu hỏi dưới đây được biên soạn riêng cho khóa học để tự kiểm tra sau khi hoàn thành chương.

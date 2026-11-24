@@ -9,6 +9,35 @@ categories:
 - chapter01
 ---
 
+Có một câu nói nổi tiếng trong giới kỹ sư dữ liệu: *"Đừng dùng pháo đại bác để bắn chim sẻ."* Dù Học sâu đã chinh phục cờ vây, gập protein và ngôn ngữ tự nhiên, hàng nghìn hệ thống sản xuất thực tế trong ngân hàng, logistics và thương mại điện tử vẫn chạy nhanh hơn, rẻ hơn và chính xác hơn với hồi quy tuyến tính hoặc Gradient Boosted Trees. Bài học này cung cấp bộ khung ra quyết định thực dụng giữa Học sâu và Học máy truyền thống, đồng thời giới thiệu hệ sinh thái phần mềm—phần cứng (PyTorch, JAX, TensorFlow, CUDA, Hugging Face) đang vận hành ngành AI hiện nay.
+
+## Bản đồ kiến thức nền: Bốn trục đánh giá khi Chọn Mô hình và Hệ sinh thái
+
+1. **Bản chất Dữ liệu (Phi cấu trúc vs. Bảng biểu)**:
+   Ảnh, âm thanh, văn bản, đồ thị phức tạp $$\to$$ ưu tiên Deep Learning; bảng dữ liệu có cấu trúc với đặc trưng hỗn hợp (số + phân loại) cỡ nhỏ/trung bình $$\to$$ ưu tiên XGBoost / LightGBM / CatBoost.
+
+2. **Ràng buộc Độ trễ, Chi phí Phần cứng và Khả năng Giải thích**:
+   Triển khai trên vi điều khiển (Edge) hay ngành tài chính/y tế đòi hỏi giải trình từng quyết định cần cân nhắc mô hình gọn nhẹ, giải thích được, hoặc áp dụng chưng cất (*distillation*) và lượng tử hóa (*quantization*).
+
+3. **Hạ tầng Tăng tốc Phần cứng (CPU vs. GPU / TPU)**:
+   CPU có ít nhân mạnh tối ưu cho xử lý tuần tự độ trễ thấp; GPU/TPU có hàng nghìn nhân tính toán song song thiết kế riêng cho phép nhân ma trận dày đặc (GEMM) và Tensor Cores.
+
+4. **Hệ sinh thái Phần mềm Hiện đại**:
+   PyTorch thống trị nghiên cứu và phần lớn sản xuất nhờ đồ thị động trực quan; JAX mạnh về tính toán khoa học và biên dịch XLA; Hugging Face và ONNX/TensorRT kết nối mượt mà từ mã nguồn tới triển khai thực tế.
+
+### Khung giải thích (nên đọc chậm): Tính tay tốc độ tính toán (FLOPs) và lý do GPU bỏ xa CPU trong Deep Learning
+
+Xét một bước nhân ma trận đơn giản trong một lớp tuyến tính với mini-batch $$B = 64$$, chiều vào $$d_{\text{in}} = 1024$$, chiều ra $$d_{\text{out}} = 1024$$:
+
+1. **Đếm số phép toán dấu phẩy động (FLOPs)**:
+   Mỗi phần tử đầu ra cần $$1024$$ phép nhân và $$1024$$ phép cộng ($$\approx 2 \times 1024$$ FLOPs).
+   Với $$64 \times 1024$$ phần tử đầu ra, tổng số phép toán là:
+   $$\text{FLOPs} = 2 \times 64 \times 1024 \times 1024 = 134{,}217{,}728 \approx 0.134\text{ GFLOPs}.$$
+2. **So sánh thời gian lý thuyết giữa CPU và GPU**:
+   - Một CPU văn phòng (~50 GFLOPs thực tế cho `fp32`): mất $$\frac{0.134}{50} \approx 2.68\text{ ms}$$ cho riêng 1 lớp.
+   - Một GPU hiện đại có Tensor Cores (~100{,}000 GFLOPs = 100 TFLOPs ở `bf16`/`fp16`): chỉ mất $$\frac{0.134}{100{,}000} \approx 0.00134\text{ ms}$$—nhanh hơn về mặt tính toán tới **2{,}000 lần**!
+3. **Ý nghĩa thực tế**: Khi mạng có 100 lớp và huấn luyện trên 1 triệu mẫu, chênh lệch đó chính là khác biệt giữa **chạy 1 buổi chiều** và **chạy suốt 1 năm**.
+
 ## Khi nào nên dùng học sâu
 
 ### Học sâu phát huy thế mạnh khi:

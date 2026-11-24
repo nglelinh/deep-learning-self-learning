@@ -9,6 +9,27 @@ categories:
 - chapter14
 ---
 
+Viết một mạng GAN trong PyTorch giống như điều khiển một chiếc xe đua không có phanh ABS: chỉ cần quên `.detach()` ở một dòng hay chọn `beta1=0.9` mặc định của Adam thay vì `0.5`, toàn bộ quá trình huấn luyện có thể vỡ vụn sau vài epoch. Bài thực hành này trình bày đầy đủ mã nguồn DCGAN/MLP-GAN trên MNIST kèm từng chi tiết kỹ thuật sống còn giúp vòng lặp đối kháng vận hành trơn tru.
+
+## Bản đồ kiến thức nền: Kỹ thuật lập trình GAN ổn định trong PyTorch
+
+- **Chuẩn hóa đầu vào về `[-1, 1]` khớp với `Tanh`:** Đảm bảo thang giá trị của ảnh thật và đầu ra Generator đồng nhất để Discriminator không gian lận bằng cách phát hiện lệch biên độ.
+- **Tách đồ thị gradient đúng cách (`.detach()`):** Khi cập nhật Discriminator, bắt buộc tách `fake_imgs.detach()` để tiết kiệm bộ nhớ và tránh truyền nhầm gradient ngược vào Generator.
+- **Thủ thuật huấn luyện thực chiến (GAN Hacks):** Dùng `LeakyReLU(0.2)` trong $$D$$ để tránh chết nơ-ron, giảm momentum `betas=(0.5, 0.999)` trong Adam, và áp dụng *one-sided label smoothing* (nhãn thật $$0{,}9$$ thay vì $$1{,}0$$).
+- **Giám sát huấn luyện bằng vector nhiễu cố định (`fixed_noise`):** Lưu cố định một batch $$\mathbf{z}_{\text{fixed}}$$ qua mọi epoch để quan sát trực tiếp sự tiến hóa của cùng các ảnh sinh theo thời gian.
+
+### Khung giải thích (nên đọc chậm): Tính tay một bước cập nhật Discriminator với One-Sided Label Smoothing
+
+Giả sử trên một mẫu thật $$x$$ và một mẫu giả $$\tilde{x} = G(z)$$, bộ phân biệt dự đoán xác suất $$D(x) = 0{,}95$$ và $$D(\tilde{x}) = 0{,}20$$.
+
+1. **Không dùng label smoothing (nhãn thật $$y_{\text{real}} = 1{,}0$$, nhãn giả $$y_{\text{fake}} = 0{,}0$$):**
+   - $$\mathcal{L}_{\text{real}} = -\ln(0{,}95) \approx 0{,}0513$$.
+   - $$\mathcal{L}_{\text{fake}} = -\ln(1 - 0{,}20) = -\ln(0{,}80) \approx 0{,}2231$$.
+   - Gradient theo logit mẫu thật: $$D(x) - 1{,}0 = -0{,}05$$ (vẫn tiếp tục đẩy $$D(x) \to 1{,}0$$ làm $$D$$ quá tự tin).
+2. **Có One-Sided Label Smoothing (nhãn thật $$y_{\text{real}} = 0{,}9$$, nhãn giả giữ nguyên $$0{,}0$$):**
+   - Gradient theo logit mẫu thật: $$D(x) - 0{,}9 = 0{,}95 - 0{,}90 = +0{,}05$$!
+   - Dấu dương này **kéo nhẹ $$D(x)$$ lùi từ $$0{,}95$$ về quanh $$0{,}90$$**, ngăn bộ phân biệt rơi vào trạng thái bão hòa quá tự tin ($$D(x) \to 1$$) — nhờ đó giữ cho gradient chảy về Generator luôn khỏe mạnh.
+
 ## 4. Đoạn mã
 
 Phần mã dưới đây cài đặt một mô hình GAN tích chập đơn giản (theo phong cách DCGAN) bằng PyTorch trên tập dữ liệu MNIST để minh họa vòng lặp huấn luyện luân phiên giữa bộ phân biệt và bộ sinh:

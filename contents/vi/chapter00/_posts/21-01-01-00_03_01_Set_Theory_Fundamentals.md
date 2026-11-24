@@ -9,6 +9,33 @@ categories:
 - chapter00
 ---
 
+Mọi khái niệm trong Khoa học Dữ liệu và Học sâu—từ phân chia tập train/validation/test không giao nhau, phép tính xác suất trên biến cố, cho đến ánh xạ nhiều tầng của mạng nơ-ron—đều đứng trên cùng một nền móng chung: **lý thuyết tập hợp**. Đọc tài liệu nghiên cứu AI mà lúng túng trước các ký hiệu $$\in, \subseteq, \cap, \cup, A \times B, f^{-1}(B)$$ giống như đọc bản nhạc mà không thuộc khóa Sol. Bài học này trang bị trọn bộ cú pháp và tư duy tập hợp để bạn đọc hiểu mượt mà các định lý toán học trong suốt khóa học.
+
+## Bản đồ kiến thức nền: Bốn mảnh ghép căn bản của Lý thuyết Tập hợp
+
+1. **Các phép toán tập hợp và Luật De Morgan**:
+   Hợp ($$\cup$$), giao ($$\cap$$), hiệu ($$\setminus$$) và phần bù ($$A^c$$) là công cụ phân vùng không gian dữ liệu, tính chỉ số IoU (*Intersection over Union*) trong phát hiện vật thể và biến đổi biến cố xác suất.
+
+2. **Tích Descartes (Cartesian Product $$A \times B$$)**:
+   Xây dựng không gian đa chiều $$\mathbb{R}^n = \mathbb{R} \times \cdots \times \mathbb{R}$$ và cặp dữ liệu có nhãn $$(x, y) \in \mathcal{X} \times \mathcal{Y}$$ cho bài toán học có giám sát.
+
+3. **Ánh xạ: Đơn ánh, Toàn ánh và Song ánh (Injective, Surjective, Bijective)**:
+   Cho biết một tầng mạng có làm mất thông tin hay không (đơn ánh), có bao phủ được toàn bộ đầu ra mong muốn hay không (toàn ánh), và có thể đảo ngược hoàn hảo hay không (song ánh—nền tảng của Normalizing Flows).
+
+4. **Lực lượng tập hợp (Cardinality: Hữu hạn, Đếm được, Không đếm được)**:
+   Phân biệt rạch ròi giữa không gian rời rạc (từ vựng ngôn ngữ, nhãn lớp) dùng tổng $$\sum$$ và không gian liên tục (trọng số thực $$\mathbb{R}^d$$) phải dùng tích phân $$\int$$.
+
+### Khung giải thích (nên đọc chậm): Tính tay chỉ số IoU bằng phép toán tập hợp và kiểm tra tính song ánh
+
+**Phần A — Phép giao/hợp trong phát hiện vật thể (Object Detection):**
+Giả sử khung dự đoán $$A$$ phủ 60 điểm ảnh và khung chuẩn (*ground truth*) $$B$$ phủ 50 điểm ảnh, trong đó vùng chồng lấn $$A \cap B$$ có đúng 30 điểm ảnh:
+1. Lực lượng tập hợp hợp: $$\lvert A \cup B \rvert = \lvert A \rvert + \lvert B \rvert - \lvert A \cap B \rvert = 60 + 50 - 30 = 80$$ điểm ảnh.
+2. Chỉ số **IoU**: $$\text{IoU}(A, B) = \frac{\lvert A \cap B \rvert}{\lvert A \cup B \rvert} = \frac{30}{80} = 0.375$$.
+
+**Phần B — So sánh hàm kích hoạt ReLU và Sigmoid dưới góc nhìn ánh xạ:**
+- **ReLU** $$f(x) = \max(0, x)$$ từ $$\mathbb{R} \to \mathbb{R}$$: **không đơn ánh** vì $$f(-2) = f(-5) = 0$$ (mất thông tin phần âm), và **không toàn ánh** lên $$\mathbb{R}$$ vì không bao giờ tạo ra số âm.
+- **Sigmoid** $$\sigma(x) = \frac{1}{1+e^{-x}}$$ từ $$\mathbb{R} \to (0, 1)$$: đồng biến chặt nên **đơn ánh**, và mọi giá trị $$p \in (0, 1)$$ đều có nghịch ảnh $$x = \ln\frac{p}{1-p}$$ nên **toàn ánh** $$\implies$$ **song ánh** giữa $$\mathbb{R}$$ và $$(0, 1)$$, cho phép quy đổi 1-1 giữa logit và xác suất!
+
 Bài học này trình bày các khái niệm cơ bản của lý thuyết tập hợp, làm nền tảng toán học để phát biểu bài toán tối ưu hóa, ràng buộc và miền khả thi.
 
 ---

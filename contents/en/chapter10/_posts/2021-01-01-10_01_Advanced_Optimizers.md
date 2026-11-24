@@ -9,6 +9,25 @@ categories:
 - chapter10
 ---
 
+Gradient descent in 100 million dimensions is nothing like rolling a marble down a smooth bowl—the landscape is packed with saddle points, flat plateaus, and razor-thin ravines. This module hub connects the mathematical theory of advanced first-order optimizers (Momentum, NAG, AdaGrad, RMSprop, Adam) with full code implementations, trajectory comparisons, and practical hyperparameter playbooks.
+
+## Background Knowledge Map: Navigating Advanced Optimization
+
+- **Core Optimizer Theory**: Understanding first-moment velocity, Nesterov look-ahead, second-moment adaptive preconditioning, and Adam's bias correction.
+- **Code & Trajectory Analysis**: Implementing every optimizer from scratch and comparing convergence behavior on ill-conditioned surfaces and neural benchmarks.
+- **Default Selection Heuristics**: Matching optimizer + weight decay + LR schedule to vision, sequence, and Transformer workloads.
+
+### Step-by-Step Worked Example (Read Slowly): Effective Momentum Horizon (How Many Past Steps Does $$\beta = 0.9$$ Remember?)
+
+In an exponential moving average $$m_t = \beta m_{t-1} + (1 - \beta) g_t$$, the weight placed on a gradient from $$k$$ steps ago decays as $$\beta^k$$.
+
+1. **Effective averaging window**:
+   $$N_{\text{eff}} \approx \frac{1}{1 - \beta}.$$
+2. **Concrete values**:
+   - $$\beta_1 = 0.9 \implies \frac{1}{1 - 0.9} = 10 \text{ steps}$$ (Adam's first moment tracks roughly the last 10 mini-batches).
+   - $$\beta_2 = 0.999 \implies \frac{1}{1 - 0.999} = 1{,}000 \text{ steps}$$ (Adam's second moment averages gradient variance over ~1,000 steps!).
+   - In LLM training with huge batches, practitioners often lower $$\beta_2 = 0.95$$ ($$N_{\text{eff}} = 20$$ steps) so the optimizer adapts faster to sudden gradient spikes!
+
 This lesson covers modern optimizers beyond vanilla gradient descent:
 
 1. **Optimizer Theory** — Momentum, NAG, AdaGrad, RMSprop, Adam, AdamW, and intuition

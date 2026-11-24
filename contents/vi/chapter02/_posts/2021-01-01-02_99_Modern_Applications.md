@@ -10,6 +10,34 @@ categories:
 lesson_type: optional
 ---
 
+Nhiều người nghĩ mạng truyền thẳng (MLP) học ở Chương 02 chỉ là món đồ chơi giáo khoa đã lỗi thời trước thời đại Transformer. Sự thật sẽ khiến bạn bất ngờ: trong các mô hình ngôn ngữ lớn hàng trăm tỷ tham số như GPT, Llama hay Gemma, **hơn 2/3 tổng số tham số của toàn bộ mô hình lại nằm chính trong các khối MLP** (thường gọi là khối FFN — Feed-Forward Network)! Tuy nhiên, khối MLP năm 2022–2026 đã tiến hóa mạnh mẽ so với MLP cổ điển với bộ ba vũ khí mới: **Pre-Norm + RMSNorm**, **cơ chế cổng nhân SwiGLU**, và kiến trúc thưa **Mixture-of-Experts (MoE)**.
+
+## Bản đồ kiến thức nền: Bốn nâng cấp biến MLP cổ điển thành Trái tim của Transformer Hiện đại
+
+1. **Pre-Norm kết hợp RMSNorm (thay cho Post-Norm & BatchNorm)**:
+   Đưa chuẩn hóa ra *trước* khối MLP và chỉ chia cho căn trung bình bình phương (RMS, bỏ bước trừ trung bình) giúp giảm chi phí tính toán và ổn định huấn luyện mạng hàng trăm tầng mà không cần bước warmup quá mong manh.
+
+2. **Hàm kích hoạt Cổng nhân SwiGLU**:
+   Thay vì $$\mathbf{W}_2\,\text{ReLU}(\mathbf{W}_1\mathbf{x})$$, SwiGLU dùng hai nhánh song song: $$\mathbf{W}_{\text{down}}\big(\text{SiLU}(\mathbf{W}_{\text{gate}}\mathbf{x}) \odot (\mathbf{W}_{\text{up}}\mathbf{x})\big)$$, giúp mạng điều tiết dòng thông tin mềm dẻo hơn hẳn.
+
+3. **Liên kết Residual ($$\mathbf{x} + \text{MLP}(\text{Norm}(\mathbf{x}))$$)**:
+   Bảo toàn luồng thông tin gốc và cho phép gradient đi thẳng từ tầng cuối về tầng đầu mà không bị bóp nghẹt.
+
+4. **Mixture-of-Experts (MoE — MLP Thưa)**:
+   Thay 1 khối MLP khổng lồ bằng $$E$$ khối MLP "chuyên gia" song song kèm một bộ định tuyến (*router*) chỉ kích hoạt top-$$k$$ chuyên gia (ví dụ $$k=2$$ trong $$E=8$$) cho mỗi token—tăng dung lượng tri thức lên gấp nhiều lần mà giữ nguyên FLOPs suy luận!
+
+### Khung giải thích (nên đọc chậm): Tính tay tỷ lệ mở rộng chiều ẩn của SwiGLU để giữ nguyên ngân sách tham số
+
+Trong Transformer cổ điển (dùng ReLU/GELU), khối FFN mở rộng chiều ẩn gấp $$4$$ lần ($$d_{\text{ff}} = 4d$$) với **2 ma trận** $$\mathbf{W}_1 \in \mathbb{R}^{d \times 4d}$$ và $$\mathbf{W}_2 \in \mathbb{R}^{4d \times d}$$:
+- Tổng số tham số FFN cổ điển: $$2 \times (d \times 4d) = 8d^2$$.
+
+Sang **SwiGLU**, khối FFN có tới **3 ma trận** ($$\mathbf{W}_{\text{gate}}, \mathbf{W}_{\text{up}}, \mathbf{W}_{\text{down}}$$) với chiều ẩn $$d_{\text{ff}}'$$:
+- Tổng số tham số SwiGLU: $$3 \times (d \times d_{\text{ff}}') = 3\,d\,d_{\text{ff}}'$$.
+- Để giữ đúng ngân sách $$8d^2$$ tham số ngang bằng FFN cổ điển, ta giải:
+  $$3\,d\,d_{\text{ff}}' = 8d^2 \implies d_{\text{ff}}' = \frac{8}{3}d \approx 2.67\,d.$$
+
+Thử với $$d = 4096$$ (cỡ Llama-7B): $$\frac{8}{3} \times 4096 \approx 10{,}923$$ (làm tròn lên bội của 256 thành $$11{,}008$$). Đó chính xác là lý do bạn luôn thấy con số tưởng chừng kỳ lạ $$\frac{8}{3}d$$ hoặc $$11{,}008$$ trong bảng thông số kỹ thuật của Llama và Mistral!
+
 # Tùy chọn: Khối MLP hiện đại
 
 > Bài này là **tùy chọn** và **không** trình bày lại lý thuyết về perceptron, kiến trúc, hàm kích hoạt hay lan truyền xuôi. Mục đích của bài là cho thấy các thành phần cơ bản đó được tổ chức ra sao trong các mô hình nền tảng (*foundation model*) giai đoạn 2022–2026.

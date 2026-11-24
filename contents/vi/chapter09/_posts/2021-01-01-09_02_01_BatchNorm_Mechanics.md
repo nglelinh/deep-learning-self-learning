@@ -9,6 +9,35 @@ categories:
 - chapter09
 ---
 
+Ban đầu, nhóm tác giả Batch Normalization tin rằng kỹ thuật này hiệu quả vì nó triệt tiêu hiện tượng "dịch chuyển hiệp biến nội" (*Internal Covariate Shift*). Nhưng đến năm 2018, nhóm nghiên cứu MIT (Santurkar et al.) phát hiện ra một nguyên nhân sâu sắc hơn nữa: **BatchNorm làm cho bề mặt hàm mất mát và gradient trở nên mượt mà (Lipschitz-smooth) hơn hẳn**, giúp bước nhảy gradient descent trở nên cực kỳ dự đoán được và cho phép dùng tốc độ học lớn hơn nhiều lần!
+
+## Bản đồ kiến thức nền: Bốn cơ chế toán học bên trong Batch Normalization
+
+1. **Chuẩn hóa z-score và hằng số ổn định $$\epsilon$$**:
+   $$\hat{x}_i = \frac{x_i - \mu_B}{\sqrt{\sigma_B^2 + \epsilon}}$$ đưa mọi đặc trưng về trung bình $$0$$ và phương sai $$\approx 1$$, trong đó $$\epsilon \approx 10^{-5}$$ ngăn chia cho 0 khi các giá trị trong batch giống hệt nhau.
+2. **Biến đổi Affine học được $$y_i = \gamma \hat{x}_i + \beta$$**:
+   Tại sao đã chuẩn hóa về $$(0, 1)$$ lại phải nhân $$\gamma$$ cộng $$\beta$$? Vì nếu kích hoạt nằm trước `sigmoid`/`tanh`, việc ép toàn bộ vào vùng tuyến tính quanh 0 sẽ làm mất tính phi tuyến; $$\gamma, \beta$$ trao lại cho mạng quyền tự khôi phục phân phối tối ưu nếu cần.
+3. **Cập nhật thống kê trượt (Exponential Moving Average) cho lúc suy luận**:
+   Sau mỗi mini-batch huấn luyện: $$\mu_{\text{run}} \leftarrow (1 - m)\mu_{\text{run}} + m \mu_B$$ (trong PyTorch mặc định `momentum=0.1` ứng với $$m = 0{,}1$$).
+4. **Tính bất biến theo tỷ lệ trọng số (Scale Invariance) và dư thừa Bias**:
+   Nhân trọng số tầng trước với hằng số $$a > 0$$ hay cộng thêm bias $$b$$ đều bị triệt tiêu hoàn toàn bởi bước trừ $$\mu_B$$ và chia $$\sigma_B$$! Đó là lý do các tầng `Conv2d`/`Linear` đứng ngay trước BatchNorm luôn nên đặt `bias=False`.
+
+### Khung giải thích (nên đọc chậm): Tính tay trọn vẹn 4 bước Forward của BatchNorm trên một mini-batch 4 mẫu
+
+Cho giá trị kích hoạt của 1 kênh trên mini-batch 4 mẫu là $$\mathbf{x} = [2{,}0, \; 4{,}0, \; 6{,}0, \; 8{,}0]$$, với tham số học được $$\gamma = 2{,}0, \; \beta = 1{,}0$$ và $$\epsilon = 0$$ (để tính tay gọn):
+
+1. **Bước 1 — Tính trung bình batch $$\mu_B$$**:
+   $$\mu_B = \frac{2 + 4 + 6 + 8}{4} = \mathbf{5{,}0}$$
+2. **Bước 2 — Tính phương sai batch $$\sigma_B^2$$** (chia cho $$m = 4$$ trong lượt forward):
+   $$\sigma_B^2 = \frac{(2-5)^2 + (4-5)^2 + (6-5)^2 + (8-5)^2}{4} = \frac{9 + 1 + 1 + 9}{4} = \mathbf{5{,}0} \implies \sigma_B = \sqrt{5} \approx \mathbf{2{,}236}$$
+3. **Bước 3 — Chuẩn hóa $$\hat{x}_i = (x_i - 5{,}0) / 2{,}236$$**:
+   $$\hat{\mathbf{x}} \approx \mathbf{[-1{,}342, \; -0{,}447, \; +0{,}447, \; +1{,}342]}$$
+   (Kiểm tra nhanh: trung bình bằng $$0$$, trung bình bình phương bằng $$1{,}00$$).
+4. **Bước 4 — Co giãn và dịch chuyển $$y_i = 2{,}0 \hat{x}_i + 1{,}0$$**:
+   $$\mathbf{y} \approx \mathbf{[-1{,}683, \; +0{,}106, \; +1{,}894, \; +3{,}683]}$$
+
+Nếu lúc khởi tạo ban đầu $$\gamma = 1, \beta = 0$$, đầu ra chính là phân phối chuẩn hóa $$\hat{\mathbf{x}}$$; rồi qua các bước SGD, mạng tự điều chỉnh $$\gamma, \beta$$ đến đúng biên độ tối ưu cho tầng kế tiếp!
+
 ## Chuẩn hóa Batch là gì?
 
 **Chuẩn hóa Batch** (*Batch Normalization* — BatchNorm hay BN), do Ioffe và Szegedy giới thiệu năm 2015, chuẩn hóa đầu vào của từng tầng theo mỗi mini-batch về trung bình 0 và phương sai 1, sau đó áp dụng phép biến đổi tỉ lệ và tịnh tiến có tham số học được. Đây là một trong những kỹ thuật ổn định huấn luyện được sử dụng rộng rãi nhất trong học sâu.

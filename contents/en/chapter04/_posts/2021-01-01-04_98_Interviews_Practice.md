@@ -10,6 +10,28 @@ categories:
 lesson_type: optional
 ---
 
+In machine learning technical interviews, interviewers rarely ask you to recite PyTorch API signatures—they hand you a whiteboard marker and ask you to compute an output tensor shape, compare the parameter budget of two $$3 \times 3$$ layers against a $$5 \times 5$$ layer, or explain the precise distinction between translation *equivariance* and translation *invariance*. These rapid-fire derivations test whether you genuinely understand the geometry and optimization of CNNs under pressure.
+
+## Background Knowledge Map: Core Interview Competency Pillars for CNNs
+
+- **Exact Tensor & Parameter Arithmetic**: Fluency with $$H_{\text{out}} = \lfloor(H + 2p - d(k-1) - 1)/s\rfloor + 1$$, parameter counts $$C_{\text{out}}(C_{\text{in}} k_H k_W + 1)$$, and memory footprint calculations without reaching for a REPL.
+- **Inductive Bias Vocabulary (Equivariance vs. Invariance)**: Precisely distinguishing $$f(T(x)) = T(f(x))$$ (convolution is equivariant to translation) from $$f(T(x)) = f(x)$$ (global pooling/classification aims for invariance), and knowing how striding and zero-padding subtly break exact equivariance.
+- **Receptive Field & Factorization Trade-offs**: Articulating why stacked small kernels reduce parameters and increase non-linear expressive power while matching the receptive field of larger kernels.
+- **Optimization & Gradient Diagnostics**: Explaining why identity shortcuts fix the degradation problem (not merely vanishing gradients) and how BatchNorm interacts with conv bias and train/eval modes.
+
+### Step-by-Step Worked Example (Read Slowly): Whiteboard Speed-Drill — Two $$3 \times 3$$ Convs vs. One $$5 \times 5$$ Conv
+
+An interviewer asks: *"Keeping input and output channels fixed at $$C = 128$$, compare one $$5 \times 5$$ conv against two stacked $$3 \times 3$$ convs in receptive field, parameter count, and non-linearity."*
+
+1. **Receptive field** (stride 1, dilation 1):
+   - One $$5 \times 5$$ conv: $$5 \times 5$$.
+   - Two $$3 \times 3$$ convs: $$r_2 = 3 + (3 - 1)(1) = 5 \implies 5 \times 5$$ (identical).
+2. **Parameter count (weights only)**:
+   - One $$5 \times 5$$ conv: $$25 C^2 = 25 \times 128^2 = 409{,}600$$.
+   - Two $$3 \times 3$$ convs: $$2 \times 9 C^2 = 18 C^2 = 18 \times 128^2 = 294{,}912$$.
+   - **Reduction**: $$(25 - 18)/25 = 28\%$$ fewer weights ($$114{,}688$$ saved).
+3. **Expressivity**: The stacked design inserts an extra ReLU activation between the two $$3 \times 3$$ layers, allowing the $$5 \times 5$$ neighborhood to compute a richer, piecewise-linear composition rather than a single linear projection.
+
 # Optional: interview practice — CNNs and early features
 
 > This lesson is **optional**. It does **not** rewrite convolution math, pooling, or the LeNet–ResNet notes. After those lessons, use this drill, then open *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) for solved items on convolution, CNN architectures, and early feature extraction.

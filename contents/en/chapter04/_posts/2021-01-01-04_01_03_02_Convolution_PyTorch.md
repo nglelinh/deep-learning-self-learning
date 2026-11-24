@@ -9,6 +9,34 @@ categories:
 - chapter04
 ---
 
+Moving from a toy 2D NumPy array to a real PyTorch vision pipeline introduces a fourth axis—the **mini-batch**—and a strict memory convention: `(N, C, H, W)`. One misplaced channel dimension or forgotten `bias=False` before BatchNorm silently wastes GPU memory or sabotages convergence. In production CNNs, `nn.Conv2d` is rarely used alone; it lives inside reusable **Conv–BatchNorm–ReLU** blocks alongside $$1 \times 1$$ pointwise bottlenecks and strided downsampling layers.
+
+## Background Knowledge Map: PyTorch Tensor Geometry and CNN Block Design
+
+- **NCHW Tensor Layout & Weight Shape Convention**: PyTorch stores image batches as `(Batch, Channels, Height, Width)` and stores `nn.Conv2d` weights as `(C_out, C_in / groups, kH, kW)`. Knowing these exact axis orders makes shape debugging instantaneous before running a single forward pass.
+- **Redundancy of Conv Bias Before BatchNorm**: BatchNorm subtracts the per-channel batch mean $$\mu_c$$ before applying its own learnable shift $$\beta_c$$. Any additive bias $$b_c$$ inside `nn.Conv2d` cancels out mathematically during mean subtraction, which is why modern CNN blocks always set `bias=False` when followed by `nn.BatchNorm2d`.
+- **Pointwise ($$1 \times 1$$) Convolutions as Per-Pixel MLPs**: A $$1 \times 1$$ convolution does not mix neighboring pixels at all—it applies the exact same linear transformation across the channel vector at every $$(h, w)$$ location, enabling cheap dimensionality reduction (bottlenecks) or channel expansion.
+- **Strided Convolution vs. Pooling for Downsampling**: Setting `stride=2` in `nn.Conv2d` halves spatial resolution using learnable weights rather than fixed max/average rules, giving the network full control over anti-aliasing and feature retention.
+
+### Step-by-Step Worked Example (Read Slowly): Tracing Shapes & Parameters Through a Bottleneck Block
+
+Consider an input batch $$X$$ of shape `(N=8, C=256, H=28, W=28)` entering a ResNet-style bottleneck sequence (all with `bias=False` because each is followed by `BatchNorm2d`):
+1. `conv1`: $$1 \times 1$$ conv, $$256 \to 64$$ channels, `stride=1, padding=0`
+2. `conv2`: $$3 \times 3$$ conv, $$64 \to 64$$ channels, `stride=2, padding=1`
+3. `conv3`: $$1 \times 1$$ conv, $$64 \to 256$$ channels, `stride=1, padding=0`
+
+1. **Trace tensor shapes layer by layer**:
+   - After `conv1`: `(8, 64, 28, 28)` — spatial dimensions unchanged, channels compressed by $$4\times$$.
+   - After `conv2`: $$H_{\text{out}} = \lfloor (28 + 2 - 3)/2 \rfloor + 1 = 14$$, giving `(8, 64, 14, 14)`.
+   - After `conv3`: `(8, 256, 14, 14)` — channels restored to $$256$$ at half resolution.
+2. **Count exact trainable parameters** (conv weights + $$2C_{\text{out}}$$ BatchNorm $$\gamma, \beta$$ parameters per block):
+   - `conv1 + bn1`: $$(64 \times 256 \times 1 \times 1) + 2(64) = 16{,}384 + 128 = 16{,}512$$.
+   - `conv2 + bn2`: $$(64 \times 64 \times 3 \times 3) + 2(64) = 36{,}864 + 128 = 36{,}992$$.
+   - `conv3 + bn3`: $$(256 \times 64 \times 1 \times 1) + 2(256) = 16{,}384 + 512 = 16{,}896$$.
+   - **Total bottleneck parameters**: $$16{,}512 + 36{,}992 + 16{,}896 = 70{,}400$$.
+3. **Compare with a single direct $$3 \times 3$$ conv ($$256 \to 256$$, `stride=2`)**:
+   - Weights alone: $$256 \times 256 \times 9 = 589{,}824$$ parameters—more than $$8.3\times$$ heavier than the entire 3-layer bottleneck block!
+
 ### PyTorch Implementation
 
 ```python

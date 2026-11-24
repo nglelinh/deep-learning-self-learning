@@ -9,6 +9,33 @@ categories:
 - chapter10
 ---
 
+The evolution from vanilla SGD to **Momentum**, **Nesterov Accelerated Gradient (NAG)**, **AdaGrad**, **RMSprop**, and **Adam** is not a random grab-bag of heuristics—it is a clean, logical progression along two orthogonal axes: **first-moment smoothing** (remembering the direction of recent gradients) and **second-moment preconditioning** (normalizing each parameter by its historical gradient scale). Once you see how Adam literally fuses Momentum's exponential moving average $$m_t$$ with RMSprop's exponential moving average $$v_t$$—and adds exact bias correction for step 1—every optimizer formula becomes effortless to derive from memory.
+
+## Background Knowledge Map: The Unified Mathematical Family of First-Order Optimizers
+
+- **Classical Momentum & Nesterov Look-Ahead**: Heavy-ball momentum updates $$v_t = \beta v_{t-1} + g_t,\; \theta \leftarrow \theta - \eta v_t$$. Nesterov evaluates the gradient *ahead* at $$\theta - \eta \beta v_{t-1}$$, acting as a predictive brake that reduces overshoot around sharp turns.
+- **AdaGrad & Its Vanishing Step Failure**: Accumulating the *unbounded* sum of squared gradients $$G_t = \sum_{\tau=1}^t g_\tau^2$$ works wonders on sparse NLP features, but monotonically shrinks the effective learning rate $$\eta / \sqrt{G_t}$$ toward zero in long non-convex deep-learning runs.
+- **RMSprop (Exponential Moving Average of $$g^2$$)**: Replacing AdaGrad's infinite sum with an exponential moving average $$v_t = \beta_2 v_{t-1} + (1 - \beta_2) g_t^2$$ forgets ancient gradients so training never stalls prematurely.
+- **Adam & Zero-Initialization Bias Correction**: Initializing $$m_0 = 0, v_0 = 0$$ biases early estimates heavily toward zero (at $$t=1$$ with $$\beta_2 = 0.999$$, $$v_1 = 0.001 g_1^2$$!). Dividing by $$(1 - \beta_1^t)$$ and $$(1 - \beta_2^t)$$ yields exact unbiased moment estimates $$\hat{m}_t, \hat{v}_t$$ from the very first step.
+
+### Step-by-Step Worked Example (Read Slowly): Hand-Tracing 2 Full Steps of Adam (With Bias Correction)
+
+Suppose a scalar parameter starts at $$\theta_0 = 1.0$$ with hyperparameters $$\eta = 0.1, \beta_1 = 0.9, \beta_2 = 0.999, \epsilon = 10^{-8}$$, initialized at $$m_0 = 0, v_0 = 0$$, and receives gradients $$g_1 = 2.0$$ at step 1 and $$g_2 = 1.0$$ at step 2.
+
+1. **Step $$t = 1$$ ($$g_1 = 2.0$$)**:
+   - First moment: $$m_1 = 0.9(0) + 0.1(2.0) = 0.2$$.
+   - Second moment: $$v_1 = 0.999(0) + 0.001(2.0^2) = 0.004$$.
+   - **Bias correction**:
+     $$\hat{m}_1 = \frac{0.2}{1 - 0.9^1} = \frac{0.2}{0.1} = 2.0, \quad \hat{v}_1 = \frac{0.004}{1 - 0.999^1} = \frac{0.004}{0.001} = 4.0.$$
+   - Update:
+     $$\theta_1 = 1.0 - 0.1 \cdot \frac{2.0}{\sqrt{4.0} + 10^{-8}} = 1.0 - 0.1(1.0) = 0.9000.$$
+   *(Notice how without bias correction, $$m_1 / \sqrt{v_1} = 0.2 / \sqrt{0.004} \approx 3.16$$ would have jumped $$3.16\times$$ too far on step 1!)*
+2. **Step $$t = 2$$ ($$g_2 = 1.0$$)**:
+   - $$m_2 = 0.9(0.2) + 0.1(1.0) = 0.28$$; $$\hat{m}_2 = \frac{0.28}{1 - 0.81} = \frac{0.28}{0.19} \approx 1.4737$$.
+   - $$v_2 = 0.999(0.004) + 0.001(1.0^2) = 0.004996$$; $$\hat{v}_2 = \frac{0.004996}{1 - 0.999^2} = \frac{0.004996}{0.001999} \approx 2.4992$$.
+   - Update:
+     $$\theta_2 = 0.9000 - 0.1 \cdot \frac{1.4737}{\sqrt{2.4992}} \approx 0.9000 - 0.0932 = 0.8068.$$
+
 # Advanced Optimization: Beyond Vanilla Gradient Descent
 
 ## 1. Concept Overview

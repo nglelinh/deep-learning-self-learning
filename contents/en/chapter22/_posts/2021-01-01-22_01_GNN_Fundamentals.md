@@ -9,6 +9,30 @@ categories:
 - chapter22
 ---
 
+At first glance, the Graph Convolutional Network (GCN) update rule $H^{(l+1)} = \sigma(\tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2} H^{(l)} W^{(l)})$ looks intimidating—until you unpack it into three crystal-clear operations: add self-loops so a node remembers itself ($\tilde{A} = A + I$), normalize by $\sqrt{\tilde{d}_i \tilde{d}_j}$ so high-degree hubs do not explode feature scales, and mix features with a shared weight matrix $W$. Yet stack too many GCN layers and every node's representation blurs into the same average—the infamous **over-smoothing** phenomenon.
+
+## Background Knowledge Map: Mathematical Core of GCN, GraphSAGE, and GAT
+
+- **Pillar 1 — Symmetric Spectral Normalization ($\tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}$)**: Derives Kipf & Welling's first-order Chebyshev approximation to spectral graph convolutions, preventing hub nodes from dominating gradient magnitudes.
+- **Pillar 2 — Inductive Neighborhood Sampling (GraphSAGE)**: Samples a fixed number of neighbors per layer and concatenates `self || agg(neighbors)`, enabling generalization to unseen nodes and billion-edge graphs.
+- **Pillar 3 — Anisotropic Attention (GAT)**: Replaces fixed degree weights with learned edge attention coefficients $\alpha_{ij} = \operatorname{softmax}_j(\text{LeakyReLU}(a^\top[Wh_i \| Wh_j]))$ so nodes focus on their most informative neighbors.
+- **Pillar 4 — Over-Smoothing, Over-Squashing, and Expressivity**: Explains why deep GNNs lose node distinctiveness (fixed point of Laplacian smoothing) and why 1-WL message passing cannot distinguish certain non-isomorphic graphs.
+
+### Step-by-Step Worked Example (Read Slowly): Computing One Exact GCN Layer on a 3-Node Path
+
+Consider the 3-node path $1 - 2 - 3$ with self-loops $\tilde{A} = A + I = \begin{bmatrix}1&1&0\\1&1&1\\0&1&1\end{bmatrix}$, degree matrix $\tilde{D} = \operatorname{diag}(2, 3, 2)$, scalar features $H^{(0)} = \begin{bmatrix}2\\ 3\\ 6\end{bmatrix}$, and weight $W = [1]$ with ReLU.
+
+1. **Compute $\tilde{D}^{-1/2} = \operatorname{diag}(1/\sqrt{2},\; 1/\sqrt{3},\; 1/\sqrt{2}) \approx \operatorname{diag}(0.7071,\; 0.5774,\; 0.7071)$**.
+2. **Compute normalized message weights $\hat{A}_{ij} = \frac{\tilde{A}_{ij}}{\sqrt{\tilde{d}_i \tilde{d}_j}}$**:
+   - $\hat{A}_{11} = \frac{1}{2} = 0.500$, $\quad \hat{A}_{12} = \frac{1}{\sqrt{6}} \approx 0.4082$.
+   - $\hat{A}_{21} = \hat{A}_{23} = \frac{1}{\sqrt{6}} \approx 0.4082$, $\quad \hat{A}_{22} = \frac{1}{3} \approx 0.3333$.
+   - $\hat{A}_{32} = 0.4082$, $\quad \hat{A}_{33} = 0.500$.
+3. **Compute $H^{(1)} = \operatorname{ReLU}(\hat{A} H^{(0)} W)$**:
+   - Node 1: $0.500(2) + 0.4082(3) = 1.000 + 1.225 = 2.225$.
+   - Node 2: $0.4082(2) + 0.3333(3) + 0.4082(6) = 0.816 + 1.000 + 2.449 = 4.265$.
+   - Node 3: $0.4082(3) + 0.500(6) = 1.225 + 3.000 = 4.225$.
+4. **Takeaway**: Notice how the initial spread $[2, 3, 6]$ tightened toward $[2.23, 4.27, 4.23]$ in just one layer—illustrating both local neighborhood smoothing and why stacking 20 GCN layers without residual connections collapses all nodes together.
+
 # Graph Neural Networks: Deep Learning on Graphs
 
 ![Graph Neural Network](https://distill.pub/2021/gnn-intro/graph_neural_network.png)

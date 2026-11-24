@@ -9,6 +9,36 @@ categories:
 - chapter00
 ---
 
+Từ một lần tung đồng xu xác định bật hay tắt một nơ-ron trong Dropout, cho tới việc một mô hình ngôn ngữ chọn ra 1 từ trong kho 50{,}000 từ vựng, mọi quyết định rời rạc trong Học sâu đều được điều khiển bởi các **phân phối rời rạc**. Nếu không phân biệt rõ Bernoulli, Nhị thức (Binomial), Categorical và Poisson, ta rất dễ dùng nhầm hàm mất mát hoặc hiểu sai bản chất thống kê của độ chính xác phân loại. Bài học này đi sâu vào công thức, kỳ vọng, phương sai và dấu ấn thực tế của từng phân phối rời rạc trong Deep Learning.
+
+## Bản đồ kiến thức nền: Bốn phân phối Rời rạc trụ cột
+
+1. **Phân phối Bernoulli ($$p$$)**:
+   Mô hình hóa một phép thử Đúng/Sai duy nhất với $$P(X=1)=p$$, $$\mathbb{E}[X]=p$$, $$\text{Var}(X)=p(1-p)$$. Đây là nền tảng của phân loại nhị phân và từng phần tử trong mặt nạ Dropout.
+
+2. **Phân phối Nhị thức — Binomial ($$n, p$$)**:
+   Đếm số lần thành công trong $$n$$ phép thử Bernoulli độc lập, với $$\mathbb{E}[X]=np$$ và $$\text{Var}(X)=np(1-p)$$. Dùng để đánh giá độ tin cậy thống kê khi kiểm thử mô hình trên $$n$$ mẫu test.
+
+3. **Phân phối Categorical / Multinomial**:
+   Mở rộng Bernoulli từ 2 lớp lên $$K$$ lớp với vector xác suất $$\sum_{k=1}^K p_k = 1$$—đầu ra chuẩn của mọi bài toán phân loại đa lớp và dự đoán token kế tiếp trong Transformer.
+
+4. **Phân phối Poisson ($$\lambda$$)**:
+   Mô hình hóa số lần sự kiện xảy ra trong một khoảng thời gian/không gian cố định (ví dụ số lượt nhấp chuột, số lượng phương tiện qua ngã tư mỗi phút), với đặc trưng $$\mathbb{E}[X] = \text{Var}(X) = \lambda$$.
+
+### Khung giải thích (nên đọc chậm): Tính tay xác suất và phương sai cho Dropout (Bernoulli) và Test Set (Binomial)
+
+**1. Phân tích một lớp Dropout với xác suất giữ lại $$p = 0.8$$ (tỷ lệ tắt 20%):**
+- Mỗi nơ-ron nhân với biến $$M \sim \text{Bernoulli}(0.8)$$: $$P(M=1)=0.8, P(M=0)=0.2$$.
+- Kỳ vọng: $$\mathbb{E}[M] = 0.8$$; phương sai: $$\text{Var}(M) = 0.8 \times 0.2 = 0.16$$.
+- Để kỳ vọng đầu ra khi huấn luyện khớp với lúc suy luận (không tắt nơ-ron), ta chia cho $$0.8$$ (nhân $$1.25$$): $$\mathbb{E}[M / 0.8] = 0.8 / 0.8 = 1.0$$.
+
+**2. Tính tay xác suất Binomial khi chấm điểm 5 mẫu kiểm thử:**
+Giả sử mô hình có độ chính xác thật $$p = 0.8$$ trên mỗi mẫu độc lập. Xác suất mô hình đoán đúng **ít nhất 4 trên 5 mẫu** là:
+- Đúng đúng 4 mẫu: $$P(X=4) = \binom{5}{4}(0.8)^4(0.2)^1 = 5 \times 0.4096 \times 0.2 = 0.4096$$.
+- Đúng cả 5 mẫu: $$P(X=5) = \binom{5}{5}(0.8)^5(0.2)^0 = 1 \times 0.32768 = 0.32768$$.
+- Cộng lại: $$P(X \ge 4) = 0.4096 + 0.32768 = 0.73728 \approx 73.73\%$$.
+Dù độ chính xác thật là 80%, vẫn có hơn 26% khả năng trên 5 mẫu ngẫu nhiên mô hình chỉ đạt $$\le 60\%$$—nhắc ta luôn cần tập kiểm thử đủ lớn để giảm phương sai đánh giá!
+
 ## Các phân phối xác suất thông dụng
 
 Nắm vững các phân phối xác suất cơ bản là yêu cầu thiết yếu cho các bài toán tối ưu hóa trong học máy và thống kê. Các phân phối này thường xuất hiện dưới dạng giả định mô hình dữ liệu, phân phối tiên nghiệm (*prior*) trong phương pháp Bayes và mô hình nhiễu trong hồi quy.

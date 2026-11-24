@@ -9,6 +9,34 @@ categories:
 - chapter00
 ---
 
+> *When a neural network misclassifies an X-ray, a single scalar loss number has to send bespoke blame signals back to millions of weights simultaneously. Multivariable calculus—partial derivatives, Jacobians, Hessians, and the multivariable chain rule—is the exact bookkeeping system that makes that feat possible.*
+
+## Background Knowledge Map: Multivariable Calculus for Neural Optimization
+
+1. **Partial Derivatives (Axis-Aligned Sensitivities)**: Isolate the rate of change of a loss $$f(x_1, \dots, x_n)$$ with respect to one coordinate while holding all other parameters frozen.
+2. **The Gradient & Jacobian (First-Order Linearization)**: Package all partial derivatives of a scalar function into a gradient vector $$\nabla f$$, or of a vector-valued layer $$h: \mathbb{R}^n \to \mathbb{R}^m$$ into an $$m \times n$$ Jacobian matrix $$J_h$$.
+3. **The Hessian Matrix (Second-Order Curvature)**: Collects all second partial derivatives $$H_{ij} = \frac{\partial^2 f}{\partial x_i \partial x_j}$$, distinguishing strict local minima (positive definite), maxima (negative definite), and saddle points (indefinite)—which dominate high-dimensional neural loss landscapes.
+4. **Multivariable Chain Rule (The Core of Backpropagation)**: Composes local derivatives along every path in a computational graph, summing contributions whenever one variable feeds into multiple downstream nodes.
+
+### Step-by-Step Worked Example (Read Slowly): Gradient, Hessian, and Chain Rule on a Coupled Loss
+
+Consider the two-variable objective $$f(x, y) = x^2 y + 3y^2$$ along the parameterized path $$x(t) = 2t$$, $$y(t) = t + 1$$, evaluated at $$t = 1$$ (so $$x = 2, y = 2$$).
+
+1. **Compute the Gradient Vector $$\nabla f(x, y)$$**:
+   $$\frac{\partial f}{\partial x} = 2xy, \qquad \frac{\partial f}{\partial y} = x^2 + 6y$$
+   At $$(x, y) = (2, 2)$$:
+   $$\nabla f(2, 2) = \begin{bmatrix} 2(2)(2) \\ 2^2 + 6(2) \end{bmatrix} = \begin{bmatrix} 8 \\ 16 \end{bmatrix}$$
+2. **Compute the Hessian Matrix $$H_f(x, y)$$**:
+   $$\frac{\partial^2 f}{\partial x^2} = 2y, \quad \frac{\partial^2 f}{\partial x \partial y} = 2x, \quad \frac{\partial^2 f}{\partial y^2} = 6$$
+   At $$(2, 2)$$:
+   $$H_f(2, 2) = \begin{bmatrix} 4 & 4 \\ 4 & 6 \end{bmatrix}$$
+   Check definiteness via leading principal minors: $$D_1 = 4 > 0$$ and $$D_2 = (4)(6) - (4)(4) = 24 - 16 = 8 > 0$$. Thus $$H_f(2, 2)$$ is strictly positive definite (locally bowl-shaped).
+3. **Apply the Multivariable Chain Rule for $$\frac{df}{dt}$$ at $$t = 1$$**:
+   We have $$\frac{dx}{dt} = 2$$ and $$\frac{dy}{dt} = 1$$. Therefore:
+   $$\frac{df}{dt}\Big|_{t=1} = \frac{\partial f}{\partial x}\frac{dx}{dt} + \frac{\partial f}{\partial y}\frac{dy}{dt} = (8)(2) + (16)(1) = 16 + 16 = 32$$
+4. **Independent Substitution Check**:
+   Substitute directly: $$f(t) = (2t)^2(t+1) + 3(t+1)^2 = 4t^3 + 7t^2 + 6t + 3$$. Differentiating gives $$f'(t) = 12t^2 + 14t + 6$$, and at $$t = 1$$: $$f'(1) = 12 + 14 + 6 = 32$$. Exact match!
+
 This lesson covers derivatives and essential multivariable calculus concepts that form the foundation for deep-learning theory and algorithms.
 
 ---

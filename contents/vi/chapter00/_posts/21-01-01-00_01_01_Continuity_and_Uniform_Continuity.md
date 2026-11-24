@@ -9,6 +9,35 @@ categories:
 - chapter00
 ---
 
+Tưởng tượng bạn đang tinh chỉnh núm vặn âm lượng: chỉ xoay nhẹ 1 milimet mà loa bất ngờ rú lên gấp nghìn lần, bạn sẽ không bao giờ chỉnh được mức nghe vừa ý. Trong Deep Learning, mạng nơ-ron gặp đúng thảm họa đó nếu hàm mất mát hay các tầng biến đổi thiếu **tính liên tục**, **liên tục đều**, và đặc biệt là **tính liên tục Lipschitz**—khái niệm từng cứu sống kiến trúc Wasserstein GAN (WGAN) khỏi cảnh bất ổn định nổi tiếng. Bài học này sẽ bóc tách ba tầng "độ mượt" ngày càng chặt chẽ của hàm số để bạn nhìn rõ chúng bảo vệ quá trình huấn luyện như thế nào.
+
+## Bản đồ kiến thức nền: Ba cấp độ mượt của hàm số trong tối ưu hóa
+
+1. **Liên tục tại điểm và trên miền (Pointwise Continuity)**:
+   Đảm bảo hàm không bị đứt gãy đột ngột; tuy nhiên bán kính an toàn $$\delta$$ có thể phải thu nhỏ vô hạn khi đi tới vùng hàm dốc đứng.
+
+2. **Liên tục đều (Uniform Continuity)**:
+   Áp đặt một bán kính $$\delta$$ dùng chung cho *mọi* điểm trên toàn miền xác định, triệt tiêu tình huống hàm ngày càng dốc vô hạn ở gần biên (như $$1/x$$ gần $$0$$).
+
+3. **Liên tục Lipschitz (Lipschitz Continuity)**:
+   Mạnh hơn cả liên tục đều: chặn trên trực tiếp tốc độ biến thiên $$\lvert f(x) - f(y) \rvert \le L \lvert x - y \rvert$$ bằng một hằng số $$L$$ cố định. Trong tối ưu hóa, gradient $$L$$-Lipschitz cho phép chọn bước học an toàn $$\eta \le 1/L$$.
+
+4. **Vai trò trong Deep Learning hiện đại**:
+   Các kỹ thuật như Spectral Normalization, Gradient Clipping hay Weight Decay đều xoay quanh mục tiêu kiểm soát hằng số Lipschitz của mạng để chống bùng nổ gradient và tăng khả năng chống nhiễu đối kháng (*adversarial robustness*).
+
+### Khung giải thích (nên đọc chậm): So sánh tay $$f(x) = x^2$$ trên $$[0, 2]$$ và trên $$\mathbb{R}$$
+
+Hãy kiểm tra trực tiếp bằng số vì sao $$f(x) = x^2$$ là Lipschitz trên đoạn đóng $$[0, 2]$$ nhưng **không** liên tục đều trên toàn trục thực $$\mathbb{R}$$:
+
+1. **Trên đoạn $$[0, 2]$$**: Với mọi $$x, y \in [0, 2]$$, ta có:
+   $$\lvert x^2 - y^2 \rvert = \lvert x + y \rvert \cdot \lvert x - y \rvert \le (2 + 2)\lvert x - y \rvert = 4\lvert x - y \rvert.$$
+   Vậy $$f(x) = x^2$$ là **Lipschitz với hằng số $$L = 4$$** trên $$[0, 2]$$. Nếu muốn $$\lvert f(x) - f(y) \rvert < 0.04$$, chỉ cần chọn duy nhất $$\delta = 0.01$$ cho mọi cặp điểm.
+2. **Trên toàn $$\mathbb{R}$$**: Giả sử thử cố định bước nhỏ $$\delta = 0.01$$ và đặt $$y = x + 0.01$$:
+   - Tại $$x = 1$$: $$\lvert f(1.01) - f(1) \rvert = \lvert 1.0201 - 1 \rvert = 0.0201$$.
+   - Tại $$x = 100$$: $$\lvert f(100.01) - f(100) \rvert = \lvert 10002.0001 - 10000 \rvert = 2.0001$$.
+   - Tại $$x = 10000$$: hiệu vọt lên $$200.0001$$!
+3. **Kết luận trực giác**: Dù $$x^2$$ rất mượt ở từng điểm, độ dốc $$2x$$ tăng không giới hạn khi $$x \to \infty$$, khiến một bước học cố định sẽ làm sai số nổ tung ở vùng trọng số lớn—đó là lý do chuẩn hóa dữ liệu và ràng buộc trọng số (như Weight Decay) cực kỳ quan trọng trong Deep Learning.
+
 Bài học này giới thiệu các khái niệm cơ bản về tính liên tục, tính liên tục đều và tính liên tục Lipschitz — những công cụ quan trọng để phân tích hành vi của hàm số trong tối ưu hóa.
 
 ---

@@ -9,6 +9,34 @@ categories:
 - chapter00
 ---
 
+Tại sao trọng số khởi tạo của hầu hết mạng nơ-ron lại lấy từ phân phối Chuẩn (Gaussian) hoặc Đều (Uniform), và vì sao chỉ một lỗi nhỏ khi chuẩn hóa dữ liệu đầu vào cũng có thể đẩy toàn bộ hàm Sigmoid vào vùng bão hòa? Câu trả lời nằm ở hình học của các **phân phối liên tục**—nơi xác suất không tập trung tại từng điểm rời rạc mà trải đều thành diện tích dưới đường cong mật độ $$p(x)$$. Bài học này giúp bạn nắm vững ba phân phối liên tục quan trọng nhất (Đều, Chuẩn, Mũ) cùng quy tắc chuẩn hóa Z-score áp dụng trực tiếp vào tiền xử lý dữ liệu và Batch Normalization.
+
+## Bản đồ kiến thức nền: Bốn trụ cột của Phân phối Liên tục
+
+1. **Hàm mật độ (PDF $$p(x)$$) và Hàm phân phối tích lũy (CDF $$F(x)$$)**:
+   Với biến liên tục, xác suất tại đúng một điểm luôn bằng $$0$$ ($$P(X = c) = 0$$); xác suất chỉ có nghĩa trên một khoảng: $$P(a \le X \le b) = \int_a^b p(x)\,dx = F(b) - F(a)$$.
+
+2. **Phân phối Đều (Uniform $$\mathcal{U}(a, b)$$)**:
+   Mọi giá trị trong $$[a, b]$$ có mật độ ngang nhau $$p(x) = \frac{1}{b-a}$$, kỳ vọng $$\frac{a+b}{2}$$, phương sai $$\frac{(b-a)^2}{12}$$. Đây là cơ sở của khởi tạo `Kaiming Uniform` mặc định trong `nn.Linear` của PyTorch!
+
+3. **Phân phối Chuẩn (Gaussian $$\mathcal{N}(\mu, \sigma^2)$$)**:
+   Hình chuông đối xứng đặc trưng bởi quy tắc 68–95–99.7%, định lý giới hạn trung tâm (tổng nhiều nguồn nhiễu nhỏ hội tụ về Gaussian), và phép chuẩn hóa $$Z = \frac{X - \mu}{\sigma} \sim \mathcal{N}(0, 1)$$.
+
+4. **Phân phối Mũ (Exponential $$\text{Exp}(\lambda)$$)**:
+   Mô hình hóa thời gian chờ giữa các sự kiện với tính chất "không nhớ" (*memoryless*), đồng thời xuất hiện trong phân phối Laplace ($$L_1$$ regularization) và phân tích sinh tồn.
+
+### Khung giải thích (nên đọc chậm): Tính tay biên khởi tạo `Uniform` tương đương phương sai của `Normal`
+
+Trong PyTorch, khi khởi tạo một lớp tuyến tính có $$n_{\text{in}} = 100$$ đầu vào theo chuẩn Xavier, ta muốn trọng số có $$\mathbb{E}[w] = 0$$ và phương sai $$\text{Var}(w) = \frac{1}{100} = 0.01$$:
+
+1. **Nếu dùng phân phối Chuẩn $$\mathcal{N}(0, \sigma^2)$$**:
+   Chỉ cần đặt độ lệch chuẩn $$\sigma = \sqrt{0.01} = 0.1$$. Theo quy tắc 68–95–99.7%, khoảng 95% trọng số sẽ nằm trong $$[-0.2, 0.2]$$.
+2. **Nếu dùng phân phối Đều đối xứng $$\mathcal{U}(-a, a)$$**:
+   Ta biết phương sai của $$\mathcal{U}(-a, a)$$ là $$\text{Var}(w) = \frac{(a - (-a))^2}{12} = \frac{4a^2}{12} = \frac{a^2}{3}$$.
+   Để $$\frac{a^2}{3} = 0.01$$, ta giải được:
+   $$a^2 = 0.03 \implies a = \sqrt{0.03} \approx 0.1732.$$
+3. **Kiểm tra ngược**: Với $$w \sim \mathcal{U}(-0.1732, 0.1732)$$, mật độ $$p(w) = \frac{1}{0.3464} \approx 2.887 > 1$$ (hoàn toàn hợp lệ cho PDF!) và diện tích $$2.887 \times 0.3464 = 1$$. Bạn vừa tự chứng minh xong con số $$\sqrt{3}$$ nổi tiếng trong mã nguồn khởi tạo trọng số của PyTorch!
+
 ### 2. Phân phối liên tục
 
 #### Phân phối đều (*Uniform*)

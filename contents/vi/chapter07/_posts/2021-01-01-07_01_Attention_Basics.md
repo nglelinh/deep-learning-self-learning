@@ -9,6 +9,33 @@ categories:
 - chapter07
 ---
 
+Năm 2014, Dzmitry Bahdanau, Kyunghyun Cho và Yoshua Bengio công bố bài báo dịch máy thần kinh kinh điển với một phát hiện làm thay đổi toàn bộ NLP: ngay khi cho phép bộ giải mã tự tính trọng số chú ý lên mọi trạng thái ẩn của bộ mã hóa, điểm BLEU trên các câu dài trên 30 từ không còn lao dốc thảm hại nữa — và đẹp hơn cả, khi vẽ ma trận trọng số $$\alpha_{ti}$$ lên biểu đồ nhiệt, mô hình đã tự học được **bảng gióng hàng (alignment)** giữa hai ngôn ngữ mà chưa từng được dạy ngữ pháp!
+
+## Bản đồ kiến thức nền: Bốn mảnh ghép nền tảng của Attention trong Seq2Seq
+
+1. **Nút thắt thông tin trong Encoder–Decoder cổ điển**:
+   Dù câu nguồn dài 5 từ hay 80 từ, Seq2Seq truyền thống buộc phải nén toàn bộ vào một vector $$h_T \in \mathbb{R}^{d}$$ cố định — thông tin ở đầu câu bị ghi đè dần khi câu dài ra.
+2. **Bahdanau Attention (Additive / Concat Attention, 2015)**:
+   Tính điểm khớp bằng một mạng MLP 1 tầng ẩn: $$e_{ti} = v_a^T \tanh(W_a s_{t-1} + U_a h_i)$$, kết hợp trạng thái giải mã trước đó $$s_{t-1}$$ với từng trạng thái mã hóa $$h_i$$.
+3. **Luong Attention (Multiplicative / Dot-Product Attention, 2015)**:
+   Thay MLP cộng tính bằng phép nhân trực tiếp $$e_{ti} = s_t^T W_a h_i$$ (hoặc $$s_t^T h_i$$), tận dụng phép nhân ma trận siêu nhanh trên GPU và đặt nền móng trực tiếp cho Transformer.
+4. **Tính diễn giải qua bản đồ gióng hàng (Alignment Heatmap)**:
+   Hàng $$t$$ của ma trận $$\alpha$$ cho biết khi sinh từ đích thứ $$t$$, mô hình đang "nhìn" vào những từ nguồn nào — thậm chí xử lý mượt mà hiện tượng đảo trật tự từ giữa tiếng Anh (*"white house"*) và tiếng Việt (*"nhà trắng"*).
+
+### Khung giải thích (nên đọc chậm): Tính tay 1 bước Bahdanau Additive Attention
+
+Giả sử câu nguồn có 2 từ với trạng thái encoder vô hướng $$h_1 = 1{,}0, \; h_2 = -0{,}5$$, trạng thái decoder hiện tại $$s_{t-1} = 0{,}5$$, và tham số học được $$W_a = 1{,}0, \; U_a = 1{,}0, \; v_a = 2{,}0$$:
+
+1. **Tính điểm năng lượng $$e_{t,i} = v_a \tanh(W_a s_{t-1} + U_a h_i)$$**:
+   - Với từ 1: $$e_{t,1} = 2{,}0 \cdot \tanh(0{,}5 + 1{,}0) = 2{,}0 \cdot \tanh(1{,}5) \approx 2{,}0 \times 0{,}905 = \mathbf{1{,}810}$$
+   - Với từ 2: $$e_{t,2} = 2{,}0 \cdot \tanh(0{,}5 - 0{,}5) = 2{,}0 \cdot \tanh(0) = \mathbf{0{,}000}$$
+2. **Chuẩn hóa Softmax**:
+   $$e^{1{,}810} \approx 6{,}110, \quad e^{0} = 1{,}000 \implies \alpha_{t,1} = \frac{6{,}110}{7{,}110} \approx \mathbf{0{,}859}, \quad \alpha_{t,2} \approx \mathbf{0{,}141}$$
+3. **Tổng hợp vector ngữ cảnh $$c_t$$**:
+   $$c_t = 0{,}859(1{,}0) + 0{,}141(-0{,}5) = 0{,}859 - 0{,}0705 = \mathbf{0{,}7885}$$
+
+Ở bước này, decoder tập trung tới **85,9%** sự chú ý vào từ nguồn thứ nhất để sinh từ tiếp theo.
+
 # Cơ sở về Cơ chế Chú ý
 
 ![Multi-Head Attention](/deep-learning-self-learning/img/chapter_img/chapter07/multihead_attention.png)

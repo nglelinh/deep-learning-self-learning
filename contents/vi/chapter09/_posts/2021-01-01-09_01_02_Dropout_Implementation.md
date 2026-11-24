@@ -9,6 +9,30 @@ categories:
 - chapter09
 ---
 
+Một trong những lỗi "âm thầm nhưng chí mạng" hay gặp nhất trong các dự án PyTorch thực tế là **quên gọi `model.eval()` trước khi chạy vòng đánh giá validation/test**. Kết quả là Dropout vẫn tiếp tục tắt ngẫu nhiên 50% neuron trong lúc chấm điểm, khiến độ chính xác tập kiểm định vừa tụt thảm hại vừa nhảy loạn xạ sau mỗi lần chạy! Bài thực hành này giúp bạn làm chủ cả cài đặt chuẩn PyTorch, bản viết tay NumPy (cả forward lẫn backward) và các quy tắc kết hợp với BatchNorm.
+
+## Bản đồ kiến thức nền: Bốn điểm kỹ thuật cốt tử khi cài đặt Dropout
+
+1. **Lan truyền ngược qua lớp Dropout**:
+   Trong lượt backward, gradient chỉ được truyền ngược qua **đúng những neuron đã sống sót** trong lượt forward (nhân lại với chính mặt nạ `mask / (1 - p)` đã lưu ở cache); các neuron bị tắt nhận gradient bằng `0`.
+2. **Quản lý chặt chẽ hai chế độ `model.train()` và `model.eval()`**:
+   Luôn bọc vòng đánh giá trong `model.eval()` kết hợp `with torch.no_grad():`, và nhớ gọi lại `model.train()` trước khi sang epoch huấn luyện kế tiếp.
+3. **Phân biệt `nn.Dropout` (phần tử) và `nn.Dropout2d` (toàn kênh)**:
+   Trên bản đồ đặc trưng CNN, các điểm ảnh kề nhau tương quan rất mạnh nên tắt lẻ từng pixel hầu như vô tác dụng; `nn.Dropout2d` tắt nguyên cả kênh đặc trưng để ép CNN thực sự học đặc trưng độc lập.
+4. **Tránh xung đột giữa Dropout và BatchNorm**:
+   Đặt Dropout ngay *trước* BatchNorm làm thay đổi phương sai giữa train và eval (hiện tượng *variance shift*, Li et al. 2019). Quy tắc an toàn: đặt Dropout sau BatchNorm hoặc chỉ dùng ở tầng phân loại cuối.
+
+### Khung giải thích (nên đọc chậm): Tính tay cả Forward và Backward của một lớp Inverted Dropout bằng NumPy
+
+Giả sử đầu vào $$\mathbf{x} = [1{,}0, \; -2{,}0, \; 4{,}0, \; 3{,}0]$$, tỷ lệ tắt $$p = 0{,}2$$ (tỷ lệ giữ $$1 - p = 0{,}8$$), mặt nạ ngẫu nhiên rút được là $$\mathbf{m} = [1, \; 0, \; 1, \; 1]$$, và gradient từ tầng trên truyền xuống là $$\mathbf{g}_{\text{out}} = [0{,}4, \; 0{,}8, \; -0{,}4, \; 1{,}6]$$:
+
+1. **Bước Forward (hệ số khuếch đại $$\frac{1}{1 - p} = \frac{1}{0{,}8} = 1{,}25$$)**:
+   $$\mathbf{y} = \mathbf{x} \odot \mathbf{m} \times 1{,}25 = [1{,}0\cdot 1,\; -2{,}0\cdot 0,\; 4{,}0\cdot 1,\; 3{,}0\cdot 1] \times 1{,}25 = \mathbf{[1{,}25, \; 0{,}00, \; 5{,}00, \; 3{,}75]}$$
+2. **Bước Backward (dùng lại CHÍNH xác mặt nạ $$\mathbf{m}$$ và hệ số $$1{,}25$$)**:
+   $$\mathbf{g}_{\text{in}} = \mathbf{g}_{\text{out}} \odot \mathbf{m} \times 1{,}25 = [0{,}4\cdot 1,\; 0{,}8\cdot 0,\; -0{,}4\cdot 1,\; 1{,}6\cdot 1] \times 1{,}25 = \mathbf{[0{,}50, \; 0{,}00, \; -0{,}50, \; 2{,}00]}$$
+
+Chú ý phần tử thứ 2: dù gradient từ trên truyền xuống là `0.8`, vì neuron này đã bị tắt ở lượt forward nên `g_in[1] = 0.00` — nó hoàn toàn không bị cập nhật trọng số ở bước này!
+
 ## 4. Đoạn Mã
 
 ### Cài đặt bằng PyTorch

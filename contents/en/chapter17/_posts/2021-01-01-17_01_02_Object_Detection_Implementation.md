@@ -9,6 +9,32 @@ categories:
 - chapter17
 ---
 
+Implementing a Faster R-CNN training loop in PyTorch feels completely different from image classification: images can have different resolutions, each image carries a variable number of bounding boxes (from 0 to 50+), and `torchvision`'s detection models expect a list of tensors plus a list of dictionaries—returning a *loss dictionary* during `.train()` and a *prediction dictionary* during `.eval()`. Mastering that data contract and collate function eliminates 90% of detection pipeline bugs.
+
+## Background Knowledge Map: Engineering Object Detectors in PyTorch
+
+- **Pillar 1 — Custom Collate & Ragged Target Dictionaries**: Uses `collate_fn = lambda batch: tuple(zip(*batch))` because standard `DataLoader` stacking crashes when image 1 has 2 boxes and image 2 has 7 boxes.
+- **Pillar 2 — Head Replacement & Background Class Indexing**: Reserves class index `0` strictly for `__background__`, setting `num_classes = K + 1` when swapping `FastRCNNPredictor` on a pretrained backbone.
+- **Pillar 3 — Dual-Mode Forward Contract**: Understands that `model(images, targets)` returns `{'loss_classifier', 'loss_box_reg', 'loss_objectness', 'loss_rpn_box_reg'}` in training mode, while `model(images)` returns `boxes, labels, scores` in eval mode.
+- **Pillar 4 — Confidence Thresholding & NMS Post-Processing**: Filters raw proposals by score threshold and `torchvision.ops.nms` before computing COCO-style mAP or visualizing boxes.
+
+### Step-by-Step Worked Example (Read Slowly): Walking Through Greedy NMS on 3 Overlapping Detections
+
+Suppose for class "car," our detector outputs three boxes with confidence scores:
+- Box 1: score $= 0.92$
+- Box 2: score $= 0.85$, with $\text{IoU}(B_1, B_2) = 0.72$
+- Box 3: score $= 0.78$, with $\text{IoU}(B_1, B_3) = 0.15$ and $\text{IoU}(B_2, B_3) = 0.60$
+
+Let the NMS IoU threshold be $\tau_{\text{NMS}} = 0.50$.
+
+1. **Sort by descending score**: $[B_1 (0.92),\; B_2 (0.85),\; B_3 (0.78)]$.
+2. **Pop highest-scoring box $B_1$ and keep it**:
+   - Check $B_2$: $\text{IoU}(B_1, B_2) = 0.72 > 0.50 \implies$ **suppress $B_2$** (duplicate of car 1).
+   - Check $B_3$: $\text{IoU}(B_1, B_3) = 0.15 \le 0.50 \implies$ keep $B_3$ in candidate pool.
+3. **Pop next remaining box $B_3$ and keep it** (pool is now empty).
+4. **Final kept detections**: $\{B_1, B_3\}$.
+5. **Takeaway**: Notice that $B_3$ survived even though $\text{IoU}(B_2, B_3) = 0.60$, because $B_2$ was already eliminated by $B_1$—showing why sorting order and threshold choice critically affect crowded scenes.
+
 ## 4. Code Snippet
 
 Complete Faster R-CNN style implementation:

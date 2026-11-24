@@ -9,6 +9,31 @@ categories:
 - chapter00
 ---
 
+> *Why do we initialize weights from a Uniform or Normal distribution, model latent codes in VAEs as standard Gaussians, and sample Mixup interpolation weights from a Beta distribution? Each continuous density has a distinct tail behavior and support that shapes optimization.*
+
+## Background Knowledge Map: Continuous Densities in Deep Learning
+
+1. **Uniform Distribution ($$\mathcal{U}(a, b)$$)**: Assigns flat density $$\frac{1}{b-a}$$ across a bounded interval with variance $$\frac{(b-a)^2}{12}$$, widely used in Glorot/He uniform weight initialization and hyperparameter random search.
+2. **Normal / Gaussian Distribution ($$\mathcal{N}(\mu, \sigma^2)$$)**: The maximum-entropy distribution for fixed mean and variance; central to weight decay, Gaussian noise injection, diffusion forward processes, and Central Limit Theorem behavior in wide layers.
+3. **Exponential Distribution ($$\text{Exp}(\lambda)$$)**: Memoryless distribution on $$[0, \infty)$$ modeling waiting times and inter-arrival intervals, closely linked to Laplace priors (two-sided exponential) that induce $$L_1$$ sparsity.
+4. **Beta Distribution ($$\text{Beta}(\alpha, \beta)$$)**: Flexible distribution supported strictly on $$[0, 1]$$, ideal for modeling uncertain probabilities, Bayesian coin priors, and Mixup data augmentation coefficients $$\lambda \sim \text{Beta}(\alpha, \alpha)$$.
+
+### Step-by-Step Worked Example (Read Slowly): Matching Uniform and Normal Initialization Variances
+
+Suppose Xavier initialization for a layer with $$n_{\text{in}} = 100, n_{\text{out}} = 200$$ calls for weight variance $$\sigma^2 = \frac{2}{n_{\text{in}} + n_{\text{out}}}$$. Let us compute both the Normal and Uniform bounds by hand.
+
+1. **Compute Target Variance**:
+   $$\sigma^2 = \frac{2}{100 + 200} = \frac{2}{300} = \frac{1}{150} \approx 0.006667$$
+2. **Xavier Normal Distribution $$\mathcal{N}(0, \sigma^2)$$**:
+   $$\sigma = \sqrt{\frac{1}{150}} \approx 0.08165$$
+   So we sample $$w_{ij} \sim \mathcal{N}(0, 0.08165^2)$$.
+3. **Xavier Uniform Distribution $$\mathcal{U}(-a, a)$$**:
+   A symmetric uniform distribution on $$[-a, a]$$ has variance:
+   $$\text{Var}(W) = \frac{(a - (-a))^2}{12} = \frac{4a^2}{12} = \frac{a^2}{3}$$
+   Equate this to $$\sigma^2 = \frac{1}{150}$$:
+   $$\frac{a^2}{3} = \frac{1}{150} \implies a^2 = \frac{3}{150} = \frac{1}{50} = 0.02 \implies a = \sqrt{0.02} \approx 0.14142$$
+   Notice why PyTorch's `xavier_uniform_` uses $$\sqrt{\frac{6}{n_{\text{in}} + n_{\text{out}}}}$$ while `xavier_normal_` uses $$\sqrt{\frac{2}{n_{\text{in}} + n_{\text{out}}}}$$: the factor of $$\sqrt{3}$$ comes directly from $$\text{Var}(\mathcal{U}(-a,a)) = a^2/3$$!
+
 ### 2. Continuous Distributions
 
 #### Uniform Distribution

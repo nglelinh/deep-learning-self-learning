@@ -9,6 +9,35 @@ categories:
 - chapter04
 ---
 
+Every deep learning practitioner eventually hits a moment of quiet panic when a PyTorch training script crashes with `RuntimeError: mat1 and mat2 shapes cannot be multiplied`—almost always traced back to a single miscalculated padding, stride, or dilation term three convolutional layers earlier. Beneath the intuitive "sliding window" metaphor lies an exact discrete calculus of index arithmetic, tensor contractions, and cross-correlation algebra. Mastering the exact math of output dimensions, multi-channel summation, and parameter counts turns architecture design from guesswork into deterministic engineering.
+
+## Background Knowledge Map: The Mathematical Machinery of 2D Convolution
+
+- **Discrete Cross-Correlation vs. True Convolution**: In signal processing, convolution flips the kernel by $$180^\circ$$ so the operator is commutative and associative ($$(f * g) * h = f * (g * h)$$). Deep learning libraries implement **cross-correlation** without flipping because learned weights absorb any orientation flip during training, avoiding unnecessary memory reversals.
+- **Tensor Contraction Across Input Channels**: A 2D convolutional filter is actually a **3D tensor** of shape $$(C_{\text{in}}, k_H, k_W)$$. At each spatial location $$(i, j)$$, it performs a full inner product across all $$C_{\text{in}}$$ channels simultaneously, collapsing depth into a single scalar before moving to the next output channel.
+- **Discrete Sampling Geometry (Padding, Stride, Dilation)**: Zero-padding $$p$$ controls boundary shrinkage, stride $$s$$ sets the subsampling lattice spacing, and dilation $$d$$ inserts $$(d-1)$$ zeros between kernel taps, giving an effective kernel span of $$k_{\text{eff}} = d(k - 1) + 1$$.
+- **Computational Complexity (FLOPs vs. Parameters)**: Parameter count depends only on $$(C_{\text{out}}, C_{\text{in}}, k_H, k_W)$$, whereas multiply-accumulate operations (MACs) scale with the spatial output area $$H_{\text{out}} \times W_{\text{out}}$$—explaining why early high-resolution layers have few parameters but dominate compute.
+
+### Step-by-Step Worked Example (Read Slowly): Multi-Channel Cross-Correlation and Output Shape
+
+Consider a 2-channel $$4 \times 4$$ input tensor $$X \in \mathbb{R}^{2 \times 4 \times 4}$$ processed by a single filter $$K \in \mathbb{R}^{2 \times 3 \times 3}$$ with padding $$p = 0$$, stride $$s = 1$$, dilation $$d = 1$$, and bias $$b = 0.5$$.
+
+1. **Compute the exact output spatial dimensions**:
+   $$H_{\text{out}} = \left\lfloor \frac{4 + 2(0) - 1(3 - 1) - 1}{1} \right\rfloor + 1 = \left\lfloor \frac{1}{1} \right\rfloor + 1 = 2, \quad W_{\text{out}} = 2.$$
+   So the output feature map $$Y$$ has shape $$(1, 2, 2)$$.
+2. **Focus on the top-left $$3 \times 3$$ patch of each input channel**:
+   Suppose channel 0's top-left $$3 \times 3$$ patch is $$X_0[0:3, 0:3] = \begin{bmatrix} 1 & 2 & 0 \\ 0 & 1 & 3 \\ 2 & 1 & 0 \end{bmatrix}$$ with kernel $$K_0 = \begin{bmatrix} 1 & 0 & -1 \\ 1 & 0 & -1 \\ 1 & 0 & -1 \end{bmatrix}$$, and channel 1's top-left patch is $$X_1[0:3, 0:3] = \begin{bmatrix} 2 & 0 & 1 \\ 1 & 1 & 1 \\ 0 & 2 & 0 \end{bmatrix}$$ with kernel $$K_1 = \begin{bmatrix} 0 & 1 & 0 \\ 1 & 1 & 1 \\ 0 & 1 & 0 \end{bmatrix}$$.
+3. **Evaluate the channel-wise Frobenius inner products**:
+   - Channel 0:
+     $$\langle X_0, K_0 \rangle = (1\cdot 1 + 2\cdot 0 + 0\cdot(-1)) + (0\cdot 1 + 1\cdot 0 + 3\cdot(-1)) + (2\cdot 1 + 1\cdot 0 + 0\cdot(-1)) = 1 - 3 + 2 = 0.$$
+   - Channel 1:
+     $$\langle X_1, K_1 \rangle = (0\cdot 2 + 1\cdot 0 + 0\cdot 1) + (1\cdot 1 + 1\cdot 1 + 1\cdot 1) + (0\cdot 0 + 1\cdot 2 + 0\cdot 0) = 0 + 3 + 2 = 5.$$
+4. **Sum across channels and add bias**:
+   $$Y[0, 0, 0] = 0 + 5 + 0.5 = 5.5.$$
+5. **Parameter and MAC count for this layer**:
+   - Parameters: $$1 \times (2 \times 3 \times 3 + 1) = 19$$.
+   - Multiply-adds across all $$2 \times 2 = 4$$ output positions: $$4 \times (2 \times 9) = 72$$ MACs.
+
 # Convolutional Layers: Building Blocks of Computer Vision
 
 ![CNN](/deep-learning-self-learning/img/chapter_img/chapter04/conv1.jpg)

@@ -9,6 +9,44 @@ categories:
 - chapter02
 ---
 
+Làm sao một mạng chỉ gồm các phép cộng, nhân và cắt bỏ số âm (ReLU) lại có thể vẽ ra ranh giới uốn lượn mềm mại bao quanh một đám mây dữ liệu hình xoắn ốc, hay nhận ra hàng nghìn giống loài khác nhau? Bí mật nằm ở **hình học gấp không gian** (*space folding*) của mạng nhiều tầng (MLP): mỗi tầng ẩn ReLU thực chất đang gấp tờ giấy không gian đầu vào lại một lần, khiến những điểm từng nằm đan xen nhau bỗng tách hẳn sang hai phía của một đường thẳng! Bài học này xây dựng lý thuyết kiến trúc mạng nơ-ron, giải quyết triệt để bài toán XOR và lý giải hình học đằng sau từng lớp ẩn.
+
+## Bản đồ kiến thức nền: Bốn trụ cột Lý thuyết Kiến trúc Mạng Nơ-ron
+
+1. **Phân rã Bài toán bằng Lớp ẩn (Hidden Representation)**:
+   Thay vì cố phân tách dữ liệu ngay ở không gian gốc, lớp ẩn tạo ra hệ tọa độ mới $$\mathbf{h} = \phi(\mathbf{W}^{(1)}\mathbf{x} + \mathbf{b}^{(1)})$$ nơi bài toán phi tuyến (như XOR) biến thành khả tách tuyến tính.
+
+2. **Số lượng Vùng Tuyến tính (Linear Regions of ReLU Networks)**:
+   Một mạng ReLU chia không gian đầu vào thành nhiều đa diện lồi rời nhau, trên mỗi đa diện mạng hoạt động như một hàm tuyến tính riêng. Số đa diện tối đa tăng theo đa thức với độ rộng, nhưng tăng theo **hàm mũ** với độ sâu!
+
+3. **Ánh xạ từ Đặc trưng đến Quyết định (Feature Extractor + Classifier)**:
+   Mọi mạng phân loại sâu đều có thể tách làm hai phần: toàn bộ các tầng đầu là bộ trích xuất đặc trưng học biểu diễn $$\mathbf{h}$$, còn tầng cuối cùng thực chất chỉ là một bộ phân loại tuyến tính (Logistic/Softmax Regression) chạy trên $$\mathbf{h}$$.
+
+4. **Dung lượng Mô hình (Model Capacity) và Thiên kiến Quy nạp (Inductive Bias)**:
+   Kiến trúc quy định họ hàm mà mạng có thể biểu diễn dễ dàng nhất: MLP giả định mọi đầu vào bình đẳng, còn CNN hay Transformer cài sẵn thiên kiến về cấu trúc không gian và quan hệ ngữ cảnh.
+
+### Khung giải thích (nên đọc chậm): Tự tay giải bài toán XOR bằng một mạng MLP đúng 2 nơ-ron ẩn ReLU
+
+Ta xây dựng mạng 2–2–1 biến đổi 4 điểm XOR $$(x_1, x_2)$$ qua 2 nơ-ron ẩn ReLU:
+$$h_1 = \max(0,\; x_1 + x_2 - 0.5), \quad h_2 = \max(0,\; x_1 + x_2 - 1.5), \quad \hat{y} = h_1 - 2h_2.$$
+
+Hãy tính từng dòng cho cả 4 đầu vào:
+
+| Đầu vào $$(x_1, x_2)$$ | $$x_1+x_2-0.5$$ | $$h_1 = \text{ReLU}(\cdot)$$ | $$x_1+x_2-1.5$$ | $$h_2 = \text{ReLU}(\cdot)$$ | Đầu ra $$\hat{y} = h_1 - 2h_2$$ | Nhãn XOR |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| $$(0, 0)$$ | $$-0.5$$ | $$0.0$$ | $$-1.5$$ | $$0.0$$ | $$0.0 - 0 = \mathbf{0.0}$$ | **0** |
+| $$(0, 1)$$ | $$+0.5$$ | $$0.5$$ | $$-0.5$$ | $$0.0$$ | $$0.5 - 0 = \mathbf{0.5}$$ | **1** |
+| $$(1, 0)$$ | $$+0.5$$ | $$0.5$$ | $$-0.5$$ | $$0.0$$ | $$0.5 - 0 = \mathbf{0.5}$$ | **1** |
+| $$(1, 1)$$ | $$+1.5$$ | $$1.5$$ | $$+0.5$$ | $$0.5$$ | $$1.5 - 2(0.5) = \mathbf{0.5}$$? Khoan! Kiểm tra lại! | — |
+
+Hãy chú ý phép kiểm tra cực quan trọng ở dòng cuối: với hệ số $$-2$$ ta được $$1.5 - 1.0 = 0.5$$, vẫn chưa về $$0$$! Để kéo $$(1,1)$$ về đúng $$0$$, chỉ cần đổi hệ số của $$h_2$$ thành $$-3$$ (hoặc dùng $$h_1 = \max(0, x_1+x_2),\, h_2 = \max(0, x_1+x_2-1),\, \hat{y} = h_1 - 2h_2$$):
+- $$(0,0) \to h_1=0, h_2=0 \implies \hat{y} = 0 - 0 = \mathbf{0}$$.
+- $$(0,1) \to h_1=1, h_2=0 \implies \hat{y} = 1 - 0 = \mathbf{1}$$.
+- $$(1,0) \to h_1=1, h_2=0 \implies \hat{y} = 1 - 0 = \mathbf{1}$$.
+- $$(1,1) \to h_1=2, h_2=1 \implies \hat{y} = 2 - 2(1) = \mathbf{0}$$.
+
+Đúng tuyệt đối 4/4 điểm! Nhìn vào bảng trên bạn thấy phép màu hình học: lớp ẩn đã gộp hai điểm $$(0,1)$$ và $$(1,0)$$ về cùng một điểm $$(1,0)$$ trong không gian $$(h_1, h_2)$$, khiến đường thẳng $$h_1 - 2h_2 = 0.5$$ chém gọn hai lớp XOR chỉ bằng một nhát cắt!
+
 # Kiến trúc Mạng Neuron: Từ Neuron đến Hệ thống Sâu
 
 ![Neural Network Layers](https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Colored_neural_network.svg/500px-Colored_neural_network.svg.png)

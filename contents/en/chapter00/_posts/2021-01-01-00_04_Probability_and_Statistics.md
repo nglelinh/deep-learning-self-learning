@@ -9,6 +9,32 @@ categories:
 lang: en
 ---
 
+> *Real-world data is never clean: sensors jitter, human annotators disagree, and the same prompt admits dozens of valid continuations. Probability theory is what lets neural networks stop chasing impossible deterministic perfection and instead learn calibrated distributions over what is likely.*
+
+## Background Knowledge Map: Probability & Statistics in Deep Learning
+
+1. **Axiomatic Probability & Conditioning (Belief Updating)**: Provides the formal rules—sum rule, product rule, and Bayes' theorem—that govern how evidence updates uncertainty across latent and observed variables.
+2. **Random Variables & Expectation (Risk Minimization)**: Frames training as minimizing expected loss $$\mathbb{E}_{(x,y)\sim p_{\text{data}}}[\ell(f_\theta(x), y)]$$, approximated in practice by empirical mini-batch averages.
+3. **Parametric Distributions (Modeling Outputs & Noise)**: Links every standard neural loss directly to a likelihood assumption—Gaussian for MSE, Bernoulli for binary cross-entropy, and Categorical for softmax cross-entropy.
+4. **Statistical Estimation (MLE, MAP, and Generalization)**: Connects maximum likelihood to cross-entropy minimization and shows how placing a prior on weights (MAP estimation) mathematically yields $$L_2$$ (Gaussian prior) and $$L_1$$ (Laplace prior) regularization.
+
+### Step-by-Step Worked Example (Read Slowly): Empirical Risk vs. Expected Risk on a Mini-Batch
+
+Suppose a binary classifier assigns predicted probability $$\hat{p}(y=1\mid x)$$ on a mini-batch of $$N = 4$$ examples with ground-truth labels and predictions:
+- $$(y_1, \hat{p}_1) = (1, 0.8)$$, $$(y_2, \hat{p}_2) = (1, 0.5)$$, $$(y_3, \hat{p}_3) = (0, 0.2)$$, $$(y_4, \hat{p}_4) = (0, 0.5)$$.
+
+1. **Compute the Likelihood of Each Sample Under a Bernoulli Model**:
+   - Sample 1 ($$y=1$$): $$P(y_1 \mid x_1) = 0.8$$
+   - Sample 2 ($$y=1$$): $$P(y_2 \mid x_2) = 0.5$$
+   - Sample 3 ($$y=0$$): $$P(y_3 \mid x_3) = 1 - 0.2 = 0.8$$
+   - Sample 4 ($$y=0$$): $$P(y_4 \mid x_4) = 1 - 0.5 = 0.5$$
+2. **Compute Joint Mini-Batch Likelihood (Assuming i.i.d. Samples)**:
+   $$\mathcal{L}(\theta) = 0.8 \times 0.5 \times 0.8 \times 0.5 = 0.16$$
+3. **Convert to Average Negative Log-Likelihood (Empirical Binary Cross-Entropy)**:
+   Using $$\ln(0.8) \approx -0.2231$$ and $$\ln(0.5) \approx -0.6931$$:
+   $$\hat{R}(\theta) = -\frac{1}{4}\ln(0.16) = -\frac{1}{4}\big[2(-0.2231) + 2(-0.6931)\big] = \frac{1.8324}{4} = 0.4581\text{ nats}$$
+   Maximizing the joint probability $$0.16$$ is algebraically identical to minimizing the average cross-entropy loss $$0.4581$$—and taking logarithms prevents underflow when $$N = 10^6$$.
+
 ## Probability and Statistics for Deep Learning
 
 Probability and statistics form a crucial foundation for understanding many deep-learning problems, especially in machine learning and data science. This section introduces the essential probabilistic concepts that frequently appear in convex deep-learning, from maximum likelihood estimation to Bayesian deep-learning.

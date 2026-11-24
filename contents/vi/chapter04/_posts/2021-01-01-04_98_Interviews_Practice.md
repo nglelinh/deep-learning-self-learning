@@ -10,6 +10,32 @@ categories:
 lesson_type: optional
 ---
 
+Trong các vòng phỏng vấn kỹ sư Machine Learning / Computer Vision tại các công ty công nghệ lớn, người phỏng vấn hiếm khi hỏi bạn thuộc lòng API PyTorch. Thay vào đó, họ thường đưa ra một tờ giấy trắng và yêu cầu bạn **tính nhẩm số tham số, kích thước tensor, trường tiếp nhận** và giải thích bản chất toán học của từng lựa chọn kiến trúc trong vòng 2 phút.
+
+## Bản đồ kiến thức nền: Bốn nhóm câu hỏi phỏng vấn cốt lõi về CNN
+
+1. **Tính nhanh kích thước và ngân sách tham số**:
+   Thành thạo hai công thức $$H' = \lfloor (H + 2p - k)/s \rfloor + 1$$ và $$\text{Params} = (k_h k_w C_{\text{in}} + 1) C_{\text{out}}$$, đồng thời nhớ nói rõ có bias hay không (khi đứng trước BatchNorm thường tắt bias).
+2. **Đánh đổi kiến trúc (Architectural Trade-offs)**:
+   Biết chứng minh bằng số vì sao chuỗi $$3 \times 3$$ tốt hơn $$5 \times 5$$ hay $$7 \times 7$$, và khi nào cần tích chập $$1 \times 1$$ hoặc depthwise separable.
+3. **Phân biệt sắc bén Đồng biến (Equivariance) và Bất biến (Invariance)**:
+   Tích chập thuần túy có tính *đồng biến tịnh tiến* ($$f(T(x)) = T(f(x))$$: ảnh dịch thì feature map dịch theo); chỉ khi kết hợp với Pooling/GAP thì biểu diễn mới tiến dần tới *bất biến tịnh tiến* ($$f(T(x)) \approx f(x)$$).
+4. **Cơ chế hoạt động của Kết nối tắt và lan truyền ngược**:
+   Giải thích được bằng đạo hàm chuỗi lý do kết nối tắt $$y = F(x) + x$$ cứu gradient và giải quyết bài toán suy thoái chiều sâu.
+
+### Khung giải thích (nên đọc chậm): Kiểm chứng bằng số câu hỏi phỏng vấn kinh điển — "Hai tầng $$3 \times 3$$ vs. một tầng $$5 \times 5$$"
+
+Giả sử $$C_{\text{in}} = C_{\text{out}} = 64$$ và ta xét trên một bản đồ đặc trưng $$32 \times 32$$ (bỏ qua bias):
+
+| Tiêu chí so sánh | Một tầng Conv $$5 \times 5$$ | Hai tầng Conv $$3 \times 3$$ liên tiếp | Chênh lệch |
+| :--- | :--- | :--- | :--- |
+| **Trường tiếp nhận** | $$5 \times 5$$ | $$3 + (3-1)\cdot 1 = 5 \times 5$$ | **Bằng nhau** |
+| **Số tham số** | $$25 \times 64^2 = \mathbf{102{,}400}$$ | $$2 \times 9 \times 64^2 = \mathbf{73{,}728}$$ | Giảm **28%** |
+| **Số tầng phi tuyến (ReLU)** | 1 | **2** | Biểu diễn phong phú hơn |
+| **Bộ nhớ kích hoạt trung gian** | Chỉ lưu 1 tensor đầu ra | Cần lưu thêm 1 tensor trung gian $$32\times 32\times 64$$ | Tốn thêm RAM khi train |
+
+Khi trả lời phỏng vấn, nêu được cả 3 ưu điểm đầu **lẫn** đánh đổi về bộ nhớ kích hoạt ở dòng cuối sẽ cho thấy bạn có kinh nghiệm triển khai thực tế chứ không chỉ học thuộc lý thuyết.
+
 # Tùy chọn: Luyện phỏng vấn — CNN và Đặc trưng Sớm
 
 > Bài này là **tùy chọn** và **không** lặp lại phần toán tích chập, tầng gộp hay lịch sử LeNet–ResNet. Sau khi học các bài chính trong chương, bạn có thể luyện tập với bộ câu hỏi dưới đây rồi mở *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) để tham khảo thêm các câu hỏi kèm lời giải đầy đủ về tích chập, kiến trúc CNN và trích xuất đặc trưng ban đầu.

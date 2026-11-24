@@ -9,6 +9,32 @@ categories:
 - chapter00
 ---
 
+Nếu một xét nghiệm y khoa AI có độ chính xác 99% báo bạn dương tính với một căn bệnh hiếm gặp (chỉ 1 trên 1{,}000 người mắc), khả năng thực sự bạn bị bệnh có phải là 99% không? Câu trả lời gây sốc cho hầu hết mọi người là **chỉ khoảng 9%!** Nghịch lý nổi tiếng ấy cho thấy trực giác con người rất dễ sụp đổ khi đối mặt với **xác suất có điều kiện** và **định lý Bayes**. Trong Deep Learning, việc hiểu chính xác $$P(y \mid \mathbf{x})$$, giả định độc lập có điều kiện và suy luận Bayes giúp bạn thiết kế bài toán phân loại dữ liệu mất cân bằng đúng đắn ngay từ đầu.
+
+## Bản đồ kiến thức nền: Bốn trụ cột của Xác suất Có điều kiện và Tính Độc lập
+
+1. **Xác suất có điều kiện ($$P(A \mid B) = \frac{P(A \cap B)}{P(B)}$$)**:
+   Thu hẹp không gian mẫu từ $$\Omega$$ xuống còn đúng vùng biến cố $$B$$ đã xảy ra—mọi mô hình phân biệt (*discriminative model*) đều trực tiếp học $$P(y \mid \mathbf{x})$$.
+
+2. **Định lý Bayes (Bayes' Theorem)**:
+   Đảo chiều điều kiện từ $$P(\mathbf{x} \mid y)$$ sang $$P(y \mid \mathbf{x}) = \frac{P(\mathbf{x} \mid y)P(y)}{P(\mathbf{x})}$$, kết nối xác suất tiên nghiệm (*prior*) với bằng chứng dữ liệu (*likelihood*) để tạo thành hậu nghiệm (*posterior*).
+
+3. **Tính độc lập và Độc lập có điều kiện**:
+   Hai biến cố độc lập thỏa $$P(A \cap B) = P(A)P(B)$$. Trong huấn luyện mạng nơ-ron, giả định các mẫu dữ liệu độc lập cho phép tách tích xác suất toàn tập thành tổng các log-loss riêng lẻ.
+
+4. **Định lý Xác suất Toàn phần (Law of Total Probability)**:
+   Tính xác suất biên $$P(A) = \sum_i P(A \mid B_i)P(B_i)$$ bằng cách cộng theo từng kịch bản—cốt lõi của cơ chế biên hóa biến ẩn (*latent variables*) trong mô hình sinh.
+
+### Khung giải thích (nên đọc chậm): Giải tay nghịch lý chẩn đoán bệnh hiếm bằng Định lý Bayes
+
+Xét một bộ sàng lọc AI cho căn bệnh hiếm có tỷ lệ mắc trong dân số $$P(D) = 0.001$$ (tức $$P(\neg D) = 0.999$$). Mô hình có độ nhạy $$P(+ \mid D) = 0.99$$ và tỷ lệ dương tính giả $$P(+ \mid \neg D) = 0.01$$:
+
+1. **Tính xác suất ra kết quả dương tính (Xác suất toàn phần)**:
+   $$P(+) = P(+ \mid D)P(D) + P(+ \mid \neg D)P(\neg D) = 0.99 \times 0.001 + 0.01 \times 0.999 = 0.00099 + 0.00999 = 0.01098.$$
+2. **Áp dụng Định lý Bayes tìm xác suất thực sự mắc bệnh khi có kết quả dương tính**:
+   $$P(D \mid +) = \frac{P(+ \mid D)P(D)}{P(+)} = \frac{0.00099}{0.01098} \approx 0.0902 \quad (9.02\%).$$
+3. **Bài học thực chiến cho Deep Learning**: Dù độ nhạy và độ đặc hiệu đều đạt 99%, vì lớp âm áp đảo gấp 999 lần, số ca báo động giả ($$0.00999$$) vẫn gấp 10 lần số ca bệnh thật ($$0.00099$$)! Đó là lý do trên tập dữ liệu mất cân bằng, ta không bao giờ chỉ nhìn vào Accuracy mà phải theo dõi Precision, Recall và PR-AUC.
+
 ### 4. Xác suất có điều kiện
 
 Xác suất để biến cố $$A$$ xảy ra khi biết biến cố $$B$$ đã xảy ra được định nghĩa là:

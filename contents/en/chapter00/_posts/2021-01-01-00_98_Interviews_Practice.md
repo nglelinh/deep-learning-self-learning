@@ -10,6 +10,29 @@ categories:
 lesson_type: optional
 ---
 
+> *In technical ML interviews, interviewers rarely ask you to integrate a textbook formula—they ask a deceptively short question like "Why does reverse-mode autodiff beat forward-mode for neural networks?" to see whether your calculus and information theory are operational rather than memorized.*
+
+## Background Knowledge Map: Core Interview Themes in Math for Deep Learning
+
+1. **Information Theory (Entropy, Cross-Entropy, and KL Divergence)**: Connects classification loss directly to coding theory via the exact decomposition $$H(p, q) = H(p) + D_{\text{KL}}(p \| q)$$, proving that cross-entropy is minimized iff $$q = p$$.
+2. **Mutual Information & Data Processing Inequality**: Quantifies shared information $$I(X; Y) = H(Y) - H(Y\mid X)$$ and explains why deterministic post-processing can never create information that wasn't already present.
+3. **Automatic Differentiation Modes (Forward vs. Reverse)**: Compares Jacobian-vector products (cost proportional to input dimension $$n$$) against vector-Jacobian products (cost proportional to output dimension $$m$$), explaining why scalar-loss networks ($$m = 1, n = 10^9$$) rely on reverse mode.
+4. **Second-Order Geometry (Hessian Eigenvalues & Conditioning)**: Uses the Hessian spectrum to diagnose local minima, saddle points, and ill-conditioned ravines during live whiteboard debugging.
+
+### Step-by-Step Worked Example (Read Slowly): Verifying $$H(p, q) = H(p) + D_{\text{KL}}(p \| q)$$ in Bits
+
+Suppose the true binary label distribution is $$p = (0.75, 0.25)$$ and a classifier predicts $$q = (0.50, 0.50)$$. Compute all three quantities in base-2 logarithms (bits), noting $$\log_2(0.75) \approx -0.4150$$, $$\log_2(0.25) = -2$$, $$\log_2(0.50) = -1$$.
+
+1. **True Entropy $$H(p)$$**:
+   $$H(p) = -\big(0.75\log_2 0.75 + 0.25\log_2 0.25\big) = -\big(0.75(-0.4150) + 0.25(-2)\big) = 0.3113 + 0.5000 = 0.8113\text{ bits}$$
+2. **Cross-Entropy $$H(p, q)$$**:
+   $$H(p, q) = -\big(0.75\log_2 0.50 + 0.25\log_2 0.50\big) = -\big(0.75(-1) + 0.25(-1)\big) = 1.0000\text{ bit}$$
+3. **KL Divergence $$D_{\text{KL}}(p \| q)$$**:
+   $$D_{\text{KL}}(p \| q) = 0.75\log_2\!\left(\frac{0.75}{0.50}\right) + 0.25\log_2\!\left(\frac{0.25}{0.50}\right) = 0.75(0.5850) + 0.25(-1) = 0.4387 - 0.2500 = 0.1887\text{ bits}$$
+4. **Identity Verification**:
+   $$H(p) + D_{\text{KL}}(p \| q) = 0.8113 + 0.1887 = 1.0000 = H(p, q)$$
+   Because $$H(p) = 0.8113$$ is fixed by the dataset, minimizing cross-entropy loss is mathematically identical to driving $$D_{\text{KL}}(p \| q) \to 0$$.
+
 # Optional: interview practice — information theory and calculus
 
 > This lesson is **optional**. It does **not** replace the calculus, linear-algebra, or probability notes. After those lessons, use this drill, then open *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) for a larger solved set on the same themes.

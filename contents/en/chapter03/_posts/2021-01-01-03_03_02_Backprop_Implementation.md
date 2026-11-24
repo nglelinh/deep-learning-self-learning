@@ -9,6 +9,29 @@ categories:
 - chapter03
 ---
 
+> *Implementing backpropagation from scratch in pure NumPy is the ultimate stress test of your understanding: if even one matrix transpose is flipped or one batch-average divisor $$1/B$$ is misplaced, your model silently learns garbage. Mastering shape-checked matrix backprop makes debugging PyTorch and custom CUDA kernels effortless.*
+
+## Background Knowledge Map: From Equations to Batched Backprop Code
+
+1. **Shape-Invariant Matrix Backprop**: For $$Z = A_{\text{prev}} W^\top + \mathbf{b}$$ with $$A_{\text{prev}} \in \mathbb{R}^{B \times d_{\text{in}}}$$ and $$dZ \in \mathbb{R}^{B \times d_{\text{out}}}$$, dimensional analysis uniquely forces $$dW = dZ^\top A_{\text{prev}}$$ (shape $$d_{\text{out}} \times d_{\text{in}}$$) and $$dA_{\text{prev}} = dZ\,W$$ (shape $$B \times d_{\text{in}}$$).
+2. **Bias Gradient Reduction**: Because $$\mathbf{b}$$ was broadcast across all $$B$$ rows during the forward pass, its backward pass must **sum** (or average) `dZ` along `axis=0` to recover shape `(d_out,)`.
+3. **Fused Output–Loss Gradients**: Computing `dZ = (probs - y_onehot) / B` directly avoids dividing by near-zero probabilities inside separate `log` and `softmax` backward passes.
+4. **Gradient Checking Discipline**: Verifying relative error $$\frac{\|\mathbf{g}_{\text{ana}} - \mathbf{g}_{\text{num}}\|_2}{\|\mathbf{g}_{\text{ana}}\|_2 + \|\mathbf{g}_{\text{num}}\|_2} < 10^{-7}$$ in `float64` guarantees bug-free custom autograd modules.
+
+### Step-by-Step Worked Example (Read Slowly): Shape-Checked Batched Backward Pass ($$B = 2$$)
+
+Suppose a linear layer maps $$d_{\text{in}} = 3 \to d_{\text{out}} = 2$$ on a batch of $$B = 2$$ samples, with cached forward input $$A_{\text{prev}}$$ and incoming upstream gradient $$dZ$$ (already scaled by $$1/B$$):
+$$A_{\text{prev}} = \begin{bmatrix} 1 & 0 & 2 \\ -1 & 3 & 1 \end{bmatrix}_{(2 \times 3)}, \qquad dZ = \begin{bmatrix} 0.5 & -1.0 \\ 1.0 & 0.5 \end{bmatrix}_{(2 \times 2)}, \qquad W = \begin{bmatrix} 2 & -1 & 0 \\ 0 & 1 & 3 \end{bmatrix}_{(2 \times 3)}$$
+
+1. **Compute Weight Gradient $$dW = dZ^\top A_{\text{prev}}$$** (shape `(2,2) @ (2,3) -> (2,3)`):
+   $$dZ^\top = \begin{bmatrix} 0.5 & 1.0 \\ -1.0 & 0.5 \end{bmatrix}$$
+   $$dW = \begin{bmatrix} 0.5(1)+1.0(-1) & 0.5(0)+1.0(3) & 0.5(2)+1.0(1) \\ -1.0(1)+0.5(-1) & -1.0(0)+0.5(3) & -1.0(2)+0.5(1) \end{bmatrix} = \begin{bmatrix} -0.5 & 3.0 & 2.0 \\ -1.5 & 1.5 & -1.5 \end{bmatrix}$$
+2. **Compute Bias Gradient $$d\mathbf{b} = \sum_{\text{batch}} dZ$$** (shape `(2,)`):
+   $$d\mathbf{b} = \begin{bmatrix} 0.5 + 1.0 & -1.0 + 0.5 \end{bmatrix} = \begin{bmatrix} 1.5 & -0.5 \end{bmatrix}$$
+3. **Compute Input Gradient $$dA_{\text{prev}} = dZ\,W$$** (shape `(2,2) @ (2,3) -> (2,3)`):
+   $$dA_{\text{prev}} = \begin{bmatrix} 0.5(2)-1.0(0) & 0.5(-1)-1.0(1) & 0.5(0)-1.0(3) \\ 1.0(2)+0.5(0) & 1.0(-1)+0.5(1) & 1.0(0)+0.5(3) \end{bmatrix} = \begin{bmatrix} 1.0 & -1.5 & -3.0 \\ 2.0 & -0.5 & 1.5 \end{bmatrix}$$
+   Every shape matches its forward tensor identically—ready for direct `numpy` or `torch.autograd.Function` verification!
+
 ## 4. Code Snippet
 
 Let's implement backpropagation from scratch to understand every detail, then show how PyTorch automates this:

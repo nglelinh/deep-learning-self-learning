@@ -9,6 +9,31 @@ categories:
 - chapter00
 ---
 
+> *In 2013, researchers stunned the NLP community by showing that subtracting the vector for "man" from "king" and adding "woman" landed right next to "queen." That wasn't magic—it was vector space geometry: closure under linear combinations, inner products, and low-dimensional subspaces doing their quiet work.*
+
+## Background Knowledge Map: Vectors, Subspaces, and Representation Geometry
+
+1. **Vector Spaces & Subspaces (Closure Under Linear Combinations)**: Defines the ambient space $$\mathbb{R}^n$$ where feature embeddings live, and explains why the set of all outputs of a linear layer forms a structured subspace (its column space).
+2. **Inner Products, Norms, and Angles (Similarity Metrics)**: Measures vector length ($$L_2$$ norm for weight decay, $$L_1$$ norm for sparsity) and directional alignment via cosine similarity $$\cos\theta = \frac{\mathbf{u}\cdot\mathbf{v}}{\|\mathbf{u}\|\|\mathbf{v}\|}$$, the core operation inside Transformer self-attention.
+3. **Linear Independence & Span (Redundancy vs. Expressivity)**: Distinguishes genuinely new feature directions from redundant linear combinations; linearly dependent neurons waste parameters without expanding the spanned subspace.
+4. **Basis & Dimension (Intrinsic Degrees of Freedom)**: Establishes the minimum number of coordinate axes needed to reconstruct every point in a subspace—the foundation of low-rank adaptation (LoRA) and manifold learning.
+
+### Step-by-Step Worked Example (Read Slowly): Testing Linear Independence, Projection, and Cosine Similarity
+
+Given two embedding vectors in $$\mathbb{R}^3$$, $$\mathbf{u} = \begin{bmatrix} 1 \\ 2 \\ 2 \end{bmatrix}$$ and $$\mathbf{v} = \begin{bmatrix} 2 \\ 1 \\ -2 \end{bmatrix}$$, and a query vector $$\mathbf{q} = \begin{bmatrix} 4 \\ 5 \\ 2 \end{bmatrix}$$:
+
+1. **Compute Norms and Dot Product of $$\mathbf{u}$$ and $$\mathbf{v}$$**:
+   $$\|\mathbf{u}\| = \sqrt{1^2 + 2^2 + 2^2} = \sqrt{9} = 3, \qquad \|\mathbf{v}\| = \sqrt{2^2 + 1^2 + (-2)^2} = \sqrt{9} = 3$$
+   $$\mathbf{u} \cdot \mathbf{v} = (1)(2) + (2)(1) + (2)(-2) = 2 + 2 - 4 = 0$$
+   Because $$\mathbf{u} \cdot \mathbf{v} = 0$$ and both are nonzero, $$\mathbf{u}$$ and $$\mathbf{v}$$ are **orthogonal** and therefore linearly independent!
+2. **Project $$\mathbf{q}$$ Onto the 2D Subspace $$\text{span}\{\mathbf{u}, \mathbf{v}\}$$**:
+   Since $$\mathbf{u} \perp \mathbf{v}$$, the orthogonal projection splits cleanly:
+   $$\mathbf{q}\cdot\mathbf{u} = 4(1) + 5(2) + 2(2) = 18 \implies c_1 = \frac{\mathbf{q}\cdot\mathbf{u}}{\|\mathbf{u}\|^2} = \frac{18}{9} = 2$$
+   $$\mathbf{q}\cdot\mathbf{v} = 4(2) + 5(1) + 2(-2) = 9 \implies c_2 = \frac{\mathbf{q}\cdot\mathbf{v}}{\|\mathbf{v}\|^2} = \frac{9}{9} = 1$$
+   $$\text{proj}_S(\mathbf{q}) = 2\mathbf{u} + 1\mathbf{v} = \begin{bmatrix} 2 \\ 4 \\ 4 \end{bmatrix} + \begin{bmatrix} 2 \\ 1 \\ -2 \end{bmatrix} = \begin{bmatrix} 4 \\ 5 \\ 2 \end{bmatrix} = \mathbf{q}$$
+3. **Geometric Conclusion**:
+   The residual $$\mathbf{q} - \text{proj}_S(\mathbf{q}) = \mathbf{0}$$, proving $$\mathbf{q}$$ lies strictly inside $$\text{span}\{\mathbf{u}, \mathbf{v}\}$$. Thus $$\{\mathbf{u}, \mathbf{v}, \mathbf{q}\}$$ is linearly dependent and spans only a 2D plane inside $$\mathbb{R}^3$$.
+
 This lesson introduces vectors, vector spaces, and fundamental concepts that form the foundation for understanding linear algebra in deep-learning contexts.
 
 ---

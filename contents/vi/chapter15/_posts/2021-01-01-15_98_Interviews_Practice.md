@@ -10,6 +10,27 @@ categories:
 lesson_type: optional
 ---
 
+Trong các buổi phỏng vấn kỹ sư Machine Learning, câu hỏi về Transfer Learning hiếm khi dừng ở "hãy nêu định nghĩa fine-tuning" — người phỏng vấn muốn thấy bạn phản xạ thế nào khi dữ liệu bị lệch miền, khi chỉ có 200 mẫu gắn nhãn, hoặc khi cần quyết định giữa trích xuất đặc trưng đóng băng với tinh chỉnh toàn mạng. Bài luyện phỏng vấn này trang bị cho bạn khung trả lời chặt chẽ, có số liệu và lập luận kỹ thuật sắc bén.
+
+## Bản đồ kiến thức nền: Bốn năng lực cốt lõi được kiểm tra khi phỏng vấn về Transfer Learning
+
+- **Đánh đổi Bias–Variance giữa Linear Probe và Fine-Tuning:** Biết cách lập luận định lượng về số tham số tự do, nguy cơ quá khớp và khả năng thích nghi biểu diễn.
+- **Chẩn đoán giới hạn của đặc trưng đóng băng:** Nhận diện rõ những bài toán miền xa (ảnh vệ tinh đa phổ, siêu âm y khoa, chữ viết cổ) hoặc tác vụ cần định vị tinh (segmentation) nơi tầng cuối ImageNet đã đánh mất thông tin vị trí.
+- **Bảo toàn cấu trúc không gian khi trích xuất đặc trưng:** Phân biệt khi nào dùng vector sau Global Average Pooling (phân loại) và khi nào phải giữ feature map 2D/kim tự tháp FPN (phát hiện vật thể, phân đoạn).
+- **Tư duy chi phí tính toán và lưu trữ:** So sánh bộ nhớ lưu nhiều bản sao checkpoint đầy đủ với việc chỉ lưu các đầu tuyến tính hoặc adapter LoRA siêu nhẹ.
+
+### Khung giải thích (nên đọc chậm): Tính toán chi phí lưu trữ khi phục vụ 50 tác vụ đích bằng Full Fine-Tuning vs. Linear Probe / Adapter
+
+Giả sử doanh nghiệp của bạn triển khai cùng một xương sống thị giác `ViT-Large` ($$304\text{ triệu}$$ tham số, lưu FP16 tốn $$2\text{ byte/tham số}$$) cho $$50$$ khách hàng với $$50$$ bài toán phân loại $$10$$ lớp khác nhau (chiều đặc trưng $$d = 1024$$).
+
+1. **Full Fine-Tuning cho từng khách hàng:**
+   - Mỗi bản sao mô hình: $$304 \times 10^6 \times 2\text{ byte} \approx 608\text{ MB}$$.
+   - Tổng lưu trữ cho 50 khách hàng: $$50 \times 608\text{ MB} = 30{,}4\text{ GB}$$ (và rất tốn VRAM nếu nạp đồng thời).
+2. **Đóng băng xương sống + 50 đầu Linear Probe:**
+   - 1 xương sống dùng chung: $$608\text{ MB}$$.
+   - Mỗi đầu phân loại `Linear(1024, 10)`: $$(1024 \times 10 + 10) \times 2\text{ byte} \approx 20{,}5\text{ KB}$$.
+   - Tổng 50 đầu: $$50 \times 20{,}5\text{ KB} \approx 1{,}025\text{ MB}$$. Tổng cộng chỉ $$\sim 609\text{ MB}$$ — **tiết kiệm gần 50 lần bộ nhớ** và có thể gộp chung batch cho cả 50 khách hàng trên một GPU!
+
 # Tùy chọn: Luyện phỏng vấn — Trích xuất đặc trưng và Học chuyển giao
 
 > Bài này mang tính **tùy chọn** và **không** thay thế phần lý thuyết so sánh trích xuất đặc trưng với tinh chỉnh. Sau khi học xong các bài chính, bạn có thể luyện với các câu hỏi dưới đây rồi mở *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) để xem thêm các câu hỏi có lời giải về trích xuất đặc trưng CNN. Phần hình học kiến trúc CNN nằm ở **04-98**.

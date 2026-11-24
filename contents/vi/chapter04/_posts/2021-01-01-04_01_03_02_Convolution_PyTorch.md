@@ -9,6 +9,33 @@ categories:
 - chapter04
 ---
 
+Khi chuyển từ công thức giấy sang PyTorch, sức mạnh thực sự nằm ở khả năng lắp ghép các mô-đun `nn.Module` thành những khối xử lý thị giác chuẩn mực — từ tích chập cơ bản, giảm mẫu bằng stride, cho đến phép tích chập $$1 \times 1$$ đầy quyền năng giúp trộn thông tin liên kênh. Hiểu rõ từng tham số của `nn.Conv2d` giúp bạn thiết kế kiến trúc sạch, gọn và tránh lãng phí bộ nhớ GPU.
+
+## Bản đồ kiến thức nền: Bốn kỹ năng thiết yếu với `nn.Conv2d` trong PyTorch
+
+1. **Chuẩn hóa kích thước tensor 4D `(N, C, H, W)`**:
+   PyTorch luôn kỳ vọng có chiều batch $$N$$ ở đầu. Ngay cả khi suy luận trên một ảnh duy nhất, ta vẫn phải thêm chiều batch bằng `x.unsqueeze(0)` để có dạng `(1, C, H, W)`.
+2. **Tích chập $$1 \times 1$$ (Pointwise Convolution) như một MLP tại mỗi pixel**:
+   Không thay đổi chiều không gian $$(H, W)$$, nhưng phép tích chập $$1 \times 1$$ tạo ra tổ hợp tuyến tính giữa các kênh tại từng tọa độ — công cụ chủ lực để giảm chiều kênh (bottleneck) trong ResNet và MobileNet.
+3. **Giảm mẫu học được bằng Stride vs. Pooling**:
+   Dùng `stride=2` trong `Conv2d` cho phép mạng tự học cách hạ độ phân giải thay vì cố định lấy max/trung bình, đồng thời giúp kiến trúc gọn gàng hơn.
+4. **Kiểm tra trọng số đã học (`conv.weight.shape`)**:
+   Ma trận trọng số trong PyTorch luôn có shape `(out_channels, in_channels // groups, kH, kW)` — nắm chắc cấu trúc này giúp bạn trực quan hóa bộ lọc và thiết lập tích chập nhóm (`groups=in_channels` cho depthwise convolution).
+
+### Khung giải thích (nên đọc chậm): Tính tay lợi ích tiết kiệm phép tính của tầng cổ chai (Bottleneck $$1 \times 1$$)
+
+Giả sử bản đồ đặc trưng có kích thước $$28 \times 28$$ với $$C_{\text{in}} = 256$$ kênh và ta muốn ra $$C_{\text{out}} = 256$$ kênh bằng bộ lọc $$3 \times 3$$:
+
+- **Cách trực tiếp** (`Conv2d(256, 256, kernel_size=3, padding=1)`):
+  Số tham số trọng số = $$3 \times 3 \times 256 \times 256 = \mathbf{589{,}824}$$.
+- **Cách dùng cổ chai $$1 \times 1$$ kiểu ResNet** (nén $$256 \to 64$$ bằng $$1\times 1$$, lọc $$3\times 3$$ trên 64 kênh, rồi mở rộng $$64 \to 256$$ bằng $$1\times 1$$):
+  1. `Conv2d(256, 64, 1)`: $$1 \times 1 \times 256 \times 64 = 16{,}384$$ tham số.
+  2. `Conv2d(64, 64, 3, padding=1)`: $$3 \times 3 \times 64 \times 64 = 36{,}864$$ tham số.
+  3. `Conv2d(64, 256, 1)`: $$1 \times 1 \times 64 \times 256 = 16{,}384$$ tham số.
+  - **Tổng cộng**: $$16{,}384 + 36{,}864 + 16{,}384 = \mathbf{69{,}632}$$ tham số!
+
+Chỉ nhờ kẹp thêm hai tầng tích chập $$1 \times 1$$, số tham số và chi phí tính toán giảm tới **8,5 lần** mà mô hình còn thêm được hai hàm kích hoạt phi tuyến ở giữa!
+
 ### Cài đặt bằng PyTorch
 
 ```python

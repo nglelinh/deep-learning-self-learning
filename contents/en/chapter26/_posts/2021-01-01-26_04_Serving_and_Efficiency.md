@@ -9,6 +9,30 @@ categories:
 - chapter26
 ---
 
+You can pay $2 million once to train an LLM, and then pay $20 million every year to serve it to users. Serving efficiency is governed by a stark hardware split: **prefill** processes your entire prompt in one giant parallel matrix–matrix multiplication (compute-bound, sets Time-To-First-Token), while **decode** generates one token at a time using matrix–vector multiplications that haul the entire model + KV cache across GPU HBM every step (memory-bandwidth-bound, sets tokens/second). Every serving knob—continuous batching, PagedAttention, quantization, and speculative decoding—directly attacks one side of that roofline.
+
+## Background Knowledge Map: Systems Engineering of LLM Serving
+
+- **Pillar 1 — Prefill vs. Decode Roofline Physics**: Computes arithmetic intensity (FLOPs / Byte) to explain why batch-size-1 decode leaves $>95\%$ of GPU Tensor Cores idle waiting on HBM memory bandwidth.
+- **Pillar 2 — Continuous Batching & PagedAttention**: Eliminates padding waste by inserting new requests at iteration boundaries and allocating KV cache in non-contiguous memory pages (like OS virtual memory) to boost throughput $3\times$–$10\times$.
+- **Pillar 3 — Sampling Controls (Temperature, Top-$k$, Top-$p$)**: Reshapes the output softmax distribution at decode time to trade deterministic precision against creative diversity.
+- **Pillar 4 — Optimization Hierarchy (Before Distilling)**: Prioritizes cheap, lossless or near-lossless serving wins (prefix caching, FP8/INT4 quantization, speculative decoding) before investing in full model distillation.
+
+### Step-by-Step Worked Example (Read Slowly): Applying Temperature, Top-$k$, and Nucleus (Top-$p$) Sampling
+
+Suppose the LM head emits logits $z = [3.0,\; 2.0,\; 1.0,\; -1.0]$ for four candidate tokens `[A, B, C, D]`.
+
+1. **Standard softmax at $T = 1.0$**:
+   $$e^3 = 20.09,\quad e^2 = 7.39,\quad e^1 = 2.72,\quad e^{-1} = 0.37 \implies Z = 30.57.$$
+   $$p = [65.7\%,\; 24.2\%,\; 8.9\%,\; 1.2\%].$$
+2. **Apply Nucleus (Top-$p$) with $p_{\text{thresh}} = 0.85$**:
+   - Cumulative mass: `A` ($65.7\% < 85\%$), `A + B` ($65.7\% + 24.2\% = 89.9\% \ge 85\%$).
+   - Keep only `{A, B}` and drop `{C, D}`!
+   - Renormalized probabilities: $p'(A) = \frac{65.7}{89.9} = 73.1\%$, $\; p'(B) = \frac{24.2}{89.9} = 26.9\%$.
+3. **Compare with low temperature $T = 0.5$** (scaled logits $[6.0, 4.0, 2.0, -2.0]$):
+   $e^6 / (e^6 + e^4 + e^2 + e^{-2}) = 403.4 / 465.4 = 86.7\%$ on `A`—sharpening the distribution dramatically.
+4. **Takeaway**: Top-$p$ dynamically adapts candidate count (keeping 1 token when the model is confident, 10+ when genuinely open-ended), whereas temperature globally sharpens or flattens every step.
+
 # Serving and Efficiency for LLMs
 
 A pretrained, instructed, aligned decoder is still expensive **per generated token**. Training is a one-off (or rare) bill; serving is the bill that scales with users. This lesson lists the knobs you should name before you reach for distillation.

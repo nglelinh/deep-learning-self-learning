@@ -9,6 +9,33 @@ categories:
 - chapter24
 ---
 
+Nếu ta chỉ lấy đạo hàm $$\left|\frac{\partial f(x)}{\partial x_i}\right|$$ để đánh giá tầm quan trọng của đặc trưng $$x_i$$, một bẫy toán học tinh vi lập tức xuất hiện: tại vùng bão hòa của ReLU hay Sigmoid, đạo hàm có thể bằng **đúng 0** ngay cả khi đặc trưng đó đã đóng góp toàn bộ tín hiệu làm thay đổi dự đoán! Bài lý thuyết này trình bày cách **Integrated Gradients**, **Grad-CAM** và **SHAP (giá trị Shapley)** khắc phục bẫy bão hòa và thiết lập những tiên đề công bằng chặt chẽ cho việc quy kết đặc trưng.
+
+## Bản đồ kiến thức nền: Nền tảng toán học của Saliency, Integrated Gradients, Grad-CAM và SHAP
+
+- **Saliency Map & Integrated Gradients (IG):** Khắc phục bão hòa gradient bằng cách tích phân đạo hàm dọc đoạn thẳng từ điểm cơ sở $$\mathbf{x}'$$ tới $$\mathbf{x}$$: $$\text{IG}_i(\mathbf{x}) = (x_i - x'_i) \int_0^1 \frac{\partial f(\mathbf{x}' + \alpha(\mathbf{x} - \mathbf{x}'))}{\partial x_i} d\alpha$$, đảm bảo tiên đề *đầy đủ* (tổng đóng góp bằng $$f(\mathbf{x}) - f(\mathbf{x}')$$).
+- **Grad-CAM trên tầng tích chập cuối:** Tính trọng số tầm quan trọng từng kênh bằng trung bình không gian của gradient $$\alpha_k^c = \frac{1}{Z}\sum_{i,j} \frac{\partial y^c}{\partial A^k_{ij}}$$, rồi lấy tổ hợp tuyến tính qua ReLU để giữ các vùng đóng góp dương cho lớp $$c$$.
+- **Giá trị Shapley trong lý thuyết trò chơi (SHAP):** Phương pháp quy kết *duy nhất* thỏa mãn đồng thời ba tiên đề: độ chính xác cục bộ, tính khuyết (missingness) và tính nhất quán (consistency).
+- **LIME (Local Interpretable Model-Agnostic Explanations):** Lấy mẫu nhiễu quanh điểm $$\mathbf{x}$$, gán trọng số gần xa theo nhân khoảng cách, rồi khớp mô hình tuyến tính thưa giải thích hành vi cục bộ.
+
+### Khung giải thích (nên đọc chậm): Tính tay giá trị Shapley (SHAP) cho một mô hình dự đoán có 2 đặc trưng
+
+Giả sử một mô hình chấm điểm rủi ro tín dụng dùng 2 đặc trưng: `Thu nhập` ($$x_1$$) và `Lịch sử trễ hạn` ($$x_2$$). Giá trị dự đoán kỳ vọng của mô hình trên 4 tập con đặc trưng đã biết là:
+- Không biết đặc trưng nào: $$v(\varnothing) = 50$$ (điểm cơ sở).
+- Chỉ biết $$x_1$$: $$v(\{x_1\}) = 62$$.
+- Chỉ biết $$x_2$$: $$v(\{x_2\}) = 70$$.
+- Biết cả hai: $$v(\{x_1, x_2\}) = 90$$ (tổng mức tăng cần phân bổ là $$90 - 50 = +40$$).
+
+Với 2 đặc trưng có $$2! = 2$$ thứ tự thêm vào ($$x_1 \to x_2$$ và $$x_2 \to x_1$$):
+1. **Đóng góp biên của $$x_1$$:**
+   - Khi thêm trước: $$v(\{x_1\}) - v(\varnothing) = 62 - 50 = +12$$.
+   - Khi thêm sau $$x_2$$: $$v(\{x_1, x_2\}) - v(\{x_2\}) = 90 - 70 = +20$$.
+   - Giá trị Shapley của $$x_1$$: $$\phi_1 = \frac{12 + 20}{2} = +16$$.
+2. **Đóng góp biên của $$x_2$$:**
+   - Khi thêm trước: $$70 - 50 = +20$$; khi thêm sau $$x_1$$: $$90 - 62 = +28$$.
+   - Giá trị Shapley của $$x_2$$: $$\phi_2 = \frac{20 + 28}{2} = +24$$.
+3. **Kiểm chứng tiên đề đầy đủ (Efficiency):** $$\phi_1 + \phi_2 = 16 + 24 = +40 = v(\{x_1, x_2\}) - v(\varnothing)$$ — chính xác tuyệt đối!
+
 # Diễn giải Mô hình: Hiểu Cơ chế “Hộp đen”
 
 ## 1. Tổng quan khái niệm

@@ -9,6 +9,35 @@ categories:
 - chapter08
 ---
 
+Andrej Karpathy từng nói rằng cách duy nhất để thực sự hiểu một mô hình ngôn ngữ lớn là **tự viết lại lõi Transformer từ đầu trong một tệp Python duy nhất**. Khi bạn tự tay viết `MultiHeadAttention`, `FeedForward`, `TransformerBlock` và kiểm chứng bằng bài test rò rỉ tương lai (*causal leak test*), mọi bí ẩn đằng sau các mô hình hàng trăm tỷ tham số sẽ tan biến — bởi GPT-4 hay Llama về bản chất chỉ là sự nhân bản của chính khối mã nguồn này ở quy mô lớn hơn!
+
+## Bản đồ kiến thức nền: Bốn chi tiết kỹ thuật cốt tử trong mã nguồn Transformer
+
+1. **Đăng ký buffer không huấn luyện (`register_buffer`)**:
+   Ma trận Positional Encoding cố định và mặt nạ tam giác nhân quả phải được lưu bằng `self.register_buffer(...)` thay vì thuộc tính thường — nhờ đó chúng tự động di chuyển cùng mô hình khi gọi `.to('cuda')` mà không bị optimizer cập nhật trọng số.
+2. **Cấu trúc Pre-LN trong `TransformerBlock`**:
+   Viết `x = x + self.drop(self.attn(self.ln1(x)))` và `x = x + self.drop(self.ffn(self.ln2(x)))` giúp mạng sâu ổn định ngay cả khi không chỉnh lịch warmup quá tỉ mỉ.
+3. **Kiểm chứng rò rỉ thông tin tương lai (Causal Leak Test)**:
+   Chạy lượt xuôi với `x1`, sau đó sửa ngẫu nhiên token cuối cùng `x2[:, -1] = ...` rồi chạy lại: hiệu tuyệt đối `max(|out1[:, :-1] - out2[:, :-1]|)` bắt buộc phải bằng đúng `0.0` (hoặc `< 1e-6` do làm tròn dấu phẩy động).
+4. **Phân biệt mặt nạ tự chú ý (Self-Attention) và chú ý chéo (Cross-Attention)**:
+   Trong Decoder, tầng thứ nhất dùng `causal_mask` trên chuỗi đích ($$Q, K, V$$ đều từ đích); tầng thứ hai dùng `src_padding_mask` với $$Q$$ từ đích còn $$K, V$$ từ đầu ra Encoder.
+
+### Khung giải thích (nên đọc chậm): Lần theo luồng kích thước Tensor qua trọn vẹn 1 khối Decoder-only Transformer
+
+Cho batch `B = 4`, độ dài chuỗi `L = 16`, kích thước ẩn `d_model = 128`, số head `H = 4` ($$d_k = 32$$), chiều ẩn FFN `d_ff = 512`, từ vựng `V = 1000`:
+
+| Bước xử lý | Phép toán chính | Kích thước Tensor đầu ra |
+| :--- | :--- | :---: |
+| 1. Token IDs đầu vào | Mảng số nguyên `[0..999]` | `(4, 16)` |
+| 2. Embedding + PosEnc | `emb(ids) * sqrt(128) + pe[:, :16]` | `(4, 16, 128)` |
+| 3. Tách Head Q, K, V | `Linear(128,128) -> view -> transpose` | `(4, 4, 16, 32)` |
+| 4. Ma trận điểm Attention | `(Q @ K^T) / sqrt(32)` | `(4, 4, 16, 16)` |
+| 5. Ghép Head + `W_O` + Residual | `transpose -> reshape -> Linear + x` | `(4, 16, 128)` |
+| 6. Khối FFN + Residual | `Linear(128,512) -> GELU -> Linear(512,128) + x` | `(4, 16, 128)` |
+| 7. LM Head dự đoán từ tiếp theo | `Linear(128, 1000)` | **`(4, 16, 1000)`** |
+
+Khi tính `CrossEntropyLoss`, ta duỗi 2 chiều đầu của logits thành `(4*16, 1000) = (64, 1000)` và nhãn đích thành `(64,)` — khớp chính xác từng chiều một!
+
 # Cài đặt Cốt lõi Transformer
 
 Bài này cài đặt các **khối nền tảng** của một encoder Transformer (cùng lõi attention dùng chung với decoder) bằng PyTorch. Mã nguồn ưu tiên tính minh bạch và kiểm soát đúng kích thước tensor; trong hệ thống sản xuất, các khối này thường được thay bằng hàm tối ưu hóa tích hợp (`scaled_dot_product_attention`) với quy mô lớn hơn.

@@ -10,6 +10,26 @@ categories:
 lesson_type: optional
 ---
 
+Hãy tưởng tượng bạn đưa một bức ảnh chiếc giày thể thao vào một mạng phân loại ảnh chỉ từng học 2 lớp là `chó` và `mèo`, rồi nhìn đầu ra Softmax báo: **99,7% là chó**! Tại sao mạng nơ-ron chuẩn lại "tự tin một cách mù quáng" trên dữ liệu ngoài phân phối (OOD), và làm thế nào để định lượng xem sự không chắc chắn đến từ nhiễu dữ liệu hay do mô hình thiếu kiến thức? Bài luyện phỏng vấn này giúp bạn làm chủ hoàn toàn chủ đề Học sâu Bayes và độ bất định.
+
+## Bản đồ kiến thức nền: Bốn trụ cột phỏng vấn về Học sâu Bayes và Độ bất định
+
+- **Phân tách Aleatoric vs. Epistemic Uncertainty:** Aleatoric (nhiễu nội tại dữ liệu, không giảm được dù thu thêm dữ liệu cùng loại) vs. Epistemic (sự thiếu hiểu biết của mô hình ở vùng thưa dữ liệu, giảm được khi bổ sung dữ liệu).
+- **Tương đương giữa Chính quy hóa L2 và Ước lượng MAP với tiên nghiệm Gauss:** Chứng minh toán học $$\arg\max_w [\ln p(D\mid w) + \ln \mathcal{N}(w\mid 0, \sigma_w^2 I)]$$ chính xác là tối thiểu hóa NLL cộng phạt $$\frac{\lambda}{2}\|w\|_2^2$$.
+- **Hiệu chuẩn xác suất (Calibration — ECE & Temperature Scaling):** Nhận diện hiện tượng *overconfidence* của Softmax (đặc biệt trên vùng OOD với mạng ReLU) và cách dùng một tham số nhiệt độ $$T$$ duy nhất trên tập validation để hiệu chuẩn.
+- **Xấp xỉ suy diễn Bayes thực dụng:** So sánh Monte Carlo Dropout (chạy $$M$$ lượt xuôi bật dropout) và Deep Ensembles (huấn luyện $$M$$ mạng độc lập — chuẩn vàng thực tế về đo độ bất định).
+
+### Khung giải thích (nên đọc chậm): Tính tay độ bất định Epistemic bằng Deep Ensemble và quy đổi tiên nghiệm Gauss sang hệ số L2
+
+**Phần A — Đo bất định qua Deep Ensemble ($$M = 3$$ mạng độc lập):**
+1. Trên một mẫu **trong phân phối (in-distribution)**, 3 mạng dự đoán xác suất lớp dương là $$[0{,}88,\; 0{,}90,\; 0{,}92]$$:
+   - Trung bình $$\bar{p} = 0{,}90$$, phương sai giữa các mạng (đại diện độ bất định Epistemic) $$\text{Var} = \frac{(-0{,}02)^2 + 0 + (0{,}02)^2}{3} \approx 0{,}00027$$ → các mạng đồng thuận cao, đáng tin cậy.
+2. Trên một mẫu **ngoài phân phối (OOD)**, 3 mạng dự đoán $$[0{,}95,\; 0{,}15,\; 0{,}70]$$:
+   - Trung bình $$\bar{p} = 0{,}60$$, phương sai $$\text{Var} = \frac{(0{,}35)^2 + (-0{,}45)^2 + (0{,}10)^2}{3} = \frac{0{,}335}{3} \approx 0{,}1117$$ — **cao gấp hơn 400 lần**, phát ngay cảnh báo từ chối dự đoán tự động!
+
+**Phần B — Quy đổi tiên nghiệm Gauss sang Weight Decay L2:**
+Với nhiễu quan sát hồi quy $$\sigma_y = 0{,}5$$ và tiên nghiệm trọng số $$w \sim \mathcal{N}(0, \sigma_w^2)$$ có $$\sigma_w = 2{,}0$$, cực đại hóa hậu nghiệm MAP cho hàm mất mát $$\frac{1}{2\sigma_y^2}\sum (y_i - \hat{y}_i)^2 + \frac{1}{2\sigma_w^2}\|w\|_2^2$$. Nhân hai vế với $$2\sigma_y^2$$, hệ số phạt L2 chính xác là $$\lambda = \frac{\sigma_y^2}{\sigma_w^2} = \frac{0{,}25}{4{,}0} = 0{,}0625$$!
+
 # Tùy chọn: Luyện phỏng vấn — Học sâu Bayes và độ bất định
 
 > Bài này là **tùy chọn**, **không** thay thế phần tổng quan hướng phát triển tương lai của chương. Sau khi đọc bài tổng quan đó (và phần xác suất ở Chương 00), hãy luyện tập với các câu hỏi dưới đây rồi tham khảo thêm *Deep Learning Interviews* (Kashani & Ivry, [arXiv:2201.00650](https://arxiv.org/abs/2201.00650)) để xem đầy đủ các câu hỏi có lời giải về lập trình xác suất và học sâu Bayes.

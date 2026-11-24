@@ -9,6 +9,30 @@ categories:
 - chapter00
 ---
 
+> *A medical AI boasts 95% sensitivity and 95% specificity on a rare cancer affecting 1% of patients—yet when it flags a patient positive, the patient still has an 84% chance of being completely healthy. Without conditional probability and Bayes' theorem, even experienced engineers misread classifier outputs.*
+
+## Background Knowledge Map: Conditioning, Bayes' Rule, and Independence
+
+1. **Conditional Probability (Restricting the Universe)**: Computes $$P(A\mid B) = P(A \cap B)/P(B)$$ by shrinking the sample space to outcomes where $$B$$ occurred and renormalizing probabilities to sum to 1.
+2. **Bayes' Theorem (Inverting Evidence)**: Relates posterior $$P(y\mid x)$$ to likelihood $$P(x\mid y)$$ and prior $$P(y)$$ via $$P(y\mid x) = \frac{P(x\mid y)P(y)}{P(x)}$$, explaining why base rates (class imbalance) dominate precision.
+3. **Statistical Independence vs. Mutual Exclusivity**: Two events with nonzero probability are independent iff $$P(A\cap B) = P(A)P(B)$$; mutually exclusive events ($$P(A\cap B)=0$$) are actually *maximally dependent* because one rules out the other.
+4. **Conditional Independence (Graphical Models & Naive Bayes)**: Allows high-dimensional joint distributions to factorize cleanly once a latent cause or context variable is observed.
+
+### Step-by-Step Worked Example (Read Slowly): The Base-Rate Trap in Imbalanced Classification
+
+A fraud detector evaluates transactions where only $$P(F) = 0.01$$ (1%) are fraudulent. The model has:
+- True Positive Rate (sensitivity): $$P(+\mid F) = 0.95$$
+- False Positive Rate: $$P(+\mid F^c) = 0.05$$ (95% specificity)
+
+1. **Compute Joint Probabilities**:
+   - True positive mass: $$P(+ \cap F) = P(+\mid F)P(F) = 0.95 \times 0.01 = 0.0095$$
+   - False positive mass: $$P(+ \cap F^c) = P(+\mid F^c)P(F^c) = 0.05 \times 0.99 = 0.0495$$
+2. **Compute Total Flag Rate via Law of Total Probability**:
+   $$P(+) = P(+ \cap F) + P(+ \cap F^c) = 0.0095 + 0.0495 = 0.0590$$
+3. **Apply Bayes' Theorem for Precision $$P(F \mid +)$$**:
+   $$P(F \mid +) = \frac{P(+ \cap F)}{P(+)} = \frac{0.0095}{0.0590} = \frac{95}{590} \approx 0.1610 \quad (16.1\%)$$
+   Even with 95% accuracy on both classes, 83.9% of alerts are false alarms! This is why imbalanced deep learning tasks require threshold tuning, focal loss, or precision–recall curves rather than raw accuracy.
+
 ### 4. Conditional Probability
 
 The probability of event A given that event B has occurred:

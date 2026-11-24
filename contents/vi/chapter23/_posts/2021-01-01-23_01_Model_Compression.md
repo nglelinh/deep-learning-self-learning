@@ -9,6 +9,28 @@ categories:
 - chapter23
 ---
 
+Một phát hiện gây chấn động từ bài báo *The Lottery Ticket Hypothesis* cho thấy bên trong một mạng nơ-ron dày đặc hàng triệu tham số thường ẩn giấu một "mạng con trúng số" chỉ chiếm **10–20% số trọng số** nhưng đạt độ chính xác ngang ngửa mạng đầy đủ! Bài học này đi sâu vào cơ sở toán học của ba trụ cột nén mô hình kinh điển: **Cắt tỉa (Pruning)**, **Lượng tử hóa đồng đều (Affine/Symmetric Quantization)** và **Chưng cất tri thức với nhiệt độ $$T$$**.
+
+## Bản đồ kiến thức nền: Cơ sở toán học của ba kỹ thuật nén mô hình cốt lõi
+
+- **Cắt tỉa theo độ lớn và cấu trúc (Magnitude & Structured Pruning):** Xếp hạng trọng số theo $$|w|$$ hoặc chuẩn $$L_1/L_2$$ của bộ lọc, cắt bỏ tỷ lệ $$p$$ rồi tinh chỉnh lại; hiểu sự đánh đổi giữa độ thưa và hiệu suất thực trên nhân CUDA.
+- **Lượng tử hóa tuyến tính (Symmetric & Asymmetric Quantization):** Ánh xạ số thực $$r \in [r_{\min}, r_{\max}]$$ sang số nguyên $$q = \text{clip}(\text{round}(r/s) + z,\; q_{\min}, q_{\max})$$ cùng quá trình giải lượng tử hóa $$\hat{r} = s(q - z)$$, phân biệt PTQ và QAT (dùng Straight-Through Estimator).
+- **Chưng cất tri thức (Hinton Knowledge Distillation):** Làm mềm phân phối Softmax bằng nhiệt độ $$T > 1$$ để lộ ra "tri thức ẩn" (*dark knowledge*) về độ tương đồng giữa các lớp sai, kết hợp mất mát KL (nhân $$T^2$$) với Cross-Entropy nhãn cứng.
+- **Tích chập tách biệt chiều sâu (Depthwise Separable Convolution):** Phân rã phép tích chập $$K \times K \times C_{\text{in}} \times C_{\text{out}}$$ thành bước lọc từng kênh rồi trộn $$1 \times 1$$ để giảm $$8\text{–}9\times$$ số phép tính FLOPs.
+
+### Khung giải thích (nên đọc chậm): Tính tay một bước lượng tử hóa đối xứng INT8 và sai số lượng tử hóa
+
+Xét một vector trọng số thực $$\mathbf{w} = [-0{,}82,\; 0{,}15,\; 1{,}27,\; -0{,}04]$$ cần lượng tử hóa đối xứng sang số nguyên có dấu INT8 trong đoạn $$[-127, 127]$$.
+
+1. **Tính hệ số tỷ lệ (Scale Factor $$s$$):**
+   $$s = \frac{\max_i |w_i|}{127} = \frac{1{,}27}{127} = 0{,}01.$$
+2. **Lượng tử hóa sang số nguyên ($$q_i = \text{round}(w_i / s)$$):**
+   - $$-0{,}82 / 0{,}01 = -82$$ → $$q_1 = -82$$
+   - $$0{,}15 / 0{,}01 = 15$$ → $$q_2 = 15$$
+   - $$1{,}27 / 0{,}01 = 127$$ → $$q_3 = 127$$
+   - $$-0{,}04 / 0{,}01 = -4$$ → $$q_4 = -4$$
+3. **Giải lượng tử hóa và đo sai số:** Nếu phần tử thứ nhất là $$-0{,}824$$ thì $$\text{round}(-82{,}4) = -82$$, giải lượng tử hóa ra $$-82 \times 0{,}01 = -0{,}820$$ — sai số tối đa luôn bị chặn bởi $$s/2 = 0{,}005$$! Tuy nhiên, nếu xuất hiện một **giá trị ngoại lai (outlier)** bằng $$12{,}7$$ trong cùng nhóm, $$s$$ nhảy vọt lên $$0{,}10$$ làm toàn bộ trọng số nhỏ bị làm tròn thô gấp 10 lần — đó chính là lý do các thuật toán lượng tử hóa LLM hiện đại phải xử lý riêng các kênh ngoại lai!
+
 # Học sâu Hiệu quả: Nén và Tăng tốc Mô hình
 
 ## 1. Tổng quan khái niệm

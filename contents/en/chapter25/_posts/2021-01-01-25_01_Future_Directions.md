@@ -9,6 +9,27 @@ categories:
 - chapter25
 ---
 
+As deep learning matures from isolated benchmarks into general-purpose infrastructure, three deep mathematical questions define the research frontier: how far do power-law scaling curves extend, how can a network adapt to a brand-new task from 5 examples without erasing prior skills, and how do we optimize conflicting real-world objectives (accuracy, fairness, latency, safety) simultaneously? Each question turns out to have a crisp mathematical formulation you can test in twenty lines of code.
+
+## Background Knowledge Map: Mathematical Core of Emerging Deep Learning Paradigms
+
+- **Pillar 1 — Power-Law Scaling & Irreducible Entropy**: Models test loss as $L(N, D) = E + \frac{A}{N^\alpha} + \frac{B}{D^\beta}$, separating reducible capacity/data error from the irreducible entropy floor $E$ of natural language.
+- **Pillar 2 — Bi-Level Meta-Learning (MAML) & Metric Few-Shot**: Finds an initialization $\theta^*$ such that just 1–5 gradient steps on a new task $\mathcal{T}_i$ yield strong generalization, or classifies queries by distance to class prototypes in embedding space.
+- **Pillar 3 — Continual Learning & Fisher Information (EWC)**: Protects parameters vital to Task A when learning Task B by adding a quadratic penalty $\frac{\lambda}{2}\sum_i F_i (\theta_i - \theta_{A,i}^*)^2$ weighted by the diagonal Fisher Information Matrix $F_i$.
+- **Pillar 4 — Multi-Objective Optimization & Pareto Fronts**: Balances competing objectives (engagement vs. diversity vs. safety) using Pareto-optimal trade-offs rather than myopic single-metric maximization.
+
+### Step-by-Step Worked Example (Read Slowly): Computing an Elastic Weight Consolidation (EWC) Penalty
+
+Suppose after mastering Task A, a model has two weights $\theta_A^* = (2.0,\; 1.0)$ with diagonal Fisher sensitivities $F = (10.0,\; 0.5)$ (meaning $\theta_1$ is $20\times$ more critical to Task A than $\theta_2$). While training on Task B with EWC strength $\lambda = 2.0$, we test two candidate updates of identical Euclidean length ($0.5$):
+- **Candidate 1** (moves important weight $\theta_1$): $\theta^{(1)} = (2.5,\; 1.0)$.
+- **Candidate 2** (moves flexible weight $\theta_2$): $\theta^{(2)} = (2.0,\; 1.5)$.
+
+1. **Compute EWC penalty $\Omega(\theta) = \frac{\lambda}{2}\big[F_1(\theta_1 - \theta_{A,1}^*)^2 + F_2(\theta_2 - \theta_{A,2}^*)^2\big]$**:
+   - Candidate 1: $\frac{2.0}{2}\big[10.0(0.5)^2 + 0.5(0)^2\big] = 10.0 \times 0.25 = 2.500$.
+   - Candidate 2: $\frac{2.0}{2}\big[10.0(0)^2 + 0.5(0.5)^2\big] = 0.5 \times 0.25 = 0.125$.
+2. **Compare**: Moving $\theta_1$ incurs a $20\times$ stiffer penalty ($2.500$ vs. $0.125$), steering Task B's optimizer to store new knowledge inside the underused weight $\theta_2$ while leaving Task A intact!
+3. **Takeaway**: EWC turns catastrophic forgetting into a clean geometric constraint using second-order curvature (Fisher information) as an anchor.
+
 # The Future of Deep Learning: Emerging Trends and Open Challenges
 
 ## 1. Concept Overview

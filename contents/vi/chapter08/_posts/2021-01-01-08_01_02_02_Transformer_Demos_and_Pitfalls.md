@@ -9,6 +9,34 @@ categories:
 - chapter08
 ---
 
+Biết viết một lớp `TransformerBlock` chạy được trên tensor ngẫu nhiên chưa đủ để huấn luyện thành công một mô hình thực thụ. Trong thực chiến, Transformer nổi tiếng là kiến trúc "khó tính" ở giai đoạn đầu huấn luyện: quên lịch tăng dần tốc độ học (learning rate warmup), dùng sai chỉ số `ignore_index` cho padding trong hàm mất mát, hay bật nhầm `eval()`/`train()` đều có thể khiến loss đi ngang mãi mãi mà không báo một dòng lỗi nào.
+
+## Bản đồ kiến thức nền: Bốn bài học thực chiến từ Demo và Cạm bẫy Transformer
+
+1. **Lịch tốc độ học Warmup + Cosine/Inverse-Sqrt Decay**:
+   Ở những bước đầu tiên, phương sai gradient của LayerNorm và ước lượng moment bậc 2 của Adam chưa ổn định; tăng tuyến tính learning rate từ $$0 \to \eta_{\max}$$ trong vài nghìn bước đầu (warmup) ngăn chặn hiện tượng phân kỳ sớm.
+2. **Dịch nhãn (Target Shifting) và `ignore_index=pad_id` trong Loss**:
+   Với mô hình ngôn ngữ tự hồi quy, đầu vào là `tokens[:, :-1]` và nhãn đích là `tokens[:, 1:]`; đồng thời phải truyền `ignore_index=pad_id` vào `CrossEntropyLoss` để mô hình không lãng phí dung lượng vào việc đoán ký tự đệm `<PAD>`.
+3. **Chẩn đoán chất lượng học qua Bản đồ Trọng số Attention**:
+   Trực quan hóa ma trận trọng số của từng head giúp phát hiện các mẫu thú vị (head nhìn từ ngay trước, head nối chủ ngữ–động từ, head tập trung vào dấu câu) cũng như phát hiện lỗi rò rỉ mặt nạ nhân quả.
+4. **Tính toán ngân sách bộ nhớ khi huấn luyện (Activation vs. Weight)**:
+   Độ dài chuỗi tăng gấp đôi khiến bộ nhớ lưu ma trận attention tăng gấp **4 lần** — đó là lý do thực tế luôn phải kết hợp Gradient Accumulation, Mixed Precision (BF16/FP16) và FlashAttention.
+
+### Khung giải thích (nên đọc chậm): Tính tay lịch Learning Rate Warmup + Inverse Square Root (Noam Scheduler của bài báo gốc 2017)
+
+Công thức lịch tốc độ học kinh điển trong *"Attention Is All You Need"*:
+$$\eta(\text{step}) = d_{\text{model}}^{-0{,}5} \cdot \min\!\left(\text{step}^{-0{,}5}, \; \text{step} \cdot \text{warmup}^{-1{,}5}\right)$$
+
+Giả sử $$d_{\text{model}} = 512 \implies d_{\text{model}}^{-0{,}5} \approx 0{,}04419$$ và $$\text{warmup} = 4{,}000$$ bước:
+
+| Bước huấn luyện (`step`) | Nhánh hoạt động | Phép tính $$\eta(\text{step})$$ | Tốc độ học $$\eta$$ |
+| :---: | :--- | :--- | :---: |
+| `step = 1,000` | Warmup tuyến tính | $$0{,}04419 \times 1{,}000 \times 4{,}000^{-1{,}5}$$ | **$$1{,}75 \times 10^{-4}$$** |
+| `step = 4,000` | Đạt đỉnh (Peak) | $$0{,}04419 \times 4{,}000^{-0{,}5}$$ | **$$6{,}99 \times 10^{-4}$$** |
+| `step = 16,000` | Giảm theo $$1/\sqrt{\text{step}}$$ | $$0{,}04419 \times 16{,}000^{-0{,}5}$$ | **$$3{,}49 \times 10^{-4}$$** (giảm một nửa) |
+
+Lịch Noam tăng mượt mà trong 4.000 bước đầu để ổn định Adam, rồi hạ dần nhẹ nhàng khi mô hình tiến gần vùng cực tiểu.
+
 # Demo, Bài báo và Bẫy Transformer
 
 Sau khi đã có các module cốt lõi ở bài trước, phần này đưa chúng vào chạy thử trên một bài toán nhỏ để kiểm chứng quá trình học, hệ thống hóa các bài báo nền tảng và tổng hợp những lỗi vận hành dễ tốn nhiều thời gian gỡ lỗi nhất.

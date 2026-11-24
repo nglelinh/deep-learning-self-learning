@@ -9,6 +9,24 @@ categories:
 - chapter15
 ---
 
+Một trong những lỗi "âm thầm" phổ biến nhất khi dùng `torchvision.models` là tải ResNet tiền huấn luyện về, đặt `requires_grad = False` cho xương sống... nhưng lại quên mất rằng các tầng `BatchNorm` vẫn đang âm thầm cập nhật `running_mean` và `running_var`, hoặc quên chuẩn hóa ảnh đầu vào theo đúng trung bình/độ lệch chuẩn của ImageNet! Bài thực hành này dẫn bạn từng bước cài đặt hoàn chỉnh quy trình Transfer Learning trong PyTorch — từ đóng băng tầng, thay đầu phân loại, thiết lập tốc độ học phân tầng đến chiến lược mở khóa dần (gradual unfreezing).
+
+## Bản đồ kiến thức nền: Bốn chi tiết kỹ thuật bắt buộc khi cài đặt Transfer Learning
+
+- **Khớp tiền xử lý với trọng số tiền huấn luyện:** Luôn dùng đúng `weights.transforms()` (chuẩn hóa `mean=[0.485, 0.456, 0.406]`, `std=[0.229, 0.224, 0.225]` và kích thước ảnh chuẩn) để đầu vào không bị lệch phân phối ngay từ tầng đầu.
+- **Quản lý `requires_grad` và `optimizer` parameter groups:** Chỉ truyền các tham số `requires_grad=True` vào bộ tối ưu, và gán từng nhóm `lr` khác nhau (ví dụ `1e-4` cho backbone, `1e-3` cho head).
+- **Chiến lược hai pha (Warm-up Head → Unfreeze Backbone):** Huấn luyện riêng đầu phân loại vài epoch trước khi mở khóa xương sống để tránh gradient nhiễu ban đầu phá hỏng các bộ lọc tốt.
+- **Kiểm soát chế độ `BatchNorm` và Weight Decay:** Giữ `bn.eval()` khi đóng băng xương sống hoặc khi batch size quá nhỏ, đồng thời tách weight decay hợp lý với AdamW.
+
+### Khung giải thích (nên đọc chậm): Kiểm tra ảnh hưởng của việc quên chuẩn hóa ImageNet lên đầu vào tầng đầu
+
+Giả sử một điểm ảnh màu đỏ sáng có giá trị pixel gốc trong $$[0, 1]$$ là $$x_R = 0{,}85$$. Xương sống ResNet-18 tiền huấn luyện trên ImageNet kỳ vọng kênh đỏ được chuẩn hóa bằng $$\mu_R = 0{,}485$$ và $$\sigma_R = 0{,}229$$.
+
+1. **Giá trị chuẩn hóa đúng:**
+   $$x_R^{\text{đúng}} = \frac{0{,}85 - 0{,}485}{0{,}229} = \frac{0{,}365}{0{,}229} \approx +1{,}594.$$
+2. **Nếu quên chuẩn hóa (đưa thẳng $$0{,}85$$ vào mạng):** Sai lệch đầu vào so với phân phối mà bộ lọc `conv1` đã học lên tới $$1{,}594 - 0{,}850 = 0{,}744$$ độ lệch chuẩn!
+   Với một điểm ảnh tối $$x_R = 0{,}05$$, giá trị đúng là $$(0{,}05 - 0{,}485)/0{,}229 \approx -1{,}900$$ (âm sâu), trong khi đưa thẳng $$0{,}05$$ lại là số dương — làm sai lệch hoàn toàn ngưỡng kích hoạt ReLU ngay từ tầng tích chập đầu tiên.
+
 ## 4. Đoạn mã
 
 Đoạn mã dưới đây cài đặt đầy đủ hai chiến lược học chuyển giao (trích xuất đặc trưng và tinh chỉnh với learning rate phân biệt theo tầng) trên ResNet-18 tiền huấn luyện ImageNet với một tập con 1000 ảnh của CIFAR-10:

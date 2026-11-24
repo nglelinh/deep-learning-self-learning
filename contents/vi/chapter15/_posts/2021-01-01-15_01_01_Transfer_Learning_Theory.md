@@ -9,6 +9,28 @@ categories:
 - chapter15
 ---
 
+Vì sao một mô hình học nhận diện chó, mèo và xe tải trên ImageNet lại có thể giúp phát hiện khối u trên phim X-quang phổi chính xác hơn hẳn một mô hình huấn luyện trực tiếp trên X-quang từ đầu? Câu trả lời không phải là phép màu, mà nằm trong **Lý thuyết Thích ứng Miền (Domain Adaptation Theory)** của Ben-David và cộng sự: sai số trên miền đích bị chặn trên bởi ba đại lượng đo được rất cụ thể.
+
+## Bản đồ kiến thức nền: Cơ sở lý thuyết của học chuyển giao và thích ứng miền
+
+- **Định lý cận tổng quát hóa miền đích (Ben-David Bound):** Ràng buộc sai số mục tiêu $$\epsilon_T(h) \le \epsilon_S(h) + \frac{1}{2} d_{\mathcal{H}\Delta\mathcal{H}}(\mathcal{D}_S, \mathcal{D}_T) + \lambda^*$$, tách rõ sai số nguồn, khoảng cách phân phối miền và sai số lý tưởng chung.
+- **Tốc độ học phân tầng (Discriminative Learning Rates):** Vì gradient biến thiên mạnh ở tầng đầu phân loại mới khởi tạo ngẫu nhiên, ta gán $$\eta_{\text{head}} \gg \eta_{\text{backbone}}$$ để không phá hủy biểu diễn tiền huấn luyện (tránh *catastrophic forgetting*).
+- **Hành vi thống kê của Batch Normalization khi chuyển miền:** Phân biệt rõ chế độ `eval()` (giữ trung bình/phương sai nguồn) và `train()` (cập nhật thống kê miền đích) khi tinh chỉnh trên batch nhỏ.
+- **Tách biệt Covariate Shift và Concept Shift:** Nhận biết miền đích khác miền nguồn ở phân phối đầu vào $$P(X)$$ hay ở chính quy tắc gán nhãn $$P(Y\mid X)$$.
+
+### Khung giải thích (nên đọc chậm): Định lượng cận sai số miền đích theo bất đẳng thức Ben-David
+
+Giả sử ta chuyển giao một bộ phân loại ảnh y tế từ bệnh viện A (miền nguồn $$S$$) sang bệnh viện B (miền đích $$T$$) dùng máy chụp đời khác:
+- Sai số trên miền nguồn: $$\epsilon_S(h) = 0{,}04$$ ($$4\%$$).
+- Khoảng cách phân kỳ hai miền: $$d_{\mathcal{H}\Delta\mathcal{H}}(\mathcal{D}_S, \mathcal{D}_T) = 0{,}16$$.
+- Sai số kết hợp tối ưu không thể tránh khỏi: $$\lambda^* = 0{,}03$$.
+
+1. **Tính cận trên sai số miền đích trước khi thích ứng miền:**
+   $$\epsilon_T(h) \le 0{,}04 + \frac{1}{2}(0{,}16) + 0{,}03 = 0{,}04 + 0{,}08 + 0{,}03 = 0{,}15\;(15\%).$$
+2. **Áp dụng chuẩn hóa độ tương phản và trích xuất đặc trưng bất biến miền** để giảm $$d_{\mathcal{H}\Delta\mathcal{H}}$$ từ $$0{,}16$$ xuống $$0{,}04$$ (giữ nguyên $$\epsilon_S = 0{,}04, \lambda^* = 0{,}03$$):
+   $$\epsilon_T(h) \le 0{,}04 + \frac{1}{2}(0{,}04) + 0{,}03 = 0{,}09\;(9\%).$$
+   Con số này cho thấy bài học chiến lược: khi $$\epsilon_S$$ đã rất thấp, cố gắng ép loss trên miền nguồn giảm thêm gần như vô ích; muốn thắng trên miền đích phải tập trung kéo giảm **khoảng cách miền** $$d_{\mathcal{H}\Delta\mathcal{H}}$$.
+
 # Học Chuyển giao: Tận dụng tri thức tiền huấn luyện
 
 ## 1. Tổng quan khái niệm
