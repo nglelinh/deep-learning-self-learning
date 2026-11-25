@@ -30,8 +30,10 @@
 /* ── Base & Reading Typography ────────────────────────────────── */
 
 html,
+html[lang="vi"],
+html[lang="en"],
 body {
-  font-family: var(--course-serif);
+  font-family: var(--course-serif) !important;
   color: var(--course-text);
   background-color: var(--course-bg);
   -webkit-font-smoothing: antialiased;
@@ -53,7 +55,7 @@ body {
   font-size: 1.05rem;
   line-height: 1.7;
   color: var(--course-text);
-  padding-top: 5.5rem;
+  padding-top: 2.25rem !important;
   padding-bottom: 3.5rem;
 }
 
@@ -82,7 +84,7 @@ body {
 .container.content h1 {
   font-size: 2rem;
   font-weight: 700;
-  margin-top: 0.25rem;
+  margin-top: 0.35rem;
   margin-bottom: 1.25rem;
   padding-bottom: 0.45rem;
   border-bottom: 1px solid var(--course-border);
@@ -111,6 +113,25 @@ body {
 .container.content a:focus {
   color: var(--course-accent-hover);
   text-decoration: underline;
+}
+
+/* ── Language Indicator Pill (Understated Monochrome) ─────────── */
+
+.post-language,
+.post-language.lang-en,
+.post-language.lang-vi {
+  display: inline-block;
+  font-family: var(--course-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.2;
+  padding: 0.22rem 0.6rem;
+  margin-top: 0;
+  margin-bottom: 0.85rem;
+  background-color: var(--course-bg-subtle);
+  border: 1px solid var(--course-border-strong);
+  border-radius: 3px;
+  color: var(--course-muted);
 }
 
 /* ── Blockquotes, Tables & Code ───────────────────────────────── */
@@ -181,34 +202,50 @@ body {
   margin: 2rem 0;
 }
 
-/* ── Top Navbar / Masthead (Minimal Monochrome) ───────────────── */
+/* ── Top Navbar / Masthead (Sticky, Clean, Vertically Centered) ─ */
 
 .masthead {
+  position: sticky !important;
   top: 0;
   left: 0;
+  right: 0;
+  width: 100%;
+  min-height: 3.75rem;
+  display: flex;
+  align-items: center;
   background-color: var(--course-bg);
   border-bottom: 1px solid var(--course-border);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  padding-top: 0.85rem;
-  padding-bottom: 0.85rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  padding: 0.65rem 0 !important;
   margin-bottom: 0;
+  z-index: 20;
   font-family: var(--course-sans);
 }
 
 .masthead .container {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  padding-left: 3.75rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 64em) {
+  .masthead .container {
+    padding-left: 1rem;
+  }
 }
 
 .masthead-title {
-  margin: 0;
+  margin: 0 !important;
   font-family: var(--course-sans);
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 600;
   line-height: 1.3;
   color: var(--course-text);
+  text-align: left !important;
 }
 
 .masthead-title a {
@@ -220,6 +257,7 @@ body {
 .masthead-title a:focus {
   color: var(--course-accent) !important;
   text-decoration: none;
+  transform: none !important;
 }
 
 .masthead-title small {
@@ -229,31 +267,45 @@ body {
 }
 
 .header-actions {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  margin: 0 !important;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.65rem;
   flex-shrink: 0;
+}
+
+.language-toggle {
+  display: flex;
+  align-items: center;
 }
 
 .language-toggle a,
 .language-switch {
+  display: inline-flex;
+  align-items: center;
   font-family: var(--course-sans);
-  font-size: 0.85rem;
+  font-size: 0.84rem !important;
   font-weight: 500;
+  line-height: 1.25;
   color: var(--course-text) !important;
-  background-color: var(--course-bg-subtle);
-  border: 1px solid var(--course-border-strong);
+  background-color: var(--course-bg-subtle) !important;
+  border: 1px solid var(--course-border-strong) !important;
   border-radius: 4px;
-  padding: 0.25rem 0.65rem;
+  padding: 0.3rem 0.7rem !important;
   text-decoration: none !important;
+  box-shadow: none !important;
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 .language-toggle a:hover,
 .language-switch:hover {
-  background-color: #ecece9;
-  border-color: var(--course-sidebar-bg);
+  background-color: #ecece9 !important;
+  border-color: var(--course-sidebar-bg) !important;
   color: #000000 !important;
+  transform: none !important;
 }
 
 .github-logo__wrapper {
@@ -265,6 +317,11 @@ body {
 
 .github-logo__wrapper:hover {
   opacity: 1;
+}
+
+.github-logo {
+  width: 28px !important;
+  height: 28px !important;
 }
 
 /* ── Dark Charcoal Sidebar (#202020, matching discrete-math) ──── */
@@ -340,8 +397,9 @@ a.sidebar-nav-item:focus {
 }
 
 .sidebar-toggle {
+  top: 0.75rem !important;
   color: #202020;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.92);
   border: 1px solid var(--course-border);
 }
 
