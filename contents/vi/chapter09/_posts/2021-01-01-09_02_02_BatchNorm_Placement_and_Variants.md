@@ -11,7 +11,7 @@ categories:
 
 Khi thiết kế một khối CNN hoặc Transformer thực tế, hai câu hỏi kỹ thuật luôn xuất hiện: *nên đặt BatchNorm trước hay sau hàm kích hoạt ReLU?* và *khi VRAM GPU chỉ đủ chạy batch size = 2 (như trong bài toán phân đoạn ảnh y khoa 3D hoặc Object Detection độ phân giải cao), vì sao BatchNorm sụp đổ và phải thay bằng gì?* Bài học này giải quyết dứt điểm cả hai bài toán thiết kế đó.
 
-## Bản đồ kiến thức nền: Bốn quyết định thiết kế về Vị trí và Biến thể Chuẩn hóa
+## Kiến thức cần nhớ: Bốn quyết định thiết kế về Vị trí và Biến thể Chuẩn hóa
 
 1. **Vị trí đặt BatchNorm (`Conv -> BN -> ReLU` vs. `Conv -> ReLU -> BN`)**:
    Quy ước chuẩn công nghiệp (ResNet, EfficientNet) là `Conv(bias=False) -> BN -> ReLU` nhằm chuẩn hóa tín hiệu tiền kích hoạt (gần phân phối Gaussian đối xứng quanh 0) trước khi cắt phần âm bởi ReLU; riêng thiết kế Pre-Activation ResNet v2 đặt `BN -> ReLU -> Conv` để giữ đường residual sạch hoàn toàn.
@@ -22,7 +22,7 @@ Khi thiết kế một khối CNN hoặc Transformer thực tế, hai câu hỏi
 4. **Hợp nhất tầng lúc suy luận (Conv–BN Folding)**:
    Vì ở chế độ `eval()`, BatchNorm chỉ là một phép biến đổi tuyến tính cố định, ta có thể gộp trực tiếp trọng số của nó vào ma trận trọng số và bias của tầng `Conv2d` đứng ngay trước — giúp suy luận nhanh hơn mà **không tốn thêm một phép tính nào** cho BatchNorm!
 
-### Khung giải thích (nên đọc chậm): Tính tay phép Gộp tầng Conv + BatchNorm lúc suy luận (Conv–BN Folding)
+### Giải thích: Tính tay phép Gộp tầng Conv + BatchNorm lúc suy luận (Conv–BN Folding)
 
 Giả sử một kênh tích chập có trọng số $$w = 2{,}0$$ (không có bias), theo sau là BatchNorm ở chế độ `eval()` với $$\mu_{\text{run}} = 1{,}0, \; \sigma_{\text{run}} = 2{,}0, \; \gamma = 4{,}0, \; \beta = 0{,}5$$.
 

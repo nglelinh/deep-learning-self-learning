@@ -11,13 +11,13 @@ categories:
 
 > *Before you can understand why a language model predicts the next token conditioned on 100,000 previous tokens, or why variational autoencoders work, you need the bedrock laws of probability: sample spaces, Kolmogorov's axioms, Bayes' theorem, and random variables.*
 
-## Background Knowledge Map: Three Building Blocks of Probability Theory
+## Key ideas: Three Building Blocks of Probability Theory
 
 1. **Sample Spaces & Kolmogorov Axioms**: Establishes the minimal rules—non-negativity, unit total mass, and countable additivity—from which every probability identity follows without contradiction.
 2. **Conditional Probability & Independence**: Formalizes how observing context $$B$$ reshapes the probability of $$A$$ via $$P(A\mid B) = P(A \cap B)/P(B)$$, and defines conditional independence—the structural assumption powering autoregressive factorization.
 3. **Random Variables & Moments**: Maps abstract outcomes to real numbers so we can compute means (expected values), variances (spread), and covariances (linear co-movement) across activations and gradients.
 
-### Step-by-Step Worked Example (Read Slowly): Autoregressive Chain Rule on a 3-Token Sequence
+### Worked example: Autoregressive Chain Rule on a 3-Token Sequence
 
 Consider a tiny vocabulary $$\{\text{The}, \text{cat}, \text{slept}\}$$ where a language model assigns:
 - $$P(w_1 = \text{The}) = 0.40$$

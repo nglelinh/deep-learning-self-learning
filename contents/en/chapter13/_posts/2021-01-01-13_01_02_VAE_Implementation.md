@@ -11,14 +11,14 @@ categories:
 
 Implementing a VAE in PyTorch looks deceptively short—barely 40 lines of code—yet three subtle details separate a clean generative model from a broken one: predicting `logvar` instead of `sigma` for numerical stability, matching the `reduction='sum'` scale between reconstruction loss and KL divergence, and keeping `reparameterize` deterministic (`z = mu`) at evaluation time when you want reproducible reconstructions.
 
-## Background Knowledge Map: Building a Production-Clean VAE in PyTorch
+## Key ideas: Building a Production-Clean VAE in PyTorch
 
 - **Pillar 1 — Log-Variance Parameterization**: Outputs $\log \sigma^2 \in (-\infty, +\infty)$ from an unconstrained linear layer and recovers $\sigma = \exp(\tfrac{1}{2}\log\sigma^2)$, guaranteeing positivity and preventing gradient explosions near $\sigma = 0$.
 - **Pillar 2 — Consistent Loss Reduction (`sum` vs. `mean`)**: Sums both pixel-level BCE/MSE and latent-dimension KL per sample before averaging across the batch, preserving the true ELBO balance.
 - **Pillar 3 — KL Annealing / Warm-Up**: Gradually ramps the KL weight $\beta$ from $0 \to 1$ during early epochs so the encoder establishes useful latent structure before the prior penalty squeezes it toward $\mathcal{N}(0, I)$.
 - **Pillar 4 — Latent Manifold Traversal & Sampling**: Verifies generalization by sampling fresh $z \sim \mathcal{N}(0, I)$ and plotting 2D grids via inverse Gaussian CDF quantiles $\Phi^{-1}(u)$.
 
-### Step-by-Step Worked Example (Read Slowly): Tracing Tensor Operations & Loss Scaling in a Mini-Batch of 2 Images
+### Worked example: Tracing Tensor Operations & Loss Scaling in a Mini-Batch of 2 Images
 
 Suppose a batch has $B = 2$ images, each with $D = 784$ pixels and latent size $K = 2$. For sample 1, per-pixel BCE sum is $110.0$ and KL sum is $8.0$. For sample 2, per-pixel BCE sum is $130.0$ and KL sum is $12.0$.
 

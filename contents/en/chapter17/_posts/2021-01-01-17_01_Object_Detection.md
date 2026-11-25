@@ -11,14 +11,14 @@ categories:
 
 Object detection is where deep learning leaves tidy single-label benchmarks and enters the messy visual world—multiple overlapping objects, dramatic scale changes, and strict real-time latency budgets. Connecting geometric theory (IoU, anchor offsets, RPNs) with torchvision's end-to-end training contract prepares you to read, debug, and customize both two-stage and one-stage detectors.
 
-## Background Knowledge Map: Object Detection Theory-to-Code Bridge
+## Key ideas: Object Detection Theory-to-Code Bridge
 
 - **Pillar 1 — Two-Stage vs. One-Stage Architectures**: Contrasts proposal-then-refine pipelines (Faster R-CNN) with dense single-shot grids (YOLO, RetinaNet) across accuracy–latency curves.
 - **Pillar 2 — Geometric Overlap & Anchor Assignment**: Uses IoU thresholds to match dense anchors to ground-truth objects and regress scale-invariant deltas.
 - **Pillar 3 — Post-Processing & Evaluation**: Applies NMS to deduplicate boxes and measures detector quality with precision–recall Area Under Curve (AP / mAP).
 - **Pillar 4 — PyTorch Detection Engineering**: Handles ragged multi-box batches, background class indexing, and pretrained FPN backbone fine-tuning.
 
-### Step-by-Step Worked Example (Read Slowly): Computing Precision, Recall, and AP from 4 Ranked Detections
+### Worked example: Computing Precision, Recall, and AP from 4 Ranked Detections
 
 Suppose an image contains $M = 2$ ground-truth dogs, and our detector outputs 4 ranked detections (highest score first) labeled True Positive (TP) or False Positive (FP) at IoU $\ge 0.50$:
 $$[\text{TP},\; \text{FP},\; \text{TP},\; \text{FP}].$$

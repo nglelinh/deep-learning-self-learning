@@ -12,14 +12,14 @@ lesson_type: optional
 
 Nhiều người lầm tưởng Autoencoder là một kỹ thuật cũ kỹ của thập niên 2010 đã bị Transformer hay Diffusion thay thế. Sự thật hoàn toàn ngược lại: Autoencoder chưa bao giờ biến mất — nó đã tiến hóa thành "bộ máy nén ngầm" đứng sau hầu hết các hệ thống AI đa phương thức đỉnh cao ngày nay, từ không gian ẩn của Stable Diffusion, bộ codec âm thanh nơ-ron (EnCodec/SoundStream) cho tới Masked Autoencoder (MAE) trong thị giác máy tính.
 
-## Bản đồ kiến thức nền: Ba vai trò chiến lược của Autoencoder hiện đại (2022–2026)
+## Kiến thức cần nhớ: Ba vai trò chiến lược của Autoencoder hiện đại (2022–2026)
 
 - **Bộ nén không gian ẩn cho mô hình khuếch tán:** Đưa ảnh $$512 \times 512 \times 3$$ xuống tensor ẩn $$64 \times 64 \times 4$$ (giảm $$48\times$$ số phần tử) giúp huấn luyện khuếch tán nhanh và tiết kiệm VRAM gấp hàng chục lần.
 - **Neural Audio Codec và lượng tử hóa vector (RVQ):** Nén sóng âm thanh liên tục thành chuỗi mã rời rạc (audio tokens) để mô hình ngôn ngữ có thể đọc và sinh tiếng nói, âm nhạc như văn bản.
 - **Masked Autoencoder (MAE):** Che ngẫu nhiên tới $$75\%$$ mảng ảnh (patches) và bắt bộ giải mã nhẹ tái tạo phần bị che, buộc bộ mã hóa ViT học biểu diễn ngữ nghĩa cực mạnh.
 - **Autoencoder thưa (SAE) cho diễn giải LLM:** Đảo ngược nút cổ chai thành không gian *rộng và cực thưa* để tách các khái niệm bị chồng chập bên trong kích hoạt của mô hình ngôn ngữ lớn.
 
-### Khung giải thích (nên đọc chậm): Tính toán mức tiết kiệm tính toán khi dùng Autoencoder nén ảnh cho Latent Diffusion và MAE
+### Giải thích: Tính toán mức tiết kiệm tính toán khi dùng Autoencoder nén ảnh cho Latent Diffusion và MAE
 
 **1. Nén không gian ẩn (kiểu Stable Diffusion, hệ số hạ mẫu $$f = 8$$):**
 - Ảnh gốc: $$512 \times 512 \times 3 = 786{,}432$$ giá trị.

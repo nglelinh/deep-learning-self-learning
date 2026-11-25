@@ -11,14 +11,14 @@ categories:
 
 You can pay $2 million once to train an LLM, and then pay $20 million every year to serve it to users. Serving efficiency is governed by a stark hardware split: **prefill** processes your entire prompt in one giant parallel matrix–matrix multiplication (compute-bound, sets Time-To-First-Token), while **decode** generates one token at a time using matrix–vector multiplications that haul the entire model + KV cache across GPU HBM every step (memory-bandwidth-bound, sets tokens/second). Every serving knob—continuous batching, PagedAttention, quantization, and speculative decoding—directly attacks one side of that roofline.
 
-## Background Knowledge Map: Systems Engineering of LLM Serving
+## Key ideas: Systems Engineering of LLM Serving
 
 - **Pillar 1 — Prefill vs. Decode Roofline Physics**: Computes arithmetic intensity (FLOPs / Byte) to explain why batch-size-1 decode leaves $>95\%$ of GPU Tensor Cores idle waiting on HBM memory bandwidth.
 - **Pillar 2 — Continuous Batching & PagedAttention**: Eliminates padding waste by inserting new requests at iteration boundaries and allocating KV cache in non-contiguous memory pages (like OS virtual memory) to boost throughput $3\times$–$10\times$.
 - **Pillar 3 — Sampling Controls (Temperature, Top-$k$, Top-$p$)**: Reshapes the output softmax distribution at decode time to trade deterministic precision against creative diversity.
 - **Pillar 4 — Optimization Hierarchy (Before Distilling)**: Prioritizes cheap, lossless or near-lossless serving wins (prefix caching, FP8/INT4 quantization, speculative decoding) before investing in full model distillation.
 
-### Step-by-Step Worked Example (Read Slowly): Applying Temperature, Top-$k$, and Nucleus (Top-$p$) Sampling
+### Worked example: Applying Temperature, Top-$k$, and Nucleus (Top-$p$) Sampling
 
 Suppose the LM head emits logits $z = [3.0,\; 2.0,\; 1.0,\; -1.0]$ for four candidate tokens `[A, B, C, D]`.
 

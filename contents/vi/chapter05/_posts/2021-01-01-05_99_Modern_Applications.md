@@ -12,7 +12,7 @@ lesson_type: optional
 
 Từng có thời điểm ngay sau khi Transformer bùng nổ, nhiều người cho rằng tư tưởng hồi quy (recurrence) đã khép lại sứ mệnh lịch sử. Nhưng khi ngữ cảnh LLM kéo dài lên hàng trăm nghìn rồi hàng triệu token, nút thắt bộ nhớ KV-cache và chi phí $$O(L^2)$$ của Attention đã làm sống dậy một thế hệ **mô hình hồi quy tuyến tính hiện đại** — tiêu biểu là **Mamba (SSM)** và **RWKV** — kết hợp khả năng huấn luyện song song với tốc độ suy luận $$O(1)$$ cho mỗi token.
 
-## Bản đồ kiến thức nền: Bốn hướng phát triển của Tư duy Hồi quy giai đoạn 2022–2026
+## Kiến thức cần nhớ: Bốn hướng phát triển của Tư duy Hồi quy giai đoạn 2022–2026
 
 1. **Vì sao hồi quy hồi sinh — Bài toán KV-Cache và Suy luận $$O(1)$$**:
    Transformer phải giữ toàn bộ lịch sử khóa/giá trị trong bộ nhớ GPU (tăng tuyến tính theo độ dài chuỗi), trong khi mô hình hồi quy hiện đại chỉ cần duy trì một trạng thái kích thước **cố định** bất kể chuỗi dài bao nhiêu.
@@ -23,7 +23,7 @@ Từng có thời điểm ngay sau khi Transformer bùng nổ, nhiều người 
 4. **Kiến trúc lai (Hybrid SSM–Attention) và thiết bị biên**:
    Các mô hình thực tiễn như Jamba, Zamba hay Nemotron-H xen kẽ các tầng Mamba (rẻ, dài) với một ít tầng Attention (truy xuất chính xác), đồng thời RNN nhỏ vẫn giữ vị thế trong xử lý âm thanh streaming độ trễ thấp.
 
-### Khung giải thích (nên đọc chậm): So sánh bằng số độ phức tạp suy luận ở độ dài ngữ cảnh $$L = 100{,}000$$ token
+### Giải thích: So sánh bằng số độ phức tạp suy luận ở độ dài ngữ cảnh $$L = 100{,}000$$ token
 
 Giả sử một mô hình 32 tầng với kích thước trạng thái/ẩn $$d = 4{,}096$$ sinh ra **1 token mới** khi ngữ cảnh đã đạt $$L = 100{,}000$$ token (dùng FP16 = 2 byte/số):
 

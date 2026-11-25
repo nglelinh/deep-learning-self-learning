@@ -11,14 +11,14 @@ categories:
 
 Giữa ba đại gia mô hình sinh cổ điển — Autoregressive, VAE và GAN — GAN luôn là cái tên gây ấn tượng thị giác mạnh nhất ngay từ cái nhìn đầu tiên nhờ độ sắc nét vượt trội. Trang nền tảng này kết nối lý thuyết đối kháng (**14-01-01**) với thực hành cài đặt PyTorch (**14-01-02**), giúp bạn nắm chắc khi nào nên dùng GAN và cách đọc vị đường cong loss đầy biến động của nó.
 
-## Bản đồ kiến thức nền: Khung tư duy cốt lõi về Mạng Sinh Đối kháng
+## Kiến thức cần nhớ: Khung tư duy cốt lõi về Mạng Sinh Đối kháng
 
 - **Tư duy học hàm mất mát thay vì cố định hàm mất mát:** Bộ phân biệt $$D$$ thực chất đóng vai trò một *hàm mất mát học được* tự thích nghi theo từng lỗi tinh vi nhất của ảnh sinh.
 - **Nhịp độ cân bằng giữa $$G$$ và $$D$$:** Hiểu vì sao loss của $$D$$ và $$G$$ không giảm đơn điệu về 0 mà dao động quanh ngưỡng cân bằng.
 - **Các biến thể nền tảng:** Từ Vanilla GAN, DCGAN (tích chập), Conditional GAN (sinh theo nhãn lớp) đến WGAN-GP (ổn định hình học).
 - **Tiêu chuẩn chẩn đoán trực quan:** Luôn theo dõi lưới ảnh từ `fixed_noise` song song với đường cong loss để phát hiện sớm hiện tượng sụp đổ mode.
 
-### Khung giải thích (nên đọc chậm): Đọc vị 3 kịch bản đường cong loss của $$D$$ và $$G$$ khi huấn luyện GAN
+### Giải thích: Đọc vị 3 kịch bản đường cong loss của $$D$$ và $$G$$ khi huấn luyện GAN
 
 Nhớ rằng tại điểm cân bằng lý tưởng $$D(x) = D(G(z)) = 0{,}5$$, ta có:
 - $$\mathcal{L}_D = -\ln(0{,}5) - \ln(0{,}5) = 2\ln 2 \approx 1{,}386$$ (hoặc $$0{,}693$$ nếu lấy trung bình hai phần).

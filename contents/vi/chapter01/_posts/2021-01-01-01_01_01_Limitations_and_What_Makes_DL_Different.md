@@ -11,7 +11,7 @@ categories:
 
 Trước năm 2012, một nhóm nghiên cứu muốn xây dựng hệ thống nhận diện khuôn mặt phải dành hàng năm trời thiết kế các bộ lọc toán học thủ công để dò sống mũi, khóe mắt, viền môi—nhưng chỉ cần đối tượng đeo kính râm hoặc xoay nghiêng đầu 30 độ, cả hệ thống lại sụp đổ. Đó là "bức tường kính" của Học máy truyền thống. Bài học này phân tích trực diện bốn hạn chế cố hữu của các mô hình cổ điển—từ thiết kế đặc trưng thủ công đến lời nguyền chiều cao (*curse of dimensionality*)—và chỉ ra cách Học sâu phá vỡ từng bức tường đó.
 
-## Bản đồ kiến thức nền: Bốn bức tường của Học máy Cổ điển và cách Học sâu vượt qua
+## Kiến thức cần nhớ: Bốn bức tường của Học máy Cổ điển và cách Học sâu vượt qua
 
 1. **Nút thắt Thiết kế Đặc trưng (Feature Engineering Bottleneck)**:
    Học máy truyền thống tách rời hai khâu *trích xuất đặc trưng* (con người làm) và *phân loại* (máy học). Học sâu hợp nhất cả hai vào cùng một mạng khả vi được tối ưu từ đầu đến cuối.
@@ -25,7 +25,7 @@ Trước năm 2012, một nhóm nghiên cứu muốn xây dựng hệ thống nh
 4. **Học Chuyển giao (Transfer Learning)**:
    Đặc trưng học được ở các tầng đầu của mạng sâu trên tập ảnh lớn có tính phổ quát cao, cho phép tái sử dụng cho bài toán y tế hay công nghiệp chỉ có vài trăm ảnh—điều gần như bất khả thi với cây quyết định.
 
-### Khung giải thích (nên đọc chậm): Tính tay "Lời nguyền Chiều cao" trong không gian lưới đơn vị
+### Giải thích: Tính tay "Lời nguyền Chiều cao" trong không gian lưới đơn vị
 
 Giả sử bạn muốn phủ kín một không gian đặc trưng chuẩn hóa $$[0, 1]^d$$ bằng các ô lưới có cạnh dài $$0.1$$ (tức chia mỗi trục thành 10 khoảng) để đảm bảo mọi điểm test đều có ít nhất một điểm train nằm gần:
 

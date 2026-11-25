@@ -11,14 +11,14 @@ categories:
 
 > *Why do we initialize weights from a Uniform or Normal distribution, model latent codes in VAEs as standard Gaussians, and sample Mixup interpolation weights from a Beta distribution? Each continuous density has a distinct tail behavior and support that shapes optimization.*
 
-## Background Knowledge Map: Continuous Densities in Deep Learning
+## Key ideas: Continuous Densities in Deep Learning
 
 1. **Uniform Distribution ($$\mathcal{U}(a, b)$$)**: Assigns flat density $$\frac{1}{b-a}$$ across a bounded interval with variance $$\frac{(b-a)^2}{12}$$, widely used in Glorot/He uniform weight initialization and hyperparameter random search.
 2. **Normal / Gaussian Distribution ($$\mathcal{N}(\mu, \sigma^2)$$)**: The maximum-entropy distribution for fixed mean and variance; central to weight decay, Gaussian noise injection, diffusion forward processes, and Central Limit Theorem behavior in wide layers.
 3. **Exponential Distribution ($$\text{Exp}(\lambda)$$)**: Memoryless distribution on $$[0, \infty)$$ modeling waiting times and inter-arrival intervals, closely linked to Laplace priors (two-sided exponential) that induce $$L_1$$ sparsity.
 4. **Beta Distribution ($$\text{Beta}(\alpha, \beta)$$)**: Flexible distribution supported strictly on $$[0, 1]$$, ideal for modeling uncertain probabilities, Bayesian coin priors, and Mixup data augmentation coefficients $$\lambda \sim \text{Beta}(\alpha, \alpha)$$.
 
-### Step-by-Step Worked Example (Read Slowly): Matching Uniform and Normal Initialization Variances
+### Worked example: Matching Uniform and Normal Initialization Variances
 
 Suppose Xavier initialization for a layer with $$n_{\text{in}} = 100, n_{\text{out}} = 200$$ calls for weight variance $$\sigma^2 = \frac{2}{n_{\text{in}} + n_{\text{out}}}$$. Let us compute both the Normal and Uniform bounds by hand.
 

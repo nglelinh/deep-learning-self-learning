@@ -11,13 +11,13 @@ categories:
 
 > *If you ever wonder why GPUs—chips originally built to rotate 3D triangles in video games—sparked the deep learning revolution, the answer is linear algebra. A neural network is, at its core, an alternating cascade of matrix multiplications and nonlinearities, and linear algebra gives us the geometry to understand what those matrices actually do to data.*
 
-## Background Knowledge Map: The Three Pillars of Linear Algebra in Deep Learning
+## Key ideas: The Three Pillars of Linear Algebra in Deep Learning
 
 1. **Vectors & Vector Spaces (Feature Geometry)**: Represents words, images, and hidden states as points in $$\mathbb{R}^d$$, where inner products measure semantic similarity and norms measure signal energy.
 2. **Matrices & Linear Transformations (Layer Operators)**: Views every weight matrix $$W \in \mathbb{R}^{m \times n}$$ as a geometric operator that rotates, scales, shears, or projects data from one representation space to another.
 3. **Eigenvalues & Eigenvectors (Dynamical Stability)**: Reveals the invariant axes of a linear operator, governing PCA dimensionality reduction, Hessian conditioning, and why repeated matrix multiplication causes vanishing or exploding gradients in deep networks.
 
-### Step-by-Step Worked Example (Read Slowly): Tracing a Feature Vector Through a Linear Layer and Its Spectrum
+### Worked example: Tracing a Feature Vector Through a Linear Layer and Its Spectrum
 
 Consider a 2D input feature vector $$\mathbf{x} = \begin{bmatrix} 3 \\ 1 \end{bmatrix}$$ passed through a symmetric weight matrix $$W = \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}$$.
 

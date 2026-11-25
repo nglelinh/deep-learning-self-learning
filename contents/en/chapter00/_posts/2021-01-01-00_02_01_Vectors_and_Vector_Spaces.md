@@ -11,14 +11,14 @@ categories:
 
 > *In 2013, researchers stunned the NLP community by showing that subtracting the vector for "man" from "king" and adding "woman" landed right next to "queen." That wasn't magic—it was vector space geometry: closure under linear combinations, inner products, and low-dimensional subspaces doing their quiet work.*
 
-## Background Knowledge Map: Vectors, Subspaces, and Representation Geometry
+## Key ideas: Vectors, Subspaces, and Representation Geometry
 
 1. **Vector Spaces & Subspaces (Closure Under Linear Combinations)**: Defines the ambient space $$\mathbb{R}^n$$ where feature embeddings live, and explains why the set of all outputs of a linear layer forms a structured subspace (its column space).
 2. **Inner Products, Norms, and Angles (Similarity Metrics)**: Measures vector length ($$L_2$$ norm for weight decay, $$L_1$$ norm for sparsity) and directional alignment via cosine similarity $$\cos\theta = \frac{\mathbf{u}\cdot\mathbf{v}}{\|\mathbf{u}\|\|\mathbf{v}\|}$$, the core operation inside Transformer self-attention.
 3. **Linear Independence & Span (Redundancy vs. Expressivity)**: Distinguishes genuinely new feature directions from redundant linear combinations; linearly dependent neurons waste parameters without expanding the spanned subspace.
 4. **Basis & Dimension (Intrinsic Degrees of Freedom)**: Establishes the minimum number of coordinate axes needed to reconstruct every point in a subspace—the foundation of low-rank adaptation (LoRA) and manifold learning.
 
-### Step-by-Step Worked Example (Read Slowly): Testing Linear Independence, Projection, and Cosine Similarity
+### Worked example: Testing Linear Independence, Projection, and Cosine Similarity
 
 Given two embedding vectors in $$\mathbb{R}^3$$, $$\mathbf{u} = \begin{bmatrix} 1 \\ 2 \\ 2 \end{bmatrix}$$ and $$\mathbf{v} = \begin{bmatrix} 2 \\ 1 \\ -2 \end{bmatrix}$$, and a query vector $$\mathbf{q} = \begin{bmatrix} 4 \\ 5 \\ 2 \end{bmatrix}$$:
 

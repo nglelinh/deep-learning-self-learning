@@ -11,7 +11,7 @@ categories:
 
 Năm 1933, nhà toán học Andrey Kolmogorov đã làm một điều phi thường: chỉ bằng **ba tiên đề ngắn gọn**, ông biến toàn bộ lĩnh vực xác suất—vốn trước đó chỉ xoay quanh các bài toán cờ bạc tung xúc xắc—thành một hệ thống giải tích chặt chẽ như hình học Euclid. Ngày nay, mỗi khi tầng Softmax ở cuối mạng phân loại ảnh ép đầu ra thành các con số nằm trong $$[0, 1]$$ và có tổng đúng bằng $$1$$, nó đang tôn trọng chính xác ba tiên đề Kolmogorov ấy. Bài học này xây dựng nền móng không gian mẫu, biến cố và hệ tiên đề xác suất để bạn hiểu rõ ngôn ngữ gốc của mọi mô hình phân loại.
 
-## Bản đồ kiến thức nền: Ba trụ cột của Không gian Mẫu và Tiên đề Kolmogorov
+## Kiến thức cần nhớ: Ba trụ cột của Không gian Mẫu và Tiên đề Kolmogorov
 
 1. **Không gian mẫu ($$\Omega$$) và Biến cố ($$A \subseteq \Omega$$)**:
    Liệt kê toàn bộ kết cục có thể xảy ra (từ 10 lớp chữ số MNIST đến 50{,}000 token từ vựng của LLM); mỗi biến cố là một tập con chứa các kết cục ta quan tâm.
@@ -22,7 +22,7 @@ Năm 1933, nhà toán học Andrey Kolmogorov đã làm một điều phi thư�
 3. **Các hệ quả trực tiếp (Phần bù và Luật cộng tổng quát)**:
    Tính xác suất "không xảy ra" bằng $$P(A^c) = 1 - P(A)$$ và xử lý các biến cố chồng lấn bằng $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$, tránh lỗi đếm trùng cực kỳ phổ biến khi phân tích sai số mô hình.
 
-### Khung giải thích (nên đọc chậm): Kiểm tra tiên đề Kolmogorov trên đầu ra Softmax và lỗi đếm trùng
+### Giải thích: Kiểm tra tiên đề Kolmogorov trên đầu ra Softmax và lỗi đếm trùng
 
 Giả sử một bộ phân loại ảnh 3 lớp $$\Omega = \{\text{Mèo}, \text{Chó}, \text{Chim}\}$$ xuất ra vector xác suất $$P(\text{Mèo}) = 0.65$$, $$P(\text{Chó}) = 0.25$$, $$P(\text{Chim}) = 0.10$$:
 

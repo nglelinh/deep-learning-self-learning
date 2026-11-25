@@ -12,14 +12,14 @@ lesson_type: optional
 
 Between 2022 and 2026, Deep RL moved from Atari games to the center of frontier AI: RLHF with PPO aligned ChatGPT, Direct Preference Optimization (DPO) showed you can optimize the exact same KL-regularized reward objective without training a separate reward model, and Group Relative Policy Optimization (GRPO) removed the critic network entirely to train math and coding reasoning models (like DeepSeek-R1) directly from verifiable outcomes.
 
-## Background Knowledge Map: Post-DQN Deep RL for Alignment & Reasoning (2022–2026)
+## Key ideas: Post-DQN Deep RL for Alignment & Reasoning (2022–2026)
 
 - **Pillar 1 — RLHF with PPO & KL Regularization**: Maximizes $\mathbb{E}[r_\phi(x, y)] - \beta\, D_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$ so the policy improves human preference scores without drifting into gibberish reward hacks.
 - **Pillar 2 — Direct Preference Optimization (DPO)**: Applies the closed-form optimal policy $r(x, y) = \beta \log \frac{\pi^*(y \mid x)}{\pi_{\text{ref}}(y \mid x)} + \beta \log Z(x)$ inside the Bradley–Terry preference model, turning RLHF into a pure supervised binary cross-entropy loss on $(y_w, y_l)$ pairs.
 - **Pillar 3 — Group Relative Policy Optimization (GRPO)**: Samples a group of $G$ completions $\{y_1, \dots, y_G\}$ for the same prompt, scores them with a verifier (unit tests / math grader), and normalizes group rewards into advantages $\hat{A}_i = \frac{r_i - \bar{r}}{\text{std}(r)}$—cutting memory by dropping the value critic.
 - **Pillar 4 — Learned World Models**: Trains latent dynamics models (DreamerV3, Genie) so agents can imagine rollouts inside a learned simulator before acting in the real world.
 
-### Step-by-Step Worked Example (Read Slowly): Computing DPO Loss & GRPO Group Advantages by Hand
+### Worked example: Computing DPO Loss & GRPO Group Advantages by Hand
 
 **Part A — DPO Loss**: For prompt $x$, chosen response $y_w$, and rejected response $y_l$ with $\beta = 0.1$, suppose log-probability ratios are $\log\frac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)} = +2.0$ and $\log\frac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l|x)} = -1.0$.
 1. Implicit reward margin: $\Delta = \beta(2.0 - (-1.0)) = 0.1 \times 3.0 = +0.30$.

@@ -11,14 +11,14 @@ categories:
 
 > *Why do we never train a softmax classifier with Mean Squared Error? Try computing the gradient of MSE through a sigmoid when the network is dead wrong ($$y = 1, \hat{y} = 0.01$$): the sigmoid derivative $$\hat{y}(1-\hat{y}) \approx 0.01$$ nearly zeroes out the error signal! Cross-entropy cancels that saturation factor completely.*
 
-## Background Knowledge Map: Classification Losses & Information Geometry
+## Key ideas: Classification Losses & Information Geometry
 
 1. **Binary Cross-Entropy (Log Loss)**: Measures negative log-likelihood of a Bernoulli output; paired with sigmoid, its logit gradient is simply $$\hat{p} - y$$, delivering maximum corrective push when the model is confidently wrong.
 2. **Categorical & Sparse Cross-Entropy**: Generalizes BCE to $$K$$ mutually exclusive classes via $$-\sum_k y_k \log p_k$$; sparse cross-entropy avoids materializing huge one-hot vectors by indexing directly into the true class's log-probability.
 3. **KL Divergence (Distillation & Soft Targets)**: Measures directed divergence $$D_{\text{KL}}(p \| q) = \sum_k p_k \log(p_k / q_k)$$, essential when training student models to match a teacher's soft probability distribution.
 4. **Hinge & Margin Losses**: Push the true class score above competing classes by a fixed geometric margin (e.g., $$\max(0, 1 - y z)$$), prioritizing decision-boundary separation over calibrated probabilities.
 
-### Step-by-Step Worked Example (Read Slowly): Computing Multi-Class Cross-Entropy and Its Logit Gradient
+### Worked example: Computing Multi-Class Cross-Entropy and Its Logit Gradient
 
 Suppose a 3-class classifier outputs logits $$\mathbf{z} = [2.0, 1.0, 0.0]$$ for an example whose true label is Class 1 (one-hot $$\mathbf{y} = [0, 1, 0]$$). Use $$e^2 \approx 7.389, e^1 \approx 2.718, e^0 = 1.000$$.
 

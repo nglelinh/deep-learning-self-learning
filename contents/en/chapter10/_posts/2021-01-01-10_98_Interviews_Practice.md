@@ -12,14 +12,14 @@ lesson_type: optional
 
 Optimization questions are a favorite stress test in ML interviews because they expose whether you understand *why* training recipes work rather than blindly copying `Adam(lr=1e-3)` from a tutorial. Can you explain on a whiteboard why Adam's bias correction matters specifically at $$t = 1$$, why AdamW fixes a genuine bug in L2-regularized Adam, or why warmup stabilizes early Transformer updates? These five prompts drill the exact intuition interviewers look for.
 
-## Background Knowledge Map: Core Interview Competency Pillars for Optimizers
+## Key ideas: Core Interview Competency Pillars for Optimizers
 
 - **Momentum & Ravine Geometry**: Explaining how exponential velocity averaging cancels alternating orthogonal gradients across steep canyon walls while compounding parallel descent components.
 - **Adam Bias Correction & Stability**: Proving from $$m_t = (1-\beta_1)\sum \beta_1^{t-i} g_i$$ why dividing by $$(1 - \beta^t)$$ prevents zero-bias distortion during early steps.
 - **Adam vs. AdamW Decoupling**: Showing why L2 weight decay inside Adam gets divided by $$\sqrt{\hat{v}_t}$$ and loses uniformity across parameters.
 - **Warmup & Generalization Trade-offs**: Articulating why warmup prevents early large-variance adaptive jumps and when SGD + Momentum still competes with AdamW.
 
-### Step-by-Step Worked Example (Read Slowly): Quick Whiteboard Proof of Adam's Bias Correction Factor
+### Worked example: Quick Whiteboard Proof of Adam's Bias Correction Factor
 
 Suppose the true gradient is a constant $$g_1 = g_2 = \dots = g_t = g$$, and we initialize $$m_0 = 0$$ with $$m_t = \beta m_{t-1} + (1 - \beta) g_t$$.
 

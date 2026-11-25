@@ -11,14 +11,14 @@ categories:
 
 Vì sao một mô hình học nhận diện chó, mèo và xe tải trên ImageNet lại có thể giúp phát hiện khối u trên phim X-quang phổi chính xác hơn hẳn một mô hình huấn luyện trực tiếp trên X-quang từ đầu? Câu trả lời không phải là phép màu, mà nằm trong **Lý thuyết Thích ứng Miền (Domain Adaptation Theory)** của Ben-David và cộng sự: sai số trên miền đích bị chặn trên bởi ba đại lượng đo được rất cụ thể.
 
-## Bản đồ kiến thức nền: Cơ sở lý thuyết của học chuyển giao và thích ứng miền
+## Kiến thức cần nhớ: Cơ sở lý thuyết của học chuyển giao và thích ứng miền
 
 - **Định lý cận tổng quát hóa miền đích (Ben-David Bound):** Ràng buộc sai số mục tiêu $$\epsilon_T(h) \le \epsilon_S(h) + \frac{1}{2} d_{\mathcal{H}\Delta\mathcal{H}}(\mathcal{D}_S, \mathcal{D}_T) + \lambda^*$$, tách rõ sai số nguồn, khoảng cách phân phối miền và sai số lý tưởng chung.
 - **Tốc độ học phân tầng (Discriminative Learning Rates):** Vì gradient biến thiên mạnh ở tầng đầu phân loại mới khởi tạo ngẫu nhiên, ta gán $$\eta_{\text{head}} \gg \eta_{\text{backbone}}$$ để không phá hủy biểu diễn tiền huấn luyện (tránh *catastrophic forgetting*).
 - **Hành vi thống kê của Batch Normalization khi chuyển miền:** Phân biệt rõ chế độ `eval()` (giữ trung bình/phương sai nguồn) và `train()` (cập nhật thống kê miền đích) khi tinh chỉnh trên batch nhỏ.
 - **Tách biệt Covariate Shift và Concept Shift:** Nhận biết miền đích khác miền nguồn ở phân phối đầu vào $$P(X)$$ hay ở chính quy tắc gán nhãn $$P(Y\mid X)$$.
 
-### Khung giải thích (nên đọc chậm): Định lượng cận sai số miền đích theo bất đẳng thức Ben-David
+### Giải thích: Định lượng cận sai số miền đích theo bất đẳng thức Ben-David
 
 Giả sử ta chuyển giao một bộ phân loại ảnh y tế từ bệnh viện A (miền nguồn $$S$$) sang bệnh viện B (miền đích $$T$$) dùng máy chụp đời khác:
 - Sai số trên miền nguồn: $$\epsilon_S(h) = 0{,}04$$ ($$4\%$$).

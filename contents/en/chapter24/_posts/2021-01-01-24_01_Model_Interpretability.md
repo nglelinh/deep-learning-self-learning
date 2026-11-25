@@ -11,14 +11,14 @@ categories:
 
 Opening the black box of a deep neural network requires both mathematical axioms (so your explanations don't lie to you) and clean PyTorch instrumentation (so you can inspect real models in seconds). This module pairs the theory of saliency, SHAP, and LRP directly with hands-on Grad-CAM and attribution code.
 
-## Background Knowledge Map: Theory-to-Practice Interpretability Guide
+## Key ideas: Theory-to-Practice Interpretability Guide
 
 - **Pillar 1 — Gradient vs. Perturbation Methods**: Contrasts fast single-pass gradient methods (Saliency, Grad-CAM) with model-agnostic perturbation methods (LIME, KernelSHAP).
 - **Pillar 2 — Conservation Axioms**: Uses Completeness and Shapley Efficiency to separate principled attributions from noisy edge-detector visualizations.
 - **Pillar 3 — PyTorch Hook Engineering**: Extracts intermediate layer activations and gradients cleanly for visual and tabular diagnostics.
 - **Pillar 4 — Pitfall Awareness**: Recognizes confirmation bias, baseline sensitivity, and adversarial manipulation of explanations.
 
-### Step-by-Step Worked Example (Read Slowly): Baseline Sensitivity in Integrated Gradients
+### Worked example: Baseline Sensitivity in Integrated Gradients
 
 Consider a single-pixel model $f(x) = x^2$ evaluated at $x = 2.0$. Compare attributions using two different baselines: black baseline $x'_A = 0.0$ versus gray baseline $x'_B = 1.0$.
 

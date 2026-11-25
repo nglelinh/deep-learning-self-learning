@@ -12,14 +12,14 @@ lesson_type: optional
 
 Nếu phải chọn một ứng dụng đã đưa Học Tăng cường Sâu lên trang nhất toàn cầu trong giai đoạn 2022–2026, đó chắc chắn là **hậu huấn luyện Mô hình Ngôn ngữ Lớn**: từ **RLHF với PPO** giúp ChatGPT biết đối thoại hữu ích và an toàn, sang **DPO** loại bỏ hoàn toàn mô hình phần thưởng, và mới nhất là **GRPO** (Group Relative Policy Optimization) đánh thức năng lực tự suy luận chuỗi tư duy (Chain-of-Thought) trên các bài toán toán học và lập trình khó!
 
-## Bản đồ kiến thức nền: Tiến hóa ba thế hệ hậu huấn luyện LLM bằng Deep RL (2022–2026)
+## Kiến thức cần nhớ: Tiến hóa ba thế hệ hậu huấn luyện LLM bằng Deep RL (2022–2026)
 
 - **RLHF với PPO:** Huấn luyện Reward Model từ cặp sở thích người dùng (mô hình Bradley–Terry), rồi dùng PPO tối ưu LLM đồng thời giữ gần mô hình tham chiếu qua phạt $$\beta D_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$$ — mạnh nhưng tốn 4 bản sao mô hình trong VRAM.
 - **DPO (Direct Preference Optimization):** Biến đổi giải tích nghiệm tối ưu của bài toán RLHF có ràng buộc KL để tối ưu trực tiếp trên dữ liệu cặp $$(y_w, y_l)$$ bằng hàm loss giống cross-entropy mà không cần Reward Model hay Critic.
 - **GRPO (Group Relative Policy Optimization) & RLVR:** Sinh một nhóm $$G$$ lời giải cho cùng một đề bài, chấm điểm bằng bộ kiểm chứng chính xác (trình biên dịch code, đáp số toán), rồi dùng chuẩn hóa z-score ngay trong nhóm làm Advantage — bỏ hẳn mạng Critic khổng lồ của PPO!
 - **Kiểm soát Reward Hacking:** Cân bằng hệ số KL $$\beta$$ và thiết kế phần thưởng kiểm chứng được (verifiable rewards) để mô hình không lách luật bằng cách viết câu trả lời dài dòng sáo rỗng.
 
-### Khung giải thích (nên đọc chậm): Tính tay Advantage theo nhóm trong GRPO trên 4 lời giải toán
+### Giải thích: Tính tay Advantage theo nhóm trong GRPO trên 4 lời giải toán
 
 Giả sử cho cùng một bài toán, mô hình sinh ra nhóm $$G = 4$$ lời giải và bộ chấm tự động trả về phần thưởng nhị phân (đúng $$= 1$$, sai $$= 0$$): $$\mathbf{r} = [1,\; 0,\; 1,\; 0]$$.
 

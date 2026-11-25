@@ -12,14 +12,14 @@ lesson_type: optional
 
 If you open the checkpoint of Stable Diffusion, Flux, Sora, or modern video generators, you will find a surprisingly familiar component right at the entrance and exit: a KL-regularized Variational Autoencoder. Rather than generating pixels directly, today's frontier generative systems split the problem in two—a VAE handles perceptual compression into a compact continuous latent tensor, while a diffusion or flow-matching Transformer models global semantics in that latent space.
 
-## Background Knowledge Map: VAEs in Modern Multimodal Systems (2022–2026)
+## Key ideas: VAEs in Modern Multimodal Systems (2022–2026)
 
 - **Pillar 1 — Perceptual Latent VAEs (KL-f8 / SDXL / Flux)**: Uses a very tiny KL weight ($\beta \approx 10^{-6}$) plus LPIPS and PatchGAN losses so the VAE preserves crisp high-frequency textures while keeping latents smoothly Gaussian for downstream diffusion.
 - **Pillar 2 — Spatiotemporal 3D Causal VAEs for Video**: Compresses video tensors $(T, H, W, 3)$ across both time (e.g., $4\times$) and space ($8\times \times 8\times$) using causal 3D convolutions so frames can be decoded streamingly without future leakage.
 - **Pillar 3 — Latent Scaling Factors**: Normalizes encoded latents by an empirical scale factor $s$ (e.g., $0.18215$ in SD 1.5) so latent variance equals $1.0$, aligning perfectly with standard diffusion noise schedules.
 - **Pillar 4 — Channel Width vs. Reconstruction Trade-off**: Explains why modern VAEs increased latent channels from $4$ (SD 1.5) to $16$ (SD3 / Flux)—dramatically improving small text, faces, and fine edges.
 
-### Step-by-Step Worked Example (Read Slowly): Spatiotemporal Compression Factor of a Video VAE
+### Worked example: Spatiotemporal Compression Factor of a Video VAE
 
 Consider a 1-second HD video clip of $T = 25$ frames at resolution $H = 512, W = 512$ with $C = 3$ RGB channels, encoded by a causal 3D VAE with temporal stride $4$ (keeping the first frame separate: $1 + (T-1)/4$), spatial stride $8$, and $C_z = 16$ latent channels.
 

@@ -11,14 +11,14 @@ categories:
 
 > *Two teams can take the exact same neural network architecture and dataset—one gets 94% accuracy in ten minutes, while the other stares at a flat loss curve for hours. The difference almost always lives in the practical training techniques: initialization, normalization, batching, and diagnostic monitoring.*
 
-## Background Knowledge Map: Pillars of Stable Neural Training
+## Key ideas: Pillars of Stable Neural Training
 
 1. **Symmetry-Breaking & Variance-Preserving Initialization**: Uses Xavier/Glorot (for tanh/sigmoid) or He/Kaiming (for ReLU) scaling so activations and gradients neither vanish nor explode at step 0.
 2. **Data Preprocessing & Leakage-Free Splits**: Standardizes inputs using strictly training-set statistics ($$\mu_{\text{train}}, \sigma_{\text{train}}$$) and enforces clean train/validation/test separation.
 3. **Diagnostic Monitoring & Checkpointing**: Tracks training vs. validation loss curves, gradient norms, and learning rates to distinguish underfitting, overfitting, and instability in real time.
 4. **Early Stopping & Reproducibility**: Halts training when validation performance plateaus, restores the best checkpoint, and pins random seeds for fair ablation experiments.
 
-### Step-by-Step Worked Example (Read Slowly): Why Fitting Scalers on Validation Data Causes Subtle Leakage
+### Worked example: Why Fitting Scalers on Validation Data Causes Subtle Leakage
 
 Suppose a 1D feature has training values $$X_{\text{train}} = \{10, 20, 30\}$$ and a single held-out test point $$x_{\text{test}} = 100$$.
 

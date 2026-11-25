@@ -11,14 +11,14 @@ categories:
 
 > *A feedforward neural network is formally nothing more than a directed acyclic graph of affine maps and elementwise nonlinearities. Yet out of that clean algebraic recursion emerges the Universal Approximation Theorem and the geometric power to untangle knotted data manifolds.*
 
-## Background Knowledge Map: Formal Theory of Feedforward Architectures
+## Key ideas: Formal Theory of Feedforward Architectures
 
 1. **Feedforward Recursion**: Defines layer $$l$$ strictly via $$\mathbf{z}^{[l]} = W^{[l]}\mathbf{a}^{[l-1]} + \mathbf{b}^{[l]}$$ and $$\mathbf{a}^{[l]} = g^{[l]}(\mathbf{z}^{[l]})$$, with $$\mathbf{a}^{[0]} = \mathbf{x}$$ and $$\hat{\mathbf{y}} = \mathbf{a}^{[L]}$$.
 2. **Manifold Untangling View**: Each layer acts as a homeomorphic/piecewise-linear warp of $$\mathbb{R}^{d_l}$$ whose goal is to deform curved, interwoven class manifolds until the final linear head can slice them with a flat hyperplane.
 3. **Universal Approximation (Cybenko / Hornik)**: Proves density of single-hidden-layer networks in $$C(K)$$ on compact sets $$K \subset \mathbb{R}^d$$, while warning that required width can grow exponentially in dimension $$d$$.
 4. **Depth Separation Theorems**: Demonstrate explicit functions (e.g., radial indicators and high-frequency compositions) representable by a polynomial-size 3-layer network that require exponential width in a 2-layer network.
 
-### Step-by-Step Worked Example (Read Slowly): Solving 2D XOR Exactly by Warping Input Space
+### Worked example: Solving 2D XOR Exactly by Warping Input Space
 
 Recall the 4 XOR points in $$\mathbb{R}^2$$: $$(0,0)\to 0$$, $$(0,1)\to 1$$, $$(1,0)\to 1$$, $$(1,1)\to 0$$. Let us apply one ReLU hidden layer with:
 $$W^{[1]} = \begin{bmatrix} 1 & 1 \\ 1 & 1 \end{bmatrix}, \quad \mathbf{b}^{[1]} = \begin{bmatrix} 0 \\ -1 \end{bmatrix}, \quad W^{[2]} = \begin{bmatrix} 1 & -2 \end{bmatrix}, \quad b^{[2]} = 0$$

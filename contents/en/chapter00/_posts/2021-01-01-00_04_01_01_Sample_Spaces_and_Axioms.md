@@ -11,14 +11,14 @@ categories:
 
 > *In 1933, Andrey Kolmogorov reduced all of probability theory to just three deceptively simple axioms. Every softmax output layer in deep learning is explicitly engineered so that its vector of class scores obeys those exact three axioms.*
 
-## Background Knowledge Map: Kolmogorov's Axioms and Softmax Validity
+## Key ideas: Kolmogorov's Axioms and Softmax Validity
 
 1. **Sample Space $$\Omega$$ and Event Space $$\mathcal{F}$$**: Defines the exhaustive universe of mutually exclusive outcomes (e.g., the 10 digit classes $$\{0, \dots, 9\}$$ in MNIST or the 50,000 tokens in a vocabulary).
 2. **Non-Negativity & Normalization (Axioms 1 & 2)**: Demands $$P(A) \geq 0$$ and $$P(\Omega) = 1$$; in neural classifiers, exponentiating logits guarantees positivity and dividing by their sum enforces normalization.
 3. **Countable Additivity (Axiom 3)**: States that for disjoint events, the probability of their union is the sum of their probabilities—letting us compute top-$$k$$ accuracy or group-level class probabilities by simple summation.
 4. **Derived Rules (Complement & Inclusion–Exclusion)**: Immediately gives $$P(A^c) = 1 - P(A)$$ and $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$, preventing double-counting in multi-label classification.
 
-### Step-by-Step Worked Example (Read Slowly): Verifying Kolmogorov's Axioms on a Softmax Output
+### Worked example: Verifying Kolmogorov's Axioms on a Softmax Output
 
 Suppose a 3-class image classifier outputs raw logits $$\mathbf{z} = [0, \ln 2, \ln 5]$$ for classes $$\{\text{cat}, \text{dog}, \text{bird}\}$$.
 

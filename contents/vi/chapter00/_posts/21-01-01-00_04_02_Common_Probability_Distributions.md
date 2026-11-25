@@ -11,7 +11,7 @@ categories:
 
 Trong tự nhiên và dữ liệu số, sự ngẫu nhiên không hề hỗn loạn vô định—chúng thường lặp lại theo một số ít "khuôn mẫu toán học" kinh điển gọi là các **phân phối xác suất**. Việc nhận diện đúng bài toán của bạn thuộc khuôn mẫu nào (nhị phân Bernoulli, đếm sự kiện Poisson, đo lường liên tục Gaussian hay vector tương quan Multivariate Normal) quyết định trực tiếp việc chọn hàm kích hoạt đầu ra, hàm mất mát và kiến trúc mô hình sinh. Bài tổng quan này phác thảo bản đồ ba nhóm phân phối bạn sẽ gặp đi gặp lại xuyên suốt khóa học.
 
-## Bản đồ kiến thức nền: Ba họ Phân phối Xác suất thiết yếu trong Học sâu
+## Kiến thức cần nhớ: Ba họ Phân phối Xác suất thiết yếu trong Học sâu
 
 1. **Họ phân phối Rời rạc (Bernoulli, Binomial, Categorical, Poisson)**:
    Mô hình hóa nhãn lớp, token ngôn ngữ, mặt nạ Dropout (Bernoulli) và số lần xuất hiện sự kiện; trực tiếp sinh ra Binary Cross-Entropy và Categorical Cross-Entropy.
@@ -22,7 +22,7 @@ Trong tự nhiên và dữ liệu số, sự ngẫu nhiên không hề hỗn lo�
 3. **Phân phối Đa biến (Multivariate Normal & Covariance Matrix)**:
    Nắm bắt mối tương quan đồng thời giữa nhiều đặc trưng, làm nền cho không gian ẩn (*latent space*) của Variational Autoencoder (VAE), Gaussian Mixture Models và phép làm trắng dữ liệu (*whitening*).
 
-### Khung giải thích (nên đọc chậm): Ánh xạ nhanh 4 bài toán Deep Learning sang đúng phân phối và hàm mất mát
+### Giải thích: Ánh xạ nhanh 4 bài toán Deep Learning sang đúng phân phối và hàm mất mát
 
 | Bài toán Deep Learning | Đầu ra cần dự đoán | Phân phối xác suất phù hợp | Hàm kích hoạt cuối & Loss tương ứng |
 | :--- | :--- | :--- | :--- |

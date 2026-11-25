@@ -11,7 +11,7 @@ categories:
 
 Tự tay lắp ráp một Transformer hoạt động trơn tru bằng PyTorch không dài như nhiều người tưởng — toàn bộ lõi từ Positional Encoding, Multi-Head Attention, FFN đến một Encoder–Decoder hoàn chỉnh chỉ gói gọn trong chưa đầy 200 dòng code rõ ràng. Bí quyết nằm ở việc chia mô-đun rành mạch và thiết lập các bài kiểm tra khói (smoke tests) ngay trước khi bước vào vòng huấn luyện.
 
-## Bản đồ kiến thức nền: Ba nguyên tắc vàng khi lập trình kiến trúc Transformer
+## Kiến thức cần nhớ: Ba nguyên tắc vàng khi lập trình kiến trúc Transformer
 
 1. **Phân tách mô-đun sạch theo sơ đồ dữ liệu**:
    Xây dựng tuần tự từ dưới lên: `PositionalEncoding` $$\to$$ `MultiHeadAttention` $$\to$$ `PositionwiseFFN` $$\to$$ `EncoderLayer` / `DecoderLayer` $$\to$$ `Transformer`. Mỗi mô-đun có hợp đồng đầu vào/đầu ra `(B, L, d_model)` thống nhất.
@@ -20,7 +20,7 @@ Tự tay lắp ráp một Transformer hoạt động trơn tru bằng PyTorch kh
 3. **Danh mục kiểm tra trước khi huấn luyện quy mô lớn**:
    Kiểm tra tính nhân quả (*causal leak test*: đổi token cuối xem logit các token trước có đổi 0,0 hay không), kiểm tra dòng gradient không bị `NaN`, và thử nghiệm overfit hoàn hảo trên 1 batch nhỏ (10 mẫu) để xác minh không có lỗi logic ngầm.
 
-### Khung giải thích (nên đọc chậm): Tính tay phép kết hợp Padding Mask và Causal Mask cho chuỗi dài $$L = 4$$
+### Giải thích: Tính tay phép kết hợp Padding Mask và Causal Mask cho chuỗi dài $$L = 4$$
 
 Giả sử trong một batch, câu có độ dài tối đa $$L = 4$$, nhưng câu này chỉ có 3 từ thật và vị trí cuối (`idx=3`) là `<PAD>`. Quy ước `1 = được phép chú ý`, `0 = bị che`:
 

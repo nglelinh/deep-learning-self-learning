@@ -11,14 +11,14 @@ categories:
 
 > *Every time you choose a loss function, initialize a layer, or design a generative decoder, you are implicitly picking a probability distribution. Knowing the canonical distribution families turns ad-hoc hyperparameter guessing into principled statistical modeling.*
 
-## Background Knowledge Map: The Distribution Toolkit of Deep Learning
+## Key ideas: The Distribution Toolkit of Deep Learning
 
 1. **Discrete Families (Bernoulli, Binomial, Categorical, Poisson)**: Model binary labels, dropout masks, multi-class token predictions, and event counts.
 2. **Continuous Families (Uniform, Gaussian, Exponential, Beta)**: Model weight initializations, continuous regression noise, latent spaces in VAEs/diffusion models, and calibrated probabilities on $$[0, 1]$$.
 3. **Multivariate Families (Multivariate Normal & Covariance Geometry)**: Capture feature correlations across dimensions, underpinning PCA, Mahalanobis outlier detection, and Gaussian diffusion transitions.
 4. **Distribution-to-Loss Duality**: Every standard deep learning loss is the negative log-likelihood (NLL) of a specific distribution—matching your model's output distribution to the data geometry prevents severe bias.
 
-### Step-by-Step Worked Example (Read Slowly): Matching a Distribution to Its Exact Neural Loss
+### Worked example: Matching a Distribution to Its Exact Neural Loss
 
 Suppose a network predicts a scalar mean $$\mu_\theta(x) = 3.0$$ for a continuous target $$y = 5.0$$ under a Gaussian model $$y \mid x \sim \mathcal{N}(\mu_\theta(x), \sigma^2)$$ with fixed $$\sigma = 2.0$$.
 

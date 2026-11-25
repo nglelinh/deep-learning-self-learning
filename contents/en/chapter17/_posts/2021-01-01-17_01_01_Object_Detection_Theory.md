@@ -11,14 +11,14 @@ categories:
 
 Object detection asks a single network to answer two fundamentally different questions at once: *"What is it?"* (a discrete, translation-invariant classification problem) and *"Where is it?"* (a continuous, translation-equivariant geometry problem). The breakthrough of modern detectors—from Faster R-CNN's anchor-based Region Proposal Networks to YOLO's dense grid predictions—was reframing raw coordinate prediction as predicting small, scale-invariant *offsets* relative to reference anchors, then pruning duplicates with Non-Maximum Suppression (NMS).
 
-## Background Knowledge Map: Mathematical Core of Object Detection
+## Key ideas: Mathematical Core of Object Detection
 
 - **Pillar 1 — Intersection over Union (IoU & GIoU)**: Defines geometric overlap between predicted and ground-truth boxes to assign positive/negative training anchors and evaluate detection quality.
 - **Pillar 2 — Scale-Invariant Box Parameterization**: Regresses normalized center offsets $(t_x, t_y)$ and log-scale ratios $(t_w, t_h)$ relative to an anchor $(x_a, y_a, w_a, h_a)$ so small and large objects contribute balanced gradients.
 - **Pillar 3 — Multi-Task Loss & Class Imbalance**: Combines classification loss (Cross-Entropy or Focal Loss to suppress easy background anchors) with Smooth-L1 or IoU-based box regression loss.
 - **Pillar 4 — Non-Maximum Suppression (NMS) & mAP**: Removes redundant overlapping detections per class via greedy IoU thresholding and integrates precision–recall curves across IoU thresholds (AP@50, AP@[.50:.95]).
 
-### Step-by-Step Worked Example (Read Slowly): Computing Exact Box IoU and Anchor Regression Targets
+### Worked example: Computing Exact Box IoU and Anchor Regression Targets
 
 Suppose an anchor box is $A = (x_1=10, y_1=10, x_2=50, y_2=50)$ (center $(30, 30)$, width $w_a = 40$, height $h_a = 40$), and a ground-truth box is $G = (x_1=20, y_1=20, x_2=60, y_2=60)$ (center $(40, 40)$, width $w_g = 40$, height $h_g = 40$).
 

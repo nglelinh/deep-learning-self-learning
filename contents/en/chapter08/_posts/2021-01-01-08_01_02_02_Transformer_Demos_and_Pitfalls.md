@@ -11,14 +11,14 @@ categories:
 
 Once your Transformer passes forward smoke tests, training it on a real sequence task exposes a new class of real-world engineering challenges: training instability without warmup, teacher-forcing vs. autoregressive decoding loops, subtle off-by-one target shifting (`x = seq[:-1]`, `y = seq[1:]`), and interpreting noisy attention heatmaps (which do not always equal causal feature importance!). Walking through concrete forward demos, attention visualizations, and classic failure modes turns working toy code into reliable production intuition.
 
-## Background Knowledge Map: Training Dynamics, Decoding, and Transformer Pitfalls
+## Key ideas: Training Dynamics, Decoding, and Transformer Pitfalls
 
 - **Next-Token Shift Alignment**: In causal language modeling, input `[BOS, A, B, C]` aligns with target `[A, B, C, EOS]`. Off-by-one shifting causes the model to learn the trivial identity function (`loss -> 0.0` instantly!) while producing gibberish at generation time.
 - **Warmup + Cosine / Inverse-Sqrt LR Schedules**: In early steps, Adam's second-moment variance estimates are noisy and Post-LN gradients are steep; linearly ramping the learning rate over the first $$N_{\text{warmup}}$$ steps prevents early attention entropy collapse.
 - **Autoregressive Decoding Latency & KV-Caching**: Recomputing the full forward pass over `[0..t]` at every generated token costs $$O(T^3)$$ total FLOPs for a length-$$T$$ generation; caching past $$K, V$$ drops total generation FLOPs to $$O(T^2)$$.
 - **Attention Is Not Always Explanation**: Because residual connections mix token representations across layers, high attention weight on token $$j$$ in layer 6 does not guarantee token $$j$$ drove the final prediction—gradient-based attribution or ablation is needed for causal claims.
 
-### Step-by-Step Worked Example (Read Slowly): Computing the Vaswani Warmup Learning Rate Schedule
+### Worked example: Computing the Vaswani Warmup Learning Rate Schedule
 
 The original Transformer paper schedules the learning rate at step $$t$$ using:
 $$\eta(t) = d_{\text{model}}^{-0.5} \cdot \min\!\left(t^{-0.5},\; t \cdot N_{\text{warmup}}^{-1.5}\right).$$

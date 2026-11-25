@@ -11,7 +11,7 @@ categories:
 
 Suốt nửa thế kỷ đầu của Trí tuệ Nhân tạo, các nhà khoa học tin rằng cách tốt nhất để máy tính thông minh là chép toàn bộ tri thức nhân loại vào cơ sở dữ liệu luật logic. Kết quả là máy có thể đánh thắng nhà vô địch cờ vua thế giới nhưng lại bó tay trước một việc đứa trẻ 3 tuổi làm trong chớp mắt: phân biệt con mèo với con chó trong ánh sáng mờ. **Học sâu** (*Deep Learning*) lật ngược hoàn toàn cách tiếp cận đó bằng cách cho phép mạng nơ-ron nhiều tầng tự học cấu trúc phân cấp của thế giới trực tiếp từ dữ liệu thô. Bài học này giải phẫu định nghĩa, bốn đặc trưng cốt lõi và sức mạnh biểu diễn của Học sâu.
 
-## Bản đồ kiến thức nền: Bốn đặc tính định hình bản sắc của Học sâu
+## Kiến thức cần nhớ: Bốn đặc tính định hình bản sắc của Học sâu
 
 1. **Phân cấp khái niệm (Hierarchical Feature Learning)**:
    Thay vì nhảy một bước từ điểm ảnh sang nhãn lớp, mạng xếp chồng nhiều phép biến đổi phi tuyến $$f(\mathbf{x}) = f_L(\dots f_2(f_1(\mathbf{x})))$$, mỗi tầng chắt lọc mức trừu tượng cao hơn tầng trước.
@@ -25,7 +25,7 @@ Suốt nửa thế kỷ đầu của Trí tuệ Nhân tạo, các nhà khoa họ
 4. **Định luật Mở rộng (Scaling Laws)**:
    Hiệu năng Học sâu tiếp tục cải thiện một cách có quy luật khi tăng đồng thời dữ liệu ($$D$$), số tham số ($$N$$) và năng lực tính toán ($$C$$), thay vì sớm chạm trần như nhiều thuật toán cổ điển.
 
-### Khung giải thích (nên đọc chậm): Tính tay sức mạnh tổ hợp của Biểu diễn Phân tán vs. Biểu diễn Cục bộ
+### Giải thích: Tính tay sức mạnh tổ hợp của Biểu diễn Phân tán vs. Biểu diễn Cục bộ
 
 Giả sử bạn muốn mô hình biểu diễn các vật thể theo 4 thuộc tính độc lập: *Màu sắc* (Đỏ/Xanh), *Hình dạng* (Tròn/Vuông), *Kích thước* (Lớn/Nhỏ), *Chất liệu* (Gỗ/Kim loại):
 

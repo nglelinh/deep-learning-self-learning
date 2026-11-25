@@ -11,14 +11,14 @@ categories:
 
 > *In 1969, Marvin Minsky and Seymour Papert proved that a single perceptron can never solve the humble 2-bit XOR gate, triggering the first AI winter. Understanding why a single hyperplane fails on XOR—and how adding just one hidden layer resolves it—is the foundational rite of passage in neural network theory.*
 
-## Background Knowledge Map: Geometry of the Perceptron
+## Key ideas: Geometry of the Perceptron
 
 1. **Hyperplane Decision Boundary**: The equation $$\mathbf{w}^\top \mathbf{x} + b = 0$$ defines a flat hyperplane with normal vector $$\mathbf{w}$$ pointing into the positive half-space and signed distance $$-b / \|\mathbf{w}\|$$ from the origin.
 2. **Perceptron Convergence Theorem**: Guarantees that if a dataset is strictly linearly separable with margin $$\gamma > 0$$, the classical mistake-driven update $$\mathbf{w} \leftarrow \mathbf{w} + y\mathbf{x}$$ terminates in at most $$(R/\gamma)^2$$ mistakes.
 3. **Linear Separability Ceiling (The XOR Barrier)**: Any function whose positive and negative points cannot be separated by a single flat cut (like XOR: $$(0,0),(1,1) \to 0$$ vs. $$(0,1),(1,0) \to 1$$) is impossible for a single neuron.
 4. **From Step Functions to Smooth Neurons**: Replacing the zero-derivative Heaviside step with smooth activations (sigmoid, tanh, ReLU) makes neurons differentiable so multi-layer networks can train via gradient descent.
 
-### Step-by-Step Worked Example (Read Slowly): Two Mistake-Driven Perceptron Updates by Hand
+### Worked example: Two Mistake-Driven Perceptron Updates by Hand
 
 Train a perceptron with initial weights $$\mathbf{w}_0 = [0, 0]^\top$$, bias $$b_0 = 0$$, and learning rate $$\eta = 1$$ on two labeled examples (labels $$y \in \{-1, +1\}$$):
 - Example 1: $$\mathbf{x}_1 = [2, 1]^\top, y_1 = +1$$

@@ -11,13 +11,13 @@ categories:
 
 Knowing the equation of 2D convolution on a whiteboard is only half the craft; translating it into bug-free, GPU-efficient code requires bridging two very different worlds. On one side sits raw NumPy, where explicit indexing exposes every boundary condition and kernel-flipping nuance. On the other sits PyTorch's `nn.Conv2d`, where batched 4D tensors, `bias=False` conventions, and modular Conv–BN–ReLU blocks power modern vision backbones. This hub connects both implementations so you can verify framework outputs against first-principles arithmetic.
 
-## Background Knowledge Map: Bridging First-Principles Code and Framework APIs
+## Key ideas: Bridging First-Principles Code and Framework APIs
 
 - **Verification by Differential Testing**: Implementing a slow, transparent NumPy reference and comparing its output against `torch.nn.functional.conv2d` on identical random tensors guarantees that your understanding of padding, stride, and channel summation matches the C++/CUDA backend to floating-point precision ($$< 10^{-6}$$).
 - **Tensor Rank & Axis Semantics**: Raw 2D images are `(H, W)`, single multi-channel images are `(C, H, W)`, and PyTorch mini-batches are `(N, C, H, W)`. Mixing up channel-last `(H, W, C)` (NumPy/PIL) with channel-first `(C, H, W)` (PyTorch) is the single most common vision bug.
 - **Modular Block Abstraction**: Real CNNs encapsulate `Conv2d -> BatchNorm2d -> ReLU` into `nn.Module` building blocks, allowing clean residual wiring, automated weight initialization, and easy inspection of intermediate feature maps.
 
-### Step-by-Step Worked Example (Read Slowly): Cross-Checking NumPy vs. PyTorch Output on a Minimal Tensor
+### Worked example: Cross-Checking NumPy vs. PyTorch Output on a Minimal Tensor
 
 Suppose we verify that our NumPy cross-correlation matches PyTorch `nn.Conv2d` on a minimal `(N=1, C_in=1, H=3, W=3)` input with a `(C_out=1, C_in=1, kH=2, kW=2)` kernel, `stride=1`, `padding=0`, `bias=0`:
 

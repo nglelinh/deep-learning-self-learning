@@ -11,7 +11,7 @@ categories:
 
 Nếu ví một mạng nơ-ron sâu như một chiếc phi thuyền liên hành tinh, thì toán học nền tảng chính là bản thiết kế động cơ và hệ thống dẫn đường giúp phi thuyền không bao giờ lạc quỹ đạo. Nhiều người học Deep Learning vội vàng lao ngay vào gọi hàm `.backward()` trong PyTorch, để rồi lúng túng mỗi khi hàm mất mát đột ngột bùng nổ thành `NaN` hay mô hình đứng yên không chịu hội tụ. Chương 00 được thiết kế như tấm bản đồ sinh tồn toán học, kết nối trực giác hình học của giải tích, đại số tuyến tính, tôpô và xác suất với những dòng code thực chiến bạn sẽ viết xuyên suốt khóa học.
 
-## Bản đồ kiến thức nền: Bốn trụ cột toán học nâng đỡ mọi mô hình Học sâu
+## Kiến thức cần nhớ: Bốn trụ cột toán học nâng đỡ mọi mô hình Học sâu
 
 1. **Giải tích đa biến và tối ưu hóa (Calculus)**:
    Cung cấp ngôn ngữ để đo độ nhạy của sai số theo hàng triệu trọng số thông qua đạo hàm riêng, vector gradient và chuỗi Taylor—trái tim của thuật toán lan truyền ngược (*backpropagation*) và Gradient Descent.
@@ -25,7 +25,7 @@ Nếu ví một mạng nơ-ron sâu như một chiếc phi thuyền liên hành 
 4. **Xác suất và Thống kê (Probability & Statistics)**:
    Giúp mạng nơ-ron không chỉ đoán bừa mà biết định lượng độ bất định, từ đó giải thích vì sao hàm Cross-Entropy hay MSE lại tự nhiên xuất phát từ nguyên lý Ước lượng Hợp lý Cực đại (MLE).
 
-### Khung giải thích (nên đọc chậm): Một bước học của nơ-ron đơn nhìn qua cả bốn nhánh toán học
+### Giải thích: Một bước học của nơ-ron đơn nhìn qua cả bốn nhánh toán học
 
 Hãy theo dõi một nơ-ron cực nhỏ dự đoán giá trị $$y = 1$$ từ đầu vào $$x = 2$$ với trọng số khởi tạo $$w = 0.2$$ và hàm mất mát bình phương $$L(w) = \frac{1}{2}(wx - y)^2$$:
 

@@ -11,14 +11,14 @@ categories:
 
 Classical knowledge distillation matches a student's full probability vector to a teacher's softmax—easy when you have 10 CIFAR classes, painful when your LLM vocabulary has 128,256 tokens and storing full teacher logits for a billion tokens would take half a petabyte of disk! Modern LLM distillation therefore split into three practical regimes: black-box synthetic data (text-in, text-out), white-box top-$k$ / reverse-KL logit distillation, and hidden-state feature alignment—each carrying sharp engineering and legal/licensing boundaries.
 
-## Background Knowledge Map: Knowledge Distillation for Large Language Models
+## Key ideas: Knowledge Distillation for Large Language Models
 
 - **Pillar 1 — Temperature-Scaled Logit KD & Dark Knowledge**: Softens teacher probabilities $p_T = \operatorname{softmax}(z_T / \tau)$ so non-target tokens transmit rich semantic similarity signals, scaled by $\tau^2$ to preserve gradient norms.
 - **Pillar 2 — Forward KL vs. Reverse KL for Generation**: Contrasts mode-covering forward KL $D_{\text{KL}}(p_T \| p_S)$ (which can cause small students to smear mass across low-probability phrases) with mode-seeking reverse KL $D_{\text{KL}}(p_S \| p_T)$ (sharp, fluent generations).
 - **Pillar 3 — Three Modern LLM Distillation Families**: Organizes synthetic-response SFT (black-box, cheapest, works across mismatched tokenizers), sparse top-$k$ logit KD (white-box, same tokenizer), and intermediate hidden-state matching.
 - **Pillar 4 — Governance & Terms-of-Service Hygiene**: Distinguishes legitimate in-house distillation (from your own or permissively licensed open-weight teachers) from unauthorized harvesting of proprietary APIs.
 
-### Step-by-Step Worked Example (Read Slowly): Why $\tau^2$ Scaling Is Mandatory in Temperature-Scaled KD
+### Worked example: Why $\tau^2$ Scaling Is Mandatory in Temperature-Scaled KD
 
 Consider a 2-class teacher logit vector $z_T = [4.0, 2.0]$ and student logits $z_S = [3.0, 3.0]$ at temperature $\tau = 2.0$.
 

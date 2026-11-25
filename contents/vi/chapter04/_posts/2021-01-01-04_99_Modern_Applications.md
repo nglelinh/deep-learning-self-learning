@@ -12,7 +12,7 @@ lesson_type: optional
 
 Khi Vision Transformer (ViT) xuất hiện năm 2020, từng có dự đoán rằng mạng tích chập (CNN) sẽ sớm trở thành "đồ cổ" trong thị giác máy tính. Thế nhưng thực tế giai đoạn 2022–2026 lại kể một câu chuyện thú vị hơn nhiều: khi được cập nhật đúng quy trình huấn luyện hiện đại và thiết kế khối tối ưu như **ConvNeXt**, CNN không những bắt kịp ViT về độ chính xác mà còn tiếp tục thống trị thị giác thời gian thực, ảnh y khoa và thiết bị biên (edge AI).
 
-## Bản đồ kiến thức nền: Bốn xu hướng hiện đại của CNN (2022–2026)
+## Kiến thức cần nhớ: Bốn xu hướng hiện đại của CNN (2022–2026)
 
 1. **ConvNeXt — Hiện đại hóa ResNet bằng công thức của Transformer**:
    Áp dụng nhân depthwise lớn $$7 \times 7$$, khối cổ chai đảo ngược (inverted bottleneck), LayerNorm thay cho BatchNorm, GELU thay cho ReLU và công thức huấn luyện AdamW + Mixup + Stochastic Depth.
@@ -23,7 +23,7 @@ Khi Vision Transformer (ViT) xuất hiện năm 2020, từng có dự đoán r�
 4. **Đánh đổi Độ phức tạp: $$O(N)$$ của CNN vs. $$O(N^2)$$ của Attention**:
    Với ảnh độ phân giải cực cao (ảnh vệ tinh, ảnh giải phẫu bệnh học), chi phí bậc hai theo số patch của Self-Attention tăng vọt, khiến CNN tuyến tính theo số pixel vẫn giữ ưu thế áp đảo về độ trễ và năng lượng.
 
-### Khung giải thích (nên đọc chậm): Tính tay sự chênh lệch chi phí giữa Depthwise Conv $$7 \times 7$$ và Self-Attention trên ảnh độ phân giải cao
+### Giải thích: Tính tay sự chênh lệch chi phí giữa Depthwise Conv $$7 \times 7$$ và Self-Attention trên ảnh độ phân giải cao
 
 Xét một bản đồ đặc trưng kích thước $$56 \times 56$$ (tổng cộng $$N = 56 \times 56 = 3{,}136$$ vị trí không gian) với số kênh $$C = 96$$:
 

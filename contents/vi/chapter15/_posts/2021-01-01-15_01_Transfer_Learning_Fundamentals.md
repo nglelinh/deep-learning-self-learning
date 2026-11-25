@@ -11,14 +11,14 @@ categories:
 
 Trong thực tế công nghiệp, hơn 90% dự án học sâu thành công không bắt đầu bằng việc phát minh một kiến trúc mạng mới, mà bắt đầu bằng việc chọn đúng một mô hình nền (foundation/pretrained model) và biết cách tinh chỉnh nó thật khéo. Mục tổng quan nền tảng này hệ thống hóa ma trận quyết định kinh điển của Học Chuyển giao trước khi đi sâu vào lý thuyết (**15-01-01**) và mã nguồn PyTorch (**15-01-02**).
 
-## Bản đồ kiến thức nền: Ma trận quyết định 4 tình huống trong Học Chuyển giao
+## Kiến thức cần nhớ: Ma trận quyết định 4 tình huống trong Học Chuyển giao
 
 - **Dữ liệu đích ít + Miền tương đồng nguồn:** Đóng băng toàn bộ xương sống, chỉ huấn luyện bộ phân loại tuyến tính (Linear Probing) hoặc dùng đặc trưng trích xuất cho SVM/Logistic Regression.
 - **Dữ liệu đích nhiều + Miền tương đồng nguồn:** Tinh chỉnh toàn bộ mạng (hoặc phần lớn các khối trên) với tốc độ học nhỏ để đạt độ chính xác tối đa.
 - **Dữ liệu đích ít + Miền khác biệt nguồn:** Trích xuất đặc trưng từ các *tầng nông/giữa* (nơi biểu diễn còn tổng quát) thay vì tầng cuối quá chuyên biệt cho nhãn nguồn.
 - **Dữ liệu đích nhiều + Miền khác biệt nguồn:** Khởi tạo từ trọng số tiền huấn luyện (vẫn hội tụ nhanh hơn khởi tạo ngẫu nhiên) và mở khóa huấn luyện lại toàn bộ mạng.
 
-### Khung giải thích (nên đọc chậm): Áp dụng ma trận quyết định và ước lượng tốc độ học phân tầng cho 2 bài toán thực tế
+### Giải thích: Áp dụng ma trận quyết định và ước lượng tốc độ học phân tầng cho 2 bài toán thực tế
 
 Xét mô hình xương sống 4 giai đoạn (`stage1` → `stage4` + `head`) với tốc độ học cơ sở cho đầu phân loại $$\eta_0 = 10^{-3}$$ và hệ số suy giảm theo tầng $$\gamma = 0{,}3$$:
 

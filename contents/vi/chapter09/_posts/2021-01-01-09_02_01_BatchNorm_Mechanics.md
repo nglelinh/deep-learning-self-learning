@@ -11,7 +11,7 @@ categories:
 
 Ban đầu, nhóm tác giả Batch Normalization tin rằng kỹ thuật này hiệu quả vì nó triệt tiêu hiện tượng "dịch chuyển hiệp biến nội" (*Internal Covariate Shift*). Nhưng đến năm 2018, nhóm nghiên cứu MIT (Santurkar et al.) phát hiện ra một nguyên nhân sâu sắc hơn nữa: **BatchNorm làm cho bề mặt hàm mất mát và gradient trở nên mượt mà (Lipschitz-smooth) hơn hẳn**, giúp bước nhảy gradient descent trở nên cực kỳ dự đoán được và cho phép dùng tốc độ học lớn hơn nhiều lần!
 
-## Bản đồ kiến thức nền: Bốn cơ chế toán học bên trong Batch Normalization
+## Kiến thức cần nhớ: Bốn cơ chế toán học bên trong Batch Normalization
 
 1. **Chuẩn hóa z-score và hằng số ổn định $$\epsilon$$**:
    $$\hat{x}_i = \frac{x_i - \mu_B}{\sqrt{\sigma_B^2 + \epsilon}}$$ đưa mọi đặc trưng về trung bình $$0$$ và phương sai $$\approx 1$$, trong đó $$\epsilon \approx 10^{-5}$$ ngăn chia cho 0 khi các giá trị trong batch giống hệt nhau.
@@ -22,7 +22,7 @@ Ban đầu, nhóm tác giả Batch Normalization tin rằng kỹ thuật này hi
 4. **Tính bất biến theo tỷ lệ trọng số (Scale Invariance) và dư thừa Bias**:
    Nhân trọng số tầng trước với hằng số $$a > 0$$ hay cộng thêm bias $$b$$ đều bị triệt tiêu hoàn toàn bởi bước trừ $$\mu_B$$ và chia $$\sigma_B$$! Đó là lý do các tầng `Conv2d`/`Linear` đứng ngay trước BatchNorm luôn nên đặt `bias=False`.
 
-### Khung giải thích (nên đọc chậm): Tính tay trọn vẹn 4 bước Forward của BatchNorm trên một mini-batch 4 mẫu
+### Giải thích: Tính tay trọn vẹn 4 bước Forward của BatchNorm trên một mini-batch 4 mẫu
 
 Cho giá trị kích hoạt của 1 kênh trên mini-batch 4 mẫu là $$\mathbf{x} = [2{,}0, \; 4{,}0, \; 6{,}0, \; 8{,}0]$$, với tham số học được $$\gamma = 2{,}0, \; \beta = 1{,}0$$ và $$\epsilon = 0$$ (để tính tay gọn):
 

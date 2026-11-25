@@ -11,7 +11,7 @@ categories:
 
 Nếu các thuật toán kinh điển như Random Forest, XGBoost hay SVM đã hoạt động xuất sắc suốt nhiều thập kỷ, vì sao thế giới lại đổ hàng trăm tỷ đô-la vào GPU và Học sâu? Câu trả lời không nằm ở sự cường điệu truyền thông, mà nằm ở **nút thắt đặc trưng** (*feature bottleneck*) trên dữ liệu phi cấu trúc: ảnh, video, âm thanh và ngôn ngữ tự nhiên. Bài tổng quan này định vị chính xác nơi Học sâu tạo ra bước nhảy vọt về chất, đồng thời giữ cho bạn cái đầu lạnh để chọn đúng công cụ cho đúng bài toán.
 
-## Bản đồ kiến thức nền: Ba trụ cột lý giải "Vì sao Học sâu?"
+## Kiến thức cần nhớ: Ba trụ cột lý giải "Vì sao Học sâu?"
 
 1. **Giới hạn của Đặc trưng Thủ công (Hand-crafted Features)**:
    Các bộ mô tả cổ điển như SIFT, HOG (ảnh) hay TF-IDF (văn bản) tốn công sức chuyên gia thiết kế, dễ gãy khi đổi ánh sáng, góc chụp hay ngữ cảnh ngôn ngữ, và không thể tinh chỉnh theo hàm mất mát cuối cùng.
@@ -22,7 +22,7 @@ Nếu các thuật toán kinh điển như Random Forest, XGBoost hay SVM đã h
 3. **Tiêu chí Chọn Công cụ Thực tế (DL vs. Classical ML)**:
    Dữ liệu bảng (tabular) cỡ nhỏ–trung bình thường là sân nhà của Gradient Boosted Trees (XGBoost, LightGBM); còn dữ liệu phi cấu trúc quy mô lớn, đa phương thức (multimodal) là lãnh địa thống trị tuyệt đối của Học sâu.
 
-### Khung giải thích (nên đọc chậm): So sánh định lượng hai bài toán thực tế để quyết định có dùng Deep Learning hay không
+### Giải thích: So sánh định lượng hai bài toán thực tế để quyết định có dùng Deep Learning hay không
 
 | Tiêu chí đánh giá | Bài toán A: Dự đoán khách hàng rời bỏ (Bảng 20 cột, 8{,}000 dòng) | Bài toán B: Phân loại lỗi sản phẩm từ ảnh camera nhà máy (200{,}000 ảnh $$224\times 224$$) |
 | :--- | :--- | :--- |

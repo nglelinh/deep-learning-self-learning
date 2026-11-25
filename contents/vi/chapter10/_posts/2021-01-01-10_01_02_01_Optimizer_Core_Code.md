@@ -11,7 +11,7 @@ categories:
 
 Viết lại trọn bộ SGD, Momentum, Nesterov, AdaGrad, RMSprop và Adam bằng NumPy thuần chỉ tốn chưa đầy 100 dòng code, nhưng giá trị nhận lại cực kỳ lớn: bạn sẽ hiểu chính xác biến đếm bước `self.t` tăng ở đâu trong Adam, tại sao phép toán `in-place` tiết kiệm bộ nhớ GPU, và cách viết dạng triển khai tương đương của Nesterov mà không phải gọi thêm một lượt forward/backward thứ hai!
 
-## Bản đồ kiến thức nền: Bốn chi tiết kỹ thuật khi viết mã lõi Bộ tối ưu
+## Kiến thức cần nhớ: Bốn chi tiết kỹ thuật khi viết mã lõi Bộ tối ưu
 
 1. **Quản lý trạng thái per-parameter theo danh sách/từ điển**:
    Mỗi tensor trọng số (ma trận $$W_1$$, vector $$b_1$$, $$W_2$$, ...) cần các bộ đệm `m` và `v` có cùng chính xác shape, khởi tạo bằng `np.zeros_like(param)`.
@@ -22,7 +22,7 @@ Viết lại trọn bộ SGD, Momentum, Nesterov, AdaGrad, RMSprop và Adam bằ
 4. **Hằng số $$\epsilon$$ đặt ngoài dấu căn bậc hai**:
    Trong cài đặt Adam chuẩn (`m_hat / (np.sqrt(v_hat) + eps)`), $$\epsilon$$ nằm ngoài dấu căn (mặc định `1e-8`, nhưng khi huấn luyện FP16/BF16 nên tăng lên `1e-6` để tránh underflow làm tròn về 0).
 
-### Khung giải thích (nên đọc chậm): Tính tay so sánh tốc độ giảm bước của AdaGrad và RMSprop sau 3 bước gradient lớn
+### Giải thích: Tính tay so sánh tốc độ giảm bước của AdaGrad và RMSprop sau 3 bước gradient lớn
 
 Giả sử một tham số liên tục nhận gradient $$g_1 = g_2 = g_3 = 10{,}0$$, tốc độ học cơ sở $$\eta = 1{,}0$$, và hệ số suy giảm của RMSprop là $$\rho = 0{,}9$$ (bỏ qua $$\epsilon$$ nhỏ):
 

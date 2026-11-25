@@ -11,14 +11,14 @@ categories:
 
 At first glance, training a neural network to output its own input looks like the most pointless objective in machine learning—an identity function $f(x) = x$ achieves zero loss immediately. The entire theoretical richness of autoencoders lies in *breaking* that trivial solution: by imposing bottlenecks, injecting noise, penalizing average neuron activation, or shrinking the encoder's Jacobian, we force the network to internalize the statistical regularities of the data distribution.
 
-## Background Knowledge Map: Mathematical Theory of Autoencoders
+## Key ideas: Mathematical Theory of Autoencoders
 
 - **Pillar 1 — Empirical Risk & Reconstruction Geometry**: Connects MSE loss to Gaussian log-likelihood and Binary Cross-Entropy to Bernoulli log-likelihood, showing how the choice of reconstruction loss encodes assumptions about pixel noise.
 - **Pillar 2 — Eckart–Young–Mirsky Theorem & Linear Autoencoders**: Proves why a linear autoencoder with bottleneck width $k$ recovers the top-$k$ singular subspace of the data matrix $X$.
 - **Pillar 3 — Sparse & Contractive Regularization**: Adds KL-divergence sparsity penalties $D_{\text{KL}}(\rho \| \hat{\rho}_j)$ on hidden activations or Frobenius-norm penalties $\|J_f(x)\|_F^2$ on the encoder Jacobian to make representations locally invariant to small perturbations.
 - **Pillar 4 — Denoising Score Connection**: Reveals that a Denoising Autoencoder trained with Gaussian corruption $\tilde{x} = x + \sigma\epsilon$ learns a vector field $g(f(\tilde{x})) - \tilde{x} \propto \nabla_{\tilde{x}} \log p_\sigma(\tilde{x})$, foreshadowing modern score-based diffusion models.
 
-### Step-by-Step Worked Example (Read Slowly): Computing Sparse KL Penalty and Contractive Jacobian Norm
+### Worked example: Computing Sparse KL Penalty and Contractive Jacobian Norm
 
 Suppose a single-layer sigmoid encoder $z = \sigma(Wx)$ has weight vector $w = [2.0,\, -1.0]$ for one hidden neuron. Across a mini-batch, this neuron's average activation is $\hat{\rho} = 0.40$, while our target sparsity level is $\rho = 0.05$.
 

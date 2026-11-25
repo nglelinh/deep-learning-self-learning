@@ -11,7 +11,7 @@ categories:
 
 Khi chuyển từ công thức giấy sang PyTorch, sức mạnh thực sự nằm ở khả năng lắp ghép các mô-đun `nn.Module` thành những khối xử lý thị giác chuẩn mực — từ tích chập cơ bản, giảm mẫu bằng stride, cho đến phép tích chập $$1 \times 1$$ đầy quyền năng giúp trộn thông tin liên kênh. Hiểu rõ từng tham số của `nn.Conv2d` giúp bạn thiết kế kiến trúc sạch, gọn và tránh lãng phí bộ nhớ GPU.
 
-## Bản đồ kiến thức nền: Bốn kỹ năng thiết yếu với `nn.Conv2d` trong PyTorch
+## Kiến thức cần nhớ: Bốn kỹ năng thiết yếu với `nn.Conv2d` trong PyTorch
 
 1. **Chuẩn hóa kích thước tensor 4D `(N, C, H, W)`**:
    PyTorch luôn kỳ vọng có chiều batch $$N$$ ở đầu. Ngay cả khi suy luận trên một ảnh duy nhất, ta vẫn phải thêm chiều batch bằng `x.unsqueeze(0)` để có dạng `(1, C, H, W)`.
@@ -22,7 +22,7 @@ Khi chuyển từ công thức giấy sang PyTorch, sức mạnh thực sự n�
 4. **Kiểm tra trọng số đã học (`conv.weight.shape`)**:
    Ma trận trọng số trong PyTorch luôn có shape `(out_channels, in_channels // groups, kH, kW)` — nắm chắc cấu trúc này giúp bạn trực quan hóa bộ lọc và thiết lập tích chập nhóm (`groups=in_channels` cho depthwise convolution).
 
-### Khung giải thích (nên đọc chậm): Tính tay lợi ích tiết kiệm phép tính của tầng cổ chai (Bottleneck $$1 \times 1$$)
+### Giải thích: Tính tay lợi ích tiết kiệm phép tính của tầng cổ chai (Bottleneck $$1 \times 1$$)
 
 Giả sử bản đồ đặc trưng có kích thước $$28 \times 28$$ với $$C_{\text{in}} = 256$$ kênh và ta muốn ra $$C_{\text{out}} = 256$$ kênh bằng bộ lọc $$3 \times 3$$:
 

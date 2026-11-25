@@ -12,14 +12,14 @@ lesson_type: optional
 
 In 2023–2026, interpretability leaped from highlighting input pixels to reverse-engineering the internal algorithms of frontier LLMs—a field called **Mechanistic Interpretability**. The core obstacle was *polysemanticity*: a single Transformer neuron often fires for unrelated concepts (both French poetry and Python brackets) because models pack more concepts than dimensions via **superposition**. Sparse Autoencoders (SAEs) broke that code by projecting residual-stream activations into an overcomplete sparse basis where individual latents correspond cleanly to monosemantic concepts like "Golden Gate Bridge" or "SQL injection."
 
-## Background Knowledge Map: Mechanistic Interpretability & SAEs (2022–2026)
+## Key ideas: Mechanistic Interpretability & SAEs (2022–2026)
 
 - **Pillar 1 — Superposition & Polysemanticity**: Explains how an $n$-dimensional residual stream can pack $m \gg n$ nearly orthogonal sparse features using Johnson–Lindenstrauss geometry.
 - **Pillar 2 — Sparse Autoencoders (SAEs) on Residual Streams**: Trains an overcomplete encoder $f = \operatorname{ReLU}(W_{\text{enc}} x + b_{\text{enc}})$ with an $L_1$ or Top-$k$ sparsity penalty to decompose polysemantic activations into interpretable monosemantic features.
 - **Pillar 3 — Activation Patching & Circuit Discovery**: Performs causal interventions—swapping activations from a corrupted prompt into a clean prompt—to isolate exact attention-head circuits (e.g., Induction Heads, Indirect Object Identification).
 - **Pillar 4 — Feature Steering & Safety Evals**: Clamps or amplifies discovered SAE features at inference time to test honesty, refusal, and sycophancy behaviors causally.
 
-### Step-by-Step Worked Example (Read Slowly): Superposition Geometry & Top-$k$ SAE Feature Decomposition
+### Worked example: Superposition Geometry & Top-$k$ SAE Feature Decomposition
 
 Suppose a 2D residual stream ($d = 2$) packs $m = 3$ unit-norm concept directions $120^\circ$ apart:
 $$d_1 = (1, 0), \qquad d_2 = (-0.5, +0.866), \qquad d_3 = (-0.5, -0.866).$$

@@ -11,7 +11,7 @@ categories:
 
 Một trong những sai lầm kinh điển nhất của người mới tự xây mạng nơ-ron là khởi tạo toàn bộ ma trận trọng số bằng `np.zeros(...)` cho "gọn gàng". Kết quả là mạng có thể chạy 1{,}000 epoch mà **mọi nơ-ron trong cùng một tầng học ra đúng một giá trị giống hệt nhau**—hiện tượng **đối xứng chết (*symmetry trap*)** khiến 1{,}000 nơ-ron chỉ mạnh ngang 1 nơ-ron duy nhất! Tương tự, chỉ một lỗi nhỏ tính trung bình chuẩn hóa trên cả tập Train lẫn Test đã đủ làm kết quả đánh giá bị gian lận (*data leakage*). Bài học này trang bị quy chuẩn vàng cho khởi tạo trọng số (Xavier/He), chuẩn hóa dữ liệu và tổ chức tập dữ liệu sạch.
 
-## Bản đồ kiến thức nền: Bốn quy chuẩn Vàng về Khởi tạo và Dữ liệu
+## Kiến thức cần nhớ: Bốn quy chuẩn Vàng về Khởi tạo và Dữ liệu
 
 1. **Phá vỡ Đối xứng và Bảo toàn Phương sai (Xavier vs. He Initialization)**:
    - **Xavier/Glorot**: $$\text{Var}(w) = \frac{2}{n_{\text{in}} + n_{\text{out}}}$$ — tối ưu cho hàm đối xứng quanh $$0$$ như Tanh/Sigmoid.
@@ -26,7 +26,7 @@ Một trong những sai lầm kinh điển nhất của người mới tự xây
 4. **Phân chia Phân tầng (Stratified Split) và Cân bằng Batch Size**:
    Với dữ liệu phân loại mất cân bằng, luôn chia phân tầng để giữ nguyên tỷ lệ các lớp ở cả 3 tập Train/Val/Test; chọn batch size là lũy thừa của 2 (32, 64, 128, 256) để tối ưu căn chỉnh bộ nhớ GPU.
 
-### Khung giải thích (nên đọc chậm): Tính tay độ lệch chuẩn khởi tạo Xavier vs. He và chuẩn hóa chống Data Leakage
+### Giải thích: Tính tay độ lệch chuẩn khởi tạo Xavier vs. He và chuẩn hóa chống Data Leakage
 
 **Phần A — So sánh số học Xavier vs. He cho một lớp `Linear(256, 128)`:**
 - **Xavier Normal**: $$\text{Var}(w) = \frac{2}{256 + 128} = \frac{2}{384} \approx 0.00521 \implies \sigma_{\text{Xavier}} = \sqrt{0.00521} \approx \mathbf{0.0722}$$.

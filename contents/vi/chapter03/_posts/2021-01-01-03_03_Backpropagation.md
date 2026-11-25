@@ -11,7 +11,7 @@ categories:
 
 Nếu phải chọn ra một thuật toán duy nhất làm nên cả đế chế Trí tuệ Nhân tạo hiện đại, đó chắc chắn là **Lan truyền Ngược (*Backpropagation*)**—được phổ biến rộng rãi bởi Rumelhart, Hinton và Williams năm 1986. Trước khi có Backpropagation hiệu quả, việc tính đạo hàm cho một mạng 1 triệu tham số bằng sai phân hữu hạn đòi hỏi chạy lan truyền xuôi tới **1 triệu lần** cho mỗi bước cập nhật! Backpropagation rút gọn chi phí khổng lồ đó xuống chỉ còn **đúng 1 lượt đi ngược**. Mục tổng quan này phác họa trực giác trước khi bạn tự tay giải toán và tự code một động cơ Backprop hoàn chỉnh.
 
-## Bản đồ kiến thức nền: Ba trụ cột của Thuật toán Lan truyền Ngược
+## Kiến thức cần nhớ: Ba trụ cột của Thuật toán Lan truyền Ngược
 
 1. **Đồ thị Tính toán và Quy tắc Dây chuyền (Computational Graph & Chain Rule)**:
    Mọi mạng nơ-ron phức tạp đều phân rã được thành đồ thị các phép toán sơ cấp (cộng, nhân, mũ, ReLU). Mỗi nút chỉ cần biết đạo hàm cục bộ của riêng mình rồi nhân với tín hiệu lỗi truyền từ phía sau về.
@@ -22,7 +22,7 @@ Nếu phải chọn ra một thuật toán duy nhất làm nên cả đế chế
 3. **Kiểm tra Gradient bằng Số học (Numerical Gradient Checking)**:
    So sánh gradient giải tích từ Backpropagation với sai phân trung tâm $$\frac{L(\theta + \varepsilon) - L(\theta - \varepsilon)}{2\varepsilon}$$—vũ khí kiểm chứng chuẩn xác tuyệt đối mỗi khi bạn tự viết lớp tùy chỉnh.
 
-### Khung giải thích (nên đọc chậm): So sánh chi phí tính Gradient giữa Sai phân Hữu hạn và Backpropagation
+### Giải thích: So sánh chi phí tính Gradient giữa Sai phân Hữu hạn và Backpropagation
 
 Giả sử mạng nơ-ron của bạn có $$P = 1{,}000{,}000$$ tham số và 1 lần chạy lan truyền xuôi mất $$1\text{ ms}$$:
 

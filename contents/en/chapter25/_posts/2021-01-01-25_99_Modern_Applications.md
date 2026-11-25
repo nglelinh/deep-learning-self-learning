@@ -12,14 +12,14 @@ lesson_type: optional
 
 For five years, the scaling game had only one lever: make pretraining bigger. Between 2024 and 2026, a second axis broke wide open—**test-time compute scaling**: letting a reasoning model spend extra thinking tokens, verify intermediate steps, call external tools (code interpreters, search, APIs), and process native images/audio in a single unified stream. Meanwhile, real-world energy and water constraints turned compute efficiency from an academic footnote into a first-class systems requirement.
 
-## Background Knowledge Map: What Shipped at the Frontier (2022–2026)
+## Key ideas: What Shipped at the Frontier (2022–2026)
 
 - **Pillar 1 — Test-Time Compute Scaling**: Trades extra inference tokens (long chains of thought, best-of-$N$ verifier search, tree search) for dramatic gains on math, coding, and planning—complementing pretraining scaling.
 - **Pillar 2 — Tool-Using Agent Loops**: Connects LLM reasoning to deterministic external execution (Python sandboxes, SQL, browsers, MCP tools) via structured observe–think–act–verify loops.
 - **Pillar 3 — Native Multimodal Architectures**: Tokenizes text, image patches, audio frames, and video clips into one shared Transformer backbone instead of bolting fragile adapters onto a text-only LLM.
 - **Pillar 4 — Energy, Cost, and Routing Constraints**: Uses model routing (small fast models for easy queries, large reasoning models for hard ones) and batching to bound carbon footprint and serving cost.
 
-### Step-by-Step Worked Example (Read Slowly): Pass@$k$ / Best-of-$N$ Test-Time Compute Trade-off
+### Worked example: Pass@$k$ / Best-of-$N$ Test-Time Compute Trade-off
 
 Suppose on a hard coding problem, a single sample from a small model succeeds with independent probability $p = 0.25$ and costs $c = \$0.001$ per attempt, and we have a unit-test suite that verifies correctness with $100\%$ precision.
 

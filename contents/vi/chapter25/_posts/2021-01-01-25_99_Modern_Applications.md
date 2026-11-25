@@ -12,14 +12,14 @@ lesson_type: optional
 
 Nếu thập kỷ trước là cuộc đua xây những mô hình ngày càng lớn hơn lúc *huấn luyện*, thì giai đoạn 2024–2026 mở ra một trục mở rộng hoàn toàn mới: **cho mô hình thêm thời gian suy nghĩ và công cụ lúc suy luận**! Từ các mô hình suy luận tự kiểm tra từng bước (Inference-Time Scaling), các tác tử lập trình/nghiên cứu gọi công cụ qua vòng lặp phản hồi (Tool-Using Agents), đến các mô hình đa phương thức nguyên bản hiểu liền mạch văn bản, ảnh, âm thanh và video — bài cập nhật này tổng kết những hướng nghiên cứu đã chính thức bước vào sản phẩm hàng ngày.
 
-## Bản đồ kiến thức nền: Ba trụ cột đã bước vào thực tế (2024–2026)
+## Kiến thức cần nhớ: Ba trụ cột đã bước vào thực tế (2024–2026)
 
 - **Mở rộng tính toán lúc suy luận (Inference-Time / Test-Time Scaling):** Dùng chuỗi tư duy dài (Long CoT), lấy mẫu song song Best-of-$$N$$ kết hợp bộ chấm điểm (Verifier/PRM) để đổi thêm token suy nghĩ lấy bước nhảy vượt bậc về độ chính xác toán/code.
 - **Tác tử sử dụng công cụ (Tool-Using Agents — ReAct & Function Calling):** Đóng gói LLM trong vòng lặp `Suy nghĩ → Gọi công cụ (tìm kiếm, chạy Python, đọc API) → Quan sát kết quả → Tự sửa lỗi`, chuyển AI từ "trả lời một lượt" sang "giải quyết tác vụ đa bước".
 - **Mô hình đa phương thức nguyên bản (Native Multimodal Models):** Huấn luyện chung văn bản, ảnh, âm thanh và video ngay từ tiền huấn luyện trong cùng một không gian biểu diễn thay vì ghép nối rời rạc các bộ mã hóa.
 - **Kỹ thuật đánh giá và kiểm soát rủi ro tác tử:** Thiết kế hộp cát (sandbox), giới hạn quyền hành động, và theo dõi độ tin cậy tích lũy qua nhiều bước gọi công cụ liên tiếp.
 
-### Khung giải thích (nên đọc chậm): Tính xác suất thành công của Best-of-$$N$$ (Test-Time Scaling) và tích lũy rủi ro của Tác tử đa bước
+### Giải thích: Tính xác suất thành công của Best-of-$$N$$ (Test-Time Scaling) và tích lũy rủi ro của Tác tử đa bước
 
 **Phần A — Sức mạnh của Best-of-$$N$$ với bộ kiểm chứng chính xác (ví dụ chạy bộ unit test lập trình):**
 Giả sử trên một bài lập trình khó, mô hình chỉ giải đúng với xác suất $$p = 0{,}20$$ ở lần thử đầu tiên (`pass@1 = 20%`). Nếu ta sinh độc lập $$N = 8$$ lời giải rồi dùng trình biên dịch + bộ test chọn lời giải chạy qua:

@@ -11,14 +11,14 @@ lang: en
 
 > *Real-world data is never clean: sensors jitter, human annotators disagree, and the same prompt admits dozens of valid continuations. Probability theory is what lets neural networks stop chasing impossible deterministic perfection and instead learn calibrated distributions over what is likely.*
 
-## Background Knowledge Map: Probability & Statistics in Deep Learning
+## Key ideas: Probability & Statistics in Deep Learning
 
 1. **Axiomatic Probability & Conditioning (Belief Updating)**: Provides the formal rules—sum rule, product rule, and Bayes' theorem—that govern how evidence updates uncertainty across latent and observed variables.
 2. **Random Variables & Expectation (Risk Minimization)**: Frames training as minimizing expected loss $$\mathbb{E}_{(x,y)\sim p_{\text{data}}}[\ell(f_\theta(x), y)]$$, approximated in practice by empirical mini-batch averages.
 3. **Parametric Distributions (Modeling Outputs & Noise)**: Links every standard neural loss directly to a likelihood assumption—Gaussian for MSE, Bernoulli for binary cross-entropy, and Categorical for softmax cross-entropy.
 4. **Statistical Estimation (MLE, MAP, and Generalization)**: Connects maximum likelihood to cross-entropy minimization and shows how placing a prior on weights (MAP estimation) mathematically yields $$L_2$$ (Gaussian prior) and $$L_1$$ (Laplace prior) regularization.
 
-### Step-by-Step Worked Example (Read Slowly): Empirical Risk vs. Expected Risk on a Mini-Batch
+### Worked example: Empirical Risk vs. Expected Risk on a Mini-Batch
 
 Suppose a binary classifier assigns predicted probability $$\hat{p}(y=1\mid x)$$ on a mini-batch of $$N = 4$$ examples with ground-truth labels and predictions:
 - $$(y_1, \hat{p}_1) = (1, 0.8)$$, $$(y_2, \hat{p}_2) = (1, 0.5)$$, $$(y_3, \hat{p}_3) = (0, 0.2)$$, $$(y_4, \hat{p}_4) = (0, 0.5)$$.

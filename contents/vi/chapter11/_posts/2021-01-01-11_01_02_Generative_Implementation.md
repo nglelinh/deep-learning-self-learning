@@ -11,14 +11,14 @@ categories:
 
 Đọc công thức MLE hay minimax thường mang lại cảm giác mọi thứ đều trơn tru, cho đến khi bạn bấm chạy vòng lặp huấn luyện đầu tiên và thấy đường loss nhảy múa không ngừng. Trang tổng hợp cài đặt này đóng vai trò cầu nối giữa hai thế giới: biến lý thuyết mô hình sinh thành mã nguồn chạy được trên bộ dữ liệu 8-Gaussian kinh điển để bạn trực tiếp so sánh mô hình tự hồi quy với GAN.
 
-## Bản đồ kiến thức nền: Lộ trình từ mô hình toán học sang thí nghiệm sinh dữ liệu
+## Kiến thức cần nhớ: Lộ trình từ mô hình toán học sang thí nghiệm sinh dữ liệu
 
 - **Thiết kế tập dữ liệu chuẩn đoán (Toy Benchmark):** Dùng hỗn hợp 8 phân phối chuẩn 2D đặt trên vòng tròn giúp trực quan hóa tức thì độ phủ mode, độ sắc nét và mật độ tràn mà không cần GPU lớn.
 - **Nhánh 1 — Cài đặt tự hồi quy:** Thực hành tách biến, tối ưu NLL chính xác và sinh mẫu tuần tự để thấy ưu thế ổn định của mật độ tường minh.
 - **Nhánh 2 — Cài đặt GAN và kiểm tra bẫy:** Thực hành vòng lặp đối kháng, đo độ phủ mode tự động và nhận diện lỗi huấn luyện phổ biến.
 - **Đánh giá thực nghiệm đa góc nhìn:** Kết hợp cả thước đo định lượng (log-likelihood, số mode phủ được) lẫn trực quan hóa phân bố mẫu sinh.
 
-### Khung giải thích (nên đọc chậm): Cách tính nhanh chỉ số độ phủ mode (Mode Coverage) trên 8 cụm Gaussian
+### Giải thích: Cách tính nhanh chỉ số độ phủ mode (Mode Coverage) trên 8 cụm Gaussian
 
 Giả sử 8 tâm cụm nằm trên vòng tròn bán kính $$R = 2{,}0$$ tại các góc $$\theta_k = \frac{2\pi k}{8}$$ ($$k = 0,\dots,7$$), mỗi cụm có độ lệch chuẩn $$\sigma = 0{,}1$$. Ta rút $$N = 800$$ mẫu từ mô hình và gán mỗi mẫu vào tâm gần nhất nếu khoảng cách Euclid $$d < 3\sigma = 0{,}3$$.
 

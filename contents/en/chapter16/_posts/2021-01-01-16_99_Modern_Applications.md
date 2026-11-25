@@ -12,14 +12,14 @@ lesson_type: optional
 
 If SimCLR proved self-supervised vision was possible, the 2023–2026 wave—DINOv2, SigLIP, and I-JEPA—made it the default vision backbone of modern AI. Today you rarely train a vision encoder from scratch: you drop in a frozen DINOv2 ViT for dense geometry (depth, correspondence, segmentation) or a SigLIP encoder for vision-language alignment, and build directly on top of representations learned without a single ImageNet label.
 
-## Background Knowledge Map: Frontier Self-Supervised Learning (2022–2026)
+## Key ideas: Frontier Self-Supervised Learning (2022–2026)
 
 - **Pillar 1 — Self-Distillation Without Negatives (DINOv2)**: Trains a student ViT to match an exponential-moving-average (EMA) teacher across global and local crops plus masked patches (iBOT), yielding emergent object-part segmentation with zero labels.
 - **Pillar 2 — Pairwise Sigmoid Contrastive Alignment (SigLIP)**: Replaces CLIP's global batch softmax with independent pairwise binary sigmoid losses, decoupling performance from massive synchronized batch sizes across GPUs.
 - **Pillar 3 — Joint-Embedding Predictive Architectures (I-JEPA / V-JEPA)**: Predicts masked target *embeddings* rather than raw pixels, avoiding wasted capacity on unpredictable fine-grained noise like waving leaves.
 - **Pillar 4 — Frozen Universal Backbones**: Uses curated, deduplicated self-supervised pretraining so a single frozen backbone powers depth estimation, robotics, and multimodal LLMs simultaneously.
 
-### Step-by-Step Worked Example (Read Slowly): CLIP Softmax vs. SigLIP Pairwise Sigmoid Loss on a $2 \times 2$ Image-Text Batch
+### Worked example: CLIP Softmax vs. SigLIP Pairwise Sigmoid Loss on a $2 \times 2$ Image-Text Batch
 
 Suppose we have 2 image-text pairs with cosine similarity matrix $S = \begin{bmatrix}0.8 & 0.2\\ 0.1 & 0.7\end{bmatrix}$, temperature scale $t = 10$ (so $tS = \begin{bmatrix}8 & 2\\ 1 & 7\end{bmatrix}$), and SigLIP learnable bias $b = -5$.
 

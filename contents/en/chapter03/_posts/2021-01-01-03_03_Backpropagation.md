@@ -11,14 +11,14 @@ categories:
 
 > *If you had to estimate the gradient of a 1-billion-parameter network by nudging each weight one by one with finite differences, a single gradient step would require a billion forward passes. Backpropagation computes every single one of those billion exact partial derivatives in just ONE backward pass—a billion-fold algorithmic miracle.*
 
-## Background Knowledge Map: Core Pillars of Backpropagation
+## Key ideas: Core Pillars of Backpropagation
 
 1. **Computational Graphs (DAG Decomposition)**: Breaks arbitrarily complex neural architectures into atomic differentiable primitives (`+`, `*`, `matmul`, `ReLU`, `exp`) with trivial local derivatives.
 2. **Reverse-Mode Automatic Differentiation**: Propagates upstream scalar-loss sensitivities $$\delta = \frac{\partial L}{\partial z}$$ backward from output to input, sharing every downstream sub-path instead of recomputing it.
 3. **Local Caching (The Memory–Compute Trade-Off)**: Stores forward-pass activations $$a^{[l-1]}$$ and pre-activations $$z^{[l]}$$ so local Jacobians can be evaluated instantly during the backward sweep.
 4. **Gradient Checking (Finite-Difference Verification)**: Validates hand-derived or custom backward kernels against centered finite differences $$\frac{L(\theta+\varepsilon) - L(\theta-\varepsilon)}{2\varepsilon}$$ to catch sign or transpose bugs.
 
-### Step-by-Step Worked Example (Read Slowly): Reverse-Mode Backprop vs. Finite Differences on a Tiny Graph
+### Worked example: Reverse-Mode Backprop vs. Finite Differences on a Tiny Graph
 
 Consider the computational graph $$L = (a \cdot b + c)^2$$ at $$a = 2, b = 3, c = 1$$. Define intermediate nodes $$u = a \cdot b$$ and $$v = u + c$$, so $$L = v^2$$.
 

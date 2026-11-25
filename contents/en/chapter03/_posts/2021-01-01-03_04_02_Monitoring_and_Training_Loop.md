@@ -11,14 +11,14 @@ categories:
 
 > *Training a neural network without logging both training and validation curves is like flying a plane in zero visibility with the instrument panel taped over. Loss curves, generalization gaps, and early-stopping patience counters tell you exactly when a model is learning, when it starts memorizing noise, and when to pull the plug.*
 
-## Background Knowledge Map: Diagnostics & Training Loop Engineering
+## Key ideas: Diagnostics & Training Loop Engineering
 
 1. **Bias–Variance Reading of Loss Curves**: Both train and val loss high $$\implies$$ underfitting (increase capacity/LR or train longer); train loss dropping while val loss rises $$\implies$$ overfitting (regularize, augment, or stop early).
 2. **Early Stopping as Implicit Regularization**: Monitors validation loss with a `patience` window and `min_delta` tolerance, restoring the best checkpoint weights before memorization degrades generalization.
 3. **Gradient Norm & Activation Telemetry**: Logging global gradient norm $$\|\mathbf{g}\|_2$$ exposes impending explosions (spikes before `NaN`) or vanishing layers long before accuracy collapses.
 4. **Epoch Hygiene & Evaluation Modes**: Properly toggling `model.train()` vs. `model.eval()` and wrapping validation in `torch.no_grad()` prevents BatchNorm/Dropout corruption and OOM crashes.
 
-### Step-by-Step Worked Example (Read Slowly): Tracing an Early-Stopping State Machine Across 7 Epochs
+### Worked example: Tracing an Early-Stopping State Machine Across 7 Epochs
 
 Suppose an early-stopping controller uses `patience = 3` and `min_delta = 0.01`, tracking validation losses across epochs 1–7:
 `[0.85, 0.72, 0.65, 0.645, 0.66, 0.68, 0.70]`.

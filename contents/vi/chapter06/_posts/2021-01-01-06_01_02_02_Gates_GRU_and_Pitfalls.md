@@ -11,7 +11,7 @@ categories:
 
 Làm sao biết chiếc LSTM bạn vừa huấn luyện thực sự "học được cách nhớ và quên" chứ không phải chỉ đang ghi nhớ vẹt? Cách trực quan nhất là **mở nắp ca-pô** và ghi lại giá trị mở của từng cổng $$f_t, i_t, o_t$$ qua từng bước thời gian — đồng thời đặt LSTM lên bàn cân trực tiếp với đối thủ gọn nhẹ hơn là **GRU**.
 
-## Bản đồ kiến thức nền: Bốn chủ đề phân tích sâu về Cổng, GRU và Cạm bẫy
+## Kiến thức cần nhớ: Bốn chủ đề phân tích sâu về Cổng, GRU và Cạm bẫy
 
 1. **Giải phẫu hành vi cổng trên chuỗi nhiễu**:
    Trên chuỗi `[5, nhiễu, nhiễu, ..., 3]`, một LSTM tốt sẽ mở $$i_1 \approx 1$$ khi thấy số `5`, sau đó giữ $$f_t \approx 1, i_t \approx 0$$ suốt đoạn nhiễu để khóa kín bộ nhớ, và chỉ mở lại $$i_T, o_T$$ ở bước cuối.
@@ -22,7 +22,7 @@ Làm sao biết chiếc LSTM bạn vừa huấn luyện thực sự "học đư�
 4. **Định vị LSTM trong bức tranh tiến hóa**:
    Biết rõ giới hạn của LSTM (tuần tự hóa $$O(T)$$ không song song được trên GPU) để hiểu chính xác tại sao Chương 07 (Attention) và Chương 08 (Transformer) ra đời.
 
-### Khung giải thích (nên đọc chậm): Tính tay cơ chế nội suy lồi của GRU so với LSTM khi gặp nhiễu
+### Giải thích: Tính tay cơ chế nội suy lồi của GRU so với LSTM khi gặp nhiễu
 
 Xét một đơn vị GRU 1 chiều với trạng thái cũ $$h_{t-1} = 5{,}0$$ và ứng viên mới chứa tín hiệu nhiễu $$\tilde{h}_t = -1{,}0$$. Phương trình cập nhật của GRU là:
 $$h_t = (1 - z_t) \cdot h_{t-1} + z_t \cdot \tilde{h}_t$$

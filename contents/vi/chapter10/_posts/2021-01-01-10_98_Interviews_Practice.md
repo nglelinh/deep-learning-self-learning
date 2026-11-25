@@ -12,7 +12,7 @@ lesson_type: optional
 
 Trong phỏng vấn Machine Learning nâng cao, câu hỏi về bộ tối ưu hiếm khi dừng ở mức "Adam viết tắt của từ gì?". Người phỏng vấn muốn kiểm tra xem bạn có giải thích được bằng trực giác toán học **tại sao Adam cần bias correction**, **điểm khác biệt chí mạng giữa Adam và AdamW**, và **vì sao Transformer gần như không thể huấn luyện thiếu Learning Rate Warmup** hay không.
 
-## Bản đồ kiến thức nền: Bốn chủ đề phỏng vấn trọng tâm về Bộ tối ưu
+## Kiến thức cần nhớ: Bốn chủ đề phỏng vấn trọng tâm về Bộ tối ưu
 
 1. **Giải thích hình học của Momentum trên thung lũng hẹp**:
    Gradient trên trục dốc đổi dấu liên tục ($$+, -, +, -$$) nên khi cộng dồn vào vận tốc $$v_t$$ chúng **tự triệt tiêu nhau**; trong khi gradient dọc đáy thung lũng luôn cùng dấu nên **cộng hưởng tăng tốc** lên tới hệ số $$\frac{1}{1 - \beta}$$ (với $$\beta = 0{,}9$$ là gấp 10 lần!).
@@ -23,7 +23,7 @@ Trong phỏng vấn Machine Learning nâng cao, câu hỏi về bộ tối ưu h
 4. **Vai trò của Learning Rate Warmup**:
    Ở vài trăm–vài nghìn bước đầu, phương sai ước lượng $$\hat{v}_t$$ của Adam rất nhiễu và các lớp chuẩn hóa chưa ổn định; giữ $$\eta$$ nhỏ rồi tăng dần giúp các thống kê moment ổn định trước khi bước những bước lớn.
 
-### Khung giải thích (nên đọc chậm): Tính tay hệ số khuếch đại vận tốc cực đại của Momentum khi gradient không đổi
+### Giải thích: Tính tay hệ số khuếch đại vận tốc cực đại của Momentum khi gradient không đổi
 
 Giả sử dọc theo đáy thung lũng phẳng, gradient luôn giữ nguyên một hướng với giá trị hằng số $$g_t = g$$, và hệ số quán tính là $$\beta = 0{,}9$$. Ta tính vận tốc $$v_t = \beta v_{t-1} + g$$ (với $$v_0 = 0$$):
 

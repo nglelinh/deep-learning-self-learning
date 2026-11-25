@@ -11,14 +11,14 @@ categories:
 
 > *In 2010, winning a computer vision contest meant chaining SIFT keypoints, HOG histograms, Fisher vectors, and a kernel SVM—and if lighting changed slightly, the whole handcrafted pipeline shattered. Deep learning replaced that brittle relay race with a single differentiable pipeline where every stage adapts together.*
 
-## Background Knowledge Map: Why Classical Pipelines Hit a Ceiling
+## Key ideas: Why Classical Pipelines Hit a Ceiling
 
 1. **Manual Feature Engineering Bottleneck**: Hand-designed descriptors (HOG, MFCC, TF-IDF) freeze assumptions about what signal matters before the classifier ever sees the labels, discarding subtle task-relevant cues.
 2. **Fixed vs. Learned Representations**: Classical models optimize only the final decision boundary over static coordinates, whereas deep networks jointly warp the coordinate space itself so complex manifolds flatten into linearly separable clusters.
 3. **Curse of Dimensionality & Local Smoothness**: Kernel methods and k-NN rely on raw input-space distance, which breaks down in high-dimensional pixel space (shifting an image by 1 pixel causes huge $$L_2$$ distance despite identical semantics).
 4. **Joint End-to-End Credit Assignment**: Backpropagating the task loss all the way to the earliest layer aligns low-level filters directly with high-level semantic accuracy.
 
-### Step-by-Step Worked Example (Read Slowly): Why Raw Pixel Distance Fails While Learned Features Succeed
+### Worked example: Why Raw Pixel Distance Fails While Learned Features Succeed
 
 Consider a tiny $$1 \times 4$$ grayscale image of a vertical white bar:
 - Image A (bar at pixel 1): $$\mathbf{a} = [1, 0, 0, 0]$$

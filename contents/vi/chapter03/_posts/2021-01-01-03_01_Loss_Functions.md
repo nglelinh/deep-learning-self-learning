@@ -11,7 +11,7 @@ categories:
 
 Trong tối ưu hóa, mạng nơ-ron không hề hiểu khái niệm "ảnh đẹp", "dự đoán thông minh" hay "câu trả lời hữu ích"—nó chỉ trung thành tuyệt đối với một mục tiêu duy nhất: **làm cho hàm mất mát $$L(\theta)$$ nhỏ nhất có thể**. Nếu bạn chọn sai hàm mất mát (chẳng hạn dùng MSE trên dữ liệu giá nhà đầy ngoại lai, hay dùng độ chính xác 0–1 không khả vi), mô hình sẽ tối ưu rất chăm chỉ theo đúng... hướng sai! Mục tổng quan này phác thảo bản đồ hai họ hàm mất mát lớn nhất—Hồi quy và Phân loại—trước khi đi vào chi tiết toán học từng công thức.
 
-## Bản đồ kiến thức nền: Ba nguyên tắc chọn Hàm Mất mát chuẩn xác
+## Kiến thức cần nhớ: Ba nguyên tắc chọn Hàm Mất mát chuẩn xác
 
 1. **Khớp với Bản chất Đầu ra và Phân phối Xác suất (Góc nhìn MLE)**:
    Nhiễu chuẩn trên số thực $$\to$$ MSE; nhiễu đuôi dày nhiều ngoại lai $$\to$$ MAE hoặc Huber; nhãn nhị phân $$\to$$ Binary Cross-Entropy; nhãn đa lớp $$\to$$ Categorical Cross-Entropy.
@@ -22,7 +22,7 @@ Trong tối ưu hóa, mạng nơ-ron không hề hiểu khái niệm "ảnh đ�
 3. **Phân biệt Loss (tối ưu hóa) vs. Metric (đánh giá nghiệp vụ)**:
    Ta huấn luyện bằng Cross-Entropy (trơn, khả vi) nhưng đánh giá bằng Accuracy, F1-score hay ROC-AUC (những đại lượng bậc thang không đạo hàm được trực tiếp).
 
-### Khung giải thích (nên đọc chậm): So sánh phản ứng của MSE và Cross-Entropy khi mô hình đoán sai tự tin
+### Giải thích: So sánh phản ứng của MSE và Cross-Entropy khi mô hình đoán sai tự tin
 
 Giả sử nhãn thật là $$y = 1$$ nhưng mô hình phân loại nhị phân đoán rất sai và rất tự tin: $$\hat{y} = 0.01$$ (xác suất lớp 1 chỉ 1%):
 

@@ -11,14 +11,14 @@ categories:
 
 In 2015, Andrej Karpathy trained a tiny character-level RNN on raw Shakespeare plays and Linux C source code, and watched it spontaneously invent indentation, balanced curly braces, and iambic pentameter—one character at a time. A character-level language model distills sequence modeling to its purest form: given the prefix `"hell"`, predict the next probability distribution over the vocabulary so that `'o'` receives the highest probability. Yet building one also exposes every classic recurrent pitfall—temperature calibration, exposure bias, hidden-state detachment across truncated chunks, and vanishing long-range context.
 
-## Background Knowledge Map: Character-Level Language Modeling & Pitfalls
+## Key ideas: Character-Level Language Modeling & Pitfalls
 
 - **Autoregressive Factorization**: A language model decomposes the joint probability of a character sequence into causal conditionals: $$P(c_1, \dots, c_T) = \prod_{t=1}^T P(c_t \mid c_{<t})$$, trained by minimizing cross-entropy loss (equivalently minimizing **perplexity** $$\exp(\mathcal{L}_{\text{CE}})$$).
 - **Teacher Forcing vs. Exposure Bias**: During training, the model receives the ground-truth previous character $$c_{t-1}$$ at every step; during generation, it feeds back its own sampled character $$\hat{c}_{t-1}$$, meaning early mistakes can compound along the rollout.
 - **Temperature-Scaled Sampling**: Dividing logits $$z$$ by temperature $$\tau > 0$$ before softmax—$$p_i = \frac{\exp(z_i/\tau)}{\sum_j \exp(z_j/\tau)}$$—controls the entropy of generation: $$\tau \to 0$$ approaches greedy argmax, $$\tau = 1$$ preserves learned probabilities, and $$\tau > 1$$ flattens the distribution for higher creativity (and higher error).
 - **Hidden State Detachment in TBPTT**: Carrying `h = h.detach()` across chunks preserves forward memory over long documents while severing the autograd graph so GPU memory stays constant instead of growing unboundedly.
 
-### Step-by-Step Worked Example (Read Slowly): Temperature Softmax & Perplexity on a 3-Character Vocabulary
+### Worked example: Temperature Softmax & Perplexity on a 3-Character Vocabulary
 
 Suppose our character RNN has vocabulary $$\{\text{'e'}, \text{'l'}, \text{'o'}\}$$ and outputs raw logits $$z = [0.0, 1.0, 2.0]$$ when the true next character is `'o'`.
 

@@ -11,14 +11,14 @@ categories:
 
 Muốn nhìn thấy mạng ResNet-50 đang tập trung vào đâu trên bức ảnh mà không phải viết lại hay sửa đổi kiến trúc mạng, vũ khí bí mật của PyTorch chính là cơ chế **Hooks** (`register_forward_hook` và `register_full_backward_hook`). Trong bài thực hành này, bạn sẽ tự tay cài đặt lớp `GradCAM`, cài đặt bản đồ Saliency, Integrated Gradients và kết hợp với thư viện giải thích để soi sáng từng dự đoán của mạng CNN.
 
-## Bản đồ kiến thức nền: Kỹ thuật lập trình Grad-CAM và Integrated Gradients trong PyTorch
+## Kiến thức cần nhớ: Kỹ thuật lập trình Grad-CAM và Integrated Gradients trong PyTorch
 
 - **Cơ chế Forward & Backward Hooks:** Bắt giữ trọn vẹn bản đồ đặc trưng $$A^k$$ (lượt xuôi) và gradient $$\partial y^c / \partial A^k$$ (lượt ngược) tại tầng tích chập cuối (`layer4[-1]`) mà không sửa mã nguồn mô hình.
 - **Tính trọng số kênh và phóng to bản đồ nhiệt:** Lấy `mean(dim=(2, 3))` trên gradient, nhân tổ hợp tuyến tính với feature map, áp dụng `F.relu(...)` và nội suy song tuyến (`bilinear`) về đúng kích thước ảnh gốc.
 - **Riemann Sum cho Integrated Gradients:** Chia đoạn thẳng từ ảnh đen $$\mathbf{x}'$$ tới ảnh gốc $$\mathbf{x}$$ thành $$m = 50$$ bước rời rạc để xấp xỉ tích phân mượt và kiểm tra sai số hội tụ (completeness delta).
 - **Quản lý vòng đời Hook & `zero_grad()`:** Luôn gỡ hook (`handle.remove()`) sau khi dùng xong để tránh rò rỉ bộ nhớ GPU và nhớ xóa gradient trước mỗi lớp mục tiêu.
 
-### Khung giải thích (nên đọc chậm): Tính tay một bản đồ nhiệt Grad-CAM kích thước $$2 \times 2$$ từ 2 kênh đặc trưng
+### Giải thích: Tính tay một bản đồ nhiệt Grad-CAM kích thước $$2 \times 2$$ từ 2 kênh đặc trưng
 
 Giả sử tầng tích chập cuối có 2 kênh đặc trưng kích thước $$2 \times 2$$:
 $$A^1 = \begin{pmatrix} 2 & 0 \\ 1 & 3 \end{pmatrix}, \quad A^2 = \begin{pmatrix} 1 & 4 \\ 0 & 1 \end{pmatrix}$$

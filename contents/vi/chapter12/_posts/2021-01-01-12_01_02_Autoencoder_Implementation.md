@@ -11,14 +11,14 @@ categories:
 
 Hiểu một Autoencoder trên giấy chỉ là nửa chặng đường; nửa còn lại thú vị hơn nhiều: nhìn một bức ảnh nhiễu hạt biến thành chữ số sắc nét ngay trên màn hình, rồi tự tay xoay vòng trong không gian ẩn 2D để xem máy tính tự sắp xếp 10 chữ số ra sao. Mục cài đặt này gom gọn hai phần thực hành trọng tâm: xây dựng các biến thể Autoencoder cốt lõi và khảo sát cấu trúc không gian ẩn.
 
-## Bản đồ kiến thức nền: Bản đồ thực hành cài đặt Autoencoder
+## Kiến thức cần nhớ: Bản đồ thực hành cài đặt Autoencoder
 
 - **Phần lõi kiến trúc (12-01-02-01):** Triển khai đầy đủ Vanilla, Denoising và Convolutional Autoencoder trên MNIST với vòng lặp huấn luyện sạch và so sánh sai số tái tạo.
 - **Phần phân tích không gian ẩn (12-01-02-02):** Thực hiện nội suy tuyến tính, vẽ bản đồ mã ẩn 2D theo màu nhãn, và chẩn đoán các bẫy kỹ thuật.
 - **Chuẩn hóa dữ liệu và hàm mất mát:** Đối chiếu trực tiếp sự phù hợp giữa thang giá trị ảnh (`[0, 1]` vs `[-1, 1]`), hàm kích hoạt cuối và hàm loss (BCE vs MSE).
 - **Chẩn đoán lỗi nhanh:** Quy trình kiểm tra nhanh kích thước tensor qua từng tầng tích chập/giải tích chập và phát hiện hiện tượng học thuộc.
 
-### Khung giải thích (nên đọc chậm): Kiểm tra nhanh sự khác biệt giữa BCE và MSE trên một điểm ảnh xám
+### Giải thích: Kiểm tra nhanh sự khác biệt giữa BCE và MSE trên một điểm ảnh xám
 
 Giả sử điểm ảnh thật là $$x = 0{,}9$$ và bộ giải mã dự đoán $$\hat{x} = 0{,}2$$ (sai khá nặng).
 

@@ -11,14 +11,14 @@ categories:
 
 When Mikolov et al. published Word2Vec in 2013, the machine learning world was mesmerized by a single vector equation: $\mathbf{v}_{\text{king}} - \mathbf{v}_{\text{man}} + \mathbf{v}_{\text{woman}} \approx \mathbf{v}_{\text{queen}}$. Nobody explicitly taught the network gender or royalty; that linear parallelogram emerged automatically because Skip-gram with Negative Sampling implicitly factorizes the shifted Pointwise Mutual Information (PMI) matrix of the entire corpus.
 
-## Background Knowledge Map: Mathematical Foundations of Word Embeddings
+## Key ideas: Mathematical Foundations of Word Embeddings
 
 - **Pillar 1 — Skip-Gram & Negative Sampling (SGNS)**: Replaces an expensive $O(|V|)$ vocabulary softmax with $k + 1$ binary logistic classifications (1 true context word vs. $k$ noise words drawn from $P_n(w) \propto f(w)^{3/4}$).
 - **Pillar 2 — Implicit Matrix Factorization & PMI**: Proves (Levy & Goldberg, 2014) that optimal SGNS dot products satisfy $u_w^\top v_c = \text{PMI}(w, c) - \log k$, unifying neural Word2Vec with classical count-based distributional semantics.
 - **Pillar 3 — GloVe (Global Vectors)**: Explicitly regresses $w_i^\top \tilde{w}_j + b_i + \tilde{b}_j \approx \log X_{ij}$ with a bounded weighting function $f(X_{ij})$ so global co-occurrence ratios map directly to vector differences.
 - **Pillar 4 — Dual Embedding Matrices & Polysemy Limits**: Explains why Skip-gram keeps separate target (`in`) and context (`out`) embedding tables, and why static embeddings still cannot separate homonyms like *"bat"* (animal vs. baseball).
 
-### Step-by-Step Worked Example (Read Slowly): One Skip-Gram Negative Sampling Loss & Gradient Step
+### Worked example: One Skip-Gram Negative Sampling Loss & Gradient Step
 
 Suppose target word `"king"` has input vector $v_c = [1.0,\; 0.5]$, true context word `"crown"` has output vector $u_o = [0.8,\; 0.4]$, and one negative sample `"banana"` has output vector $u_n = [-0.5,\; 1.0]$.
 

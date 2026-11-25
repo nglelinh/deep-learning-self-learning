@@ -11,14 +11,14 @@ categories:
 
 Pretraining on the open internet teaches an LLM to imitate everything humanity has ever written—textbooks and conspiracy forums alike. Supervised Fine-Tuning (SFT) teaches it the *format* of a helpful assistant, yet SFT alone still struggles to distinguish a subtly hallucinated answer from a careful, honest one because both look fluent under cross-entropy. Preference alignment (RLHF, DPO, GRPO) adds the crucial comparative signal: given two fluent responses to the exact same prompt, push up the probability of the better one while anchoring to the reference model with a KL leash.
 
-## Background Knowledge Map: The Three-Stage LLM Post-Training Pipeline
+## Key ideas: The Three-Stage LLM Post-Training Pipeline
 
 - **Pillar 1 — Supervised Fine-Tuning (SFT) & Loss Masking**: Fine-tunes on high-quality `(prompt, response)` dialogues while masking loss on prompt tokens (`label = -100`) so gradients train only assistant completions.
 - **Pillar 2 — Bradley–Terry Reward Modeling**: Converts pairwise human rankings $(y_w \succ y_l \mid x)$ into a scalar reward function via $\mathcal{L}_{\text{RM}} = -\mathbb{E}[\log\sigma(r_\phi(x, y_w) - r_\phi(x, y_l))]$.
 - **Pillar 3 — KL-Regularized Preference Optimization (PPO vs. DPO)**: Optimizes expected preference while penalizing $\beta D_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$ to prevent reward hacking, verbosity inflation, and mode collapse.
 - **Pillar 4 — Scope & Limits of Alignment**: Distinguishes behavioral shaping (tone, refusal, helpfulness) from factual grounding—alignment cannot invent knowledge absent from pretraining or retrieval.
 
-### Step-by-Step Worked Example (Read Slowly): Bradley–Terry Reward Loss & KL-Penalized Objective
+### Worked example: Bradley–Terry Reward Loss & KL-Penalized Objective
 
 Suppose for prompt $x$, a reward model scores the preferred answer $r(x, y_w) = 2.5$ and the rejected answer $r(x, y_l) = 1.5$.
 

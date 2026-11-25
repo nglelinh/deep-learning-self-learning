@@ -11,14 +11,14 @@ categories:
 
 Dropout is one line of PyTorch (`nn.Dropout(p=0.5)`), yet it is responsible for some of the most baffling production bugs in deep learning. Forget to call `model.eval()` before validation, and your validation accuracy will randomly wobble—and often score *lower* than training accuracy. Apply standard 1D dropout to 2D CNN feature maps instead of `nn.Dropout2d` (Spatial Dropout), and neighboring correlated pixels instantly leak the dropped activation's information right around the hole! Mastering exact inverted-dropout code and placement rules prevents these silent traps.
 
-## Background Knowledge Map: Practical Dropout Engineering & Pitfalls
+## Key ideas: Practical Dropout Engineering & Pitfalls
 
 - **Inverted Dropout Backward Pass**: During backpropagation, the exact same binary mask $$m$$ and scale $$\frac{1}{1-p}$$ used in the forward pass multiply the upstream gradient: $$\frac{\partial \mathcal{L}}{\partial h} = \frac{\partial \mathcal{L}}{\partial \tilde{h}} \odot \frac{m}{1 - p}$$. Dropped neurons receive strictly zero gradient.
 - **The `model.eval()` Contract**: Leaving a network in `train()` mode during inference keeps random masking active—introducing stochastic predictions and artificially degrading test accuracy. (Exception: **MC Dropout** intentionally keeps dropout on across $$K$$ forward passes to estimate epistemic uncertainty!)
 - **Spatial Dropout (`nn.Dropout2d`) for CNNs**: Because adjacent pixels in a feature map are strongly correlated, zeroing isolated pixels barely regularizes a CNN; dropping entire *channels* forces true feature-level redundancy.
 - **Dropout + BatchNorm Disharmony (Li et al., 2019)**: Placing Dropout immediately *before* BatchNorm shifts feature variance between train mode (inflated by $$\frac{1}{1-p}$$) and eval mode (no noise), causing running-variance mismatch; place Dropout *after* BatchNorm/activation or only on final dense heads.
 
-### Step-by-Step Worked Example (Read Slowly): Why Dropout Before BatchNorm Causes Variance Shift
+### Worked example: Why Dropout Before BatchNorm Causes Variance Shift
 
 Suppose an activation $$x$$ has mean $$0$$ and variance $$\sigma^2 = 1.0$$ before a Dropout layer with $$p = 0.5$$, followed immediately by BatchNorm.
 

@@ -12,14 +12,14 @@ lesson_type: optional
 
 Khi mô hình nền lớn lên tới 7 tỷ, 70 tỷ hay hàng trăm tỷ tham số, việc "mở khóa toàn bộ mạng để tinh chỉnh" theo kiểu cổ điển trở nên xa xỉ tới mức chỉ vài phòng thí nghiệm lớn mới đủ GPU. Bước ngoặt mang tên **PEFT (Parameter-Efficient Fine-Tuning)** — với hai ngôi sao **LoRA** và **QLoRA** — đã dân chủ hóa hoàn toàn học chuyển giao, giúp bạn tinh chỉnh một mô hình khổng lồ ngay trên một chiếc GPU tiêu dùng mà chất lượng vẫn tiệm cận tinh chỉnh toàn phần.
 
-## Bản đồ kiến thức nền: Bốn trụ cột của Học Chuyển giao hiện đại (PEFT 2022–2026)
+## Kiến thức cần nhớ: Bốn trụ cột của Học Chuyển giao hiện đại (PEFT 2022–2026)
 
 - **Giả thuyết hạng thấp nội tại (Intrinsic Low-Rank) của LoRA:** Thay vì cập nhật ma trận đầy đủ $$\Delta W \in \mathbb{R}^{d \times k}$$, phân tích $$\Delta W = \frac{\alpha}{r} B A$$ với $$B \in \mathbb{R}^{d \times r}, A \in \mathbb{R}^{r \times k}$$ ($$r \ll \min(d, k)$$) và khởi tạo $$B = 0$$ để lúc đầu không làm xáo trộn mô hình gốc.
 - **QLoRA (Quantized LoRA):** Đóng băng xương sống ở định dạng 4-bit NormalFloat (NF4) kết hợp lượng tử hóa kép (double quantization) và chỉ giữ trạng thái bộ tối ưu Adam cho các ma trận LoRA nhỏ bé ở BF16.
 - **Triển khai không tăng độ trễ (Weight Merging):** Sau khi huấn luyện xong, cộng gộp trực tiếp $$W_{\text{mới}} = W_0 + \frac{\alpha}{r} B A$$ để suy luận nhanh y hệt mô hình gốc, hoặc hoán đổi nóng nhiều adapter LoRA theo từng người dùng.
 - **Mở rộng sang Thị giác & Đa phương thức:** Áp dụng LoRA cho lớp chiếu Attention của CLIP, Stable Diffusion/Flux (học phong cách/nhân vật chỉ từ vài chục ảnh) và mô hình ngôn ngữ thị giác (VLM).
 
-### Khung giải thích (nên đọc chậm): Tính tay số tham số và độ giảm VRAM của LoRA & QLoRA trên một ma trận $$4096 \times 4096$$
+### Giải thích: Tính tay số tham số và độ giảm VRAM của LoRA & QLoRA trên một ma trận $$4096 \times 4096$$
 
 Xét một ma trận trọng số chiếu tuyến tính $$W_0 \in \mathbb{R}^{4096 \times 4096}$$ trong Transformer ($$16{,}777{,}216$$ tham số).
 

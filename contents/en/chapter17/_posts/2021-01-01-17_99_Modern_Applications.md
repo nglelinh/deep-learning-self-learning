@@ -12,14 +12,14 @@ lesson_type: optional
 
 Between 2023 and 2026, computer vision broke free of fixed 80-class COCO label lists. With Segment Anything (SAM / SAM 2), you click a single point on *any* object in an image or video and get a crisp mask zero-shot; with Grounding DINO and RT-DETR, you type an arbitrary text phrase like *"the cracked red mug on the left"* and get end-to-end Transformer bounding boxes without ever running NMS.
 
-## Background Knowledge Map: Post-YOLO & Post-Mask-R-CNN Vision (2022–2026)
+## Key ideas: Post-YOLO & Post-Mask-R-CNN Vision (2022–2026)
 
 - **Pillar 1 — Promptable Segmentation (SAM & SAM 2)**: Decouples heavy image encoding from a lightweight prompt decoder (points, boxes, masks, and video memory banks), enabling real-time interactive segmentation across unseen categories.
 - **Pillar 2 — NMS-Free End-to-End Detection (DETR & RT-DETR)**: Uses bipartite Hungarian matching between learned object queries and ground-truth boxes so the Transformer predicts unique objects directly without heuristic NMS.
 - **Pillar 3 — Open-Vocabulary Detection (Grounding DINO)**: Fuses text-encoder phrase embeddings with visual multi-scale features via cross-attention, turning fixed-class classification into phrase–region similarity matching.
 - **Pillar 4 — Production Edge Detectors (YOLOv8–v11 / YOLO-World)**: Continues to dominate latency-critical industrial inspection, drones, and edge cameras where TensorRT/ONNX throughput is paramount.
 
-### Step-by-Step Worked Example (Read Slowly): Bipartite Hungarian Matching Cost in DETR
+### Worked example: Bipartite Hungarian Matching Cost in DETR
 
 Suppose an image has 2 ground-truth objects ($G_1, G_2$) and a DETR decoder emits 2 object queries ($Q_1, Q_2$) with pairwise matching cost matrix $C_{ij} = \mathcal{L}_{\text{cls}}(Q_i, G_j) + \mathcal{L}_{\text{box}}(Q_i, G_j)$:
 $$C = \begin{bmatrix} 0.9 & 0.2 \\ 0.3 & 0.8 \end{bmatrix}.$$

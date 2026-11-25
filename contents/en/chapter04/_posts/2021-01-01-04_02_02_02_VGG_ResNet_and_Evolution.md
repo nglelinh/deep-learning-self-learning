@@ -11,14 +11,14 @@ categories:
 
 After AlexNet's 2012 breakthrough, vision researchers asked an obvious question: if 8 layers beat hand-crafted features, what happens at 16, 20, or 100 layers? VGG (2014) showed that replacing bulky $$7 \times 7$$ and $$11 \times 11$$ filters with uniform stacks of $$3 \times 3$$ convolutions dramatically improved accuracy—yet when researchers pushed plain VGG-style networks past 20 layers, something shocking happened: **even training error got worse**. A 56-layer plain network could not even match a 20-layer network on the training set, despite strictly containing the 20-layer solution space. ResNet (2015) solved this "degradation problem" with one deceptively simple line of algebra—$$y = F(x) + x$$—unlocking networks hundreds of layers deep.
 
-## Background Knowledge Map: Depth, Factorization, and Residual Gradient Flow
+## Key ideas: Depth, Factorization, and Residual Gradient Flow
 
 - **Filter Factorization (VGG Principle)**: Stacking two $$3 \times 3$$ convolutions achieves the exact $$5 \times 5$$ receptive field of a single $$5 \times 5$$ layer—and three $$3 \times 3$$ layers match a $$7 \times 7$$ receptive field—while cutting parameters and inserting extra ReLU non-linearities between layers.
 - **The Degradation Problem vs. Overfitting**: Overfitting produces low training error and high test error; degradation produces *high training error* in deeper plain networks because SGD struggles to approximate the identity map through stacked non-linear layers.
 - **Residual Learning & Identity Shortcuts**: Reparameterizing a block to learn the *residual* $$F(x) = H(x) - x$$ makes the identity map trivial—the optimizer simply drives weights toward zero. During backpropagation, the gradient splits into $$\frac{\partial \mathcal{L}}{\partial x_\ell} = \frac{\partial \mathcal{L}}{\partial x_L}\left(1 + \frac{\partial}{\partial x_\ell}\sum_{i=\ell}^{L-1} F(x_i)\right)$$, creating an unimpeded gradient highway directly to early layers.
 - **Bottleneck Design & Macro-Architecture Evolution**: Pairing $$1 \times 1 \to 3 \times 3 \to 1 \times 1$$ bottlenecks with Global Average Pooling enabled ResNet-50 (25.6M parameters) to crush VGG-16 (138M parameters) with less than one-fifth the weights.
 
-### Step-by-Step Worked Example (Read Slowly): Receptive Field & Parameter Proof (Three $$3 \times 3$$ vs. One $$7 \times 7$$)
+### Worked example: Receptive Field & Parameter Proof (Three $$3 \times 3$$ vs. One $$7 \times 7$$)
 
 Assume input and output feature maps both have $$C$$ channels, with stride $$s = 1$$ and same-padding.
 

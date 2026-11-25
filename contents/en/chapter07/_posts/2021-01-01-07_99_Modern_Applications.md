@@ -12,14 +12,14 @@ lesson_type: optional
 
 Standard attention looks effortless on a whiteboard, yet at sequence length $$T = 32{,}768$$, materializing the $$T \times T$$ score matrix in GPU High-Bandwidth Memory (HBM) consumes gigabytes of VRAM per head and stalls Tensor Cores waiting on memory reads. Between 2022 and 2026, systems breakthroughs—**FlashAttention** (IO-aware tiling + online softmax), **PagedAttention** (virtual memory for KV-caches), and **Grouped-Query Attention (GQA)**—rewrote how attention executes on silicon, making 128K–1M-token LLMs practical without changing a single mathematical digit of exact attention.
 
-## Background Knowledge Map: IO-Aware Kernels, KV-Cache Compression, and Long Context
+## Key ideas: IO-Aware Kernels, KV-Cache Compression, and Long Context
 
 - **FlashAttention (Online Softmax Tiling)**: GPU SRAM is $$>10\times$$ faster than HBM but tiny (~20 MB). FlashAttention streams blocks of $$Q, K, V$$ into SRAM and computes exact softmax incrementally using running max and normalizer statistics—reducing HBM memory from $$O(T^2)$$ to $$O(T)$$ while cutting wall-clock time $$2\times\text{–}4\times$$.
 - **KV-Cache Memory Wall & GQA/MQA**: During autoregressive decoding, caching past $$K, V$$ tensors dominates GPU memory. **Multi-Query Attention (MQA)** shares 1 KV head across all query heads; **Grouped-Query Attention (GQA)** shares $$h_{\text{kv}}$$ KV heads across groups of $$h_q / h_{\text{kv}}$$ query heads (e.g., Llama 3), slashing KV-cache size by $$4\times\text{–}8\times$$ with near-zero quality loss.
 - **PagedAttention (vLLM)**: Borrowing virtual memory paging from operating systems, PagedAttention stores KV-caches in non-contiguous fixed-size blocks, eliminating memory fragmentation and enabling dynamic batching and shared-prefix caching.
 - **Sliding-Window & Sparse Attention**: Restricting local layers to a window $$W$$ (e.g., Mistral's 4K sliding window) bounds attention compute to $$O(T \cdot W)$$ while stacked layers still propagate information globally.
 
-### Step-by-Step Worked Example (Read Slowly): KV-Cache Memory Savings of GQA vs. MHA
+### Worked example: KV-Cache Memory Savings of GQA vs. MHA
 
 Consider a 32-layer LLM with $$d_{\text{model}} = 4{,}096$$, $$h_q = 32$$ query heads ($$d_k = 128$$), context length $$T = 8{,}192$$ tokens, stored in `bf16` (2 bytes per element) for a single request:
 

@@ -11,7 +11,7 @@ categories:
 
 Khi một ma trận tác động lên không gian, hầu hết mọi vector đều bị xoay lệch khỏi phương ban đầu. Thế nhưng luôn tồn tại những hướng đặc biệt—gọi là **vector riêng** (*eigenvectors*)—mà sau phép biến đổi, chúng không hề đổi phương, chỉ bị kéo dài ra hoặc co ngắn lại đúng bằng một hệ số gọi là **giá trị riêng** (*eigenvalue*). Khái niệm tưởng chừng thuần túy đại số này lại nắm giữ chìa khóa của hai hiện tượng nổi tiếng nhất trong Deep Learning: lý do gradient bùng nổ hoặc biến mất trong mạng hồi tiếp (RNN), và lý do dữ liệu hàng nghìn chiều có thể nén gọn qua PCA mà giữ nguyên cấu trúc chính.
 
-## Bản đồ kiến thức nền: Bốn ứng dụng cốt lõi của Giá trị riêng và Vector riêng
+## Kiến thức cần nhớ: Bốn ứng dụng cốt lõi của Giá trị riêng và Vector riêng
 
 1. **Phương trình đặc trưng $$\mathbf{A}\mathbf{v} = \lambda\mathbf{v}$$**:
    Tìm các hướng bất biến bằng cách giải $$\det(\mathbf{A} - \lambda\mathbf{I}) = 0$$; dấu và độ lớn của $$\lambda$$ cho biết hướng đó bị phóng đại ($$\lvert\lambda\rvert > 1$$), triệt tiêu ($$\lvert\lambda\rvert < 1$$) hay đảo chiều ($$\lambda < 0$$).
@@ -25,7 +25,7 @@ Khi một ma trận tác động lên không gian, hầu hết mọi vector đ�
 4. **Số điều kiện (Condition Number $$\kappa = \lvert\lambda_{\max}/\lambda_{\min}\rvert$$)**:
    Đo mức độ "méo dẹt" của thung lũng mất mát: $$\kappa$$ càng lớn, Gradient Descent càng dao động mạnh và hội tụ càng chậm.
 
-### Khung giải thích (nên đọc chậm): Tính tay giá trị riêng, vector riêng và kiểm chứng lũy thừa $$\mathbf{A}^{10}$$
+### Giải thích: Tính tay giá trị riêng, vector riêng và kiểm chứng lũy thừa $$\mathbf{A}^{10}$$
 
 Xét ma trận đối xứng $$\mathbf{A} = \begin{bmatrix} 3 & 1 \\ 1 & 3 \end{bmatrix}$$:
 

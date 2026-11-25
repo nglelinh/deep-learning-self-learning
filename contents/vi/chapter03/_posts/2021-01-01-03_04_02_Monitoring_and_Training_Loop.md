@@ -11,7 +11,7 @@ categories:
 
 Huấn luyện một mạng nơ-ron mà không theo dõi biểu đồ `train_loss`, `val_loss` và chuẩn gradient giống như lái máy bay xuyên mây mà tắt toàn bộ bảng đồng hồ buồng lái: bạn không biết mình đang tăng độ cao êm đẹp hay sắp lao xuống đất. Nhiều mô hình đạt đỉnh hiệu năng ở epoch 18, nhưng vì người chạy cứ để mặc tới epoch 100 nên mô hình học vẹt hoàn toàn tập huấn luyện và tụt dốc không phanh trên tập thật. Bài học này hướng dẫn bạn xây dựng một **vòng lặp huấn luyện chuyên nghiệp** với hệ thống giám sát chỉ số, lưu checkpoint tốt nhất và cơ chế **Dừng sớm (*Early Stopping*)**.
 
-## Bản đồ kiến thức nền: Bốn thành phần của Vòng lặp Huấn luyện Chuyên nghiệp
+## Kiến thức cần nhớ: Bốn thành phần của Vòng lặp Huấn luyện Chuyên nghiệp
 
 1. **Tách biệt Chế độ Huấn luyện (`model.train()`) và Đánh giá (`model.eval()` + `torch.no_grad()`)**:
    Lúc đánh giá bắt buộc chuyển sang `eval()` để tắt Dropout và khóa thống kê chạy (*running stats*) của BatchNorm, đồng thời bọc `torch.no_grad()` để không tốn VRAM lưu đồ thị đạo hàm.
@@ -25,7 +25,7 @@ Huấn luyện một mạng nơ-ron mà không theo dõi biểu đồ `train_los
 4. **Tính Tái lập Thực nghiệm (Reproducibility & Logging)**:
    Cố định hạt giống ngẫu nhiên (`seed`), ghi nhật ký đầy đủ siêu tham số và biểu đồ học (TensorBoard / Weights & Biases) để mọi kết quả tốt đều có thể lặp lại chính xác.
 
-### Khung giải thích (nên đọc chậm): Mô phỏng tay cơ chế Early Stopping với `patience = 3`, `min_delta = 0.01`
+### Giải thích: Mô phỏng tay cơ chế Early Stopping với `patience = 3`, `min_delta = 0.01`
 
 Theo dõi chuỗi `val_loss` qua 9 epoch liên tiếp để thấy chính xác thời điểm lưu checkpoint và thời điểm dừng:
 

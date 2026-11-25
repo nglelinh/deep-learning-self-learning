@@ -11,14 +11,14 @@ categories:
 
 > *Open the source code of GPT, Llama, or Gemma and you will not find a single ReLU in the Transformer blocks—instead you will see GELU, SiLU (Swish), and SwiGLU. Modern activations combine ReLU's non-saturating positive ray with smooth curvature near zero to stabilize deep optimization.*
 
-## Background Knowledge Map: Modern Activations & Gradient Preservation
+## Key ideas: Modern Activations & Gradient Preservation
 
 1. **GELU & SiLU/Swish (Smooth Stochastic Gating)**: Weight each input smoothly by a probability gate—$$\text{SiLU}(z) = z\sigma(z)$$ and $$\text{GELU}(z) = z\Phi(z)$$—giving smooth derivatives everywhere and slight non-monotonicity for negative $$z$$.
 2. **Gated Linear Units (SwiGLU)**: Splits the hidden projection into two pathways, $$\text{SwiGLU}(\mathbf{x}) = \text{SiLU}(\mathbf{x}W_1) \odot (\mathbf{x}W_2)$$, providing multiplicative feature interaction that consistently lowers LLM perplexity per FLOP.
 3. **Output-Layer Matching Principle**: Pairs the final activation strictly with the task's probability model—linear for regression, sigmoid for binary/multi-label, and numerically stabilized log-softmax for multi-class classification.
 4. **Vanishing Gradient Mitigation Stack**: Combines non-saturating activations with variance-preserving initialization (He/Xavier), normalization (LayerNorm/RMSNorm), and residual skip connections.
 
-### Step-by-Step Worked Example (Read Slowly): Computing SiLU (Swish) Value, Derivative, and Numerically Stable Softmax
+### Worked example: Computing SiLU (Swish) Value, Derivative, and Numerically Stable Softmax
 
 1. **SiLU Forward & Backward at $$z = 0$$ and $$z = -1$$** ($$\text{SiLU}(z) = z\sigma(z)$$):
    By the product rule:

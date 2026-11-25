@@ -11,7 +11,7 @@ categories:
 
 Chọn đúng bộ tối ưu không chỉ quyết định mô hình hội tụ sau 2 giờ hay 2 ngày, mà còn ảnh hưởng trực tiếp tới **khả năng tổng quát hóa** trên dữ liệu thực tế: tại sao ResNet trên ImageNet thường đạt đỉnh bằng SGD + Momentum, còn Transformer/LLM gần như bắt buộc phải dùng AdamW? Mục này hệ thống hóa trọn vẹn từ nền tảng toán học, cài đặt từ đầu cho đến bản đồ so sánh và cạm bẫy thực chiến.
 
-## Bản đồ kiến thức nền: Ba trụ cột học phần Thuật toán Tối ưu Nâng cao
+## Kiến thức cần nhớ: Ba trụ cột học phần Thuật toán Tối ưu Nâng cao
 
 1. **Phả hệ toán học của các bộ tối ưu**:
    Hiểu rõ bước tiến hóa logic: SGD $$\to$$ Momentum / Nesterov (thêm moment bậc 1 $$m_t$$) và AdaGrad $$\to$$ RMSprop (thêm moment bậc 2 $$v_t$$ có suy giảm mũ) $$\to$$ Adam / AdamW (hợp nhất cả hai).
@@ -20,7 +20,7 @@ Chọn đúng bộ tối ưu không chỉ quyết định mô hình hội tụ s
 3. **Chiến lược chọn Bộ tối ưu và Lịch Learning Rate**:
    Biết phối hợp bộ tối ưu với Warmup + Cosine Annealing, hiểu lý do tách rời Weight Decay (AdamW) và tránh bẫy tuning sai siêu tham số $$(\beta_1, \beta_2, \epsilon)$$.
 
-### Khung giải thích (nên đọc chậm): Bảng tóm tắt 4 phương trình cập nhật cốt lõi để đối chiếu trong một cái nhìn
+### Giải thích: Bảng tóm tắt 4 phương trình cập nhật cốt lõi để đối chiếu trong một cái nhìn
 
 Gọi $$g_t = \nabla_\theta \mathcal{L}(\theta_{t-1})$$ là gradient tại bước $$t$$ và $$\eta$$ là tốc độ học:
 

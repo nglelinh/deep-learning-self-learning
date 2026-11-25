@@ -11,7 +11,7 @@ categories:
 
 Mọi khái niệm trong Khoa học Dữ liệu và Học sâu—từ phân chia tập train/validation/test không giao nhau, phép tính xác suất trên biến cố, cho đến ánh xạ nhiều tầng của mạng nơ-ron—đều đứng trên cùng một nền móng chung: **lý thuyết tập hợp**. Đọc tài liệu nghiên cứu AI mà lúng túng trước các ký hiệu $$\in, \subseteq, \cap, \cup, A \times B, f^{-1}(B)$$ giống như đọc bản nhạc mà không thuộc khóa Sol. Bài học này trang bị trọn bộ cú pháp và tư duy tập hợp để bạn đọc hiểu mượt mà các định lý toán học trong suốt khóa học.
 
-## Bản đồ kiến thức nền: Bốn mảnh ghép căn bản của Lý thuyết Tập hợp
+## Kiến thức cần nhớ: Bốn mảnh ghép căn bản của Lý thuyết Tập hợp
 
 1. **Các phép toán tập hợp và Luật De Morgan**:
    Hợp ($$\cup$$), giao ($$\cap$$), hiệu ($$\setminus$$) và phần bù ($$A^c$$) là công cụ phân vùng không gian dữ liệu, tính chỉ số IoU (*Intersection over Union*) trong phát hiện vật thể và biến đổi biến cố xác suất.
@@ -25,7 +25,7 @@ Mọi khái niệm trong Khoa học Dữ liệu và Học sâu—từ phân chia
 4. **Lực lượng tập hợp (Cardinality: Hữu hạn, Đếm được, Không đếm được)**:
    Phân biệt rạch ròi giữa không gian rời rạc (từ vựng ngôn ngữ, nhãn lớp) dùng tổng $$\sum$$ và không gian liên tục (trọng số thực $$\mathbb{R}^d$$) phải dùng tích phân $$\int$$.
 
-### Khung giải thích (nên đọc chậm): Tính tay chỉ số IoU bằng phép toán tập hợp và kiểm tra tính song ánh
+### Giải thích: Tính tay chỉ số IoU bằng phép toán tập hợp và kiểm tra tính song ánh
 
 **Phần A — Phép giao/hợp trong phát hiện vật thể (Object Detection):**
 Giả sử khung dự đoán $$A$$ phủ 60 điểm ảnh và khung chuẩn (*ground truth*) $$B$$ phủ 50 điểm ảnh, trong đó vùng chồng lấn $$A \cap B$$ có đúng 30 điểm ảnh:

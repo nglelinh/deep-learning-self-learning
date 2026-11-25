@@ -12,14 +12,14 @@ lesson_type: optional
 
 In machine learning technical interviews, interviewers rarely ask you to recite PyTorch API signatures—they hand you a whiteboard marker and ask you to compute an output tensor shape, compare the parameter budget of two $$3 \times 3$$ layers against a $$5 \times 5$$ layer, or explain the precise distinction between translation *equivariance* and translation *invariance*. These rapid-fire derivations test whether you genuinely understand the geometry and optimization of CNNs under pressure.
 
-## Background Knowledge Map: Core Interview Competency Pillars for CNNs
+## Key ideas: Core Interview Competency Pillars for CNNs
 
 - **Exact Tensor & Parameter Arithmetic**: Fluency with $$H_{\text{out}} = \lfloor(H + 2p - d(k-1) - 1)/s\rfloor + 1$$, parameter counts $$C_{\text{out}}(C_{\text{in}} k_H k_W + 1)$$, and memory footprint calculations without reaching for a REPL.
 - **Inductive Bias Vocabulary (Equivariance vs. Invariance)**: Precisely distinguishing $$f(T(x)) = T(f(x))$$ (convolution is equivariant to translation) from $$f(T(x)) = f(x)$$ (global pooling/classification aims for invariance), and knowing how striding and zero-padding subtly break exact equivariance.
 - **Receptive Field & Factorization Trade-offs**: Articulating why stacked small kernels reduce parameters and increase non-linear expressive power while matching the receptive field of larger kernels.
 - **Optimization & Gradient Diagnostics**: Explaining why identity shortcuts fix the degradation problem (not merely vanishing gradients) and how BatchNorm interacts with conv bias and train/eval modes.
 
-### Step-by-Step Worked Example (Read Slowly): Whiteboard Speed-Drill — Two $$3 \times 3$$ Convs vs. One $$5 \times 5$$ Conv
+### Worked example: Whiteboard Speed-Drill — Two $$3 \times 3$$ Convs vs. One $$5 \times 5$$ Conv
 
 An interviewer asks: *"Keeping input and output channels fixed at $$C = 128$$, compare one $$5 \times 5$$ conv against two stacked $$3 \times 3$$ convs in receptive field, parameter count, and non-linearity."*
 

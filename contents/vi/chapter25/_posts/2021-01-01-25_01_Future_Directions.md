@@ -11,14 +11,14 @@ categories:
 
 Một trong những biểu đồ ấn tượng nhất của khoa học máy tính thế kỷ 21 là đường thẳng tắp trên trục log–log của **Scaling Laws**: trải dài qua hơn 6 bậc độ lớn về sức mạnh tính toán, hàm mất mát của mô hình ngôn ngữ giảm đều đặn như một định luật vật lý! Bài học này đi sâu vào toán học của **Scaling Laws**, **Few-Shot / Meta-Learning (MAML)**, **Học liên tục chống quên thảm họa** và các câu hỏi mở về hiệu quả mẫu, suy luận nhân quả và an toàn AI.
 
-## Bản đồ kiến thức nền: Khung lý thuyết các hướng nghiên cứu biên giới của Học sâu
+## Kiến thức cần nhớ: Khung lý thuyết các hướng nghiên cứu biên giới của Học sâu
 
 - **Định luật mở rộng dạng hàm lũy thừa (Chinchilla):** $$L(N, D) = E + \frac{A}{N^\alpha} + \frac{B}{D^\beta}$$, trong đó $$E$$ là entropy bất khả giảm của ngôn ngữ tự nhiên còn hai số hạng sau phản ánh sai số do thiếu tham số và thiếu dữ liệu.
 - **Meta-Learning và Few-Shot Learning (MAML, Prototypical Networks):** Học cách khởi tạo tham số $$\theta^*$$ sao cho chỉ sau 1–5 bước hạ gradient trên vài mẫu mới, mô hình đã thích nghi ngay với tác vụ chưa từng thấy.
 - **Chống quên thảm họa trong Học liên tục (Continual Learning — EWC):** Dùng ma trận thông tin Fisher $$F_i$$ để phạt nặng việc làm lệch các trọng số quan trọng đối với tác vụ cũ khi học tác vụ mới.
 - **AI tin cậy, nhân quả và bền vững năng lượng:** Kết hợp suy luận nhân quả (do-calculus), tiết kiệm năng lượng phần cứng và căn chỉnh an toàn cho các hệ thống tự chủ.
 
-### Khung giải thích (nên đọc chậm): Tính tay một bước vòng trong (Inner Loop) của MAML và phạt Fisher trong EWC
+### Giải thích: Tính tay một bước vòng trong (Inner Loop) của MAML và phạt Fisher trong EWC
 
 **Phần A — Một bước thích nghi nhanh của MAML:** Giả sử siêu tham số khởi tạo là $$\theta = 1{,}0$$, tốc độ học vòng trong $$\alpha = 0{,}1$$, và trên 5 mẫu hỗ trợ của tác vụ mới $$\mathcal{T}_i$$, đạo hàm hàm loss là $$\nabla_\theta \mathcal{L}_{\mathcal{T}_i}(1{,}0) = -3{,}0$$.
 - Tham số thích nghi chỉ sau 1 bước: $$\theta_i' = \theta - \alpha \nabla_\theta \mathcal{L}_{\mathcal{T}_i}(\theta) = 1{,}0 - 0{,}1(-3{,}0) = 1{,}3$$.

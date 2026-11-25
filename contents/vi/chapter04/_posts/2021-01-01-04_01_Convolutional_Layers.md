@@ -11,7 +11,7 @@ categories:
 
 Mọi hệ thống nhận diện khuôn mặt, xe tự lái hay chẩn đoán ảnh X-quang đều bắt đầu từ một phép toán tưởng chừng đơn giản: trượt một ma trận số nhỏ qua bức ảnh và tính tổng tích từng phần tử. Thế nhưng đằng sau thao tác trượt ấy là cả một hệ thống toán học chặt chẽ về kích thước tensor, đa kênh, bước nhảy và độ đệm — nơi chỉ cần sai một đơn vị là toàn bộ đường ống kiến trúc bị lệch chiều.
 
-## Bản đồ kiến thức nền: Bốn nhánh kiến thức của Tầng Tích chập
+## Kiến thức cần nhớ: Bốn nhánh kiến thức của Tầng Tích chập
 
 1. **Đại số tensor và hình học kích thước**:
    Hiểu chính xác mối quan hệ giữa kích thước đầu vào $$(H, W, C_{\text{in}})$$, kích thước nhân $$k$$, đệm $$p$$, bước nhảy $$s$$ và giãn cách $$d$$ để dự đoán ngay đầu ra mà không phải "chạy thử rồi sửa lỗi shape".
@@ -22,7 +22,7 @@ Mọi hệ thống nhận diện khuôn mặt, xe tự lái hay chẩn đoán �
 4. **Biến thể hiện đại và cạm bẫy kỹ thuật**:
    Phân biệt tích chập chuẩn với tích chập $$1\times 1$$, depthwise separable và dilated convolution, đồng thời tránh các lỗi kinh điển như nhầm thứ tự chiều NCHW/NHWC hay quên bias khi dùng BatchNorm.
 
-### Khung giải thích (nên đọc chậm): Tính nhanh một tầng tích chập 4 tham số trên giấy
+### Giải thích: Tính nhanh một tầng tích chập 4 tham số trên giấy
 
 Cho ảnh đầu vào kích thước $$H = 32, W = 32, C_{\text{in}} = 3$$ đi qua tầng `Conv2d(in_channels=3, out_channels=16, kernel_size=3, stride=2, padding=1)`:
 

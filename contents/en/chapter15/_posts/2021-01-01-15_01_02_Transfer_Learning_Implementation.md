@@ -11,14 +11,14 @@ categories:
 
 Most transfer-learning bugs in PyTorch are silent: your training loop runs cleanly, the loss drops, and yet test accuracy is 12% worse than expected. The culprits are almost always the same three details—forgetting to match ImageNet's RGB normalization mean/std, leaving `BatchNorm` running statistics unfrozen when fine-tuning on tiny batches, or hitting pretrained weights with the same aggressive learning rate (`1e-3`) used for a freshly initialized linear head.
 
-## Background Knowledge Map: Practical PyTorch Transfer Learning Pipeline
+## Key ideas: Practical PyTorch Transfer Learning Pipeline
 
 - **Pillar 1 — Preprocessing & Normalization Parity**: Matches the exact input resolution, channel order, and per-channel `(mean, std)` used during pretraining so early convolutional filters see activations in their expected dynamic range.
 - **Pillar 2 — Selective Parameter Freezing (`requires_grad = False`)**: Filters frozen parameters out of the optimizer (`filter(lambda p: p.requires_grad, model.parameters())`) to save optimizer memory and prevent accidental weight drift.
 - **Pillar 3 — Two-Stage Linear-Probe-Then-Fine-Tune (LP-FT)**: Trains the randomly initialized head first while the backbone is frozen, then unfreezes upper blocks with discriminative learning rates (`1e-4` backbone, `1e-3` head) to prevent feature distortion.
 - **Pillar 4 — BatchNorm Mode Discipline**: Explains when to keep frozen backbone `BatchNorm` layers in `.eval()` mode during feature extraction versus letting running stats adapt under severe domain shift.
 
-### Step-by-Step Worked Example (Read Slowly): Computing Differential Learning-Rate Updates in LP-FT
+### Worked example: Computing Differential Learning-Rate Updates in LP-FT
 
 Suppose during Stage 2 fine-tuning of a ResNet-18, we use AdamW/SGD with backbone learning rate $\eta_{\text{bb}} = 10^{-4}$ and head learning rate $\eta_{\text{head}} = 10^{-3}$. At step 1, a pretrained convolutional weight is $w_{\text{bb}} = 0.5000$ with gradient $g_{\text{bb}} = 2.0$, and a head weight is $w_{\text{head}} = 0.0500$ with gradient $g_{\text{head}} = 2.0$.
 

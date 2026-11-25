@@ -11,14 +11,14 @@ categories:
 
 Trước khi một dòng văn bản kịp chạm tới tầng Attention đầu tiên, nó phải đi qua "cánh cửa" **Tokenizer** — nơi một câu tiếng Việt có thể bị cắt thành vài token đẹp đẽ hoặc vụn vỡ thành hàng chục mảnh byte tùy cách huấn luyện BPE. Ngay sau đó là trái tim toán học của tiền huấn luyện LLM: công thức đạo hàm siêu gọn $$\partial\mathcal{L}/\partial z = p - t$$, mẹo **Log-Sum-Exp** chống tràn số mũ (tiền đề của FlashAttention), và quy ước chuyển vị $$X W^\top$$ của PyTorch.
 
-## Bản đồ kiến thức nền: Bốn trụ cột của Tiền huấn luyện và Tokenization
+## Kiến thức cần nhớ: Bốn trụ cột của Tiền huấn luyện và Tokenization
 
 - **Mô hình hóa ngôn ngữ tự hồi quy (Next-Token Prediction):** Tối ưu hóa trung bình Negative Log-Likelihood trên toàn chuỗi $$\mathcal{L} = -\frac{1}{T}\sum_{t=1}^T \ln P_\theta(x_t \mid x_{<t})$$, liên hệ trực tiếp với chỉ số Perplexity $$\text{PPL} = e^{\mathcal{L}}$$.
 - **Softmax + Cross-Entropy và đạo hàm $$p - t$$:** Rút gọn đạo hàm của tổ hợp hai hàm phức tạp thành hiệu trực giác giữa phân phối dự đoán $$p$$ và nhãn one-hot $$t$$.
 - **Ổn định số học Log-Sum-Exp và Online Softmax:** Trừ giá trị cực đại $$m = \max_i z_i$$ trước khi lấy hàm mũ để không bao giờ gặp `NaN`/`Inf`, đồng thời cập nhật thống kê trượt từng khối (tiling) trong FlashAttention.
 - **Quy ước hình học tầng tuyến tính `nn.Linear`:** Phân biệt công thức toán học $$Y = X W$$ với cách lưu ma trận chuyển vị `(out_features, in_features)` của PyTorch để tránh sai lệch khi tính FLOPs hay ghép ma trận LoRA.
 
-### Khung giải thích (nên đọc chậm): Tính tay Softmax ổn định số học, Cross-Entropy, Perplexity và gradient $$p - t$$
+### Giải thích: Tính tay Softmax ổn định số học, Cross-Entropy, Perplexity và gradient $$p - t$$
 
 Giả sử từ điển thu nhỏ có 3 token `[mèo, chó, cá]`, nhãn đúng là `mèo` ($$\mathbf{t} = [1, 0, 0]$$), và tầng chiếu cuối xuất ra logit rất lớn $$\mathbf{z} = [1002{,}0,\; 1000{,}0,\; 1000{,}0]$$.
 

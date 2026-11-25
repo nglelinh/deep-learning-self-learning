@@ -11,14 +11,14 @@ categories:
 
 Hãy tưởng tượng bạn lấy mã ẩn của một chữ số 1 và một chữ số 7, rồi đi dọc theo đoạn thẳng nối giữa hai điểm đó trong không gian ẩn — liệu những bức ảnh giải mã dọc đường có biến hình mượt mà từ số 1 sang số 7 hay sẽ vỡ nát thành nhiễu hỗn độn? Bài học này đưa bạn bước vào bên trong "hộp đen" không gian ẩn của Autoencoder để trực quan hóa các cụm dữ liệu, thử nghiệm nội suy và nhận diện lý do chính Autoencoder thường chưa thể sinh dữ liệu mới một cách tin cậy.
 
-## Bản đồ kiến thức nền: Khám phá không gian ẩn và những giới hạn dẫn đường sang VAE
+## Kiến thức cần nhớ: Khám phá không gian ẩn và những giới hạn dẫn đường sang VAE
 
 - **Nội suy tuyến tính trong không gian ẩn:** Tính $$\mathbf{z}(\alpha) = (1-\alpha)\mathbf{z}_A + \alpha\mathbf{z}_B$$ và giải mã $$g_\theta(\mathbf{z}(\alpha))$$ để kiểm tra tính liên tục cục bộ của biểu diễn học được.
 - **Trực quan hóa không gian ẩn 2D:** Chiếu dữ liệu xuống $$d = 2$$ để quan sát cách các lớp tự tách cụm mà không hề dùng nhãn lớp trong quá trình huấn luyện.
 - **Lỗ hổng không gian ẩn (Holes in Latent Space):** Vì Autoencoder thường không áp đặt phân phối tiên nghiệm lên $$\mathbf{z}$$, nhiều vùng nằm giữa các cụm không hề tương ứng với dữ liệu thật, khiến việc lấy mẫu ngẫu nhiên tạo ra ảnh méo mó.
 - **Bẫy thực hành phổ biến:** Lạm dụng nút cổ chai quá rộng (học thuộc), dùng sai hàm mất mát (MSE gây mờ nhẹ trên ảnh nhị phân), hoặc quên chuẩn hóa thang ảnh.
 
-### Khung giải thích (nên đọc chậm): Tính tay một đường nội suy 5 bước trong không gian ẩn 2D và nhận diện vùng trống
+### Giải thích: Tính tay một đường nội suy 5 bước trong không gian ẩn 2D và nhận diện vùng trống
 
 Giả sử sau khi huấn luyện Autoencoder 2D trên MNIST, ảnh chữ số `1` được mã hóa tại $$\mathbf{z}_A = (-2{,}0,\; 1{,}0)$$ và ảnh chữ số `7` tại $$\mathbf{z}_B = (2{,}0,\; 3{,}0)$$.
 

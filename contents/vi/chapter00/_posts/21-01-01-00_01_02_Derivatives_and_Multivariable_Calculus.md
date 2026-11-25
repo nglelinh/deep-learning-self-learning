@@ -11,7 +11,7 @@ categories:
 
 Khi huấn luyện một mạng nơ-ron nhỏ nhất cũng có hàng nghìn trọng số cùng lúc tác động lên hàm mất mát, ta không còn đứng trên một đường cong 2D nữa mà đang đứng giữa một địa hình núi non nghìn chiều. Làm thế nào để biết việc tăng trọng số $$w_{17}$$ thêm $$0.001$$ sẽ làm giảm sai số hay đẩy nó tăng vọt, trong khi mọi trọng số khác vẫn đang đồng thời thay đổi? Câu trả lời nằm ở **đạo hàm riêng**, **quy tắc dây chuyền đa biến** và **ma trận Jacobian**—những viên gạch trực tiếp kiến tạo nên thuật toán lan truyền ngược.
 
-## Bản đồ kiến thức nền: Bốn khái niệm trụ cột của Giải tích Đa biến
+## Kiến thức cần nhớ: Bốn khái niệm trụ cột của Giải tích Đa biến
 
 1. **Đạo hàm riêng (Partial Derivatives)**:
    Đóng băng tất cả các biến khác và chỉ đo độ nhạy của hàm theo duy nhất một tọa độ $$x_i$$, tương ứng với độ dốc khi cắt mặt cong bằng một mặt phẳng song song trục tọa độ.
@@ -25,7 +25,7 @@ Khi huấn luyện một mạng nơ-ron nhỏ nhất cũng có hàng nghìn tr�
 4. **Quy tắc dây chuyền đa biến (Multivariable Chain Rule)**:
    Cộng dồn mọi đường lan truyền ảnh hưởng từ một biến đầu vào qua nhiều biến trung gian tới đầu ra cuối cùng—chính xác là cơ chế tính gradient qua các tầng nối tiếp và kết nối tắt (*skip connections*) của ResNet.
 
-### Khung giải thích (nên đọc chậm): Tính tay đạo hàm riêng và quy tắc dây chuyền cho mạng 2 nhánh
+### Giải thích: Tính tay đạo hàm riêng và quy tắc dây chuyền cho mạng 2 nhánh
 
 Xét một hàm hợp mô phỏng mạng hai nhánh hội tụ: $$z = u^2 + 3uv$$, trong đó hai nhánh trung gian phụ thuộc vào cùng một tham số $$t$$ theo $$u(t) = 2t$$ và $$v(t) = t + 1$$. Hãy tính $$\frac{dz}{dt}$$ tại $$t = 1$$ theo đúng quy tắc dây chuyền đa biến:
 

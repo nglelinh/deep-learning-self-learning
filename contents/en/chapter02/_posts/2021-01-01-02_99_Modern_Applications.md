@@ -12,14 +12,14 @@ lesson_type: optional
 
 > *Look inside Llama 3, Qwen, or DeepSeek and you might think the humble MLP was replaced by Attention. In fact, roughly two-thirds of the parameters and FLOPs in every modern Transformer live inside its upgraded MLP blocks—powered by Pre-Norm RMSNorm, residual highways, and SwiGLU gating.*
 
-## Background Knowledge Map: Evolution of the Modern MLP Block (2022–2026)
+## Key ideas: Evolution of the Modern MLP Block (2022–2026)
 
 1. **Pre-Norm + RMSNorm**: Places normalization *before* each sub-layer and drops mean-centering ($$\text{RMSNorm}(\mathbf{x}) = \frac{\mathbf{x}}{\text{RMS}(\mathbf{x})} \odot \boldsymbol{\gamma}$$), stabilizing deep Transformer gradients while cutting normalization overhead.
 2. **SwiGLU Feedforward Blocks**: Replaces the 2-matrix `Linear -> ReLU -> Linear` block with a 3-matrix gated block using hidden width $$\approx \frac{8}{3}d$$ so total parameter count stays matched at $$8d^2$$.
 3. **All-MLP Vision (MLP-Mixer)**: Demonstrates that alternating token-mixing MLPs and channel-mixing MLPs can rival CNNs without a single convolution or attention layer.
 4. **Kolmogorov–Arnold Networks (KANs)**: Explores placing learnable univariate spline functions on *edges* rather than fixed activations on *nodes*, sparking active research in scientific function approximation.
 
-### Step-by-Step Worked Example (Read Slowly): Computing RMSNorm vs. LayerNorm on a Token Vector
+### Worked example: Computing RMSNorm vs. LayerNorm on a Token Vector
 
 Take a 4-dimensional token embedding $$\mathbf{x} = [2, 2, 2, 2]$$ with unit scale weights $$\boldsymbol{\gamma} = [1, 1, 1, 1]$$ and $$\varepsilon = 0$$ (for clean hand arithmetic; in practice $$\varepsilon = 10^{-6}$$).
 

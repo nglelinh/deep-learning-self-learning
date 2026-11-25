@@ -11,7 +11,7 @@ categories:
 
 Viết ra một mạng CNN chạy được mà không báo lỗi chỉ mới đi được nửa chặng đường. Nửa chặng đường khó hơn nằm ở việc nhận diện những cạm bẫy âm thầm giết chết hiệu năng — như kích thước đặc trưng co về 0 ở tầng sâu, mất thông tin biên ảnh, hay chi phí tính toán phình to khi triển khai lên điện thoại — và biết chọn đúng biến thể tích chập (Depthwise Separable, Dilated) cho từng bài toán.
 
-## Bản đồ kiến thức nền: Bốn nhánh kiến thức nâng cao về Tích chập
+## Kiến thức cần nhớ: Bốn nhánh kiến thức nâng cao về Tích chập
 
 1. **Tích chập Tách theo Chiều sâu (Depthwise Separable Convolution)**:
    Tách phép lọc không gian (1 bộ lọc riêng cho từng kênh) khỏi phép trộn kênh (tích chập $$1\times 1$$), tạo nền tảng cho MobileNet và Xception chạy mượt trên thiết bị di động.
@@ -22,7 +22,7 @@ Viết ra một mạng CNN chạy được mà không báo lỗi chỉ mới đi
 4. **Chẩn đoán các cạm bẫy kinh điển**:
    Từ hiệu ứng lưới bàn cờ (*checkerboard artifacts*) khi dùng transposed convolution, lỗi quên `padding` khiến ảnh co nhanh, cho tới nhầm lẫn giữa bất biến (invariance) và đồng biến (equivariance).
 
-### Khung giải thích (nên đọc chậm): Tính tay tỷ lệ tiết kiệm của Depthwise Separable và Trường tiếp nhận của Dilated Conv
+### Giải thích: Tính tay tỷ lệ tiết kiệm của Depthwise Separable và Trường tiếp nhận của Dilated Conv
 
 **Phần A — Depthwise Separable vs. Standard Conv** (với $$k = 3, C_{\text{in}} = 64, C_{\text{out}} = 128$$):
 - **Standard Conv**: $$3 \times 3 \times 64 \times 128 = \mathbf{73{,}728}$$ tham số.

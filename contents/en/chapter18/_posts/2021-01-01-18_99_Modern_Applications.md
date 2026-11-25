@@ -12,14 +12,14 @@ lesson_type: optional
 
 Today's NLP pipelines rarely train static Word2Vec embeddings from scratch, yet dense vector geometry is more central than ever: Retrieval-Augmented Generation (RAG) embeds entire documents into dense vectors to ground LLM answers in private facts, while structured JSON extraction and BPE tokenization determine whether an applied system stays accurate, fast, and within context budgets.
 
-## Background Knowledge Map: Applied Modern NLP (2022–2026)
+## Key ideas: Applied Modern NLP (2022–2026)
 
 - **Pillar 1 — Dense Bi-Encoder Retrieval & RAG**: Encodes queries and document chunks into normalized vectors via contrastive embedding models, retrieves top-$k$ passages via Approximate Nearest Neighbors (HNSW/FAISS), and injects them into an LLM prompt.
 - **Pillar 2 — Hybrid Search & Cross-Encoder Reranking**: Combines lexical BM25 (exact IDs, rare jargon) with dense semantic search via Reciprocal Rank Fusion (RRF), then reranks top candidates with a cross-encoder.
 - **Pillar 3 — Structured Extraction & Constrained Decoding**: Uses JSON schemas and grammar-constrained sampling so generative LLMs reliably emit typed records for downstream databases.
 - **Pillar 4 — Applied Tokenization Economics**: Tracks token-to-word ratios across languages and code, directly controlling API latency, context-window utilization, and billing cost.
 
-### Step-by-Step Worked Example (Read Slowly): Reciprocal Rank Fusion (RRF) for Hybrid RAG Search
+### Worked example: Reciprocal Rank Fusion (RRF) for Hybrid RAG Search
 
 Suppose a user queries *"Error E402 timeout"*. Lexical BM25 returns ranks `{Doc A: 1, Doc B: 3, Doc C: 2}` while dense vector search returns ranks `{Doc A: 4, Doc B: 1, Doc C: 2}`. Using the standard RRF formula $\text{RRF}(d) = \sum_{r} \frac{1}{k + \text{rank}_r(d)}$ with $k = 60$:
 

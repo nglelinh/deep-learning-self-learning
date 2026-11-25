@@ -11,7 +11,7 @@ categories:
 
 Nếu bài học trước cho bạn thấy động lực ra đời của Attention trong bài toán dịch máy Seq2Seq, thì phần đi sâu này sẽ nâng Attention lên thành một **phép toán tensor tổng quát** có thể đứng độc lập mà không cần RNN. Đây chính là bước chuyển hóa biến Attention từ một "phụ kiện" gắn kèm LSTM trở thành trái tim của toàn bộ kiến trúc Transformer.
 
-## Bản đồ kiến thức nền: Ba trụ cột khi đi sâu vào Cơ chế Chú ý
+## Kiến thức cần nhớ: Ba trụ cột khi đi sâu vào Cơ chế Chú ý
 
 1. **Toán học của Scaled Dot-Product Attention và lập luận phương sai**:
    Hiểu chính xác tại sao phải chia tích vô hướng $$Q K^T$$ cho $$\sqrt{d_k}$$ trước khi đưa qua `softmax`, và cách viết toàn bộ phép tính gọn gàng thành một tích ma trận theo batch.
@@ -20,7 +20,7 @@ Nếu bài học trước cho bạn thấy động lực ra đời của Attenti
 3. **Cài đặt chuẩn xác và tránh lỗi mặt nạ (Masking)**:
    Nắm vững kỹ thuật che bằng $$-\infty$$ (trước softmax, không phải nhân 0 sau softmax) cho cả **padding mask** lẫn **causal mask**, cùng kiểm chứng hình dạng tensor 4D `(B, H, L, d_k)`.
 
-### Khung giải thích (nên đọc chậm): Tính tay sự bùng nổ phương sai khi KHÔNG chia cho $$\sqrt{d_k}$$
+### Giải thích: Tính tay sự bùng nổ phương sai khi KHÔNG chia cho $$\sqrt{d_k}$$
 
 Giả sử các phần tử của $$\mathbf{q}, \mathbf{k} \in \mathbb{R}^{d_k}$$ độc lập, có trung bình $$0$$ và phương sai $$1$$. Khi đó tích vô hướng $$s = \sum_{i=1}^{d_k} q_i k_i$$ có phương sai bằng đúng $$d_k$$ (độ lệch chuẩn $$\sigma = \sqrt{d_k}$$):
 

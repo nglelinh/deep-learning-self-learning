@@ -12,7 +12,7 @@ lesson_type: optional
 
 Ở vòng phỏng vấn kỹ thuật Deep Learning, chương Mạng Nơ-ron và Hàm Kích hoạt là "mỏ vàng" của những câu hỏi kiểm tra tư duy sâu: *Nếu bỏ hết hàm kích hoạt phi tuyến trong mạng 10 tầng thì chuyện gì xảy ra? Chứng minh Softmax bất biến khi cộng một hằng số? Tại sao Dying ReLU xuất hiện khi learning rate quá lớn?* Những câu hỏi này không đòi hỏi bạn nhớ công thức dài dòng, mà kiểm tra xem bạn có nắm chắc bản chất toán học để giải thích gãy gọn trên bảng trắng hay không.
 
-## Bản đồ kiến thức nền: Bốn chủ đề Phỏng vấn trọng tâm của Chương 02
+## Kiến thức cần nhớ: Bốn chủ đề Phỏng vấn trọng tâm của Chương 02
 
 1. **Vai trò Không thể thay thế của Tính Phi tuyến**:
    Chứng minh nhanh tích của $$L$$ biến đổi affine vẫn là một biến đổi affine duy nhất ($$\mathbf{W}_L \cdots \mathbf{W}_1 \mathbf{x} + \tilde{\mathbf{b}}$$), khiến mọi độ sâu trở nên vô nghĩa nếu thiếu hàm kích hoạt.
@@ -26,7 +26,7 @@ lesson_type: optional
 4. **Đếm Tham số và Chi phí Tính toán (FLOPs)**:
    Kỹ năng tính nhẩm cực nhanh số trọng số, bias và bộ nhớ activation của một khối MLP—kỹ năng thực chiến hay bị hỏi trực tiếp trong phỏng vấn ML Engineer.
 
-### Khung giải thích (nên đọc chậm): Tính tay ảnh hưởng của Nhiệt độ (Temperature $$T$$) lên Softmax
+### Giải thích: Tính tay ảnh hưởng của Nhiệt độ (Temperature $$T$$) lên Softmax
 
 Một câu hỏi phỏng vấn rất hay gặp trong kỷ nguyên LLM: *"Tham số temperature $$T$$ trong $$\text{softmax}(\mathbf{z}/T)$$ làm thay đổi phân phối xác suất như thế nào?"* Hãy thử trên vector logit $$\mathbf{z} = [2, 1, 0]$$ với 3 mức nhiệt độ:
 

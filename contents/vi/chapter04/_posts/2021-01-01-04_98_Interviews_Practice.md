@@ -12,7 +12,7 @@ lesson_type: optional
 
 Trong các vòng phỏng vấn kỹ sư Machine Learning / Computer Vision tại các công ty công nghệ lớn, người phỏng vấn hiếm khi hỏi bạn thuộc lòng API PyTorch. Thay vào đó, họ thường đưa ra một tờ giấy trắng và yêu cầu bạn **tính nhẩm số tham số, kích thước tensor, trường tiếp nhận** và giải thích bản chất toán học của từng lựa chọn kiến trúc trong vòng 2 phút.
 
-## Bản đồ kiến thức nền: Bốn nhóm câu hỏi phỏng vấn cốt lõi về CNN
+## Kiến thức cần nhớ: Bốn nhóm câu hỏi phỏng vấn cốt lõi về CNN
 
 1. **Tính nhanh kích thước và ngân sách tham số**:
    Thành thạo hai công thức $$H' = \lfloor (H + 2p - k)/s \rfloor + 1$$ và $$\text{Params} = (k_h k_w C_{\text{in}} + 1) C_{\text{out}}$$, đồng thời nhớ nói rõ có bias hay không (khi đứng trước BatchNorm thường tắt bias).
@@ -23,7 +23,7 @@ Trong các vòng phỏng vấn kỹ sư Machine Learning / Computer Vision tại
 4. **Cơ chế hoạt động của Kết nối tắt và lan truyền ngược**:
    Giải thích được bằng đạo hàm chuỗi lý do kết nối tắt $$y = F(x) + x$$ cứu gradient và giải quyết bài toán suy thoái chiều sâu.
 
-### Khung giải thích (nên đọc chậm): Kiểm chứng bằng số câu hỏi phỏng vấn kinh điển — "Hai tầng $$3 \times 3$$ vs. một tầng $$5 \times 5$$"
+### Giải thích: Kiểm chứng bằng số câu hỏi phỏng vấn kinh điển — "Hai tầng $$3 \times 3$$ vs. một tầng $$5 \times 5$$"
 
 Giả sử $$C_{\text{in}} = C_{\text{out}} = 64$$ và ta xét trên một bản đồ đặc trưng $$32 \times 32$$ (bỏ qua bias):
 

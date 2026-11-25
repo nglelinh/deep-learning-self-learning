@@ -11,14 +11,14 @@ categories:
 
 Một bức ảnh chữ số viết tay MNIST có tới $$784$$ điểm ảnh, nhưng liệu bao nhiêu con số là đủ để tái hiện lại dáng cong của số 3 hay nét thẳng của số 7? Khi tự tay viết mã nguồn Vanilla Autoencoder, Denoising Autoencoder và Convolutional Autoencoder bằng PyTorch, bạn sẽ thấy ngay sự khác biệt giữa việc ép phẳng ảnh thành vector (mất cấu trúc không gian) với việc dùng tầng tích chập và tích chập chuyển vị để giữ trọn hình dáng chữ số.
 
-## Bản đồ kiến thức nền: Thiết kế kiến trúc và quy trình huấn luyện Autoencoder trong PyTorch
+## Kiến thức cần nhớ: Thiết kế kiến trúc và quy trình huấn luyện Autoencoder trong PyTorch
 
 - **Thiết kế đối xứng Encoder–Decoder:** Giảm dần kích thước chiều (ví dụ $$784 \to 256 \to 64 \to 16$$) rồi mở rộng ngược lại, khớp hàm kích hoạt đầu ra (`Sigmoid` cho ảnh $$[0,1]$$, `Tanh` cho $$[-1,1]$$) với hàm mất mát.
 - **Biến thể Denoising ngay trong vòng huấn luyện:** Cộng nhiễu Gaussian $$\tilde{\mathbf{x}} = \text{clip}(\mathbf{x} + \sigma\boldsymbol{\epsilon}, 0, 1)$$ tại bước forward nhưng vẫn tính loss so với ảnh sạch $$\mathbf{x}$$.
 - **Convolutional Autoencoder (CAE):** Dùng `Conv2d(stride=2)` để hạ mẫu và `ConvTranspose2d` để nâng mẫu, khai thác tính bất biến tịnh tiến và giảm hàng chục lần số tham số so với MLP.
 - **Kiểm định trực quan và định lượng:** Theo dõi đồng thời MSE/BCE trên tập kiểm tra và bảng đối chiếu ảnh gốc – ảnh nhiễu – ảnh tái tạo.
 
-### Khung giải thích (nên đọc chậm): Tính kích thước tensor và số tham số: MLP Autoencoder vs. Conv Autoencoder trên MNIST
+### Giải thích: Tính kích thước tensor và số tham số: MLP Autoencoder vs. Conv Autoencoder trên MNIST
 
 Xét đầu vào MNIST kích thước $$1 \times 28 \times 28 = 784$$:
 

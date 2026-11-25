@@ -9,16 +9,16 @@ categories:
 - chapter14
 ---
 
-Viết một mạng GAN trong PyTorch giống như điều khiển một chiếc xe đua không có phanh ABS: chỉ cần quên `.detach()` ở một dòng hay chọn `beta1=0.9` mặc định của Adam thay vì `0.5`, toàn bộ quá trình huấn luyện có thể vỡ vụn sau vài epoch. Bài thực hành này trình bày đầy đủ mã nguồn DCGAN/MLP-GAN trên MNIST kèm từng chi tiết kỹ thuật sống còn giúp vòng lặp đối kháng vận hành trơn tru.
+Viết một mạng GAN trong PyTorch giống như điều khiển một chiếc xe đua không có phanh ABS: chỉ cần quên `.detach()` ở một dòng hay chọn `beta1=0.9` mặc định của Adam thay vì `0.5`, toàn bộ quá trình huấn luyện có thể vỡ vụn sau vài epoch. Bài thực hành này trình bày đầy đủ mã nguồn DCGAN/MLP-GAN trên MNIST kèm từng chi tiết kỹ thuật quan trọng giúp vòng lặp đối kháng vận hành trơn tru.
 
-## Bản đồ kiến thức nền: Kỹ thuật lập trình GAN ổn định trong PyTorch
+## Kiến thức cần nhớ: Kỹ thuật lập trình GAN ổn định trong PyTorch
 
 - **Chuẩn hóa đầu vào về `[-1, 1]` khớp với `Tanh`:** Đảm bảo thang giá trị của ảnh thật và đầu ra Generator đồng nhất để Discriminator không gian lận bằng cách phát hiện lệch biên độ.
 - **Tách đồ thị gradient đúng cách (`.detach()`):** Khi cập nhật Discriminator, bắt buộc tách `fake_imgs.detach()` để tiết kiệm bộ nhớ và tránh truyền nhầm gradient ngược vào Generator.
 - **Thủ thuật huấn luyện thực chiến (GAN Hacks):** Dùng `LeakyReLU(0.2)` trong $$D$$ để tránh chết nơ-ron, giảm momentum `betas=(0.5, 0.999)` trong Adam, và áp dụng *one-sided label smoothing* (nhãn thật $$0{,}9$$ thay vì $$1{,}0$$).
 - **Giám sát huấn luyện bằng vector nhiễu cố định (`fixed_noise`):** Lưu cố định một batch $$\mathbf{z}_{\text{fixed}}$$ qua mọi epoch để quan sát trực tiếp sự tiến hóa của cùng các ảnh sinh theo thời gian.
 
-### Khung giải thích (nên đọc chậm): Tính tay một bước cập nhật Discriminator với One-Sided Label Smoothing
+### Giải thích: Tính tay một bước cập nhật Discriminator với One-Sided Label Smoothing
 
 Giả sử trên một mẫu thật $$x$$ và một mẫu giả $$\tilde{x} = G(z)$$, bộ phân biệt dự đoán xác suất $$D(x) = 0{,}95$$ và $$D(\tilde{x}) = 0{,}20$$.
 

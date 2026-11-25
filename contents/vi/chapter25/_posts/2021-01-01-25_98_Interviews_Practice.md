@@ -12,14 +12,14 @@ lesson_type: optional
 
 Hãy tưởng tượng bạn đưa một bức ảnh chiếc giày thể thao vào một mạng phân loại ảnh chỉ từng học 2 lớp là `chó` và `mèo`, rồi nhìn đầu ra Softmax báo: **99,7% là chó**! Tại sao mạng nơ-ron chuẩn lại "tự tin một cách mù quáng" trên dữ liệu ngoài phân phối (OOD), và làm thế nào để định lượng xem sự không chắc chắn đến từ nhiễu dữ liệu hay do mô hình thiếu kiến thức? Bài luyện phỏng vấn này giúp bạn làm chủ hoàn toàn chủ đề Học sâu Bayes và độ bất định.
 
-## Bản đồ kiến thức nền: Bốn trụ cột phỏng vấn về Học sâu Bayes và Độ bất định
+## Kiến thức cần nhớ: Bốn trụ cột phỏng vấn về Học sâu Bayes và Độ bất định
 
 - **Phân tách Aleatoric vs. Epistemic Uncertainty:** Aleatoric (nhiễu nội tại dữ liệu, không giảm được dù thu thêm dữ liệu cùng loại) vs. Epistemic (sự thiếu hiểu biết của mô hình ở vùng thưa dữ liệu, giảm được khi bổ sung dữ liệu).
 - **Tương đương giữa Chính quy hóa L2 và Ước lượng MAP với tiên nghiệm Gauss:** Chứng minh toán học $$\arg\max_w [\ln p(D\mid w) + \ln \mathcal{N}(w\mid 0, \sigma_w^2 I)]$$ chính xác là tối thiểu hóa NLL cộng phạt $$\frac{\lambda}{2}\|w\|_2^2$$.
 - **Hiệu chuẩn xác suất (Calibration — ECE & Temperature Scaling):** Nhận diện hiện tượng *overconfidence* của Softmax (đặc biệt trên vùng OOD với mạng ReLU) và cách dùng một tham số nhiệt độ $$T$$ duy nhất trên tập validation để hiệu chuẩn.
 - **Xấp xỉ suy diễn Bayes thực dụng:** So sánh Monte Carlo Dropout (chạy $$M$$ lượt xuôi bật dropout) và Deep Ensembles (huấn luyện $$M$$ mạng độc lập — chuẩn vàng thực tế về đo độ bất định).
 
-### Khung giải thích (nên đọc chậm): Tính tay độ bất định Epistemic bằng Deep Ensemble và quy đổi tiên nghiệm Gauss sang hệ số L2
+### Giải thích: Tính tay độ bất định Epistemic bằng Deep Ensemble và quy đổi tiên nghiệm Gauss sang hệ số L2
 
 **Phần A — Đo bất định qua Deep Ensemble ($$M = 3$$ mạng độc lập):**
 1. Trên một mẫu **trong phân phối (in-distribution)**, 3 mạng dự đoán xác suất lớp dương là $$[0{,}88,\; 0{,}90,\; 0{,}92]$$:

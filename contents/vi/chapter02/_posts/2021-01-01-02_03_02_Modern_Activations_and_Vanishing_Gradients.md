@@ -11,7 +11,7 @@ categories:
 
 ReLU đã giải cứu Deep Learning khỏi cơn ác mộng bão hòa của Sigmoid, nhưng nó vẫn để lại hai vết gợn nhỏ: góc gãy không khả vi tại $$0$$ và những "nơ-ron chết" (*dying ReLU*) không bao giờ tỉnh lại khi bị đẩy sang vùng âm. Để đẩy độ chính xác và độ ổn định lên tầm cao mới cho BERT, GPT, Vision Transformer và Llama, cộng đồng nghiên cứu đã sáng tạo ra thế hệ hàm kích hoạt hiện đại: **Leaky ReLU, ELU, GELU, SiLU (Swish) và SwiGLU**. Bài học này giúp bạn chọn đúng hàm kích hoạt cho từng tầng và làm chủ toàn bộ bộ công cụ chống gradient biến mất.
 
-## Bản đồ kiến thức nền: Bốn mũi nhọn của Hàm Kích hoạt Hiện đại và Chống Gradient Biến mất
+## Kiến thức cần nhớ: Bốn mũi nhọn của Hàm Kích hoạt Hiện đại và Chống Gradient Biến mất
 
 1. **Họ sửa lỗi Dying ReLU (Leaky ReLU, PReLU, ELU)**:
    Giữ một độ dốc nhỏ $$\alpha > 0$$ (thường $$0.01$$) ở miền âm để nơ-ron không bao giờ bị khóa chết hoàn toàn với đạo hàm bằng $$0$$.
@@ -26,7 +26,7 @@ ReLU đã giải cứu Deep Learning khỏi cơn ác mộng bão hòa của Sigm
 4. **Bộ tứ Giải pháp Đồng bộ**:
    Hàm kích hoạt không bão hòa (ReLU/GELU) + Khởi tạo chuẩn (He/Xavier) + Chuẩn hóa (BatchNorm/LayerNorm/RMSNorm) + Kết nối tắt (Residual Connections) + Gradient Clipping.
 
-### Khung giải thích (nên đọc chậm): Tính tay giá trị và đạo hàm của Leaky ReLU vs. SiLU (Swish) tại $$x = -1$$
+### Giải thích: Tính tay giá trị và đạo hàm của Leaky ReLU vs. SiLU (Swish) tại $$x = -1$$
 
 Hãy đặt lên bàn cân ba hàm kích hoạt tại cùng một điểm âm $$x = -1$$ để thấy sự khác biệt về dòng chảy gradient:
 

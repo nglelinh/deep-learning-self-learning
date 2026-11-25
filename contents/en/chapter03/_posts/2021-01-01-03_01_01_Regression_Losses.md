@@ -11,14 +11,14 @@ categories:
 
 > *Predicting house prices, battery lifetimes, or bounding-box coordinates looks simple until a single data-entry typo adds an extra zero to one label. Understanding how MSE, MAE, and Huber loss trade off smooth convergence near zero against robustness to extreme errors is essential for every regression model.*
 
-## Background Knowledge Map: Regression Loss Geometry
+## Key ideas: Regression Loss Geometry
 
 1. **Mean Squared Error (MSE / $$L_2$$)**: Smooth everywhere with gradient $$2(\hat{y} - y)$$ that shrinks naturally as predictions approach the target, converging cleanly to the conditional mean $$\mathbb{E}[Y\mid X]$$.
 2. **Mean Absolute Error (MAE / $$L_1$$)**: Linear penalty converging to the conditional median, robust to heavy-tailed outliers, but its constant-magnitude gradient $$\pm 1$$ can oscillate around the minimum unless the learning rate decays.
 3. **Huber Loss (Smooth $$L_1$$ Hybrid)**: Acts quadratically ($$\frac{1}{2}e^2$$) for small errors $$\lvert e\rvert \leq \delta$$ and linearly ($$\delta(\lvert e\rvert - \frac{1}{2}\delta)$$) for large errors $$\lvert e\rvert > \delta$$, combining smooth convergence near $$0$$ with bounded outlier gradients $$\pm\delta$$.
 4. **Scale & Metric Alignment**: Reminds practitioners to distinguish training loss (e.g., MSE) from interpretable evaluation units (RMSE in original units, $$R^2$$, or MAPE).
 
-### Step-by-Step Worked Example (Read Slowly): Comparing MSE, MAE, and Huber Loss ($$\delta = 1.0$$) Across Small and Large Errors
+### Worked example: Comparing MSE, MAE, and Huber Loss ($$\delta = 1.0$$) Across Small and Large Errors
 
 Compute loss value and gradient magnitude $$\left\lvert \frac{\partial L}{\partial \hat{y}}\right\rvert$$ for two residuals: a small error $$e_1 = 0.5$$ and an outlier error $$e_2 = 10.0$$ (where $$e = \hat{y} - y$$).
 

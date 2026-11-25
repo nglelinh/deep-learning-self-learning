@@ -12,7 +12,7 @@ lesson_type: optional
 
 Ở mức toán học, công thức lan truyền ngược của một mô hình Llama-405B năm 2026 hoàn toàn giống hệt quy tắc dây chuyền năm 1986. Thế nhưng nếu chạy theo kiểu ngây thơ từng dòng Python, mô hình ấy sẽ hết sạch bộ nhớ VRAM ngay ở lớp thứ 5 và tốn hàng tháng trời chờ GPU truyền dữ liệu qua lại bộ nhớ! Cuộc cách mạng thực sự của huấn luyện Deep Learning hiện đại (2022–2026) nằm ở **góc nhìn trình biên dịch và hệ thống**: `torch.compile`, JAX `jit`, **Kernel Fusion**, **Gradient Checkpointing** và **FlashAttention**—biến cùng một quy tắc dây chuyền thành mã máy siêu tốc, tiết kiệm bộ nhớ gấp nhiều lần.
 
-## Bản đồ kiến thức nền: Bốn kỹ thuật Trình biên dịch & Hệ thống nâng tầm Backpropagation
+## Kiến thức cần nhớ: Bốn kỹ thuật Trình biên dịch & Hệ thống nâng tầm Backpropagation
 
 1. **Biên dịch Đồ thị & Hợp nhất Nhân tính toán (`torch.compile`, JAX `jit`, Kernel Fusion)**:
    Thay vì đọc/ghi tensor trung gian ra bộ nhớ toàn cục (HBM) nhiều lần cho từng phép toán nhỏ (cộng, nhân, kích hoạt), trình biên dịch gộp chúng thành **một GPU kernel duy nhất** chạy ngay trên bộ nhớ đệm siêu nhanh SRAM.
@@ -26,7 +26,7 @@ lesson_type: optional
 4. **FlashAttention (Nhận thức Phân cấp Bộ nhớ GPU — IO-Aware Backprop)**:
    Chia nhỏ ma trận Attention theo từng khối (*tiling*) vừa khít SRAM và tái tính toán ma trận chú ý lúc backward thay vì ghi ma trận $$N \times N$$ khổng lồ xuống HBM—giảm bộ nhớ từ $$O(N^2)$$ xuống $$O(N)$$ mà kết quả toán học **chính xác 100%**!
 
-### Khung giải thích (nên đọc chậm): Tính tay mức tiết kiệm VRAM của Gradient Checkpointing trên mạng 100 tầng
+### Giải thích: Tính tay mức tiết kiệm VRAM của Gradient Checkpointing trên mạng 100 tầng
 
 Giả sử bạn huấn luyện một mạng có $$L = 100$$ tầng giống nhau, mỗi tầng sinh ra tensor kích hoạt (*activation*) nặng $$100\text{ MB}$$:
 

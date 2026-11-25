@@ -11,14 +11,14 @@ categories:
 
 Single-head attention has a subtle blind spot: because a single softmax outputs one weighted average across all tokens, trying to attend simultaneously to a pronoun's grammatical subject *and* its adjacent verb averages their two value vectors into an ambiguous blur. **Multi-Head Attention** solves this by projecting the same $$d_{\text{model}}$$ representation into $$h$$ independent low-dimensional subspaces—so Head 1 can track subject–verb agreement, Head 2 can track coreference, and Head 3 can track local punctuation—all in parallel for the exact same total FLOPs as one big head!
 
-## Background Knowledge Map: Multi-Head Attention Mechanics & Common Pitfalls
+## Key ideas: Multi-Head Attention Mechanics & Common Pitfalls
 
 - **Parallel Subspace Projections**: Instead of one $$d_{\text{model}}$$-wide attention pass, splitting into $$h$$ heads of dimension $$d_k = d_{\text{model}}/h$$ lets each head learn its own similarity metric $$W_Q^{(i)} (W_K^{(i)})^\top$$ while keeping total projection parameters fixed at $$4 d_{\text{model}}^2$$.
 - **The Critical `view` + `transpose` Ordering**: To split heads in PyTorch, you MUST reshape `(B, T, d_model) -> (B, T, h, d_k)` *first* and then `transpose(1, 2) -> (B, h, T, d_k)`. Calling `.view(B, h, T, d_k)` directly scrambles tokens across heads without raising an error!
 - **All-Masked Row `NaN` Pitfall**: If a padding mask hides *every* key in a row (e.g., an all-pad dummy sequence), `softmax([-inf, -inf, ...])` evaluates to `0/0 = NaN` and poisons gradients across the entire batch.
 - **Attention Dropout Placement**: Dropout is applied to the *attention probability weights* (after softmax, before multiplying by $$V$$) and again after the output projection $$W_O$$—preventing heads from co-adapting to a single deterministic token.
 
-### Step-by-Step Worked Example (Read Slowly): Proving Multi-Head Has the Same Projection Parameters as Single-Head
+### Worked example: Proving Multi-Head Has the Same Projection Parameters as Single-Head
 
 Let $$d_{\text{model}} = 512$$ and compare $$h = 1$$ head ($$d_k = 512$$) against $$h = 8$$ heads ($$d_k = 64$$), omitting biases for clarity:
 

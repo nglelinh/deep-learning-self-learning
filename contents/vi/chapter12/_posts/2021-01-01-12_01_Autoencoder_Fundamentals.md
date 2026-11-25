@@ -11,14 +11,14 @@ categories:
 
 Trong thế giới dữ liệu khổng lồ hôm nay, phần lớn ảnh, âm thanh và văn bản đều không có nhãn. Làm thế nào để máy tính tự học được bản chất của thế giới mà không cần con người ngồi gắn nhãn từng mẫu một? Autoencoder là câu trả lời kinh điển và thanh lịch nhất: biến chính dữ liệu đầu vào thành đích đến, dùng áp lực nén để chắt lọc tri thức.
 
-## Bản đồ kiến thức nền: Khung tổng quan nền tảng Autoencoder
+## Kiến thức cần nhớ: Khung tổng quan nền tảng Autoencoder
 
 - **Tư duy nén có cấu trúc:** Phân biệt nén dữ liệu tổng quát (như ZIP/JPEG) với nén học được theo miền dữ liệu (Autoencoder chỉ nén xuất sắc đúng loại dữ liệu nó đã thấy).
 - **Phổ các biến thể cốt lõi:** Nắm vững vai trò riêng của Undercomplete, Denoising, Sparse và Convolutional Autoencoder.
 - **Đánh giá biểu diễn không giám sát:** Đánh giá không chỉ qua sai số tái tạo mà còn qua khả năng tách cụm tuyến tính (linear probing) và phát hiện bất thường.
 - **Điểm dừng của Autoencoder xác định:** Nhận rõ ranh giới giữa *học biểu diễn* (Autoencoder làm rất tốt) và *sinh dữ liệu mới* (cần nâng cấp lên VAE ở Chương 13).
 
-### Khung giải thích (nên đọc chậm): So sánh tỷ lệ nén của Autoencoder MNIST ở ba mức kích thước nút cổ chai
+### Giải thích: So sánh tỷ lệ nén của Autoencoder MNIST ở ba mức kích thước nút cổ chai
 
 Một ảnh MNIST có $$784$$ số thực (32-bit float = $$3{,}136\text{ byte}$$). Xét 3 cấu hình nút cổ chai $$d$$:
 

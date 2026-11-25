@@ -11,14 +11,14 @@ categories:
 
 Điều gì xảy ra nếu trong một mạng xã hội, ta chỉ đơn giản lấy *tổng* đặc trưng của mọi bạn bè để cập nhật biểu diễn của một người dùng? Một ngôi sao có 10 triệu người theo dõi sẽ có vector lớn gấp triệu lần người bình thường, khiến kích hoạt bùng nổ! Bài học nền tảng này giải phẫu cách **GCN** giải quyết bài toán đó bằng chuẩn hóa đối xứng $$\tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}$$, cách **GAT** dùng cơ chế chú ý học trọng số cạnh, và hiện tượng **Oversmoothing** khi xếp quá nhiều tầng GNN.
 
-## Bản đồ kiến thức nền: Cơ sở toán học của GCN, GAT và các hiện tượng đặc thù trên đồ thị
+## Kiến thức cần nhớ: Cơ sở toán học của GCN, GAT và các hiện tượng đặc thù trên đồ thị
 
 - **Tích chập đồ thị chuẩn hóa (GCN — Kipf & Welling):** Bổ sung vòng khuyên tự nối $$\tilde{A} = A + I$$ để đỉnh giữ lại đặc trưng chính nó, rồi chuẩn hóa hai đầu theo căn bậc hai bậc đỉnh $$\tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2} H W$$ giúp ổn định thang độ lớn.
 - **Graph Attention Networks (GAT):** Tính trọng số chú ý $$\alpha_{ij} = \text{softmax}_j(\text{LeakyReLU}(\mathbf{a}^\top[W\mathbf{h}_i \| W\mathbf{h}_j]))$$ cho phép đỉnh chủ động ưu tiên các láng giềng liên quan nhất.
 - **Ba cấp độ tác vụ trên đồ thị:** Phân loại đỉnh (node classification), dự đoán cạnh (link prediction), và phân loại toàn đồ thị (graph classification qua phép gộp readout toàn cục).
 - **Hiện tượng quá mịn (Oversmoothing):** Khi xếp quá nhiều tầng (thường $$> 4\text{–}6$$ tầng GCN thuần), việc lấy trung bình lặp đi lặp lại làm mọi vector đỉnh hội tụ về cùng một giá trị, xóa nhòa sự khác biệt giữa các lớp.
 
-### Khung giải thích (nên đọc chậm): Tính tay một bước truyền thông điệp GCN chuẩn hóa đối xứng cho đỉnh trung tâm
+### Giải thích: Tính tay một bước truyền thông điệp GCN chuẩn hóa đối xứng cho đỉnh trung tâm
 
 Xét đồ thị đường thẳng $$1 - 2 - 3$$ với đặc trưng vô hướng ban đầu $$h_1 = 2{,}0$$, $$h_2 = 4{,}0$$, $$h_3 = 6{,}0$$ và trọng số tuyến tính $$W = 1$$ (bỏ qua ReLU vì các số đều dương).
 

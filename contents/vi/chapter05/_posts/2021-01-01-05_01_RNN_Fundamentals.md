@@ -11,7 +11,7 @@ categories:
 
 Để hiểu vì sao những mô hình ngôn ngữ khổng lồ ngày nay phải tốn hàng tỷ đô-la nghiên cứu kiến trúc chuỗi, bước đi đúng đắn nhất là bắt đầu từ chính phương trình hồi quy đơn giản nhất của RNN. Nắm vững cách trải phẳng (unrolling) theo thời gian và lan truyền ngược BPTT sẽ cho bạn nền tảng vững chắc để đọc hiểu mọi kiến trúc xử lý chuỗi về sau.
 
-## Bản đồ kiến thức nền: Ba trụ cột học phần Cơ bản về RNN
+## Kiến thức cần nhớ: Ba trụ cột học phần Cơ bản về RNN
 
 1. **Lý thuyết và trực giác trải phẳng theo thời gian (Unrolling)**:
    Biến một vòng lặp hồi tiếp thành một mạng sâu $$T$$ tầng chia sẻ chung trọng số — nhờ đó quy tắc chuỗi (chain rule) quen thuộc áp dụng được ngay.
@@ -20,7 +20,7 @@ categories:
 3. **Triển khai thực chiến và kỹ thuật ổn định huấn luyện**:
    Tự lập trình RNN từ NumPy/PyTorch, xây dựng mô hình ngôn ngữ cấp ký tự, áp dụng gradient clipping và truncated BPTT để huấn luyện ổn định.
 
-### Khung giải thích (nên đọc chậm): Tính tay tốc độ suy giảm và bùng nổ của lũy thừa trọng số sau 20 bước
+### Giải thích: Tính tay tốc độ suy giảm và bùng nổ của lũy thừa trọng số sau 20 bước
 
 Trong BPTT, đạo hàm từ bước $$T$$ truyền ngược về bước $$T - k$$ tỷ lệ với lũy thừa $$\lambda^k$$ (với $$\lambda$$ là độ lớn trọng số hồi tiếp hiệu dụng sau khi nhân đạo hàm $$\tanh' \le 1$$):
 

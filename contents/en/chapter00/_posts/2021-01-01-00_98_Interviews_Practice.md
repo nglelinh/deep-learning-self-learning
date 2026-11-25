@@ -12,14 +12,14 @@ lesson_type: optional
 
 > *In technical ML interviews, interviewers rarely ask you to integrate a textbook formula—they ask a deceptively short question like "Why does reverse-mode autodiff beat forward-mode for neural networks?" to see whether your calculus and information theory are operational rather than memorized.*
 
-## Background Knowledge Map: Core Interview Themes in Math for Deep Learning
+## Key ideas: Core Interview Themes in Math for Deep Learning
 
 1. **Information Theory (Entropy, Cross-Entropy, and KL Divergence)**: Connects classification loss directly to coding theory via the exact decomposition $$H(p, q) = H(p) + D_{\text{KL}}(p \| q)$$, proving that cross-entropy is minimized iff $$q = p$$.
 2. **Mutual Information & Data Processing Inequality**: Quantifies shared information $$I(X; Y) = H(Y) - H(Y\mid X)$$ and explains why deterministic post-processing can never create information that wasn't already present.
 3. **Automatic Differentiation Modes (Forward vs. Reverse)**: Compares Jacobian-vector products (cost proportional to input dimension $$n$$) against vector-Jacobian products (cost proportional to output dimension $$m$$), explaining why scalar-loss networks ($$m = 1, n = 10^9$$) rely on reverse mode.
 4. **Second-Order Geometry (Hessian Eigenvalues & Conditioning)**: Uses the Hessian spectrum to diagnose local minima, saddle points, and ill-conditioned ravines during live whiteboard debugging.
 
-### Step-by-Step Worked Example (Read Slowly): Verifying $$H(p, q) = H(p) + D_{\text{KL}}(p \| q)$$ in Bits
+### Worked example: Verifying $$H(p, q) = H(p) + D_{\text{KL}}(p \| q)$$ in Bits
 
 Suppose the true binary label distribution is $$p = (0.75, 0.25)$$ and a classifier predicts $$q = (0.50, 0.50)$$. Compute all three quantities in base-2 logarithms (bits), noting $$\log_2(0.75) \approx -0.4150$$, $$\log_2(0.25) = -2$$, $$\log_2(0.50) = -1$$.
 

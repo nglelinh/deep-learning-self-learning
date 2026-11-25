@@ -12,14 +12,14 @@ lesson_type: optional
 
 When Vision Transformers (ViT) arrived in 2020, many predicted the immediate extinction of Convolutional Neural Networks. Yet by 2022, ConvNeXt stunned the field by showing that a pure CNN—modernized with larger $$7 \times 7$$ depthwise kernels, inverted bottlenecks, LayerNorm, GELU, and AdamW training recipes—could match or surpass hierarchical Vision Transformers like Swin on ImageNet, COCO, and ADE20K. Today's frontier vision systems (from ConvNeXt V2 and SAM-style hybrids to edge robotics models) reveal a deeper truth: convolution and attention are complementary operators, not rivals.
 
-## Background Knowledge Map: Modernizing CNNs in the Transformer Era
+## Key ideas: Modernizing CNNs in the Transformer Era
 
 - **Training Recipe vs. Architectural Inductive Bias**: Much of ViT's early advantage came from modern optimization (AdamW, cosine decay, Mixup, CutMix, RandAugment, stochastic depth) rather than self-attention alone; porting those recipes back to ResNet/ConvNeXt closed the gap dramatically.
 - **Macro & Micro Modernizations (ConvNeXt Blueprint)**: Replacing $$3 \times 3$$ standard convs with $$7 \times 7$$ depthwise convs expands receptive fields cheaply, while inverted bottlenecks (expand $$4\times$$ then project back) mirror Transformer MLP blocks.
 - **Hybrid Convolution–Attention Backbones**: Modern vision foundation models routinely use convolutional stems (fast, inductive-bias-rich local feature extraction at high resolution) feeding global Transformer blocks at low resolution—avoiding the $$O(N^2)$$ cost of self-attention on raw pixels.
 - **Edge Deployment & Hardware Determinism**: On mobile NPUs, autonomous vehicles, and high-resolution medical imaging, CNNs still win on latency predictability, memory bandwidth, and small-data sample efficiency.
 
-### Step-by-Step Worked Example (Read Slowly): Why a $$7 \times 7$$ Depthwise Conv Beats a $$3 \times 3$$ Standard Conv
+### Worked example: Why a $$7 \times 7$$ Depthwise Conv Beats a $$3 \times 3$$ Standard Conv
 
 Consider a modern ConvNeXt block operating on $$C = 96$$ channels at resolution $$56 \times 56$$:
 

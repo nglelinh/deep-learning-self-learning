@@ -11,7 +11,7 @@ categories:
 
 Một bức ảnh màu độ phân giải Full HD không gì khác hơn là một mảng số gồm hơn 6 triệu tọa độ; một câu tiếng Việt trước khi đi vào Transformer cũng được hóa thành chuỗi các vector hàng nghìn chiều. Toàn bộ thế giới dữ liệu của Học sâu vận hành bên trong không gian đại số tuyến tính, nơi GPU có thể thực hiện hàng nghìn tỷ phép nhân ma trận mỗi giây. Bài tổng quan này phác họa ba mảnh ghép cốt lõi—vector, ma trận và giá trị riêng—để bạn nhìn đại số tuyến tính bằng con mắt hình học thay vì những bảng số vô hồn.
 
-## Bản đồ kiến thức nền: Ba trụ cột Đại số Tuyến tính cho Học sâu
+## Kiến thức cần nhớ: Ba trụ cột Đại số Tuyến tính cho Học sâu
 
 1. **Vector, Tích vô hướng và Chuẩn (Vectors & Norms)**:
    Mã hóa từng mẫu dữ liệu hoặc embedding ngữ nghĩa thành một điểm/mũi tên trong $$\mathbb{R}^n$$; tích vô hướng đo độ tương đồng góc (cơ chế Attention), còn chuẩn $$L_1, L_2$$ đo độ lớn và kiểm soát regularization.
@@ -22,7 +22,7 @@ Một bức ảnh màu độ phân giải Full HD không gì khác hơn là mộ
 3. **Giá trị riêng và Vector riêng (Eigenvalues & Eigenvectors)**:
    Tiết lộ các "trục chính bất biến" của ma trận—chìa khóa để hiểu PCA giảm chiều dữ liệu, phân tích độ cong Hessian của hàm mất mát, và giải thích hiện tượng gradient bùng nổ/biến mất khi nhân lặp ma trận qua nhiều tầng sâu.
 
-### Khung giải thích (nên đọc chậm): Theo dõi một vector đặc trưng đi qua một lớp tuyến tính
+### Giải thích: Theo dõi một vector đặc trưng đi qua một lớp tuyến tính
 
 Giả sử ta có vector đầu vào 2 chiều $$\mathbf{x} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}$$ đi qua lớp tuyến tính $$\mathbf{y} = \mathbf{W}\mathbf{x} + \mathbf{b}$$ với ma trận trọng số $$\mathbf{W} = \begin{bmatrix} 2 & -1 \\ 0 & 3 \end{bmatrix}$$ và độ lệch $$\mathbf{b} = \begin{bmatrix} 1 \\ -2 \end{bmatrix}$$:
 

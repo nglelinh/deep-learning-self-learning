@@ -11,14 +11,14 @@ categories:
 
 > *If you write a forward pass with Python `for` loops over individual neurons and samples, training MNIST takes hours; rewrite the exact same math as batched matrix multiplications (GEMM) and it finishes in seconds. Forward propagation is where abstract graph equations become high-throughput tensor algebra.*
 
-## Background Knowledge Map: Batched Forward Propagation & Tensor Mechanics
+## Key ideas: Batched Forward Propagation & Tensor Mechanics
 
 1. **Layer-by-Layer State Transitions**: Maps input tensor $$A^{[0]} = X \in \mathbb{R}^{B \times d_0}$$ through $$Z^{[l]} = A^{[l-1]} W^{[l]\top} + \mathbf{1}\mathbf{b}^{[l]\top}$$ and $$A^{[l]} = g^{[l]}(Z^{[l]})$$, caching $$Z^{[l]}$$ and $$A^{[l-1]}$$ for the backward pass.
 2. **Broadcasting Semantics**: Explains how a 1D bias vector of shape `(d_out,)` automatically stretches across the batch dimension `(B, d_out)` without duplicating memory on disk.
 3. **Vectorization & Hardware Arithmetic Intensity**: Grouping $$B$$ examples into a matrix converts memory-bound matrix-vector products into compute-bound matrix-matrix multiplications that saturate GPU Tensor Cores.
 4. **Activation Caching & Memory Trade-Off**: During training, every intermediate activation $$A^{[l]}$$ must stay in VRAM until backprop consumes it—which is why batch size $$B$$ scales activation memory linearly.
 
-### Step-by-Step Worked Example (Read Slowly): Full Batched Matrix Forward Pass ($$B = 2$$)
+### Worked example: Full Batched Matrix Forward Pass ($$B = 2$$)
 
 Compute one batched forward pass for $$B = 2$$ samples in $$\mathbb{R}^2$$ through a `2 -> 2 -> 1` ReLU network:
 $$X = \begin{bmatrix} 1 & 2 \\ -1 & 1 \end{bmatrix}, \quad W^{[1]} = \begin{bmatrix} 1 & -1 \\ 2 & 1 \end{bmatrix}, \quad \mathbf{b}^{[1]} = \begin{bmatrix} 0.5 \\ -1.0 \end{bmatrix}, \quad W^{[2]} = \begin{bmatrix} 3 & -2 \end{bmatrix}, \quad b^{[2]} = 1.0$$

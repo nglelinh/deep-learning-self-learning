@@ -12,14 +12,14 @@ lesson_type: optional
 
 Có một sự thật thú vị ít người để ý: dù Stable Diffusion, Sora hay Veo nổi tiếng nhờ mô hình khuếch tán và Transformer, nhưng bức ảnh hay thước phim cuối cùng bạn nhìn thấy trên màn hình lại luôn được "vẽ ra" bởi một **VAE**! Thay vì cạnh tranh trực tiếp với Diffusion về độ sắc nét, VAE hiện đại đã tìm thấy vị trí không thể thay thế trong vai trò bộ mã hóa – giải mã không gian ẩn cho ảnh độ phân giải cao, video 3D và các bộ sinh một bước.
 
-## Bản đồ kiến thức nền: Vai trò chiến lược của VAE trong hệ sinh thái tạo sinh 2022–2026
+## Kiến thức cần nhớ: Vai trò chiến lược của VAE trong hệ sinh thái tạo sinh 2022–2026
 
 - **KL-VAE + Perceptual/GAN Loss trong Stable Diffusion:** Kết hợp trọng số KL rất nhỏ ($$\sim 10^{-6}$$) với hàm mất mát cảm nhận (LPIPS) và bộ phân biệt PatchGAN để xóa bỏ nhược điểm ảnh mờ của VAE cổ điển.
 - **Causal 3D VAE cho mô hình sinh video:** Mở rộng nén theo cả không gian lẫn thời gian (ví dụ $$4\times$$ thời gian và $$8\times 8$$ không gian) giúp nén 1 đoạn video thành chuỗi token gọn nhẹ cho DiT.
 - **VQ-VAE và mã hóa rời rạc (Discrete Tokenizers):** Ánh xạ vector ẩn vào sổ mã hữu hạn (codebook) để ghép nối trực tiếp ảnh/video với mô hình ngôn ngữ tự hồi quy.
 - **Chưng cất khuếch tán và Consistency Models trong không gian ẩn:** Thực hiện sinh ảnh trong 1–4 bước ngay trên không gian ẩn của VAE, giảm độ trễ từ vài giây xuống dưới 100 mili-giây.
 
-### Khung giải thích (nên đọc chậm): Tính hệ số nén của Causal 3D VAE trên một đoạn video ngắn
+### Giải thích: Tính hệ số nén của Causal 3D VAE trên một đoạn video ngắn
 
 Xét một đoạn video 4 giây ở tốc độ 24 khung hình/giây ($$T = 96$$ khung hình), độ phân giải $$512 \times 512$$ với 3 kênh màu RGB.
 

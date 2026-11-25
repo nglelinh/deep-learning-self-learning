@@ -12,14 +12,14 @@ lesson_type: optional
 
 Between 2020 and 2026, generative modeling underwent a tectonic shift: unstable adversarial games gave way to denoising diffusion models and flow matching, which turn generation into solving a smooth differential equation from Gaussian noise to data. Rather than replacing likelihood theory, these modern engines directly generalize it—connecting score matching, variational lower bounds, and continuous normalizing flows into one unified framework.
 
-## Background Knowledge Map: Diffusion, Score Matching, and Flow Matching
+## Key ideas: Diffusion, Score Matching, and Flow Matching
 
 - **Pillar 1 — Forward Corruption & Reverse Denoising (DDPM)**: Gradually adds Gaussian noise to data $x_0 \to x_t$ via a closed-form kernel, then trains a neural network $\epsilon_\theta(x_t, t)$ to predict the noise and reverse the Markov chain.
 - **Pillar 2 — Score Functions & Langevin Dynamics**: Interprets denoising as estimating the Stein score $\nabla_x \log p_t(x)$—the vector field pointing uphill toward higher data density—without ever computing the partition function $Z$.
 - **Pillar 3 — Conditional Flow Matching (Rectified Flows)**: Replaces curved stochastic diffusion paths with straight-line linear interpolants $x_t = (1-t)x_0 + t x_1$ and regresses a velocity field $v_\theta(x_t, t)$ directly onto $x_1 - x_0$, enabling high-quality generation in far fewer ODE steps.
 - **Pillar 4 — Classifier-Free Guidance (CFG)**: Steers conditional generation by extrapolating between conditional and unconditional predictions, trading diversity for sharper prompt adherence.
 
-### Step-by-Step Worked Example (Read Slowly): One Exact Flow-Matching Training & Sampling Step in 2D
+### Worked example: One Exact Flow-Matching Training & Sampling Step in 2D
 
 Suppose a 2D data point is $x_1 = (4.0, 2.0)$, sampled noise is $x_0 = (0.0, -2.0)$, and we sample time $t = 0.25$ along the linear interpolant $x_t = (1 - t)x_0 + t x_1$.
 

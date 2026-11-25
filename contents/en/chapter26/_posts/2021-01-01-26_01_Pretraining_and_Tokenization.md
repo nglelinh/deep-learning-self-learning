@@ -11,14 +11,14 @@ categories:
 
 At the bottom of every trillion-parameter LLM lies one astonishingly clean equation: for next-token cross-entropy loss with a softmax language-model head, the gradient with respect to the raw vocabulary logits $z$ is simply $p - t$—predicted probability minus the one-hot target. Understanding how that gradient interacts with log-sum-exp numerical stability, SwiGLU activations, selective AdamW weight decay, and BPE tokenization turns LLM pretraining from black magic into transparent numerical engineering.
 
-## Background Knowledge Map: Foundations of LLM Pretraining & Tokenization
+## Key ideas: Foundations of LLM Pretraining & Tokenization
 
 - **Pillar 1 — Causal Next-Token Objective & Softmax Gradient**: Shifts inputs `x[:-1]` against targets `x[1:]` across sequence length $T$ and exploits $\frac{\partial \mathcal{L}}{\partial z} = p - t$ for fast, clean backpropagation.
 - **Pillar 2 — Log-Sum-Exp & Online Softmax Stability**: Subtracts $m = \max_j z_j$ before exponentiating to eliminate `inf`/`NaN` overflows, and generalizes to streaming block-wise max/normalizer updates inside FlashAttention.
 - **Pillar 3 — Modern FFN Activations & Selective AdamW Decay**: Uses SwiGLU gated linear units and applies AdamW decoupled weight decay *only* to 2D weight matrices—never to 1D LayerNorm/RMSNorm scales or biases.
 - **Pillar 4 — Byte-Pair Encoding (BPE) Subword Trade-offs**: Iteratively merges the most frequent adjacent byte/symbol pairs to balance sequence compression against embedding-table size $|V| \times d_{\text{model}}$.
 
-### Step-by-Step Worked Example (Read Slowly): Log-Sum-Exp Softmax, Cross-Entropy Loss, and Exact Logit Gradient
+### Worked example: Log-Sum-Exp Softmax, Cross-Entropy Loss, and Exact Logit Gradient
 
 Suppose at position $t$, a tiny 3-token vocabulary `{0: "cat", 1: "dog", 2: "mat"}` produces raw logits $z = [100.0,\; 102.0,\; 100.0]$, and the true next token is index `1` (`"dog"`, so $t = [0, 1, 0]$).
 

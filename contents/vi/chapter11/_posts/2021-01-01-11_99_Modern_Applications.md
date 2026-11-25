@@ -12,14 +12,14 @@ lesson_type: optional
 
 Chỉ vài năm trước, GAN vẫn là "vị vua không ngai" của thế giới sinh ảnh; thế nhưng ngày nay, từ Stable Diffusion 3, Flux đến các hệ thống tạo video siêu thực, sân khấu trung tâm đã thuộc về **Mô hình Khuếch tán (Diffusion)** và **Flow Matching**. Điều gì khiến ý tưởng "phá hủy ảnh bằng nhiễu rồi học cách khử nhiễu từng bước" lại đánh bại được cả cuộc đấu trí đối kháng lẫn chuỗi tự hồi quy? Bài cập nhật này giải mã bước chuyển mình quan trọng nhất của AI tạo sinh giai đoạn 2022–2026.
 
-## Bản đồ kiến thức nền: Bốn trụ cột của AI tạo sinh hiện đại (2022–2026)
+## Kiến thức cần nhớ: Bốn trụ cột của AI tạo sinh hiện đại (2022–2026)
 
 - **Quá trình khuếch tán thuận và ngược (DDPM / Score Matching):** Thêm nhiễu chuẩn hóa theo lịch trình $$\bar{\alpha}_t$$ rồi huấn luyện mạng dự đoán nhiễu $$\boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t)$$ (tương đương học trường điểm số $$\nabla_{\mathbf{x}} \log p_t(\mathbf{x})$$).
 - **Flow Matching và đường đi thẳng (Rectified Flow):** Thay quỹ đạo nhiễu cong phức tạp bằng phép nội suy tuyến tính $$\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\mathbf{x}_1$$ và học trường vận tốc $$\mathbf{v}_\theta(\mathbf{x}_t, t) \approx \mathbf{x}_1 - \mathbf{x}_0$$ giúp giảm mạnh số bước lấy mẫu.
 - **Khuếch tán trong không gian ẩn (Latent Diffusion) và DiT:** Kết hợp bộ nén VAE (Chương 12–13) với kiến trúc Diffusion Transformer để mở rộng lên độ phân giải cao và dữ liệu video.
 - **Hệ sinh thái dẫn đường và tăng tốc:** Classifier-Free Guidance (CFG) để bám sát prompt văn bản, cùng các bộ giải ODE/SDE và chưng cất vài bước cho suy luận thực tế.
 
-### Khung giải thích (nên đọc chậm): Tính tay một bước thêm nhiễu DDPM và mục tiêu vận tốc Flow Matching
+### Giải thích: Tính tay một bước thêm nhiễu DDPM và mục tiêu vận tốc Flow Matching
 
 Xét một giá trị điểm ảnh (đã chuẩn hóa) $$x_0 = 0{,}8$$ và một mẫu nhiễu chuẩn $$\epsilon = -0{,}5$$.
 

@@ -12,14 +12,14 @@ lesson_type: optional
 
 Nếu ở năm 2015 kỹ sư NLP chủ yếu tải vector Word2Vec/GloVe về để đưa vào LSTM phân loại cảm xúc, thì ngày nay nhúng từ tĩnh đã nhường sân khấu cho **Mô hình Ngôn ngữ Lớn (LLM)** và **nhúng ngữ nghĩa cấp đoạn văn (Dense Embeddings)** làm trái tim của hệ thống **RAG (Retrieval-Augmented Generation)**. Bài cập nhật này giải thích mạch chuyển tiếp liền lạc từ một vector cho mỗi từ sang hệ thống vừa truy hồi tri thức vừa sinh câu trả lời có căn cứ.
 
-## Bản đồ kiến thức nền: Bốn trụ cột của NLP hiện đại (2022–2026)
+## Kiến thức cần nhớ: Bốn trụ cột của NLP hiện đại (2022–2026)
 
 - **Subword Tokenization (BPE / Unigram) và nhúng theo ngữ cảnh:** Biến văn bản thành chuỗi token con rồi đi qua nhiều tầng Self-Attention để cùng một từ mang vector khác nhau hoàn toàn theo ngữ cảnh.
 - **Truy hồi dày (Dense Retrieval) và RAG:** Nhúng cả câu hỏi lẫn các đoạn tài liệu thành vector chuẩn hóa, tìm top-$$k$$ đoạn gần nhất bằng tích vô hướng (hoặc kết hợp BM25), rồi nạp vào cửa sổ ngữ cảnh của LLM để giảm ảo giác.
 - **Trích xuất có cấu trúc (Structured Outputs / JSON Schema):** Dùng giải mã có ràng buộc ngữ pháp để ép LLM trả về dữ liệu JSON hợp lệ 100% cho các hệ thống phần mềm.
 - **Đánh giá hệ thống NLP ứng dụng:** Tách biệt rõ hai tầng lỗi trong RAG — lỗi truy hồi (Recall@k, MRR) và lỗi sinh câu trả lời trung thực (Faithfulness) — thay vì đánh giá mơ hồ.
 
-### Khung giải thích (nên đọc chậm): Tính tay điểm truy hồi lai (Hybrid Search: BM25 + Dense Cosine bằng RRF) trong RAG
+### Giải thích: Tính tay điểm truy hồi lai (Hybrid Search: BM25 + Dense Cosine bằng RRF) trong RAG
 
 Trong hệ thống RAG thực tế, ta thường kết hợp xếp hạng từ khóa (BM25) với xếp hạng vector ngữ nghĩa (Dense Embedding) bằng công thức **Reciprocal Rank Fusion (RRF)** với hằng số làm mượt $$k = 60$$:
 $$\text{RRF}(d) = \frac{1}{k + r_{\text{BM25}}(d)} + \frac{1}{k + r_{\text{dense}}(d)}.$$

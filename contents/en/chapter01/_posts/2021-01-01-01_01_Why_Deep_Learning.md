@@ -11,14 +11,14 @@ categories:
 
 > *Every new deep learning engineer faces a critical architectural question on their very first production project: "Should I build a deep neural network here, or will XGBoost beat it in ten minutes?" Knowing why deep learning wins—and where it loses—is what separates an engineer from a hype follower.*
 
-## Background Knowledge Map: The Case for (and Against) Deep Learning
+## Key ideas: The Case for (and Against) Deep Learning
 
 1. **End-to-End Representation Discovery**: Eliminates fragile manual feature pipelines on unstructured modalities (pixels, waveforms, raw text, graphs) where human-engineered descriptors plateau early.
 2. **Data & Compute Scaling Laws**: Classical ML error curves flatten out past moderate dataset sizes, whereas deep models continue improving predictably as data, parameters, and compute scale together.
 3. **Inductive Bias & Tabular Boundaries**: On small-to-medium structured tabular datasets with heterogeneous features, gradient-boosted decision trees (XGBoost, LightGBM) still often match or beat neural nets at a fraction of the cost.
 4. **Ecosystem & Transfer Learning Leverage**: Pretrained foundation models let small teams inherit billions of tokens or images of prior representation learning via fine-tuning rather than training from scratch.
 
-### Step-by-Step Worked Example (Read Slowly): Quantifying Scaling Break-Even Between Classical ML and Deep Learning
+### Worked example: Quantifying Scaling Break-Even Between Classical ML and Deep Learning
 
 Suppose on a document-classification benchmark, a TF-IDF + Logistic Regression baseline achieves error rate $$E_{\text{ML}}(N) = 0.08 + \frac{2.0}{\sqrt{N}}$$ (floor of 8% due to fixed bag-of-words features), while a fine-tuned Transformer achieves $$E_{\text{DL}}(N) = 0.02 + \frac{8.0}{\sqrt{N}}$$ (lower 2% floor, higher sample complexity). Find the dataset size $$N^*$$ where deep learning overtakes classical ML.
 

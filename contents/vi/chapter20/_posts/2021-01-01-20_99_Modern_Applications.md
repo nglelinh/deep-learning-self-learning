@@ -12,14 +12,14 @@ lesson_type: optional
 
 Khi nghe đến Học Tăng cường, nhiều người chỉ nghĩ tới robot đi bộ hay AI chơi cờ vây; nhưng trên thực tế, phần lớn hệ thống RL đang tạo ra giá trị kinh tế khổng lồ mỗi giây hôm nay lại nằm ở **hệ thống gợi ý (Contextual Bandits)**, **RL ngoại tuyến trên dữ liệu log (Offline RL)** và đặc biệt là **khung MDP của RLHF** giúp căn chỉnh các mô hình ngôn ngữ lớn như ChatGPT, Claude và Gemini!
 
-## Bản đồ kiến thức nền: Ba ứng dụng thực chiến của nền tảng RL hiện đại (2022–2026)
+## Kiến thức cần nhớ: Ba ứng dụng thực chiến của nền tảng RL hiện đại (2022–2026)
 
 - **Mô hình hóa sinh văn bản LLM dưới dạng MDP (RLHF):** Coi chuỗi token đã sinh là trạng thái $$s_t$$, token kế tiếp là hành động $$a_t \in V$$, chính sách là chính LLM $$\pi_\theta(a_t\mid s_t)$$, và phần thưởng nằm ở cuối câu kèm phạt KL để không trôi xa mô hình gốc.
 - **Contextual Multi-Armed Bandits trong xếp hạng & quảng cáo:** Bài toán RL một bước (không có chuyển trạng thái dài hạn) dùng UCB hoặc Thompson Sampling để vừa khai thác nội dung có tỷ lệ nhấp cao vừa khám phá nội dung mới.
 - **RL ngoại tuyến (Offline / Batch RL — CQL, IQL):** Huấn luyện chính sách hoàn toàn từ nhật ký lịch sử cố định (y tế, tài chính, công nghiệp) mà không được phép tương tác mạo hiểm với môi trường thật.
 - **Bẫy phân phối lệch (Distributional Shift) trong Offline RL:** Hiểu lý do Q-Learning tiêu chuẩn ước lượng quá cao các hành động ngoài tập log (OOD actions) và cần ràng buộc bảo thủ (conservative penalty).
 
-### Khung giải thích (nên đọc chậm): Tính điểm chọn cánh tay bằng thuật toán UCB1 (Upper Confidence Bound) trong Bandit
+### Giải thích: Tính điểm chọn cánh tay bằng thuật toán UCB1 (Upper Confidence Bound) trong Bandit
 
 Một hệ thống gợi ý tin tức có 2 bài viết ứng viên sau tổng cộng $$t = 100$$ lượt hiển thị ($$\ln 100 \approx 4{,}605$$):
 - **Bài A:** Đã hiển thị $$N_A = 80$$ lần, tỷ lệ nhấp trung bình $$\hat{\mu}_A = 0{,}20$$.

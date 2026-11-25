@@ -11,7 +11,7 @@ categories:
 
 Trong câu *"Con mèo không băng qua đường vì **nó** quá mệt"*, để hiểu đại từ **"nó"** chỉ con mèo (không phải con đường), mô hình vừa cần theo dõi quan hệ ngữ pháp chủ–vị, vừa cần theo dõi quan hệ ngữ nghĩa giữa *"mệt"* và sinh vật sống. Nếu chỉ dùng **một** đầu chú ý duy nhất, việc lấy trung bình tất cả các quan hệ khác nhau vào cùng một phân phối softmax sẽ làm mờ nhạt thông tin. **Multi-Head Attention** giải quyết bài toán này bằng cách cho phép nhiều đầu chú ý cùng hoạt động song song trên các không gian con khác nhau.
 
-## Bản đồ kiến thức nền: Bốn trụ cột của Multi-Head Attention và Cạm bẫy Thực tế
+## Kiến thức cần nhớ: Bốn trụ cột của Multi-Head Attention và Cạm bẫy Thực tế
 
 1. **Phép chiếu đa không gian con ($$W_i^Q, W_i^K, W_i^V$$) và ghép nối $$W^O$$**:
    Mỗi đầu $$i \in \{1 \dots H\}$$ chiếu vector $$d_{\text{model}}$$ xuống chiều nhỏ hơn $$d_k = d_{\text{model}} / H$$, tính attention độc lập, rồi ghép (concat) cả $$H$$ đầu về lại $$d_{\text{model}}$$ và trộn qua ma trận chiếu đầu ra $$W^O$$.
@@ -22,7 +22,7 @@ Trong câu *"Con mèo không băng qua đường vì **nó** quá mệt"*, để
 4. **Cạm bẫy kinh điển của Multi-Head Attention**:
    Quên đặt `Dropout` lên trọng số chú ý (attention dropout), nhầm thứ tự quy ước `attn_mask` (boolean `True` nghĩa là **bị che** trong `nn.MultiheadAttention` nhưng lại khác ở một số hàm tự viết!), và hiện tượng một số head trở nên dư thừa (head redundancy).
 
-### Khung giải thích (nên đọc chậm): Tính tay tổng số tham số của một khối Multi-Head Attention chuẩn Transformer Base
+### Giải thích: Tính tay tổng số tham số của một khối Multi-Head Attention chuẩn Transformer Base
 
 Xét cấu hình Transformer Base kinh điển: $$d_{\text{model}} = 512$$, số đầu $$H = 8 \implies d_k = d_v = 512 / 8 = 64$$ (bỏ qua bias để gọn):
 

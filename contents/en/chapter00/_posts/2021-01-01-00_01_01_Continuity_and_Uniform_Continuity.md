@@ -11,14 +11,14 @@ categories:
 
 > *Why can a single imperceptible pixel perturbation fool a high-accuracy image classifier into calling a panda a gibbon, or cause a GAN discriminator to explode? The answer lies not just in whether a network is continuous, but in how tightly its worst-case sensitivity—its Lipschitz constant—is controlled across the entire input space.*
 
-## Background Knowledge Map: Continuity, Uniformity, and Lipschitz Control
+## Key ideas: Continuity, Uniformity, and Lipschitz Control
 
 1. **Pointwise Continuity (Local Predictability)**: Guarantees that around a specific input $$c$$, sufficiently small perturbations stay close in output space, though the required tolerance $$\delta(\varepsilon, c)$$ may shrink arbitrarily at other points.
 2. **Uniform Continuity (Global Consistency)**: Strengthens continuity by demanding a single $$\delta(\varepsilon)$$ that works simultaneously everywhere on the domain, preventing arbitrarily steep cliffs from forming as you move across the space.
 3. **Lipschitz Continuity (Quantitative Slope Bound)**: Caps the maximum amplification ratio $$\lvert f(x) - f(y)\rvert / \lvert x - y\rvert \leq L$$, which directly governs adversarial robustness, Wasserstein GAN constraints, and safe gradient descent step sizes ($$\eta < 2/L$$).
 4. **Compactness & Heine–Cantor Bridge**: Explains why continuous functions on closed, bounded domains (like normalized image hypercubes $$[0, 1]^d$$) are automatically uniformly continuous, giving theoretical safety on bounded feature spaces.
 
-### Step-by-Step Worked Example (Read Slowly): Computing Exact Lipschitz Bounds vs. Failure of Uniform Continuity
+### Worked example: Computing Exact Lipschitz Bounds vs. Failure of Uniform Continuity
 
 Compare two functions on the open interval $$A = (0, 1]$$: $$f(x) = x^2$$ and $$g(x) = \frac{1}{x}$$.
 

@@ -11,14 +11,14 @@ categories:
 
 > *When inverted dropout randomly zeros out neurons during training, it flips independent Bernoulli coins; when you count how many neurons survived across a layer, you get a Binomial variable; and when a server counts incoming inference requests per second, you get a Poisson distribution.*
 
-## Background Knowledge Map: Discrete Distributions in Neural Systems
+## Key ideas: Discrete Distributions in Neural Systems
 
 1. **Bernoulli Distribution ($$\text{Bern}(p)$$)**: Models a single binary trial—binary classification targets, dropout keep-masks $$m_i \sim \text{Bern}(p)$$, and pixel binarization—with mean $$p$$ and variance $$p(1-p)$$.
 2. **Binomial Distribution ($$\text{Bin}(n, p)$$)**: Counts the number of successes in $$n$$ independent Bernoulli trials, governing the distribution of active neurons in a dropout layer and exact confidence intervals for test-set accuracy.
 3. **Categorical Distribution ($$\text{Cat}(\mathbf{p})$$)**: Generalizes Bernoulli to $$K$$ mutually exclusive classes, serving as the output distribution of every softmax classifier and autoregressive language model.
 4. **Poisson Distribution ($$\text{Pois}(\lambda)$$)**: Models rare event counts per unit time or space (clicks, spikes in neuromorphic nets, arrivals) where mean equals variance ($$\lambda$$).
 
-### Step-by-Step Worked Example (Read Slowly): Exact Dropout Survival Probabilities and Inverted Scaling
+### Worked example: Exact Dropout Survival Probabilities and Inverted Scaling
 
 Consider a tiny hidden layer with $$n = 4$$ neurons, each with activation $$h_i = 2.0$$, where dropout keeps each neuron independently with probability $$p = 0.5$$.
 

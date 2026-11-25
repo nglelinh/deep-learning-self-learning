@@ -11,7 +11,7 @@ categories:
 
 Nếu Self-Attention là "phòng họp" nơi các từ trao đổi thông tin với nhau, thì câu hỏi đặt ra là: *tại sao sau mỗi phòng họp, Transformer lại phải cho từng từ đi vào một "phòng làm việc riêng" gọi là FFN, rồi lại phải chuẩn hóa bằng LayerNorm và cộng đường tắt Residual?* Bài học lý thuyết này giải mã chính xác từng mắt xích toán học giữ cho cả cỗ máy Transformer 100 tầng vẫn huấn luyện mượt mà.
 
-## Bản đồ kiến thức nền: Bốn trụ cột lý thuyết của Transformer
+## Kiến thức cần nhớ: Bốn trụ cột lý thuyết của Transformer
 
 1. **Mã hóa vị trí lượng giác (Sinusoidal Positional Encoding)**:
    Dùng cặp $$\sin(\text{pos}/10000^{2i/d})$$ và $$\cos(\text{pos}/10000^{2i/d})$$ ở nhiều tần số khác nhau — nhờ công thức cộng góc lượng giác, vị trí $$\text{pos} + k$$ luôn là một phép **biến đổi tuyến tính** (ma trận xoay 2D) của vị trí $$\text{pos}$$, giúp mô hình dễ dàng học khoảng cách tương đối!
@@ -22,7 +22,7 @@ Nếu Self-Attention là "phòng họp" nơi các từ trao đổi thông tin v�
 4. **Liên kết trọng số (Weight Tying) và hệ số $$\sqrt{d_{\text{model}}}$$**:
    Chia sẻ chung ma trận giữa bảng Token Embedding đầu vào và tầng Linear dự đoán từ vựng đầu ra (LM Head) giúp tiết kiệm hàng chục triệu tham số, đồng thời nhân embedding với $$\sqrt{d_{\text{model}}}$$ để tín hiệu ngữ nghĩa không bị lấn át bởi Positional Encoding có biên độ $$\in [-1, 1]$$.
 
-### Khung giải thích (nên đọc chậm): Tính tay vector Positional Encoding lượng giác tại 3 vị trí đầu tiên ($$d_{\text{model}} = 4$$)
+### Giải thích: Tính tay vector Positional Encoding lượng giác tại 3 vị trí đầu tiên ($$d_{\text{model}} = 4$$)
 
 Với $$d_{\text{model}} = 4$$, ta có 2 cặp chỉ số tần số:
 - Cặp $$i = 0$$ (tần số cao): $$\omega_0 = 1 / 10000^{0/4} = 1$$ $$\to$$ $$(\sin(\text{pos}), \; \cos(\text{pos}))$$

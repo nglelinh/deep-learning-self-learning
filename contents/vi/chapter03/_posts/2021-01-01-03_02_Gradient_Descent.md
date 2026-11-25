@@ -11,7 +11,7 @@ categories:
 
 Đã có bản đồ sai số (hàm mất mát), bước tiếp theo là trả lời câu hỏi cốt lõi nhất của tối ưu hóa: *làm thế nào để điều chỉnh hàng triệu trọng số cùng lúc sao cho hàm mất mát tụt xuống đáy nhanh và ổn định nhất?* Câu trả lời mang tính biểu tượng của cả ngành Học sâu là **Gradient Descent**—thuật toán xuống dốc từng bước ngược hướng vector gradient. Mục tổng quan này phác họa bức tranh chung về quy tắc cập nhật, ba biến thể theo kích thước batch và những cạm bẫy hình học sẽ được mổ xẻ sâu ở hai bài kế tiếp.
 
-## Bản đồ kiến thức nền: Ba trụ cột của Thuật toán Gradient Descent
+## Kiến thức cần nhớ: Ba trụ cột của Thuật toán Gradient Descent
 
 1. **Quy tắc Cập nhật và Vai trò của Learning Rate ($$\theta_{t+1} = \theta_t - \eta \nabla L(\theta_t)$$)**:
    $$\eta$$ quá nhỏ khiến huấn luyện rùa bò và dễ mắc kẹt; $$\eta$$ quá lớn khiến tham số bật qua lại hai bờ thung lũng và phân kỳ về vô cực.
@@ -22,7 +22,7 @@ categories:
 3. **Địa hình Bề mặt Mất mát Phi lồi (Non-Convex Landscape)**:
    Khác với bài toán lồi chỉ có 1 đáy duy nhất, bề mặt mất mát của mạng sâu đầy rẫy điểm yên ngựa (*saddle points*), thung lũng hẹp dài (*ill-conditioned ravines*) và vùng phẳng (*plateaus*).
 
-### Khung giải thích (nên đọc chậm): Thấy ngay tác động của Learning Rate trên parabol $$L(w) = w^2$$
+### Giải thích: Thấy ngay tác động của Learning Rate trên parabol $$L(w) = w^2$$
 
 Xét hàm đơn giản $$L(w) = w^2$$ (đáy tại $$w^* = 0$$), có đạo hàm $$L'(w) = 2w$$. Xuất phát từ $$w_0 = 4$$, công thức cập nhật là $$w_{t+1} = w_t - \eta(2w_t) = (1 - 2\eta)w_t$$:
 

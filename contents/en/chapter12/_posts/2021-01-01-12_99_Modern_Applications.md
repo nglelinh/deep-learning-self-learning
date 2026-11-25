@@ -12,14 +12,14 @@ lesson_type: optional
 
 You might think classical autoencoders were retired once diffusion models and LLMs took over—in reality, they quietly became the load-bearing compression layer underneath almost every modern multimodal system. Stable Diffusion does not diffuse pixels; it diffuses inside an autoencoder's latent space. Audio language models do not predict raw 48 kHz waveforms; they predict discrete tokens emitted by a vector-quantized neural audio codec.
 
-## Background Knowledge Map: Modern Autoencoders (2022–2026)
+## Key ideas: Modern Autoencoders (2022–2026)
 
 - **Pillar 1 — Latent Diffusion Codecs**: Compresses high-resolution RGB images (e.g., $512 \times 512 \times 3$) by a spatial factor of $8\times$ into compact $64 \times 64 \times 4$ latents, cutting quadratic self-attention cost by over $4{,}000\times$.
 - **Pillar 2 — Vector Quantization & Residual VQ (RVQ)**: Snaps continuous encoder vectors to nearest codebook entries $e_k$, turning images and audio into discrete token streams compatible with autoregressive Transformers.
 - **Pillar 3 — Masked Autoencoders (MAE)**: Drops $75\%$ of image patches at the encoder input and reconstructs missing pixels with a lightweight decoder, scaling self-supervised vision pretraining to billion-parameter ViTs.
 - **Pillar 4 — Perceptual & Adversarial Reconstruction Losses**: Replaces pure pixel MSE (which causes blur) with LPIPS perceptual losses plus PatchGAN discriminators so compressed reconstructions stay razor-sharp.
 
-### Step-by-Step Worked Example (Read Slowly): Compute Savings of Latent Compression & Residual Vector Quantization Bitrate
+### Worked example: Compute Savings of Latent Compression & Residual Vector Quantization Bitrate
 
 1. **Spatial compression savings for a $512 \times 512 \times 3$ image encoded to $64 \times 64 \times 4$**:
    - Raw pixel elements: $512 \times 512 \times 3 = 786{,}432$.

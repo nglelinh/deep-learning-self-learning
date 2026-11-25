@@ -11,14 +11,14 @@ categories:
 
 > *Every weight initialization, every dropout mask, every mini-batch gradient, and every latent vector in a VAE is a random variable. Understanding expectation, variance, and linearity of expectation lets you predict whether activations will blow up across 100 layers before you even run a single epoch.*
 
-## Background Knowledge Map: Random Variables and Moment Propagation
+## Key ideas: Random Variables and Moment Propagation
 
 1. **Discrete vs. Continuous Random Variables**: Describes quantities via probability mass functions (PMFs) for discrete tokens/masks and probability density functions (PDFs) for continuous weights/activations.
 2. **Linearity of Expectation (Always Holds)**: Even when variables are correlated, $$\mathbb{E}[aX + bY] = a\mathbb{E}[X] + b\mathbb{E}[Y]$$, which guarantees that mini-batch SGD gradients are unbiased estimators of the full-dataset gradient.
 3. **Variance Scaling (The Key to Initialization)**: For independent variables, $$\text{Var}(aX + bY) = a^2\text{Var}(X) + b^2\text{Var}(Y)$$; this quadratic scaling by $$a^2$$ is the exact derivation behind Xavier/Glorot and He initialization.
 4. **Law of the Unconscious Statistician (LOTUS)**: Computes $$\mathbb{E}[g(X)]$$ directly from the distribution of $$X$$ without deriving the distribution of $$g(X)$$, enabling Monte Carlo gradient estimation in stochastic networks.
 
-### Step-by-Step Worked Example (Read Slowly): Deriving Variance Preservation for a Linear Layer
+### Worked example: Deriving Variance Preservation for a Linear Layer
 
 Consider a single neuron computing $$z = \sum_{i=1}^{n} w_i x_i$$ with $$n = 100$$ inputs, where inputs $$x_i$$ and weights $$w_i$$ are mutually independent with mean $$0$$, input variance $$\text{Var}(x_i) = 1$$, and weight variance $$\text{Var}(w_i) = \sigma_w^2$$.
 

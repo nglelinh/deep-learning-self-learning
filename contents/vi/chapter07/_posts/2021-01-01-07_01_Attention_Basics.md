@@ -11,7 +11,7 @@ categories:
 
 Năm 2014, Dzmitry Bahdanau, Kyunghyun Cho và Yoshua Bengio công bố bài báo dịch máy thần kinh kinh điển với một phát hiện làm thay đổi toàn bộ NLP: ngay khi cho phép bộ giải mã tự tính trọng số chú ý lên mọi trạng thái ẩn của bộ mã hóa, điểm BLEU trên các câu dài trên 30 từ không còn lao dốc thảm hại nữa — và đẹp hơn cả, khi vẽ ma trận trọng số $$\alpha_{ti}$$ lên biểu đồ nhiệt, mô hình đã tự học được **bảng gióng hàng (alignment)** giữa hai ngôn ngữ mà chưa từng được dạy ngữ pháp!
 
-## Bản đồ kiến thức nền: Bốn mảnh ghép nền tảng của Attention trong Seq2Seq
+## Kiến thức cần nhớ: Bốn mảnh ghép nền tảng của Attention trong Seq2Seq
 
 1. **Nút thắt thông tin trong Encoder–Decoder cổ điển**:
    Dù câu nguồn dài 5 từ hay 80 từ, Seq2Seq truyền thống buộc phải nén toàn bộ vào một vector $$h_T \in \mathbb{R}^{d}$$ cố định — thông tin ở đầu câu bị ghi đè dần khi câu dài ra.
@@ -22,7 +22,7 @@ Năm 2014, Dzmitry Bahdanau, Kyunghyun Cho và Yoshua Bengio công bố bài bá
 4. **Tính diễn giải qua bản đồ gióng hàng (Alignment Heatmap)**:
    Hàng $$t$$ của ma trận $$\alpha$$ cho biết khi sinh từ đích thứ $$t$$, mô hình đang "nhìn" vào những từ nguồn nào — thậm chí xử lý mượt mà hiện tượng đảo trật tự từ giữa tiếng Anh (*"white house"*) và tiếng Việt (*"nhà trắng"*).
 
-### Khung giải thích (nên đọc chậm): Tính tay 1 bước Bahdanau Additive Attention
+### Giải thích: Tính tay 1 bước Bahdanau Additive Attention
 
 Giả sử câu nguồn có 2 từ với trạng thái encoder vô hướng $$h_1 = 1{,}0, \; h_2 = -0{,}5$$, trạng thái decoder hiện tại $$s_{t-1} = 0{,}5$$, và tham số học được $$W_a = 1{,}0, \; U_a = 1{,}0, \; v_a = 2{,}0$$:
 

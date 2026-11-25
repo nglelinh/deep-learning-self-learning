@@ -11,7 +11,7 @@ categories:
 
 Nếu tầng tích chập là đôi mắt tinh tường phát hiện từng chi tiết nhỏ, thì **tầng gộp (pooling)** và **kiến trúc tổng thể** chính là cách bộ não chắt lọc thông tin: bỏ qua những xê dịch nhỏ không đáng kể, nén dần không gian để tập trung vào ngữ nghĩa, và tổ chức hàng chục đến hàng trăm tầng sao cho tín hiệu học không bao giờ bị nghẽn.
 
-## Bản đồ kiến thức nền: Ba trụ cột của Tầng Gộp và Thiết kế Kiến trúc CNN
+## Kiến thức cần nhớ: Ba trụ cột của Tầng Gộp và Thiết kế Kiến trúc CNN
 
 1. **Tầng Gộp (Max, Average, Global Average Pooling)**:
    Đóng vai trò giảm độ phân giải không gian, tiết kiệm bộ nhớ/FLOPs, tăng trường tiếp nhận và mang lại tính bất biến cục bộ trước các dịch chuyển nhỏ vài pixel.
@@ -20,7 +20,7 @@ Nếu tầng tích chập là đôi mắt tinh tường phát hiện từng chi 
 3. **Quy luật tiến hóa của các kiến trúc CNN kinh điển**:
    Đi từ những khối xếp chồng tuần tự (LeNet, AlexNet, VGG) sang các thiết kế đa nhánh (Inception) và đường cao tốc gradient bằng kết nối tắt (ResNet).
 
-### Khung giải thích (nên đọc chậm): Tính tay lượng tham số tiết kiệm khi thay Flatten + FC bằng Global Average Pooling
+### Giải thích: Tính tay lượng tham số tiết kiệm khi thay Flatten + FC bằng Global Average Pooling
 
 Giả sử trước bộ phân loại 1.000 lớp (ImageNet), bản đồ đặc trưng cuối cùng có kích thước $$7 \times 7 \times 512$$:
 

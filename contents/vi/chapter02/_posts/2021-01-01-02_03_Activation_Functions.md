@@ -11,7 +11,7 @@ categories:
 
 Thử tưởng tượng bạn xây một tòa tháp gồm 100 tầng mạng nơ-ron, đầu tư cả dàn GPU đắt tiền, nhưng quên mất một chi tiết nhỏ: **không đặt hàm kích hoạt phi tuyến** giữa các tầng. Kết quả? Về mặt toán học, cả 100 tầng đó lập tức sụp đổ thành đúng **một phép nhân ma trận duy nhất**—không mạnh hơn một mô hình hồi quy tuyến tính 1 tầng! Hàm kích hoạt chính là nguồn gốc của tính phi tuyến và khả năng học các ranh giới phức tạp. Mục tổng quan này mở đường cho hai bài chuyên sâu đi từ Sigmoid/Tanh cổ điển đến ReLU, GELU và cuộc chiến chống gradient biến mất.
 
-## Bản đồ kiến thức nền: Ba vai trò sống còn của Hàm Kích hoạt
+## Kiến thức cần nhớ: Ba vai trò của Hàm Kích hoạt
 
 1. **Phá vỡ Tính Tuyến tính (Non-linearity)**:
    Nhờ phép hợp $$\mathbf{W}_2 \sigma(\mathbf{W}_1 \mathbf{x})$$ không thể gộp thành một ma trận duy nhất, mỗi tầng mới thực sự cộng thêm năng lực uốn cong không gian biểu diễn.
@@ -22,7 +22,7 @@ Thử tưởng tượng bạn xây một tòa tháp gồm 100 tầng mạng nơ-
 3. **Định hình Miền Đầu ra theo Tác vụ (Output Semantics)**:
    Lớp ẩn ưu tiên tốc độ và dòng gradient (ReLU, GELU, SwiGLU), còn lớp đầu ra phải khớp miền xác suất của bài toán: Linear cho hồi quy, Sigmoid cho nhị phân/đa nhãn, và Softmax cho phân loại đa lớp loại trừ.
 
-### Khung giải thích (nên đọc chậm): Chứng minh bằng tay sự sụp đổ của mạng 2 tầng không có hàm kích hoạt
+### Giải thích: Chứng minh bằng tay sự sụp đổ của mạng 2 tầng không có hàm kích hoạt
 
 Xét mạng 2 tầng *tuyến tính thuần túy* với $$\mathbf{W}_1 = \begin{bmatrix} 1 & 2 \\ 0 & -1 \end{bmatrix}$$, $$\mathbf{W}_2 = \begin{bmatrix} 3 & 1 \end{bmatrix}$$ (bỏ qua bias cho gọn):
 

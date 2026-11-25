@@ -11,13 +11,13 @@ categories:
 
 Gradient descent in 100 million dimensions is nothing like rolling a marble down a smooth bowl—the landscape is packed with saddle points, flat plateaus, and razor-thin ravines. This module hub connects the mathematical theory of advanced first-order optimizers (Momentum, NAG, AdaGrad, RMSprop, Adam) with full code implementations, trajectory comparisons, and practical hyperparameter playbooks.
 
-## Background Knowledge Map: Navigating Advanced Optimization
+## Key ideas: Navigating Advanced Optimization
 
 - **Core Optimizer Theory**: Understanding first-moment velocity, Nesterov look-ahead, second-moment adaptive preconditioning, and Adam's bias correction.
 - **Code & Trajectory Analysis**: Implementing every optimizer from scratch and comparing convergence behavior on ill-conditioned surfaces and neural benchmarks.
 - **Default Selection Heuristics**: Matching optimizer + weight decay + LR schedule to vision, sequence, and Transformer workloads.
 
-### Step-by-Step Worked Example (Read Slowly): Effective Momentum Horizon (How Many Past Steps Does $$\beta = 0.9$$ Remember?)
+### Worked example: Effective Momentum Horizon (How Many Past Steps Does $$\beta = 0.9$$ Remember?)
 
 In an exponential moving average $$m_t = \beta m_{t-1} + (1 - \beta) g_t$$, the weight placed on a gradient from $$k$$ steps ago decays as $$\beta^k$$.
 

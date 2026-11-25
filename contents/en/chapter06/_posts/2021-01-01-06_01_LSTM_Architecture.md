@@ -11,13 +11,13 @@ categories:
 
 Why did the LSTM architecture remain one of the most cited inventions in computer science for nearly thirty years? Because it turned an impossible optimization problem—propagating gradients across dozens of nonlinear recurrent steps—into a smooth, controllable additive highway. This chapter hub guides you through both the formal mathematical theory of LSTM/GRU cells and their hands-on code implementation, gate visualization, and pitfall diagnostics.
 
-## Background Knowledge Map: Navigating the LSTM Architecture Module
+## Key ideas: Navigating the LSTM Architecture Module
 
 - **Theory & Gradient Flow**: Understanding the Constant Error Carousel, the four-gate equations, and why additive cell updates bypass the vanishing Jacobian product of vanilla RNNs.
 - **Core Code & Memory Tasks**: Writing explicit LSTM cells in NumPy and PyTorch and testing them on long-range memory tasks where vanilla RNNs fail.
 - **Gate Inspection & GRU Comparison**: Measuring live gate saturation, contrasting 4-gate LSTMs with 3-gate GRUs, and mastering production best practices (forget-bias init, gradient clipping, sequence packing).
 
-### Step-by-Step Worked Example (Read Slowly): Comparing Effective Depth & State Bandwidth
+### Worked example: Comparing Effective Depth & State Bandwidth
 
 Consider a 2-layer stacked LSTM with $$d_h = 256$$ processing a sequence of length $$T = 60$$:
 

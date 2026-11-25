@@ -12,7 +12,7 @@ lesson_type: quiz
 
 Đọc hiểu một công thức toán học trên màn hình thường tạo ra một ảo giác rất ngọt ngào: ta thấy "có lý" và nghĩ mình đã nắm vững, cho đến khi tự tay giải một bài toán trắc nghiệm bẫy và phát hiện mình vẫn nhầm giữa liên tục đều với Lipschitz, hay giữa độc lập với xung khắc. Bài kiểm tra tổng hợp này là trạm kiểm định chất lượng cho toàn bộ Chương 00—giúp bạn tự soi lại lỗ hổng kiến thức trên cả bốn mảng Giải tích, Đại số tuyến tính, Tôpô và Xác suất trước khi bước vào thế giới mạng nơ-ron.
 
-## Bản đồ kiến thức nền: Bốn cụm năng lực được kiểm tra trong Bộ Trắc nghiệm Chương 00
+## Kiến thức cần nhớ: Bốn cụm năng lực được kiểm tra trong Bộ Trắc nghiệm Chương 00
 
 1. **Giải tích & Tối ưu hóa (Đạo hàm, Gradient, Chuỗi Taylor, Lipschitz)**:
    Kiểm tra khả năng tính nhanh đạo hàm riêng, đọc hướng tăng/giảm nhanh nhất từ vector gradient và nhận diện điều kiện áp dụng xấp xỉ Taylor.
@@ -26,7 +26,7 @@ lesson_type: quiz
 4. **Xác suất & Thống kê (Tiên đề, Bayes, Phân phối, MLE)**:
    Kiểm tra phân biệt biến cố xung khắc vs. độc lập, tính xác suất có điều kiện bằng định lý Bayes và lập hàm log-likelihood để tìm ước lượng MLE.
 
-### Khung giải thích (nên đọc chậm): Chiến thuật giải nhanh 2 câu bẫy kinh điển trước khi làm bài
+### Giải thích: Chiến thuật giải nhanh 2 câu bẫy kinh điển trước khi làm bài
 
 **Bẫy 1 — Phân biệt "Xung khắc" (Mutually Exclusive) và "Độc lập" (Independent):**
 Giả sử hai biến cố $$A, B$$ đều có xác suất dương: $$P(A) = 0.4, P(B) = 0.5$$. Nếu $$A$$ và $$B$$ **xung khắc**, chúng có độc lập không?

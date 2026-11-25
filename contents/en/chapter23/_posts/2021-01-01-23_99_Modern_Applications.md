@@ -12,14 +12,14 @@ lesson_type: optional
 
 Naive round-to-nearest 4-bit quantization wrecks a 70B LLM because a tiny handful of activation channels (~0.1% of features) carry massive outlier magnitudes that blow up quantization scales. Between 2023 and 2026, efficient LLM serving conquered that outlier problem through Hessian-guided quantization (GPTQ), activation-aware channel scaling (AWQ), portable consumer formats (GGUF), Sparse Mixture-of-Experts (MoE), and lossless speculative decoding.
 
-## Background Knowledge Map: Modern LLM Efficiency Stack (2022–2026)
+## Key ideas: Modern LLM Efficiency Stack (2022–2026)
 
 - **Pillar 1 — Outlier-Aware Weight Quantization (GPTQ & AWQ)**: Compensates quantization rounding error across remaining weights using inverse Hessian updates (GPTQ) or rescales the ~1% salient weight channels protected by large input activations (AWQ).
 - **Pillar 2 — Consumer Edge Formats (GGUF / K-Quants)**: Packs group-wise quantized blocks (e.g., `Q4_K_M`, 32-weight super-blocks with FP16 scales) into a single memory-mapped file for fast CPU/Apple-Silicon inference (`llama.cpp`).
 - **Pillar 3 — Lossless Speculative Decoding**: Uses a tiny draft model to propose $K$ tokens rapidly, then verifies all $K$ in a *single* parallel forward pass of the large target model via rejection sampling—preserving the **exact** target distribution.
 - **Pillar 4 — Sparse Mixture-of-Experts (MoE)**: Decouples total knowledge capacity (e.g., 8×7B or 671B total params) from per-token compute (routing each token to only top-2 experts).
 
-### Step-by-Step Worked Example (Read Slowly): Effective Bits-Per-Weight (BPW) of Group-Wise INT4 & Speculative Speedup
+### Worked example: Effective Bits-Per-Weight (BPW) of Group-Wise INT4 & Speculative Speedup
 
 **Part A — Group-Wise INT4 Effective Bit-Width**: Suppose weights are stored in 4-bit integers in groups of $g = 128$ weights, where each group stores one FP16 scale ($16$ bits) and one FP16 zero-point ($16$ bits).
 1. Total bits per 128 weights: $128 \times 4 + 16 + 16 = 512 + 32 = 544\text{ bits}$.

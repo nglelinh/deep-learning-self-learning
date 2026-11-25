@@ -11,14 +11,14 @@ categories:
 
 > *Most self-learners stall in deep learning not because the math is impossible, but because they read equations passively without implementing tiny sanity checks, or they copy notebooks without understanding why a loss curve behaves the way it does. Mastering deep learning is a closed-loop craft of theory, code, and diagnostic intuition.*
 
-## Background Knowledge Map: How Deep Learning Mastery Compounds
+## Key ideas: How Deep Learning Mastery Compounds
 
 1. **Application Landscape (Modalities & Inductive Biases)**: Maps real-world domains—vision, NLP, speech, RL, healthcare—to the structural assumptions (spatial locality, sequence order, reward dynamics) that dictate architecture choice.
 2. **Systemic Limitations & Failure Modes**: Highlights data hunger, distribution shift, black-box interpretability, compute costs, and calibration errors so you design models with realistic guardrails from day one.
 3. **Three-Loop Study Method**: Combines (a) hand-verifying tiny numerical examples, (b) coding minimal from-scratch NumPy/PyTorch baselines, and (c) diagnosing real training curves (overfitting, underfitting, gradient instability).
 4. **Progressive Dependency Graph**: Links Chapter 00's math to Chapters 02–03's core neural training mechanics, which then unlock CNNs, RNNs, Transformers, and generative models without conceptual gaps.
 
-### Step-by-Step Worked Example (Read Slowly): Designing a Sanity-Check Overfit Test Before Full Training
+### Worked example: Designing a Sanity-Check Overfit Test Before Full Training
 
 Before launching a 12-hour GPU run on 50,000 images, senior engineers always run a 30-second **tiny-batch overfit check**. Suppose you have a 10-class classifier and select $$N = 8$$ training examples.
 

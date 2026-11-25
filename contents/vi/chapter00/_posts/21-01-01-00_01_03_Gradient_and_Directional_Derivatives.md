@@ -11,7 +11,7 @@ categories:
 
 Giữa màn sương dày đặc trên sườn núi, bạn không thấy đỉnh núi cũng chẳng thấy thung lũng, nhưng đôi chân bạn cảm nhận được mặt đất đang dốc về hướng nào. Nếu muốn xuống núi nhanh nhất có thể trong bước tiếp theo, bạn nên bước theo hướng nào? Câu hỏi hình học đơn giản ấy dẫn thẳng tới **vector gradient** và **đạo hàm theo hướng**—hai khái niệm định nghĩa nên chiếc la bàn vạn năng của toàn bộ ngành Học sâu hiện đại.
 
-## Bản đồ kiến thức nền: Bốn góc nhìn cốt lõi về Gradient và Đạo hàm theo hướng
+## Kiến thức cần nhớ: Bốn góc nhìn cốt lõi về Gradient và Đạo hàm theo hướng
 
 1. **Vector Gradient ($$\nabla f$$)**:
    Gom mọi đạo hàm riêng thành một vector duy nhất sống trong không gian tham số, đóng vai trò mũi tên chỉ chính xác hướng tăng dốc nhất của hàm số.
@@ -25,7 +25,7 @@ Giữa màn sương dày đặc trên sườn núi, bạn không thấy đỉnh 
 4. **Hướng giảm nhanh nhất (Steepest Descent)**:
    Vì $$\cos\theta$$ đạt cực tiểu bằng $$-1$$ khi $$\theta = 180^\circ$$, bước đi theo hướng $$\mathbf{u} = -\frac{\nabla f}{\|\nabla f\|}$$ đảm bảo hàm mất mát giảm nhanh nhất trong lân cận vô cùng bé.
 
-### Khung giải thích (nên đọc chậm): So sánh tốc độ giảm khi bước theo nhiều hướng khác nhau
+### Giải thích: So sánh tốc độ giảm khi bước theo nhiều hướng khác nhau
 
 Xét hàm mất mát hai biến $$f(x, y) = x^2 + 4y^2$$ (một thung lũng elip) tại điểm hiện tại $$\mathbf{p} = (2, 1)$$, nơi $$f(2, 1) = 4 + 4 = 8$$:
 

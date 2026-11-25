@@ -11,7 +11,7 @@ categories:
 
 Biết viết một lớp `TransformerBlock` chạy được trên tensor ngẫu nhiên chưa đủ để huấn luyện thành công một mô hình thực thụ. Trong thực chiến, Transformer nổi tiếng là kiến trúc "khó tính" ở giai đoạn đầu huấn luyện: quên lịch tăng dần tốc độ học (learning rate warmup), dùng sai chỉ số `ignore_index` cho padding trong hàm mất mát, hay bật nhầm `eval()`/`train()` đều có thể khiến loss đi ngang mãi mãi mà không báo một dòng lỗi nào.
 
-## Bản đồ kiến thức nền: Bốn bài học thực chiến từ Demo và Cạm bẫy Transformer
+## Kiến thức cần nhớ: Bốn bài học thực chiến từ Demo và Cạm bẫy Transformer
 
 1. **Lịch tốc độ học Warmup + Cosine/Inverse-Sqrt Decay**:
    Ở những bước đầu tiên, phương sai gradient của LayerNorm và ước lượng moment bậc 2 của Adam chưa ổn định; tăng tuyến tính learning rate từ $$0 \to \eta_{\max}$$ trong vài nghìn bước đầu (warmup) ngăn chặn hiện tượng phân kỳ sớm.
@@ -22,7 +22,7 @@ Biết viết một lớp `TransformerBlock` chạy được trên tensor ngẫu
 4. **Tính toán ngân sách bộ nhớ khi huấn luyện (Activation vs. Weight)**:
    Độ dài chuỗi tăng gấp đôi khiến bộ nhớ lưu ma trận attention tăng gấp **4 lần** — đó là lý do thực tế luôn phải kết hợp Gradient Accumulation, Mixed Precision (BF16/FP16) và FlashAttention.
 
-### Khung giải thích (nên đọc chậm): Tính tay lịch Learning Rate Warmup + Inverse Square Root (Noam Scheduler của bài báo gốc 2017)
+### Giải thích: Tính tay lịch Learning Rate Warmup + Inverse Square Root (Noam Scheduler của bài báo gốc 2017)
 
 Công thức lịch tốc độ học kinh điển trong *"Attention Is All You Need"*:
 $$\eta(\text{step}) = d_{\text{model}}^{-0{,}5} \cdot \min\!\left(\text{step}^{-0{,}5}, \; \text{step} \cdot \text{warmup}^{-1{,}5}\right)$$

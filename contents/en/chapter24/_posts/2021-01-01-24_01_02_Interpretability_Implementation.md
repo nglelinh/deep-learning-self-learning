@@ -11,14 +11,14 @@ categories:
 
 Grad-CAM is the Swiss Army knife of visual debugging in PyTorch because it requires zero retraining and works on any CNN—provided you wire PyTorch's `register_forward_hook` and `register_full_backward_hook` cleanly without leaking GPU memory! One misplaced `.detach()` or forgotten `hook.remove()` inside a loop will silently accumulate computation graphs until CUDA throws an Out-Of-Memory error.
 
-## Background Knowledge Map: Implementing Grad-CAM & Attribution Hooks in PyTorch
+## Key ideas: Implementing Grad-CAM & Attribution Hooks in PyTorch
 
 - **Pillar 1 — Forward & Backward Hook Mechanics**: Captures intermediate convolutional feature maps $A^k \in \mathbb{R}^{H \times W}$ during the forward pass and class-specific gradients $\frac{\partial y^c}{\partial A^k}$ during `.backward()`, always removing hooks after use.
 - **Pillar 2 — Global Average Pooling of Gradients**: Collapses spatial gradients into per-channel importance weights $\alpha_k^c = \frac{1}{HW}\sum_{i,j} \frac{\partial y^c}{\partial A^k_{ij}}$ before forming the linear combination $\sum_k \alpha_k^c A^k$.
 - **Pillar 3 — ReLU Positive Filtering & Bilinear Upsampling**: Applies $\operatorname{ReLU}(\cdot)$ to keep only pixels that *positively* support target class $c$, then upsamples the coarse $(7 \times 7)$ map to full image resolution $(224 \times 224)$.
 - **Pillar 4 — Faithfulness Verification (Deletion Metric)**: Masks out the top-$p\%$ Grad-CAM pixels and checks whether target class confidence drops sharply, confirming the heatmap is causally faithful.
 
-### Step-by-Step Worked Example (Read Slowly): Computing a Exact $2 \times 2$ Grad-CAM Heatmap by Hand
+### Worked example: Computing a Exact $2 \times 2$ Grad-CAM Heatmap by Hand
 
 Suppose the last convolutional layer has $K = 2$ channels of spatial size $2 \times 2$, with forward activations $A^1, A^2$ and backward gradients $G^1, G^2$ for target class $c$:
 $$A^1 = \begin{bmatrix}2 & 0\\ 1 & 3\end{bmatrix}, \quad G^1 = \begin{bmatrix}0.4 & 0.0\\ 0.2 & 0.2\end{bmatrix}; \qquad A^2 = \begin{bmatrix}1 & 4\\ 0 & 1\end{bmatrix}, \quad G^2 = \begin{bmatrix}-0.1 & -0.3\\ 0.0 & 0.0\end{bmatrix}.$$

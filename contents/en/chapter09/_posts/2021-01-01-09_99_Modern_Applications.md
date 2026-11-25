@@ -12,14 +12,14 @@ lesson_type: optional
 
 Walk into a modern frontier LLM pretraining run (Llama, Gemma, Qwen) and you will notice something surprising: **Dropout is almost completely gone** (`dropout = 0.0`), replaced by single-epoch multi-trillion-token data streams, decoupled weight decay (AdamW), and RMSNorm—while in Vision Transformers and ConvNeXt, **DropPath (Stochastic Depth)** and **Sharpness-Aware Minimization (SAM)** have largely superseded neuron-level dropout. Understanding *why* modern recipes shifted from random neuron masking to path dropping and flat-minima optimization connects textbook regularization directly to 2022–2026 research.
 
-## Background Knowledge Map: Modern Regularization Recipes (SAM, DropPath, LLM Stacks)
+## Key ideas: Modern Regularization Recipes (SAM, DropPath, LLM Stacks)
 
 - **Sharpness-Aware Minimization (SAM)**: Instead of minimizing loss only at the current point $$w$$, SAM minimizes the worst-case loss inside an $$\ell_2$$ ball of radius $$\rho$$: $$\min_w \max_{\|\epsilon\|_2 \le \rho} \mathcal{L}(w + \epsilon)$$—explicitly steering SGD into wide, flat basins that generalize better under distribution shift.
 - **Stochastic Depth / DropPath**: In deep residual vision backbones (ViT, ConvNeXt, Swin), randomly dropping entire residual branches $$x + \text{DropPath}(F(x))$$ with linearly increasing drop probability across depth regularizes deep pathways far more effectively than dropping individual activations.
 - **Why Frontier LLMs Often Use Zero Dropout**: When pretraining on trillions of unique tokens (roughly 1 epoch), the model rarely sees the same example twice—so classic memorization overfitting is minimal, and dropout actually wastes effective model capacity per FLOP.
 - **Label Smoothing, Z-Loss, and QK-Norm**: Modern large-scale recipes pair decoupled weight decay with logit stabilization (router/logit z-loss) and Query–Key normalization to prevent attention-logit explosion at billion-parameter scale.
 
-### Step-by-Step Worked Example (Read Slowly): One Two-Step SAM Update on a 1D Sharp vs. Flat Valley
+### Worked example: One Two-Step SAM Update on a 1D Sharp vs. Flat Valley
 
 Suppose we evaluate a 1D loss $$\mathcal{L}(w) = 10(w - 1)^2$$ at $$w = 1.2$$ with perturbation radius $$\rho = 0.05$$ and learning rate $$\eta = 0.02$$.
 

@@ -11,7 +11,7 @@ categories:
 
 Từ một lần tung đồng xu xác định bật hay tắt một nơ-ron trong Dropout, cho tới việc một mô hình ngôn ngữ chọn ra 1 từ trong kho 50{,}000 từ vựng, mọi quyết định rời rạc trong Học sâu đều được điều khiển bởi các **phân phối rời rạc**. Nếu không phân biệt rõ Bernoulli, Nhị thức (Binomial), Categorical và Poisson, ta rất dễ dùng nhầm hàm mất mát hoặc hiểu sai bản chất thống kê của độ chính xác phân loại. Bài học này đi sâu vào công thức, kỳ vọng, phương sai và dấu ấn thực tế của từng phân phối rời rạc trong Deep Learning.
 
-## Bản đồ kiến thức nền: Bốn phân phối Rời rạc trụ cột
+## Kiến thức cần nhớ: Bốn phân phối Rời rạc trụ cột
 
 1. **Phân phối Bernoulli ($$p$$)**:
    Mô hình hóa một phép thử Đúng/Sai duy nhất với $$P(X=1)=p$$, $$\mathbb{E}[X]=p$$, $$\text{Var}(X)=p(1-p)$$. Đây là nền tảng của phân loại nhị phân và từng phần tử trong mặt nạ Dropout.
@@ -25,7 +25,7 @@ Từ một lần tung đồng xu xác định bật hay tắt một nơ-ron tron
 4. **Phân phối Poisson ($$\lambda$$)**:
    Mô hình hóa số lần sự kiện xảy ra trong một khoảng thời gian/không gian cố định (ví dụ số lượt nhấp chuột, số lượng phương tiện qua ngã tư mỗi phút), với đặc trưng $$\mathbb{E}[X] = \text{Var}(X) = \lambda$$.
 
-### Khung giải thích (nên đọc chậm): Tính tay xác suất và phương sai cho Dropout (Bernoulli) và Test Set (Binomial)
+### Giải thích: Tính tay xác suất và phương sai cho Dropout (Bernoulli) và Test Set (Binomial)
 
 **1. Phân tích một lớp Dropout với xác suất giữ lại $$p = 0.8$$ (tỷ lệ tắt 20%):**
 - Mỗi nơ-ron nhân với biến $$M \sim \text{Bernoulli}(0.8)$$: $$P(M=1)=0.8, P(M=0)=0.2$$.

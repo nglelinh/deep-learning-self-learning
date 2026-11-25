@@ -11,7 +11,7 @@ categories:
 
 Một viên gạch riêng lẻ không thể che nắng mưa, nhưng biết cách xếp gạch thành vòm, cột và mái sẽ tạo nên một tòa nhà vững chãi. Mạng nơ-ron cũng vậy: từ cùng một loại nơ-ron đơn giản, cách bạn tổ chức số tầng (*depth*), số nơ-ron mỗi tầng (*width*), kiểu kết nối (*dense*, *residual*, *bottleneck*) sẽ quyết định liệu mạng có thể học được bài toán phức tạp hay bị kẹt cứng khi huấn luyện. Mục tổng quan này mở đầu hai bài chuyên sâu về lý thuyết kiến trúc và nghệ thuật cân bằng độ sâu—độ rộng.
 
-## Bản đồ kiến thức nền: Ba trụ cột của Thiết kế Kiến trúc Mạng Nơ-ron
+## Kiến thức cần nhớ: Ba trụ cột của Thiết kế Kiến trúc Mạng Nơ-ron
 
 1. **Lớp vào, Lớp ẩn và Lớp ra (Input, Hidden, Output Layers)**:
    Lớp vào giữ biểu diễn thô, các lớp ẩn đóng vai trò "xưởng chế biến" liên tục uốn cong không gian dữ liệu để các lớp bị trộn lẫn trở nên tách rời tuyến tính, còn lớp ra chiếu về đúng định dạng bài toán.
@@ -22,7 +22,7 @@ Một viên gạch riêng lẻ không thể che nắng mưa, nhưng biết cách
 3. **Đánh đổi Độ sâu vs. Độ rộng và Mẫu Thiết kế Thực chiến**:
    Mạng sâu hiệu quả tham số hơn nhờ tái sử dụng đặc trưng phân cấp, nhưng khó huấn luyện hơn nếu thiếu khởi tạo chuẩn, chuẩn hóa tầng (Norm) và kết nối tắt (Skip/Residual Connections).
 
-### Khung giải thích (nên đọc chậm): So sánh tay số tham số của mạng Nông-Rộng vs. mạng Sâu-Hẹp
+### Giải thích: So sánh tay số tham số của mạng Nông-Rộng vs. mạng Sâu-Hẹp
 
 Xét một bài toán nhận đầu vào $$d_{\text{in}} = 100$$ chiều và dự đoán $$d_{\text{out}} = 10$$ lớp:
 

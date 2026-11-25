@@ -12,7 +12,7 @@ lesson_type: optional
 
 Nhiều người nghĩ mạng truyền thẳng (MLP) học ở Chương 02 chỉ là món đồ chơi giáo khoa đã lỗi thời trước thời đại Transformer. Sự thật sẽ khiến bạn bất ngờ: trong các mô hình ngôn ngữ lớn hàng trăm tỷ tham số như GPT, Llama hay Gemma, **hơn 2/3 tổng số tham số của toàn bộ mô hình lại nằm chính trong các khối MLP** (thường gọi là khối FFN — Feed-Forward Network)! Tuy nhiên, khối MLP năm 2022–2026 đã tiến hóa mạnh mẽ so với MLP cổ điển với bộ ba vũ khí mới: **Pre-Norm + RMSNorm**, **cơ chế cổng nhân SwiGLU**, và kiến trúc thưa **Mixture-of-Experts (MoE)**.
 
-## Bản đồ kiến thức nền: Bốn nâng cấp biến MLP cổ điển thành Trái tim của Transformer Hiện đại
+## Kiến thức cần nhớ: Bốn nâng cấp biến MLP cổ điển thành Trái tim của Transformer Hiện đại
 
 1. **Pre-Norm kết hợp RMSNorm (thay cho Post-Norm & BatchNorm)**:
    Đưa chuẩn hóa ra *trước* khối MLP và chỉ chia cho căn trung bình bình phương (RMS, bỏ bước trừ trung bình) giúp giảm chi phí tính toán và ổn định huấn luyện mạng hàng trăm tầng mà không cần bước warmup quá mong manh.
@@ -26,7 +26,7 @@ Nhiều người nghĩ mạng truyền thẳng (MLP) học ở Chương 02 chỉ
 4. **Mixture-of-Experts (MoE — MLP Thưa)**:
    Thay 1 khối MLP khổng lồ bằng $$E$$ khối MLP "chuyên gia" song song kèm một bộ định tuyến (*router*) chỉ kích hoạt top-$$k$$ chuyên gia (ví dụ $$k=2$$ trong $$E=8$$) cho mỗi token—tăng dung lượng tri thức lên gấp nhiều lần mà giữ nguyên FLOPs suy luận!
 
-### Khung giải thích (nên đọc chậm): Tính tay tỷ lệ mở rộng chiều ẩn của SwiGLU để giữ nguyên ngân sách tham số
+### Giải thích: Tính tay tỷ lệ mở rộng chiều ẩn của SwiGLU để giữ nguyên ngân sách tham số
 
 Trong Transformer cổ điển (dùng ReLU/GELU), khối FFN mở rộng chiều ẩn gấp $$4$$ lần ($$d_{\text{ff}} = 4d$$) với **2 ma trận** $$\mathbf{W}_1 \in \mathbb{R}^{d \times 4d}$$ và $$\mathbf{W}_2 \in \mathbb{R}^{4d \times d}$$:
 - Tổng số tham số FFN cổ điển: $$2 \times (d \times 4d) = 8d^2$$.

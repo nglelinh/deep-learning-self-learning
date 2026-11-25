@@ -11,14 +11,14 @@ categories:
 
 > *Choosing the wrong tool for a machine learning problem can cost six months of engineering time and thousands of dollars in GPU bills. Great ML practitioners don't reach for deep learning blindly—they weigh data modality, sample size, latency, interpretability, and the modern PyTorch/JAX/Hugging Face ecosystem before writing line one.*
 
-## Background Knowledge Map: Decision Criteria & Modern DL Ecosystem
+## Key ideas: Decision Criteria & Modern DL Ecosystem
 
 1. **Modality & Scale Matrix**: Deep learning dominates unstructured data (images, audio, text, video, multimodal streams) and large-scale datasets, while classical GBDTs remain formidable on small-to-medium tabular data.
 2. **Operational Constraints (Latency, Memory, Interpretability)**: Regulated domains (credit scoring, clinical triage) often demand calibrated probabilities, strict millisecond budgets, or auditable feature attributions that shape architecture selection.
 3. **Hardware Acceleration (GPUs, TPUs, Tensor Cores)**: Exploits massive matrix-multiply parallelism (GEMM) in reduced precision (`FP16`/`BF16`/`FP8`), turning week-long CPU runs into minutes.
 4. **Software Stack Synergy**: Combines PyTorch/JAX for autodiff and compilation (`torch.compile`, XLA), Hugging Face for pretrained weights, and ONNX/TensorRT for low-latency production deployment.
 
-### Step-by-Step Worked Example (Read Slowly): Computing GPU Throughput & Training Cost Before Launching a Run
+### Worked example: Computing GPU Throughput & Training Cost Before Launching a Run
 
 Suppose you want to fine-tune a vision model requiring $$C = 4 \times 10^9$$ FLOPs (4 GFLOPs) per forward pass on $$N = 100{,}000$$ images for $$E = 10$$ epochs on a GPU delivering $$T_{\text{eff}} = 50\text{ TFLOP/s}$$ ($$5 \times 10^{13}$$ FLOP/s) effective `BF16` throughput.
 

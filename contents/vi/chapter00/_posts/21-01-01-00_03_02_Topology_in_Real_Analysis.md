@@ -11,7 +11,7 @@ categories:
 
 Trong bảo mật AI hiện đại, một bức ảnh gấu trúc chỉ cần cộng thêm một nhiễu vô hình có chuẩn nhỏ hơn $$\varepsilon = 8/255$$ đã có thể đánh lừa mạng nơ-ron nhận nhầm thành vượn cáo. Câu hỏi *"tất cả những bức ảnh nằm trong bán kính $$\varepsilon$$ quanh ảnh gốc có hình thù thế nào?"* chính là một câu hỏi của **tôpô trong không gian metric**. Bằng cách hiểu rõ hình cầu mở, tập đóng, điểm biên, tính lồi và tính compact, bạn sẽ nhìn thấy khung hình học đứng sau cả tối ưu hóa lẫn độ bền vững của mạng nơ-ron.
 
-## Bản đồ kiến thức nền: Bốn khái niệm Tôpô thiết yếu trong Giải tích Thực
+## Kiến thức cần nhớ: Bốn khái niệm Tôpô thiết yếu trong Giải tích Thực
 
 1. **Không gian Metric và Hình cầu mở (Metric Spaces & Open Balls)**:
    Tổng quát hóa khái niệm khoảng cách (Euclid $$L_2$$, Manhattan $$L_1$$, Chebyshev $$L_\infty$$). Mỗi chuẩn tạo ra một "hình cầu" khác nhau: hình tròn ($$L_2$$), hình thoi ($$L_1$$), và hình vuông/siêu lập phương ($$L_\infty$$—chuẩn phổ biến nhất trong tấn công đối kháng).
@@ -25,7 +25,7 @@ Trong bảo mật AI hiện đại, một bức ảnh gấu trúc chỉ cần c�
 4. **Liên hệ với Tối ưu hóa Lồi và Regularization**:
    Ràng buộc trọng số $$\|\mathbf{w}\|_2 \le C$$ hay $$\|\mathbf{w}\|_1 \le C$$ chính là các tập compact lồi; nghiệm tối ưu thường rơi đúng lên **biên** của tập này (và ở các góc nhọn của hình thoi $$L_1$$, tạo nên trọng số bằng $$0$$).
 
-### Khung giải thích (nên đọc chậm): So sánh tay 3 hình cầu bán kính $$r = 1$$ quanh gốc tọa độ
+### Giải thích: So sánh tay 3 hình cầu bán kính $$r = 1$$ quanh gốc tọa độ
 
 Xét điểm thử $$\mathbf{p} = (0.7, 0.7)$$ trong $$\mathbb{R}^2$$. Hãy kiểm tra xem $$\mathbf{p}$$ có nằm trong hình cầu mở đơn vị $$B(\mathbf{0}, 1) = \{\mathbf{x} : \|\mathbf{x}\| < 1\}$$ ứng với ba chuẩn khác nhau hay không:
 

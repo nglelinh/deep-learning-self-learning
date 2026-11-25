@@ -12,14 +12,14 @@ lesson_type: optional
 
 > *In deep learning interviews, logistic regression is the favorite microscope: it is tiny enough to derive its gradient and Hessian on a whiteboard in two minutes, yet rich enough to reveal whether you truly understand log-odds, convexity, and forward-vs.-reverse automatic differentiation.*
 
-## Background Knowledge Map: High-Yield Training & Autodiff Interview Topics
+## Key ideas: High-Yield Training & Autodiff Interview Topics
 
 1. **Logistic Regression Gradient & Log-Odds**: Deriving $$\nabla_{\mathbf{w}} L = (\sigma(\mathbf{w}^\top\mathbf{x}) - y)\mathbf{x}$$ in one clean line and interpreting each weight $$w_j$$ as the change in log-odds per unit increase in $$x_j$$.
 2. **Convexity via the Logistic Hessian**: Proving $$H(\mathbf{w}) = X^\top D X$$ with $$D_{ii} = p_i(1-p_i) > 0$$ is positive semidefinite everywhere, guaranteeing every local minimum of logistic regression is global.
 3. **Forward-Mode vs. Reverse-Mode Autodiff**: Comparing operation counts—$$O(n)$$ passes for forward mode vs. $$O(m)$$ passes for reverse mode on $$f: \mathbb{R}^n \to \mathbb{R}^m$$—and understanding why Hessian-vector products combine both (forward-over-reverse).
 4. **Hessian as a Diagnostic Tool**: Using top eigenvalues (sharpness) and negative eigenvalues (saddle directions) to diagnose training instability rather than inverting a $$10^9 \times 10^9$$ matrix directly.
 
-### Step-by-Step Worked Example (Read Slowly): Computing the Exact Logistic Hessian and Verifying Positive Semidefiniteness
+### Worked example: Computing the Exact Logistic Hessian and Verifying Positive Semidefiniteness
 
 Consider a 1D logistic regression model $$p_i = \sigma(w x_i)$$ on two points $$x_1 = 2, x_2 = -1$$ evaluated at $$w = 0$$ (where $$p_1 = p_2 = \sigma(0) = 0.5$$).
 

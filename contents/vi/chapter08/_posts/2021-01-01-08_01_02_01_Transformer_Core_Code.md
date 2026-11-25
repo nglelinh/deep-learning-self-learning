@@ -11,7 +11,7 @@ categories:
 
 Andrej Karpathy từng nói rằng cách duy nhất để thực sự hiểu một mô hình ngôn ngữ lớn là **tự viết lại lõi Transformer từ đầu trong một tệp Python duy nhất**. Khi bạn tự tay viết `MultiHeadAttention`, `FeedForward`, `TransformerBlock` và kiểm chứng bằng bài test rò rỉ tương lai (*causal leak test*), mọi bí ẩn đằng sau các mô hình hàng trăm tỷ tham số sẽ tan biến — bởi GPT-4 hay Llama về bản chất chỉ là sự nhân bản của chính khối mã nguồn này ở quy mô lớn hơn!
 
-## Bản đồ kiến thức nền: Bốn chi tiết kỹ thuật cốt tử trong mã nguồn Transformer
+## Kiến thức cần nhớ: Bốn chi tiết kỹ thuật cốt tử trong mã nguồn Transformer
 
 1. **Đăng ký buffer không huấn luyện (`register_buffer`)**:
    Ma trận Positional Encoding cố định và mặt nạ tam giác nhân quả phải được lưu bằng `self.register_buffer(...)` thay vì thuộc tính thường — nhờ đó chúng tự động di chuyển cùng mô hình khi gọi `.to('cuda')` mà không bị optimizer cập nhật trọng số.
@@ -22,7 +22,7 @@ Andrej Karpathy từng nói rằng cách duy nhất để thực sự hiểu m�
 4. **Phân biệt mặt nạ tự chú ý (Self-Attention) và chú ý chéo (Cross-Attention)**:
    Trong Decoder, tầng thứ nhất dùng `causal_mask` trên chuỗi đích ($$Q, K, V$$ đều từ đích); tầng thứ hai dùng `src_padding_mask` với $$Q$$ từ đích còn $$K, V$$ từ đầu ra Encoder.
 
-### Khung giải thích (nên đọc chậm): Lần theo luồng kích thước Tensor qua trọn vẹn 1 khối Decoder-only Transformer
+### Giải thích: Lần theo luồng kích thước Tensor qua trọn vẹn 1 khối Decoder-only Transformer
 
 Cho batch `B = 4`, độ dài chuỗi `L = 16`, kích thước ẩn `d_model = 128`, số head `H = 4` ($$d_k = 32$$), chiều ẩn FFN `d_ff = 512`, từ vựng `V = 1000`:
 

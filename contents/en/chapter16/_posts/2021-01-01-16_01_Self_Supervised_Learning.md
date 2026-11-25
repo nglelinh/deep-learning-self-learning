@@ -11,14 +11,14 @@ categories:
 
 In 2020, SimCLR startled the computer vision community by showing that a simple ResNet trained with *zero* class labels—just matching two random crops and color jitters of the same photo—could nearly match fully supervised ImageNet accuracy on a linear probe. Beneath that apparent simplicity lies a rich mathematical interplay between mutual information lower bounds, hyperspherical alignment and uniformity, and why throwing away the projection head after pretraining boosts downstream accuracy by over 10%.
 
-## Background Knowledge Map: Mathematical & Architectural Mechanics of SSL
+## Key ideas: Mathematical & Architectural Mechanics of SSL
 
 - **Pillar 1 — Mutual Information & InfoNCE Bounds**: Proves that minimizing InfoNCE maximizes a lower bound $I(X; Y) \ge \log(N) - \mathcal{L}_{\text{InfoNCE}}$, explaining why larger batch sizes $N$ tighten the bound.
 - **Pillar 2 — Alignment & Uniformity on the Hypersphere**: Decomposes contrastive learning into two geometric forces: *alignment* (positive views map to nearby unit vectors) and *uniformity* (all embeddings spread evenly across $\mathbb{S}^{d-1}$).
 - **Pillar 3 — Role of the Nonlinear Projection Head $g(\cdot)$**: Absorbs augmentation-specific invariance (like color distortion) inside $z = g(h)$, keeping the upstream representation $h = f(x)$ rich in color and pose information for downstream tasks.
 - **Pillar 4 — Masked Modeling vs. Joint-Embedding Architectures**: Contrasts pixel/token reconstruction (BERT, MAE) with representation-space prediction (BYOL, DINO, SimCLR), clarifying their inductive biases.
 
-### Step-by-Step Worked Example (Read Slowly): How Temperature $\tau$ Reweights Hard vs. Easy Negatives
+### Worked example: How Temperature $\tau$ Reweights Hard vs. Easy Negatives
 
 Using the cosine similarities $s_+ = 0.80$, $s_{\text{hard}} = 0.60$, $s_{\text{easy}} = 0.00$, compare the softmax negative weights $w_k = \frac{e^{s_k/\tau}}{\sum e^{s_m/\tau}}$ at $\tau = 0.5$ versus $\tau = 0.1$.
 

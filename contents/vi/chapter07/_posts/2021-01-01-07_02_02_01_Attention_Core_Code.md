@@ -11,7 +11,7 @@ categories:
 
 Cách tốt nhất để biến công thức Attention từ một dòng ký hiệu trừu tượng thành công cụ bạn thực sự làm chủ là tự tay viết hàm `bahdanau_attention` và `scaled_dot_product_attention`, chạy trên một ví dụ nhỏ và **in thẳng ma trận trọng số chú ý $$\alpha$$ ra màn hình**. Khi thấy từng con số xác suất tự động sáng lên ở đúng các cặp từ tương ứng, trực giác về soft alignment sẽ khắc sâu ngay lập tức.
 
-## Bản đồ kiến thức nền: Bốn kỹ thuật lập trình cốt lõi cho Attention
+## Kiến thức cần nhớ: Bốn kỹ thuật lập trình cốt lõi cho Attention
 
 1. **Ổn định số học cho Softmax (Log-Sum-Exp Trick)**:
    Trừ đi `max` trên trục tính softmax trước khi lấy `exp` giúp tránh tràn số `exp(1000) = inf`, đảm bảo kết quả luôn hữu hạn và chính xác.
@@ -22,7 +22,7 @@ Cách tốt nhất để biến công thức Attention từ một dòng ký hi�
 4. **Kiểm chứng Soft Alignment bằng bảng trọng số**:
    Quan sát tổng mỗi hàng bằng `1.000` và kiểm tra xem khi làm sắc nét điểm số (tăng độ lớn query/key), phân phối hội tụ dần về hard alignment (chỉ chọn 1 vị trí).
 
-### Khung giải thích (nên đọc chậm): Tính tay bước ổn định số học Softmax khi có giá trị lớn và vị trí bị Mask
+### Giải thích: Tính tay bước ổn định số học Softmax khi có giá trị lớn và vị trí bị Mask
 
 Giả sử một hàng điểm chú ý trước softmax là $$\mathbf{s} = [100{,}0, \; 102{,}0, \; 500{,}0]$$ nhưng vị trí thứ 3 là token `<PAD>` (bị mask):
 

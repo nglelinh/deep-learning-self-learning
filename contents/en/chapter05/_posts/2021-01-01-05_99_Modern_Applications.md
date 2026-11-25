@@ -12,14 +12,14 @@ lesson_type: optional
 
 Conventional wisdom in 2020 declared recurrent neural networks obsolete in the shadow of the Transformer. Yet Transformers carry a stubborn physical tax: their KV-cache grows linearly with context length and prefill attention scales quadratically $$O(T^2)$$. Between 2023 and 2026, a wave of linear-time recurrent architectures—most notably **Mamba** (Selective State Space Models) and **RWKV**—returned to the exact state-space recursion of Chapter 05, upgrading it with input-dependent gating and hardware-aware parallel scans so models can train in parallel like Transformers while generating tokens in $$O(1)$$ constant memory like an RNN.
 
-## Background Knowledge Map: The Modern Recurrent Revival (SSMs, Mamba, RWKV)
+## Key ideas: The Modern Recurrent Revival (SSMs, Mamba, RWKV)
 
 - **Linear Time-Invariant & Selective State Space Models**: Classical continuous-time control theory ($$\dot{h}(t) = A h(t) + B x(t)$$) discretized into $$h_t = \bar{A}_t h_{t-1} + \bar{B}_t x_t$$ turns recurrence into an associative operation. Making $$\bar{A}_t, \bar{B}_t$$ functions of $$x_t$$ (Mamba's selectivity) lets the state selectively remember or ignore tokens.
 - **Parallel Associative Scan (Blelloch Prefix Sum)**: Because linear recurrence is associative, a sequence of length $$T$$ can be computed in $$O(\log T)$$ parallel depth on GPUs during training—breaking the sequential training bottleneck of classical nonlinear RNNs.
 - **Constant-Memory Autoregressive Inference**: While a Transformer must attend over an ever-growing KV-cache of $$O(T)$$ past tokens, an SSM or RWKV updates a fixed-size state tensor in $$O(1)$$ time and $$O(1)$$ memory per generated token.
 - **Hybrid Transformer–SSM Architectures**: Models like Jamba and Zamba interleave Mamba layers (cheap long-range compression) with periodic Attention layers (exact needle-in-a-haystack recall), combining the strengths of both families.
 
-### Step-by-Step Worked Example (Read Slowly): Why Linear Recurrence Parallelizes via Associativity
+### Worked example: Why Linear Recurrence Parallelizes via Associativity
 
 Consider a scalar selective SSM step $$h_t = a_t h_{t-1} + b_t$$ with $$h_0 = 0$$ and 4 time steps:
 $$(a_1, b_1) = (0.5, 2),\; (a_2, b_2) = (0.5, 4),\; (a_3, b_3) = (0.2, 1),\; (a_4, b_4) = (1.0, 3).$$

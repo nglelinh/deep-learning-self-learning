@@ -11,7 +11,7 @@ categories:
 
 Trong những mô hình ngôn ngữ nổi tiếng, phép toán huyền thoại $$\text{vector}(\text{"Vua"}) - \text{vector}(\text{"Nam"}) + \text{vector}(\text{"Nữ"}) \approx \text{vector}(\text{"Hoàng hậu"})$$ từng khiến cả giới công nghệ kinh ngạc. Điều kỳ diệu ấy không phải phép thuật—nó là hệ quả trực tiếp của cấu trúc **không gian vector**, nơi ngữ nghĩa được ánh xạ thành hướng và khoảng cách hình học. Bài học này xây dựng nền tảng chặt chẽ về vector, tổ hợp tuyến tính, độc lập tuyến tính, chuẩn và tích vô hướng để bạn làm chủ ngôn ngữ biểu diễn dữ liệu của Deep Learning.
 
-## Bản đồ kiến thức nền: Bốn khái niệm xương sống của Không gian Vector
+## Kiến thức cần nhớ: Bốn khái niệm xương sống của Không gian Vector
 
 1. **Tổ hợp tuyến tính và Không gian sinh (Linear Combination & Span)**:
    Mô tả tập hợp tất cả các điểm có thể tạo ra từ một bộ vector cơ sở; một lớp mạng tuyến tính thực chất đang lấy tổ hợp tuyến tính các cột của ma trận trọng số.
@@ -25,7 +25,7 @@ Trong những mô hình ngôn ngữ nổi tiếng, phép toán huyền thoại $
 4. **Tích vô hướng và Độ tương đồng Cosine (Dot Product & Cosine Similarity)**:
    Liên kết đại số với hình học qua công thức $$\mathbf{u} \cdot \mathbf{v} = \|\mathbf{u}\|_2 \|\mathbf{v}\|_2 \cos\theta$$—phép toán trung tâm của cả phép chiếu, phân loại tuyến tính lẫn cơ chế Self-Attention trong Transformer.
 
-### Khung giải thích (nên đọc chậm): Tính tay chuẩn $$L_1, L_2$$ và độ tương đồng Cosine giữa hai embedding
+### Giải thích: Tính tay chuẩn $$L_1, L_2$$ và độ tương đồng Cosine giữa hai embedding
 
 Giả sử hai câu văn được mã hóa thành hai vector embedding 3 chiều: $$\mathbf{u} = (1, 2, 2)$$ và $$\mathbf{v} = (2, 1, -2)$$. Hãy tính tay toàn bộ các đại lượng hình học quan trọng:
 

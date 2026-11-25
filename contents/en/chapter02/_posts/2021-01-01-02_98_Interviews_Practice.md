@@ -12,14 +12,14 @@ lesson_type: optional
 
 > *Neural-architecture interview questions rarely test obscure papers; they probe whether you can spot subtle pitfalls on a whiteboard in 60 seconds—like why removing nonlinearities collapses depth, why softmax overflows without max-subtraction, or why a dead ReLU neuron can never revive itself.*
 
-## Background Knowledge Map: High-Frequency Architecture Interview Concepts
+## Key ideas: High-Frequency Architecture Interview Concepts
 
 1. **Nonlinearity & Rank Collapse**: Proving concisely why an $$L$$-layer linear MLP has rank bounded by $$\min_l d_l$$ and collapses to one affine map.
 2. **Numerical Stability of Softmax & LogSumExp**: Using shift invariance $$\text{softmax}(\mathbf{z} - c) = \text{softmax}(\mathbf{z})$$ to prevent overflow and underflow in `float16`/`float32`.
 3. **Saturation & Dead-Neuron Pathology**: Diagnosing why large positive/negative logits freeze sigmoid gradients ($$\sigma'(z) \to 0$$) and why large negative biases permanently silence ReLU units.
 4. **Parameter & FLOP Estimation**: Mentally computing parameter counts and memory footprints of dense layers to spot capacity bottlenecks during system design.
 
-### Step-by-Step Worked Example (Read Slowly): Diagnosing a Dead ReLU Neuron After One Aggressive Update
+### Worked example: Diagnosing a Dead ReLU Neuron After One Aggressive Update
 
 Suppose a ReLU neuron $$a = \text{ReLU}(w x + b)$$ receives positive inputs $$x \in [0, 1]$$, starts with $$w = 0.5, b = 0.2$$, and on a single outlier sample $$(x = 1.0, \frac{\partial L}{\partial a} = +20.0)$$ takes a gradient step with overly large learning rate $$\eta = 0.5$$.
 

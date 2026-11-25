@@ -11,7 +11,7 @@ lang: vi
 
 Thế giới thực không bao giờ sạch sẽ như sách giáo khoa: cảm biến camera luôn có nhiễu hạt, chữ viết tay của hai người cho cùng số "7" có thể hoàn toàn khác nhau, và cùng một câu hỏi có thể có nhiều câu trả lời đúng. Nếu chỉ dùng hàm tất định cứng nhắc, AI sẽ gãy vụn trước sự bất định ấy. **Xác suất và Thống kê** là ngôn ngữ giúp mạng nơ-ron không chỉ đưa ra dự đoán, mà còn biết mức độ tự tin của mình—đồng thời biến bài toán huấn luyện thành bài toán tìm phân phối xác suất khớp nhất với dữ liệu quan sát được.
 
-## Bản đồ kiến thức nền: Bốn trụ cột Xác suất & Thống kê trong Học sâu
+## Kiến thức cần nhớ: Bốn trụ cột Xác suất & Thống kê trong Học sâu
 
 1. **Không gian mẫu, Tiên đề và Định lý Bayes**:
    Đặt nền móng logic chặt chẽ cho việc cập nhật niềm tin (*posterior*) khi có thêm dữ liệu quan sát mới (*likelihood*) kết hợp với tri thức ban đầu (*prior*).
@@ -25,7 +25,7 @@ Thế giới thực không bao giờ sạch sẽ như sách giáo khoa: cảm bi
 4. **Kỳ vọng, Phương sai và Luật số lớn**:
    Giải thích vì sao Mini-Batch Stochastic Gradient Descent (SGD) chỉ dùng 32 hoặc 64 mẫu mỗi bước vẫn cho ước lượng không chệch của gradient toàn tập dữ liệu hàng triệu mẫu.
 
-### Khung giải thích (nên đọc chậm): Kiểm chứng bằng tay ước lượng không chệch của Mini-Batch
+### Giải thích: Kiểm chứng bằng tay ước lượng không chệch của Mini-Batch
 
 Giả sử toàn tập dữ liệu chỉ có 4 mẫu với gradient riêng lẻ tại tham số hiện tại là: $$g_1 = 2, g_2 = 6, g_3 = -2, g_4 = 10$$.
 

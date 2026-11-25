@@ -11,7 +11,7 @@ categories:
 
 Khi viết một bài toán tối ưu như $$\min_{\theta \in \Theta} L(\theta)$$, chúng ta thường mặc nhiên giả định rằng nghiệm nhỏ nhất *chắc chắn tồn tại* và chuỗi cập nhật $$\theta_1, \theta_2, \dots$$ sẽ tiến về đâu đó có nghĩa. Nhưng trên thực tế, một hàm số trên tập mở hoàn toàn có thể không bao giờ đạt cực tiểu (ví dụ $$f(x) = x$$ trên $$(0, 1)$$ không có giá trị nhỏ nhất!). Giải tích thực và lý thuyết tập hợp cung cấp khung ngôn ngữ chính xác về tập đóng, tập mở, tính compact và sự hội tụ—những bảo chứng thầm lặng đằng sau mọi định lý tối ưu hóa và học máy lý thuyết.
 
-## Bản đồ kiến thức nền: Ba trụ cột của Lý thuyết Tập hợp và Giải tích Thực
+## Kiến thức cần nhớ: Ba trụ cột của Lý thuyết Tập hợp và Giải tích Thực
 
 1. **Lý thuyết tập hợp và Ánh xạ (Sets & Functions)**:
    Xây dựng ngôn ngữ chuẩn hóa để biểu diễn không gian mẫu, tập dữ liệu huấn luyện/kiểm thử, miền tham số khả thi và các ánh xạ tầng mạng nơ-ron $$f: \mathbb{R}^d \to \mathbb{R}^k$$.
@@ -22,7 +22,7 @@ Khi viết một bài toán tối ưu như $$\min_{\theta \in \Theta} L(\theta)$
 3. **Tính Compact và Định lý Weierstrass**:
    Trong $$\mathbb{R}^n$$, tập vừa đóng vừa bị chặn là tập compact; mọi hàm liên tục trên tập compact đều đạt giá trị lớn nhất và nhỏ nhất—bảo chứng cốt lõi cho sự tồn tại nghiệm của bài toán tối ưu có ràng buộc.
 
-### Khung giải thích (nên đọc chậm): So sánh sự tồn tại cực tiểu trên tập mở và tập đóng
+### Giải thích: So sánh sự tồn tại cực tiểu trên tập mở và tập đóng
 
 Xét hàm đơn giản $$f(x) = \frac{1}{x} + x$$ trên hai miền khác nhau:
 

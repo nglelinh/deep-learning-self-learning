@@ -11,7 +11,7 @@ categories:
 
 Nếu chỉ nhìn ma trận như một bảng Excel chứa đầy con số, phép nhân ma trận sẽ trông như một quy tắc nhân-rồi-cộng kỳ quặc và vô nghĩa. Nhưng ngay khi bạn đeo cặp kính hình học vào, mọi thứ bỗng bừng sáng: một ma trận $$m \times n$$ chính là một cỗ máy biến đổi toàn bộ không gian $$\mathbb{R}^n$$ sang $$\mathbb{R}^m$$—xoay, lật, kéo giãn hoặc chiếu bẹp nó xuống chiều thấp hơn. Mỗi tầng `Linear` hay tích chập trong mạng nơ-ron sâu đều là một phép biến đổi ma trận như vậy, và nhân nhiều ma trận liên tiếp chính là ghép nối các tầng mạng lại với nhau.
 
-## Bản đồ kiến thức nền: Bốn góc nhìn thiết yếu về Ma trận và Phép biến đổi Tuyến tính
+## Kiến thức cần nhớ: Bốn góc nhìn thiết yếu về Ma trận và Phép biến đổi Tuyến tính
 
 1. **Phép nhân ma trận là phép hợp hàm (Composition of Transformations)**:
    Áp dụng ma trận $$\mathbf{A}$$ rồi đến $$\mathbf{B}$$ tương đương với một phép biến đổi duy nhất $$\mathbf{B}\mathbf{A}$$. Điều này giải thích ngay vì sao mạng nhiều tầng *không có hàm kích hoạt phi tuyến* chỉ tương đương một ma trận duy nhất!
@@ -25,7 +25,7 @@ Nếu chỉ nhìn ma trận như một bảng Excel chứa đầy con số, phé
 4. **Định thức và Ma trận nghịch đảo (Determinant & Inverse)**:
    Định thức $$\det(\mathbf{A})$$ đo hệ số phóng đại diện tích/thể tích của phép biến đổi; khi $$\det(\mathbf{A}) = 0$$, không gian bị ép phẳng và phép biến đổi không còn khả nghịch.
 
-### Khung giải thích (nên đọc chậm): Kiểm chứng bằng tay tính không giao hoán và sự ép chiều
+### Giải thích: Kiểm chứng bằng tay tính không giao hoán và sự ép chiều
 
 Xét hai ma trận $$2 \times 2$$: ma trận xoay $$90^\circ$$ ngược chiều kim đồng hồ $$\mathbf{R} = \begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix}$$ và ma trận kéo giãn trục ngang gấp 2 lần $$\mathbf{S} = \begin{bmatrix} 2 & 0 \\ 0 & 1 \end{bmatrix}$$. Tác động lên điểm $$\mathbf{x} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$$ theo hai thứ tự:
 

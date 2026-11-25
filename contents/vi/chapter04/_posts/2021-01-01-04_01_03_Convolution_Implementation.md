@@ -11,7 +11,7 @@ categories:
 
 Một dòng code `nn.Conv2d(3, 64, kernel_size=3, padding=1)` trong PyTorch chạy chỉ trong vài phần nghìn giây, nhưng chính sự tiện lợi ấy lại khiến nhiều lập trình viên gặp khó khăn khi phải debug lỗi lệch kích thước tensor, tối ưu tốc độ suy luận, hay viết lại tầng tích chập trên thiết bị nhúng không có PyTorch. Muốn làm chủ CNN, ta cần nhìn xuyên qua lớp vỏ API bằng cách tự cài đặt từ đầu bằng NumPy rồi mới đối chiếu với PyTorch.
 
-## Bản đồ kiến thức nền: Ba lớp kỹ thuật khi triển khai Tầng Tích chập
+## Kiến thức cần nhớ: Ba lớp kỹ thuật khi triển khai Tầng Tích chập
 
 1. **Tư duy chỉ số mảng và Padding tường minh (NumPy)**:
    Tự dùng `np.pad` và cắt lát `image[i*s : i*s+kh, j*s : j*s+kw]` giúp bạn kiểm soát tuyệt đối từng tọa độ, hiểu rõ vì sao `output_shape` lấy phần nguyên sàn (`//`) khi chia cho stride.
@@ -20,7 +20,7 @@ Một dòng code `nn.Conv2d(3, 64, kernel_size=3, padding=1)` trong PyTorch ch�
 3. **Từ tích chập đơn lẻ đến Khối CNN tiêu chuẩn (Conv Block)**:
    Trong thực tế, ít khi dùng `Conv2d` đứng một mình; đơn vị xây dựng chuẩn là cụm `Conv2d(bias=False) -> BatchNorm2d -> ReLU` (hoặc SiLU/GELU) kết hợp với tích chập $$1\times 1$$ để nén hoặc mở rộng số kênh.
 
-### Khung giải thích (nên đọc chậm): Lần theo chỉ số cắt lát (slicing) trong vòng lặp NumPy
+### Giải thích: Lần theo chỉ số cắt lát (slicing) trong vòng lặp NumPy
 
 Giả sử ảnh đã pad có kích thước $$5 \times 5$$, nhân $$K$$ kích thước $$3 \times 3$$, bước nhảy $$s = 2$$. Khi đó $$H_{\text{out}} = \lfloor (5 - 3)/2 \rfloor + 1 = 2$$. Với mỗi cặp chỉ số đầu ra $$(i, j) \in \{0, 1\} \times \{0, 1\}$$, vùng ảnh được cắt lát là `padded[i*2 : i*2+3, j*2 : j*2+3]`:
 

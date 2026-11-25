@@ -11,7 +11,7 @@ categories:
 
 Nếu lan truyền ngược là quá trình "học từ sai lầm", thì **lan truyền xuôi (*forward propagation*)** chính là quá trình mạng nơ-ron "suy nghĩ và đưa ra câu trả lời". Viết vòng lặp `for` lồng nhau cho từng nơ-ron và từng mẫu dữ liệu bằng Python thuần có thể mất hàng giờ đồng hồ, nhưng chỉ cần viết lại đúng phép tính đó dưới dạng **nhân ma trận theo batch (vectorization)**, GPU có thể xử lý xong hàng chục nghìn ảnh trong vài mili-giây. Bài học này dẫn bạn đi từng bước toán học của lan truyền xuôi, từ một mẫu đơn lẻ đến mini-batch đa chiều và trực giác hình học đằng sau mỗi tầng biến đổi.
 
-## Bản đồ kiến thức nền: Bốn trụ cột của Lan truyền Xuôi
+## Kiến thức cần nhớ: Bốn trụ cột của Lan truyền Xuôi
 
 1. **Chuỗi Biến đổi Đệ quy qua từng Tầng**:
    Bắt đầu từ $$\mathbf{A}^{(0)} = \mathbf{X}$$, mỗi tầng $$\ell = 1, \dots, L$$ thực hiện đúng hai bước: biến đổi tuyến tính $$\mathbf{Z}^{(\ell)} = \mathbf{A}^{(\ell-1)}\mathbf{W}^{(\ell)} + \mathbf{b}^{(\ell)}$$ (có broadcasting cho $$\mathbf{b}^{(\ell)}$$) và kích hoạt phi tuyến $$\mathbf{A}^{(\ell)} = \sigma_\ell(\mathbf{Z}^{(\ell)})$$.
@@ -25,7 +25,7 @@ Nếu lan truyền ngược là quá trình "học từ sai lầm", thì **lan t
 4. **Trực giác Hình học của Chuỗi Tầng**:
    Mỗi tầng không di chuyển điểm dữ liệu một cách hỗn loạn mà liên tục xoay, kéo giãn và gấp không gian để đến tầng cuối cùng, các lớp khác nhau nằm gọn trên hai phía đối diện của một siêu phẳng.
 
-### Khung giải thích (nên đọc chậm): Tính tay Lan truyền Xuôi cho một Mini-Batch 2 mẫu qua mạng 2–2–1
+### Giải thích: Tính tay Lan truyền Xuôi cho một Mini-Batch 2 mẫu qua mạng 2–2–1
 
 Xét mini-batch gồm 2 mẫu $$\mathbf{X} = \begin{bmatrix} 1 & 0 \\ -1 & 2 \end{bmatrix} \in \mathbb{R}^{2 \times 2}$$ đi qua mạng có:
 $$\mathbf{W}^{(1)} = \begin{bmatrix} 1 & -1 \\ 2 & 1 \end{bmatrix}, \;\mathbf{b}^{(1)} = \begin{bmatrix} 0 & 1 \end{bmatrix}, \;\mathbf{W}^{(2)} = \begin{bmatrix} 1 \\ -2 \end{bmatrix}, \; b^{(2)} = 0.5.$$

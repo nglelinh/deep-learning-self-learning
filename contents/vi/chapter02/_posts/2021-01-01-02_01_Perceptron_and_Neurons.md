@@ -11,7 +11,7 @@ categories:
 
 Từng có thời điểm năm 1969, cuốn sách *Perceptrons* của Marvin Minsky và Seymour Papert đã chứng minh rằng một Perceptron đơn lẻ hoàn toàn bất lực trước một cổng logic cực kỳ đơn giản: **phép XOR**—gây ra "mùa đông AI" đầu tiên kéo dài hơn một thập kỷ. Vì sao một phép tính nhỏ bé như XOR lại đánh bại được Perceptron? Câu trả lời nằm ngay trong hình học của phương trình $$\mathbf{w}^\top \mathbf{x} + b = 0$$: một nơ-ron đơn chỉ biết kẻ **một đường thẳng duy nhất**. Bài học này phân tích sâu cấu tạo toán học, trực giác siêu phẳng và giới hạn tuyến tính của Perceptron để thấy rõ vì sao ta buộc phải xây dựng mạng nhiều tầng.
 
-## Bản đồ kiến thức nền: Bốn mảnh ghép cốt lõi của Perceptron và Nơ-ron Nhân tạo
+## Kiến thức cần nhớ: Bốn mảnh ghép cốt lõi của Perceptron và Nơ-ron Nhân tạo
 
 1. **Tổng có trọng số và Độ lệch (Weighted Sum & Bias)**:
    Vector trọng số $$\mathbf{w}$$ quyết định **hướng** (vector pháp tuyến) và độ nhạy của ranh giới quyết định; còn bias $$b$$ dịch chuyển siêu phẳng ra khỏi gốc tọa độ để khớp dữ liệu tự do hơn.
@@ -25,7 +25,7 @@ Từng có thời điểm năm 1969, cuốn sách *Perceptrons* của Marvin Min
 4. **Quy tắc cập nhật Perceptron (Perceptron Learning Rule)**:
    Khi đoán sai mẫu $$(\mathbf{x}, y)$$, xoay vector trọng số theo $$\mathbf{w} \leftarrow \mathbf{w} + \eta (y - \hat{y})\mathbf{x}$$—định lý hội tụ Perceptron đảm bảo thuật toán dừng sau hữu hạn bước nếu dữ liệu khả tách tuyến tính.
 
-### Khung giải thích (nên đọc chậm): Tự tay kiểm chứng Perceptron giải được AND nhưng thất bại trước XOR
+### Giải thích: Tự tay kiểm chứng Perceptron giải được AND nhưng thất bại trước XOR
 
 Xét bốn điểm góc của hình vuông đơn vị $$(x_1, x_2) \in \{(0,0), (0,1), (1,0), (1,1)\}$$:
 

@@ -12,7 +12,7 @@ lesson_type: optional
 
 Công thức Attention chuẩn có một điểm yếu chí mạng ở cấp độ phần cứng: để tính `softmax(QK^T / sqrt(d))`, GPU phải ghi cả ma trận điểm số $$L \times L$$ ra bộ nhớ chính HBM chậm chạp rồi lại đọc ngược vào — khiến Attention bị nghẽn băng thông bộ nhớ (*memory-bound*) ngay cả khi nhân tính toán Tensor Core đang rảnh rỗi! Giai đoạn 2022–2026 chứng kiến cuộc cách mạng kỹ thuật hệ thống với **FlashAttention**, **GQA/MQA** và **PagedAttention**, giúp kéo dài ngữ cảnh LLM từ 4K lên hàng triệu token.
 
-## Bản đồ kiến thức nền: Bốn đột phá hệ thống về Attention (2022–2026)
+## Kiến thức cần nhớ: Bốn đột phá hệ thống về Attention (2022–2026)
 
 1. **FlashAttention (Tri Dao et al., 2022–2024) — Chính xác 100%, bộ nhớ $$O(L)$$**:
    Không hề xấp xỉ toán học! FlashAttention chia nhỏ $$Q, K, V$$ thành các khối (tiles) vừa khít bộ nhớ siêu nhanh SRAM trên chip GPU, dùng thuật toán *online softmax* để tính trọn vẹn Attention mà **không bao giờ** phải ghi ma trận $$L \times L$$ xuống HBM.
@@ -23,7 +23,7 @@ Công thức Attention chuẩn có một điểm yếu chí mạng ở cấp đ�
 4. **Sliding-Window và Sparse/Linear Attention**:
    Giới hạn mỗi token chỉ chú ý vào cửa sổ cục bộ $$W$$ token gần nhất (Mistral) hoặc kết hợp các token neo (*attention sinks*), giảm độ phức tạp từ $$O(L^2)$$ xuống $$O(L \cdot W)$$.
 
-### Khung giải thích (nên đọc chậm): Tính tay mức tiết kiệm VRAM của GQA và FlashAttention ở ngữ cảnh $$L = 8{,}192$$
+### Giải thích: Tính tay mức tiết kiệm VRAM của GQA và FlashAttention ở ngữ cảnh $$L = 8{,}192$$
 
 **Phần A — FlashAttention vs. Standard Attention (1 layer, 1 batch, $$H=32$$ head, FP16 = 2 byte)**:
 - Ma trận điểm số $$S = Q K^T$$ nếu lưu ra HBM chiếm:

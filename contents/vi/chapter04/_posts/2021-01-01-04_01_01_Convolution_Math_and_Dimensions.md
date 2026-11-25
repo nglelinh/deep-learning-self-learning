@@ -11,7 +11,7 @@ categories:
 
 Trong phòng thí nghiệm giải phẫu thần kinh năm 1959, David Hubel và Torsten Wiesel tình cờ phát hiện một điều kinh ngạc: tế bào vỏ não thị giác mèo không hề phản ứng với một đốm sáng tròn, nhưng lại phát xung dữ dội ngay khi mép tấm kính trượt tạo thành một **vạch thẳng nghiêng** lướt ngang trường nhìn. Hơn nửa thế kỷ sau, phép toán mô phỏng lại cơ chế quét mẫu cục bộ ấy — tích chập 2D đa kênh — đã trở thành ngôn ngữ nền tảng của toàn bộ thị giác máy tính.
 
-## Bản đồ kiến thức nền: Bốn trụ cột toán học của Tầng Tích chập
+## Kiến thức cần nhớ: Bốn trụ cột toán học của Tầng Tích chập
 
 1. **Tích chập (Convolution) vs. Tương quan chéo (Cross-Correlation)**:
    Xử lý tín hiệu lật ngược bộ lọc 180° trước khi trượt để phép toán có tính giao hoán; Deep Learning bỏ bước lật vì trọng số do mạng tự học nên lật hay không cho cùng không gian hàm.
@@ -22,7 +22,7 @@ Trong phòng thí nghiệm giải phẫu thần kinh năm 1959, David Hubel và 
 4. **Ngân sách tham số và độ phức tạp tính toán**:
    Số tham số độc lập với độ phân giải ảnh $$(H, W)$$, nhưng số phép tính FLOPs tỷ lệ thuận với $$H_{\text{out}} \cdot W_{\text{out}}$$ — đây là lý do ảnh độ phân giải cao tiêu tốn bộ nhớ kích hoạt rất lớn dù mô hình ít tham số.
 
-### Khung giải thích (nên đọc chậm): Tính tay tương quan chéo 2D với Padding và Stride
+### Giải thích: Tính tay tương quan chéo 2D với Padding và Stride
 
 Xét ma trận đầu vào $$I$$ kích thước $$4 \times 4$$ và bộ lọc phát hiện cạnh dọc $$K$$ kích thước $$2 \times 2$$ với $$P = 0, S = 2$$:
 

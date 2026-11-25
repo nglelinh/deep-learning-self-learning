@@ -11,7 +11,7 @@ categories:
 
 Nếu mô hình phân loại ảnh của bạn đoán xác suất bức ảnh là con chó bằng $$0.99$$ khi nhãn thật là con mèo, sai lầm đó không chỉ "sai 1 điểm" mà là một sự tự tin mù quáng cần bị phạt cực nặng. Đó là lý do các bài toán phân loại trong Học sâu hầu như luôn xoay quanh **Cross-Entropy (Log Loss)**—hàm mất mát có nguồn gốc từ Lý thuyết Thông tin và MLE—cùng những biến thể chuyên trị dữ liệu mất cân bằng như **Focal Loss**, **Label Smoothing** và **Hinge Loss**. Bài học này giải phẫu trọn vẹn bộ hàm mất mát phân loại và quy tắc lựa chọn trong từng tình huống.
 
-## Bản đồ kiến thức nền: Bốn trụ cột của Hàm Mất mát Phân loại
+## Kiến thức cần nhớ: Bốn trụ cột của Hàm Mất mát Phân loại
 
 1. **Binary Cross-Entropy (BCE) cho Phân loại Nhị phân & Đa nhãn**:
    $$L = -[y\ln p + (1-y)\ln(1-p)]$$ với $$p = \sigma(z)$$. Trong PyTorch, luôn dùng `BCEWithLogitsLoss` (nhận trực tiếp logit $$z$$) thay vì tự chạy `Sigmoid` rồi `BCELoss` để đảm bảo ổn định số học.
@@ -25,7 +25,7 @@ Nếu mô hình phân loại ảnh của bạn đoán xác suất bức ảnh l�
 4. **Kỹ thuật nâng cao: Label Smoothing & Focal Loss**:
    Label Smoothing làm mềm nhãn từ `[0, 1, 0]` thành `[0.05, 0.90, 0.05]` chống quá tự tin (*overconfidence*); còn Focal Loss nhân thêm $$(1 - p_t)^\gamma$$ để hạ trọng số mẫu dễ và tập trung sức học vào mẫu khó/lớp hiếm.
 
-### Khung giải thích (nên đọc chậm): Tính tay Cross-Entropy, Gradient $$\mathbf{p} - \mathbf{y}$$ và Focal Loss
+### Giải thích: Tính tay Cross-Entropy, Gradient $$\mathbf{p} - \mathbf{y}$$ và Focal Loss
 
 Giả sử bài toán 3 lớp có nhãn thật là lớp 0 ($$\mathbf{y} = [1, 0, 0]$$), và mạng xuất ra vector logit $$\mathbf{z} = [1.0,\; 2.0,\; 0.0]$$:
 

@@ -12,14 +12,14 @@ lesson_type: optional
 
 > *It is tempting to assume that modern foundation-model frameworks have abstracted math away into `loss.backward()`. In reality, the biggest breakthroughs of 2022–2026—Physics-Informed Neural Networks, LoRA low-rank matrices, FlashAttention, and flow-matching diffusion—are pure applied calculus, linear algebra, and probability written in Triton and JAX.*
 
-## Background Knowledge Map: Classical Math Inside 2022–2026 AI Stacks
+## Key ideas: Classical Math Inside 2022–2026 AI Stacks
 
 1. **Automatic Differentiation & Scientific ML (PINNs)**: Uses higher-order derivatives ($$\frac{\partial^2 u}{\partial x^2}$$) computed directly through autodiff graphs to enforce partial differential equations as soft loss penalties.
 2. **Low-Rank Linear Algebra (LoRA & Quantized Matrices)**: Exploits the insight that fine-tuning weight updates $$\Delta W \in \mathbb{R}^{d \times d}$$ live in a tiny subspace of rank $$r \ll d$$, factoring $$\Delta W = BA$$ to cut trainable parameters by $$100\times$$.
 3. **Probability & Score Matching (Diffusion & Flow Matching)**: Trains generative models to estimate the score function $$\nabla_{\mathbf{x}} \log p_t(\mathbf{x})$$ or velocity field transporting Gaussian noise smoothly into complex data distributions.
 4. **Differentiable Programming Beyond Neural Nets**: Extends reverse-mode gradients through physics simulators, ray tracers, and convex optimization layers to solve inverse problems end-to-end.
 
-### Step-by-Step Worked Example (Read Slowly): Parameter & FLOP Savings of Low-Rank Adaptation (LoRA)
+### Worked example: Parameter & FLOP Savings of Low-Rank Adaptation (LoRA)
 
 Consider a Transformer projection matrix $$W_0 \in \mathbb{R}^{4096 \times 4096}$$ adapted via LoRA with rank $$r = 16$$: $$W = W_0 + BA$$ where $$B \in \mathbb{R}^{4096 \times 16}$$ and $$A \in \mathbb{R}^{16 \times 4096}$$.
 

@@ -12,7 +12,7 @@ lesson_type: optional
 
 Trong các buổi phỏng vấn vị trí Machine Learning / Deep Learning Engineer tại những công ty công nghệ hàng đầu, người phỏng vấn hiếm khi hỏi bạn thuộc lòng cú pháp PyTorch. Thay vào đó, họ đặt ra những câu hỏi toán học sắc lẹm chỉ dài hai dòng—như *"Hãy phân tách Cross-Entropy thành Entropy và KL-Divergence"* hay *"Điều gì xảy ra với Thông tin Tương hỗ của một bộ phân loại hoàn hảo?"*—để kiểm tra xem bạn có thực sự hiểu bản chất đằng sau dòng code mình viết hay không. Bài luyện phỏng vấn này rèn cho bạn tư duy trả lời gọn, chặt chẽ và chạm đúng gốc rễ lý thuyết thông tin cùng giải tích.
 
-## Bản đồ kiến thức nền: Ba trụ cột Lý thuyết Thông tin & Giải tích hay gặp nhất khi Phỏng vấn
+## Kiến thức cần nhớ: Ba trụ cột Lý thuyết Thông tin & Giải tích hay gặp nhất khi Phỏng vấn
 
 1. **Entropy ($$H(P)$$), Cross-Entropy ($$H(P, Q)$$) và KL-Divergence ($$D_{\text{KL}}(P \| Q)$$)**:
    Ba đại lượng gắn kết bằng đẳng thức vàng $$H(P, Q) = H(P) + D_{\text{KL}}(P \| Q)$$. Vì $$H(P)$$ cố định theo dữ liệu thật, tối thiểu hóa Cross-Entropy tương đương kéo phân phối dự đoán $$Q$$ sát phân phối thật $$P$$ theo khoảng cách KL.
@@ -23,7 +23,7 @@ Trong các buổi phỏng vấn vị trí Machine Learning / Deep Learning Engin
 3. **Giải tích trong Tối ưu hóa (Độ lồi, Bất đẳng thức Jensen, Điểm dừng)**:
    Bất đẳng thức Jensen là vũ khí chứng minh nhanh $$D_{\text{KL}}(P \| Q) \ge 0$$ (bất đẳng thức Gibbs) cũng như suy ra cận dưới ELBO trong Variational Autoencoder—những câu hỏi phỏng vấn cấp độ Senior/Research.
 
-### Khung giải thích (nên đọc chậm): Tính tay Entropy, Cross-Entropy và KL-Divergence trên phân phối 2 lớp
+### Giải thích: Tính tay Entropy, Cross-Entropy và KL-Divergence trên phân phối 2 lớp
 
 Giả sử phân phối nhãn thật của một bài toán là $$P = (0.8, 0.2)$$ và mô hình của bạn dự đoán $$Q = (0.5, 0.5)$$ (dùng log cơ số 2, đơn vị *bit*):
 

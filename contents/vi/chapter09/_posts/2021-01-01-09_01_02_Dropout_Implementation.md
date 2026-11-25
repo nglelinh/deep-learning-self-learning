@@ -11,7 +11,7 @@ categories:
 
 Một trong những lỗi "âm thầm nhưng chí mạng" hay gặp nhất trong các dự án PyTorch thực tế là **quên gọi `model.eval()` trước khi chạy vòng đánh giá validation/test**. Kết quả là Dropout vẫn tiếp tục tắt ngẫu nhiên 50% neuron trong lúc chấm điểm, khiến độ chính xác tập kiểm định vừa tụt thảm hại vừa nhảy loạn xạ sau mỗi lần chạy! Bài thực hành này giúp bạn làm chủ cả cài đặt chuẩn PyTorch, bản viết tay NumPy (cả forward lẫn backward) và các quy tắc kết hợp với BatchNorm.
 
-## Bản đồ kiến thức nền: Bốn điểm kỹ thuật cốt tử khi cài đặt Dropout
+## Kiến thức cần nhớ: Bốn điểm kỹ thuật cốt tử khi cài đặt Dropout
 
 1. **Lan truyền ngược qua lớp Dropout**:
    Trong lượt backward, gradient chỉ được truyền ngược qua **đúng những neuron đã sống sót** trong lượt forward (nhân lại với chính mặt nạ `mask / (1 - p)` đã lưu ở cache); các neuron bị tắt nhận gradient bằng `0`.
@@ -22,7 +22,7 @@ Một trong những lỗi "âm thầm nhưng chí mạng" hay gặp nhất trong
 4. **Tránh xung đột giữa Dropout và BatchNorm**:
    Đặt Dropout ngay *trước* BatchNorm làm thay đổi phương sai giữa train và eval (hiện tượng *variance shift*, Li et al. 2019). Quy tắc an toàn: đặt Dropout sau BatchNorm hoặc chỉ dùng ở tầng phân loại cuối.
 
-### Khung giải thích (nên đọc chậm): Tính tay cả Forward và Backward của một lớp Inverted Dropout bằng NumPy
+### Giải thích: Tính tay cả Forward và Backward của một lớp Inverted Dropout bằng NumPy
 
 Giả sử đầu vào $$\mathbf{x} = [1{,}0, \; -2{,}0, \; 4{,}0, \; 3{,}0]$$, tỷ lệ tắt $$p = 0{,}2$$ (tỷ lệ giữ $$1 - p = 0{,}8$$), mặt nạ ngẫu nhiên rút được là $$\mathbf{m} = [1, \; 0, \; 1, \; 1]$$, và gradient từ tầng trên truyền xuống là $$\mathbf{g}_{\text{out}} = [0{,}4, \; 0{,}8, \; -0{,}4, \; 1{,}6]$$:
 

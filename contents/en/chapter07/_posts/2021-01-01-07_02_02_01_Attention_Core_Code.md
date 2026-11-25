@@ -11,14 +11,14 @@ categories:
 
 Translating attention math into PyTorch code is a masterclass in numerical stability and broadcasting hygiene. A single missing `keepdim=True` in softmax, a mask applied *after* softmax instead of *before*, or an unshifted `exp(x)` on large logits can silently produce `NaN`s or leak future tokens during autoregressive training. Building both a transparent loop-based Bahdanau module and a vectorized scaled dot-product function side by side guarantees you can spot every subtle tensor bug on sight.
 
-## Background Knowledge Map: Core Implementation Patterns for Attention
+## Key ideas: Core Implementation Patterns for Attention
 
 - **Numerically Stable Softmax (Log-Sum-Exp Shift)**: Subtracting `row_max = scores.max(dim=-1, keepdim=True).values` before exponentiation never changes the mathematical probabilities, yet prevents `float32`/`float16` overflow when scores exceed ~88 (or ~11 in fp16).
 - **Mask Broadcasting & `masked_fill`**: Using boolean masks where `True` marks forbidden positions (or `0` marks padding) with `scores = scores.masked_fill(mask == 0, float("-inf"))` cleanly broadcasts across `(B, 1, 1, T_k)` or `(B, h, T_q, T_k)`.
 - **Loop-Based Bahdanau vs. Vectorized QKV**: Looping over decoder time steps makes Bahdanau alignment crystal clear for teaching, whereas `torch.matmul(Q, K.transpose(-2, -1))` unlocks full GPU parallelism.
 - **Row-Sum Invariant Checks**: Asserting `torch.allclose(attn.sum(dim=-1), torch.ones(...))` and inspecting masked entries (`attn[mask == 0] == 0`) are fast unit tests that catch 90% of attention implementation bugs immediately.
 
-### Step-by-Step Worked Example (Read Slowly): Why Subtracting the Row Maximum Prevents Overflow
+### Worked example: Why Subtracting the Row Maximum Prevents Overflow
 
 Suppose a single attention row in `float16` produces raw scores $$z = [100.0, 101.0, 99.0]$$.
 

@@ -11,14 +11,14 @@ categories:
 
 > *When a neural network misclassifies an X-ray, a single scalar loss number has to send bespoke blame signals back to millions of weights simultaneously. Multivariable calculus—partial derivatives, Jacobians, Hessians, and the multivariable chain rule—is the exact bookkeeping system that makes that feat possible.*
 
-## Background Knowledge Map: Multivariable Calculus for Neural Optimization
+## Key ideas: Multivariable Calculus for Neural Optimization
 
 1. **Partial Derivatives (Axis-Aligned Sensitivities)**: Isolate the rate of change of a loss $$f(x_1, \dots, x_n)$$ with respect to one coordinate while holding all other parameters frozen.
 2. **The Gradient & Jacobian (First-Order Linearization)**: Package all partial derivatives of a scalar function into a gradient vector $$\nabla f$$, or of a vector-valued layer $$h: \mathbb{R}^n \to \mathbb{R}^m$$ into an $$m \times n$$ Jacobian matrix $$J_h$$.
 3. **The Hessian Matrix (Second-Order Curvature)**: Collects all second partial derivatives $$H_{ij} = \frac{\partial^2 f}{\partial x_i \partial x_j}$$, distinguishing strict local minima (positive definite), maxima (negative definite), and saddle points (indefinite)—which dominate high-dimensional neural loss landscapes.
 4. **Multivariable Chain Rule (The Core of Backpropagation)**: Composes local derivatives along every path in a computational graph, summing contributions whenever one variable feeds into multiple downstream nodes.
 
-### Step-by-Step Worked Example (Read Slowly): Gradient, Hessian, and Chain Rule on a Coupled Loss
+### Worked example: Gradient, Hessian, and Chain Rule on a Coupled Loss
 
 Consider the two-variable objective $$f(x, y) = x^2 y + 3y^2$$ along the parameterized path $$x(t) = 2t$$, $$y(t) = t + 1$$, evaluated at $$t = 1$$ (so $$x = 2, y = 2$$).
 

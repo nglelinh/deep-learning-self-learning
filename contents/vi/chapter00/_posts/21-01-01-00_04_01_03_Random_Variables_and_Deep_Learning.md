@@ -11,7 +11,7 @@ categories:
 
 Máy tính không thể cộng trừ chữ "Mèo" hay "Mưa", nhưng ngay khi ta gán cho mỗi kết cục ngẫu nhiên một con số thực—gọi là **biến ngẫu nhiên** (*random variable*)—toàn bộ kho vũ khí của giải tích và đại số lập tức phát huy tác dụng. Trong một mạng nơ-ron đang huấn luyện, gần như mọi thứ đều là biến ngẫu nhiên: từ mẫu dữ liệu rút ngẫu nhiên trong mini-batch, mặt nạ Dropout bật/tắt 0–1, cho tới chính trọng số khởi tạo ban đầu. Hiểu rõ kỳ vọng, phương sai và hiệp phương sai của biến ngẫu nhiên giúp bạn kiểm soát dòng chảy tín hiệu xuyên qua hàng trăm tầng mạng.
 
-## Bản đồ kiến thức nền: Bốn công cụ của Biến Ngẫu nhiên trong Học sâu
+## Kiến thức cần nhớ: Bốn công cụ của Biến Ngẫu nhiên trong Học sâu
 
 1. **Biến ngẫu nhiên Rời rạc (PMF) vs. Liên tục (PDF & CDF)**:
    Biến rời rạc dùng hàm khối xác suất $$P(X = x)$$ và tổng $$\sum$$; biến liên tục dùng hàm mật độ $$p(x)$$ (có thể lớn hơn $$1$$!) và tích phân $$\int p(x)\,dx = 1$$.
@@ -25,7 +25,7 @@ Máy tính không thể cộng trừ chữ "Mèo" hay "Mưa", nhưng ngay khi ta
 4. **Hàm mất mát dưới góc nhìn Kỳ vọng (Expected Risk)**:
    Mục tiêu lý tưởng của Deep Learning là cực tiểu hóa rủi ro kỳ vọng $$\mathbb{E}_{(x,y)\sim P_{\text{data}}}[\ell(f_\theta(x), y)]$$, và tập huấn luyện chỉ là trung bình thực nghiệm xấp xỉ kỳ vọng đó.
 
-### Khung giải thích (nên đọc chậm): Tính tay phương sai qua một nơ-ron tuyến tính để hiểu khởi tạo Xavier
+### Giải thích: Tính tay phương sai qua một nơ-ron tuyến tính để hiểu khởi tạo Xavier
 
 Giả sử một nơ-ron nhận $$n = 100$$ đầu vào độc lập $$x_1, \dots, x_{100}$$ đều có $$\mathbb{E}[x_i] = 0, \text{Var}(x_i) = 1$$, và ta khởi tạo trọng số độc lập $$w_1, \dots, w_{100}$$ với $$\mathbb{E}[w_i] = 0, \text{Var}(w_i) = \sigma_w^2$$. Xét đầu ra $$z = \sum_{i=1}^{100} w_i x_i$$:
 

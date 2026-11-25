@@ -12,14 +12,14 @@ lesson_type: optional
 
 Năm 2024, giải Nobel Hóa học gọi tên đột phá dự đoán cấu trúc protein — và ở trái tim của cuộc cách mạng khoa học đó (từ AlphaFold 2 đến **AlphaFold 3**) là sự giao thoa giữa **học sâu hình học trên đồ thị**, **Graph Transformer** và **mô hình khuếch tán 3D**. Bài cập nhật này cho thấy GNN hiện đại đã vượt xa khung truyền thông điệp cục bộ để chinh phục từ thiết kế dược phẩm đến đồ thị tri thức (GraphRAG) và hệ thống gợi ý hàng tỷ nút.
 
-## Bản đồ kiến thức nền: Ba mặt trận hiện đại của Học sâu trên Đồ thị (2022–2026)
+## Kiến thức cần nhớ: Ba mặt trận hiện đại của Học sâu trên Đồ thị (2022–2026)
 
 - **Graph Transformer (Graphormer, GPS):** Cho phép mọi cặp đỉnh chú ý trực tiếp tới nhau (giải quyết tắc nghẽn *oversquashing* tầm xa) bằng cách nhúng khoảng cách đường đi ngắn nhất và vector riêng Laplacian vào điểm chú ý.
 - **AlphaFold 3 và học sâu sinh học phân tử:** Kết hợp khối *Pairformer* (cập nhật biểu diễn cặp nguyên tử/axit amin thỏa mãn bất đẳng thức tam giác) với bộ khuếch tán sinh trực tiếp tọa độ 3D của phức hợp protein–DNA–thuốc.
 - **GNN quy mô web trong hệ thống gợi ý (PinSage, LightGCN):** Mô hình hóa tương tác người dùng–sản phẩm thành đồ thị hai phía để lan truyền sở thích bậc cao mà lọc cộng tác cổ điển bỏ sót.
 - **Đồ thị tri thức & GraphRAG:** Kết hợp truy hồi đa bước trên đồ thị thực thể–quan hệ với LLM để trả lời các câu hỏi tổng hợp xuyên suốt hàng nghìn tài liệu.
 
-### Khung giải thích (nên đọc chậm): Tính tay thiên lệch khoảng cách đồ thị (Spatial Encoding) trong Graph Transformer
+### Giải thích: Tính tay thiên lệch khoảng cách đồ thị (Spatial Encoding) trong Graph Transformer
 
 Trong Graphormer (Graph Transformer), điểm chú ý giữa đỉnh $$i$$ và đỉnh $$j$$ được bổ sung một số hạng thiên lệch học được $$b_{\phi(i, j)}$$ phụ thuộc vào **độ dài đường đi ngắn nhất** $$\phi(i, j)$$ giữa hai đỉnh:
 $$A_{ij} = \frac{(Q_i \cdot K_j)}{\sqrt{d_k}} + b_{\phi(i, j)}.$$

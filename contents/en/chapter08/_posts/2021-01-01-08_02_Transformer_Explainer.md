@@ -11,14 +11,14 @@ categories:
 
 Even after deriving every matrix equation of a Transformer, it is surprisingly hard to *feel* what happens to a single prompt—like `"Data visualization empowers users to"`—as it flows through tokenization, embeddings, 12 layers of multi-head self-attention and MLP expansions, and finally into a probability distribution over 50,257 GPT-2 vocabulary tokens. Interactive visualizers like Polo Club's *Transformer Explainer* turn those abstract tensors into a live glass box where you can watch temperature, top-$$k$$, and top-$$p$$ reshape the next word in real time.
 
-## Background Knowledge Map: Tracing One Live Token Through GPT-2
+## Key ideas: Tracing One Live Token Through GPT-2
 
 - **Subword Tokenization (BPE) & Embedding Lookup**: Byte-Pair Encoding splits text into frequent subword chunks (avoiding out-of-vocabulary failures), mapping each integer token ID $$t_i \in \{0, \dots, 50256\}$$ to a 768-dimensional vector plus a learned positional vector.
 - **Multi-Head Self-Attention Flow**: In GPT-2 Small (12 layers, 12 heads, $$d_{\text{model}} = 768, d_k = 64$$), each token's residual vector is projected into 12 parallel `(Q, K, V)` subspaces, mixed causally, and added back to the residual stream.
 - **MLP Expansion & GELU Non-Linearity**: Each token independently expands $$768 \to 3{,}072 \to 768$$ through a smooth GELU activation, acting like a key-value associative memory bank that refines semantic predictions.
 - **Unembedding & Sampling Controls (Temperature, Top-$$k$$, Top-$$p$$)**: Multiplying the final hidden state by $$W_{\text{emb}}^\top$$ produces 50,257 logits; temperature rescales sharpness, top-$$k$$ truncates to the $$k$$ highest-scoring tokens, and top-$$p$$ (nucleus sampling) truncates to the smallest token set whose cumulative probability exceeds $$p$$.
 
-### Step-by-Step Worked Example (Read Slowly): Top-$$k$$ vs. Top-$$p$$ (Nucleus) Truncation on 5 Candidate Tokens
+### Worked example: Top-$$k$$ vs. Top-$$p$$ (Nucleus) Truncation on 5 Candidate Tokens
 
 Suppose GPT-2's softmax over the top 5 next-token candidates yields:
 - `"understand"`: $$0.45$$

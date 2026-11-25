@@ -11,14 +11,14 @@ categories:
 
 > *Individual pixels in a face image are never independent—knowing a pixel on the left cheek strongly constrains its neighbors. Multivariate distributions capture those cross-feature correlations through covariance matrices, powering everything from Batch Normalization and PCA whitening to Variational Autoencoders and Diffusion Models.*
 
-## Background Knowledge Map: Multivariate Probability in Deep Learning
+## Key ideas: Multivariate Probability in Deep Learning
 
 1. **Multivariate Normal Distribution ($$\mathcal{N}(\boldsymbol{\mu}, \Sigma)$$)**: Encodes both the center $$\boldsymbol{\mu}$$ and the ellipsoidal correlation geometry $$\Sigma$$; diagonal $$\Sigma$$ implies axis-aligned independence, while off-diagonal entries tilt the contours.
 2. **Mahalanobis Distance (Covariance-Aware Distance)**: Measures how far a point lies from a distribution via $$d_M(\mathbf{x}) = \sqrt{(\mathbf{x} - \boldsymbol{\mu})^\top \Sigma^{-1} (\mathbf{x} - \boldsymbol{\mu})}$$, normalizing away scale and correlation for out-of-distribution (OOD) detection.
 3. **Reparameterization Trick (Differentiable Sampling)**: Expresses $$\mathbf{z} \sim \mathcal{N}(\boldsymbol{\mu}, \text{diag}(\boldsymbol{\sigma}^2))$$ as $$\mathbf{z} = \boldsymbol{\mu} + \boldsymbol{\sigma} \odot \boldsymbol{\epsilon}$$ with $$\boldsymbol{\epsilon} \sim \mathcal{N}(\mathbf{0}, I)$$, allowing gradients to flow smoothly through stochastic latent layers.
 4. **MAP Estimation & Bayesian Regularization**: Shows that adding $$\frac{\lambda}{2}\|\mathbf{w}\|_2^2$$ to a loss is mathematically equivalent to placing an isotropic multivariate Gaussian prior $$\mathcal{N}(\mathbf{0}, \tau^2 I)$$ over the network weights.
 
-### Step-by-Step Worked Example (Read Slowly): Computing Mahalanobis Distance and a VAE Reparameterized Sample
+### Worked example: Computing Mahalanobis Distance and a VAE Reparameterized Sample
 
 Consider a 2D latent distribution $$\mathcal{N}(\boldsymbol{\mu}, \Sigma)$$ with $$\boldsymbol{\mu} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}$$ and $$\Sigma = \begin{bmatrix} 4 & 2 \\ 2 & 2 \end{bmatrix}$$, and a test embedding $$\mathbf{x} = \begin{bmatrix} 3 \\ 4 \end{bmatrix}$$.
 

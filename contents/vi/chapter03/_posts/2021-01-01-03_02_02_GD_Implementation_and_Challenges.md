@@ -11,7 +11,7 @@ categories:
 
 Viết công thức `w = w - lr * grad` chỉ tốn đúng một dòng code, nhưng đưa Gradient Descent vào huấn luyện mạng sâu thực tế lại giống như lái xe địa hình qua sa mạc đầy bẫy cát lún: hẻm núi dốc hẹp khiến tham số đập qua đập lại mãi không tiến tới, điểm yên ngựa làm gradient gần như bằng 0, và đặc trưng chưa chuẩn hóa khiến mặt cắt hàm mất mát méo xệch. Bài học này hướng dẫn cách triển khai Mini-Batch GD sạch sẽ bằng mã nguồn, đồng thời giải phẫu các thách thức hình học kinh điển mở đường cho Momentum và Adam.
 
-## Bản đồ kiến thức nền: Bốn thách thức thực chiến khi Triển khai Gradient Descent
+## Kiến thức cần nhớ: Bốn thách thức thực chiến khi Triển khai Gradient Descent
 
 1. **Hẻm núi hẹp mất cân bằng độ cong (Ill-Conditioned Ravines)**:
    Khi một chiều có độ cong (giá trị riêng Hessian) lớn gấp trăm lần chiều kia, Gradient Descent buộc phải dùng $$\eta$$ rất nhỏ để không nổ ở chiều dốc, dẫn tới lê lết cực chậm ở chiều phẳng.
@@ -25,7 +25,7 @@ Viết công thức `w = w - lr * grad` chỉ tốn đúng một dòng code, nh�
 4. **Lịch sử Động lượng (Momentum) & Cắt ngưỡng Gradient (Gradient Clipping)**:
    Cộng dồn vận tốc quá khứ $$\mathbf{v}_t = \beta \mathbf{v}_{t-1} + \nabla L$$ giúp triệt tiêu dao động zig-zag và tăng tốc dọc đáy hẻm núi; còn Gradient Clipping chặn đứng những cú nhảy đột biến do vách đá dựng đứng.
 
-### Khung giải thích (nên đọc chậm): Tính tay hiện tượng Zig-Zag trên thung lũng elip $$L(x, y) = \frac{1}{2}(x^2 + 10y^2)$$
+### Giải thích: Tính tay hiện tượng Zig-Zag trên thung lũng elip $$L(x, y) = \frac{1}{2}(x^2 + 10y^2)$$
 
 Xét bề mặt có độ cong trục $$y$$ gấp 10 lần trục $$x$$, với gradient $$\nabla L = (x,\; 10y)$$. Xuất phát từ $$(x_0, y_0) = (10, 1)$$ và thử bước học $$\eta = 0.18$$:
 

@@ -11,7 +11,7 @@ categories:
 
 Vào năm 2014, Diederik Kingma và Jimmy Ba công bố bài báo về **Adam** (*Adaptive Moment Estimation*) — một trong những bài báo được trích dẫn nhiều nhất mọi thời đại trong khoa học máy tính (hơn 180.000 lượt trích dẫn). Nhưng để không dùng Adam như một chiếc "hộp đen", ta cần giải phẫu từng mảnh ghép toán học đã tạo nên nó: từ lực quán tính của Momentum, cú "nhìn trước" của Nesterov, bài toán triệt tiêu tốc độ học của AdaGrad, cách RMSprop sửa lỗi bằng trung bình trượt hàm mũ, cho đến bước hiệu chỉnh độ lệch thiên về 0 ở những vòng lặp đầu tiên.
 
-## Bản đồ kiến thức nền: Bốn trụ cột toán học của các Bộ tối ưu
+## Kiến thức cần nhớ: Bốn trụ cột toán học của các Bộ tối ưu
 
 1. **Momentum và Nesterov Accelerated Gradient (NAG)**:
    Momentum cộng dồn vận tốc $$v_t = \beta v_{t-1} + g_t$$ (giống hòn bi nặng lăn xuống dốc). Nesterov tinh tế hơn: nó tính gradient tại **vị trí dự đoán phía trước** $$\theta_{t-1} - \eta \beta v_{t-1}$$ để kịp "hãm phanh" khi sắp vượt qua đáy thung lũng.
@@ -22,7 +22,7 @@ Vào năm 2014, Diederik Kingma và Jimmy Ba công bố bài báo về **Adam** 
 4. **Adam và Hiệu chỉnh độ lệch (Bias Correction)**:
    Vì $$m_0 = 0$$ và $$v_0 = 0$$, ở bước $$t = 1$$ ta có $$v_1 = (1 - 0{,}999) g_1^2 = 0{,}001 g_1^2$$ — nhỏ hơn giá trị thật tới **1.000 lần**! Chia cho $$(1 - \beta_1^t)$$ và $$(1 - \beta_2^t)$$ đưa kỳ vọng ước lượng về đúng không chệch ngay từ bước đầu tiên.
 
-### Khung giải thích (nên đọc chậm): Tính tay trọn vẹn 2 bước đầu tiên của Adam để thấy phép màu của Bias Correction
+### Giải thích: Tính tay trọn vẹn 2 bước đầu tiên của Adam để thấy phép màu của Bias Correction
 
 Cho tham số khởi đầu $$\theta_0 = 1{,}0$$, tốc độ học $$\eta = 0{,}1$$, các hệ số chuẩn $$\beta_1 = 0{,}9, \; \beta_2 = 0{,}999, \; \epsilon = 10^{-8}$$, và giả sử gradient đo được ở hai bước đầu đều là $$g_1 = g_2 = 2{,}0$$:
 

@@ -11,13 +11,13 @@ categories:
 
 Going from Transformer equations to a rock-solid PyTorch codebase requires discipline across two stages: first implementing every core layer (`MultiHeadAttention`, `PositionwiseFFN`, `PositionalEncoding`, encoder/decoder stacks) with airtight tensor shapes and masks; second running forward demos, inspecting attention weights, and guarding against real-world training pitfalls. This hub maps every module and pre-scaling checklist item before you train on larger corpora.
 
-## Background Knowledge Map: Transformer Module Architecture & Pre-Scaling Checklist
+## Key ideas: Transformer Module Architecture & Pre-Scaling Checklist
 
 - **Core Layer Composition**: Connecting embeddings, positional buffers, Pre-/Post-LN sublayers, and residual dropouts into composable `nn.Module` blocks.
 - **Masking & Causal Integrity**: Enforcing padding masks in cross/self-attention and causal triangular masks in autoregressive decoders with zero leakage.
 - **Scaling Readiness**: Validating loss on a tiny overfit-one-batch sanity test, verifying gradient norms, and applying LR warmup + AdamW before launching multi-epoch runs.
 
-### Step-by-Step Worked Example (Read Slowly): The "Overfit One Batch" Sanity Check Formula
+### Worked example: The "Overfit One Batch" Sanity Check Formula
 
 Before training a Transformer for hours, compute the expected **initial random cross-entropy loss** for vocabulary size $$V = 10{,}000$$:
 

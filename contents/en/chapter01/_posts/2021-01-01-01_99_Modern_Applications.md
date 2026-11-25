@@ -12,14 +12,14 @@ lesson_type: optional
 
 > *In 2016, "doing deep learning" meant collecting a custom dataset and training a ResNet from random weights. By 2022–2026, the default workflow inverted: you start from a massive pretrained foundation model, evaluate zero-shot or few-shot performance, and only fine-tune—often with parameter-efficient adapters—when the data proves it necessary.*
 
-## Background Knowledge Map: The Foundation-Model Workflow (2022–2026)
+## Key ideas: The Foundation-Model Workflow (2022–2026)
 
 1. **Pretrain–Adapt Paradigm**: Shifts compute from bespoke per-task training to massive self-supervised pretraining followed by lightweight adaptation (prompting, RAG, LoRA, DPO/RLHF).
 2. **Chinchilla & Inference-Optimal Scaling Laws**: Balances model parameters $$N$$ and training tokens $$D$$ under a fixed compute budget $$C \approx 6ND$$, revealing that many earlier models were severely undertrained relative to their size.
 3. **Open-Weight Ecosystem & Quantization**: Enables running billion-parameter models locally via 4-bit/8-bit weight quantization (AWQ, GPTQ, GGUF) and efficient KV-cache serving engines (vLLM, TensorRT-LLM).
 4. **Evaluation-Driven Iteration**: Treats rigorous benchmark suites, contamination checks, and slice-level error metrics as the primary bottleneck once model capabilities outpace naive accuracy metrics.
 
-### Step-by-Step Worked Example (Read Slowly): Applying the Chinchilla Compute-Optimal Rule ($$C \approx 6ND$$)
+### Worked example: Applying the Chinchilla Compute-Optimal Rule ($$C \approx 6ND$$)
 
 Suppose your lab has a fixed pretraining compute budget of $$C = 1.2 \times 10^{21}$$ FLOPs and follows the Chinchilla ratio of roughly $$D \approx 20 N$$ training tokens per parameter.
 

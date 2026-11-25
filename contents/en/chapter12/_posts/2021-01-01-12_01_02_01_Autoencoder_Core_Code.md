@@ -11,14 +11,14 @@ categories:
 
 When you build a PyTorch autoencoder for MNIST from scratch, the subtle bugs are rarely syntax errors—they are architectural mismatches. Use a ReLU on the final decoder layer when your pixels live in $[0, 1]$ and your loss will stall; feed noisy images to both the input *and* target of a denoising autoencoder and you will teach the network to preserve static instead of removing it. Walking carefully through tensor shapes, activation ranges, and corruption targets turns abstract equations into clean, debuggable code.
 
-## Background Knowledge Map: Engineering Autoencoders in PyTorch
+## Key ideas: Engineering Autoencoders in PyTorch
 
 - **Pillar 1 — Symmetric Encoder–Decoder Tensor Flow**: Maps flattened $28 \times 28 = 784$-dimensional images down through bottleneck layers ($784 \to 256 \to 64 \to d_z$) and symmetrically back to $784$, balancing parameter count and compression ratio.
 - **Pillar 2 — Output Activation & Loss Pairing**: Matches `Sigmoid` outputs in $[0, 1]$ with `BCELoss` or `MSELoss`, versus `Tanh` outputs in $[-1, 1]$ with `MSELoss`, preventing saturation and range clipping.
 - **Pillar 3 — Denoising Corruption Pipeline**: Injects Gaussian or masking noise on-the-fly (`x_noisy = torch.clamp(x + noise, 0, 1)`) while computing loss strictly against the *clean* target `x`.
 - **Pillar 4 — Optimization & Reconstruction Monitoring**: Tracks per-pixel MSE and visual side-by-side reconstructions across epochs to verify that the bottleneck captures global shape rather than mean-gray averages.
 
-### Step-by-Step Worked Example (Read Slowly): Parameter Count and Compression Ratio of an MNIST MLP Autoencoder
+### Worked example: Parameter Count and Compression Ratio of an MNIST MLP Autoencoder
 
 Consider an encoder `784 -> 256 -> 64 -> 16` and symmetric decoder `16 -> 64 -> 256 -> 784` (all linear layers with biases).
 

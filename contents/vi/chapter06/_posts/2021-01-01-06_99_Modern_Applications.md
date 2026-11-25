@@ -12,7 +12,7 @@ lesson_type: optional
 
 Gần 30 năm sau khi khai sinh ra LSTM (1997), chính cha đẻ của nó — Sepp Hochreiter — bất ngờ quay trở lại vào năm 2024 với **xLSTM (Extended LSTM)** và chứng minh rằng: chỉ cần thay cổng sigmoid bằng cổng hàm mũ (exponential gating) và mở rộng bộ nhớ tế bào từ vector thành **ma trận**, họ kiến trúc LSTM hoàn toàn có thể mở rộng lên hàng tỷ tham số và cạnh tranh sòng phẳng với Transformer và Mamba!
 
-## Bản đồ kiến thức nền: Bốn ứng dụng và đột phá hiện đại của Hồi quy có cổng (2022–2026)
+## Kiến thức cần nhớ: Bốn ứng dụng và đột phá hiện đại của Hồi quy có cổng (2022–2026)
 
 1. **xLSTM (2024) — Hai biến thể sLSTM và mLSTM**:
    - **sLSTM**: dùng cổng hàm mũ $$i_t = \exp(\tilde{i}_t), \; f_t = \exp(\tilde{f}_t)$$ kèm biến chuẩn hóa $$n_t$$ để khắc phục nhược điểm khó "sửa sai" quyết định lưu trữ của LSTM cũ.
@@ -24,7 +24,7 @@ Gần 30 năm sau khi khai sinh ra LSTM (1997), chính cha đẻ của nó — S
 4. **Kiến trúc lai trong hệ thống quy mô lớn**:
    Các mô hình kết hợp tầng hồi quy có cổng / mLSTM với vài tầng Attention mang lại dung lượng nhớ dài mà vẫn giữ chi phí suy luận thấp.
 
-### Khung giải thích (nên đọc chậm): Tính tay bước nâng cấp từ Bộ nhớ Vector (LSTM) sang Bộ nhớ Ma trận (mLSTM)
+### Giải thích: Tính tay bước nâng cấp từ Bộ nhớ Vector (LSTM) sang Bộ nhớ Ma trận (mLSTM)
 
 Giả sử kích thước ẩn $$d = 2$$, tại bước $$t$$ ta có bộ nhớ ma trận cũ $$C_{t-1} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$$, khóa mới $$k_t = \begin{bmatrix} 1 \\ 2 \end{bmatrix}$$, giá trị mới $$v_t = \begin{bmatrix} 3 \\ -1 \end{bmatrix}$$, cổng quên $$f_t = 0{,}5$$ và cổng nhập $$i_t = 1{,}0$$:
 

@@ -11,14 +11,14 @@ categories:
 
 Knowing the math of generative models on a whiteboard is only half the craft; the real intuition arrives the moment you train two competing paradigms—an explicit autoregressive density estimator and an implicit adversarial generator—on the same synthetic dataset and watch how differently their losses behave. This roadmap bridges theory into working PyTorch code, guiding you from exact mixture likelihoods to adversarial pitfalls and diagnostic checks.
 
-## Background Knowledge Map: From Generative Equations to Running Code
+## Key ideas: From Generative Equations to Running Code
 
 - **Pillar 1 — Synthetic Benchmark Design**: Uses low-dimensional multi-modal distributions (like 8 Gaussians on a circle) where ground-truth density and mode locations are known analytically, making every failure mode visually and numerically transparent.
 - **Pillar 2 — Explicit Conditional Implementation**: Translates $p_\theta(x_1)p_\theta(x_2 \mid x_1)$ into differentiable PyTorch modules with mixture parameters and stable log-likelihood loss.
 - **Pillar 3 — Implicit Adversarial Training Loops**: Implements alternating discriminator/generator updates, highlighting why optimizer state, learning-rate balance, and gradient flow govern stability.
 - **Pillar 4 — Quantitative Model Comparison**: Establishes disciplined evaluation habits—comparing held-out negative log-likelihood where available alongside mode-counting diagnostics for implicit models.
 
-### Step-by-Step Worked Example (Read Slowly): Designing the 8-Gaussian Circle Geometry
+### Worked example: Designing the 8-Gaussian Circle Geometry
 
 Let us compute the exact coordinates of the 8 Gaussian centers arranged on a circle of radius $R = 2.0$ at angles $\theta_k = \frac{2\pi k}{8} = \frac{\pi k}{4}$ for $k = 0, \dots, 7$, each with isotropic standard deviation $\sigma = 0.1$.
 

@@ -11,14 +11,14 @@ categories:
 
 Assembling a full Transformer from scratch in PyTorch—`PositionalEncoding`, `MultiHeadAttention`, `PositionwiseFFN`, `EncoderLayer`, `DecoderLayer`, and top-level masks—is one of the most rewarding exercises in deep learning because the entire architecture fits cleanly in ~200 lines of readable code. Yet a single subtle convention mismatch—such as inverting the boolean mask polarity between padding and causal masks, or forgetting to scale embeddings by $$\sqrt{d_{\text{model}}}$$—can leave a syntactically valid model completely unable to converge.
 
-## Background Knowledge Map: Engineering a Clean PyTorch Transformer
+## Key ideas: Engineering a Clean PyTorch Transformer
 
 - **Embedding Scaling ($$\sqrt{d_{\text{model}}}$$)** : Multiplying learned token embeddings by $$\sqrt{d_{\text{model}}}$$ keeps their variance comparable to the $$[-1, 1]$$ sinusoidal positional encodings so position signals do not drown out word semantics at initialization.
 - **Unified Mask Polarity & Broadcasting**: Combining a 2D causal lower-triangular mask `(1, 1, T, T)` with a 1D padding mask `(B, 1, 1, T)` via logical `AND` (or `OR` depending on polarity) ensures every head and batch item enforces both causality and padding simultaneously.
 - **Registering Non-Trainable Buffers (`register_buffer`)**: Storing the precomputed sinusoidal positional encoding table via `self.register_buffer("pe", pe)` ensures it automatically moves with `.to(device)` and saves inside `state_dict` without receiving optimizer gradient updates.
 - **Smoke-Test Driven Verification**: Running shape assertions, causal leakage tests (perturbing token $$t+1$$ must change output at step $$t$$ by exactly `0.0`), and gradient-flow checks before training prevents hours of wasted GPU compute.
 
-### Step-by-Step Worked Example (Read Slowly): Verifying Zero Future Leakage in a Causal Mask Test
+### Worked example: Verifying Zero Future Leakage in a Causal Mask Test
 
 How do you prove mathematically that your decoder implementation has zero future-token leakage?
 

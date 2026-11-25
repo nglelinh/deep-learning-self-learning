@@ -11,14 +11,14 @@ categories:
 
 Một mô hình vừa hoàn tất tiền huấn luyện trên toàn bộ Internet giống như một thư viện khổng lồ biết mọi thứ — từ thơ lục bát đến mã độc mạng — nhưng hoàn toàn không biết phân biệt điều gì hữu ích, trung thực hay an toàn khi trò chuyện với con người. **Căn chỉnh (Alignment)** là quy trình "điêu khắc" hành vi từ khối đá thô đó qua ba bước kinh điển: **SFT → Mô hình phần thưởng (RM) → Tối ưu sở thích (RLHF / DPO)**.
 
-## Bản đồ kiến thức nền: Bốn trụ cột của Căn chỉnh LLM (từ SFT đến DPO/RLHF)
+## Kiến thức cần nhớ: Bốn trụ cột của Căn chỉnh LLM (từ SFT đến DPO/RLHF)
 
 - **Tinh chỉnh có giám sát (SFT — Supervised Fine-Tuning):** Dùng tập dữ liệu hội thoại chất lượng cao để dạy định dạng lượt nói, cấu trúc suy luận và chỉ tính loss trên phần phản hồi của trợ lý (*assistant token masking*).
 - **Mô hình hóa sở thích con người (Bradley–Terry Reward Model):** Thay vì yêu cầu con người chấm điểm tuyệt đối từ 1–10 (rất nhiễu), chỉ cần so sánh cặp $$(y_w \succ y_l)$$ và tối ưu $$\mathcal{L}_{\text{RM}} = -\ln\sigma(r_\phi(x, y_w) - r_\phi(x, y_l))$$.
 - **Tối ưu hóa chính sách có ràng buộc KL (PPO & DPO):** Cân bằng giữa nâng cao điểm sở thích và giữ mô hình không trôi quá xa $$\pi_{\text{ref}}$$ để tránh sụp đổ ngôn ngữ hoặc *reward hacking*.
 - **Ranh giới của căn chỉnh:** Nhận rõ căn chỉnh định hình *phong cách, độ an toàn và tính tuân thủ*, nhưng **không thể thay thế** tri thức bị thiếu từ tiền huấn luyện hay hệ thống truy hồi RAG cho dữ liệu thời gian thực.
 
-### Khung giải thích (nên đọc chậm): Tính tay một bước hàm mất mát DPO trên cặp phản hồi $$(y_w, y_l)$$
+### Giải thích: Tính tay một bước hàm mất mát DPO trên cặp phản hồi $$(y_w, y_l)$$
 
 Hàm mất mát **Direct Preference Optimization (DPO)** cho một cặp phản hồi được chọn $$y_w$$ và bị từ chối $$y_l$$ với hệ số kiểm soát KL $$\beta = 0{,}1$$ là:
 $$\mathcal{L}_{\text{DPO}} = -\ln \sigma\!\left(\beta \ln\frac{\pi_\theta(y_w\mid x)}{\pi_{\text{ref}}(y_w\mid x)} - \beta \ln\frac{\pi_\theta(y_l\mid x)}{\pi_{\text{ref}}(y_l\mid x)}\right).$$

@@ -11,14 +11,14 @@ categories:
 
 Open a 2024–2026 Llama, Qwen, Mistral, or DeepSeek checkpoint and you will notice almost every single sub-layer of the 2017 Vaswani Transformer has been upgraded: LayerNorm became mean-free **RMSNorm**, sinusoidal positional encodings became relative rotational **RoPE**, the 2-matrix ReLU MLP became a 3-matrix **SwiGLU** gate, and Multi-Head Attention became **Grouped-Query Attention (GQA)** so the KV cache shrinks by $4\times$–$8\times$. Being able to count every parameter and every byte of KV cache in these blocks is the hallmark of a graduate-level LLM engineer.
 
-## Background Knowledge Map: Modern Decoder Architecture & Resource Accounting
+## Key ideas: Modern Decoder Architecture & Resource Accounting
 
 - **Pillar 1 — RMSNorm & Pre-Norm Residual Stability**: Drops mean-centering to normalize strictly by $\text{RMS}(x) = \sqrt{\frac{1}{d}\sum x_i^2 + \epsilon}$, cutting elementwise memory traffic while stabilizing deep residual streams.
 - **Pillar 2 — Rotary Positional Embeddings (RoPE)**: Rotates query and key 2D pairs by position-dependent angles $m\theta_i$ so dot products $q_m^\top k_n$ depend *strictly* on relative distance $m - n$.
 - **Pillar 3 — SwiGLU FFN & Parameter Parity**: Uses $\big(\text{SiLU}(x W_{\text{gate}}) \odot (x W_{\text{up}})\big) W_{\text{down}}$ with intermediate width $d_{\text{ff}} \approx \frac{8}{3} d_{\text{model}}$ so 3 matrices match the parameter budget of a classic $4 d_{\text{model}}$ 2-matrix MLP.
 - **Pillar 4 — GQA KV-Cache & FlashAttention Accounting**: Shares $n_{\text{kv}} < n_q$ key–value heads across query groups to slash KV-cache VRAM by $n_q / n_{\text{kv}}$, while FlashAttention tiles $Q, K, V$ in fast SRAM to avoid materializing the $O(T^2)$ attention matrix in HBM.
 
-### Step-by-Step Worked Example (Read Slowly): Exact KV-Cache Bytes & RMSNorm Calculation
+### Worked example: Exact KV-Cache Bytes & RMSNorm Calculation
 
 **Part A — RMSNorm on a 4D vector** $x = [1.0,\; -1.0,\; 3.0,\; -3.0]$ with $\epsilon = 0$ and scale $\gamma = [1, 1, 1, 1]$:
 1. Mean square: $\frac{1^2 + (-1)^2 + 3^2 + (-3)^2}{4} = \frac{1 + 1 + 9 + 9}{4} = \frac{20}{4} = 5.0$.

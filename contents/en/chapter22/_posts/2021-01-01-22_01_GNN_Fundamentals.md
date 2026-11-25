@@ -11,14 +11,14 @@ categories:
 
 At first glance, the Graph Convolutional Network (GCN) update rule $H^{(l+1)} = \sigma(\tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2} H^{(l)} W^{(l)})$ looks intimidating—until you unpack it into three crystal-clear operations: add self-loops so a node remembers itself ($\tilde{A} = A + I$), normalize by $\sqrt{\tilde{d}_i \tilde{d}_j}$ so high-degree hubs do not explode feature scales, and mix features with a shared weight matrix $W$. Yet stack too many GCN layers and every node's representation blurs into the same average—the infamous **over-smoothing** phenomenon.
 
-## Background Knowledge Map: Mathematical Core of GCN, GraphSAGE, and GAT
+## Key ideas: Mathematical Core of GCN, GraphSAGE, and GAT
 
 - **Pillar 1 — Symmetric Spectral Normalization ($\tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}$)**: Derives Kipf & Welling's first-order Chebyshev approximation to spectral graph convolutions, preventing hub nodes from dominating gradient magnitudes.
 - **Pillar 2 — Inductive Neighborhood Sampling (GraphSAGE)**: Samples a fixed number of neighbors per layer and concatenates `self || agg(neighbors)`, enabling generalization to unseen nodes and billion-edge graphs.
 - **Pillar 3 — Anisotropic Attention (GAT)**: Replaces fixed degree weights with learned edge attention coefficients $\alpha_{ij} = \operatorname{softmax}_j(\text{LeakyReLU}(a^\top[Wh_i \| Wh_j]))$ so nodes focus on their most informative neighbors.
 - **Pillar 4 — Over-Smoothing, Over-Squashing, and Expressivity**: Explains why deep GNNs lose node distinctiveness (fixed point of Laplacian smoothing) and why 1-WL message passing cannot distinguish certain non-isomorphic graphs.
 
-### Step-by-Step Worked Example (Read Slowly): Computing One Exact GCN Layer on a 3-Node Path
+### Worked example: Computing One Exact GCN Layer on a 3-Node Path
 
 Consider the 3-node path $1 - 2 - 3$ with self-loops $\tilde{A} = A + I = \begin{bmatrix}1&1&0\\1&1&1\\0&1&1\end{bmatrix}$, degree matrix $\tilde{D} = \operatorname{diag}(2, 3, 2)$, scalar features $H^{(0)} = \begin{bmatrix}2\\ 3\\ 6\end{bmatrix}$, and weight $W = [1]$ with ReLU.
 

@@ -9,9 +9,9 @@ categories:
 - chapter04
 ---
 
-Năm 2012, tại cuộc thi thị giác máy tính danh giá ImageNet, một mô hình CNN mang tên AlexNet bất ngờ đánh bại toàn bộ các phương pháp thị giác cổ điển với khoảng cách sai số hơn 10 điểm phần trăm — một cú địa chấn làm thay đổi hoàn toàn lịch sử trí tuệ nhân tạo. Từ cột mốc đó đến năm 2015, các kiến trúc kinh điển nối tiếp nhau ra đời, mỗi kiến trúc đều giải quyết một nút thắt kỹ thuật sống còn của thế hệ trước.
+Năm 2012, tại cuộc thi thị giác máy tính danh giá ImageNet, một mô hình CNN mang tên AlexNet bất ngờ đánh bại toàn bộ các phương pháp thị giác cổ điển với khoảng cách sai số hơn 10 điểm phần trăm — một cú địa chấn làm thay đổi hoàn toàn lịch sử trí tuệ nhân tạo. Từ cột mốc đó đến năm 2015, các kiến trúc kinh điển nối tiếp nhau ra đời, mỗi kiến trúc đều giải quyết một nút thắt kỹ thuật quan trọng của thế hệ trước.
 
-## Bản đồ kiến thức nền: Bốn mốc tiến hóa của Kiến trúc CNN Kinh điển
+## Kiến thức cần nhớ: Bốn mốc tiến hóa của Kiến trúc CNN Kinh điển
 
 1. **LeNet-5 (1998) — Bản thiết kế sơ khai hoàn chỉnh**:
    Yann LeCun chứng minh chuỗi `Conv -> Pool -> Conv -> Pool -> FC` có thể đọc chữ số viết tay trên hàng triệu tờ séc ngân hàng.
@@ -22,7 +22,7 @@ Năm 2012, tại cuộc thi thị giác máy tính danh giá ImageNet, một mô
 4. **ResNet (2015) — Phá vỡ trần chiều sâu bằng kết nối tắt**:
    Giải quyết nghịch lý suy thoái (mạng sâu hơn lại có sai số huấn luyện cao hơn) bằng cách học phần dư $$F(x) = H(x) - x$$ thay vì học trực tiếp ánh xạ $$H(x)$$.
 
-### Khung giải thích (nên đọc chậm): Bảng đối chiếu quy mô và bước nhảy vọt hiệu năng trên ImageNet
+### Giải thích: Bảng đối chiếu quy mô và bước nhảy vọt hiệu năng trên ImageNet
 
 | Kiến trúc | Năm | Độ sâu có trọng số | Top-5 Error (ImageNet) | Đột phá cốt lõi |
 | :--- | :---: | :---: | :---: | :--- |

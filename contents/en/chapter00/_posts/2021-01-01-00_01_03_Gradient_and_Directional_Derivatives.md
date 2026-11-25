@@ -11,14 +11,14 @@ categories:
 
 > *Picture yourself blindfolded on a foggy mountain ridge trying to descend as fast as possible with only a spirit level under your boots. You cannot see the valley floor, yet one local measurement—the gradient—points directly uphill, and its opposite points straight down the steepest local slope.*
 
-## Background Knowledge Map: Geometry of Gradients and Steepest Descent
+## Key ideas: Geometry of Gradients and Steepest Descent
 
 1. **Directional Derivative (Probing Any Direction)**: Measures the instantaneous rate of change of $$f$$ along a chosen unit vector $$\mathbf{u}$$ via the dot product $$D_{\mathbf{u}} f(\mathbf{x}) = \nabla f(\mathbf{x}) \cdot \mathbf{u}$$.
 2. **Cauchy–Schwarz Optimality (Why $$-\nabla f$$ Wins)**: Since $$\nabla f \cdot \mathbf{u} = \|\nabla f\| \|\mathbf{u}\| \cos\theta = \|\nabla f\|\cos\theta$$, ascent is maximized at $$\theta = 0$$ ($$\mathbf{u} = \nabla f / \|\nabla f\|$$) and descent is maximized at $$\theta = \pi$$ ($$\mathbf{u} = -\nabla f / \|\nabla f\|$$).
 3. **Orthogonality to Level Sets**: Every tangent vector along a contour curve $$f(\mathbf{x}) = c$$ has directional derivative $$0$$, proving that $$\nabla f$$ is always perpendicular to the level contours.
 4. **Anisotropic Conditioning (Why Gradients Zig-Zag)**: In elongated elliptical valleys, the negative gradient points perpendicular to the contour—toward the steep canyon wall rather than straight to the minimum—motivating momentum and adaptive optimizers.
 
-### Step-by-Step Worked Example (Read Slowly): Computing Directional Derivatives on an Elliptical Loss Bowl
+### Worked example: Computing Directional Derivatives on an Elliptical Loss Bowl
 
 Consider the anisotropic quadratic loss $$f(x, y) = x^2 + 4y^2$$ at the point $$\mathbf{p} = (2, 1)$$, where $$f(2, 1) = 4 + 4 = 8$$.
 

@@ -12,14 +12,14 @@ lesson_type: optional
 
 Open the source code of Llama 3, Qwen 2.5, Mistral, or Gemma and compare it line-by-line against the 2017 *Attention Is All You Need* diagram: the macro skeleton is unmistakably the same decoder-only Transformer, yet **five targeted micro-upgrades** replaced almost every original sub-layer. Pre-RMSNorm replaced Post-LayerNorm, Rotary Positional Embeddings (RoPE) replaced additive sinusoids, SwiGLU replaced ReLU FFNs, and Grouped-Query Attention (GQA) replaced standard MHA—together enabling stable 70B–600B+ parameter scaling and 128K+ context windows.
 
-## Background Knowledge Map: Five Modern Upgrades Inside Frontier LLM Blocks
+## Key ideas: Five Modern Upgrades Inside Frontier LLM Blocks
 
 - **Pre-RMSNorm**: Dropping mean-centering from LayerNorm leaves $$\text{RMSNorm}(x) = \frac{x}{\sqrt{\frac{1}{d}\sum x_i^2 + \epsilon}} \odot g$$—matching LayerNorm's training stability while cutting normalization overhead by ~$$10\text{–}40\%$$.
 - **Rotary Positional Embeddings (RoPE)**: Instead of adding position vectors to embeddings, RoPE rotates each 2D pair of $$q_m, k_n$$ by angles $$m\theta_i$$ and $$n\theta_i$$, so their dot product $$q_m^\top k_n$$ depends *purely* on the relative distance $$(m - n)$$!
 - **SwiGLU Gated Feed-Forward Layers**: Replacing `W2(ReLU(W1 x))` with `W_down(SiLU(W_gate x) * (W_up x))` adds multiplicative gating; to keep parameter counts equal to a $$4d$$ ReLU FFN, intermediate width is scaled to $$\approx \frac{8}{3} d_{\text{model}}$$.
 - **Multimodal & Local Serving Ecosystem**: The exact same Transformer backbone now fuses ViT image patches, audio tokens, and text tokens inside unified models served locally via quantized GGUF/llama.cpp or at scale via vLLM/SGLang.
 
-### Step-by-Step Worked Example (Read Slowly): Why SwiGLU Uses Hidden Width $$\frac{8}{3} d$$ Instead of $$4 d$$
+### Worked example: Why SwiGLU Uses Hidden Width $$\frac{8}{3} d$$ Instead of $$4 d$$
 
 A standard Transformer FFN has **2** matrices ($$W_1, W_2$$) with hidden width $$d_{\text{ff}} = 4 d$$, giving parameter count:
 $$P_{\text{ReLU-FFN}} = 2 \cdot d \cdot (4 d) = 8 d^2.$$

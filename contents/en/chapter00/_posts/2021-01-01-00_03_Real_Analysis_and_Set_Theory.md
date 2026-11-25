@@ -11,14 +11,14 @@ categories:
 
 > *Why can we even be sure that a loss function achieves a minimum on a bounded weight ball, or that a sequence of iterates produced by an optimizer converges to a limit inside our feasible set? Real analysis and set theory supply the precision behind every "exists," "converges," and "generalizes" statement in machine learning theory.*
 
-## Background Knowledge Map: Foundations of Sets, Spaces, and Convergence
+## Key ideas: Foundations of Sets, Spaces, and Convergence
 
 1. **Set Theory & Mappings (Formalizing Data and Models)**: Treats datasets as finite sets or multisets, classifiers as functions $$f: \mathcal{X} \to \mathcal{Y}$$, and hypothesis classes $$\mathcal{H}$$ as families of functions over which learning searches.
 2. **Metric Spaces & Neighborhoods (Quantifying Closeness)**: Generalizes Euclidean distance to arbitrary metrics ($$L_1, L_2, L_\infty$$, Wasserstein), defining $$\varepsilon$$-balls used in adversarial robustness and nearest-neighbor retrieval.
 3. **Open, Closed, and Compact Sets (Existence of Optima)**: Establishes the Extreme Value Theorem—every continuous loss on a compact (closed and bounded in $$\mathbb{R}^d$$) parameter set attains its global minimum.
 4. **Sequences & Completeness (Convergence Guarantees)**: Explains why Cauchy sequences converge in $$\mathbb{R}^d$$, allowing optimization proofs to guarantee that vanishing step sizes settle at a concrete limit point.
 
-### Step-by-Step Worked Example (Read Slowly): Why Closedness Matters for Finding a Minimum
+### Worked example: Why Closedness Matters for Finding a Minimum
 
 Compare minimizing the continuous loss $$L(w) = w^2 + 1$$ over two feasible sets: the open interval $$U = (1, 3)$$ versus the closed, compact interval $$K = [1, 3]$$.
 

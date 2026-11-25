@@ -11,7 +11,7 @@ categories:
 
 Năm 2015, nhóm nghiên cứu của Kaiming He tại Microsoft Research chứng kiến một hiện tượng hết sức trớ trêu: khi họ xếp chồng một mạng CNN thường lên 56 tầng thay vì 20 tầng trên tập CIFAR-10, **ngay cả sai số huấn luyện (training error)** của mạng 56 tầng cũng tệ hơn mạng 20 tầng! Đó không phải overfitting — mà là **vấn đề suy thoái (degradation problem)**. Và giải pháp của họ lại đơn giản đến mức ai cũng phải thốt lên: chỉ cần cộng thêm đầu vào $$x$$ vào đầu ra của khối tích chập, tạo nên **ResNet**.
 
-## Bản đồ kiến thức nền: Bốn nguyên lý thiết kế từ VGG đến ResNet
+## Kiến thức cần nhớ: Bốn nguyên lý thiết kế từ VGG đến ResNet
 
 1. **Nguyên lý VGG — Phân rã nhân lớn thành chuỗi nhân $$3 \times 3$$**:
    Hai tầng $$3 \times 3$$ liên tiếp có cùng trường tiếp nhận với một tầng $$5 \times 5$$, và ba tầng $$3 \times 3$$ tương đương một tầng $$7 \times 7$$, nhưng ít tham số hơn nhiều và có thêm nhiều lớp ReLU phi tuyến ở giữa.
@@ -22,7 +22,7 @@ Năm 2015, nhóm nghiên cứu của Kaiming He tại Microsoft Research chứng
 4. **Đường cao tốc Gradient (Gradient Highway)**:
    Khi đạo hàm ngược qua $$y = F(x) + x$$, ta có $$\frac{\partial \mathcal{L}}{\partial x} = \frac{\partial \mathcal{L}}{\partial y}\left(\frac{\partial F(x)}{\partial x} + I\right)$$. Số hạng đơn vị $$+I$$ đảm bảo gradient luôn chảy thẳng về các tầng đầu mà không bị triệt tiêu kể cả khi mạng sâu hơn 100 tầng.
 
-### Khung giải thích (nên đọc chậm): Tính tay so sánh 3 tầng $$3 \times 3$$ (VGG) với 1 tầng $$7 \times 7$$ và dòng gradient trong ResNet
+### Giải thích: Tính tay so sánh 3 tầng $$3 \times 3$$ (VGG) với 1 tầng $$7 \times 7$$ và dòng gradient trong ResNet
 
 **Phần A — Tại sao VGG chọn 3 tầng $$3 \times 3$$ thay vì 1 tầng $$7 \times 7$$** (với $$C_{\text{in}} = C_{\text{out}} = C$$ kênh):
 - **Trường tiếp nhận**: Tầng 1 nhìn $$3\times 3$$ $$\to$$ Tầng 2 nhìn $$5\times 5$$ $$\to$$ Tầng 3 nhìn **$$7\times 7$$** (y hệt 1 tầng $$7\times 7$$).

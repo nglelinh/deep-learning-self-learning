@@ -11,14 +11,14 @@ categories:
 
 Run a toy GAN on a ring of eight Gaussians and you will witness one of the most famous pathologies in deep learning unfold in real time: instead of covering all eight islands, the generator often discovers one island that fools the discriminator and piles every single sample onto that one spot. Watching an autoregressive model and a GAN side-by-side on the exact same 2D ring turns abstract textbook warnings—mode collapse, vanishing gradients, and likelihood-vs-realism gaps—into something you can measure in five seconds.
 
-## Background Knowledge Map: Implicit GANs, Mode Collapse, and Diagnostics
+## Key ideas: Implicit GANs, Mode Collapse, and Diagnostics
 
 - **Pillar 1 — Implicit Pushforward Distributions**: Defines $p_G$ not by a density formula, but by transforming noise $z \sim \mathcal{N}(0, I)$ through a deterministic map $x = G_\theta(z)$, making sampling $O(1)$ forward pass while sacrificing exact likelihood.
 - **Pillar 2 — Adversarial Minimax Dynamics**: Contrasts single-objective gradient descent (MLE) with two-player zero-sum optimization $\min_G \max_D V(D, G)$, where simultaneous gradient updates can orbit or collapse rather than converge.
 - **Pillar 3 — Mode Coverage vs. Sample Precision**: Distinguishes *precision* (are generated points near real data?) from *recall* (are all real modes represented?), exposing why visual sharpness alone hides catastrophic mode dropping.
 - **Pillar 4 — Empirical Failure Diagnostics**: Connects diagnostic scripts (counting covered modes, tracking discriminator saturation $D(x) \to 1$, comparing held-out NLL) to practical debugging in larger generative pipelines.
 
-### Step-by-Step Worked Example (Read Slowly): Quantifying Mode Collapse and Discriminator Saturation
+### Worked example: Quantifying Mode Collapse and Discriminator Saturation
 
 Suppose our 8-Gaussian ring has centers $c_1, \dots, c_8$, and we draw $N = 800$ samples from a trained toy GAN. Counting samples within radius $r = 0.5$ of each center yields:
 $$\text{counts} = [380,\, 390,\, 0,\, 0,\, 0,\, 0,\, 0,\, 0], \quad \text{and } 30 \text{ samples fall outside all } 8 \text{ disks.}$$

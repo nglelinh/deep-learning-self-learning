@@ -11,7 +11,7 @@ categories:
 
 Đằng sau dòng lệnh quen thuộc `optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4)` chỉ là một vòng lặp rất ngắn cập nhật từng tensor tham số dựa trên `.grad` và từ điển trạng thái `state`. Khi tự viết lại các bộ tối ưu từ đầu và quan sát chúng chạy đua trên cùng một bề mặt hàm mất mát 2D, bạn sẽ phát triển được "cảm giác trực quan" để chẩn đoán ngay lập tức khi quá trình huấn luyện bị dao động hoặc đứng im.
 
-## Bản đồ kiến thức nền: Ba trụ cột khi triển khai và đối chiếu Bộ tối ưu
+## Kiến thức cần nhớ: Ba trụ cột khi triển khai và đối chiếu Bộ tối ưu
 
 1. **Thiết kế giao diện chuẩn hóa (`step()` và `zero_grad()`)**:
    Mỗi bộ tối ưu lưu từ điển trạng thái (vận tốc `v`, bình phương trượt `s`, bộ đếm bước `t`) gắn liền với từng tensor tham số, và tuyệt đối phải xóa gradient cũ trước mỗi bước backward (trừ khi cố ý dùng gradient accumulation).
@@ -20,7 +20,7 @@ categories:
 3. **Phân biệt L2 Regularization và Decoupled Weight Decay trong mã nguồn**:
    Chỉ khác nhau đúng 1 dòng code — cộng `wd * param` vào `grad` (Adam + L2) hay trừ trực tiếp `lr * wd * param` vào `param` (AdamW) — nhưng tạo ra sự khác biệt lớn về độ tổng quát hóa!
 
-### Khung giải thích (nên đọc chậm): Tính tay sự khác biệt giữa Adam + L2 và AdamW trên 1 tham số
+### Giải thích: Tính tay sự khác biệt giữa Adam + L2 và AdamW trên 1 tham số
 
 Giả sử $$w = 2{,}0$$, gradient dữ liệu $$g = 0{,}0$$ (chỉ còn hiệu ứng phân rã trọng số), $$\eta = 0{,}1$$, hệ số weight decay $$\lambda = 0{,}5$$, và ước lượng moment bậc 2 hiện tại là $$\sqrt{\hat{v}_t} = 4{,}0$$ (một tham số có lịch sử gradient lớn):
 

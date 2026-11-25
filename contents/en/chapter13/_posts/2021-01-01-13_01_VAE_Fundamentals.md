@@ -11,14 +11,14 @@ categories:
 
 Variational Autoencoders sit at the intersection of Bayesian statistics and deep neural networks. By replacing deterministic bottleneck codes with learned probability distributions, VAEs turn compression into principled density modeling—giving you a single framework that can reconstruct, interpolate, detect anomalies, and synthesize new data.
 
-## Background Knowledge Map: Roadmap to VAE Mastery
+## Key ideas: Roadmap to VAE Mastery
 
 - **Pillar 1 — Probabilistic Encoder–Decoder Duality**: Views the encoder $q_\phi(z \mid x)$ as an inference network and the decoder $p_\theta(x \mid z)$ as a generative likelihood model.
 - **Pillar 2 — The ELBO Objective**: Unifies reconstruction fidelity and latent regularization into a single lower bound on $\log p_\theta(x)$.
 - **Pillar 3 — Differentiable Sampling**: Uses the reparameterization trick so standard backpropagation trains stochastic latent layers end-to-end.
 - **Pillar 4 — Diagnostics & Practical Tuning**: Connects theoretical failure modes (posterior collapse, blurry MSE reconstructions) directly to code-level remedies (KL annealing, balanced reductions).
 
-### Step-by-Step Worked Example (Read Slowly): Mapping Uniform Grid Coordinates to a 2D Gaussian Prior via Inverse CDF
+### Worked example: Mapping Uniform Grid Coordinates to a 2D Gaussian Prior via Inverse CDF
 
 To visualize a 2D VAE latent space cleanly, we sample uniformly spaced quantiles $u \in \{0.1, 0.5, 0.9\}$ along each axis and map them through the standard normal inverse CDF $\Phi^{-1}(u)$ instead of spacing linearly in $[-3, 3]$.
 

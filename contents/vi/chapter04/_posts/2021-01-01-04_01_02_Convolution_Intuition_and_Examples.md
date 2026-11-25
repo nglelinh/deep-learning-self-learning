@@ -11,7 +11,7 @@ categories:
 
 Làm thế nào một mạng chỉ toàn các bộ lọc bé xíu $$3 \times 3$$ — mỗi bộ lọc chỉ nhìn thấy 9 điểm ảnh — lại có thể nhận ra cả một chiếc ô tô hay một khuôn mặt người nằm trải dài hàng trăm pixel? Câu trả lời không nằm ở việc phóng to từng bộ lọc, mà nằm ở nghệ thuật **xếp chồng** để mở rộng tầm nhìn và lắp ghép đặc trưng theo từng tầng bậc.
 
-## Bản đồ kiến thức nền: Ba trực giác cốt lõi để "đọc vị" một mạng CNN
+## Kiến thức cần nhớ: Ba trực giác cốt lõi để "đọc vị" một mạng CNN
 
 1. **Bộ lọc như một máy đo độ tương đồng mẫu (Template Matching)**:
    Phép tích vô hướng giữa cửa sổ ảnh và bộ lọc đạt cực đại khi vùng ảnh có hoa văn giống hệt bộ lọc (ví dụ Sobel dọc phản hồi cực đại tại ranh giới sáng–tối theo phương thẳng đứng).
@@ -22,7 +22,7 @@ Làm thế nào một mạng chỉ toàn các bộ lọc bé xíu $$3 \times 3$$
 4. **Trường tiếp nhận lý thuyết vs. Trường tiếp nhận hiệu dụng (ERF)**:
    Dù trường tiếp nhận lý thuyết phủ rộng, các điểm ảnh ở tâm đóng góp nhiều đường đi hơn nên trọng số ảnh hưởng thường phân bố dạng hình chuông Gaussian tập trung quanh trung tâm.
 
-### Khung giải thích (nên đọc chậm): Tính tay sự mở rộng trường tiếp nhận qua 3 tầng tích chập
+### Giải thích: Tính tay sự mở rộng trường tiếp nhận qua 3 tầng tích chập
 
 Giả sử ta xếp chồng các tầng tích chập $$3 \times 3$$ với `padding=1`. Công thức truy hồi trường tiếp nhận $$r_l$$ và bước nhảy tích lũy $$j_l$$ là:
 $$r_l = r_{l-1} + (k_l - 1) \cdot j_{l-1}, \qquad j_l = j_{l-1} \cdot s_l$$

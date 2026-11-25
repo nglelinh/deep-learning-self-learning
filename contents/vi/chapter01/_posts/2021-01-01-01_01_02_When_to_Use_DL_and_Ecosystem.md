@@ -11,7 +11,7 @@ categories:
 
 Có một câu nói nổi tiếng trong giới kỹ sư dữ liệu: *"Đừng dùng pháo đại bác để bắn chim sẻ."* Dù Học sâu đã chinh phục cờ vây, gập protein và ngôn ngữ tự nhiên, hàng nghìn hệ thống sản xuất thực tế trong ngân hàng, logistics và thương mại điện tử vẫn chạy nhanh hơn, rẻ hơn và chính xác hơn với hồi quy tuyến tính hoặc Gradient Boosted Trees. Bài học này cung cấp bộ khung ra quyết định thực dụng giữa Học sâu và Học máy truyền thống, đồng thời giới thiệu hệ sinh thái phần mềm—phần cứng (PyTorch, JAX, TensorFlow, CUDA, Hugging Face) đang vận hành ngành AI hiện nay.
 
-## Bản đồ kiến thức nền: Bốn trục đánh giá khi Chọn Mô hình và Hệ sinh thái
+## Kiến thức cần nhớ: Bốn trục đánh giá khi Chọn Mô hình và Hệ sinh thái
 
 1. **Bản chất Dữ liệu (Phi cấu trúc vs. Bảng biểu)**:
    Ảnh, âm thanh, văn bản, đồ thị phức tạp $$\to$$ ưu tiên Deep Learning; bảng dữ liệu có cấu trúc với đặc trưng hỗn hợp (số + phân loại) cỡ nhỏ/trung bình $$\to$$ ưu tiên XGBoost / LightGBM / CatBoost.
@@ -25,7 +25,7 @@ Có một câu nói nổi tiếng trong giới kỹ sư dữ liệu: *"Đừng d
 4. **Hệ sinh thái Phần mềm Hiện đại**:
    PyTorch thống trị nghiên cứu và phần lớn sản xuất nhờ đồ thị động trực quan; JAX mạnh về tính toán khoa học và biên dịch XLA; Hugging Face và ONNX/TensorRT kết nối mượt mà từ mã nguồn tới triển khai thực tế.
 
-### Khung giải thích (nên đọc chậm): Tính tay tốc độ tính toán (FLOPs) và lý do GPU bỏ xa CPU trong Deep Learning
+### Giải thích: Tính tay tốc độ tính toán (FLOPs) và lý do GPU bỏ xa CPU trong Deep Learning
 
 Xét một bước nhân ma trận đơn giản trong một lớp tuyến tính với mini-batch $$B = 64$$, chiều vào $$d_{\text{in}} = 1024$$, chiều ra $$d_{\text{out}} = 1024$$:
 

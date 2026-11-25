@@ -12,7 +12,7 @@ lesson_type: optional
 
 Chuẩn bị phỏng vấn Deep Learning mà chỉ học tủ danh sách câu hỏi rời rạc rất dễ rơi vào cảnh "gặp câu hỏi biến tấu một chút là đứng hình". Lý do đơn giản là mọi câu hỏi phỏng vấn sắc bén đều bắt nguồn từ một hệ thống kiến thức liên thông: từ xác suất và giải tích (Chương 00), qua kiến trúc mạng và lan truyền ngược (Chương 02–03), đến tối ưu hóa, CNN, Transformer và thiết kế hệ thống ML. Bài học này thiết kế lộ trình đối chiếu từng chương của khóa học với các chủ đề trọng tâm của sách *Deep Learning Interviews*, giúp bạn tích lũy năng lực phỏng vấn song hành với tiến độ học hàng ngày.
 
-## Bản đồ kiến thức nền: Bốn nhóm câu hỏi cốt lõi trong Phỏng vấn Deep Learning
+## Kiến thức cần nhớ: Bốn nhóm câu hỏi cốt lõi trong Phỏng vấn Deep Learning
 
 1. **Nền tảng Toán & Thống kê (Ch 00–03)**:
    Tự tay đạo hàm Softmax + Cross-Entropy, giải thích liên hệ MLE–MSE–Cross-Entropy, phân biệt L1/L2 Regularization, và phân tích nguyên nhân gradient biến mất/bùng nổ.
@@ -26,7 +26,7 @@ Chuẩn bị phỏng vấn Deep Learning mà chỉ học tủ danh sách câu h�
 4. **Thiết kế Hệ thống ML (ML System Design)**:
    Biết chọn metric kinh doanh và metric mô hình, xử lý mất cân bằng dữ liệu, trôi phân phối (*data drift*) và tối ưu độ trễ suy luận (*latency/throughput*).
 
-### Khung giải thích (nên đọc chậm): Áp dụng khung trả lời 4 bước cho một câu hỏi phỏng vấn kinh điển
+### Giải thích: Áp dụng khung trả lời 4 bước cho một câu hỏi phỏng vấn kinh điển
 
 **Đề bài mẫu**: *"Tại sao trong Scaled Dot-Product Attention ta phải chia tích vô hướng $$\mathbf{q} \cdot \mathbf{k}$$ cho $$\sqrt{d_k}$$ trước khi đưa vào Softmax?"*
 

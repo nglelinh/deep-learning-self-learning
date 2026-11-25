@@ -11,7 +11,7 @@ categories:
 
 Trong dữ liệu thực tế, các đặc trưng hiếm khi "mạnh ai nấy chạy": chiều cao thường đi đôi với cân nặng, độ sáng của hai điểm ảnh cạnh nhau gần như giống hệt nhau, và các chiều của vector embedding ngôn ngữ tương tác chặt chẽ với nhau. Để mô tả trọn vẹn thế giới đa chiều ấy, ta cần **phân phối chuẩn đa biến** (*Multivariate Normal*) với **ma trận hiệp phương sai** $$\boldsymbol{\Sigma}$$—chìa khóa toán học đứng sau cả phép làm trắng dữ liệu (*PCA Whitening*), khoảng cách Mahalanobis, lẫn thủ thuật tái tham số hóa (*reparameterization trick*) của Variational Autoencoder (VAE).
 
-## Bản đồ kiến thức nền: Bốn trụ cột của Phân phối Đa biến trong Học sâu
+## Kiến thức cần nhớ: Bốn trụ cột của Phân phối Đa biến trong Học sâu
 
 1. **Vector kỳ vọng ($$\boldsymbol{\mu}$$) và Ma trận Hiệp phương sai ($$\boldsymbol{\Sigma}$$)**:
    Đường chéo chính của $$\boldsymbol{\Sigma}$$ chứa phương sai từng chiều; các phần tử ngoài đường chéo $$\Sigma_{ij} = \text{Cov}(X_i, X_j)$$ đo mức độ hai đặc trưng biến thiên cùng chiều hay ngược chiều.
@@ -25,7 +25,7 @@ Trong dữ liệu thực tế, các đặc trưng hiếm khi "mạnh ai nấy ch
 4. **Phân phối Biên và Phân phối Có điều kiện**:
    Một tính chất đẹp hiếm có của Gaussian đa biến là mọi phép chiếu biên và mọi phân phối có điều kiện của nó đều vẫn là Gaussian—nền tảng của Gaussian Processes và bộ lọc Kalman.
 
-### Khung giải thích (nên đọc chậm): Tính tay khoảng cách Mahalanobis và kiểm tra bước tái tham số hóa VAE
+### Giải thích: Tính tay khoảng cách Mahalanobis và kiểm tra bước tái tham số hóa VAE
 
 **Phần A — Khoảng cách Mahalanobis vs. Euclid:**
 Xét phân phối chuẩn 2D có $$\boldsymbol{\mu} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}$$ và ma trận hiệp phương sai chéo $$\boldsymbol{\Sigma} = \begin{bmatrix} 4 & 0 \\ 0 & 0.25 \end{bmatrix}$$ (chiều $$x_1$$ trải rộng với $$\sigma_1 = 2$$, chiều $$x_2$$ hẹp với $$\sigma_2 = 0.5$$), suy ra $$\boldsymbol{\Sigma}^{-1} = \begin{bmatrix} 0.25 & 0 \\ 0 & 4 \end{bmatrix}$$.

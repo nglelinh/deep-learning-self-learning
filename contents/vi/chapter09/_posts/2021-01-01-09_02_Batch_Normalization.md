@@ -11,7 +11,7 @@ categories:
 
 Trước năm 2015, huấn luyện một mạng CNN trên 10 tầng giống như việc cân bằng một chồng đĩa sứ cao ngất: chỉ cần chỉnh nhích learning rate lên một chút hoặc khởi tạo trọng số hơi lệch, các tầng sâu lập tức nhận đầu vào trôi dạt vào vùng bão hòa và toàn bộ quá trình huấn luyện đổ vỡ. Sự ra đời của **Batch Normalization** (Ioffe & Szegedy, 2015) đã thay đổi cuộc chơi mãi mãi — biến việc huấn luyện mạng cực sâu trở nên ổn định, nhanh gấp nhiều lần và mở đường cho cả họ chuẩn hóa hiện đại (LayerNorm, GroupNorm, RMSNorm).
 
-## Bản đồ kiến thức nền: Ba trụ cột của Chuẩn hóa Batch và Họ Chuẩn hóa
+## Kiến thức cần nhớ: Ba trụ cột của Chuẩn hóa Batch và Họ Chuẩn hóa
 
 1. **Cơ chế chuẩn hóa 4 bước kèm tham số khôi phục $$(\gamma, \beta)$$**:
    Tính trung bình $$\mu_B$$ và phương sai $$\sigma_B^2$$ trên mini-batch, chuẩn hóa về phân phối chuẩn $$(0, 1)$$, rồi cho phép mạng tự học lại tỷ lệ $$\gamma$$ và độ dịch $$\beta$$ để không làm mất sức biểu đạt.
@@ -20,7 +20,7 @@ Trước năm 2015, huấn luyện một mạng CNN trên 10 tầng giống như
 3. **Bản đồ chọn lớp Chuẩn hóa theo miền dữ liệu**:
    BatchNorm cho CNN với batch đủ lớn ($$\ge 16$$), GroupNorm cho phát hiện vật thể/phân đoạn có batch rất nhỏ (1–4 ảnh), InstanceNorm cho chuyển đổi phong cách ảnh, và LayerNorm/RMSNorm cho Transformer/NLP.
 
-### Khung giải thích (nên đọc chậm): Phân biệt trục tính trung bình & phương sai của 4 họ Chuẩn hóa trên tensor `(N, C, H, W)`
+### Giải thích: Phân biệt trục tính trung bình & phương sai của 4 họ Chuẩn hóa trên tensor `(N, C, H, W)`
 
 Giả sử ta có một batch ảnh kích thước `(N=8, C=64, H=16, W=16)`:
 

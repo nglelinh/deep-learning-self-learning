@@ -12,14 +12,14 @@ lesson_type: optional
 
 When a foundation model has 70 billion parameters, classical full fine-tuning requires over a terabyte of GPU memory—putting adaptation out of reach for almost every team. Parameter-Efficient Fine-Tuning (PEFT) changed the economics of transfer learning overnight: by freezing the giant base weight matrix $W_0$ and learning a tiny low-rank update $\Delta W = B A$ (LoRA) on top of 4-bit quantized base weights (QLoRA), a single workstation GPU can specialize a frontier model while storing a 50 MB adapter instead of a 140 GB checkpoint.
 
-## Background Knowledge Map: Modern Transfer Learning via PEFT (2022–2026)
+## Key ideas: Modern Transfer Learning via PEFT (2022–2026)
 
 - **Pillar 1 — Low-Rank Adaptation (LoRA)**: Parameterizes weight updates as $W = W_0 + \frac{\alpha}{r} B A$ with $B \in \mathbb{R}^{d_{\text{out}} \times r}$, $A \in \mathbb{R}^{r \times d_{\text{in}}}$ ($r \ll \min(d_{\text{in}}, d_{\text{out}})$), adding zero inference latency once merged into $W_0$.
 - **Pillar 2 — Quantized Transfer (QLoRA & NF4)**: Stores frozen $W_0$ in 4-bit NormalFloat with double quantization and dequantizes on-the-fly into BF16 during forward/backward passes, slashing memory by $\sim 4\times$.
 - **Pillar 3 — Multimodal & Multi-Tenant Adapters**: Enables serving dozens of domain-specific LoRA adapters dynamically on top of a single shared frozen base model in GPU memory.
 - **Pillar 4 — Limits of Low-Rank Updates**: Clarifies when full fine-tuning or continual pretraining still beats LoRA (e.g., injecting massive new factual knowledge or learning an entirely new language/modality).
 
-### Step-by-Step Worked Example (Read Slowly): LoRA Parameter Reduction & Rank-2 Matrix Update
+### Worked example: LoRA Parameter Reduction & Rank-2 Matrix Update
 
 Consider a Transformer projection matrix $W_0 \in \mathbb{R}^{4096 \times 4096}$ adapted with LoRA rank $r = 16$ and scaling $\alpha = 32$.
 

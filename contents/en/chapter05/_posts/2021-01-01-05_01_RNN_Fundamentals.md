@@ -11,13 +11,13 @@ categories:
 
 Before gated cells (LSTM/GRU) and Transformers entered the scene, the vanilla Recurrent Neural Network established the core mathematical language of sequential deep learning: hidden states as compressed memory, parameter sharing across time, and Backpropagation Through Time. This module pairs the rigorous mathematical theory of vanilla RNNs with hands-on NumPy and PyTorch implementations so you understand both why recurrence works and precisely where its gradient dynamics break down.
 
-## Background Knowledge Map: Vanilla RNN Fundamentals Roadmap
+## Key ideas: Vanilla RNN Fundamentals Roadmap
 
 - **Recurrent State-Space Formulation**: Modeling variable-length sequences via $$h_t = \tanh(W_{hh} h_{t-1} + W_{xh} x_t + b_h)$$ with shared temporal weights.
 - **BPTT & Gradient Pathologies**: Understanding how repeated Jacobian products cause vanishing or exploding gradients as sequence length grows.
 - **End-to-End Implementation & Language Modeling**: Coding BPTT from scratch, applying gradient clipping, and sampling autoregressive text from a character-level RNN.
 
-### Step-by-Step Worked Example (Read Slowly): Exact Sequence-Length Memory Footprint of BPTT
+### Worked example: Exact Sequence-Length Memory Footprint of BPTT
 
 Suppose you train a batch of $$N = 32$$ sequences of length $$T = 100$$ with hidden dimension $$d_h = 256$$ in `float32` (4 bytes per scalar).
 

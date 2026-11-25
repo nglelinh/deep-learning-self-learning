@@ -12,14 +12,14 @@ lesson_type: optional
 
 Trong các buổi phỏng vấn kỹ sư Machine Learning, câu hỏi về Transfer Learning hiếm khi dừng ở "hãy nêu định nghĩa fine-tuning" — người phỏng vấn muốn thấy bạn phản xạ thế nào khi dữ liệu bị lệch miền, khi chỉ có 200 mẫu gắn nhãn, hoặc khi cần quyết định giữa trích xuất đặc trưng đóng băng với tinh chỉnh toàn mạng. Bài luyện phỏng vấn này trang bị cho bạn khung trả lời chặt chẽ, có số liệu và lập luận kỹ thuật sắc bén.
 
-## Bản đồ kiến thức nền: Bốn năng lực cốt lõi được kiểm tra khi phỏng vấn về Transfer Learning
+## Kiến thức cần nhớ: Bốn năng lực cốt lõi được kiểm tra khi phỏng vấn về Transfer Learning
 
 - **Đánh đổi Bias–Variance giữa Linear Probe và Fine-Tuning:** Biết cách lập luận định lượng về số tham số tự do, nguy cơ quá khớp và khả năng thích nghi biểu diễn.
 - **Chẩn đoán giới hạn của đặc trưng đóng băng:** Nhận diện rõ những bài toán miền xa (ảnh vệ tinh đa phổ, siêu âm y khoa, chữ viết cổ) hoặc tác vụ cần định vị tinh (segmentation) nơi tầng cuối ImageNet đã đánh mất thông tin vị trí.
 - **Bảo toàn cấu trúc không gian khi trích xuất đặc trưng:** Phân biệt khi nào dùng vector sau Global Average Pooling (phân loại) và khi nào phải giữ feature map 2D/kim tự tháp FPN (phát hiện vật thể, phân đoạn).
 - **Tư duy chi phí tính toán và lưu trữ:** So sánh bộ nhớ lưu nhiều bản sao checkpoint đầy đủ với việc chỉ lưu các đầu tuyến tính hoặc adapter LoRA siêu nhẹ.
 
-### Khung giải thích (nên đọc chậm): Tính toán chi phí lưu trữ khi phục vụ 50 tác vụ đích bằng Full Fine-Tuning vs. Linear Probe / Adapter
+### Giải thích: Tính toán chi phí lưu trữ khi phục vụ 50 tác vụ đích bằng Full Fine-Tuning vs. Linear Probe / Adapter
 
 Giả sử doanh nghiệp của bạn triển khai cùng một xương sống thị giác `ViT-Large` ($$304\text{ triệu}$$ tham số, lưu FP16 tốn $$2\text{ byte/tham số}$$) cho $$50$$ khách hàng với $$50$$ bài toán phân loại $$10$$ lớp khác nhau (chiều đặc trưng $$d = 1024$$).
 

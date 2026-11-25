@@ -11,7 +11,7 @@ categories:
 
 Tưởng tượng bạn xây mô hình dự báo giá căn hộ: 99 căn hộ bình thường có giá quanh 3 tỷ đồng, nhưng lọt vào tập dữ liệu đúng 1 căn biệt thự nhập nhầm giá 300 tỷ đồng. Nếu huấn luyện bằng **MSE**, chỉ duy nhất một điểm ngoại lai đó có thể kéo lệch toàn bộ mô hình vì sai số bị bình phương lên tới hàng chục nghìn lần! Ngược lại, **MAE** miễn nhiễm tốt với ngoại lai nhưng lại có độ dốc không đổi khiến tối ưu dễ rung lắc quanh đáy. Bài học này phân tích bộ ba **MSE, MAE và Huber Loss** để bạn biết chọn thước đo hồi quy tối ưu cho từng đặc thù nhiễu dữ liệu.
 
-## Bản đồ kiến thức nền: Bốn góc nhìn cốt lõi về Hàm Mất mát Hồi quy
+## Kiến thức cần nhớ: Bốn góc nhìn cốt lõi về Hàm Mất mát Hồi quy
 
 1. **MSE (Mean Squared Error — $$L_2$$ Loss)**:
    Phạt theo bình phương sai số $$(y - \hat{y})^2$$, có đạo hàm tỷ lệ thuận với độ lớn sai số $$2(\hat{y} - y)$$ nên mượt quanh $$0$$ và tương ứng MLE của nhiễu Gaussian; nghiệm tối ưu hằng số là **trung bình (mean)**.
@@ -25,7 +25,7 @@ Tưởng tượng bạn xây mô hình dự báo giá căn hộ: 99 căn hộ b�
 4. **Log-Cosh và Biến đổi Miền (RMSE, RMSLE)**:
    RMSE đưa đơn vị về lại thang đo gốc của $$y$$, còn RMSLE phạt sai số theo tỷ lệ phần trăm thay vì hiệu tuyệt đối—rất hữu ích khi giá trị mục tiêu trải rộng qua nhiều bậc độ lớn.
 
-### Khung giải thích (nên đọc chậm): Tính tay MSE, MAE và Huber Loss khi có 1 điểm ngoại lai
+### Giải thích: Tính tay MSE, MAE và Huber Loss khi có 1 điểm ngoại lai
 
 Xét 4 mẫu dữ liệu với sai số $$e_i = \hat{y}_i - y_i$$ lần lượt là: $$e_1 = 0.5,\; e_2 = -0.5,\; e_3 = 0.2,\; e_4 = 10.0$$ (mẫu 4 là ngoại lai). Ta tính mức phạt và độ lớn đạo hàm trên mẫu ngoại lai $$e_4 = 10$$ với Huber ngưỡng $$\delta = 1.0$$:
 

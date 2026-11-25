@@ -11,13 +11,13 @@ categories:
 
 A single convolutional layer extracts local textures, but recognizing a whole scene requires coordinating spatial downsampling with multi-stage feature hierarchies. This section pairs **pooling layers**—which compress resolution and introduce local invariance—with the **classic CNN architectures** (LeNet, AlexNet, VGG, ResNet) that assembled convolution, pooling, normalization, and residual paths into complete vision systems.
 
-## Background Knowledge Map: From Single Layers to Full Vision Backbones
+## Key ideas: From Single Layers to Full Vision Backbones
 
 - **Spatial Pyramids & Channel-Resolution Trade-off**: Classic CNNs follow a disciplined pyramid rule: whenever pooling (or strided conv) halves $$H$$ and $$W$$ (cutting spatial area by $$4\times$$), the next stage doubles the channel count $$C$$, keeping per-layer FLOPs roughly constant across depth.
 - **Pooling Semantics (Max, Average, Global Average)**: Local pooling builds shift tolerance across early stages, while Global Average Pooling at the end converts arbitrary $$(C, H, W)$$ grids into compact $$C$$-dimensional semantic embeddings.
 - **Macro-Architectural Motifs**: Understanding how LeNet, AlexNet, VGG, and ResNet wire pooling, bottlenecks, and skip connections equips you to read—and design—any modern vision backbone.
 
-### Step-by-Step Worked Example (Read Slowly): Why Doubling Channels When Halving Resolution Keeps FLOPs Constant
+### Worked example: Why Doubling Channels When Halving Resolution Keeps FLOPs Constant
 
 Suppose Stage 1 of a CNN operates on feature maps of shape $$(C, H, W) = (64, 56, 56)$$ with a $$3 \times 3$$ conv ($$64 \to 64$$), and Stage 2 follows a $$2 \times 2$$ stride-2 pooling layer with $$(128, 28, 28)$$ and a $$3 \times 3$$ conv ($$128 \to 128$$).
 

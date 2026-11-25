@@ -11,14 +11,14 @@ categories:
 
 Turning autoencoder theory into reliable PyTorch code involves two distinct skills: first, getting the reconstruction loop and denoising corruption pipeline right; second, interrogating the learned latent space to verify that compression actually produced meaningful features rather than a brittle lookup table. This implementation guide splits those two stages cleanly so you can test each in isolation.
 
-## Background Knowledge Map: Autoencoder Engineering Workflow
+## Key ideas: Autoencoder Engineering Workflow
 
 - **Pillar 1 — Core Reconstruction Pipeline**: Covers dataset normalization, symmetric bottleneck modules, and MSE/BCE optimization loops on MNIST.
 - **Pillar 2 — Corruption-Based Regularization**: Demonstrates how adding noise only at the encoder input transforms memorization into manifold projection.
 - **Pillar 3 — Latent Space Visualization & Morphing**: Uses 2D bottlenecks and linear interpolation paths to inspect class clustering and manifold smoothness.
 - **Pillar 4 — Architectural Scaling to Convolutions**: Transitions from fully connected layers to 2D convolutional bottlenecks suited for spatial image structure.
 
-### Step-by-Step Worked Example (Read Slowly): Comparing Reconstruction Error for Anomaly Detection
+### Worked example: Comparing Reconstruction Error for Anomaly Detection
 
 Suppose a trained autoencoder reconstructs normal test images with MSE $\mu_{\text{norm}} = 0.012$ and standard deviation $\sigma_{\text{norm}} = 0.003$. We set an anomaly threshold at $\tau = \mu_{\text{norm}} + 3\sigma_{\text{norm}}$.
 

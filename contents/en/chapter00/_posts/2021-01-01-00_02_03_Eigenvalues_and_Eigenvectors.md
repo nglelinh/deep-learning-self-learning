@@ -11,14 +11,14 @@ categories:
 
 > *Train a 50-layer recurrent network with carelessly scaled weights and within seconds your gradients either collapse to `0.0` or explode to `NaN`. Why? Because multiplying by the same matrix $$W$$ fifty times scales every component along its eigenvectors by $$\lambda_i^{50}$$—and eigenvalues tell you at a glance whether a system will die, stabilize, or blow up.*
 
-## Background Knowledge Map: Spectral Structure of Matrices
+## Key ideas: Spectral Structure of Matrices
 
 1. **Eigenvalues & Eigenvectors (Invariant Directions)**: Nonzero vectors $$\mathbf{v}$$ that a matrix $$A$$ merely stretches or flips ($$A\mathbf{v} = \lambda\mathbf{v}$$) without rotating, revealing the intrinsic coordinate axes of the transformation.
 2. **Characteristic Polynomial & Trace/Determinant Checks**: Eigenvalues satisfy $$\det(A - \lambda I) = 0$$, and always obey two quick sanity checks: $$\sum_i \lambda_i = \text{tr}(A)$$ and $$\prod_i \lambda_i = \det(A)$$.
 3. **Spectral Theorem for Symmetric Matrices**: Real symmetric matrices (such as covariance matrices in PCA and Hessians of smooth losses) always have real eigenvalues and an orthonormal eigenbasis, guaranteeing clean diagonalization $$A = Q\Lambda Q^\top$$.
 4. **Condition Number & Optimization Speed**: The ratio $$\kappa = \lvert \lambda_{\max}\rvert / \lvert \lambda_{\min}\rvert$$ of the Hessian controls how elongated a loss valley is; large $$\kappa$$ forces vanilla gradient descent to crawl, motivating preconditioning and normalization.
 
-### Step-by-Step Worked Example (Read Slowly): Full Eigendecomposition and Condition Number of a Hessian
+### Worked example: Full Eigendecomposition and Condition Number of a Hessian
 
 Consider the symmetric Hessian matrix $$H = \begin{bmatrix} 5 & 2 \\ 2 & 2 \end{bmatrix}$$ of a quadratic loss $$L(\mathbf{w}) = \frac{1}{2}\mathbf{w}^\top H \mathbf{w}$$.
 

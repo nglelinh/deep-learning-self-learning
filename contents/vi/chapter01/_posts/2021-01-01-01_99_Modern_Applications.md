@@ -12,7 +12,7 @@ lesson_type: optional
 
 Nếu năm 2016 câu hỏi mặc định khi bắt đầu một dự án AI là *"Mình nên thu thập bao nhiêu nghìn mẫu để huấn luyện mạng từ đầu?"*, thì trong giai đoạn 2022–2026 câu hỏi mặc định đã hoàn toàn thay đổi: *"Mình nên bắt đầu từ mô hình nền tảng (Foundation Model) nào, thử prompting/RAG trước hay tinh chỉnh nhẹ bằng LoRA?"* Sự chuyển dịch này không hề làm kiến thức nền tảng của bạn trở nên lỗi thời—ngược lại, nó giúp bạn đi xa hơn gấp nhiều lần nếu hiểu rõ quy trình thực hành hiện đại và biết đánh giá rủi ro của từng lựa chọn.
 
-## Bản đồ kiến thức nền: Bốn tầng của Quy trình Thực hành Học sâu Hiện đại
+## Kiến thức cần nhớ: Bốn tầng của Quy trình Thực hành Học sâu Hiện đại
 
 1. **Bậc thang Thích ứng (Adaptation Ladder: Prompting $$\to$$ RAG $$\to$$ LoRA $$\to$$ Pretraining)**:
    Luôn đi từ phương án chi phí thấp, lặp nhanh nhất trước khi đầu tư tinh chỉnh trọng số hay huấn luyện từ đầu—chỉ nâng bậc khi đo lường thực nghiệm chứng minh bậc dưới đã chạm trần.
@@ -26,7 +26,7 @@ Nếu năm 2016 câu hỏi mặc định khi bắt đầu một dự án AI là 
 4. **Sự kết hợp giữa Mô hình Nền tảng và Mô hình Chuyên biệt**:
    Dùng mô hình lớn làm "giáo viên" sinh dữ liệu tổng hợp hoặc gán nhãn tự động, rồi chưng cất (*distill*) sang mô hình nhỏ chạy siêu nhanh và tiết kiệm chi phí trong sản xuất.
 
-### Khung giải thích (nên đọc chậm): Tính tay lượng VRAM cần thiết để nạp một LLM 7 tỷ tham số ở các độ chính xác khác nhau
+### Giải thích: Tính tay lượng VRAM cần thiết để nạp một LLM 7 tỷ tham số ở các độ chính xác khác nhau
 
 Giả sử bạn muốn chạy suy luận một mô hình nền tảng cỡ $$7\text{ tỷ}$$ tham số ($$7 \times 10^9$$) trên GPU cá nhân có 16 GB VRAM:
 

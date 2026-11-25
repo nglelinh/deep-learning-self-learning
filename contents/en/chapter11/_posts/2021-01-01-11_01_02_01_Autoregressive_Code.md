@@ -11,14 +11,14 @@ categories:
 
 Before writing a single line of PyTorch for an autoregressive model, picture drawing a 2D point $(x_1, x_2)$ from a ring of eight Gaussian islands. If you try to predict $x_1$ and $x_2$ independently, you get a blurry square grid of 64 phantom islands. The chain rule of probability breaks that curse with surgical elegance: first sample the horizontal coordinate $x_1$ from a multimodal mixture, then ask a neural network—conditioned on the exact $x_1$ you just drew—where the vertical coordinate $x_2$ is allowed to land.
 
-## Background Knowledge Map: Implementing Autoregressive Density Models
+## Key ideas: Implementing Autoregressive Density Models
 
 - **Pillar 1 — Probability Chain Rule Factorization**: Decomposes any joint density into exact conditionals $p_\theta(x_1, \dots, x_d) = \prod_{i=1}^d p_\theta(x_i \mid x_{<i})$, guaranteeing a normalized density with zero partition-function approximation.
 - **Pillar 2 — Mixture Density Parameterization**: Models each conditional $p_\theta(x_i \mid x_{<i})$ as a weighted mixture of logistics or Gaussians so a single input $x_1$ can map to multiple valid $x_2$ modes (e.g., top and bottom of a circle).
 - **Pillar 3 — Log-Sum-Exp Numerical Stability**: Evaluates $\log \sum_{k=1}^K \pi_k p_k(x)$ in log-space via `torch.logsumexp` so tiny probabilities never underflow to zero during backpropagation.
 - **Pillar 4 — Teacher Forcing vs. Sequential Ancestral Sampling**: Explains why training evaluates all conditionals in parallel using ground-truth prefixes, whereas generation must step sequentially from $x_1$ to $x_d$.
 
-### Step-by-Step Worked Example (Read Slowly): Evaluating a 2-Component Conditional Mixture Density
+### Worked example: Evaluating a 2-Component Conditional Mixture Density
 
 Suppose at $x_1 = 0$, the ring of Gaussians has two vertical modes at $x_2 = +2$ and $x_2 = -2$. Our autoregressive network outputs mixture weights $\pi = (0.5, 0.5)$, means $\mu = (+2.0, -2.0)$, and equal standard deviations $\sigma = (0.5, 0.5)$. Let us compute the exact log-likelihood of a real observation $x_2 = 2.0$.
 

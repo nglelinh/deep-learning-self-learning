@@ -11,7 +11,7 @@ categories:
 
 Nếu bạn có 10 triệu ảnh huấn luyện, việc tính gradient trên toàn bộ 10 triệu ảnh rồi mới nhích trọng số đi đúng **1 bước** (Batch GD) sẽ chậm tới mức không thể chấp nhận; ngược lại, cập nhật ngay sau từng ảnh đơn lẻ (Pure SGD) lại quá nhiễu và lãng phí 99% sức mạnh song song của GPU. Câu trả lời thực chiến nằm ở **Mini-Batch Gradient Descent** kết hợp **Lịch điều chỉnh Tốc độ Học (*Learning Rate Schedule*)**. Bài học này mổ xẻ cơ chế toán học của cả ba biến thể và nghệ thuật chọn, làm ấm (*warmup*) và giảm dần (*decay*) tốc độ học.
 
-## Bản đồ kiến thức nền: Bốn trụ cột về Biến thể GD và Learning Rate
+## Kiến thức cần nhớ: Bốn trụ cột về Biến thể GD và Learning Rate
 
 1. **Batch vs. Stochastic (SGD) vs. Mini-Batch GD**:
    So sánh trên 3 trục: phương sai ước lượng gradient (tỷ lệ $$\propto 1/B$$), tần suất cập nhật mỗi epoch ($$\lceil N/B \rceil$$ bước), và khả năng khai thác phép nhân ma trận song song (GEMM) trên GPU.
@@ -25,7 +25,7 @@ Nếu bạn có 10 triệu ảnh huấn luyện, việc tính gradient trên to�
 4. **Quy tắc Mở rộng Tuyến tính (Linear Scaling Rule)**:
    Khi tăng kích thước batch lên $$k$$ lần để huấn luyện phân tán trên nhiều GPU, phương sai gradient giảm $$k$$ lần nên ta thường tăng learning rate tương ứng (cỡ $$k$$ hoặc $$\sqrt{k}$$ lần kèm warmup).
 
-### Khung giải thích (nên đọc chậm): Tính tay tốc độ cập nhật và Cosine Decay Learning Rate
+### Giải thích: Tính tay tốc độ cập nhật và Cosine Decay Learning Rate
 
 **Phần A — So sánh số lần cập nhật trọng số trong 1 Epoch** với tập dữ liệu $$N = 50{,}000$$ mẫu:
 - **Batch GD** ($$B = 50{,}000$$): đúng **1 lần cập nhật / epoch** (rất mượt nhưng siêu chậm).

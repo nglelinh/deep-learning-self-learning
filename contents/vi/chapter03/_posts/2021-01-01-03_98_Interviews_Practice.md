@@ -12,7 +12,7 @@ lesson_type: optional
 
 Trong các vòng phỏng vấn chuyên sâu về Deep Learning và Machine Learning, ba chủ đề **Tự động tính đạo hàm (Autodiff)**, **Ma trận Hessian (độ cong bậc hai)** và **Hồi quy Logistic** xuất hiện dày đặc đến mức gần như trở thành "bài thi nhập môn bắt buộc". Tại sao? Bởi vì hồi quy logistic là trường hợp nhỏ nhất, trong suốt nhất của mạng nơ-ron, nơi bạn có thể tự tay chứng minh tính lồi toàn cục của Cross-Entropy, giải thích ý nghĩa log-odds và tính trọn vẹn cả gradient lẫn ma trận Hessian chỉ trên một trang giấy!
 
-## Bản đồ kiến thức nền: Bốn trọng tâm Phỏng vấn của Chương 03
+## Kiến thức cần nhớ: Bốn trọng tâm Phỏng vấn của Chương 03
 
 1. **Autodiff (Chế độ Tiến vs. Chế độ Lùi — Forward vs. Reverse Mode)**:
    Với hàm $$f: \mathbb{R}^n \to \mathbb{R}^m$$: Forward-mode tính nhanh khi $$n \ll m$$ (ít biến vào, nhiều đầu ra); Reverse-mode (Backprop) tính nhanh khi $$n \gg m$$ (hàng triệu trọng số $$\to$$ 1 giá trị loss vô hướng).
@@ -26,7 +26,7 @@ Trong các vòng phỏng vấn chuyên sâu về Deep Learning và Machine Learn
 4. **Phân biệt Độ cong Hessian & Phương pháp Newton**:
    Dấu của các giá trị riêng Hessian phân loại tức thì điểm dừng: toàn dương (cực tiểu), toàn âm (cực đại), lẫn lộn dương và âm (**điểm yên ngựa**).
 
-### Khung giải thích (nên đọc chậm): Chứng minh tay tính nửa xác định dương của Hessian Hồi quy Logistic trên 2 mẫu
+### Giải thích: Chứng minh tay tính nửa xác định dương của Hessian Hồi quy Logistic trên 2 mẫu
 
 Xét 2 mẫu 1 chiều $$x_1 = 1, x_2 = 2$$ với dự đoán xác suất hiện tại $$\hat{y}_1 = 0.5, \hat{y}_2 = 0.8$$ (bỏ qua bias):
 

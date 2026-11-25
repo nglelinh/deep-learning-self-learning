@@ -11,14 +11,14 @@ categories:
 
 Đặt niềm tin mù quáng vào một con số độ chính xác 98% giống như lái máy bay mà không có bảng đồng hồ đo bên trong buồng lái: mọi thứ có thể êm đẹp trong điều kiện chuẩn, nhưng ngay khi gặp nhiễu lạ ngoài thực tế, bạn sẽ không biết mô hình hỏng ở đâu. Mục tổng quan nền tảng này kết nối chặt chẽ phần lý thuyết quy kết (**24-01-01**) với bài cài đặt thực chiến (**24-01-02**).
 
-## Bản đồ kiến thức nền: Hệ quy chiếu phân loại các phương pháp Diễn giải Mô hình
+## Kiến thức cần nhớ: Hệ quy chiếu phân loại các phương pháp Diễn giải Mô hình
 
 - **Giải thích nội tại (Intrinsic) vs. Hậu kiểm (Post-hoc):** Phân biệt mô hình tự dễ hiểu (cây quyết định nông, hồi quy tuyến tính) với việc giải thích mạng sâu sau khi huấn luyện (Grad-CAM, SHAP).
 - **Cục bộ (Local) vs. Toàn cục (Global):** Trả lời "vì sao ảnh này bị gán nhãn mèo?" (local) khác với "mô hình học quy luật tổng quát nào trên toàn tập dữ liệu?" (global).
 - **Phụ thuộc mô hình (Model-Specific) vs. Độc lập mô hình (Model-Agnostic):** Các phương pháp gradient tận dụng cấu trúc khả vi của mạng nơ-ron cực nhanh, còn LIME/KernelSHAP chạy được với mọi hộp đen nhưng tốn nhiều lượt truy vấn.
 - **Tiêu chuẩn chọn công cụ theo miền dữ liệu:** Grad-CAM/IG cho ảnh, SHAP cho dữ liệu bảng tài chính/y tế, và phân tích mạch/SAE cho mô hình ngôn ngữ.
 
-### Khung giải thích (nên đọc chậm): So sánh chi phí tính toán: Grad-CAM vs. KernelSHAP trên một bức ảnh $$224 \times 224$$
+### Giải thích: So sánh chi phí tính toán: Grad-CAM vs. KernelSHAP trên một bức ảnh $$224 \times 224$$
 
 Giả sử một lượt suy luận (forward) qua ResNet-50 mất $$5\text{ ms}$$ và một lượt lan truyền ngược (backward) mất $$10\text{ ms}$$.
 

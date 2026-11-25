@@ -11,7 +11,7 @@ categories:
 
 Hiểu lý thuyết Backpropagation trên giấy mới đi được nửa chặng đường; nửa chặng đường còn lại—và là trải nghiệm đáng giá nhất với mọi kỹ sư Học sâu—là **tự tay cài đặt toàn bộ mạng MLP và lan truyền ngược từ đầu chỉ bằng NumPy**, rồi thấy nó tự học giải gọn bài toán XOR mà không cần bất kỳ dòng PyTorch nào! Một lỗi nhỏ về chiều ma trận (quên chuyển vị, quên chia cho kích thước batch $$B$$, hay dùng nhầm giá trị đã kích hoạt thay vì tiền kích hoạt) có thể khiến mạng học sai lặng lẽ. Bài thực hành này giúp bạn viết mã sạch, kiểm tra kích thước chặt chẽ và kiểm chứng độ chính xác bằng Gradient Checking.
 
-## Bản đồ kiến thức nền: Bốn kỷ luật lập trình khi Tự cài Backpropagation bằng NumPy
+## Kiến thức cần nhớ: Bốn kỷ luật lập trình khi Tự cài Backpropagation bằng NumPy
 
 1. **Quy tắc Khớp Chiều Ma trận (Shape Invariant Check)**:
    Gradient của mọi tham số **bắt buộc phải có kích thước giống hệt chính tham số đó**: `dW.shape == W.shape`, `db.shape == b.shape`, `dA.shape == A.shape`. Cài sẵn các dòng `assert` kiểm tra shape giúp bắt ngay 90% lỗi lập trình.
@@ -25,7 +25,7 @@ Hiểu lý thuyết Backpropagation trên giấy mới đi được nửa chặn
 4. **Kiểm tra Sai số Tương đối bằng Sai phân Trung tâm (Gradient Checking)**:
    So sánh `grad_analytic` và `grad_numeric` qua công thức $$\frac{\|g_a - g_n\|_2}{\|g_a\|_2 + \|g_n\|_2}$$: nếu nhỏ hơn $$10^{-7}$$ (với `float64`), cài đặt Backprop của bạn đã chính xác tuyệt đối!
 
-### Khung giải thích (nên đọc chậm): Tính tay một phép kiểm tra Gradient Checking với $$\varepsilon = 10^{-4}$$
+### Giải thích: Tính tay một phép kiểm tra Gradient Checking với $$\varepsilon = 10^{-4}$$
 
 Giả sử bạn nghi ngờ công thức đạo hàm giải tích của hàm $$L(w) = w^3$$ tại $$w = 2.0$$ (đạo hàm đúng là $$g_a = 3(2)^2 = 12.000000$$). Hãy kiểm tra bằng sai phân trung tâm với $$\varepsilon = 10^{-4}$$:
 

@@ -11,14 +11,14 @@ categories:
 
 Trong thế giới không nhãn, mối nguy lớn nhất luôn rình rập mọi thuật toán học biểu diễn là **sụp đổ biểu diễn (Representation Collapse)**: nếu bộ mã hóa ánh xạ *mọi* bức ảnh về đúng một vector hằng số $$\mathbf{z} = (0, 0, \dots, 0)$$, thì mọi cặp ảnh giống nhau đều có khoảng cách bằng 0! Bài học này giải phẫu cơ chế toán học của **InfoNCE**, **Masked Prediction** và **BYOL/DINO** — ba con đường thông minh giúp học sâu thoát khỏi bẫy sụp đổ để tạo ra những bộ biểu diễn còn mạnh hơn cả học có giám sát.
 
-## Bản đồ kiến thức nền: Cơ chế toán học ngăn sụp đổ biểu diễn trong SSL
+## Kiến thức cần nhớ: Cơ chế toán học ngăn sụp đổ biểu diễn trong SSL
 
 - **Hàm mất mát InfoNCE (NT-Xent) và nhiệt độ $$\tau$$:** Xây dựng bài toán phân loại $$(2N-1)$$ lớp bằng độ tương đồng cosin chia nhiệt độ $$\tau$$, tạo đồng thời lực hút (cặp dương) và lực đẩy (cặp âm) chống sụp đổ.
 - **Liên hệ với thông tin tương hỗ (Mutual Information):** Chứng minh cực tiểu hóa InfoNCE tương đương cực đại hóa cận dưới của thông tin tương hỗ $$I(\mathbf{v}_1; \mathbf{v}_2)$$ giữa hai góc nhìn.
 - **Dự đoán phần bị che (BERT / MAE):** Khai thác sự dư thừa ngữ cảnh trong chuỗi văn bản hoặc mảng ảnh; phần mất mát chỉ tính trên các vị trí bị che giúp mô hình học cấu trúc toàn cục.
 - **Phá đối xứng không cần cặp âm (BYOL / SimSiam / DINO):** Dùng mạng đích cập nhật trượt (EMA), đầu dự đoán (predictor), `stop-gradient` và căn giữa (centering) để học biểu diễn giàu thông tin mà không cần batch size khổng lồ.
 
-### Khung giải thích (nên đọc chậm): Tính tay hàm mất mát InfoNCE (NT-Xent) cho một cặp dương và hai mẫu âm
+### Giải thích: Tính tay hàm mất mát InfoNCE (NT-Xent) cho một cặp dương và hai mẫu âm
 
 Xét một vector truy vấn $$\mathbf{z}_i$$ (đã chuẩn hóa đơn vị $$\|\mathbf{z}\|_2 = 1$$) với cặp dương $$\mathbf{z}_j$$ và hai mẫu âm $$\mathbf{z}_{k_1}, \mathbf{z}_{k_2}$$. Giả sử độ tương đồng cosin lần lượt là:
 - $$s(i, j) = 0{,}80$$ (cặp dương)

@@ -11,14 +11,14 @@ categories:
 
 When Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio published *Neural Machine Translation by Jointly Learning to Align and Translate* (2015), they included a now-iconic heatmap of French-to-English attention weights: the diagonal tracked word-for-word correspondence, and at the phrase *"zone économique européenne"* $$\to$$ *"European Economic Area"*, the model's attention weights spontaneously jumped backward in exact reverse order to match French adjective placement. That visual proof showed that soft alignment could be learned purely from end-to-end translation loss—without a single hand-coded grammar rule.
 
-## Background Knowledge Map: Encoder–Decoder Alignment and Additive Attention
+## Key ideas: Encoder–Decoder Alignment and Additive Attention
 
 - **Seq2Seq Compression Bottleneck**: In Sutskever et al. (2014), the encoder's final state $$h_T$$ had to encode every noun, tense, and clause of the entire input sentence. Mutual information between early source tokens and $$h_T$$ decays with sequence length.
 - **Bahdanau (Additive) Score Function**: Given decoder state $$s_{t-1}$$ and encoder annotation $$h_j$$, additive attention scores alignment via a small 1-hidden-layer MLP: $$e_{t,j} = v_a^\top \tanh(W_a s_{t-1} + U_a h_j)$$, allowing $$s_{t-1}$$ and $$h_j$$ to have completely different dimensions.
 - **Luong (Multiplicative / Dot-Product) Score Function**: Luong et al. (2015) showed that simpler bilinear/dot-product scoring $$e_{t,j} = s_t^\top W_a h_j$$ runs much faster on GPUs because it reduces to matrix multiplication rather than broadcasting a 3D addition tensor.
 - **Soft vs. Hard Alignment**: Soft attention computes a smooth expectation $$\sum_j \alpha_{t,j} h_j$$ (differentiable via standard backpropagation), whereas hard attention samples a single index $$j^* \sim \text{Cat}(\alpha_t)$$ (requiring REINFORCE / high-variance policy gradients).
 
-### Step-by-Step Worked Example (Read Slowly): Hand-Computing Bahdanau Additive Attention
+### Worked example: Hand-Computing Bahdanau Additive Attention
 
 Suppose at decoder step $$t$$, we have scalar decoder state $$s_{t-1} = 1.0$$ and two encoder states $$h_1 = 2.0, h_2 = -1.0$$, with parameters $$W_a = 0.5, U_a = 0.5, v_a = 2.0$$.
 

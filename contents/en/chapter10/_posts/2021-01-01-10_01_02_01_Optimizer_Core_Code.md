@@ -11,14 +11,14 @@ categories:
 
 Implementing SGD, Momentum, NAG, AdaGrad, RMSprop, and Adam in ~100 lines of clean NumPy reveals an underappreciated systems reality of modern deep learning: **optimizer states are often bigger than the model itself**. Every single trainable weight in Adam requires storing *two* extra `float32` state tensors (`m` and `v`), tripling parameter memory before a single activation is even allocated. Coding each update rule explicitly also exposes subtle implementation details—like incrementing `self.t += 1` *before* bias correction and keeping `eps` outside the square root (`np.sqrt(v_hat) + eps`).
 
-## Background Knowledge Map: Engineering Details of Optimizer Implementations
+## Key ideas: Engineering Details of Optimizer Implementations
 
 - **State Buffer Allocation & Memory Footprint**: Vanilla SGD holds `0` extra floats/param; Momentum/RMSprop hold `1` float/param; Adam/AdamW hold `2` floats/param (`m` and `v`)—meaning a 7B-parameter model in `fp32` requires $$7\text{B} \times 8\text{ bytes} = 56\text{ GB}$$ just for Adam's momentum and variance states!
 - **Step Counter Ordering (`self.t += 1`)**: Computing `1 - beta1 ** self.t` with `t = 0` divides by zero (`1 - 1 = 0`). Incrementing `t` at the start of `step()` ensures `t = 1` on the very first update.
 - **Exact Placement of $$\epsilon$$**: Adam places $$\epsilon$$ *outside* the square root (`sqrt(v_hat) + eps`, default `1e-8`). When training in `fp16`, `1e-8` underflows or becomes too tiny relative to small gradients, which is why mixed-precision recipes often raise `eps=1e-6` or keep master optimizer states in `fp32`.
 - **In-Place Parameter Updates & `zero_grad()`**: In PyTorch, gradients accumulate across `.backward()` calls by design (enabling gradient accumulation for large effective batches), so forgetting `optimizer.zero_grad(set_to_none=True)` silently corrupts every step after step 1.
 
-### Step-by-Step Worked Example (Read Slowly): Memory Budget of Training a 100M-Parameter Model With SGD vs. Adam
+### Worked example: Memory Budget of Training a 100M-Parameter Model With SGD vs. Adam
 
 Suppose a model has $$P = 100{,}000{,}000$$ trainable `float32` parameters (4 bytes each = $$400\text{ MB}$$):
 

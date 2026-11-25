@@ -11,14 +11,14 @@ categories:
 
 When Hubel and Wiesel projected bars of light onto a screen in front of an anesthetized cat in 1959, they stumbled on a startling biological fact: individual neurons in the primary visual cortex remained completely silent until a straight edge drifted across a tiny patch of the retina at one exact angle. Decades later, when researchers visualized the first-layer filters of AlexNet trained purely on natural image labels, the exact same oriented edge detectors and color-opponent Gabor blobs emerged spontaneously from gradient descent. Convolution works not by memorizing pixels, but by asking a hierarchy of local geometric questions—and composing small answers into global understanding.
 
-## Background Knowledge Map: From Local Filters to Semantic Hierarchies
+## Key ideas: From Local Filters to Semantic Hierarchies
 
 - **Directional Derivatives & Edge Detection**: Finite-difference kernels like Sobel $$[-1, 0, +1]$$ approximate the spatial partial derivatives $$\partial I / \partial x$$ and $$\partial I / \partial y$$. Wherever pixel intensity jumps sharply, the inner product spikes; in flat uniform regions, positive and negative weights cancel cleanly to zero.
 - **Receptive Field Dynamics**: A single $$3 \times 3$$ filter sees only $$9$$ pixels, which cannot tell a dog's ear from a triangle. However, each stacked convolutional layer expands the **theoretical receptive field** $$r_\ell = r_{\ell-1} + (k_\ell - 1)\prod_{i=1}^{\ell-1} s_i$$, allowing deep neurons to integrate context across the entire image.
 - **Effective vs. Theoretical Receptive Field**: Because there are exponentially more paths from the center of a receptive field than from its corners, Luo et al. (2016) showed that the *effective* receptive field follows a Gaussian profile concentrated near the center—meaning depth and stride must be designed generously.
 - **Feature Hierarchy & Compositionality**: Combining oriented edges with ReLU non-linearities creates corner and curve detectors in layer 2, texture and part detectors in layers 3–4, and class-discriminative object prototypes near the top of the network.
 
-### Step-by-Step Worked Example (Read Slowly): Receptive Field Growth Across Three Layers
+### Worked example: Receptive Field Growth Across Three Layers
 
 Let us compute the exact receptive field size $$r_\ell$$ and effective stride (jump) $$j_\ell$$ as a signal passes through a three-layer CNN stem:
 - Layer 1: $$3 \times 3$$ conv, stride $$s_1 = 1$$

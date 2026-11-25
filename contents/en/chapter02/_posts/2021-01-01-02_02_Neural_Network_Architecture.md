@@ -11,14 +11,14 @@ categories:
 
 > *Give two engineers the exact same budget of one million parameters—one builds a single wide layer, the other builds a structured 8-layer bottleneck—and their test accuracies can differ by twenty points. Architecture is how we encode assumptions about the geometry of the problem directly into the computational graph.*
 
-## Background Knowledge Map: Principles of Neural Architecture Design
+## Key ideas: Principles of Neural Architecture Design
 
 1. **Hierarchical Composition**: Early layers extract local, reusable primitives while deeper layers assemble them into invariant global concepts.
 2. **Width vs. Depth Trade-Off**: Width expands instantaneous representational bandwidth and eases optimization; depth multiplies compositional expressivity exponentially per parameter.
 3. **Information Bottlenecks & Skip Connections**: Bottlenecks force compression of task-relevant signals (as in autoencoders), while residual pathways preserve gradient flow across very deep stacks.
 4. **Parameter & Activation Memory Budgeting**: Balances expressivity against overfitting and hardware memory limits by sizing each layer deliberately rather than arbitrarily.
 
-### Step-by-Step Worked Example (Read Slowly): Comparing Two Equal-Parameter Architectures (Wide vs. Deep)
+### Worked example: Comparing Two Equal-Parameter Architectures (Wide vs. Deep)
 
 Suppose an input has dimension $$d_{\text{in}} = 64$$ and output has $$d_{\text{out}} = 4$$, and we compare two MLPs with nearly identical parameter counts (ignoring biases for quick estimation):
 - **Architecture A (Wide, 1 hidden layer)**: `64 -> 128 -> 4`

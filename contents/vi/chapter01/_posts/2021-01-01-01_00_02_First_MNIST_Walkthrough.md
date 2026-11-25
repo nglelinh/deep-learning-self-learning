@@ -11,7 +11,7 @@ categories:
 
 Mọi ngôn ngữ lập trình đều có bài mở đầu `"Hello, World!"`, và trong thế giới Deep Learning, **"Hello, World!" chính là nhận diện chữ số viết tay MNIST**. Bộ dữ liệu gồm 70{,}000 ảnh chữ số từ 0 đến 9 do Yann LeCun và cộng sự tập hợp từ cuối thập niên 1990 đủ nhỏ để chạy trong vài giây trên máy tính cá nhân, nhưng lại chứa đầy đủ mọi thành phần cốt lõi của một hệ thống Học sâu thực thụ: chuẩn hóa tensor, thiết kế kiến trúc nhiều tầng, tính Cross-Entropy và chạy vòng lặp tối ưu. Bài thực hành này dẫn bạn đi từng dòng code để thực sự "chạm tay" vào mạng nơ-ron đầu tiên.
 
-## Bản đồ kiến thức nền: Bốn thành phần trong một Pipeline Huấn luyện PyTorch chuẩn
+## Kiến thức cần nhớ: Bốn thành phần trong một Pipeline Huấn luyện PyTorch chuẩn
 
 1. **Dữ liệu và Tiền xử lý Tensor (`Dataset`, `DataLoader`, `Transforms`)**:
    Chuyển ảnh PIL từ giá trị nguyên $$[0, 255]$$ sang tensor thực $$[0, 1]$$, rồi chuẩn hóa về trung bình $$0$$ và độ lệch chuẩn $$1$$ (với MNIST là $$\mu \approx 0.1307, \sigma \approx 0.3081$$), đồng thời xáo trộn (*shuffle*) và gom theo mini-batch.
@@ -25,7 +25,7 @@ Mọi ngôn ngữ lập trình đều có bài mở đầu `"Hello, World!"`, v�
 4. **Vòng lặp Huấn luyện 5 bước kinh điển**:
    `optimizer.zero_grad()` $$\to$$ `outputs = model(x)` $$\to$$ `loss = criterion(outputs, y)` $$\to$$ `loss.backward()` $$\to$$ `optimizer.step()`. Quên `zero_grad()` sẽ khiến gradient cộng dồn qua các batch làm mô hình hỏng ngay lập tức!
 
-### Khung giải thích (nên đọc chậm): Theo dõi kích thước Tensor và số bước cập nhật của 1 Epoch MNIST
+### Giải thích: Theo dõi kích thước Tensor và số bước cập nhật của 1 Epoch MNIST
 
 Giả sử bạn huấn luyện trên tập train MNIST có $$60{,}000$$ ảnh với `batch_size = 64` qua mạng `784 -> 128 -> 64 -> 10`:
 

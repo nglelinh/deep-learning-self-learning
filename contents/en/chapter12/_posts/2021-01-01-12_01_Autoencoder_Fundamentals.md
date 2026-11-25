@@ -11,14 +11,14 @@ categories:
 
 Long before transformers dominated representation learning, autoencoders proved a deceptively simple principle: you do not need human labels to learn rich internal features if you ask a network to compress and rebuild the world. Understanding both the mathematical foundations (linear PCA equivalence, sparsity, denoising) and the hands-on PyTorch mechanics gives you the conceptual bridge to VAEs, masked image modeling, and modern neural codecs.
 
-## Background Knowledge Map: Unifying Autoencoder Theory and Practice
+## Key ideas: Unifying Autoencoder Theory and Practice
 
 - **Pillar 1 — Information Bottleneck Principle**: Forces an encoder $f_\phi: \mathbb{R}^d \to \mathbb{R}^k$ ($k \ll d$) to discard redundant variation and retain only the coordinates needed for reconstruction.
 - **Pillar 2 — Regularized Families**: Organizes vanilla, denoising, sparse, and contractive autoencoders as different constraints preventing trivial identity copying.
 - **Pillar 3 — Representation Geometry**: Connects bottleneck width and architectural inductive bias (MLP vs. CNN) to cluster separation and interpolation quality.
 - **Pillar 4 — Bridge to Probabilistic Generation**: Highlights where deterministic autoencoders stop (unstructured latent holes) and where variational autoencoders begin.
 
-### Step-by-Step Worked Example (Read Slowly): Choosing Bottleneck Dimension via Explained Variance
+### Worked example: Choosing Bottleneck Dimension via Explained Variance
 
 Suppose a 4D dataset has covariance eigenvalues $\lambda_1 = 9.0, \lambda_2 = 5.0, \lambda_3 = 0.8, \lambda_4 = 0.2$.
 

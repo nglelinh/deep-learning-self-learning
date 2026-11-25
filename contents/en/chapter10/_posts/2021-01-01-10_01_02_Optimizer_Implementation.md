@@ -11,13 +11,13 @@ categories:
 
 Knowing optimizer equations is one thing; watching their trajectories race side-by-side across an ill-conditioned 2D valley and a noisy neural network loss surface is what builds lasting engineering judgment. This implementation hub pairs the from-scratch NumPy/PyTorch optimizer classes with empirical benchmarks, Adam vs. AdamW comparisons, learning-rate schedules, and classic convergence pitfalls.
 
-## Background Knowledge Map: Practical Optimizer Engineering
+## Key ideas: Practical Optimizer Engineering
 
 - **From-Scratch Verification**: Coding Momentum, NAG, AdaGrad, RMSprop, and Adam in NumPy and confirming identical trajectories against `torch.optim`.
 - **Comparative Benchmarking**: Testing convergence speed, oscillation damping, and generalization across both convex/non-convex 2D surfaces and neural classification tasks.
 - **Production Recipes**: Combining `AdamW` (for Transformers/NLP) or `SGD + Momentum` (for classic CNNs) with warmup, cosine decay, and gradient clipping.
 
-### Step-by-Step Worked Example (Read Slowly): Computing Cosine Annealing Learning Rate at Quarter Milestones
+### Worked example: Computing Cosine Annealing Learning Rate at Quarter Milestones
 
 For `CosineAnnealingLR` decaying from $$\eta_{\max} = 10^{-3}$$ to $$\eta_{\min} = 0$$ over $$T_{\max} = 100$$ epochs:
 $$\eta(t) = \eta_{\min} + \frac{1}{2}(\eta_{\max} - \eta_{\min})\left(1 + \cos\!\left(\frac{\pi t}{T_{\max}}\right)\right).$$

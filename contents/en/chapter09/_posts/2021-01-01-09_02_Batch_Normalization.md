@@ -11,13 +11,13 @@ categories:
 
 Few ideas in deep learning delivered a bigger immediate payoff than normalizing intermediate layer activations. In just two lines of math—standardize, then scale and shift—Batch Normalization tamed gradient explosion, accelerated convergence by $$5\times\text{–}10\times$$, and unlocked deep architectures like ResNet. This module hub connects the exact train/eval mechanics of BatchNorm with its placement rules and batch-independent successors (LayerNorm, InstanceNorm, GroupNorm).
 
-## Background Knowledge Map: Batch Normalization & Its Family Tree
+## Key ideas: Batch Normalization & Its Family Tree
 
 - **Exact Forward/Eval Mechanics**: Computing mini-batch mean/variance during training, updating EMA running statistics, and freezing them at `model.eval()`.
 - **Architectural Placement & `bias=False`**: Understanding Conv–BN–ReLU ordering and why preceding conv biases are mathematically redundant.
 - **Choosing the Right Normalizer**: Matching BatchNorm (large-batch CNNs), GroupNorm (small-batch vision), InstanceNorm (style transfer), and LayerNorm/RMSNorm (Transformers).
 
-### Step-by-Step Worked Example (Read Slowly): Verifying Why Conv Bias Cancels Out Before BatchNorm
+### Worked example: Verifying Why Conv Bias Cancels Out Before BatchNorm
 
 Suppose a convolutional channel outputs $$z_i = u_i + b$$ across a batch $$i = 1 \dots m$$, where $$b$$ is a constant scalar bias added to every sample in that channel.
 

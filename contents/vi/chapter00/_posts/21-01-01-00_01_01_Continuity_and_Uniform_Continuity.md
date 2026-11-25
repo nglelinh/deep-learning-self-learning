@@ -11,7 +11,7 @@ categories:
 
 Tưởng tượng bạn đang tinh chỉnh núm vặn âm lượng: chỉ xoay nhẹ 1 milimet mà loa bất ngờ rú lên gấp nghìn lần, bạn sẽ không bao giờ chỉnh được mức nghe vừa ý. Trong Deep Learning, mạng nơ-ron gặp đúng thảm họa đó nếu hàm mất mát hay các tầng biến đổi thiếu **tính liên tục**, **liên tục đều**, và đặc biệt là **tính liên tục Lipschitz**—khái niệm từng cứu sống kiến trúc Wasserstein GAN (WGAN) khỏi cảnh bất ổn định nổi tiếng. Bài học này sẽ bóc tách ba tầng "độ mượt" ngày càng chặt chẽ của hàm số để bạn nhìn rõ chúng bảo vệ quá trình huấn luyện như thế nào.
 
-## Bản đồ kiến thức nền: Ba cấp độ mượt của hàm số trong tối ưu hóa
+## Kiến thức cần nhớ: Ba cấp độ mượt của hàm số trong tối ưu hóa
 
 1. **Liên tục tại điểm và trên miền (Pointwise Continuity)**:
    Đảm bảo hàm không bị đứt gãy đột ngột; tuy nhiên bán kính an toàn $$\delta$$ có thể phải thu nhỏ vô hạn khi đi tới vùng hàm dốc đứng.
@@ -25,7 +25,7 @@ Tưởng tượng bạn đang tinh chỉnh núm vặn âm lượng: chỉ xoay n
 4. **Vai trò trong Deep Learning hiện đại**:
    Các kỹ thuật như Spectral Normalization, Gradient Clipping hay Weight Decay đều xoay quanh mục tiêu kiểm soát hằng số Lipschitz của mạng để chống bùng nổ gradient và tăng khả năng chống nhiễu đối kháng (*adversarial robustness*).
 
-### Khung giải thích (nên đọc chậm): So sánh tay $$f(x) = x^2$$ trên $$[0, 2]$$ và trên $$\mathbb{R}$$
+### Giải thích: So sánh tay $$f(x) = x^2$$ trên $$[0, 2]$$ và trên $$\mathbb{R}$$
 
 Hãy kiểm tra trực tiếp bằng số vì sao $$f(x) = x^2$$ là Lipschitz trên đoạn đóng $$[0, 2]$$ nhưng **không** liên tục đều trên toàn trục thực $$\mathbb{R}$$:
 

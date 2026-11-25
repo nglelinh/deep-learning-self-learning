@@ -11,7 +11,7 @@ categories:
 
 Làm sao một mạng chỉ gồm các phép cộng, nhân và cắt bỏ số âm (ReLU) lại có thể vẽ ra ranh giới uốn lượn mềm mại bao quanh một đám mây dữ liệu hình xoắn ốc, hay nhận ra hàng nghìn giống loài khác nhau? Bí mật nằm ở **hình học gấp không gian** (*space folding*) của mạng nhiều tầng (MLP): mỗi tầng ẩn ReLU thực chất đang gấp tờ giấy không gian đầu vào lại một lần, khiến những điểm từng nằm đan xen nhau bỗng tách hẳn sang hai phía của một đường thẳng! Bài học này xây dựng lý thuyết kiến trúc mạng nơ-ron, giải quyết triệt để bài toán XOR và lý giải hình học đằng sau từng lớp ẩn.
 
-## Bản đồ kiến thức nền: Bốn trụ cột Lý thuyết Kiến trúc Mạng Nơ-ron
+## Kiến thức cần nhớ: Bốn trụ cột Lý thuyết Kiến trúc Mạng Nơ-ron
 
 1. **Phân rã Bài toán bằng Lớp ẩn (Hidden Representation)**:
    Thay vì cố phân tách dữ liệu ngay ở không gian gốc, lớp ẩn tạo ra hệ tọa độ mới $$\mathbf{h} = \phi(\mathbf{W}^{(1)}\mathbf{x} + \mathbf{b}^{(1)})$$ nơi bài toán phi tuyến (như XOR) biến thành khả tách tuyến tính.
@@ -25,7 +25,7 @@ Làm sao một mạng chỉ gồm các phép cộng, nhân và cắt bỏ số �
 4. **Dung lượng Mô hình (Model Capacity) và Thiên kiến Quy nạp (Inductive Bias)**:
    Kiến trúc quy định họ hàm mà mạng có thể biểu diễn dễ dàng nhất: MLP giả định mọi đầu vào bình đẳng, còn CNN hay Transformer cài sẵn thiên kiến về cấu trúc không gian và quan hệ ngữ cảnh.
 
-### Khung giải thích (nên đọc chậm): Tự tay giải bài toán XOR bằng một mạng MLP đúng 2 nơ-ron ẩn ReLU
+### Giải thích: Tự tay giải bài toán XOR bằng một mạng MLP đúng 2 nơ-ron ẩn ReLU
 
 Ta xây dựng mạng 2–2–1 biến đổi 4 điểm XOR $$(x_1, x_2)$$ qua 2 nơ-ron ẩn ReLU:
 $$h_1 = \max(0,\; x_1 + x_2 - 0.5), \quad h_2 = \max(0,\; x_1 + x_2 - 1.5), \quad \hat{y} = h_1 - 2h_2.$$

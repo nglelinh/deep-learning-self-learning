@@ -12,14 +12,14 @@ lesson_type: optional
 
 Senior LLM engineering interviews test whether you can reason across the full stack on a whiteboard without hand-waving: when to prompt vs. RAG vs. fine-tune, why you should check quantization and speculative decoding *before* launching a costly distillation run, how to derive the softmax head gradient in two lines, and how to count every parameter and KV-cache byte of a modern decoder block from scratch.
 
-## Background Knowledge Map: Full-Stack LLM Interview Readiness
+## Key ideas: Full-Stack LLM Interview Readiness
 
 - **Pillar 1 — Build-vs-Retrieve-vs-Adapt Decision Tree**: Separates knowledge injection (RAG), style/format adaptation (prompting / LoRA SFT), and preference/reasoning shaping (DPO / GRPO).
 - **Pillar 2 — Serving & Compression Triage**: Evaluates latency and VRAM bottlenecks quantitatively—choosing quantization, prefix caching, or speculative decoding before retraining a student model.
 - **Pillar 3 — Core Math Derivations on Demand**: Fluently derives $\partial\mathcal{L}/\partial z = p - t$, temperature-scaled KD gradients, and attention FLOP / KV-cache scaling formulas.
 - **Pillar 4 — Architecture Accounting**: Identifies RMSNorm, RoPE, SwiGLU, and GQA in modern checkpoints and verifies parameter counts and memory budgets on the spot.
 
-### Step-by-Step Worked Example (Read Slowly): Solving an Interview Triage Prompt — RAG vs. Fine-Tune Latency & Cost
+### Worked example: Solving an Interview Triage Prompt — RAG vs. Fine-Tune Latency & Cost
 
 An interviewer asks: *"Our 10,000-document internal policy corpus changes every week. Should we LoRA fine-tune our 8B model weekly or use RAG with a 500-token retrieved context?"* Let us quantify both sides:
 

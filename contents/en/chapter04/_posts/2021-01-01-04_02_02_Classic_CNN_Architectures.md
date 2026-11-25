@@ -11,14 +11,14 @@ categories:
 
 Reading the history of CNN architectures from 1998 to 2015 is like watching aviation evolve from the Wright Flyer to a commercial jetliner in under two decades. Each landmark paper—LeNet-5, AlexNet, VGGNet, and ResNet—did not merely add more layers; each diagnosed a concrete mathematical bottleneck (saturating activations, bloated FC heads, oversized kernels, or optimization degradation) and invented a reusable architectural principle that still shapes Vision Transformers and ConvNeXt today.
 
-## Background Knowledge Map: The Evolutionary Arc of Landmark CNNs
+## Key ideas: The Evolutionary Arc of Landmark CNNs
 
 - **LeNet-5 (1998)**: Established the canonical `Conv -> Pool -> Conv -> Pool -> FC` blueprint and proved end-to-end backpropagation on raw pixels could beat hand-crafted digit features.
 - **AlexNet (2012)**: Proved GPU-accelerated deep CNNs with ReLU, Dropout, and data augmentation could scale to million-image datasets (ImageNet).
 - **VGGNet (2014)**: Replaced heterogeneous kernel sizes with clean, modular stacks of $$3 \times 3$$ filters, proving depth and architectural regularity drive representation power.
 - **ResNet (2015)**: Introduced identity skip connections ($$x + F(x)$$) and $$1\times 1$$ bottlenecks, solving deep optimization degradation and enabling 50–152+ layer networks.
 
-### Step-by-Step Worked Example (Read Slowly): Efficiency Leap Across Four Generations
+### Worked example: Efficiency Leap Across Four Generations
 
 Compare how efficiently each landmark architecture turns parameters into ImageNet accuracy (approximate canonical published figures):
 

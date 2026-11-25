@@ -11,14 +11,14 @@ categories:
 
 Nếu bạn đặt sơ đồ Transformer gốc năm 2017 cạnh mã nguồn của Llama 3, Qwen 2.5 hay Gemma 2, bạn sẽ nhận ra gần như mọi khối bên trong đều đã được nâng cấp tinh vi: `LayerNorm` đổi thành **RMSNorm**, `ReLU FFN` đổi thành **SwiGLU**, mã hóa vị trí cộng đổi thành phép quay **RoPE**, còn Multi-Head Attention đổi thành **GQA**! Bài học khép lại toàn bộ khóa học này biến bạn thành một "kế toán trưởng" kiến trúc LLM: hiểu sâu từng mảnh ghép hiện đại và tự tay hạch toán chính xác từng tham số, từng byte VRAM và từng phép tính FLOPs.
 
-## Bản đồ kiến thức nền: Bốn nâng cấp nội tại của khối Decoder LLM hiện đại
+## Kiến thức cần nhớ: Bốn nâng cấp nội tại của khối Decoder LLM hiện đại
 
 - **RMSNorm (Root Mean Square Normalization):** Bỏ phép trừ trung bình của LayerNorm, chỉ chuẩn hóa theo căn trung bình bình phương $$\text{RMS}(\mathbf{x}) = \sqrt{\frac{1}{d}\sum x_i^2 + \epsilon}$$, giữ nguyên độ ổn định Pre-Norm mà giảm chi phí đọc/ghi bộ nhớ.
 - **FFN SwiGLU (Gated Linear Unit với SiLU):** Dùng 3 ma trận chiếu $$(W_{\text{gate}}, W_{\text{up}}, W_{\text{down}})$$ với kích thước ẩn $$d_{ff} \approx \frac{8}{3}d$$ để giữ nguyên tổng tham số như FFN chuẩn $$4d$$ nhưng tăng mạnh khả năng biểu diễn phi tuyến.
 - **RoPE (Rotary Position Embedding):** Xoay từng cặp chiều $$(2i, 2i+1)$$ của Query và Key một góc $$m\theta_i$$ theo vị trí $$m$$, khiến tích vô hướng $$Q_m \cdot K_n$$ tự động chỉ phụ thuộc vào **khoảng cách tương đối** $$(m - n)$$.
 - **Grouped-Query Attention (GQA) và Sổ sách chi phí:** Chia sẻ $$n_{\text{kv}}$$ đầu Key/Value cho $$n_q$$ đầu Query (tỷ lệ nhóm $$G = n_q / n_{\text{kv}}$$), cắt giảm tuyến tính kích thước KV Cache lẫn trọng số $$W_K, W_V$$.
 
-### Khung giải thích (nên đọc chậm): Tính tay một bước RMSNorm 2D và phép quay vị trí tương đối RoPE
+### Giải thích: Tính tay một bước RMSNorm 2D và phép quay vị trí tương đối RoPE
 
 **Phần A — Tính tay RMSNorm** cho vector đầu vào $$\mathbf{x} = [3{,}0,\; 4{,}0]$$ với trọng số scale $$\boldsymbol{\gamma} = [1{,}0,\; 1{,}0]$$ ($$\epsilon \approx 0$$):
 1. Căn trung bình bình phương: $$\text{RMS}(\mathbf{x}) = \sqrt{\frac{3^2 + 4^2}{2}} = \sqrt{\frac{25}{2}} = \sqrt{12{,}5} \approx 3{,}5355$$.

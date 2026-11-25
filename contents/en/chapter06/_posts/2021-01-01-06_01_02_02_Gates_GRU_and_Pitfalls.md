@@ -11,14 +11,14 @@ categories:
 
 Opening the hood of a trained LSTM on a noisy memory sequence—like `[5, noise, noise, ..., 3]`—lets you literally watch the gates think: the input gate spikes open on step 0 to store `5`, slams shut across every noisy middle step while the forget gate holds near `1.0` to protect the stored number, and finally opens the output gate at the end. Comparing that behavior side-by-side against a **GRU** clarifies when the GRU's leaner 3-gate design matches LSTM accuracy at $$25\%$$ lower cost, and when LSTM's decoupled cell state still wins.
 
-## Background Knowledge Map: Gate Diagnostics, GRU Trade-offs, and Practical Pitfalls
+## Key ideas: Gate Diagnostics, GRU Trade-offs, and Practical Pitfalls
 
 - **Interpretable Gate Trajectories**: Plotting $$f_t, i_t, o_t$$ over time exposes silent failure modes immediately—for instance, a saturated forget gate stuck near $$0.0$$ means the LSTM has collapsed into a memoryless feedforward network.
 - **LSTM vs. GRU Expressivity**: Because a GRU ties memory retention and new-input writing via $$(1 - z_t) h_{t-1} + z_t \tilde{h}_t$$, it cannot simultaneously keep $$100\%$$ of old memory *and* add a large new value; an LSTM can ($$f_t \approx 1, i_t \approx 1$$), giving LSTMs an edge on strict counting tasks (Weiss et al., 2018).
 - **Recurrent Dropout Pitfall**: Applying standard naive dropout directly to the recurrent hidden-to-hidden transition corrupts memory across time steps; **variational dropout** (Gal & Ghahramani, 2016) fixes this by using the *same* dropout mask at every time step of a sequence, while PyTorch's `dropout` argument applies only between stacked layers.
 - **Padding & `pack_padded_sequence`**: Feeding zero-padded variable-length sequences without packing wastes compute and pollutes the final hidden state with dozens of trailing zero updates.
 
-### Step-by-Step Worked Example (Read Slowly): One Scalar GRU Step vs. Parameter Savings Over LSTM
+### Worked example: One Scalar GRU Step vs. Parameter Savings Over LSTM
 
 Let a scalar GRU have previous state $$h_{t-1} = 2.0$$, input $$x_t = -1.0$$, update gate $$z_t = \sigma(-1.5) \approx 0.1824$$, reset gate $$r_t = \sigma(0.5) \approx 0.6225$$, and candidate $$\tilde{h}_t = \tanh(0.5(r_t h_{t-1}) + x_t)$$.
 

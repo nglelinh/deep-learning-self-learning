@@ -11,14 +11,14 @@ categories:
 
 > *Imagine staring at a modern 70-billion-parameter language model generating fluent code and wondering whether deep learning is software engineering or applied mathematics. Underneath PyTorch's clean abstractions, every single forward pass, loss spike, and gradient update is governed by four classical pillars of mathematics working in concert—and the moment a model diverges at step 4,000, it is those four pillars that tell you why.*
 
-## Background Knowledge Map: The Mathematical Architecture of Deep Learning
+## Key ideas: The Mathematical Architecture of Deep Learning
 
 1. **Multivariable Calculus (The Engine of Credit Assignment)**: Measures how infinitesimal perturbations to millions of weights alter a scalar loss, providing the chain rule and local curvature estimates that make gradient-based optimization possible.
 2. **Linear Algebra (The Language of Representation)**: Encodes batches of data, layer weights, and attention scores as vectors and matrices, turning neural computation into structured compositions of linear maps and spectral decompositions.
 3. **Real Analysis & Set Theory (The Guarantee of Stability)**: Supplies the topological and metric foundations—compactness, continuity, and Lipschitz bounds—that determine whether a loss minimum exists and whether an iterative optimizer can converge to it.
 4. **Probability & Information Theory (The Bridge to Uncertainty)**: Casts learning as density estimation and risk minimization, explaining why cross-entropy trains classifiers, why weight decay acts as a Gaussian prior, and how generative models sample new data.
 
-### Step-by-Step Worked Example (Read Slowly): Watching All Four Pillars Fire in One Training Step
+### Worked example: Watching All Four Pillars Fire in One Training Step
 
 Suppose we train a tiny one-parameter linear model $$\hat{y} = w x$$ on a single noisy observation $$(x, y) = (2, 5)$$ under Gaussian noise, starting at $$w_0 = 1.0$$ with learning rate $$\eta = 0.1$$.
 

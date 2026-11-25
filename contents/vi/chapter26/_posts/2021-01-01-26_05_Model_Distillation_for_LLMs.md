@@ -11,14 +11,14 @@ categories:
 
 Ở Chương 23, chưng cất tri thức (Knowledge Distillation) trông rất gọn gàng: chỉ cần lấy toàn bộ vector logit của mô hình thầy chia nhiệt độ $$T$$ rồi dạy mô hình học sinh. Nhưng bước sang thế giới LLM, công thức đó lập tức vấp phải ba bức tường thực tế: từ điển thầy–trò có thể khác nhau, ma trận logit cho chuỗi 4.096 token với từ điển 128.000 từ nặng hàng gigabyte, và nhiều mô hình thầy mạnh nhất chỉ mở qua API "hộp đen"! Bài học này giải mã ba trường phái chưng cất LLM hiện đại.
 
-## Bản đồ kiến thức nền: Bốn trụ cột của Chưng cất Mô hình cho LLM
+## Kiến thức cần nhớ: Bốn trụ cột của Chưng cất Mô hình cho LLM
 
 - **Ôn lại KD cổ điển và điểm nghẽn trên LLM:** Khi $$|V| = 128{,}000$$, việc lưu và truyền phân phối Softmax đầy đủ trên mỗi token trở nên quá đắt đỏ, chưa kể bài toán lệch bộ tách từ (*tokenizer mismatch*).
 - **Nhóm 1 — Chưng cất hộp đen qua dữ liệu tổng hợp (Sequence-Level / CoT Distillation):** Dùng mô hình thầy sinh lời giải kèm chuỗi tư duy chi tiết, lọc chất lượng bằng bộ kiểm chứng (verifier), rồi huấn luyện SFT cho học sinh.
 - **Nhóm 2 — Chưng cất hộp trắng cấp Logit (Forward KL, Reverse KL, Skew KL):** Chỉ dùng Top-$$k$$ logit hoặc đảo chiều phân kỳ KL (Reverse KL tập trung vào mode chính thay vì trải phẳng *mode-covering* như Forward KL).
 - **Nhóm 3 — Chưng cất On-Policy (GKD / MiniLLM):** Để chính mô hình học sinh tự sinh chuỗi rồi nhờ thầy chấm logit ngay trên quỹ đạo đó, khắc phục triệt để lệch phân phối (*exposure bias*) lúc suy luận.
 
-### Khung giải thích (nên đọc chậm): Tính dung lượng lưu trữ ma trận Logit đầy đủ vs. Top-$$k$$ và so sánh Forward KL vs. Reverse KL
+### Giải thích: Tính dung lượng lưu trữ ma trận Logit đầy đủ vs. Top-$$k$$ và so sánh Forward KL vs. Reverse KL
 
 **Phần A — Vì sao không thể lưu toàn bộ Logit của LLM?**
 Xét chỉ **1 chuỗi** dài $$L = 4{,}096$$ token với từ điển $$|V| = 128{,}000$$ lưu ở FP16 ($$2\text{ byte/số}$$):

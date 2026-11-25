@@ -12,7 +12,7 @@ lesson_type: optional
 
 Suốt gần một thập kỷ, AdamW gần như không có đối thủ trong việc huấn luyện các mô hình nền tảng quy mô lớn — nhưng chi phí bộ nhớ khổng lồ của nó (lưu 2 bản sao trạng thái FP32 cho hàng trăm tỷ tham số) và khát vọng rút ngắn hàng triệu giờ GPU đã thúc đẩy một làn sóng bộ tối ưu mới đầy ấn tượng giai đoạn 2023–2025: từ **Lion** (do AI tự tiến hóa tìm ra!), **Sophia** (tận dụng thông tin bậc hai Hessian), cho tới **Muon** (tối ưu hóa trực giao hóa ma trận theo phổ giá trị kỳ dị).
 
-## Bản đồ kiến thức nền: Bốn đột phá Bộ tối ưu giai đoạn 2023–2025
+## Kiến thức cần nhớ: Bốn đột phá Bộ tối ưu giai đoạn 2023–2025
 
 1. **Lion (EvoLved Sign Momentum, Google Brain 2023)**:
    Được tìm ra bằng thuật toán tìm kiếm tiến hóa chương trình! Lion bỏ hoàn toàn moment bậc 2 $$v_t$$ (tiết kiệm ngay **50% bộ nhớ trạng thái optimizer** so với AdamW) và cập nhật tham số chỉ bằng **dấu** `sign(...)` của tổ hợp quán tính — nên mọi tham số có độ lớn bước nhảy đồng đều tuyệt đối.
@@ -23,7 +23,7 @@ Suốt gần một thập kỷ, AdamW gần như không có đối thủ trong v
 4. **Kỹ thuật tiết kiệm bộ nhớ hệ thống (8-bit AdamW, Adafactor, GaLore)**:
    Lượng tử hóa trạng thái optimizer xuống 8-bit (`bitsandbytes`) hoặc chiếu gradient xuống không gian con hạng thấp (GaLore) giúp tinh chỉnh mô hình 7B–70B ngay trên một GPU tiêu dùng.
 
-### Khung giải thích (nên đọc chậm): Tính tay bước cập nhật bằng dấu của Lion và so sánh bộ nhớ trạng thái với AdamW
+### Giải thích: Tính tay bước cập nhật bằng dấu của Lion và so sánh bộ nhớ trạng thái với AdamW
 
 **Phần A — Một bước cập nhật của Lion** (cho $$w = 1{,}0, \; m_0 = 0{,}5, \; g_1 = -2{,}0, \; \beta_1 = 0{,}9, \; \beta_2 = 0{,}99, \; \eta = 0{,}01, \; \lambda = 0{,}1$$):
 1. Tính hướng cập nhật tạm (nội suy bằng $$\beta_1$$):

@@ -12,7 +12,7 @@ lesson_type: optional
 
 Trong các buổi phỏng vấn kỹ sư AI, chủ đề **quá khớp (overfitting) và chính quy hóa** là phép thử nhanh nhất để phân biệt người chỉ biết gọi thư viện với người thực sự hiểu toán học huấn luyện. Chỉ cần một câu hỏi như *"Tại sao phạt $$L_1$$ tạo ra trọng số bằng đúng 0 còn $$L_2$$ thì không?"* hay *"Điều gì xảy ra nếu bạn quên `model.eval()` trên mạng có cả Dropout và BatchNorm?"*, người phỏng vấn sẽ đánh giá ngay độ sâu tư duy của bạn.
 
-## Bản đồ kiến thức nền: Bốn nhóm câu hỏi phỏng vấn kinh điển về Chính quy hóa
+## Kiến thức cần nhớ: Bốn nhóm câu hỏi phỏng vấn kinh điển về Chính quy hóa
 
 1. **Chẩn đoán đường cong học tập (Learning Curves)**:
    Phân biệt rõ *overfitting* (train loss giảm sâu, val loss quay đầu tăng), *underfitting* (cả hai đều cao) và *data leakage/distribution shift*, cùng thứ tự ưu tiên xử lý (thêm dữ liệu/augmentation $$\to$$ giảm độ phức tạp/tăng regularization $$\to$$ chỉnh early stopping).
@@ -23,7 +23,7 @@ Trong các buổi phỏng vấn kỹ sư AI, chủ đề **quá khớp (overfitt
 4. **Data Augmentation và Implicit Regularization**:
    Giải thích vì sao cắt xoay ảnh, Mixup, hay ngay cả nhiễu ngẫu nhiên của Mini-batch SGD cũng đóng vai trò chính quy hóa mạnh mẽ bằng cách ép mô hình bất biến theo phép biến đổi và tìm vùng cực tiểu phẳng.
 
-### Khung giải thích (nên đọc chậm): So sánh bằng số bước co trọng số của $$L_1$$ và $$L_2$$ khi trọng số đã nhỏ ($$w = 0{,}05$$)
+### Giải thích: So sánh bằng số bước co trọng số của $$L_1$$ và $$L_2$$ khi trọng số đã nhỏ ($$w = 0{,}05$$)
 
 Giả sử đạo hàm từ dữ liệu bằng $$0$$ (trọng số này không giúp giảm loss), ta xét lực kéo về 0 của $$L_1$$ và $$L_2$$ với cùng $$\lambda = 0{,}1$$ và $$\eta = 0{,}5$$ tại $$w = 0{,}05$$:
 

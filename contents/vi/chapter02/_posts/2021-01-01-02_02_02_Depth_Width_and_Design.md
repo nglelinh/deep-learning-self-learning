@@ -11,7 +11,7 @@ categories:
 
 Nếu Định lý Xấp xỉ Phổ quát khẳng định chỉ **một tầng ẩn duy nhất** là đủ để xấp xỉ mọi hàm liên tục, vậy tại sao các kiến trúc hiện đại như ResNet hay Llama lại chồng tới 50, 100 thậm chí hơn 100 tầng sâu? Khoảng cách giữa *"tồn tại trên lý thuyết"* và *"học được thực tế với chi phí hữu hạn"* chính là bí mật của nghệ thuật thiết kế kiến trúc. Bài học này phân tích sâu sự đánh đổi giữa **độ sâu** (*depth*) và **độ rộng** (*width*), giới thiệu các mẫu thiết kế kinh điển như thắt cổ chai (*bottleneck*), hình phễu (*pyramid*) và kết nối tắt (*skip connections*).
 
-## Bản đồ kiến thức nền: Bốn nguyên lý Thiết kế Độ sâu, Độ rộng và Mẫu Kiến trúc
+## Kiến thức cần nhớ: Bốn nguyên lý Thiết kế Độ sâu, Độ rộng và Mẫu Kiến trúc
 
 1. **Định lý Xấp xỉ Phổ quát vs. Hiệu quả Độ sâu (Expressivity vs. Efficiency)**:
    Mạng 1 tầng ẩn có thể cần số nơ-ron cỡ $$O(2^d)$$ để biểu diễn một hàm có cấu trúc phân cấp, trong khi mạng sâu chỉ cần $$O(d)$$ nơ-ron nhờ tính hợp hàm lặp lại.
@@ -27,7 +27,7 @@ Nếu Định lý Xấp xỉ Phổ quát khẳng định chỉ **một tầng �
 4. **Quy tắc Thực chiến khi Chọn Kích thước Mạng**:
    Bắt đầu từ kiến trúc gọn, kiểm chứng khả năng overfit dữ liệu huấn luyện trước, sau đó mới mở rộng độ sâu/độ rộng kết hợp Regularization và Normalization.
 
-### Khung giải thích (nên đọc chậm): Tính tay mức tiết kiệm FLOPs của khối Bottleneck so với khối Phẳng
+### Giải thích: Tính tay mức tiết kiệm FLOPs của khối Bottleneck so với khối Phẳng
 
 Giả sử bạn cần xử lý một vector đặc trưng 256 chiều đi qua hai lớp liên tiếp và trả về 256 chiều:
 

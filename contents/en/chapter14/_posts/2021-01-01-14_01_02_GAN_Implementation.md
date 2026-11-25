@@ -11,14 +11,14 @@ categories:
 
 Coding a Deep Convolutional GAN (DCGAN) teaches you more about gradient hygiene than almost any other PyTorch exercise. Forget `.detach()` on `fake_images` when updating the discriminator and you waste compute backpropagating through the generator twice; use standard ReLU in the discriminator and dead neurons choke gradient flow back to $G$; set Adam's $\beta_1 = 0.9$ instead of $0.5$ and momentum overshoots the moving Nash equilibrium into wild oscillations.
 
-## Background Knowledge Map: Engineering DCGANs in PyTorch
+## Key ideas: Engineering DCGANs in PyTorch
 
 - **Pillar 1 — DCGAN Architectural Stabilizers**: Replaces pooling with strided convolutions (`D`) and transposed convolutions (`G`), applies `BatchNorm2d` (except `D`'s input and `G`'s output), and uses `LeakyReLU(0.2)` in `D` to keep negative gradients alive.
 - **Pillar 2 — Detaching & Alternating Optimizer Steps**: Separates discriminator updates (`fake.detach()`) from generator updates (`D(fake)` with `G` gradients active and `D` weights frozen/unstepped), preventing accidental graph corruption.
 - **Pillar 3 — Non-Saturating Loss & Label Smoothing**: Trains `G` with `BCEWithLogitsLoss(D(fake), ones)` and optionally smooths real labels to $0.9$ to keep `D` from becoming overconfident and starving `G` of gradients.
 - **Pillar 4 — Reduced Momentum ($\beta_1 = 0.5$) & Monitoring**: Lowers Adam's first-moment decay from $0.9$ to $0.5$ so optimizers adapt rapidly to a non-stationary opponent, while tracking `D(real)` and `D(fake)` probabilities every epoch.
 
-### Step-by-Step Worked Example (Read Slowly): Tracing One Discriminator & Generator Update Step on Logits
+### Worked example: Tracing One Discriminator & Generator Update Step on Logits
 
 Suppose for a mini-batch of 2 real and 2 fake images, the discriminator outputs raw logits $s_{\text{real}} = [2.0, 0.0]$ and $s_{\text{fake}} = [-2.0, 0.0]$. Using $\sigma(2) \approx 0.8808$, $\sigma(0) = 0.5$, $\sigma(-2) \approx 0.1192$:
 

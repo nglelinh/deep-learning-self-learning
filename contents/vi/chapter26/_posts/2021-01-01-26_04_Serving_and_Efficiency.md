@@ -11,14 +11,14 @@ categories:
 
 Tại sao khi bạn gửi một văn bản dài 2.000 từ cho LLM, nó chỉ mất chưa đầy 1 giây để "đọc" hết toàn bộ văn bản đó, nhưng sau đó lại phải mất tới 5 giây chỉ để "viết" ra 200 từ trả lời? Bí mật nằm ở hai pha vật lý hoàn toàn trái ngược nhau trên GPU: **Prefill** (nghẽn tính toán — compute-bound, chạy song song toàn bộ prompt) và **Decode** (nghẽn băng thông bộ nhớ — memory-bandwidth-bound, sinh từng token một). Bài học này mở khóa toàn bộ nghệ thuật phục vụ LLM tốc độ cao.
 
-## Bản đồ kiến thức nền: Bốn trụ cột của Phục vụ và Hiệu năng suy luận LLM
+## Kiến thức cần nhớ: Bốn trụ cột của Phục vụ và Hiệu năng suy luận LLM
 
 - **Hai pha Prefill vs. Decode và hai thước đo TTFT / TPOT:** Tách biệt *Time-To-First-Token* (độ trễ pha Prefill) với *Time-Per-Output-Token* (tốc độ sinh từng token ở pha Decode) để chẩn đoán đúng nút cổ chai phần cứng.
 - **KV Cache, PagedAttention và Continuous Batching:** Tái sử dụng vector Key/Value của các token cũ tránh tính lại bậc hai, quản lý VRAM không phân mảnh theo trang (kiểu hệ điều hành), và chèn/nhả yêu cầu ở cấp độ từng token.
 - **Chiến lược giải mã lấy mẫu (Temperature, Top-$$k$$, Top-$$p$$ Nucleus):** Kiểm soát trực tiếp sự đánh đổi giữa tính xác định chính xác (code, toán) và độ sáng tạo đa dạng (viết lách).
 - **Speculative Decoding và Disaggregated Serving:** Dùng mô hình nháp kiểm định song song nhiều token một lượt để bẻ gãy nút cổ chai băng thông của pha Decode.
 
-### Khung giải thích (nên đọc chậm): Tính tay tác động của Nhiệt độ $$T$$ và lọc Top-$$p$$ (Nucleus Sampling) lên phân phối token
+### Giải thích: Tính tay tác động của Nhiệt độ $$T$$ và lọc Top-$$p$$ (Nucleus Sampling) lên phân phối token
 
 Giả sử tại bước sinh hiện tại, 4 token ứng viên có logit là $$\mathbf{z} = [4{,}0,\; 3{,}0,\; 2{,}0,\; 1{,}0]$$.
 

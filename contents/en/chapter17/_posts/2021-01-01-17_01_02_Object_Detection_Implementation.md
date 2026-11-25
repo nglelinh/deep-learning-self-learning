@@ -11,14 +11,14 @@ categories:
 
 Implementing a Faster R-CNN training loop in PyTorch feels completely different from image classification: images can have different resolutions, each image carries a variable number of bounding boxes (from 0 to 50+), and `torchvision`'s detection models expect a list of tensors plus a list of dictionaries—returning a *loss dictionary* during `.train()` and a *prediction dictionary* during `.eval()`. Mastering that data contract and collate function eliminates 90% of detection pipeline bugs.
 
-## Background Knowledge Map: Engineering Object Detectors in PyTorch
+## Key ideas: Engineering Object Detectors in PyTorch
 
 - **Pillar 1 — Custom Collate & Ragged Target Dictionaries**: Uses `collate_fn = lambda batch: tuple(zip(*batch))` because standard `DataLoader` stacking crashes when image 1 has 2 boxes and image 2 has 7 boxes.
 - **Pillar 2 — Head Replacement & Background Class Indexing**: Reserves class index `0` strictly for `__background__`, setting `num_classes = K + 1` when swapping `FastRCNNPredictor` on a pretrained backbone.
 - **Pillar 3 — Dual-Mode Forward Contract**: Understands that `model(images, targets)` returns `{'loss_classifier', 'loss_box_reg', 'loss_objectness', 'loss_rpn_box_reg'}` in training mode, while `model(images)` returns `boxes, labels, scores` in eval mode.
 - **Pillar 4 — Confidence Thresholding & NMS Post-Processing**: Filters raw proposals by score threshold and `torchvision.ops.nms` before computing COCO-style mAP or visualizing boxes.
 
-### Step-by-Step Worked Example (Read Slowly): Walking Through Greedy NMS on 3 Overlapping Detections
+### Worked example: Walking Through Greedy NMS on 3 Overlapping Detections
 
 Suppose for class "car," our detector outputs three boxes with confidence scores:
 - Box 1: score $= 0.92$

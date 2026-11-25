@@ -11,14 +11,14 @@ categories:
 
 > *When researchers talk about "adversarial $$\varepsilon$$-balls," "manifold hypotheses," or "flat versus sharp minima," they are speaking the language of point-set topology. Topology strips away coordinates to ask the questions optimization truly cares about: What is a neighborhood? Where is the boundary? And can a sequence escape?*
 
-## Background Knowledge Map: Metric Topology for Optimization & Generalization
+## Key ideas: Metric Topology for Optimization & Generalization
 
 1. **Metric Spaces & Open Balls (Neighborhood Geometry)**: Defines the $$\varepsilon$$-ball $$B_\varepsilon(\mathbf{x}) = \{\mathbf{y} : d(\mathbf{x}, \mathbf{y}) < \varepsilon\}$$, which directly formalizes adversarial threat models ($$L_2$$ and $$L_\infty$$ perturbation balls) and local minima.
 2. **Open vs. Closed Sets & Boundary Points**: Distinguishes interior points (where small gradient steps stay feasible) from boundary points (where constraints like weight clipping or probability simplices activate).
 3. **Compactness (Heine–Borel Theorem)**: In $$\mathbb{R}^d$$, a set is compact if and only if it is closed and bounded—guaranteeing that every continuous loss achieves a global minimum and every bounded sequence has a convergent subsequence.
 4. **Connectedness & Path-Connectedness (Mode Connectivity)**: Explains whether two distinct neural network minima can be joined by a continuous low-loss curve, a cornerstone of modern loss-landscape research.
 
-### Step-by-Step Worked Example (Read Slowly): Comparing $$L_2$$ vs. $$L_\infty$$ Open Balls in Adversarial Perturbations
+### Worked example: Comparing $$L_2$$ vs. $$L_\infty$$ Open Balls in Adversarial Perturbations
 
 Suppose an input image patch has two pixel intensities $$\mathbf{x} = (0.50, 0.50)$$ and an attacker can perturb it to $$\mathbf{y} = (0.58, 0.56)$$ with perturbation $$\boldsymbol{\delta} = \mathbf{y} - \mathbf{x} = (0.08, 0.06)$$. Test whether $$\mathbf{y}$$ lies inside the open ball $$B_{0.1}(\mathbf{x})$$ under the $$L_2$$ and $$L_\infty$$ metrics.
 

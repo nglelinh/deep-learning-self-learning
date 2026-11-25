@@ -12,14 +12,14 @@ lesson_type: optional
 
 > *Walk into a senior ML interview and you will rarely be asked to recite a textbook definition verbatim. Instead, you will be handed an ambiguous failure—a training loss stuck at 2.30, a classifier with 99% accuracy that fails in production, or a latency budget of 15 ms—and asked to reason from first principles.*
 
-## Background Knowledge Map: Structuring Deep Learning Interview Readiness
+## Key ideas: Structuring Deep Learning Interview Readiness
 
 1. **First-Principles Foundations (Chapters 00–05)**: Covers calculus, linear algebra, probability, backprop, initialization, optimization, and regularization—the non-negotiable core tested in almost every ML screen.
 2. **Architecture & Inductive Bias Fluency (Chapters 06–14)**: Connects CNNs, RNNs, Attention, Transformers, and generative models to concrete trade-offs in receptive field, sequence complexity, and memory footprint.
 3. **Diagnostic & Debugging Reasoning**: Translates symptoms (NaN loss, train/val divergence, mode collapse, gradient explosion) directly into mathematical root causes and targeted fixes.
 4. **Closed-Book Derivation vs. System Design Trade-Offs**: Separates timed whiteboard derivations (loss gradients, complexity counts) from open-ended production design (data pipelines, evaluation metrics, serving latency).
 
-### Step-by-Step Worked Example (Read Slowly): Diagnosing a Classic Interview Failure Mode from Two Numbers
+### Worked example: Diagnosing a Classic Interview Failure Mode from Two Numbers
 
 An interviewer tells you: *"We trained a 5-class classifier on 50,000 images. After 10 epochs, training cross-entropy is $$0.02$$, validation cross-entropy is $$1.85$$, and validation accuracy is $$61\%$$. What is happening, and what exact numbers prove it?"*
 

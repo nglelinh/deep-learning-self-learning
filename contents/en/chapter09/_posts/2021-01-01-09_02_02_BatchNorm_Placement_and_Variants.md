@@ -11,14 +11,14 @@ categories:
 
 Batch Normalization conquered ImageNet CNNs trained with batch sizes of 64 to 256—yet the moment you move to high-resolution object detection (batch size 2), style transfer, or variable-length Transformers, normalizing *across the batch axis* breaks down completely: noisy 2-sample variance estimates destabilize training, and padding tokens pollute sequence statistics. That exact limitation gave birth to the normalization family tree—**LayerNorm**, **InstanceNorm**, and **GroupNorm**—each differing solely in *which axes* of the `(N, C, H, W)` tensor are averaged together.
 
-## Background Knowledge Map: The Axis Geometry of Normalization Variants
+## Key ideas: The Axis Geometry of Normalization Variants
 
 - **BatchNorm2d — Normalize Over `(N, H, W)` per Channel `C`**: Computes one mean and variance per channel across the entire mini-batch and spatial grid. Excels on medium/large-batch CNNs; degrades sharply when per-GPU batch size drops below ~8.
 - **LayerNorm — Normalize Over `(C, H, W)` (or `D`) per Sample `N`**: Completely independent of batch size and sequence length, with identical behavior at train and test time—making it (and RMSNorm) the undisputed standard for Transformers and RNNs.
 - **InstanceNorm — Normalize Over `(H, W)` per Sample `N` and Channel `C`**: Strips per-image contrast and color statistics independently for each channel, making it the workhorse of neural style transfer and image-to-image translation.
 - **GroupNorm — Normalize Over `(C/G, H, W)` per Sample `N` and Group `G`**: Splits channels into $$G$$ groups (e.g., $$G = 32$$), interpolating smoothly between LayerNorm ($$G=1$$) and InstanceNorm ($$G=C$$) while remaining 100% batch-size independent for detection/segmentation backbones.
 
-### Step-by-Step Worked Example (Read Slowly): Counting Normalization Groups on a `(N=2, C=6, H=4, W=4)` Tensor
+### Worked example: Counting Normalization Groups on a `(N=2, C=6, H=4, W=4)` Tensor
 
 Consider a 4D feature tensor of shape `(N=2, C=6, H=4, W=4)` (total $$2 \times 6 \times 16 = 192$$ activations). How many `(mean, var)` pairs are computed, and how many elements are averaged in each?
 

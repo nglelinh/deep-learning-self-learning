@@ -12,7 +12,7 @@ lesson_type: optional
 
 Nếu đem sơ đồ khối Transformer gốc năm 2017 đặt cạnh một mô hình ngôn ngữ lớn hiện đại giai đoạn 2024–2026 như **Llama 3**, **Qwen 2.5**, **DeepSeek** hay **Gemma 2**, bạn sẽ thấy bộ khung tổng thể vẫn gần như nguyên vẹn — nhưng gần như **mọi linh kiện bên trong** đều đã được tinh chỉnh sắc bén hơn để huấn luyện ổn định hơn ở quy mô nghìn tỷ token và suy luận nhanh hơn trên phần cứng thực tế.
 
-## Bản đồ kiến thức nền: Bốn nâng cấp tiêu chuẩn của Khối Transformer Hiện đại (2022–2026)
+## Kiến thức cần nhớ: Bốn nâng cấp tiêu chuẩn của Khối Transformer Hiện đại (2022–2026)
 
 1. **RMSNorm + Pre-LN thay cho Post-LN LayerNorm**:
    RMSNorm bỏ bước trừ giá trị trung bình (chỉ chia cho căn trung bình bình phương $$\text{RMS}(x)$$), giảm ~10–15% chi phí tính toán chuẩn hóa mà chất lượng và độ ổn định tương đương LayerNorm.
@@ -23,7 +23,7 @@ Nếu đem sơ đồ khối Transformer gốc năm 2017 đặt cạnh một mô 
 4. **Mixture of Experts (MoE) và Transformer Đa phương thức (Multimodal)**:
    Thay 1 khối FFN đặc bằng nhiều chuyên gia (ví dụ 8–64 experts) nhưng chỉ kích hoạt Top-2 chuyên gia cho mỗi token (như Mixtral, DeepSeek-V3), cho phép mở rộng dung lượng tri thức lên hàng trăm tỷ tham số trong khi chi phí suy luận chỉ bằng mô hình cỡ nhỏ.
 
-### Khung giải thích (nên đọc chậm): Tính tay phép xoay vị trí RoPE 2 chiều để thấy tính bất biến khoảng cách tương đối
+### Giải thích: Tính tay phép xoay vị trí RoPE 2 chiều để thấy tính bất biến khoảng cách tương đối
 
 Xét vector 2D $$\mathbf{q} = [1, 0]^T$$ đặt ở vị trí $$m$$ và $$\mathbf{k} = [1, 0]^T$$ đặt ở vị trí $$n$$, với góc xoay cơ sở $$\theta = 30^\circ$$. Ma trận xoay RoPE ở vị trí $$t$$ là $$R(t\theta) = \begin{bmatrix} \cos t\theta & -\sin t\theta \\ \sin t\theta & \cos t\theta \end{bmatrix}$$:
 

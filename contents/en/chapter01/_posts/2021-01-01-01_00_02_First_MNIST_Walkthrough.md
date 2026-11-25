@@ -11,14 +11,14 @@ categories:
 
 > *MNIST is the "Hello, World!" of deep learning, yet treating it as a black-box copy-paste script hides the most valuable skill in the field: tracking tensor shapes, parameter counts, and memory budgets at every single line of a forward and backward pass.*
 
-## Background Knowledge Map: Anatomy of Your First End-to-End Neural Pipeline
+## Key ideas: Anatomy of Your First End-to-End Neural Pipeline
 
 1. **Tensor Shape Accounting (Input to Logits)**: Tracks exact dimensions—from image batch $$(B, 1, 28, 28)$$ through flattening $$(B, 784)$$ to hidden layers and class logits $$(B, 10)$$—eliminating 90% of beginner runtime bugs.
 2. **Parameter & Capacity Budgeting**: Counts exact weights and biases per `nn.Linear(in, out)` layer as $$(\text{in} \times \text{out}) + \text{out}$$, revealing where memory and overfitting risk concentrate.
 3. **The Four-Step PyTorch Training Loop**: Separates (1) zeroing stale gradients (`zero_grad`), (2) forward pass & loss computation, (3) reverse-mode autodiff (`loss.backward`), and (4) parameter update (`optimizer.step`).
 4. **Evaluation Hygiene (`eval()` & `no_grad()`)**: Switches stochastic layers (Dropout, BatchNorm) to deterministic inference mode and disables autograd graph construction to prevent memory leaks during validation.
 
-### Step-by-Step Worked Example (Read Slowly): Exact Tensor Shapes and Parameter Count for a 3-Layer MNIST MLP
+### Worked example: Exact Tensor Shapes and Parameter Count for a 3-Layer MNIST MLP
 
 Consider the classic MNIST MLP architecture: `784 -> 256 -> 128 -> 10` trained with mini-batch size $$B = 64$$ in `float32` (4 bytes per number).
 

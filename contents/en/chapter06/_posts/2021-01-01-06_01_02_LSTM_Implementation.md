@@ -11,13 +11,13 @@ categories:
 
 Coding gated recurrence cleanly requires moving seamlessly from low-level cell arithmetic to high-level diagnostic analysis. This implementation hub links the two halves of practical LSTM/GRU engineering: building and training the core LSTM cell from scratch (and in `nn.LSTM`), followed by inspecting live gate activations, benchmarking LSTM against GRU, and avoiding recurrent dropout and padding pitfalls.
 
-## Background Knowledge Map: Practical Engineering Checklist for LSTM/GRU
+## Key ideas: Practical Engineering Checklist for LSTM/GRU
 
 - **Cell-Level Verification**: Implementing a manual NumPy LSTM cell with explicit `(f, i, g, o)` gates and verifying its forward/backward outputs against PyTorch's fused kernels.
 - **Synthetic Memory Stress Tests**: Using controlled long-range benchmarks (remember-first-add-last) to verify that forget gates actually stay open across long distractor spans.
 - **Architectural Benchmarking**: Comparing LSTM and GRU on identical datasets while tracking parameter counts, wall-clock speed, and validation stability.
 
-### Step-by-Step Worked Example (Read Slowly): Diagnosing a Padded Batch Bug
+### Worked example: Diagnosing a Padded Batch Bug
 
 Suppose a mini-batch contains two sentences of lengths $$3$$ and $$5$$ padded with zeros to length $$5$$, and you extract `output[:, -1, :]` (the last time step) for classification:
 

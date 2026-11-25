@@ -12,14 +12,14 @@ lesson_type: optional
 
 Suốt gần một thập kỷ, mọi bộ phát hiện đối tượng đều bị trói chặt vào hai thứ: danh sách lớp cố định (ví dụ đúng 80 lớp của COCO) và thuật toán hậu xử lý thủ công NMS. Từ năm 2022 đến 2026, cả hai rào cản đó đồng loạt bị phá vỡ: **RT-DETR** loại bỏ hoàn toàn NMS nhờ khớp hai phía Hungarian, **SAM / SAM 2** cắt tách bất kỳ vật thể nào trong ảnh/video chỉ bằng một cú nhấp chuột, còn **Grounding DINO** tìm vật thể bằng câu mô tả tiếng người tự do!
 
-## Bản đồ kiến thức nền: Ba bước ngoặt của Thị giác Máy tính hiện đại (2022–2026)
+## Kiến thức cần nhớ: Ba bước ngoặt của Thị giác Máy tính hiện đại (2022–2026)
 
 - **Phân đoạn theo Prompt (SAM & SAM 2):** Tách biệt bộ mã hóa ảnh nặng (chạy 1 lần) với bộ giải mã mặt nạ siêu nhẹ nhận prompt điểm/hộp/văn bản; SAM 2 mở rộng thêm bộ nhớ thời gian để theo dõi đối tượng xuyên suốt video.
 - **Bộ phát hiện Transformer thời gian thực (RT-DETR / RF-DETR):** Dùng phép khớp một-một Hungarian lúc huấn luyện nên mỗi truy vấn đối tượng (object query) tạo đúng một dự đoán, bỏ hẳn Anchor Boxes và NMS.
 - **Phát hiện từ vựng mở (Open-Vocabulary Detection — Grounding DINO, YOLO-World):** Trộn chéo đặc trưng ảnh với vector văn bản để phát hiện cả những vật thể chưa từng có trong tập nhãn cố định.
 - **Chuỗi kết hợp Grounding DINO + SAM:** Quy trình tiêu chuẩn công nghiệp cho gắn nhãn tự động (auto-labeling): nhập cụm từ văn bản → Grounding DINO khoanh hộp → SAM cắt chính xác mặt nạ pixel.
 
-### Khung giải thích (nên đọc chậm): Tính tay bài toán khớp một-một Hungarian trong DETR (loại bỏ NMS)
+### Giải thích: Tính tay bài toán khớp một-một Hungarian trong DETR (loại bỏ NMS)
 
 Giả sử ảnh có 2 đối tượng thật ($$y_1$$: `mèo`, $$y_2$$: `chó`) và bộ giải mã DETR tạo ra 3 dự đoán $$(\hat{y}_1, \hat{y}_2, \hat{y}_3)$$. Ma trận chi phí khớp (càng nhỏ càng tốt, gộp sai số lớp + sai số hộp GIoU) với đối tượng 3 là lớp rỗng $$\varnothing$$ (no-object) cho bởi:
 - $$\hat{y}_1$$: chi phí với `mèo` $$= 0{,}2$$, với `chó` $$= 2{,}5$$, với $$\varnothing = 1{,}0$$

@@ -12,14 +12,14 @@ lesson_type: optional
 
 Standard message-passing GNNs are nearsighted: a 2-layer GCN can only see 2 hops away, and trying to route long-range signals through a narrow graph bottleneck causes *over-squashing*. Between 2022 and 2026, geometric deep learning broke that barrier by fusing global Transformer attention with graph structural encodings (GraphGPS) and 3D equivariant diffusion (AlphaFold 3)—predicting joint structures of proteins, DNA, RNA, and small-molecule ligands at atomic precision.
 
-## Background Knowledge Map: Modern Geometric & Graph Deep Learning (2022–2026)
+## Key ideas: Modern Geometric & Graph Deep Learning (2022–2026)
 
 - **Pillar 1 — Graph Transformers & Structural Encodings**: Allows every node to attend globally to every other node while injecting graph topology via Laplacian eigenvectors, random-walk landing probabilities, or shortest-path attention biases (Graphormer, GraphGPS).
 - **Pillar 2 — 3D Equivariance & AlphaFold 3**: Combines Pairformer relational attention with diffusion directly over 3D atomic coordinates, respecting $\text{SE}(3)$ rotations and translations without brittle handcrafted torsion angles.
 - **Pillar 3 — Industrial Heterogeneous Graphs**: Scales GNNs to billion-edge user–item–creator recommendation graphs (PinSage, PyG) using temporal neighbor sampling and multi-relation message passing.
 - **Pillar 4 — Hybrid Local + Global Layers**: Pairs a local MPNN (inductive bias for immediate bonds/edges) with global self-attention (long-range communication) in parallel within every block.
 
-### Step-by-Step Worked Example (Read Slowly): Computing Shortest-Path Attention Bias in a Graph Transformer
+### Worked example: Computing Shortest-Path Attention Bias in a Graph Transformer
 
 Consider a 4-node linear molecule $1 - 2 - 3 - 4$. Suppose raw dot-product attention logits from node 1 to all 4 nodes are equal: $q_1^\top k_j / \sqrt{d} = [1.0, 1.0, 1.0, 1.0]$. A Graphormer layer adds a learned shortest-path bias $b(\text{spd}(1, j))$ where $b(0) = 0.5,\; b(1) = 0.2,\; b(2) = -0.3,\; b(3) = -0.8$.
 

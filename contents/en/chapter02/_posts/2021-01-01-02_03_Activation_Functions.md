@@ -11,14 +11,14 @@ categories:
 
 > *Remove every activation function from a 100-layer neural network and the entire billion-parameter monument collapses mathematically into a single linear regression layer. Activation functions are the sole source of nonlinearity—and simultaneously the primary gatekeepers of gradient flow.*
 
-## Background Knowledge Map: Why Activation Functions Govern Both Expressivity and Trainability
+## Key ideas: Why Activation Functions Govern Both Expressivity and Trainability
 
 1. **Linear Collapse Theorem**: Without nonlinear activations, $$W_L(\dots(W_2(W_1 \mathbf{x}))\dots) = (W_L \cdots W_1)\mathbf{x} = W_{\text{eff}}\mathbf{x}$$, destroying all benefits of depth.
 2. **Derivative Magnitude & Gradient Flow**: Because backprop multiplies by $$g'(z^{[l]})$$ at every layer, activations with $$g'(z) \ll 1$$ (like saturated sigmoid) shrink gradients exponentially to zero across depth.
 3. **Zero-Centered Outputs & Optimization Geometry**: Strictly positive outputs (like sigmoid) force all weight gradients entering a neuron to share the same sign, causing inefficient zig-zagging updates.
 4. **Modern Smooth Gating (GELU, SiLU/Swish, SwiGLU)**: Trades ReLU's sharp corner at zero for smooth, non-monotonic curves that preserve small negative gradients and improve Transformer convergence.
 
-### Step-by-Step Worked Example (Read Slowly): Proving Linear Collapse Numerically on a 2-Layer Network
+### Worked example: Proving Linear Collapse Numerically on a 2-Layer Network
 
 Consider two linear layers with **no activation function**:
 $$W_1 = \begin{bmatrix} 2 & -1 \\ 0 & 3 \end{bmatrix}, \quad W_2 = \begin{bmatrix} 1 & 2 \\ -1 & 1 \end{bmatrix}, \quad \mathbf{x} = \begin{bmatrix} 4 \\ 1 \end{bmatrix}$$

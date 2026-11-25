@@ -11,14 +11,14 @@ categories:
 
 How can a frozen neural network—whose weights $\theta$ do not change by a single bit—learn a brand-new classification task just by reading four examples inside its prompt? In-Context Learning (ICL) works because self-attention conditions every next-token distribution $p_\theta(y \mid x_1, y_1, \dots, x_k, y_k, x_{\text{query}})$ on the entire prefix: the prompt acts as a temporary soft program that selects and composes latent skills already crystallized during pretraining.
 
-## Background Knowledge Map: Mechanics of Prompting & In-Context Learning
+## Key ideas: Mechanics of Prompting & In-Context Learning
 
 - **Pillar 1 — Prefix Conditioning ($p_\theta(x_t \mid x_{<t})$)**: Frames every system prompt, few-shot example, and retrieved document strictly as conditioning context steering the same frozen next-token distribution.
 - **Pillar 2 — Implicit Bayesian Task Selection & Induction Heads**: Explains how few-shot examples narrow posterior uncertainty over *which* latent task concept is active, assisted by induction-head circuits copying patterns across context.
 - **Pillar 3 — Base Pretrained vs. Instruction-Tuned Behavior**: Distinguishes a raw base model (which completes *"Translate to French: hello"* with *"Translate to Spanish: ..."*) from an SFT/chat-tuned model trained on role-delimited assistant turns.
 - **Pillar 4 — Prompt Sensitivity & Structured Verification**: Addresses order sensitivity, label-space bias, and why Chain-of-Thought (CoT) unlocks extra serial computation steps per token before committing to an answer.
 
-### Step-by-Step Worked Example (Read Slowly): How Few-Shot Context Shifts Next-Token Probabilities via Bayes' Rule
+### Worked example: How Few-Shot Context Shifts Next-Token Probabilities via Bayes' Rule
 
 Suppose a pretrained LM implicitly models two equally likely latent tasks ($P(T_{\text{syn}}) = P(T_{\text{ant}}) = 0.5$): Task $T_{\text{syn}}$ outputs synonyms (predicts `"hot -> warm"` with prob $0.8$, `"hot -> cold"` with prob $0.1$) and Task $T_{\text{ant}}$ outputs antonyms (predicts `"hot -> cold"` with prob $0.8$, `"hot -> warm"` with prob $0.1$).
 

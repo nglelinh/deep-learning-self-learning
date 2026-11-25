@@ -12,14 +12,14 @@ lesson_type: optional
 
 For nearly a decade, AdamW sat virtually unchallenged atop deep learning optimization—yet training 100B+ parameter LLMs exposed its two biggest costs: **16 bytes/parameter** of optimizer state memory and purely diagonal (coordinate-wise) preconditioning that ignores matrix structure across weight rows and columns. Between 2023 and 2025, a new wave of optimizers challenged that status quo: **Lion** (discovered via symbolic program search, using sign updates and cutting optimizer memory in half), **Sophia** (lightweight diagonal Hessian clipping), and **Muon** (orthogonalizing 2D weight-matrix momentum updates via Newton–Schulz iterations for dramatically faster LLM pretraining).
 
-## Background Knowledge Map: Beyond AdamW — The 2023–2025 Optimizer Frontier
+## Key ideas: Beyond AdamW — The 2023–2025 Optimizer Frontier
 
 - **Sign-Based Memory Compression (Lion, 2023)**: Replaces Adam's second-moment buffer `v` entirely by taking $$\operatorname{sign}(\beta_1 m_{t-1} + (1 - \beta_1) g_t)$$—halving optimizer memory (only 1 momentum buffer) while requiring ~$$3\times\text{–}10\times$$ smaller learning rates and larger weight decay.
 - **Second-Order Curvature Approximation (Sophia, 2023)**: Periodically estimates the diagonal Hessian $$h_t$$ (via Hutchinson's or Gauss–Newton estimators) and clips the update $$\operatorname{clip}(m_t / \max(h_t, \epsilon), -1, 1)$$, accelerating along flat directions while braking aggressively on sharp curvature.
 - **Matrix-Aware Orthogonalization (Muon, 2024)**: Recognizes that linear-layer weights $$W \in \mathbb{R}^{m \times n}$$ are **matrices**, not unstructured vectors. Applying fast **Newton–Schulz** iterations to the momentum matrix $$M_t$$ approximates its polar factor $$U V^\top$$ (setting all singular values to $$1$$), updating every spectral direction at equal speed!
 - **Hybrid Production Recipes**: Frontier training runs increasingly pair Muon for hidden 2D weight matrices with AdamW for 1D biases, LayerNorm gains, and token embeddings—combining spectral speed with scalar stability.
 
-### Step-by-Step Worked Example (Read Slowly): Why Orthogonalizing a Momentum Matrix (Muon) Rescues Small Singular Directions
+### Worked example: Why Orthogonalizing a Momentum Matrix (Muon) Rescues Small Singular Directions
 
 Suppose a $$2 \times 2$$ weight layer has momentum matrix $$M = \begin{bmatrix} 10 & 0 \\ 0 & 0.1 \end{bmatrix}$$ (singular values $$\sigma_1 = 10, \sigma_2 = 0.1$$ — a $$100:1$$ anisotropy!).
 

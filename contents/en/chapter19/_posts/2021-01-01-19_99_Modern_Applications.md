@@ -12,14 +12,14 @@ lesson_type: optional
 
 Until 2022, building a production speech stack meant wiring together fragile acoustic models, pronunciation lexicons, and language-model decoders tuned separately for each language. OpenAI's Whisper blew up that pipeline by training a single encoder–decoder Transformer on 680,000 hours of weakly supervised multilingual audio—and by 2024–2026, neural audio codecs and full-duplex speech-to-speech models turned spoken conversation into native token-stream modeling.
 
-## Background Knowledge Map: Modern Speech & Audio Stacks (2022–2026)
+## Key ideas: Modern Speech & Audio Stacks (2022–2026)
 
 - **Pillar 1 — Weakly Supervised Multilingual ASR (Whisper)**: Pads/chunks audio into 30-second 80/128-bin log-Mel windows, downsamples $2\times$ via strided convs into 1500 encoder frames, and uses special task tokens (`<|transcribe|>`, `<|translate|>`, timestamps) for multitask decoding.
 - **Pillar 2 — Neural Audio Codecs & Discrete Speech Tokens**: Quantizes continuous speech into semantic + acoustic RVQ token streams (EnCodec, Mimi, DAC) so LLMs can read and speak audio end-to-end without an intermediate text bottleneck.
 - **Pillar 3 — Full-Duplex Speech & Low-Latency Streaming**: Handles simultaneous listening and speaking (interruptions, backchannels) by predicting overlapping user/assistant token streams at fixed frame rates (e.g., 12.5 Hz).
 - **Pillar 4 — Speaker Diarization & Meeting Pipelines**: Combines Voice Activity Detection (VAD), speaker embeddings (`pyannote`), and Whisper ASR to answer *"who spoke what and when?"*
 
-### Step-by-Step Worked Example (Read Slowly): Computing Whisper's Encoder Frame Budget and Real-Time Factor (RTF)
+### Worked example: Computing Whisper's Encoder Frame Budget and Real-Time Factor (RTF)
 
 Whisper processes $30\text{ s}$ of $16\text{ kHz}$ audio using a $10\text{ ms}$ hop length ($3{,}000$ Mel frames) followed by two 1D convolutions where the second has `stride=2`.
 

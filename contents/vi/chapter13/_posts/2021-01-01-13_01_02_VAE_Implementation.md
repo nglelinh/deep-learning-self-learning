@@ -11,14 +11,14 @@ categories:
 
 Chỉ một sai sót nhỏ về tỷ lệ cộng giữa hàm mất mát tái tạo (tính tổng trên $$784$$ pixel) và phân kỳ KL (tính tổng trên $$20$$ chiều ẩn) cũng đủ khiến VAE của bạn hoặc sụp đổ thành cục mờ, hoặc đánh mất hoàn toàn khả năng sinh ảnh mới. Trong bài cài đặt này, ta xây dựng trọn vẹn VAE trên MNIST bằng PyTorch — từ nhánh song song `fc_mu` / `fc_logvar`, hàm `reparameterize`, hàm mất mát ELBO cho đến kỹ thuật KL annealing và vẽ lưới ảnh sinh trong không gian ẩn 2D.
 
-## Bản đồ kiến thức nền: Các thành phần kỹ thuật cốt lõi khi lập trình VAE
+## Kiến thức cần nhớ: Các thành phần kỹ thuật cốt lõi khi lập trình VAE
 
 - **Dự đoán `logvar` thay vì `std`:** Xuất ra $$\log(\sigma^2) \in (-\infty, +\infty)$$ không bị ràng buộc dấu, rồi tính `std = torch.exp(0.5 * logvar)` giúp ổn định số học và tránh đạo hàm nổ.
 - **Cân bằng thang đo `reduction='sum'` trong hàm loss ELBO:** Cộng tổng BCE trên mọi pixel với tổng KL trên mọi chiều ẩn (rồi mới chia cho `batch_size`) — tránh bẫy dùng `reduction='mean'` làm suy yếu hệ số tái tạo đi $$784$$ lần.
 - **Lấy mẫu mới và vẽ lưới đa tạp 2D:** Khi $$d = 2$$, ánh xạ lưới phân vị hàm phân phối chuẩn ngược (PPF) qua bộ giải mã để nhìn thấy toàn bộ bản đồ chuyển dạng mượt mà giữa 10 chữ số.
 - **KL Annealing và $$\beta$$-VAE:** Tăng dần trọng số $$\beta$$ từ $$0 \to 1$$ trong những epoch đầu để tránh posterior collapse, hoặc chọn $$\beta > 1$$ để tách bạch các chiều thuộc tính.
 
-### Khung giải thích (nên đọc chậm): Kiểm tra bẫy `reduction='mean'` vs. `reduction='sum'` trong hàm loss VAE
+### Giải thích: Kiểm tra bẫy `reduction='mean'` vs. `reduction='sum'` trong hàm loss VAE
 
 Xét một ảnh MNIST ($$784$$ pixel) với không gian ẩn $$d = 20$$ chiều. Giả sử tại một bước huấn luyện, lỗi BCE trung bình mỗi pixel là $$0{,}25$$ và phân kỳ KL trung bình mỗi chiều ẩn là $$0{,}50$$.
 

@@ -11,14 +11,14 @@ categories:
 
 > *Should you compute gradients over all 1,000,000 training examples before taking a single step, or update after every single sample? The answer—mini-batch SGD with a carefully scheduled learning rate—sits at the sweet spot between statistical variance, GPU vectorization, and generalization.*
 
-## Background Knowledge Map: GD Variants & Learning-Rate Dynamics
+## Key ideas: GD Variants & Learning-Rate Dynamics
 
 1. **Batch vs. Stochastic vs. Mini-Batch GD**: Trades off gradient variance ($$\propto \sigma^2 / B$$) against update frequency and hardware utilization; mini-batches ($$B = 32$$ to $$4096$$) keep GPUs saturated while preserving helpful gradient noise.
 2. **Linear Scaling Rule & Warmup**: Increasing batch size by $$k\times$$ reduces gradient noise, often allowing a larger learning rate, while initial linear warmup prevents early instability before curvature statistics settle.
 3. **Learning Rate Schedules (Step, Cosine, Exponential)**: Starts high to traverse flat plateaus and escape poor basins, then decays smoothly so stochastic updates settle tightly inside the bottom of a minimum.
 4. **Variance Floor of Constant-LR SGD**: With a fixed $$\eta$$, noisy mini-batch gradients orbit in a ball of radius $$O(\eta \sigma^2)$$ around the optimum rather than converging to zero error—necessitating decay.
 
-### Step-by-Step Worked Example (Read Slowly): Quantifying Gradient Variance Reduction Across Batch Sizes
+### Worked example: Quantifying Gradient Variance Reduction Across Batch Sizes
 
 Suppose a dataset of $$N = 4$$ points has individual gradients $$g_1 = 2, g_2 = 6, g_3 = 10, g_4 = 14$$ at the current weight $$w$$.
 

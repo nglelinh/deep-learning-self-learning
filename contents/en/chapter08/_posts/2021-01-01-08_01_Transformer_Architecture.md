@@ -11,13 +11,13 @@ categories:
 
 How did one architecture unify machine translation, code generation, protein folding, and image recognition under a single set of building blocks? Because the Transformer separates *where information flows* (self- and cross-attention) from *how each token transforms it* (position-wise MLPs), wrapped inside a deeply stable residual stream. This module hub connects the full mathematical theory of the Transformer with its step-by-step PyTorch implementation and diagnostic demos.
 
-## Background Knowledge Map: Mastering the Transformer Module
+## Key ideas: Mastering the Transformer Module
 
 - **Theory & Equations**: Positional encodings, Pre-LN vs. Post-LN residual blocks, FFN capacity, and encoder–decoder vs. decoder-only topologies.
 - **From-Scratch Code**: Modular PyTorch layers, mask broadcasting, buffer registration, and unit tests.
 - **Training & Diagnostics**: Learning-rate warmup, attention map inspection, and classic failure modes.
 
-### Step-by-Step Worked Example (Read Slowly): Encoder-Only vs. Decoder-Only Attention Complexity
+### Worked example: Encoder-Only vs. Decoder-Only Attention Complexity
 
 Compare a 6-layer Encoder-only model (BERT-style) and a 6-layer Decoder-only model (GPT-style) on a sequence of length $$T = 128$$:
 

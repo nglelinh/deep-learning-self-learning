@@ -11,14 +11,14 @@ categories:
 
 At the heart of every convolutional neural network—from LeNet reading handwritten checks in 1998 to ConvNeXt competing with Vision Transformers today—sits a single mathematical primitive: the convolutional layer. Before diving into pooling or multi-stage architectures, this module dissects that primitive from four complementary angles: exact discrete math, geometric intuition, hands-on NumPy/PyTorch code, and modern efficiency variants.
 
-## Background Knowledge Map: Four Lenses on the Convolutional Layer
+## Key ideas: Four Lenses on the Convolutional Layer
 
 - **Algebraic & Dimensional Mechanics**: Exact cross-correlation formulas, multi-channel inner products, and the output-shape equation $$H_{\text{out}} = \lfloor (H + 2p - d(k-1) - 1)/s \rfloor + 1$$ govern every tensor transition.
 - **Visual & Geometric Intuition**: Local filters act as template matchers and finite-difference edge detectors whose stacked receptive fields build hierarchical representations from pixels to semantic parts.
 - **Systems & Implementation Fluency**: Translating index loops in NumPy into batched `(N, C, H, W)` PyTorch blocks (with `BatchNorm2d` and `bias=False`) turns theory into trainable GPU code.
 - **Architectural Efficiency & Trade-offs**: Depthwise separable, dilated, and residual convolutions solve the compute, receptive-field, and optimization bottlenecks of plain stacked layers.
 
-### Step-by-Step Worked Example (Read Slowly): One-Shot Sanity Check of a Conv Layer Specification
+### Worked example: One-Shot Sanity Check of a Conv Layer Specification
 
 Before coding any convolutional layer, verify three numbers by hand for `nn.Conv2d(in_channels=3, out_channels=32, kernel_size=5, stride=2, padding=2)` applied to a $$64 \times 64$$ RGB image:
 

@@ -11,7 +11,7 @@ categories:
 
 Trong thực tế lập trình Deep Learning, 90% lỗi liên quan đến Attention không nằm ở chỗ viết sai công thức toán, mà nằm ở ba chỗ âm thầm: **nhầm chiều `transpose` khi tách head**, **áp sai chiều broadcast của mask**, hoặc **quên chia cho $$\sqrt{d_k}$$**. Danh mục kiểm tra và lộ trình cài đặt ở mục này giúp bạn viết code Attention sạch, dễ kiểm thử và không dính bẫy ngầm.
 
-## Bản đồ kiến thức nền: Ba trụ cột khi triển khai mã nguồn Attention
+## Kiến thức cần nhớ: Ba trụ cột khi triển khai mã nguồn Attention
 
 1. **Từ vòng lặp tường minh (Bahdanau) đến vector hóa theo batch (Scaled Dot-Product)**:
    Viết bản Bahdanau tường minh giúp nhìn thấy rõ bảng gióng hàng giữa từng từ nguồn–đích, sau đó chuyển sang phép nhân tensor 4D `(B, H, L, d_k)` của Multi-Head Attention.
@@ -20,7 +20,7 @@ Trong thực tế lập trình Deep Learning, 90% lỗi liên quan đến Attent
 3. **Bộ kiểm thử nhanh (Smoke Tests) bắt buộc**:
    Luôn kiểm tra 3 bất biến: tổng trọng số softmax trên trục cuối bằng `1.0`, các vị trí bị che (causal/padding) có trọng số bằng đúng `0.0`, và thay đổi token tương lai không làm thay đổi đầu ra của token quá khứ.
 
-### Khung giải thích (nên đọc chậm): Minh họa bằng số vì sao `view(B, H, L, d_k)` sai hoàn toàn so với `view(B, L, H, d_k).transpose(1, 2)`
+### Giải thích: Minh họa bằng số vì sao `view(B, H, L, d_k)` sai hoàn toàn so với `view(B, L, H, d_k).transpose(1, 2)`
 
 Giả sử $$B=1, \; L=2$$ token, $$d_{\text{model}}=4$$, tách thành $$H=2$$ head (mỗi head $$d_k=2$$). Tensor gốc `x` gồm 2 token:
 - Token 0: `[a1, a2, a3, a4]` (trong đó `[a1, a2]` thuộc Head 0; `[a3, a4]` thuộc Head 1)

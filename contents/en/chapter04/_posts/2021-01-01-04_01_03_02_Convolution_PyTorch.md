@@ -11,14 +11,14 @@ categories:
 
 Moving from a toy 2D NumPy array to a real PyTorch vision pipeline introduces a fourth axis—the **mini-batch**—and a strict memory convention: `(N, C, H, W)`. One misplaced channel dimension or forgotten `bias=False` before BatchNorm silently wastes GPU memory or sabotages convergence. In production CNNs, `nn.Conv2d` is rarely used alone; it lives inside reusable **Conv–BatchNorm–ReLU** blocks alongside $$1 \times 1$$ pointwise bottlenecks and strided downsampling layers.
 
-## Background Knowledge Map: PyTorch Tensor Geometry and CNN Block Design
+## Key ideas: PyTorch Tensor Geometry and CNN Block Design
 
 - **NCHW Tensor Layout & Weight Shape Convention**: PyTorch stores image batches as `(Batch, Channels, Height, Width)` and stores `nn.Conv2d` weights as `(C_out, C_in / groups, kH, kW)`. Knowing these exact axis orders makes shape debugging instantaneous before running a single forward pass.
 - **Redundancy of Conv Bias Before BatchNorm**: BatchNorm subtracts the per-channel batch mean $$\mu_c$$ before applying its own learnable shift $$\beta_c$$. Any additive bias $$b_c$$ inside `nn.Conv2d` cancels out mathematically during mean subtraction, which is why modern CNN blocks always set `bias=False` when followed by `nn.BatchNorm2d`.
 - **Pointwise ($$1 \times 1$$) Convolutions as Per-Pixel MLPs**: A $$1 \times 1$$ convolution does not mix neighboring pixels at all—it applies the exact same linear transformation across the channel vector at every $$(h, w)$$ location, enabling cheap dimensionality reduction (bottlenecks) or channel expansion.
 - **Strided Convolution vs. Pooling for Downsampling**: Setting `stride=2` in `nn.Conv2d` halves spatial resolution using learnable weights rather than fixed max/average rules, giving the network full control over anti-aliasing and feature retention.
 
-### Step-by-Step Worked Example (Read Slowly): Tracing Shapes & Parameters Through a Bottleneck Block
+### Worked example: Tracing Shapes & Parameters Through a Bottleneck Block
 
 Consider an input batch $$X$$ of shape `(N=8, C=256, H=28, W=28)` entering a ResNet-style bottleneck sequence (all with `bias=False` because each is followed by `BatchNorm2d`):
 1. `conv1`: $$1 \times 1$$ conv, $$256 \to 64$$ channels, `stride=1, padding=0`

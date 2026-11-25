@@ -11,7 +11,7 @@ categories:
 
 Năm 2015, bài blog nổi tiếng *"The Unreasonable Effectiveness of Recurrent Neural Networks"* của Andrej Karpathy khiến cả cộng đồng lập trình sửng sốt: một mạng RNN cấp ký tự cực kỳ gọn nhẹ, chỉ học dự đoán **ký tự tiếp theo**, mà sau vài giờ huấn luyện đã biết tự gõ kịch Shakespeare đúng thể thơ, tự viết code C có đóng mở ngoặc `{}` khớp nhau, thậm chí tự sinh mã LaTeX gần như biên dịch được!
 
-## Bản đồ kiến thức nền: Bốn trụ cột của Mô hình Ngôn ngữ Cấp Ký tự (Char-RNN)
+## Kiến thức cần nhớ: Bốn trụ cột của Mô hình Ngôn ngữ Cấp Ký tự (Char-RNN)
 
 1. **Bài toán học tự giám sát (Next-Token Prediction)**:
    Từ chuỗi văn bản thô `"hello"`, ta không cần ai gán nhãn thủ công: đầu vào là `"hell"` và nhãn đích dịch phải 1 bước là `"ello"` — chính là nguyên lý tiền huấn luyện của mọi LLM hiện đại.
@@ -22,7 +22,7 @@ Năm 2015, bài blog nổi tiếng *"The Unreasonable Effectiveness of Recurrent
 4. **Các cạm bẫy kinh điển khi huấn luyện RNN thực tế**:
    Quên khởi tạo lại hoặc `detach` trạng thái ẩn giữa các batch độc lập, không dùng `pack_padded_sequence` khi chuỗi trong cùng batch có độ dài khác nhau (khiến `<PAD>` làm nhiễu trạng thái ẩn), và kỳ vọng RNN thuần nhớ được phụ thuộc xa hơn ~15–20 bước.
 
-### Khung giải thích (nên đọc chậm): Tính tay ảnh hưởng của Nhiệt độ (Temperature $$\tau$$) lên xác suất sinh ký tự tiếp theo
+### Giải thích: Tính tay ảnh hưởng của Nhiệt độ (Temperature $$\tau$$) lên xác suất sinh ký tự tiếp theo
 
 Giả sử ở bước dự đoán ký tự sau `"hel"`, mạng đưa ra 3 logit cho các ký tự `('l', 'p', 'o')` lần lượt là $$\mathbf{z} = [2{,}0, \; 1{,}0, \; 0{,}0]$$. Xác suất lấy mẫu là $$p_i = \frac{e^{z_i / \tau}}{\sum_j e^{z_j / \tau}}$$:
 

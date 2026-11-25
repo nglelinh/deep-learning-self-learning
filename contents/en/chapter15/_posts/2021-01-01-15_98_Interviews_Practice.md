@@ -12,14 +12,14 @@ lesson_type: optional
 
 In senior ML engineering interviews, transfer learning questions rarely ask you to recite definitions—they drop you into a messy production scenario: *"Your linear probe hits 78% on satellite imagery, full fine-tuning overfits to 71%, and your batch size is 4. What do you do?"* Practicing crisp, first-principles answers to these four diagnostic prompts trains you to reason about feature geometry, BatchNorm statistics, and domain shift under pressure.
 
-## Background Knowledge Map: Interview Reasoning on Transfer & Feature Extraction
+## Key ideas: Interview Reasoning on Transfer & Feature Extraction
 
 - **Pillar 1 — Bias–Variance Trade-off in Adaptation**: Diagnoses when frozen features underfit (high bias under domain shift) versus when full fine-tuning overfits (high variance on scarce labels).
 - **Pillar 2 — Layer Selection & Feature Extraction Mechanics**: Distinguishes penultimate pooled embeddings from intermediate spatial feature maps depending on whether the task needs semantic class identity or fine-grained localization.
 - **Pillar 3 — Domain Shift Diagnostics**: Separates covariate shift (input style/lighting changes), label shift (class priors change), and concept drift (label definitions change).
 - **Pillar 4 — Failure Modes in Low-Data Regimes**: Anticipates BatchNorm instability on small batches, head-initialization gradient shock (fixed by LP-FT), and negative transfer.
 
-### Step-by-Step Worked Example (Read Slowly): Diagnosing Feature-Distribution Drift via Cosine Similarity
+### Worked example: Diagnosing Feature-Distribution Drift via Cosine Similarity
 
 Suppose a frozen ImageNet encoder maps daytime cat photos to average unit embedding $\bar{u}_S = [0.8,\, 0.6,\, 0.0]^\top$, and infrared thermal cat photos to $\bar{u}_T = [0.2,\, 0.4,\, 0.8944]^\top$ (verify: $0.2^2 + 0.4^2 + 0.8944^2 = 0.04 + 0.16 + 0.80 = 1.00$).
 

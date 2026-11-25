@@ -11,14 +11,14 @@ categories:
 
 Interpolate linearly between the latent code of a handwritten "1" and a handwritten "7" in a standard autoencoder, and you might be surprised: halfway between them, the decoder does not always morph smoothly—it often outputs a ghostly smudge. That single experiment reveals the fundamental limitation of deterministic autoencoders: because nothing constrains the geometry *between* encoded training points, the latent space can contain uncharted holes.
 
-## Background Knowledge Map: Latent Geometry, Convolutions, and Failure Modes
+## Key ideas: Latent Geometry, Convolutions, and Failure Modes
 
 - **Pillar 1 — Latent Space Interpolation**: Evaluates $g_\theta((1-\alpha)z_1 + \alpha z_2)$ for $\alpha \in [0, 1]$ to probe whether the learned manifold is convex and smoothly organized or fragmented with dead zones.
 - **Pillar 2 — Convolutional Encoder–Decoder Spatial Arithmetic**: Replaces dense layers with strided convolutions and transposed convolutions (`ConvTranspose2d`), preserving 2D translation equivariance and drastically cutting parameter counts.
 - **Pillar 3 — Unregularized Holes vs. Generative Sampling**: Explains why you cannot sample a random $z \sim \mathcal{N}(0, I)$ and expect a realistic image from a vanilla autoencoder—motivating the KL prior of VAEs.
 - **Pillar 4 — Representation Diagnostics & Pitfalls**: Uses 2D latent scatter plots and reconstruction error histograms to diagnose underfitting, posterior fragmentation, and checkerboard artifacts from transposed convolutions.
 
-### Step-by-Step Worked Example (Read Slowly): Tracing Spatial Dimensions Through a Convolutional Autoencoder
+### Worked example: Tracing Spatial Dimensions Through a Convolutional Autoencoder
 
 Trace a single MNIST image tensor of shape $(1, 1, 28, 28)$ through a 2-layer strided convolutional encoder (`kernel=3, stride=2, padding=1`) and transposed-convolution decoder (`kernel=3, stride=2, padding=1, output_padding=1`).
 

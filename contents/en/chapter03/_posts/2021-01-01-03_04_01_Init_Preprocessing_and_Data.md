@@ -11,14 +11,14 @@ categories:
 
 > *Initialize every weight in a neural network to zero and something eerie happens: every neuron in a hidden layer computes the exact same activation, receives the exact same gradient, and updates to the exact same weight forever—turning a 1,000-neuron layer into a single expensive neuron. Breaking symmetry at the right variance scale is step zero of deep learning.*
 
-## Background Knowledge Map: Initialization, Preprocessing, and Batching
+## Key ideas: Initialization, Preprocessing, and Batching
 
 1. **Symmetry Breaking (Why Zero Init Fails)**: Identical weights force all neurons in a layer to evolve identically across epochs; random initialization breaks symmetry so neurons specialize into distinct feature detectors.
 2. **Xavier (Glorot) vs. He (Kaiming) Variance Scaling**: Xavier sets $$\text{Var}(W) = \frac{2}{n_{\text{in}} + n_{\text{out}}}$$ for linear/tanh regimes; He sets $$\text{Var}(W) = \frac{2}{n_{\text{in}}}$$ to compensate for ReLU zeroing out half the activation energy.
 3. **Input Standardization (Zero Mean, Unit Variance)**: Centers and rescales features so loss contours become roughly spherical, preventing large-scale features from dominating gradient updates.
 4. **Mini-Batch Shuffling & Stratified Splits**: Randomizing batch order every epoch eliminates cyclical gradient bias, while stratified splitting preserves rare-class ratios across train, validation, and test sets.
 
-### Step-by-Step Worked Example (Read Slowly): Comparing He vs. Xavier Signal Variance Across a 10-Layer ReLU Network
+### Worked example: Comparing He vs. Xavier Signal Variance Across a 10-Layer ReLU Network
 
 Suppose a 10-layer ReLU MLP has constant width $$n = 512$$ per layer and unit-variance input $$\text{Var}(a^{[0]}) = 1.0$$. For a ReLU layer with symmetric zero-mean weights, forward variance evolves as:
 $$\text{Var}(a^{[l]}) = \frac{1}{2}\,n\,\text{Var}(W)\,\text{Var}(a^{[l-1]})$$

@@ -11,7 +11,7 @@ categories:
 
 Rất nhiều người bắt đầu học Deep Learning với tinh thần hừng hực, xem liền tù tì hàng chục giờ video bài giảng, sao chép sạch sẽ các notebook có sẵn—nhưng hai tháng sau, khi đứng trước một tập dữ liệu mới hoàn toàn, họ lại không biết bắt đầu từ đâu và mất phương hướng trước hàng trăm siêu tham số. Học sâu là một kỹ năng kết hợp giữa **tư duy toán học** và **kỷ luật thực nghiệm kỹ thuật**. Bài hướng dẫn này trình bày bức tranh ứng dụng thực tế cùng chiến lược học tập chủ động để bạn biến kiến thức thụ động thành năng lực giải quyết bài toán thật.
 
-## Bản đồ kiến thức nền: Bốn nguyên tắc vàng để làm chủ Học sâu hiệu quả
+## Kiến thức cần nhớ: Bốn nguyên tắc vàng để làm chủ Học sâu hiệu quả
 
 1. **Học theo vòng lặp Lý thuyết $$\leftrightarrow$$ Cài đặt từ đầu $$\leftrightarrow$$ Thực nghiệm**:
    Đừng chỉ đọc công thức rồi bỏ qua, cũng đừng chỉ gọi `.fit()` như hộp đen. Tự cài lại lan truyền ngược bằng NumPy một lần sẽ giúp bạn hiểu sâu hơn đọc mười bài blog.
@@ -25,7 +25,7 @@ Rất nhiều người bắt đầu học Deep Learning với tinh thần hừng
 4. **Kết nối Kiến trúc với Bản chất Dữ liệu**:
    Nhìn thấy sợi dây xuyên suốt khóa học: MLP cho dữ liệu bảng/vector $$\to$$ CNN cho ảnh có tính cục bộ không gian $$\to$$ RNN/Transformer cho chuỗi và ngôn ngữ $$\to$$ Mô hình sinh cho phân phối dữ liệu.
 
-### Khung giải thích (nên đọc chậm): Tính nhanh ngân sách học tập và phép thử "Overfit 1 Batch"
+### Giải thích: Tính nhanh ngân sách học tập và phép thử "Overfit 1 Batch"
 
 Giả sử bạn có một tập dữ liệu phân loại 5 lớp gồm 10{,}000 mẫu và muốn kiểm chứng code huấn luyện mới viết có đúng không trước khi chạy 50 epoch tốn 2 giờ:
 

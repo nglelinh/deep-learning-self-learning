@@ -12,14 +12,14 @@ lesson_type: optional
 
 Feed a standard ImageNet classifier a photo of pure TV static, and it will happily declare *"99.4% confident: toaster."* That dangerous overconfidence is why senior ML interviews probe Bayesian Deep Learning and uncertainty quantification: can you distinguish irreducible data noise (*aleatoric*) from model ignorance (*epistemic*), show why L2 weight decay is secretly a Gaussian prior, and estimate predictive uncertainty cheaply with Monte Carlo Dropout?
 
-## Background Knowledge Map: Bayesian Deep Learning & Uncertainty Quantification
+## Key ideas: Bayesian Deep Learning & Uncertainty Quantification
 
 - **Pillar 1 — Aleatoric vs. Epistemic Uncertainty**: Separates irreducible observation noise in $p(y \mid x)$ (unreducible even with infinite data) from parameter uncertainty in $p(\theta \mid \mathcal{D})$ (which shrinks as you gather more data).
 - **Pillar 2 — MAP Estimation & Regularization Duality**: Proves that minimizing $\text{NLL} + \lambda \|\theta\|_2^2$ is mathematically identical to Maximum A Posteriori (MAP) inference under an isotropic Gaussian prior $\theta \sim \mathcal{N}(0, \sigma_0^2 I)$, while L1 corresponds to a Laplace prior.
 - **Pillar 3 — Point Estimates vs. Posterior Predictive Marginalization**: Explains why a single MAP weight $\hat{\theta}$ extrapolates linearly with unbounded logits far from training data, whereas averaging $p(y \mid x, \mathcal{D}) = \int p(y \mid x, \theta)p(\theta \mid \mathcal{D})\,d\theta$ moderates confidence.
 - **Pillar 4 — Practical Approximations (MC Dropout & Deep Ensembles)**: Runs $T$ stochastic forward passes with dropout active at test time (or averages $M$ independently trained models) to decompose total predictive variance.
 
-### Step-by-Step Worked Example (Read Slowly): Decomposing Predictive Uncertainty via MC Dropout
+### Worked example: Decomposing Predictive Uncertainty via MC Dropout
 
 Suppose we run $T = 4$ stochastic MC Dropout forward passes on an out-of-distribution image for a binary classifier, obtaining predicted probabilities $p^{(t)} = [0.90,\; 0.10,\; 0.80,\; 0.20]$.
 

@@ -12,14 +12,14 @@ lesson_type: optional
 
 Chỉ vài năm trước, muốn xây dựng một hệ thống nhận dạng tiếng nói cho tiếng Việt hoặc một chuyên ngành hẹp, bạn phải gom hàng nghìn giờ ghi âm căn chỉnh thủ công theo từng âm vị cùng mô hình ngôn ngữ rời rạc. Sự xuất hiện của **Whisper**, các **Neural Audio Codec** (EnCodec, Mimi) và hệ thống hội thoại giọng nói song công (full-duplex speech-to-speech) đã thống nhất hoàn toàn thế giới âm thanh với kiến trúc Transformer.
 
-## Bản đồ kiến thức nền: Bốn trụ cột của công nghệ Tiếng nói hiện đại (2022–2026)
+## Kiến thức cần nhớ: Bốn trụ cột của công nghệ Tiếng nói hiện đại (2022–2026)
 
 - **Whisper và huấn luyện giám sát yếu đa nhiệm:** Dùng một kiến trúc Encoder–Decoder duy nhất trên 680.000+ giờ âm thanh đa ngữ để đồng thời nhận dạng ngôn ngữ, ghi chép có dấu câu, gắn mốc thời gian và dịch sang tiếng Anh.
 - **Thước đo chất lượng ASR — Word Error Rate (WER) và CER:** Đo lường chính xác sai số thay thế (S), xóa (D) và chèn (I) dựa trên khoảng cách biên tập Levenshtein.
 - **Residual Vector Quantization (RVQ) Audio Codec:** Nén sóng âm thành nhiều tầng mã rời rạc tốc độ bit cực thấp ($$1{,}5\text{–}6\text{ kbps}$$), biến sinh giọng nói thành bài toán dự đoán token kế tiếp giống LLM.
 - **Giao tiếp giọng nói song công (Full-Duplex Speech Models):** Giảm độ trễ phản hồi xuống dưới 300 ms bằng cách xử lý luồng âm thanh trực tiếp (audio-in, audio-out) thay vì nối chuỗi chậm chạp `ASR → LLM → TTS`.
 
-### Khung giải thích (nên đọc chậm): Tính tay Word Error Rate (WER) và tốc độ bit của một Neural Audio Codec
+### Giải thích: Tính tay Word Error Rate (WER) và tốc độ bit của một Neural Audio Codec
 
 **Phần A — Tính tay WER:** Giả sử câu chuẩn (*reference*) có $$N = 8$$ từ: `hôm nay trời nắng đẹp và rất mát`, còn mô hình ASR xuất ra: `hôm nay trời rất nắng và rất mát mẻ`.
 - So khớp tối ưu: chèn thêm `rất` trước `nắng` ($$I = 1$$), xóa `đẹp` ($$D = 1$$), chèn thêm `mẻ` ở cuối ($$I = 1$$), không có thay thế trực tiếp (hoặc tính tương đương: $$S=1, D=0, I=1$$? Chú ý: `nắng đẹp` → `rất nắng` là chèn `rất` + xóa `đẹp` = 2 phép, cộng chèn `mẻ` = 1 phép, tổng khoảng cách biên tập $$= 3$$).

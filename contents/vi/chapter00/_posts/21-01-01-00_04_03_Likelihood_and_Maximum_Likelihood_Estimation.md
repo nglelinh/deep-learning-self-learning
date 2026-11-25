@@ -11,7 +11,7 @@ lang: vi
 
 Một trong những khoảnh khắc "vỡ òa" lớn nhất khi học Deep Learning là nhận ra rằng những hàm mất mát tưởng như được nghĩ ra một cách tùy hứng—MSE cho hồi quy, Binary Cross-Entropy cho phân loại nhị phân, Categorical Cross-Entropy cho đa lớp—thực chất đều là **cùng một nguyên lý duy nhất** đội những chiếc mặt nạ khác nhau: **Ước lượng Hợp lý Cực đại (Maximum Likelihood Estimation — MLE)**. Bài học này mở khóa chiếc cầu nối vĩ đại giữa thống kê và tối ưu hóa, giúp bạn hiểu sâu *tại sao* ta lại huấn luyện mạng nơ-ron bằng chính các hàm mất mát đó.
 
-## Bản đồ kiến thức nền: Bốn trụ cột của Hàm Hợp lý và MLE
+## Kiến thức cần nhớ: Bốn trụ cột của Hàm Hợp lý và MLE
 
 1. **Xác suất vs. Hàm Hợp lý (Probability vs. Likelihood)**:
    Xác suất cố định tham số $$\theta$$ và hỏi dữ liệu $$x$$ nào dễ xảy ra ($$P(x \mid \theta)$$); ngược lại, hàm hợp lý cố định dữ liệu $$x$$ đã quan sát và xoay tham số $$\theta$$ để xem mô hình nào giải thích dữ liệu tốt nhất ($$\mathcal{L}(\theta \mid x)$$).
@@ -27,7 +27,7 @@ Một trong những khoảnh khắc "vỡ òa" lớn nhất khi học Deep Learn
 4. **Từ MLE đến MAP (Maximum A Posteriori) và Regularization**:
    Khi nhân thêm phân phối tiên nghiệm $$P(\theta)$$ lên tham số (ví dụ Gaussian $$\mathcal{N}(0, \tau^2)$$), âm log hậu nghiệm tự động sinh ra số hạng phạt $$\lambda \|\theta\|_2^2$$—chính là **L2 Regularization (Weight Decay)**!
 
-### Khung giải thích (nên đọc chậm): Tự tay suy ra công thức MLE cho 10 lần tung đồng xu và liên hệ Cross-Entropy
+### Giải thích: Tự tay suy ra công thức MLE cho 10 lần tung đồng xu và liên hệ Cross-Entropy
 
 Giả sử bạn tung một đồng xu lạ 10 lần và thu được 7 lần Ngửa ($$y=1$$), 3 lần Sấp ($$y=0$$). Ta muốn tìm xác suất ra Ngửa $$p \in (0, 1)$$ hợp lý nhất:
 

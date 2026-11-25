@@ -11,14 +11,14 @@ categories:
 
 > *For twenty years, researchers defaulted to sigmoid and tanh because they looked like smooth biological firing rates—until deep networks refused to train past five layers. Switching to the deceptively trivial function $$\max(0, z)$$ (ReLU) unlocked deep vision models overnight, and understanding its derivative explains why.*
 
-## Background Knowledge Map: Comparing Classic Activation Families
+## Key ideas: Comparing Classic Activation Families
 
 1. **Sigmoid ($$\sigma(z) = \frac{1}{1+e^{-z}}$$)**: Squashes $$\mathbb{R} \to (0, 1)$$, ideal for binary probability outputs and LSTM gates, but suffers from saturation ($$\max \sigma'(z) = 0.25$$) and non-zero-centered outputs.
 2. **Hyperbolic Tangent ($$\tanh(z)$$)**: Rescales sigmoid to $$(-1, 1)$$ with zero-centered outputs and steeper peak slope ($$\tanh'(0) = 1$$), yet still saturates exponentially for $$\lvert z\rvert > 3$$.
 3. **ReLU ($$\max(0, z)$$)**: Maintains an exact unit derivative $$1$$ for all $$z > 0$$ (eliminating positive-side vanishing gradients) at trivial compute cost, but risks "dying ReLUs" if weights push $$z < 0$$ permanently.
 4. **Leaky ReLU & ELU**: Restore a small nonzero slope ($$\alpha = 0.01$$ or smooth exponential tail) for $$z < 0$$ so negative pre-activations still receive recovery gradients.
 
-### Step-by-Step Worked Example (Read Slowly): Comparing Forward Values and Gradients at $$z = 0$$ and $$z = 4$$
+### Worked example: Comparing Forward Values and Gradients at $$z = 0$$ and $$z = 4$$
 
 Evaluate Sigmoid, Tanh, ReLU, and Leaky ReLU ($$\alpha = 0.01$$) at both $$z = 0$$ (active center) and $$z = 4$$ (large pre-activation, noting $$e^{-4} \approx 0.0183$$).
 

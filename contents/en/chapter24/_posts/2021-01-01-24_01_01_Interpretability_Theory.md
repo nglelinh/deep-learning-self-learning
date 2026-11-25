@@ -11,14 +11,14 @@ categories:
 
 Raw gradient saliency maps suffer from a nasty mathematical flaw: inside a saturated ReLU or sigmoid region, a feature can be the *sole reason* a prediction is high and still have a local gradient of zero! Axiomatic attribution theory—culminating in Shapley values (SHAP), Integrated Gradients, and Layer-wise Relevance Propagation (LRP)—fixes this by insisting on rigorous conservation laws: the sum of feature attributions must equal the exact difference between the model's output and a neutral baseline.
 
-## Background Knowledge Map: Axiomatic Attribution Theory
+## Key ideas: Axiomatic Attribution Theory
 
 - **Pillar 1 — Integrated Gradients & Completeness**: Integrates gradients along the straight-line path from baseline $x'$ to input $x$: $\text{IG}_i(x) = (x_i - x'_i)\int_0^1 \frac{\partial F(x' + \alpha(x-x'))}{\partial x_i}\,d\alpha$, satisfying both Sensitivity and Completeness axioms.
 - **Pillar 2 — Cooperative Game Theory & Shapley Values (SHAP)**: Treats features as players in a coalition game and proves there is a *unique* attribution satisfying Efficiency, Symmetry, Dummy, and Additivity.
 - **Pillar 3 — Layer-Wise Relevance Propagation (LRP)**: Propagates the output logit $f(x)$ backward layer by layer while conserving total relevance $\sum_i R_i^{(l)} = \sum_j R_j^{(l+1)}$ at every layer.
 - **Pillar 4 — Attention vs. Explanation Debate**: Clarifies why raw Transformer attention weights do not automatically equal causal feature importance unless validated by gradient or ablation tests.
 
-### Step-by-Step Worked Example (Read Slowly): Computing Exact Shapley Values for a 2-Feature Classifier
+### Worked example: Computing Exact Shapley Values for a 2-Feature Classifier
 
 Suppose a loan-approval model $v(S)$ uses two binary features: $A$ (high income) and $B$ (clean credit history), with subset outputs:
 $$v(\varnothing) = 0.20, \quad v(\{A\}) = 0.50, \quad v(\{B\}) = 0.40, \quad v(\{A, B\}) = 0.90.$$

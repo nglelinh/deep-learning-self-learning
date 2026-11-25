@@ -12,14 +12,14 @@ lesson_type: optional
 
 Regularization and normalization questions are staples of ML engineering interviews because they separate practitioners who memorize API flags from those who actually debug diverging or overfitting training runs. Can you explain geometrically why L1 induces exact sparsity while L2 shrinks weights smoothly? Can you trace what breaks when `model.eval()` is forgotten on a network containing both Dropout and BatchNorm? These five focused prompts sharpen your diagnostic instincts.
 
-## Background Knowledge Map: High-Signal Interview Concepts in Regularization
+## Key ideas: High-Signal Interview Concepts in Regularization
 
 - **Diagnosing Overfitting vs. Underfitting**: Reading train/val loss divergence curves and matching remedies (data augmentation, weight decay, dropout, early stopping) to the actual failure mode.
 - **L1 vs. L2 Geometry & Subgradients**: Understanding why the diamond-shaped L1 ball intersects loss contours on coordinate axes (exact zeros / feature selection), whereas the circular L2 ball shrinks all coordinates proportionally without zeroing them.
 - **Train vs. Eval Mode Semantics**: Articulating the exact mathematical difference between `train()` and `eval()` for both Dropout (masking + $$1/(1-p)$$ scaling vs. identity) and BatchNorm (batch stats vs. EMA running stats).
 - **Data Augmentation as Implicit Invariance**: Framing random crops, flips, and Mixup as injecting domain-symmetry priors directly into the empirical risk distribution.
 
-### Step-by-Step Worked Example (Read Slowly): One Gradient Step — L1 vs. L2 Regularization on a Small Weight
+### Worked example: One Gradient Step — L1 vs. L2 Regularization on a Small Weight
 
 Suppose a single weight currently sits at $$w = 0.02$$, the data-loss gradient is $$g = 0$$ (an irrelevant feature!), learning rate is $$\eta = 0.1$$, and regularization strength is $$\lambda = 0.3$$.
 

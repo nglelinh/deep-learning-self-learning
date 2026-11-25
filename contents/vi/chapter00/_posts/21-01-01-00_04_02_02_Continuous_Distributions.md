@@ -11,7 +11,7 @@ categories:
 
 Tại sao trọng số khởi tạo của hầu hết mạng nơ-ron lại lấy từ phân phối Chuẩn (Gaussian) hoặc Đều (Uniform), và vì sao chỉ một lỗi nhỏ khi chuẩn hóa dữ liệu đầu vào cũng có thể đẩy toàn bộ hàm Sigmoid vào vùng bão hòa? Câu trả lời nằm ở hình học của các **phân phối liên tục**—nơi xác suất không tập trung tại từng điểm rời rạc mà trải đều thành diện tích dưới đường cong mật độ $$p(x)$$. Bài học này giúp bạn nắm vững ba phân phối liên tục quan trọng nhất (Đều, Chuẩn, Mũ) cùng quy tắc chuẩn hóa Z-score áp dụng trực tiếp vào tiền xử lý dữ liệu và Batch Normalization.
 
-## Bản đồ kiến thức nền: Bốn trụ cột của Phân phối Liên tục
+## Kiến thức cần nhớ: Bốn trụ cột của Phân phối Liên tục
 
 1. **Hàm mật độ (PDF $$p(x)$$) và Hàm phân phối tích lũy (CDF $$F(x)$$)**:
    Với biến liên tục, xác suất tại đúng một điểm luôn bằng $$0$$ ($$P(X = c) = 0$$); xác suất chỉ có nghĩa trên một khoảng: $$P(a \le X \le b) = \int_a^b p(x)\,dx = F(b) - F(a)$$.
@@ -25,7 +25,7 @@ Tại sao trọng số khởi tạo của hầu hết mạng nơ-ron lại lấy
 4. **Phân phối Mũ (Exponential $$\text{Exp}(\lambda)$$)**:
    Mô hình hóa thời gian chờ giữa các sự kiện với tính chất "không nhớ" (*memoryless*), đồng thời xuất hiện trong phân phối Laplace ($$L_1$$ regularization) và phân tích sinh tồn.
 
-### Khung giải thích (nên đọc chậm): Tính tay biên khởi tạo `Uniform` tương đương phương sai của `Normal`
+### Giải thích: Tính tay biên khởi tạo `Uniform` tương đương phương sai của `Normal`
 
 Trong PyTorch, khi khởi tạo một lớp tuyến tính có $$n_{\text{in}} = 100$$ đầu vào theo chuẩn Xavier, ta muốn trọng số có $$\mathbb{E}[w] = 0$$ và phương sai $$\text{Var}(w) = \frac{1}{100} = 0.01$$:
 

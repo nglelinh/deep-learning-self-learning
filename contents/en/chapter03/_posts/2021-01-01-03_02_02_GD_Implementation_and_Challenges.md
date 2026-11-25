@@ -11,14 +11,14 @@ categories:
 
 > *Writing a 10-line gradient descent loop in NumPy is easy; keeping it from oscillating in narrow ravines, stalling on high-dimensional saddle points, or diverging from unscaled features is where real optimization engineering begins.*
 
-## Background Knowledge Map: Practical Obstacles in Gradient Descent
+## Key ideas: Practical Obstacles in Gradient Descent
 
 1. **Ill-Conditioned Ravines (Anisotropic Curvature)**: When one parameter axis is $$100\times$$ steeper than another, vanilla GD bounces violently across the narrow canyon while barely moving along the valley floor.
 2. **Saddle Points vs. Local Minima**: In high-dimensional parameter spaces ($$d \gg 10^6$$), nearly all critical points with $$\nabla L = \mathbf{0}$$ are saddle points (some positive, some negative Hessian eigenvalues), where deterministic GD can stall indefinitely.
 3. **Feature Scaling & Condition Number**: Feeding unnormalized features (e.g., age $$[0, 100]$$ next to income $$[0, 10^6]$$) stretches loss contours by $$10^4\times$$, crippling vanilla GD until features are standardized.
 4. **Vectorized Implementation & Numerical Checks**: Replacing Python loops with matrix ops and verifying analytic gradients against finite-difference numerical gradients eliminates silent bugs.
 
-### Step-by-Step Worked Example (Read Slowly): Watching Vanilla GD Zig-Zag in an Ill-Conditioned Valley
+### Worked example: Watching Vanilla GD Zig-Zag in an Ill-Conditioned Valley
 
 Minimize $$L(w_1, w_2) = 0.5 w_1^2 + 5 w_2^2$$ (Hessian eigenvalues $$\lambda_1 = 1, \lambda_2 = 10$$, condition number $$\kappa = 10$$), starting at $$(w_1, w_2) = (10, 1)$$ with learning rate $$\eta = 0.18$$ (just under the stability limit $$2/\lambda_2 = 0.20$$).
 
